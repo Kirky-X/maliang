@@ -1,0 +1,9 @@
+{
+  "name": "maliang",
+  "version": "0.1.0",
+  "description": "DESIGN.md 设计系统 + UI markdown 生成。13 种 design system 风格,12 个 references 维度规范,2 个子命令(design-md / ui-md)。",
+  "license": "MIT",
+  "keywords": ["design-system", "design-token", "ui-markdown", "DESIGN.md", "w3c-dtcg"],
+  "homepage": "https://github.com/Kirky-X/maliang",
+  "repository": "https://github.com/Kirky-X/maliang"
+}
