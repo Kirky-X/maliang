@@ -12,6 +12,8 @@ version: 1.1.0
 
 ## 1. 顶部导航
 
+<!-- 布局组织见 ../../references/layout.md -->
+
 引用 [`../../organisms/nav-bar.md`](../../organisms/nav-bar.md):左侧返回 / 中间标题"关于" / 右侧无。
 - nav-bar action:左=tap→history.back(返回 setting/index); 中=无; 右=无
 
