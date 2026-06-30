@@ -10,6 +10,8 @@ version: 1.1.0
 
 ## 1. 顶部导航
 
+<!-- 布局组织见 ../../references/layout.md -->
+
 引用 [`organisms/nav-bar.md`](../organisms/nav-bar.md):左侧菜单 / 中间标题"首页" / 右侧消息。
 - nav-bar action:左=tap→抽屉菜单; 中=无; 右=tap→ui/message.md
 
