@@ -1,6 +1,7 @@
 ---
 name: maliang
 description: 设计系统技能,含两个子命令。(A) design-md —— 创建、应用、验证、导出 DESIGN.md 设计系统文件(Google Labs agent-first 格式:YAML 前置 token + Markdown 设计理由);(B) ui-md —— 从 DESIGN.md 产出页面级硬 token UI markdown(布局章节 + 组件参数表,颜色/字体/间距全引用 token,RGBA+HEX)。主动触发:(1) 用户提到 DESIGN.md、design token、设计系统、设计规范、品牌/样式/主题色规范;(2) 想从 CSS、Tailwind、组件代码提取设计 token 或统一样式;(3) 提供 UI 截图/设计稿想转化为结构化设计规范;(4) 需要页面级 UI markdown、组件规格表、布局描述、UI 交付物;(5) 正在开发前端组件需要保持样式一致性;(6) 需要将设计系统导出为 Tailwind/CSS 变量或 W3C DTCG 格式,或 lint、diff、验证 DESIGN.md。任何重要前端项目启动时,主动建议先建立 DESIGN.md,再产出页面 UI markdown —— 不要等用户开口。
+license: MIT
 ---
 
 # maliang —— 设计系统技能
@@ -25,4 +26,4 @@ description: 设计系统技能,含两个子命令。(A) design-md —— 创建
 ## 通用
 
 - **不确定用哪个?** 先 `design-md`。没有 DESIGN.md 就无法产出可靠的 `ui-md` 硬 token。
-- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 原则)在 [`references/`](references/) 下,两个子命令共享参考,不在本路由器重复。
+- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局 / 原则)在 [`references/`](references/) 下,两个子命令共享参考,不在本路由器重复。
