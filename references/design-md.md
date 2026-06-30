@@ -160,6 +160,8 @@ components:
 
 <Grid model (fixed-width or fluid), spacing philosophy, containment patterns.>
 
+布局类型选用参考 [`layout.md`](./layout.md)。
+
 ## Elevation & Depth
 
 <How hierarchy is conveyed: shadows, tonal layers, borders, or flat contrast.>
