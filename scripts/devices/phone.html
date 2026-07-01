@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>手机设备外壳模板 - {{DEVICE_NAME}}</title>
+  <style>
+    /* 设备尺寸变量(由 preview 子命令从 device_models.py 注入) */
+    :root {
+      --device-width: {{DEVICE_WIDTH}}px;
+      --device-height: {{DEVICE_HEIGHT}}px;
+      --device-corner-radius: {{DEVICE_CORNER_RADIUS}}px;
+      --device-border-width: {{DEVICE_BORDER_WIDTH}}px;
+      --device-has-notch: {{DEVICE_HAS_NOTCH}};
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f0f0f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* 手机外壳容器 */
+    .device-shell {
+      position: relative;
+      width: var(--device-width);
+      height: var(--device-height);
+      border-radius: var(--device-corner-radius);
+      border: var(--device-border-width) solid #1a1a1a;
+      background: #1a1a1a;
+      box-shadow:
+        0 0 0 2px #333,
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 0 4px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    /* 屏幕(实际内容区域) */
+    .device-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: calc(var(--device-corner-radius) - var(--device-border-width));
+      overflow: hidden;
+      background: #ffffff;
+      position: relative;
+    }
+
+    /* 刘海(仅当 --device-has-notch 为 1 时显示) */
+    .device-notch {
+      display: var(--notch-display, none);
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 30px;
+      background: #1a1a1a;
+      border-radius: 0 0 18px 18px;
+      z-index: 100;
+    }
+
+    /* 当 has-notch=1 时显示刘海 */
+    .device-shell[data-notch="1"] .device-notch {
+      display: block;
+    }
+
+    /* 侧边按钮(装饰,可选) */
+    .device-shell::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 100px;
+      width: 3px;
+      height: 30px;
+      background: #333;
+      border-radius: 2px 0 0 2px;
+    }
+
+    .device-shell::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      top: 120px;
+      width: 3px;
+      height: 50px;
+      background: #333;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* 预览内容容器(由 preview 子命令注入实际页面内容) */
+    .preview-content {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* 设备信息标签(调试用,可移除) */
+    .device-label {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="device-shell" data-notch="{{DEVICE_HAS_NOTCH}}">
+    <div class="device-notch"></div>
+    <div class="device-screen">
+      <div class="preview-content">
+        <!-- 页面内容由 preview 子命令注入 -->
+        {{PREVIEW_CONTENT}}
+      </div>
+    </div>
+  </div>
+  <div class="device-label">{{DEVICE_NAME}} - {{DEVICE_WIDTH}}x{{DEVICE_HEIGHT}}</div>
+</body>
+</html>
