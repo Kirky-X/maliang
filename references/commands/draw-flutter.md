@@ -25,7 +25,7 @@
 2. **解析 token.md** — 读取 `examples/ui-markdown/token.md`,建立 token 名→硬值映射表(颜色/字体/间距/圆角)
 3. **解析布局章节** — 按"顶部导航 → 主体区块 → 底部 dock"顺序,逐章提取组件类型(按钮/文本/列表/...)与参数表
 
-**⚑ 输入解析确认检查点**:确认已解析出页面布局章节 + 组件参数表 + token 引用清单(逻辑组件 → Flutter Widget 预映射),再进入组件映射阶段。
+**🔴 CHECKPOINT · 输入解析确认**:确认已解析出页面布局章节 + 组件参数表 + token 引用清单(逻辑组件 → Flutter Widget 预映射),再进入组件映射阶段。
 
 ---
 
@@ -43,6 +43,28 @@
 | image | `Image` / `Image.asset` / `Image.network` | [widget.md](../framework/flutter/image/widget.md) + [properties.md](../framework/flutter/image/properties.md) |
 | input | `TextField` / `TextFormField` | [widget.md](../framework/flutter/input/widget.md) + [properties.md](../framework/flutter/input/properties.md) |
 | navigation bar | `AppBar` / `BottomNavigationBar` | (参考 organisms/) |
+| layout | `Row` / `Column` / `Stack` / `Flex` / `Expanded` | [widget.md](../framework/flutter/layout/widget.md) + [properties.md](../framework/flutter/layout/properties.md) |
+| tabs | `TabBar` + `TabBarView` + `DefaultTabController` | [widget.md](../framework/flutter/tabs/widget.md) + [properties.md](../framework/flutter/tabs/properties.md) |
+| form | `Form` + `FormField` + `TextFormField` | [widget.md](../framework/flutter/form/widget.md) + [properties.md](../framework/flutter/form/properties.md) |
+| dialog | `showDialog` + `AlertDialog` / `SimpleDialog` | [widget.md](../framework/flutter/dialog/widget.md) + [properties.md](../framework/flutter/dialog/properties.md) |
+| grid | `GridView` / `SliverGrid` | [widget.md](../framework/flutter/grid/widget.md) + [properties.md](../framework/flutter/grid/properties.md) |
+| progress | `LinearProgressIndicator` / `CircularProgressIndicator` | [widget.md](../framework/flutter/progress/widget.md) + [properties.md](../framework/flutter/progress/properties.md) |
+| icon | `Icon` / `IconButton` | [widget.md](../framework/flutter/icon/widget.md) + [properties.md](../framework/flutter/icon/properties.md) |
+| shape | `CustomPaint` / `ClipPath` / `DecoratedBox` | [widget.md](../framework/flutter/shape/widget.md) + [properties.md](../framework/flutter/shape/properties.md) |
+| theme | `ThemeData` / `Theme` | [widget.md](../framework/flutter/theme/widget.md) + [properties.md](../framework/flutter/theme/properties.md) |
+| animation | `AnimatedContainer` / `Hero` / `AnimationController` | [widget.md](../framework/flutter/animation/widget.md) + [properties.md](../framework/flutter/animation/properties.md) |
+| gesture | `GestureDetector` / `InkWell` / `Dismissible` | [widget.md](../framework/flutter/gesture/widget.md) + [properties.md](../framework/flutter/gesture/properties.md) |
+| i18n | `intl` 包 / `Localizations` | [widget.md](../framework/flutter/i18n/widget.md) + [properties.md](../framework/flutter/i18n/properties.md) |
+| a11y | `Semantics` widget | [widget.md](../framework/flutter/a11y/widget.md) + [properties.md](../framework/flutter/a11y/properties.md) |
+| video | `video_player` 包 / `VideoPlayer` | [widget.md](../framework/flutter/video/widget.md) + [properties.md](../framework/flutter/video/properties.md) |
+| menu | `PopupMenuButton` / `DropdownMenu` | [widget.md](../framework/flutter/menu/widget.md) + [properties.md](../framework/flutter/menu/properties.md) |
+| scroll | `SingleChildScrollView` / `CustomScrollView` / `NestedScrollView` | [widget.md](../framework/flutter/scroll/widget.md) + [properties.md](../framework/flutter/scroll/properties.md) |
+| carousel | `PageView` / `carousel_slider` 包 | [widget.md](../framework/flutter/carousel/widget.md) + [properties.md](../framework/flutter/carousel/properties.md) |
+| radio | `Radio` + `RadioGroup`(`Wrap`/`Column` 组合) | [widget.md](../framework/flutter/radio/widget.md) + [properties.md](../framework/flutter/radio/properties.md) |
+| switch | `Switch` / `SwitchListTile` | [widget.md](../framework/flutter/switch/widget.md) + [properties.md](../framework/flutter/switch/properties.md) |
+| popover | N/A(Flutter 无原生 Popover,用 `showDialog`/`Overlay` 组合) | [N/A](../framework/flutter/popover/widget.md) |
+| message | `ScaffoldMessenger.showSnackBar` | [widget.md](../framework/flutter/message/widget.md) + [properties.md](../framework/flutter/message/properties.md) |
+| drawer | `Drawer` / `Scaffold.drawer` | [widget.md](../framework/flutter/drawer/widget.md) + [properties.md](../framework/flutter/drawer/properties.md) |
 
 ### Token 映射规则
 
@@ -62,7 +84,7 @@
 3. 填充属性 — 将 draw-md 参数表的值(token 引用)映射为 Flutter Widget 属性
 4. 生成代码 — 产出 `StatelessWidget` 或 `StatefulWidget`,含 `build()` 方法
 
-**⚑ Flutter 代码生成确认检查点**:确认每个组件都已映射到 Flutter Widget,所有 token 引用点已用 {token-name} 格式标注(无裸值),再进入产出校验。
+**🔴 CHECKPOINT · Flutter 代码生成确认**:确认每个组件都已映射到 Flutter Widget,所有 token 引用点已用 {token-name} 格式标注(无裸值),再进入产出校验。
 
 ---
 
@@ -77,7 +99,7 @@
 - [ ] 产出文件含注释标注来源(`// 由 draw-flutter 从 <page>.md 生成`)
 - [ ] import 语句完整(`package:flutter/material.dart` 等)
 
-**⚑ 校验通过确认检查点**:确认无裸值、无悬空 token、组件映射完整,Flutter Dart 代码方可交付使用。
+**🔴 CHECKPOINT · 校验通过确认**:确认无裸值、无悬空 token、组件映射完整,Flutter Dart 代码方可交付使用。
 
 ---
 
@@ -106,3 +128,13 @@
 | UI markdown 缺少 token 引用(裸值) | 提示具体偏差(哪些值未引用 token) | 用 DESIGN.md 中的 token 替换裸值,标注"自动补全,需确认" |
 | 组件无对应 Flutter Widget 文档(framework/flutter/ 无对应类型) | 在 index.md 索引表查最接近类型 | 用基础 Widget(Text/ElevatedButton/ListView)组合实现,标注"组合方案" |
 | Flutter 代码编译报错(Widget 嵌套/类型错误) | 提示具体编译错误及修复方向 | 引导用户简化 UI markdown(移除复杂组件)后重试 |
+
+---
+
+## 禁止事项(反例)
+
+- **禁止用 `Container` 嵌套 `Container` 表达间距**:`Container` 嵌套会增加 widget 树深度、触发多余布局 pass,性能差。MUST 用 `Padding` widget 表达内边距。
+- **禁止颜色硬编码**(如 `Color(0xFF5B7CFA)`):硬编码脱离主题,暗色模式与多端一致失效。MUST 用 `Theme.of(context).colorScheme` 引用设计 token。
+- **禁止列表用 `Column` + 多个子 widget**:`Column` 一次性构建全部子 widget,无懒加载,长列表会卡顿/OOM。MUST 用 `ListView.builder` 按需构建。
+- **禁止状态管理在 Widget 内用 `setState` 处理跨页面状态**:`setState` 作用域仅当前 Widget,跨页面状态会失同步、难以测试。MUST 用 Provider / Riverpod / Bloc 集中管理。
+- **禁止文本不用 `Text` widget 的 `style` 引用 `ThemeData.textTheme`**:硬编码字号/字重会脱离主题层级,响应式与一致性失效。MUST 经 `style: Theme.of(context).textTheme.xxx` 引用。

@@ -1,9 +1,10 @@
 ---
 name: about
 description: 关于页(二级)—— 应用信息 + 功能列表
-background: "{surface-base}"
-updated: 2026-06-30
-version: 1.1.0
+background: "{color-surface-base}"
+components: [navigation, image, text, list, button, icon]
+updated: 2026-07-02
+version: 1.2.0
 ---
 
 # 关于(about)
@@ -14,7 +15,7 @@ version: 1.1.0
 
 <!-- 布局组织见 ../../references/dimensions/layout.md -->
 
-引用 [`../../organisms/nav-bar.md`](../../organisms/nav-bar.md):左侧返回 / 中间标题"关于" / 右侧无。
+引用 [`../../organisms/nav-bar.md`](../../organisms/nav-bar.md)(组件类型:`navigation`):左侧返回 / 中间标题"关于" / 右侧无。
 - nav-bar action:左=tap→history.back(返回 setting/index); 中=无; 右=无
 
 ## 2. 应用信息
@@ -23,12 +24,13 @@ version: 1.1.0
 
 | 参数       | 值                       |
 | ---------- | ------------------------ |
+| 组件类型 | `image` + `text`(P0 + 现有组件,组合:logo 图标 + 应用名/版本号文本) |
 | logo 尺寸  | 72px                     |
 | 应用名字号 | `{font-size-h3}`         |
 | 字重       | `{font-weight-semibold}` |
-| 字体颜色   | `{text-primary}`         |
+| 字体颜色   | `{color-text-primary}`         |
 | 版本字号   | `{font-size-caption}`    |
-| 版本颜色   | `{text-secondary}`       |
+| 版本颜色   | `{color-text-secondary}`       |
 | action     | tap=无(纯展示); state=无; db=无; api=GET /api/app/info; long-press=无 |
 
 应用信息区展示内容:
@@ -42,11 +44,12 @@ version: 1.1.0
 
 | 参数     | 值                                |
 | -------- | --------------------------------- |
+| 组件类型 | `list` + `button` + `icon`(现有组件 + P0 + P1,组合:行列表容器 + 可点击行 + 左侧图标) |
 | 行高     | 48px                              |
 | padding  | 0 `{spacing-lg}`                  |
 | 字体大小 | `{font-size-body}`                |
-| 字体颜色 | `{text-primary}`                  |
-| 分割线   | `{border-hairline}` + `{divider}` |
+| 字体颜色 | `{color-text-primary}`                  |
+| 分割线   | `{border-hairline}` + `{color-divider}` |
 | action   | tap=→对应目标页; state=按下高亮; db=无; api=无; long-press=无 |
 
 ### 3.1 item 字段结构

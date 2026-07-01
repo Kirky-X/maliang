@@ -24,7 +24,7 @@
 
 **输入冲突优先级**:若用户同时提供代码和截图,以代码(更精确)为主、截图为辅助校验;若同时表达"新建"和"已有 DESIGN.md",先执行 Edge Cases 中的「合并 vs 覆写」流程。
 
-**⚑ 标记的检查点规则(贯穿全文)**:遇到 ⚑ 标记时必须真正暂停,等待用户文字回复后才能继续;不能假设默认同意直接往下走。
+**🔴 CHECKPOINT 规则(贯穿全文)**:遇到 🔴 CHECKPOINT 标记时必须真正暂停,等待用户文字回复后才能继续;不能假设默认同意直接往下走。
 
 ---
 
@@ -41,7 +41,7 @@ When the user provides CSS, Tailwind config, or component source:
 3. **Infer scale**: 统计所有 spacing 数值,若 ≥70% 是 8 的倍数 → base=8px;否则 base=4px。归一化时四舍五入到最近的 base 倍数
 4. **Write prose rationale**: for each token group, write 2-4 sentences explaining the design intent, not just the values
 
-**⚑ 提取确认检查点**:在填写模板之前,先展示 token 提取结果供用户核对:
+**🔴 CHECKPOINT · 提取确认**:在填写模板之前,先展示 token 提取结果供用户核对:
 
 ```
 🎨 提取到的 tokens:
@@ -65,7 +65,7 @@ When the user provides CSS, Tailwind config, or component source:
 4. **信息密度** — 内容密集的数据 dashboard,还是宽松的消费者应用?
 5. **参考品牌** — 有视觉风格接近的产品或网站可以参考吗?
 
-**⚑ 生成前确认检查点**:收集完所有回答后,先汇总设计方向让用户确认,再生成文件:
+**🔴 CHECKPOINT · 生成前确认**:收集完所有回答后,先汇总设计方向让用户确认,再生成文件:
 
 ```
 📋 设计方向确认:
@@ -141,7 +141,7 @@ components:
     typography: "{typography.label-sm}"
     rounded: "{rounded.md}"
     padding: 12px 24px
-  # 更多组件模式(hover/active/disabled、chip、input 等)见 examples/heritage.md
+  # 更多组件模式(hover/active/disabled、chip、input 等)见 examples/design-system/heritage/DESIGN.md
 ---
 
 ## Overview
@@ -190,7 +190,7 @@ When building frontend code alongside an existing DESIGN.md:
 
 Read the DESIGN.md completely. Extract all token values into a lookup table. Then read the prose — it contains usage guardrails that tokens alone cannot express (e.g., "use tertiary for at most one CTA per screen", "labels are always uppercase").
 
-**⚑ 应用前确认检查点**:如果是首次在项目中应用 DESIGN.md,展示解析结果让用户确认范围:
+**🔴 CHECKPOINT · 应用前确认**:如果是首次在项目中应用 DESIGN.md,展示解析结果让用户确认范围:
 
 ```
 📋 将应用以下 token 到代码中:
@@ -312,6 +312,18 @@ Primary purpose: **inject the spec (or just the rule table) into an agent's prom
 
 ---
 
+## 约束汇总(硬性)
+
+- [ ] DESIGN.md 的 YAML frontmatter MUST 含 name/version/updated/tokens(至少 colors/typography/spacing)
+- [ ] 每个 token MUST 有语义化命名(kebab-case,如 `color-brand-primary`),禁止字面量
+- [ ] prose-first 格式:YAML token + Markdown 设计理由,禁止纯 JSON / 纯 CSS 变量文件
+- [ ] 设计理由 MUST 解释"为什么"(呼应 philosophy.md),不只是"是什么"
+- [ ] 4 个动作(创建/应用/验证/导出)的输入输出 MUST 明确,不得跳过验证直接导出
+- [ ] 引用 heritage 范例 MUST 用相对路径(`examples/design-system/heritage/DESIGN.md`),禁止绝对路径
+- [ ] 导出格式 MUST 支持 Tailwind / CSS / W3C DTCG / lint 至少 3 种,缺一种需说明原因
+
+---
+
 ## Edge Cases & Fallbacks
 
 ### CLI 不可用(无 npm / node 环境)
@@ -385,6 +397,6 @@ DESIGN.md 的 CSS 导出格式不直接适用于原生平台:
 
 - [`spec-schema.md`](../meta/spec-schema.md) — 完整 token 类型定义(字段类型、Dimension vs number、`fontFeature`/`fontVariation`)+ 权威 Linter Rules 表(9 条规则名 + severity)
 - [`philosophy.md`](../meta/philosophy.md) — DESIGN.md 写作三原则(prose 优先 / 具体参考 / 负约束),Phase 1 写 prose 前必读
-- [`../../examples/heritage.md`](../../examples/heritage.md) — 生产级 DESIGN.md 范例,含完整 component 变体(hover/active/disabled/chip/input)
+- [`../../examples/design-system/heritage/DESIGN.md`](../../examples/design-system/heritage/DESIGN.md) — 生产级 DESIGN.md 范例,含完整 component 变体(hover/active/disabled/chip/input)
 
 > 已在 Phase 1/2/3 内联引用,此处为索引。

@@ -40,58 +40,16 @@ git clone https://github.com/Kirky-X/maliang.git
 
 ## 使用示例
 
-maliang 作为 skill 被 agent 加载后,通过自然语言意图触发,无需显式命令。以下为典型用法:
+maliang 作为 skill 被 agent 加载后,通过自然语言意图触发,无需显式命令。子命令详细描述与用户意图路由见 [SKILL.md 路由表](./SKILL.md)。
 
-### design-md:创建 DESIGN.md
-
-> 帮我基于现有 CSS 代码创建 DESIGN.md 设计系统文件
-
-agent 将读取 `references/commands/design-md.md` 流程,按 prose-first 方法论产出 `DESIGN.md`(YAML token + Markdown 设计理由)。
-
-其他触发场景:
-- "从这张 UI 截图提取设计 token"
-- "lint 我的 DESIGN.md 是否符合规范"
-- "把 DESIGN.md 导出为 Tailwind / CSS 变量 / W3C DTCG 格式"
-
-### draw-md:生成页面级 UI markdown
-
-> 基于 DESIGN.md 产出首页的 UI markdown 规格
-
-agent 将读取 `references/commands/draw-md.md` 流程,产出页面级硬 token markdown(布局章节 + 组件参数表,颜色/字体/间距全引用 token,RGBA + HEX)。
-
-其他触发场景:
-- "规格化跨页面复用的导航栏 / dock"
-- "产出设置页的 UI markdown"
-
-> **迁移说明**:本子命令原名为 `ui-md`,已重命名为 `draw-md` 以与下游 `draw-*` 系列命名对齐。功能完全不变。
-
-### preview:预览 UI markdown 效果
-
-> 预览首页 UI markdown 在 iPhone 15 上的效果
-
-agent 将读取 `references/commands/preview.md` 流程,使用 Element Plus CDN + 设备外壳 CSS 产出自包含 HTML 预览文件,浏览器打开即可验证。
-
-其他触发场景:
-- "在 iPad Pro 上预览设置页"
-- "用 Samsung Galaxy Tab S8 预览列表页"
-
-### draw-harmony:转换为 HarmonyOS 代码
-
-> 将首页 UI markdown 转换为 HarmonyOS ArkTS 代码
-
-agent 将读取 `references/commands/draw-harmony.md` 流程,查 `references/framework/harmony/` 组件文档,产出 ArkTS `@Component` 代码。
-
-### draw-flutter:转换为 Flutter 代码
-
-> 将首页 UI markdown 转换为 Flutter Dart 代码
-
-agent 将读取 `references/commands/draw-flutter.md` 流程,查 `references/framework/flutter/` 组件文档,产出 Flutter Widget 代码。
-
-### draw-element:转换为 Element Plus 代码
-
-> 将首页 UI markdown 转换为 Element Plus Vue 3 SFC 代码
-
-agent 将读取 `references/commands/draw-element.md` 流程,查 `references/framework/element/` 组件文档,产出 Vue 3 SFC 代码。
+| 子命令 | 一句话功能 |
+| ------ | ---------- |
+| design-md | 产出 prose-first 的 DESIGN.md |
+| draw-md | 产出页面级硬 token UI markdown |
+| preview | 用 Element Plus 实时预览验证 |
+| draw-harmony | 转换为 HarmonyOS(ArkTS) |
+| draw-flutter | 转换为 Flutter |
+| draw-element | 转换为 Element Plus(Vue 3) |
 
 ## 能力概览
 

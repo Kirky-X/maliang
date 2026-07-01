@@ -16,26 +16,26 @@ version: 1.1.0
 
 > HEX 列含色块预览(`<span style="background:...">`),支持 markdown 内联 HTML 渲染器(GitHub / VSCode 预览)。
 
-| token            | HEX                                                                    | RGBA                | 用途                 |
-| ---------------- | ---------------------------------------------------------------------- | ------------------- | -------------------- |
-| brand-primary    | #5B7CFA <span style="background:#5B7CFA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(91,124,250,1)  | 品牌主色 / 主 CTA    |
-| brand-secondary  | #8B5CF6 <span style="background:#8B5CF6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(139,92,246,1)  | 品牌次色 / 辅助强调  |
-| accent           | #FF6B6B <span style="background:#FF6B6B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,107,107,1) | 强调色(每屏至多一处) |
-| surface-base     | #F7F8FA <span style="background:#F7F8FA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(247,248,250,1) | 页面背景             |
-| surface-card     | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,255,255,1) | 卡片背景             |
-| surface-elevated | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,255,255,1) | 悬浮卡片 / 弹层背景  |
-| text-primary     | #1A1D21 <span style="background:#1A1D21;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(26,29,33,1)    | 主要文字(标题/正文)  |
-| text-secondary   | #6B7280 <span style="background:#6B7280;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(107,114,128,1) | 次要文字(说明/时间)  |
-| text-placeholder | #9CA3AF <span style="background:#9CA3AF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(156,163,175,1) | 占位符 / 辅助提示    |
-| text-disabled    | #C0C4CC <span style="background:#C0C4CC;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(192,196,204,1) | 禁用文字             |
-| text-on-brand    | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,255,255,1) | 品牌色背景上的文字   |
-| border-base      | #E5E7EB <span style="background:#E5E7EB;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(229,231,235,1) | 标准边框             |
-| divider          | #F0F1F3 <span style="background:#F0F1F3;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(240,241,243,1) | 分割线               |
-| danger           | #EF4444 <span style="background:#EF4444;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(239,68,68,1)   | 危险 / 错误 / 删除   |
-| success          | #10B981 <span style="background:#10B981;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(16,185,129,1)  | 成功 / 已完成        |
-| warning          | #F59E0B <span style="background:#F59E0B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(245,158,11,1)  | 警告 / 提示          |
-| link             | #3B82F6 <span style="background:#3B82F6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(59,130,246,1)  | 链接文字             |
-| overlay          | #00000080 <span style="background:#00000080;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(0,0,0,0.5)     | 遮罩层(弹窗背景)     |
+| token                | HEX                                                                    | RGBA                | 用途                 |
+| --------------------- | ---------------------------------------------------------------------- | ------------------- | -------------------- |
+| color-brand-primary   | #5B7CFA <span style="background:#5B7CFA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(91,124,250,1)  | 品牌主色 / 主 CTA    |
+| color-brand-secondary | #8B5CF6 <span style="background:#8B5CF6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(139,92,246,1)  | 品牌次色 / 辅助强调  |
+| color-accent          | #FF6B6B <span style="background:#FF6B6B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,107,107,1) | 强调色(每屏至多一处) |
+| color-surface-base    | #F7F8FA <span style="background:#F7F8FA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(247,248,250,1) | 页面背景             |
+| color-surface-card    | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,255,255,1) | 卡片背景             |
+| color-surface-elevated| #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,255,255,1) | 悬浮卡片 / 弹层背景  |
+| color-text-primary    | #1A1D21 <span style="background:#1A1D21;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(26,29,33,1)    | 主要文字(标题/正文)  |
+| color-text-secondary  | #6B7280 <span style="background:#6B7280;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(107,114,128,1) | 次要文字(说明/时间)  |
+| color-text-placeholder| #9CA3AF <span style="background:#9CA3AF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(156,163,175,1) | 占位符 / 辅助提示    |
+| color-text-disabled   | #C0C4CC <span style="background:#C0C4CC;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(192,196,204,1) | 禁用文字             |
+| color-text-on-brand   | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(255,255,255,1) | 品牌色背景上的文字   |
+| color-border-base     | #E5E7EB <span style="background:#E5E7EB;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(229,231,235,1) | 标准边框             |
+| color-divider         | #F0F1F3 <span style="background:#F0F1F3;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(240,241,243,1) | 分割线               |
+| color-danger          | #EF4444 <span style="background:#EF4444;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(239,68,68,1)   | 危险 / 错误 / 删除   |
+| color-success         | #10B981 <span style="background:#10B981;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(16,185,129,1)  | 成功 / 已完成        |
+| color-warning         | #F59E0B <span style="background:#F59E0B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(245,158,11,1)  | 警告 / 提示          |
+| color-link            | #3B82F6 <span style="background:#3B82F6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(59,130,246,1)  | 链接文字             |
+| color-overlay         | #00000080 <span style="background:#00000080;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(0,0,0,0.5)     | 遮罩层(弹窗背景)     |
 
 ## 2. 字体(typography)
 
@@ -67,6 +67,29 @@ version: 1.1.0
 | icon-size-xl      | 32px  | 空状态 / 大图标      |
 | icon-stroke       | 1.5px | 线性图标描边粗细     |
 | icon-touch-target | 44px  | 可点击热区(费茨定律) |
+
+### 3.1 图标内容 token
+
+> 命名约定:`{icon-<name>-<style>}`,其中 `<name>` 是图标语义名(kebab-case),`<style>` 是 `filled`(填充)或 `stroke`(线性)。本表只列默认 App 端 dock + 首页用到的图标,业务图标按需扩展并补充到此表。
+
+| token                       | 用途                             | 风格   |
+| -------------------------- | -------------------------------- | ------ |
+| icon-search-filled         | 搜索图标(填充,搜索栏右侧)     | filled |
+| icon-search-stroke         | 搜索图标(线性)                 | stroke |
+| icon-home-filled           | 首页 tab(填充,选中态)         | filled |
+| icon-home-stroke           | 首页 tab(线性,未选中态)       | stroke |
+| icon-discover-filled       | 发现 tab(填充,选中态)         | filled |
+| icon-discover-stroke       | 发现 tab(线性,未选中态)       | stroke |
+| icon-messages-filled       | 消息 tab(填充,选中态)         | filled |
+| icon-messages-stroke       | 消息 tab(线性,未选中态)       | stroke |
+| icon-mine-filled           | 我的 tab(填充,选中态)         | filled |
+| icon-mine-stroke           | 我的 tab(线性,未选中态)       | stroke |
+| icon-back                  | 返回箭头(线性,导航栏左上)     | stroke |
+| icon-feed                  | 内容流图标(首页内容流)         | stroke |
+| icon-rank                  | 排行榜图标(金刚区入口)         | stroke |
+| icon-category              | 分类图标(金刚区入口)           | stroke |
+
+**约束**:页面 markdown 引用图标 token 时 MUST 使用本表的命名,不得自创。新增图标 token 需在「新增组件流程」对应的 token 维护流程中补充到此表。
 
 ## 4. 间距(spacing)
 
@@ -102,7 +125,7 @@ version: 1.1.0
 | border-medium   | 2px   | 强调 / 选中态边框     |
 | border-thick    | 4px   | 容器边界 / 分隔栏     |
 
-分割线颜色用 `{divider}`;标准边框用 `{border-base}`(见颜色表)。**慎用分割线**,分组优先用间距 > 底色 > 分割线。
+分割线颜色用 `{color-divider}`;标准边框用 `{color-border-base}`(见颜色表)。**慎用分割线**,分组优先用间距 > 底色 > 分割线。
 
 ---
 
@@ -110,13 +133,13 @@ version: 1.1.0
 
 暗色模式独立调色(非简单反色),关键 token 对应值:
 
-| token          | HEX(暗)                                                                   | RGBA(暗)               |
-| -------------- | ------------------------------------------------------------------------- | ---------------------- |
-| surface-base   | #141413 <span style="background:#141413;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(20,20,19,1)       |
-| surface-card   | #1F1F1E <span style="background:#1F1F1E;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(31,31,30,1)       |
-| text-primary   | #F5F4ED <span style="background:#F5F4ED;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(245,244,237,1)    |
-| text-secondary | #A8A29E <span style="background:#A8A29E;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(168,162,158,1)    |
-| border-base    | #FFFFFF14 <span style="background:#FFFFFF14;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,0.08) |
-| divider        | #FFFFFF0F <span style="background:#FFFFFF0F;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,0.06) |
+| token              | HEX(暗)                                                                   | RGBA(暗)               |
+| ------------------ | ------------------------------------------------------------------------- | ---------------------- |
+| color-surface-base | #141413 <span style="background:#141413;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(20,20,19,1)       |
+| color-surface-card | #1F1F1E <span style="background:#1F1F1E;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(31,31,30,1)       |
+| color-text-primary | #F5F4ED <span style="background:#F5F4ED;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(245,244,237,1)    |
+| color-text-secondary | #A8A29E <span style="background:#A8A29E;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>   | rgba(168,162,158,1)    |
+| color-border-base  | #FFFFFF14 <span style="background:#FFFFFF14;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,0.08) |
+| color-divider      | #FFFFFF0F <span style="background:#FFFFFF0F;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,0.06) |
 
-品牌色 / 功能色(brand-primary、danger、success、warning、link)暗色模式下保持色相、略降饱和度以适配深底。字号 / 间距 / 圆角 / 分割线粗细暗色模式不变。
+品牌色 / 功能色(color-brand-primary、color-danger、color-success、color-warning、color-link)暗色模式下保持色相、略降饱和度以适配深底。字号 / 间距 / 圆角 / 分割线粗细暗色模式不变。

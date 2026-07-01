@@ -1,9 +1,10 @@
 ---
 name: home
 description: 首页 —— 搜索 + 金刚区入口 + 内容流
-background: "{surface-base}"
-updated: 2026-06-30
-version: 1.1.0
+background: "{color-surface-base}"
+components: [navigation, input, icon, grid, button, list, card]
+updated: 2026-07-02
+version: 1.2.0
 ---
 
 # 首页(home)
@@ -12,22 +13,27 @@ version: 1.1.0
 
 <!-- 布局组织见 ../../references/dimensions/layout.md -->
 
-引用 [`organisms/nav-bar.md`](../organisms/nav-bar.md):左侧菜单 / 中间标题"首页" / 右侧消息。
+引用 [`organisms/nav-bar.md`](../organisms/nav-bar.md)(组件类型:`navigation`):左侧菜单 / 中间标题"首页" / 右侧消息。
 - nav-bar action:左=tap→抽屉菜单; 中=无; 右=tap→ui/message.md
 
 ## 2. 搜索栏
 
-页面主体第 1 区。
+页面主体第 1 区。椭圆形搜索框,右侧搜索图标(填充样式),左侧 hint 占位文案。**真输入框**(非搜索入口),submit 触发搜索跳转。
 
-| 参数     | 值                              |
-| -------- | ------------------------------- |
-| 宽度     | match-parent − 2×`{spacing-lg}` |
-| 高度     | 36px                            |
-| 圆角     | `{radius-full}`                 |
-| 背景颜色 | `{surface-base}`(灰底胶囊)      |
-| 字体颜色 | `{text-placeholder}`            |
-| padding  | 0 `{spacing-md}`                |
-| action   | tap=→ui/search.md; state=聚焦变白底; db=无; api=无; long-press=无 |
+| 参数          | 值                              |
+| ------------- | ------------------------------- |
+| 组件类型      | `input` + `icon`(P0 + P1,组合:搜索输入框 + 右侧搜索图标,引用 framework/index.md) |
+| 宽度          | match-parent − 2×`{spacing-lg}` |
+| 高度          | 36px                            |
+| 圆角          | `{radius-full}`(胶囊形)         |
+| 背景颜色      | `{color-surface-base}`(灰底胶囊)      |
+| 字体颜色      | `{color-text-placeholder}`            |
+| padding       | 0 `{spacing-md}`                |
+| input-type    | search                          |
+| placeholder   | "请输入搜索的关键词"            |
+| maxlength     | 30                              |
+| icon-right    | `{icon-search-filled}`,`{icon-size-md}`,填充样式,位于右侧 |
+| action        | submit=→ui/search.md?q={input-value}; focus=聚焦变白底+弹出键盘; blur=失焦收起键盘; input=实时联想(可选); db=无; api=GET /api/search/suggest?q=?; long-press=无 |
 
 ## 3. 金刚区入口
 
@@ -35,10 +41,11 @@ version: 1.1.0
 
 | 参数     | 值                    |
 | -------- | --------------------- |
+| 组件类型 | `grid` + `button` + `icon`(P0 + P0 + P1,组合:网格容器 + 可点击图标按钮) |
 | 图标尺寸 | `{icon-size-xl}`      |
-| 图标颜色 | `{brand-primary}`     |
+| 图标颜色 | `{color-brand-primary}`     |
 | 字体大小 | `{font-size-caption}` |
-| 字体颜色 | `{text-secondary}`    |
+| 字体颜色 | `{color-text-secondary}`    |
 | 间距     | `{spacing-md}`        |
 | action   | tap=→对应目标页; state=按下高亮; db=无; api=无; long-press=无 |
 
@@ -72,7 +79,8 @@ version: 1.1.0
 
 | 参数     | 值                 |
 | -------- | ------------------ |
-| 卡片背景 | `{surface-card}`   |
+| 组件类型 | `list` + `card`(P0 + P2,组合:瀑布流列表 + 卡片项) |
+| 卡片背景 | `{color-surface-card}`   |
 | 卡片圆角 | `{radius-rounded}` |
 | 卡片间距 | `{spacing-md}`     |
 | padding  | `{spacing-md}`     |
@@ -94,5 +102,5 @@ version: 1.1.0
 
 ## 5. 底部 dock
 
-引用 [`organisms/dock.md`](../organisms/dock.md):首页(选中) / 发现 / 消息 / 我的。
+引用 [`organisms/dock.md`](../organisms/dock.md)(组件类型:`navigation`):首页(选中) / 发现 / 消息 / 我的。
 - dock action:详见 organisms/dock.md 第 2 节,tap=→对应一级页面; state=切换选中态

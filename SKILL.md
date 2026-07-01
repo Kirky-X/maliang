@@ -39,7 +39,8 @@ license: MIT
 
 - **不确定用哪个?** 先 `design-md`。没有 DESIGN.md 就无法产出可靠的 `draw-md` 硬 token,更无法进行框架适配。
 - **完整流程链路**(每步产出 = 下步输入): `design-md`(→DESIGN.md) → `draw-md`(→examples/ui-markdown/*.md) → `preview`(→preview_*.html) → `draw-harmony`/`draw-flutter`/`draw-element`(→框架代码)
-- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局 / 原则)在 [`references/dimensions/`](references/dimensions/) 下,六个子命令共享参考,不在本路由器重复。
+- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局)在 [`references/dimensions/`](references/dimensions/) 下;设计原则在 [`references/meta/principles.md`](references/meta/principles.md),六个子命令共享参考,不在本路由器重复。
+- 默认页面清单(App 15 页 + Web 15 页,含 P0/P1/P2 选用规则)在 [`references/default-pages/index.md`](references/default-pages/index.md) 下,供 `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用。
 - 框架组件文档(按钮/文本/列表 × 三框架)在 [`references/framework/`](references/framework/index.md) 下,三个 draw-* 子命令共享。
 
 ## 失败模式与 fallback
