@@ -8,7 +8,7 @@ version: 1.1.0
 # token.md —— 全局硬 token 表(产物层)
 
 > 所有页面 markdown 的 frontmatter 与组件参数表 **MUST 引用本文件的 token**,禁止硬编码色值字面量。
-> token 命名遵循规范层 [`token.md`](../../../references/token.md) 的规则(kebab-case、层级、语义)。
+> token 命名遵循规范层 [`token.md`](../../../references/meta/token.md) 的规则(kebab-case、层级、语义)。
 > **格式约定**:颜色 token 给 HEX + RGBA 双格式;尺寸类 token(字号/图标/间距/圆角/分割线粗细)给具体像素值(无 RGBA 语义)。
 > 默认浅色模式;暗色模式见文末。
 
