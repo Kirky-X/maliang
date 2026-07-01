@@ -24,16 +24,9 @@
 
 ### 可选设备列表
 
-| 设备名 | 平台 | 类型 | 尺寸(宽×高) |
-| ------ | ---- | ---- | ------------- |
-| iPhone 15 Pro Max | iOS | phone | 430×932 |
-| iPhone 15 | iOS | phone | 393×852 |
-| iPhone SE 3rd | iOS | phone | 375×667 |
-| iPad Pro 12.9" | iOS | tablet | 1024×1366 |
-| iPad Air | iOS | tablet | 820×1180 |
-| Samsung Galaxy Tab S8 | Android | tablet | 1600×2560 |
+(设备清单见 `scripts/device_models.py`,流程文档不重复列出,避免与脚本脱节)
 
-**⚑ 设备选择检查点**:展示设备列表,让用户选择预览设备。默认选 iPhone 15(393×852)。
+**🔴 CHECKPOINT · 设备选择**:展示设备列表,让用户选择预览设备。默认选 iPhone 15(393×852)。
 
 ---
 
@@ -46,7 +39,7 @@
 3. **解析布局章节** — 按"顶部导航 → 主体区块 → 底部 dock"顺序,逐章提取组件类型与参数表
 4. **解析 organisms** — 若页面引用了 `organisms/` 下的组件,读取对应 markdown
 
-**⚑ 输入解析确认检查点**:确认 UI markdown + token.md 已读取,设备尺寸已从 device_models.py 选定,展示预览配置摘要(页面名 + 设备名 + 尺寸)供用户确认,再进入 HTML 生成。
+**🔴 CHECKPOINT · 输入解析确认**:确认 UI markdown + token.md 已读取,设备尺寸已从 device_models.py 选定,展示预览配置摘要(页面名 + 设备名 + 尺寸)供用户确认,再进入 HTML 生成。
 
 ---
 
@@ -120,7 +113,7 @@
 | navigation bar | `<el-menu>` / `<el-header>` |
 | dock | `<el-footer>` + `<el-button-group>` |
 
-**⚑ HTML 生成确认检查点**:确认 preview HTML 已生成且 token 引用正确(无硬编码颜色/字号/间距),设备外壳 CSS 已注入,提示用户在浏览器打开验证效果。
+**🔴 CHECKPOINT · HTML 生成确认**:确认 preview HTML 已生成且 token 引用正确(无硬编码颜色/字号/间距),设备外壳 CSS 已注入,提示用户在浏览器打开验证效果。
 
 ---
 
@@ -163,3 +156,13 @@
 | Element Plus CDN 不可达(离线环境) | 提示用户检查网络连接 | 引导用户下载 Element Plus 本地引用,提供本地引用代码片段 |
 | UI markdown 缺少 token 引用(裸值) | 提示具体偏差(哪些值未引用 token) | 用 DESIGN.md 中的 token 替换裸值,标注"自动补全,需确认" |
 | preview HTML 在浏览器中渲染异常 | 提示用户检查浏览器控制台错误 | 引导用户简化 UI markdown(移除复杂组件)后重试 |
+
+---
+
+## 禁止事项(反例)
+
+- **禁止硬编码设备尺寸在流程文档中**:在 markdown 表格/正文写死宽高会与 `scripts/device_models.py` 脱节,设备更新时多处漂移。MUST 从 `scripts/device_models.py` 读取尺寸。
+- **禁止用浏览器开发者工具手动改样式代替预览验证**:手动改值无法复现、不入产物,验证结果不可追溯。MUST 用 Element Plus 框架实时渲染生成自包含 HTML 预览。
+- **禁止跳过 iOS/Android 双端验证**(只测一端):单端通过不代表另一端布局/字体一致,会遗漏平台差异。MUST 双端都跑预览校验。
+- **禁止预览发现的问题只口头记录不写入修复清单**:口头记录易丢失,无法驱动下一轮迭代。MUST 输出到下一轮 `draw-md` 的输入(显式问题清单 + 对应组件/章节)。
+- **禁止用模拟器截图代替真机预览**:模拟器颜色/字体渲染与真机有差异,关键页面视觉结论不可靠。关键页面 MUST 真机验证,模拟器仅用于布局快速校验。
