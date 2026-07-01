@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "scenario": "典型场景：design-md 创建设计系统",
+    "prompt": "帮我基于现有 CSS 代码创建 DESIGN.md 设计系统文件",
+    "expected": "agent 应路由到 design-md 子命令 → 读取 references/design-md.md → 按 prose-first 方法论产出 DESIGN.md（YAML frontmatter token + Markdown 设计理由）→ 含 8 维度规范（色/字/图/距/角/线/布局/原则）"
+  },
+  {
+    "id": 2,
+    "scenario": "复杂场景：完整流水线",
+    "prompt": "我有一个电商应用,需要从设计系统到 Element Plus 框架代码的完整流程",
+    "expected": "agent 应识别为多步任务 → 路由 design-md → draw-md → preview → draw-element → 各步骤间有检查点 → 产出 DESIGN.md + UI markdown + 预览 HTML + Vue 3 SFC 代码"
+  },
+  {
+    "id": 3,
+    "scenario": "歧义/失败场景：无 DESIGN.md 直接要 UI markdown",
+    "prompt": "帮我产出首页的 UI markdown 规格",
+    "expected": "agent 应检查是否存在 DESIGN.md → 若无,先引导用户走 design-md 流程（'没有 DESIGN.md 就无法产出可靠的 draw-md 硬 token'）→ 若有,路由到 draw-md"
+  }
+]
