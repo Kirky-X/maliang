@@ -163,7 +163,7 @@ design-md ──► draw-md ──► preview ──► draw-harmony / draw-flut
 
 ### ui-md 去哪了?
 
-`ui-md` 子命令已重命名为 `draw-md`(v0.2.0),以与下游 `draw-harmony` / `draw-flutter` / `draw-element` 系列命名对齐。功能完全不变,只需将触发语中的 `ui-md` 改为 `draw-md` 即可。
+`ui-md` 子命令已重命名为 `draw-md`(v0.1.0),以与下游 `draw-harmony` / `draw-flutter` / `draw-element` 系列命名对齐。功能完全不变,只需将触发语中的 `ui-md` 改为 `draw-md` 即可。
 
 ### 哪些源格式被支持?
 
