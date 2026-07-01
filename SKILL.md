@@ -4,7 +4,7 @@ description: 设计系统技能。触发:DESIGN.md/design token/设计系统;CSS
 license: MIT
 ---
 
-# maliang —— 设计系统技能
+# maliang (马良) —— 设计系统技能
 
 六个子命令构成一条完整流水线:design-md(创建 DESIGN.md)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ draw-harmony/draw-flutter/draw-element(框架代码)。
 

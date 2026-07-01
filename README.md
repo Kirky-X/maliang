@@ -1,4 +1,4 @@
-# maliang —— 设计系统技能
+# maliang (马良) —— 设计系统技能
 
 maliang 是一个面向 AI agent 的设计系统 skill,采用 Google Labs agent-first 格式(YAML token + Markdown 设计理由)。它通过六个子命令构成一条完整流水线:`design-md` 产出 prose-first 的 `DESIGN.md`,`draw-md` 从 `DESIGN.md` 产出页面级硬 token UI markdown,`preview` 使用 Element Plus 框架实时预览验证,`draw-harmony` / `draw-flutter` / `draw-element` 将逻辑 UI markdown 转换为具体框架实现代码。
 
