@@ -1,4 +1,4 @@
-# maliang (马良) — Design System Skill
+# Maliang (马良) — Design System Skill
 
 [![GitHub Release](https://img.shields.io/github/v/release/Kirky-X/maliang?style=flat-square)](https://github.com/Kirky-X/maliang/releases)
 [![GitHub License](https://img.shields.io/github/license/Kirky-X/maliang?style=flat-square)](LICENSE)
