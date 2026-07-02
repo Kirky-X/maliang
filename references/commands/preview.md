@@ -48,9 +48,15 @@ flowchart LR
 <head>
   <meta charset="UTF-8">
   <title>预览 - <页面名称></title>
-  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="https://unpkg.com/element-plus"></script>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.4.4/dist/index.css"
+        integrity="sha384-kkb0OalbI4Ig9NU9d8J+OvUzucgmMGl8jmxwJ2nEw/vqiyQbd0rplhuU5TfnNNYp"
+        crossorigin="anonymous">
+  <script src="https://unpkg.com/vue@3.4.21/dist/vue.global.js"
+          integrity="sha384-8CdW77YPqMZ3v22pThUIR22Qp1FB5oisZG2WE3OpE0l1fTHAIsdIwjQZFf/rmQ/B"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/element-plus@2.4.4/dist/index.full.min.js"
+          integrity="sha384-BN4M9h5H6vfLYw9pv5Lgjk5VHdDVkm1zzsgkZ1DhGfWie/dDmCsQDVCA728TX0ry"
+          crossorigin="anonymous"></script>
   <style>
     :root { /* CSS 变量注入(从 token.md 解析) */
       --color-primary: #...;  --color-surface: #...;
@@ -214,5 +220,6 @@ flowchart LR
 | -------- | ---------------------------------------- |
 | 设备尺寸不在 scripts/device_models.py | 提示用户从已支持设备选最接近的 → 用最接近尺寸替代,标注"近似尺寸" |
 | Element Plus CDN 不可达(离线) | 提示检查网络 → 引导用户下载 Element Plus 本地引用 |
+| file:// 协议下 CDN 被阻断(混合内容策略) | 提示改用 http(s):// 或本地服务器 → 或下载 CDN 资源到本地引用(注:与"file:// 可打开"约束存在权衡,需用户选择) |
 | UI markdown 缺少 token 引用(裸值) | 提示具体偏差(哪些值未引用 token) → 用 DESIGN.md token 替换,标注"自动补全,需确认" |
 | preview HTML 浏览器渲染异常 | 提示检查控制台错误 → 引导用户简化 UI markdown(移除复杂组件)后重试 |

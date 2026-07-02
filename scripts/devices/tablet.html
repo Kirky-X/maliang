@@ -21,8 +21,8 @@
       min-height: 100vh;
       background: #f0f0f0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      /* 平板尺寸较大,缩小整体显示 */
-      transform: scale(0.6);
+      /* 平板尺寸较大,动态缩小整体显示(上限 0.6,避免视口溢出) */
+      transform: scale(min(0.6, calc((100vh - 120px) / var(--device-height, 800))));
       transform-origin: center center;
     }
 
@@ -108,7 +108,7 @@
       border-radius: 6px;
       font-size: 12px;
       font-family: monospace;
-      transform: scale(1.67); /* 反转 body 的 scale(0.6) */
+      transform: scale(1); /* body 已用动态 scale,无需反向补偿 */
       transform-origin: bottom left;
     }
   </style>
