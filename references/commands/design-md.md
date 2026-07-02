@@ -14,17 +14,69 @@
 
 | User Intent                           | Phase                                              |
 | ------------------------------------- | -------------------------------------------------- |
+| 任意 design-md 触发                   | → **Phase 0**: Brief Inference(推理设计方向)     |
 | "Create a DESIGN.md for my project"   | → **Phase 1A/1B**: Generate from code or interview |
 | "Extract tokens from my CSS/Tailwind" | → **Phase 1A**: Analyze code                       |
 | Provides a screenshot/mockup          | → **Phase 1C**: Extract from image                 |
 | "Build UI using our design system"    | → **Phase 2**: Apply tokens                        |
-| "Lint / validate my DESIGN.md"        | → **Phase 3**: CLI lint                            |
+| "Lint / validate my DESIGN.md"        | → **Phase 3**: CLI lint(9 项规则)               |
 | "Export tokens to Tailwind/CSS"       | → **Phase 3**: CLI export                          |
+| "Generate theme variations"           | → **Phase 4**: Variation Engine                    |
 | Starting any frontend project         | → Scaffold DESIGN.md **first**                     |
 
 **输入冲突优先级**:若用户同时提供代码和截图,以代码(更精确)为主、截图为辅助校验;若同时表达"新建"和"已有 DESIGN.md",先执行 Edge Cases 中的「合并 vs 覆写」流程。
 
 **🔴 CHECKPOINT 规则(贯穿全文)**:遇到 🔴 CHECKPOINT 标记时必须真正暂停,等待用户文字回复后才能继续;不能假设默认同意直接往下走。
+
+---
+
+## Phase 0: Brief Inference(推理设计方向)
+
+> 进入 design-md 流程的**第一件事**。从用户的简短 brief(产品描述 / 截图 / 关键词)推理出设计方向,作为 Phase 1 写 prose 的输入。来源:taste-skill + ui-ux-pro-max-skill。完整推理规则见 [`meta/product-reasoning.md`](../meta/product-reasoning.md)。
+
+### 步骤
+
+1. **提取 brief 关键词**:从用户输入识别产品类型 / 用户群 / 业务目标 / 平台 / 情绪关键词
+2. **匹配产品类型**:对照 [`product-reasoning.md`](../meta/product-reasoning.md) 第 2 节 12 个示例,命中则采用其推理结果;未命中查询 [`color-palettes.md`](../dimensions/color-palettes.md) 192 套桶
+3. **推理 7 维输出**:
+   - `Recommended_Pattern`(布局模式,见 [`vocabulary/layout.md`](../vocabulary/layout.md))
+   - `Style_Priority`(设计风格优先级)
+   - `Color_Mood`(色彩情绪 → 查 color-palettes.md)
+   - `Typography_Mood`(字体情绪)
+   - `Key_Effects`(关键效果,≤ 3 个)
+   - `Decision_Rules`(决策规则)
+   - `Anti_Patterns`(反模式,与 [`ai-tells.md`](../meta/ai-tells.md) 联动)
+4. **推断 Dials**:DESIGN_VARIANCE / MOTION_INTENSITY / VISUAL_DENSITY 三档(见 [`dials.md`](../meta/dials.md))
+5. **选 1-2 个参考设计系统**:从 [`design-systems.md`](../dimensions/design-systems.md) 11 个系统中选最接近的
+
+**🔴 CHECKPOINT · Brief 推理确认**:展示推理结果让用户确认:
+
+```
+📋 设计方向推理:
+  产品类型:[matched type or "未命中,需手动确认"]
+  推荐布局:[pattern names]
+  风格优先级:[high > medium > low]
+  色彩情绪:[mood] → 查 palettes:[桶名]
+  字体策略:[display + ui]
+  关键效果:[≤3 items]
+  Anti-Patterns:[禁止模式]
+  Dials: VARIANCE=x / MOTION=x / DENSITY=x
+  参考系统:[1-2 个 design system names]
+
+方向确认无误?确认后进入 Phase 1 生成 DESIGN.md。
+```
+
+### Brief 不充分时
+
+若用户 brief 缺关键词(如只说"做个 App"),不要硬推理:
+
+- 进入 Phase 1B 访谈模式补全信息
+- 提示用户:"brief 信息不足以推理设计方向,需补充以下问题"
+- 不接受默认推理结果,必须人工确认
+
+### 与 Phase 1 的衔接
+
+Phase 0 的推理结果写入 DESIGN.md frontmatter 的 `product:` 块(见 [`product-reasoning.md`](../meta/product-reasoning.md) 第 3 节),Phase 1 写 prose 时引用这些推理结果作为"为什么"的依据。
 
 ---
 
@@ -264,6 +316,22 @@ npx @google/design.md lint --format json DESIGN.md   # machine-readable output
 
 Nine rules, each at a fixed severity (`error` / `warning` / `info`). **The canonical rule names and severities live in [`spec-schema.md`](../meta/spec-schema.md) → Linter Rules** (mirrored from `packages/cli/src/linter/linter/rules/*.ts`) — consult that table when interpreting findings; do not rely on rule names from memory.
 
+#### 9 项 Lint 规则速查
+
+> 完整字段定义与触发条件见 [`spec-schema.md`](../meta/spec-schema.md) → Linter Rules。本表仅作快速识别,不替代规范。
+
+| # | 规则名(典型)              | Severity | 触发场景                                          | 修复方向                                |
+| - | --------------------------- | -------- | ------------------------------------------------- | --------------------------------------- |
+| 1 | `missing-required-field`    | error    | YAML 缺 name/version/colors/typography/spacing    | 补全必需字段                            |
+| 2 | `invalid-color-format`      | error    | 颜色非 `#` 开头 / 非 valid hex / rgb              | 规范化为 `#RRGGBB` 或 `rgba()`          |
+| 3 | `invalid-numeric`           | error    | 数字字段含单位错误(如 `fontWeight: "700"` 字符串)| 改为裸数字 `700`                        |
+| 4 | `orphaned-token`            | warning  | token 定义了但未被任何组件引用                    | 评估是否删除,或在组件中引用             |
+| 5 | `unknown-property`          | warning  | 组件属性不在 spec-schema 已知列表                 | 改用规范属性名,或扩展 spec-schema      |
+| 6 | `contrast-ratio`            | warning  | 组件 `backgroundColor` / `textColor` 对比度 < 4.5:1 | 改深文字色或改浅背景色(见 [`color.md`](../dimensions/color.md) 第 8 节) |
+| 7 | `invalid-token-reference`   | error    | `{path.to.token}` 引用指向不存在的 token          | 修正引用路径,或创建被引用 token         |
+| 8 | `redundant-token`           | info     | 两个 token 名不同但值相同                         | 评估是否合并(谨慎,可能是有意为之)    |
+| 9 | `deprecated-field`          | warning  | 使用了 spec 中标 deprecated 的字段                | 迁移到替代字段                          |
+
 **`contrast-ratio` is checked automatically**: the linter computes the WCAG contrast ratio for every component's `backgroundColor` / `textColor` pair and emits a `warning` (ratio in the message) for any pair below WCAG AA (4.5:1). No manual contrast checking needed — read the finding.
 
 **JSON output contract** (`--format json`):
@@ -309,6 +377,136 @@ npx @google/design.md spec --rules-only --format json
 ```
 
 Primary purpose: **inject the spec (or just the rule table) into an agent's prompt** when generating or reviewing a DESIGN.md without prior context, so the agent follows the canonical sections and rules instead of guessing. This is not merely "print the spec" — it is the bridge that gives the agent the same rule table the linter enforces.
+
+---
+
+## Phase 4: Variation Engine(变体生成)
+
+> 从一份主 DESIGN.md 派生多个主题变体(明/暗 / 季节 / A/B / 品牌)。来源:taste-skill + ui-ux-pro-max-skill。**输入**:主 DESIGN.md + 变体规格。**输出**:N 个 `DESIGN.<variant>.md` 文件 + diff 报告。
+
+### 触发场景
+
+| 用户意图                              | 变体类型           | 输出文件                       |
+| ------------------------------------- | ------------------ | ------------------------------ |
+| "做个暗色版本"                        | mode               | `DESIGN.dark.md`               |
+| "做圣诞节主题"                        | seasonal           | `DESIGN.holiday-christmas.md`  |
+| "A/B 测试两个 hero 配色"             | ab-test            | `DESIGN.ab-a.md` / `.ab-b.md`  |
+| "为子品牌 X 派生一份"                 | brand              | `DESIGN.brand-x.md`            |
+| "做高对比度无障碍版"                  | accessibility      | `DESIGN.a11y-aaa.md`           |
+
+### 变体生成流程
+
+1. **解析主 DESIGN.md**:提取全部 token + prose,建立基础结构
+2. **应用变体规格**:对每个 token 应用变体规则(见下方规则类型)
+3. **保持 prose 一致**:prose 章节不变,除非变体明确改语义(如"高对比度版"需在 Overview 加说明)
+4. **生成 diff 报告**:列出相对主版本的 token 改动(增 / 删 / 改值)
+5. **lint 每个变体**:每个 `DESIGN.<variant>.md` 单独跑 Phase 3 lint,确保仍合规
+
+### 变体规则类型
+
+#### Type 1 · Mode(明暗模式)
+
+```yaml
+# 主 DESIGN.md
+colors:
+  bg-primary: "#ffffff"
+  text-primary: "#1a1c1e"
+
+# DESIGN.dark.md(自动反演 + 暗色独立设计,见 color.md 第 5 节)
+colors:
+  bg-primary: "#1a1c1e"        # 不纯黑
+  text-primary: "#f7f5f2"      # 不纯白
+  # 强调色饱和度下调
+```
+
+**规则**:暗色不是简单反色,需独立设计;对比度仍需满足 WCAG AA(见 [`accessibility.md`](../meta/accessibility.md))。
+
+#### Type 2 · Seasonal(季节主题)
+
+```yaml
+# 主 DESIGN.md
+colors:
+  primary: "#3b82f6"  # 蓝
+
+# DESIGN.holiday-christmas.md
+colors:
+  primary: "#dc2626"  # 红
+  tertiary: "#16a34a"  # 绿(辅助强调)
+  # prose 加说明:本主题为圣诞限定,12 月生效
+```
+
+**规则**:季节变体只改 Primitive 层(色相),Semantic 层映射不变;功能色(success/danger)不可改色相(语义固定)。
+
+#### Type 3 · AB Test(A/B 测试)
+
+```yaml
+# 主 DESIGN.md
+colors:
+  primary: "#3b82f6"
+
+# DESIGN.ab-a.md
+colors:
+  primary: "#3b82f6"  # 原色
+  # hero CTA 文案:"立即开始"
+
+# DESIGN.ab-b.md
+colors:
+  primary: "#dc2626"  # 红色(假设 B 测试红色 CTA 转化更高)
+  # hero CTA 文案:"免费试用"
+```
+
+**规则**:A/B 变体只改被测变量(单变量原则),其余 token 完全一致;diff 报告需明确标出"测试变量"。
+
+#### Type 4 · Brand(子品牌)
+
+```yaml
+# 主 DESIGN.md(parent brand)
+colors:
+  primary: "#3b82f6"
+  # font-family: Inter
+
+# DESIGN.brand-x.md(sub-brand)
+colors:
+  primary: "#8b5cf6"  # 子品牌色(避开 ai-tells.md Lila Rule 柔紫)
+  # font-family: Söhne  # 子品牌字体
+  # prose 加说明:子品牌定位 / 受众差异
+```
+
+**规则**:子品牌变体可改色相 + 字体,但保留主品牌的 Layout / Component 模式;在 prose 中说明子品牌定位差异。
+
+#### Type 5 · Accessibility(无障碍增强)
+
+```yaml
+# DESIGN.a11y-aaa.md
+colors:
+  text-primary: "#0a0a0a"  # 比主版本更深,达 AAA 7:1
+  text-secondary: "#404040"  # 也达 AAA
+  border-default: "#525252"  # 提对比
+dials:
+  motion_intensity: 1  # 强制最低动效
+  design_variance: 2   # 减少视觉变化
+```
+
+**规则**:无障碍变体不可"减功能",只增强可达性;Motion Intensity 强制 ≤ 3;所有对比度达 AAA(7:1)。
+
+### 变体约束(硬性)
+
+- [ ] 每个变体 MUST 单独通过 Phase 3 lint,不可豁免
+- [ ] 变体 MUST 显式声明 `variant_of: DESIGN.md`(在 frontmatter)
+- [ ] diff 报告 MUST 列出全部 token 改动(增 / 删 / 改值)
+- [ ] prose 章节 MUST 保持一致,除非变体类型明确改语义
+- [ ] Accessibility 变体 MUST 不引入新的反模式(如降低对比度换美观)
+- [ ] AB Test 变体 MUST 单变量,其余 token 完全一致
+
+### 失败模式
+
+| 触发条件                          | 处理                                                     |
+| --------------------------------- | -------------------------------------------------------- |
+| 变体改了 Semantic 命名            | 报错,变体只改 Primitive 值,不改 Semantic 命名          |
+| 变体 lint 失败                    | 修复后重生成,不可"豁免变体 lint"                       |
+| 变体引入 AI Tells(如柔紫)       | 拒绝生成,提示按 [`ai-tells.md`](../meta/ai-tells.md) 修改 |
+| AB 变体改了多个变量               | 拆为多组 AB,保持单变量原则                               |
+| 变体 prose 与主版本冲突           | 变体 prose 必须说明差异,不可静默改                      |
 
 ---
 

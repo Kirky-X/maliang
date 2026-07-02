@@ -60,6 +60,58 @@
 
 状态色是功能色基础上的明度/饱和微调,**不引入新色相**。disabled 统一降透明度而非换灰色,保留语义可读性。
 
+## 8. WCAG 对比度强制
+
+> 本节为颜色相关的对比度硬性规则。完整 WCAG 规则(含 prefers-* 偏好)见 [`accessibility.md`](../meta/accessibility.md)。Accessibility 为 CRITICAL 优先级(见 [`rules-priority.md`](../meta/rules-priority.md)),不可被任何颜色美学覆盖。
+
+### 阈值表
+
+| 文本类型             | AA(最低) | AAA(目标) |
+| -------------------- | --------- | ----------- |
+| 正文(< 18pt / 14pt bold) | 4.5:1     | 7:1         |
+| 大文本(≥ 18pt / 14pt bold) | 3:1       | 4.5:1       |
+| 非文本(UI 组件 / 图形) | 3:1       | —           |
+
+### 颜色配对强制项
+
+- `color-text-primary` 与 `color-bg-primary` 配对**必须**通过 AA(4.5:1 正文)
+- `color-text-secondary` 即使作为辅助文字,只要承载信息,也必须 ≥ 4.5:1
+- `color-text-disabled` 不豁免对比度,需 ≥ 3:1(保证可识别)
+- `color-border` 与背景对比度 ≥ 3:1(用于表单 / 输入框边框识别)
+- `placeholder` 文字 ≥ 4.5:1,不可用 `text-gray-300` 凑数
+
+### 状态色对比度
+
+| 状态     | 对比度规则                                       |
+| -------- | ------------------------------------------------ |
+| hover    | 不可降低对比度(提亮通常降低对比度,需校验)     |
+| pressed  | 不可低于 default 的 90%                          |
+| focused  | focus ring 与背景对比度 ≥ 3:1                    |
+| disabled | 文本对比度仍 ≥ 3:1(不豁免)                    |
+
+### 暗色模式对比度
+
+暗色模式下对比度更易不达标(浅灰文字 on 深灰背景):
+
+- 暗色背景的 `color-text-primary` 不可用纯白(`#fff`),但对比度必须 ≥ 4.5:1 → 用 `#f7f5f2` 或 `#e5e5e5` 一类浅灰
+- 暗色强调色饱和度下调,但对比度仍需 ≥ 3:1(大文本 / UI 组件)
+- 暗色模式下应优先 AAA(7:1),因暗色背景上视觉疲劳更明显
+
+### 功能色对比度
+
+功能色(success/warning/danger/info)作为信息载体时:
+
+- success 绿色 on 白底 ≥ 4.5:1
+- warning 黄色 on 白底常不达标(需用深一档 amber / orange,而非 yellow)
+- danger 红色 on 白底 ≥ 4.5:1
+- info 与品牌色同源,继承品牌色对比度
+
+### 自动校验
+
+- design-md Phase 3 Lint 阶段:`npx @google/design.md lint` 自动计算每个组件 `backgroundColor` / `textColor` 配对的 WCAG 对比度,低于 AA 触发 warning
+- preview 阶段 Pre-Flight Check:扫描所有文字与背景配对,违反 = 硬性失败
+- 工具:WebAIM Contrast Checker / Chrome DevTools Contrast Ratio 检查器
+
 ## 与调色板/产物层的关系
 
 ```

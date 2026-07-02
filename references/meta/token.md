@@ -78,3 +78,154 @@ radius-sm                  # 圆角:小
 - 新增 token → 小版本
 - 改语义/改值 → 升小版本并标注迁移路径
 - 移除 token → 标 `deprecated`,保留一个发布周期后再删
+
+## 导出格式
+
+> 本节定义 token 在不同目标平台的**格式规范**。CLI 命令(`npx @google/design.md export`)见 [`design-md.md`](../commands/design-md.md) Phase 3。本文只管"导出后的格式长什么样 + 命名如何转换"。
+
+### 1. W3C DTCG(Design Tokens Community Group)
+
+JSON 标准,用于 Figma / Style Dictionary / Token Studio 等 token pipeline 工具。三层结构完整保留。
+
+```json
+{
+  "color": {
+    "red": {
+      "500": { "$type": "color", "$value": "#ef4444" }
+    },
+    "bg": {
+      "primary": { "$type": "color", "$value": "{color.red.500}" }
+    }
+  },
+  "font": {
+    "size": {
+      "body": { "$type": "dimension", "$value": "16px" }
+    }
+  }
+}
+```
+
+**规则**:
+- 每个节点用 `$type` + `$value`(DTCG v1.0 规范)
+- 引用用 `{path.to.token}` 字符串,不用 `$ref`
+- 文件名 `tokens.json`,编码 UTF-8
+
+### 2. Tailwind v3(JSON config)
+
+```json
+{
+  "theme": {
+    "extend": {
+      "colors": {
+        "primary": "#ef4444",
+        "bg-primary": "var(--color-bg-primary)",
+        "text-secondary": "var(--color-text-secondary)"
+      },
+      "fontSize": {
+        "body": ["16px", { "lineHeight": "1.6" }],
+        "title-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }]
+      },
+      "spacing": {
+        "md": "16px",
+        "lg": "32px"
+      },
+      "borderRadius": {
+        "sm": "4px",
+        "md": "8px"
+      }
+    }
+  }
+}
+```
+
+**规则**:
+- 命名转 kebab-case(`color-bg-primary` → `bg-primary`,前缀 `color-` 移除后 `bg-` / `text-` 作 Tailwind utility)
+- 复合 typography(fontSize + lineHeight + fontWeight)用 Tailwind v3 的 tuple 写法
+- 优先引用 CSS 变量(`var(--...)`),便于运行时切换主题
+
+### 3. Tailwind v4(CSS `@theme` 块)
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ef4444;
+  --color-bg-primary: #ffffff;
+  --color-text-secondary: #6c7278;
+
+  --font-size-body: 16px;
+  --font-size-title-lg: 32px;
+
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+```
+
+**规则**:
+- Tailwind v4 用 CSS `@theme` 块声明,直接映射到 CSS 变量
+- 命名直接用 CSS 变量规则(kebab-case + `--` 前缀),与 [`token.md`](./token.md) 命名结构一致
+- v4 不需要 JSON config,所有 token 都是 CSS 变量
+- 暗色模式用 `@media (prefers-color-scheme: dark) { @theme { --color-bg-primary: #1a1c1e; } }`
+
+### 4. CSS 变量(`:root`)
+
+```css
+:root {
+  /* Primitive */
+  --color-red-500: #ef4444;
+
+  /* Semantic */
+  --color-bg-primary: #ffffff;
+  --color-text-primary: #1a1c1e;
+  --color-text-secondary: #6c7278;
+
+  /* Component */
+  --color-button-primary-bg: var(--color-bg-primary);
+  --color-button-primary-text: var(--color-text-primary);
+
+  /* Typography */
+  --font-size-body: 16px;
+  --font-weight-body: 400;
+  --line-height-body: 1.6;
+
+  /* Spacing / Radius / Shadow / Z-Index */
+  --spacing-md: 16px;
+  --radius-md: 8px;
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --z-index-modal: 400;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #1a1c1e;
+    --color-text-primary: #f7f5f2;
+    /* 其他暗色覆盖 */
+  }
+}
+```
+
+**规则**:
+- 三层结构(Primitive / Semantic / Component)都在 `:root` 中,通过 `var()` 引用链表达
+- 暗色模式用 `@media (prefers-color-scheme: dark)` 覆盖语义层,Primitive 不动
+- 复合 typography(fontFamily + fontSize + fontWeight + lineHeight)拆为多个 CSS 变量,CSS 中用 shorthand 重组
+
+### 5. 命名跨格式映射
+
+| 来源(token.md)    | DTCG                  | Tailwind v3       | Tailwind v4 / CSS    |
+| ------------------- | --------------------- | ----------------- | -------------------- |
+| `color-bg-primary`  | `color.bg.primary`    | `bg-primary`      | `--color-bg-primary` |
+| `color-red-500`     | `color.red.500`       | `red-500`         | `--color-red-500`    |
+| `font-size-body`    | `font.size.body`      | `body`(in fontSize) | `--font-size-body`  |
+| `spacing-md`        | `spacing.md`          | `md`(in spacing)  | `--spacing-md`       |
+| `radius-sm`         | `radius.sm`           | `sm`(in borderRadius) | `--radius-sm`     |
+| `z-index-modal`     | `z-index.modal`       | `modal`(in zIndex) | `--z-index-modal`   |
+
+### 6. 导出强制项
+
+- 同一份 DESIGN.md **必须**能导出全部 4 种格式,缺一种需说明原因
+- 命名转换**必须**保持语义一致(不因格式改语义,只改命名风格)
+- 复合对象(typography)**必须**在所有格式中可还原(fontFamily + size + weight + lineHeight 不可丢)
+- 暗色模式 token **必须**在 CSS / Tailwind v4 中通过 `@media` 覆盖,不可在 DTCG JSON 中重复定义

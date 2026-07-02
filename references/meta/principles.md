@@ -18,6 +18,10 @@
 | 序列位置效应    | 首尾更被记住                | 首放导航,尾放行动                  |
 | 共同区域原则    | 同一封闭区域视为一组        | 卡片/容器边界定义组                |
 | 雅各布定律      | 用户习惯其他产品            | 走平台惯例,别发明交互              |
+| **第 13 定律 · 动画动机** | 所有动画必须有动机(状态变化 / 空间引导 / 反馈),装饰性动画会降低可用性 | 无动机的动画直接砍掉;每段动画先回答"为什么动" |
+| **第 14 定律 · 完整交互状态** | 交互元素必须覆盖 Loading / Empty / Error / Tactile Feedback 四类状态 | 缺任一类即"半成品",preview 阶段硬性失败 |
+
+> 第 13 / 14 定律来源:taste-skill。第 13 定律与 [`dials.md`](./dials.md) MOTION_INTENSITY 联动:Level 1-3 严格只允许有动机动画;第 14 定律的 Tactile Feedback 与 [`vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 联动。
 
 ## 二、UI 技巧(48 项,按主题)
 
@@ -89,6 +93,23 @@
 
 - 地图类卡片加视觉引导(地标元素)
 - 可点击信息标签化(降认知)
+
+### 来源标注(48 项技巧)
+
+按主题分组,来源如下(供后续维护时溯源):
+
+| 主题分组        | 来源                                                                 |
+| --------------- | -------------------------------------------------------------------- |
+| 配色(8 项)    | taste-skill + 现有设计实践沉淀                                       |
+| 布局/留白(10 项) | taste-skill + 现有设计实践沉淀                                    |
+| 图标/组件(5 项) | taste-skill + 现有设计实践沉淀                                      |
+| 文字排版(8 项) | taste-skill + ui-ux-pro-max-skill                                    |
+| 质感/特效(3 项) | taste-skill                                                          |
+| 情感化设计(5 项) | taste-skill + 现有设计实践沉淀                                      |
+| 数据可视化(4 项) | ui-ux-pro-max-skill                                                  |
+| 导航交互(2 项) | taste-skill + 现有设计实践沉淀                                       |
+
+**冲突处理**:若某项技巧与 [`ai-tells.md`](./ai-tells.md) / [`performance.md`](./performance.md) / [`accessibility.md`](./accessibility.md) 冲突,以后者为准(后者是 CRITICAL/HIGH 硬性规则,本节技巧是 MEDIUM 经验沉淀)。例:本节"毛玻璃卡片"技巧需遵守 [`glass-effect.md`](../dimensions/glass-effect.md) 的性能预算。
 
 ## 三、改版案例(核心手法)
 
