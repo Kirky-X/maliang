@@ -1,7 +1,6 @@
 .claude
 .venv
-openspec
-changes/
+openspec/changes/
 temp
 .gitnexus
 
