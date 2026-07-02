@@ -396,16 +396,13 @@ extract_subcommands() {
   local hint
   hint="$(grep -m1 '^argument-hint:' "$skillmd" 2>/dev/null || true)"
   if [[ -n "$hint" && "$hint" =~ \[([^\]]+)\] ]]; then
-    local inner="${BASH_REMATCH[1]}" cmd
-    local old_ifs="$IFS"
-    IFS='|'
-    set -f
-    for cmd in $inner; do
+    local inner="${BASH_REMATCH[1]}"
+    local -a cmds=() cmd
+    IFS='|' read -ra cmds <<< "$inner"
+    for cmd in "${cmds[@]}"; do
       cmd="${cmd// /}"
       [[ -n "$cmd" ]] && printf '%s\n' "$cmd"
     done
-    set +f
-    IFS="$old_ifs"
     return 0
   fi
   # 策略 2: markdown 表格行 | `cmd` | ...
@@ -482,15 +479,12 @@ cmd_generate_commands() {
   # 解析子命令列表
   local subcommands=() s
   if [[ -n "$commands_arg" ]]; then
-    local old_ifs="$IFS"
-    IFS=','
-    set -f
-    for s in $commands_arg; do
+    local -a cmds=()
+    IFS=',' read -ra cmds <<< "$commands_arg"
+    for s in "${cmds[@]}"; do
       s="${s// /}"
       [[ -n "$s" ]] && subcommands+=("$s")
     done
-    set +f
-    IFS="$old_ifs"
   else
     local raw
     raw="$(extract_subcommands "$skillmd")"
