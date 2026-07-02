@@ -96,17 +96,12 @@
 
 ## 选型决策
 
-```
-产品类型推理(见 product-reasoning.md)
-  ↓
-匹配本表 11 个设计系统的"适用场景"
-  ↓
-选 1-2 个最接近的作为参考锚点
-  ↓
-在 DESIGN.md Overview 章节引用:
-  "本设计系统参考 [Linear] 的 Dark-first 与 [Stripe] 的数据可视化配色"
-  ↓
-draw-md 阶段对照参考系统的视觉特征实现
+```mermaid
+flowchart TD
+  A["产品类型推理<br/>(见 product-reasoning.md)"] --> B["匹配本表 11 个设计系统的&quot;适用场景&quot;"]
+  B --> C["选 1-2 个最接近的作为参考锚点"]
+  C --> D["在 DESIGN.md Overview 章节引用:<br/>&quot;本设计系统参考 [Linear] 的 Dark-first<br/>与 [Stripe] 的数据可视化配色&quot;"]
+  D --> E["draw-md 阶段对照参考系统的视觉特征实现"]
 ```
 
 **禁止**:照搬(违反品牌识别);引用 2 个以上参考系统(混乱);引用未在本表的"小道消息参考"(无验证来源)。
