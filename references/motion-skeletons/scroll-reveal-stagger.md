@@ -1,6 +1,6 @@
 # Scroll Reveal Stagger —— 滚动揭示交错 GSAP 骨架
 
-> Framework 模板。元素进入视口时按顺序揭示(stagger),最常用的滚动动画。来源:taste-skill。MOTION_INTENSITY 4-10 适用(见 [`dials.md`](../../meta/dials.md))。是 design-md 默认推荐动效。
+> Framework 模板。元素进入视口时按顺序揭示(stagger),最常用的滚动动画。来源:taste-skill。MOTION_INTENSITY 4-10 适用(见 [`dials.md`](../meta/dials.md))。是 design-md 默认推荐动效。
 
 ## 视觉效果
 

@@ -1,6 +1,6 @@
 # Horizontal Pan —— 横向平移 GSAP 骨架
 
-> Framework 模板。垂直滚动驱动横向位移,内容从右向左平移。来源:taste-skill。MOTION_INTENSITY ≥ 7 适用(见 [`dials.md`](../../meta/dials.md))。常见于品牌站、作品集、产品发布页。
+> Framework 模板。垂直滚动驱动横向位移,内容从右向左平移。来源:taste-skill。MOTION_INTENSITY ≥ 7 适用(见 [`dials.md`](../meta/dials.md))。常见于品牌站、作品集、产品发布页。
 
 ## 视觉效果
 

@@ -1,6 +1,6 @@
 # Sticky Stack —— 粘性堆叠 GSAP 骨架
 
-> Framework 模板。滚动时章节依次堆叠(sticky),新章节从下方覆盖旧章节,旧章节按比例缩小 / 变暗。来源:taste-skill。MOTION_INTENSITY ≥ 7 适用(见 [`dials.md`](../../meta/dials.md))。
+> Framework 模板。滚动时章节依次堆叠(sticky),新章节从下方覆盖旧章节,旧章节按比例缩小 / 变暗。来源:taste-skill。MOTION_INTENSITY ≥ 7 适用(见 [`dials.md`](../meta/dials.md))。
 
 ## 视觉效果
 
@@ -80,8 +80,8 @@ if (prefersReducedMotion.matches) {
 
 ## 强制规则
 
-- **必须**实现 `prefers-reduced-motion` 降级(见 [`accessibility.md`](../../meta/accessibility.md) 第 2 节)
-- **必须**用 `transform` + `opacity`,不用 `top` / `margin`(见 [`performance.md`](../../meta/performance.md) Hardware Accel)
+- **必须**实现 `prefers-reduced-motion` 降级(见 [`accessibility.md`](../meta/accessibility.md) 第 2 节)
+- **必须**用 `transform` + `opacity`,不用 `top` / `margin`(见 [`performance.md`](../meta/performance.md) Hardware Accel)
 - **必须**用 `ScrollTrigger.scrub` 而非 scroll 事件监听
 - 卡片数量 ≤ 5 张(超过性能下降)
 - `will-change` 在动画期间设,ScrollTrigger `onLeave` 时清除
