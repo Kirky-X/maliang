@@ -111,3 +111,99 @@ flowchart TD
 - 本表是 closed set 的初始版本,可扩展;扩展时必须含 URL + 视觉特征 + 适用场景 + 借鉴要点 + Dials 关联
 - 扩展优先级:被多个产品类型引用 > 单一产品类型;公开可访问 > 私有 / 内部
 - 不收录:纯模板站(Bootstrap / Material 默认);已停更 / 失效的设计系统
+
+## brief → 设计系统包映射表(11 个组件库 / token 系统)
+
+> 上文 11 个"真实参考系统"侧重**视觉特征借鉴**;本表侧重**可引入的组件库 / token 系统**,从 brief 推理该选哪个包作为实现基础。每个包含定位 / 适用场景 / token 命名风格 / 与 maliang DESIGN.md 的桥接建议。来源:taste-skill。
+
+### 选包决策流
+
+```
+brief → 产品类型推理(见 product-reasoning.md)→ 匹配下表"适用场景" → 选 1 个包作为实现基础
+  → maliang DESIGN.md 的 token 用该包的命名风格导出 → 组件直接用该包或包装
+```
+
+### 11 个设计系统包
+
+#### 1. Fluent UI(Microsoft)
+
+- **定位**:微软生态跨平台组件库(Web / Win / iOS / Android),Fluent 2 设计语言
+- **适用场景**:企业 SaaS(微软生态)、Office 插件、Teams 应用、Azure 工具
+- **token 命名**:`colorBrandBackground`、`spacingHorizontalM`、`fontSizeBase600`(camelCase + 语义后缀)
+- **桥接建议**:DESIGN.md `colors:` 导出为 Fluent token 时,`primary` → `colorBrandBackground`,`neutral` → `colorNeutralBackground1`;圆角 token 对应 `cornerRadiusLarge/Medium/Small`
+
+#### 2. Carbon(IBM)
+
+- **定位**:IBM 企业级设计系统,数据密集型 B 端首选
+- **适用场景**:企业 dashboard、数据可视化、金融 / 保险 B 端、AI 工具站
+- **token 命名**:`$background`、`$text-primary`、`$spacing-05`、`$layout-lg`(kebab + 编号档位)
+- **桥接建议**:DESIGN.md `spacing:` 用 8px base 对齐 Carbon `spacing-05`(40px);`typography:` 用 Carbon 编号(`heading-03` / `body-long-01`)
+
+#### 3. Polaris(Shopify)
+
+- **定位**:Shopify 电商后台设计系统,商户工具首选
+- **适用场景**:电商后台、多租户 SaaS、内容管理、支付流程
+- **token 命名**:`--p-color-bg`、`--p-space-4`、`--p-font-size-325`(双连字符 + `p-` 前缀)
+- **桥接建议**:DESIGN.md token 加 `--p-` 前缀导出;Polaris 的 `Card` / `DataTable` / `FormLayout` 可直接包装为 maliang 组件
+
+#### 4. Atlaskit(Atlassian)
+
+- **定位**:Atlassian 协作工具设计系统(Jira / Confluence 同源)
+- **适用场景**:项目管理、协作工具、Wiki / 知识库、DevOps 看板
+- **token 命名**:`@atlaskit/tokens` 动态 token(`color.background.accent.blue`、`space.200`),点分路径
+- **桥接建议**:DESIGN.md token 用点分路径映射(`colors.primary` → `color.background.accent.blue`);Atlaskit 的 `Modal` / `Select` / `Tree` 可直接复用
+
+#### 5. Primer(GitHub)
+
+- **定位**:GitHub 全产品线设计系统,代码优先 + 状态色语义化
+- **适用场景**:开发者平台、代码托管、DevOps 工具、开源项目站
+- **token 命名**:`var(--fgColor-default)`、`var(--control-bgColor-rest)`、`var(--space-2)`(语义化 + 状态后缀)
+- **桥接建议**:DESIGN.md token 加状态后缀(`primary-rest` / `primary-hover`);Primer 的状态色(open/closed/merged)直接复用语义
+
+#### 6. GOV.UK
+
+- **定位**:英国政府公共服务设计系统,无障碍 + 合规首选
+- **适用场景**:政府站、公共服务、合规金融、医疗、教育公共部门
+- **token 命名**:`$govuk-colour-blue`、`$govuk-font-19`、`$govuk-gutter`(双连字符 + `govuk-` 前缀 + 编号)
+- **桥接建议**:DESIGN.md 强制 WCAG AAA(非 AA);`typography:` 用 GOV.UK 字号编号(`font-19` = 19px);禁用装饰性动画
+
+#### 7. USWDS(美国网页设计系统)
+
+- **定位**:美国政府设计系统,标准化公共信息
+- **适用场景**:美国政府站、联邦机构、公共数据展示
+- **token 命名**:`theme-color-primary`、`theme-grid-gap-mobile-lg`(语义 + 断点后缀)
+- **桥接建议**:DESIGN.md token 加断点后缀(`spacing-md-mobile` / `spacing-md-desktop`);USWDS 的 `usa-banner` / `usa-nav` 可直接复用
+
+#### 8. Bootstrap
+
+- **定位**:最广泛使用的 CSS 框架,快速原型 + 传统企业站
+- **适用场景**:内部工具、传统企业官网、快速 MVP、教学示例
+- **token 命名**:`--bs-primary`、`--bs-body-color`、`--bs-border-radius`(双连字符 + `bs-` 前缀)
+- **桥接建议**:DESIGN.md token 加 `--bs-` 前缀导出;**注意**:Bootstrap 默认风格易触发 [`ai-tells.md`](../meta/ai-tells.md) "通用感",需深度定制 token
+
+#### 9. Radix Themes
+
+- **定位**:无样式 Radix Primitives 的主题层,现代化 + 无障碍优先
+- **适用场景**:现代 SaaS、开发者工具、需要深度定制的 React 应用
+- **token 命名**:`--gray1`~`--gray12`、`--blue9`、`--space-5`(编号制 + 色阶)
+- **桥接建议**:DESIGN.md `colors:` 用 Radix 12 阶色阶(`gray1`~`gray12`);Radix Themes 的 `Theme` 组件可直接接受 DESIGN.md token 作为 `accentColor`
+
+#### 10. shadcn/ui
+
+- **定位**:可复制粘贴的 React 组件集合(非 npm 包),Tailwind + Radix 底层
+- **适用场景**:Next.js / Remix 项目、创业公司、需要完全控制的组件库
+- **token 命名**:`--background`、`--primary`、`--radius`(HSL 变量 + 语义命名)
+- **桥接建议**:DESIGN.md token 直接导出为 shadcn/ui 的 CSS 变量(`--primary` / `--background`);shadcn/ui 的 `components.json` 可配置 DESIGN.md 作为 token 源
+
+#### 11. Tailwind CSS
+
+- **定位**:原子化 CSS 框架,非组件库但提供 token 系统
+- **适用场景**:任何 Web 项目(作为 token 底座)、文档站、开发者工具
+- **token 命名**:`colors.primary.500`、`spacing.4`、`fontSize.lg`(对象路径 + 编号档位)
+- **桥接建议**:DESIGN.md 用 `npx @google/design.md export --format json-tailwind` 直接导出为 `tailwind.config.js` 的 `theme` 对象;`spacing:` base 必须 4 或 8(对齐 Tailwind 默认)
+
+### 选包约束(硬性)
+
+- **单项目 ≤ 1 个包**:禁止混用(如 Bootstrap + shadcn/ui),token 命名冲突 + 维护成本爆炸
+- **token 命名对齐**:选定包后,DESIGN.md 导出必须用该包的命名风格(不可用 maliang 默认 kebab-case 导出给 Fluent UI,需转 camelCase)
+- **ai-tells 关联**:Bootstrap / Material 默认风格易触发"通用感",选这些包必须深度定制 token(改色相 + 改圆角 + 改字族)

@@ -1,6 +1,7 @@
-# Apple Liquid Glass Web Approximation —— 玻璃质感 Web 实现
+# Apple Liquid Glass Web Approximation —— 玻璃质感 Web 实现(基础配方)
 
-> 维度规范。Apple iOS 26 / macOS 26 引入的 Liquid Glass 设计语言,Web 端无法完全复现(原生层级 / 折射 / 光线追踪不可用),但可用 `backdrop-filter` + 多层叠加做出可接受的近似。来源:taste-skill。
+> 维度规范(基础配方)。Apple iOS 26 / macOS 26 引入的 Liquid Glass 设计语言,本文件提供基于 `backdrop-filter` 的**基础近似配方**(模糊 + 饱和,无真实折射)。
+> 需要真实折射/光线弯折感的进阶实现(SVG feDisplacementMap + WebGL 双引擎)见 [`glass-advanced.md`](./glass-advanced.md)。来源:taste-skill。
 
 **使用前提**:`backdrop-filter` 性能开销大,移动 Safari 表现差。必须遵守 [`performance.md`](../meta/performance.md) 与 [`accessibility.md`](../meta/accessibility.md) 的降级要求。
 
@@ -168,6 +169,7 @@
 
 ## 与其他文档的关系
 
+- **真实折射/物理参数模型**见 [`glass-advanced.md`](./glass-advanced.md)(SVG + WebGL 双引擎,本文件为基础配方的进阶升级路径)
 - 性能约束见 [`performance.md`](../meta/performance.md) 第 3 节 DOM Cost
 - 无障碍降级见 [`accessibility.md`](../meta/accessibility.md) 第 4 节 prefers-reduced-transparency
 - 暗色模式规则见 [`color.md`](./color.md) 第 5 节

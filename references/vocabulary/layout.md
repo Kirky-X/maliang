@@ -36,3 +36,37 @@
   - { name: testimonial, layout: layout-single-column, max_width: 3xl }
   - { name: pricing, layout: layout-grid-uniform, columns: 3 }
 ```
+
+## 生产级硬规则
+
+> 交付前机械检查,任一违反 = 硬性失败。补充 [`ai-tells.md`](../meta/ai-tells.md) 第 9 节"三列卡片禁令"之外的布局专属约束。
+
+### L1 · Zigzag 上限(≤ 3 重复)
+
+- Zigzag 布局(左右交替的图文 section,如 feature 1 左图右文 → feature 2 右图左文)单页重复 ≤ 3 次
+- 超过 3 次 = 节奏疲劳,必须改用 `layout-bento-grid` 或 `layout-stacked` + 视觉变体
+- 允许的变体:zigzag × 3 + bento + testimonial(非 zigzag)→ 合规
+
+### L2 · Split-header 禁令
+
+- **禁止** Split-header 布局(顶部导航栏左右分屏 50/50,如左 logo + 右全宽图)
+- 理由:与 `hero-split` 视觉冲突,导致首屏双焦点;导航栏应保持单行高度
+- 替代:导航栏用 `layout-full-bleed` 单行 + Hero 用 `hero-split`
+
+### L3 · Bento 单元数(≤ 6)
+
+- `layout-bento-grid` 单个 bento 区域内单元数 ≤ 6 个
+- 超过 6 个 = 视觉拥挤,拆为多个 bento 区域(中间用留白或分隔标题断开)
+- 单元大小差异:必须有 1 个"主单元"(≥ 2×2)+ 多个"次单元"(1×1 或 1×2),禁止全等大(否则退化为 `layout-grid-uniform`)
+
+### L4 · Section 布局重复禁令(≤ 2 个相同布局连续)
+
+- 同一布局模式连续重复 ≤ 2 次(如 `layout-bento-grid` → `layout-bento-grid` → `layout-bento-grid` = 违规)
+- 第 3 个 section 必须切换布局(如改为 `layout-single-column` / `layout-split-screen` / `layout-full-bleed`)
+- 允许:相同布局非连续出现(如 bento → single → bento = 合规)
+
+### L5 · Marquee 单页 ≤ 1
+
+- Marquee(横向滚动 logo 墙 / 客户 logo 滚动)单页 ≤ 1 个
+- 多个 marquee = 动效冗余 + 视觉噪音,触发 [`ai-tells.md`](../meta/ai-tells.md) 装饰性动画
+- Marquee 必须 `prefers-reduced-motion: reduce` 时停止滚动,改为静态网格
