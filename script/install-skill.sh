@@ -1,0 +1,1 @@
+../../script/install-skill.sh

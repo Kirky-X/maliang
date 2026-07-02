@@ -9,6 +9,7 @@ license: MIT
 六个子命令构成一条完整流水线:design-md(创建 DESIGN.md)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ draw-harmony/draw-flutter/draw-element(框架代码)。
 
 - **design-md**(上游)— 产出 prose-first 的 **DESIGN.md**(YAML token + Markdown 设计理由,Google Labs agent-first 格式)。支持"创建、应用、验证、导出"四个动作。解决"设计系统**是什么、为什么**"。
+- **redesign**(上游旁路)— 改版现有 UI,8 维度审计 + 保留规则 + 现代化杠杆 + 决策树。支持 Refresh / Restructure / Rebuild 三模式。解决"**现有设计如何变好**"。
 - **draw-md**(中游)— 从 DESIGN.md 产出页面级硬 token **UI markdown**(布局章节 + 组件参数表,颜色/字体/间距全引用 token,RGBA + HEX)。解决"每个页面/组件**具体怎么实现**"。
 - **preview**(验证)— 使用 Element Plus 框架对 draw-md 产出进行实时预览验证,支持 iOS/Android 设备外壳。解决"**效果对不对**"。
 - **draw-harmony**(下游)— 将 draw-md 逻辑 UI 转换为 HarmonyOS(ArkTS)框架实现。解决"HarmonyOS **代码怎么写**"。
@@ -24,6 +25,7 @@ license: MIT
 | 创建 / 生成 DESIGN.md(从代码/截图/访谈)     | design-md     | [`references/commands/design-md.md`](references/commands/design-md.md) |
 | 应用 DESIGN.md 到前端代码                   | design-md     | [`references/commands/design-md.md`](references/commands/design-md.md) |
 | lint / diff / 导出 / 验证 DESIGN.md         | design-md     | [`references/commands/design-md.md`](references/commands/design-md.md) |
+| 🔷 改版 / 重设计现有 UI(Refresh/Restructure/Rebuild) | redesign | [`references/commands/redesign.md`](references/commands/redesign.md) |
 | 产出页面级 UI markdown(token 表 + 页面规格) | draw-md       | [`references/commands/draw-md.md`](references/commands/draw-md.md)     |
 | 跨页面复用组件(导航栏 / dock)规格化         | draw-md       | [`references/commands/draw-md.md`](references/commands/draw-md.md)     |
 | 🔴 预览 UI markdown 效果(设备外壳 + Element)| preview       | [`references/commands/preview.md`](references/commands/preview.md)     |
