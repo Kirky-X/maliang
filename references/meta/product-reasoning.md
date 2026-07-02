@@ -181,6 +181,6 @@ product:
 
 - 推理出的 `color_mood` 在 [`color-palettes.md`](../dimensions/color-palettes.md) 查具体色值
 - `recommended_pattern` 命名见 [`vocabulary/`](../vocabulary/)
-- `key_effects` 实现见 [`framework/motion-skeletons/`](../framework/motion-skeletons/)
+- `key_effects` 实现见 [`motion-skeletons/`](../motion-skeletons/)
 - `dials` 解释见 [`dials.md`](./dials.md)
 - `anti_patterns` 与 [`ai-tells.md`](./ai-tells.md) 联动,本文的 anti_patterns 是产品特定,AI Tells 是通用

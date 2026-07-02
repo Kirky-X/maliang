@@ -20,7 +20,7 @@
 ## 使用规则
 
 - draw-md 输出时,Hero 章节必须标注一个模式名,不接受"顶部"等泛化描述
-- 模式名与 [`framework/motion-skeletons/`](../framework/motion-skeletons/) 联动:`hero-parallax` 必须配 sticky-stack 或 scroll-reveal-stagger
+- 模式名与 [`motion-skeletons/`](../motion-skeletons/) 联动:`hero-parallax` 必须配 sticky-stack 或 scroll-reveal-stagger
 - 同一站点跨页 Hero 模式 ≤ 2 种(避免混乱)
 - 触发 [`ai-tells.md`](../meta/ai-tells.md) 第 1 节"紫蓝粉渐变背景"的,改用 `hero-text-only` 或 `hero-split`
 
