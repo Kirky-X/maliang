@@ -1,6 +1,6 @@
 ---
 name: maliang
-description: "设计系统技能。触发:DESIGN.md/design token/设计系统;CSS/Tailwind 提取 token;页面级 UI markdown/组件规格;导出 Tailwind/CSS/W3C DTCG/lint;UI markdown 转 HarmonyOS/Flutter/Element Plus。English: design system, design tokens, UI markdown, ArkTS, Flutter, Element Plus."
+description: "前端设计生成 skill。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus"
 license: MIT
 ---
 

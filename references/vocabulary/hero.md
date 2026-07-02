@@ -33,3 +33,34 @@
 - right: { image: product-screenshot.png, ratio: 4:3 }
 - motion: scroll-reveal-stagger (Level 5)
 ```
+
+## 生产级硬规则
+
+> 交付前机械检查,任一违反 = 硬性失败,不可降级为 warning。补充 [`ai-tells.md`](../meta/ai-tells.md) 与 [`principles.md`](../meta/principles.md) 未覆盖的 Hero 专属约束。
+
+### H1 · Hero 栈 ≤ 4
+
+- Hero 区域纵向元素栈 ≤ 4 层(典型:eyebrow → headline → subhead → CTA)
+- 超过 4 层视为信息过载,必须拆分到下方 section
+- 允许的 4 层组合:eyebrow + headline + subhead + CTA / headline + subhead + CTA + 次要链接 / logo + headline + CTA + 信任标识
+
+### H2 · Eyebrow 节制(每页 ≤ 1)
+
+- Eyebrow(标题上方的小标签文字,如 "NEW" / "FEATURE")每页 ≤ 1 个
+- Hero 内用了 eyebrow,后续 section 标题**禁止**再用 eyebrow(改用纯标题或 section number)
+- 违反 = 多 eyebrow 稀释焦点,触发 [`ai-tells.md`](../meta/ai-tells.md) "通用感"
+
+### H3 · Hero CTA ≤ 2
+
+- Hero 内主 CTA + 次 CTA 合计 ≤ 2 个
+- 单 CTA:聚焦转化(登录页 / 注册页)
+- 双 CTA:主 + 次(如"免费试用" + "查看演示"),次 CTA 必须视觉降级(ghost / text 风)
+- **禁止** Hero 内出现 3+ CTA(决策瘫痪,见 [`principles.md`](../meta/principles.md) 希克定律应用)
+
+### H4 · 其他 Hero 硬约束
+
+- Hero 标题字数 ≤ 12 个中文 / ≤ 7 个英文词(超长拆副标题)
+- Hero 副标题字数 ≤ 30 个中文 / ≤ 18 个英文词
+- Hero 背景图必须含 `aspect-ratio` + `width/height`(见 [`performance.md`](../meta/performance.md) CLS)
+- `hero-fullscreen` 必须实现 `min-height: 100svh`(非 `100vh`,移动端地址栏收起抖动)
+- Hero 视频必须 `autoplay muted loop playsinline` + `poster` fallback
