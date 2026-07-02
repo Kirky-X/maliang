@@ -16,11 +16,13 @@
 
 ## 流程总览
 
-```
-┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-│ 1. Mode      │ → │ 2. Audit     │ → │ 3. Preserve │ → │ 4. Modernize│ → │ 5. Decision │ → │ 6. Never    │
-│   Detection  │   │   8 维度     │   │   Rules     │   │   Levers    │   │   Tree      │   │   Change    │
-└──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘
+```mermaid
+flowchart LR
+  A["1. Mode Detection"] --> B["2. Audit<br/>8 维度"]
+  B --> C["3. Preserve Rules"]
+  C --> D["4. Modernize Levers"]
+  D --> E["5. Decision Tree"]
+  E --> F["6. Never Change"]
 ```
 
 ---
@@ -180,30 +182,19 @@ redesign 有三种模式,先识别再走不同路径:
 
 每个改动点过一遍决策树,产出明确的"改 / 不改 / 询问":
 
-```
-[改动点]
-  │
-  ├─ 是否触发 AI Tells 黑名单? 
-  │    ├─ 是 → 改
-  │    └─ 否 ↓
-  │
-  ├─ 是否违反 CRITICAL 规则(Accessibility / Touch)?
-  │    ├─ 是 → 改(不可妥协)
-  │    └─ 否 ↓
-  │
-  ├─ 是否违反 HIGH 规则(Performance / Style / Layout / Navigation)?
-  │    ├─ 是 → 改,但记录替代方案
-  │    └─ 否 ↓
-  │
-  ├─ 是否在 Preservation Rules 保留项中?
-  │    ├─ 是 → 不改(除非用户明确要求)
-  │    └─ 否 ↓
-  │
-  ├─ 审计 Score ≤ 2?
-  │    ├─ 是 → 改
-  │    └─ 否 ↓
-  │
-  └─ 询问用户(中性,不强推)
+```mermaid
+flowchart TD
+  Start["改动点"] --> Q1{"是否触发 AI Tells 黑名单?"}
+  Q1 -->|"是"| R1["改"]
+  Q1 -->|"否"| Q2{"是否违反 CRITICAL 规则<br/>(Accessibility / Touch)?"}
+  Q2 -->|"是"| R2["改(不可妥协)"]
+  Q2 -->|"否"| Q3{"是否违反 HIGH 规则<br/>(Performance / Style / Layout / Navigation)?"}
+  Q3 -->|"是"| R3["改,但记录替代方案"]
+  Q3 -->|"否"| Q4{"是否在 Preservation Rules<br/>保留项中?"}
+  Q4 -->|"是"| R4["不改<br/>(除非用户明确要求)"]
+  Q4 -->|"否"| Q5{"审计 Score ≤ 2?"}
+  Q5 -->|"是"| R5["改"]
+  Q5 -->|"否"| R6["询问用户<br/>(中性,不强推)"]
 ```
 
 ---

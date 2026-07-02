@@ -4,12 +4,10 @@
 
 ## 视觉效果
 
-```
-元素初始:opacity 0 + translateY(20px)
-  ↓
-进入视口(80% 可见)
-  ↓
-依次(每个间隔 80ms)过渡到 opacity 1 + translateY(0)
+```mermaid
+flowchart TD
+  A["元素初始:opacity 0 + translateY(20px)"] --> B["进入视口(80% 可见)"]
+  B --> C["依次(每个间隔 80ms)过渡到<br/>opacity 1 + translateY(0)"]
 ```
 
 ## HTML 结构
