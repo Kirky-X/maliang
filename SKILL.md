@@ -1,12 +1,12 @@
 ---
 name: maliang
-description: "前端设计生成 skill。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus"
+description: "前端设计生成 skill。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild"
 license: MIT
 ---
 
 # maliang (马良) —— 设计系统技能
 
-六个子命令构成一条完整流水线:design-md(创建 DESIGN.md)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ draw-harmony/draw-flutter/draw-element(框架代码)。
+七个子命令构成一条完整流水线:design-md(创建 DESIGN.md)→ redesign(改版现有 UI)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ draw-harmony/draw-flutter/draw-element(框架代码)。
 
 - **design-md**(上游)— 产出 prose-first 的 **DESIGN.md**(YAML token + Markdown 设计理由,Google Labs agent-first 格式)。支持"创建、应用、验证、导出"四个动作。解决"设计系统**是什么、为什么**"。
 - **redesign**(上游旁路)— 改版现有 UI,8 维度审计 + 保留规则 + 现代化杠杆 + 决策树。支持 Refresh / Restructure / Rebuild 三模式。解决"**现有设计如何变好**"。
@@ -41,7 +41,7 @@ license: MIT
 
 - **不确定用哪个?** 先 `design-md`。没有 DESIGN.md 就无法产出可靠的 `draw-md` 硬 token,更无法进行框架适配。
 - **完整流程链路**(每步产出 = 下步输入): `design-md`(→DESIGN.md) → `draw-md`(→examples/ui-markdown/*.md) → `preview`(→preview_*.html) → `draw-harmony`/`draw-flutter`/`draw-element`(→框架代码)
-- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局)在 [`references/dimensions/`](references/dimensions/) 下;设计原则在 [`references/meta/principles.md`](references/meta/principles.md),六个子命令共享参考,不在本路由器重复。
+- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局)在 [`references/dimensions/`](references/dimensions/) 下,另含 color-palettes(调色板库)、design-systems(参考设计系统)、glass-effect(liquid glass 基础配方)、glass-advanced(liquid glass SVG+WebGL 进阶折射);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),七个子命令共享参考,不在本路由器重复。
 - 默认页面清单(App 15 页 + Web 15 页,含 P0/P1/P2 选用规则)在 [`references/default-pages/index.md`](references/default-pages/index.md) 下,供 `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用。
 - 框架组件文档(按钮/文本/列表 × 三框架)在 [`references/framework/`](references/framework/index.md) 下,三个 draw-* 子命令共享。
 

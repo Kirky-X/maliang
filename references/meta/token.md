@@ -1,6 +1,6 @@
 # Design Token 命名规范
 
-> 规范层。定义 token 的**命名规则与层级体系**，不含具体颜色/数值。具体硬值（RGBA + HEX）在产物层 [`examples/ui-markdown/token.md`](../../examples/ui-markdown/token.md)。两层职责见 `design.md` Decision 4。
+> 规范层。定义 token 的**命名规则与层级体系**，不含具体颜色/数值。具体硬值（RGBA + HEX）在产物层 [`examples/ui-markdown/token.md`](../../examples/ui-markdown/token.md)。两层职责隔离:规范层仅定义命名规则与层级体系(不含色值),产物层承载具体硬值(RGBA + HEX),以避免下游 draw-* 解析失败。
 
 ## 命名结构
 
