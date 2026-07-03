@@ -3,6 +3,7 @@
 openspec/changes/
 temp
 .gitnexus
+specmark/
 
 # OS
 .DS_Store
@@ -46,3 +47,8 @@ yarn-error.log*
 
 # Meta
 .meta
+
+# 测试代码（开发期使用，不入仓库）
+tests/
+**/tests/
+**/test/

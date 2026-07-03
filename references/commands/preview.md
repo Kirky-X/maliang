@@ -43,6 +43,7 @@ flowchart LR
 将解析结果注入 HTML 模板,生成自包含预览文件:
 
 ```html
+<!-- SRI 提示:integrity 哈希随 CDN 资源版本变化。当前哈希对应 element-plus@2.4.4 与 vue@3.4.21;更新版本时必须用 `openssl dgst -sha384 -binary <file> | openssl base64 -A` 重新生成并替换 integrity 属性值,否则浏览器会因 SRI 不匹配拒绝加载资源导致预览无法渲染。 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
