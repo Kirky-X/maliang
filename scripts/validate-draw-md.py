@@ -18,6 +18,11 @@
   5. 章节顺序错误(warning,仅 ui/ 一级页面)
   6. 二级页面文件位置(error,仅 ui/ 直接子文件)
   7. 组件参数表缺 action 字段(error)
+  8. 暗色模式 token 引用覆盖(warning)
+  9. aria-label 可访问性(warning)
+  10. 触控区 ≥44px(error)
+  11. 动效 ≤400ms(error)
+  12. 卡片 radius 违规(error)
 """
 import argparse
 import os
@@ -52,6 +57,24 @@ TABLE_SEP_RE = re.compile(r"^\|[\s\-:|]+\|?\s*$")
 
 # kebab-case 标识符
 KEBAB_RE = re.compile(r"[a-z][a-z0-9-]*")
+
+# 暗色 token 引用形式 {xxx-dark}
+DARK_TOKEN_REF_RE = re.compile(r"\{[a-z][a-z0-9-]*-dark\}")
+
+# 毫秒时长字面量 \d+ms
+MS_DURATION_RE = re.compile(r"(\d+)ms")
+
+# 像素尺寸字面量 \d+px
+PX_VALUE_RE = re.compile(r"(\d+)px")
+
+# 交互组件 slug(参数表需含 aria-label)
+INTERACTIVE_SLUGS = {"button", "icon", "input", "link"}
+
+# 可点击组件 slug(触控区需 ≥44px)
+CLICKABLE_SLUGS = {"button", "icon", "link"}
+
+# 触控区最小尺寸(px)
+TOUCH_TARGET_MIN = 44
 
 
 # ---------------------------------------------------------------------------
@@ -333,6 +356,153 @@ def check_secondary_pages(rel_path):
     return results
 
 
+def check_dark_mode_coverage(rel_path, lines, valid_tokens=None):
+    """检查 8:暗色模式 token 引用覆盖(warning)。
+
+    扫描含 -dark 后缀的 token 引用(正则 \\{xxx-dark\\}),
+    0 引用则报 warning,提示暗色模式覆盖缺失(AUDIT-REPORT G01)。
+    valid_tokens 参数为兼容现有 check_* 签名,本检查不依赖它。
+    """
+    results = []
+    has_dark = False
+    for line in lines:
+        if DARK_TOKEN_REF_RE.search(line):
+            has_dark = True
+            break
+    if not has_dark:
+        results.append(("WARN", rel_path, 0,
+                        "页面未引用任何 dark token,暗色模式覆盖缺失"))
+    return results
+
+
+def check_aria_labels(rel_path, lines):
+    """检查 9:交互组件 aria-label 可访问性(warning)。
+
+    识别交互组件参数表(组件类型含 button/icon/input/link 之一),
+    检查参数表是否含 aria-label 字段,缺失返回 warning(AUDIT-REPORT G02)。
+    容器组件(navigation 等)不检查。
+    """
+    results = []
+    for header_line, rows in _extract_param_tables(lines):
+        type_row = None
+        for line_no, cells in rows:
+            if cells and cells[0] == "组件类型":
+                type_row = (line_no, cells)
+                break
+        if type_row is None:
+            continue
+        line_no, cells = type_row
+        value = cells[1] if len(cells) > 1 else ""
+        slugs = _extract_slugs_from_value(value)
+        interactive = [s for s in slugs if s in INTERACTIVE_SLUGS]
+        if not interactive:
+            continue
+        has_aria = False
+        for _, row_cells in rows:
+            if row_cells and "aria-label" in row_cells[0].lower():
+                has_aria = True
+                break
+        if not has_aria:
+            results.append(("WARN", rel_path, line_no,
+                            "交互组件 " + "+".join(interactive) +
+                            " 缺少 aria-label 字段"))
+    return results
+
+
+def check_touch_target(rel_path, lines):
+    """检查 10:可点击组件触控区 ≥44px(error)。
+
+    识别可点击组件(组件类型含 button/icon/link 之一),
+    解析 width/height 字段(正则 \\d+px),<44px 返回 error(AUDIT-REPORT G03)。
+    match-parent 跳过(非定值,继承父级)。
+    """
+    results = []
+    for header_line, rows in _extract_param_tables(lines):
+        type_row = None
+        for line_no, cells in rows:
+            if cells and cells[0] == "组件类型":
+                type_row = (line_no, cells)
+                break
+        if type_row is None:
+            continue
+        line_no, cells = type_row
+        value = cells[1] if len(cells) > 1 else ""
+        slugs = _extract_slugs_from_value(value)
+        if not any(s in CLICKABLE_SLUGS for s in slugs):
+            continue
+        for row_line_no, row_cells in rows:
+            if not row_cells:
+                continue
+            field = row_cells[0].lower()
+            if ("width" not in field and "height" not in field
+                    and "宽度" not in field and "高度" not in field):
+                continue
+            row_value = row_cells[1] if len(row_cells) > 1 else ""
+            if "match-parent" in row_value.lower():
+                continue
+            m = PX_VALUE_RE.search(row_value)
+            if m:
+                size = int(m.group(1))
+                if size < TOUCH_TARGET_MIN:
+                    results.append(("ERROR", rel_path, row_line_no,
+                                    "可点击组件 " + str(size) +
+                                    "px <44px,触控区不足"))
+    return results
+
+
+def check_motion_duration(rel_path, lines):
+    """检查 11:动效 duration ≤400ms(error)。
+
+    扫描 \\d+ms 模式,>400 返回 error(AUDIT-REPORT G06)。
+    引用 token(如 {duration-slower})不含 \\d+ms,自然跳过。
+    """
+    results = []
+    for i, line in enumerate(lines, start=1):
+        if TABLE_SEP_RE.match(line):
+            continue
+        for m in MS_DURATION_RE.finditer(line):
+            duration = int(m.group(1))
+            if duration > 400:
+                results.append(("ERROR", rel_path, i,
+                                "动效 " + str(duration) +
+                                "ms >400ms 硬约束违规"))
+    return results
+
+
+def check_card_radius(rel_path, lines):
+    """检查 12:卡片组件 radius 违规(error)。
+
+    扫描组件类型含 card 的参数表,检查 radius 字段,
+    为 {radius-md} 返回 error,应用 {radius-lg}(AUDIT-REPORT G07)。
+    {radius-full}/{radius-sm} 不报错。
+    """
+    results = []
+    for header_line, rows in _extract_param_tables(lines):
+        type_row = None
+        for line_no, cells in rows:
+            if cells and cells[0] == "组件类型":
+                type_row = (line_no, cells)
+                break
+        if type_row is None:
+            continue
+        line_no, cells = type_row
+        value = cells[1] if len(cells) > 1 else ""
+        slugs = _extract_slugs_from_value(value)
+        if not any("card" in s for s in slugs):
+            continue
+        for row_line_no, row_cells in rows:
+            if not row_cells:
+                continue
+            field = row_cells[0].lower()
+            if "radius" not in field and "圆角" not in field:
+                continue
+            row_value = row_cells[1] if len(row_cells) > 1 else ""
+            if "{radius-md}" in row_value:
+                results.append(("ERROR", rel_path, row_line_no,
+                                "卡片组件使用 radius-md 违规,应用 radius-lg"))
+    return results
+
+
 # ---------------------------------------------------------------------------
 # 文件收集与主流程
 # ---------------------------------------------------------------------------
@@ -396,7 +566,7 @@ def main(argv):
     def rel(path):
         return os.path.relpath(path, target_dir)
 
-    # ui 文件:检查 1-4 + 7 全做;检查 5/6 仅直接子文件
+    # ui 文件:检查 1-4 + 7-12 全做;检查 5/6 仅直接子文件
     for abs_path in ui_files:
         rp = rel(abs_path)
         with open(abs_path, "r", encoding="utf-8") as f:
@@ -407,11 +577,16 @@ def main(argv):
         all_results.extend(check_component_slugs(rp, lines, valid_slugs))
         all_results.extend(check_frontmatter(rp, text))
         all_results.extend(check_action_field(rp, lines))
+        all_results.extend(check_dark_mode_coverage(rp, lines, valid_tokens))
+        all_results.extend(check_aria_labels(rp, lines))
+        all_results.extend(check_touch_target(rp, lines))
+        all_results.extend(check_motion_duration(rp, lines))
+        all_results.extend(check_card_radius(rp, lines))
         if os.path.dirname(rp) == "ui":
             all_results.extend(check_section_order(rp, lines))
             all_results.extend(check_secondary_pages(rp))
 
-    # organisms 文件:检查 1-4 + 7
+    # organisms 文件:检查 1-4 + 7-12
     for abs_path in org_files:
         rp = rel(abs_path)
         with open(abs_path, "r", encoding="utf-8") as f:
@@ -422,6 +597,11 @@ def main(argv):
         all_results.extend(check_component_slugs(rp, lines, valid_slugs))
         all_results.extend(check_frontmatter(rp, text))
         all_results.extend(check_action_field(rp, lines))
+        all_results.extend(check_dark_mode_coverage(rp, lines, valid_tokens))
+        all_results.extend(check_aria_labels(rp, lines))
+        all_results.extend(check_touch_target(rp, lines))
+        all_results.extend(check_motion_duration(rp, lines))
+        all_results.extend(check_card_radius(rp, lines))
 
     # 排序:error 先于 warn,再按 file、line
     severity_rank = {"ERROR": 0, "WARN": 1}

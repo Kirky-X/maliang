@@ -120,6 +120,20 @@ flowchart LR
 - [ ] Element Plus 组件正确渲染(无 Vue 控制台错误)
 - [ ] 在浏览器中打开文件,视觉与 draw-md 描述一致
 
+### 校验强化
+
+preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 12 项检查(含 5 项新检查:暗色/aria/触控区/动效/radius),不通过则回退 draw-md 修补。
+
+**aria-label 在 HTML 的映射规则:**
+- button → `<el-button aria-label="语义描述">`
+- icon → `<el-icon aria-label="语义描述">`
+- input → `<el-input aria-label="语义描述">`
+- link → `<a aria-label="语义描述">`
+
+**暗色模式在 HTML 的映射:**
+- 用 CSS 变量 + `prefers-color-scheme: dark` 媒体查询
+- `{surface-dark}` → `--surface-dark: #1A1B1E;`
+
 ---
 
 ## 5. Pre-Flight Check(102 项机械检查)

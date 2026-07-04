@@ -162,6 +162,11 @@ version: 1.0.0 # 页面版本号
 - [ ] 所有颜色值引用产物层 `examples/ui-markdown/token.md`,**无硬编码色值字面量**
 - [ ] 二级页面用子目录嵌套(如 `setting/about.md`)
 - [ ] 跨页面复用组件放 `organisms/`,页面引用而非重复定义
+- [ ] 每个页面 MUST 引用至少 1 个 dark token 或含"## 暗色模式"章节(对应检查 8, AUDIT G01)
+- [ ] 交互组件(组件类型含 button/icon/input/link)参数表 MUST 含 aria-label 字段(对应检查 9, AUDIT G02)
+- [ ] 可点击组件(组件类型含 button/icon/link)width/height MUST ≥44px(对应检查 10, AUDIT G03)
+- [ ] 动效 duration MUST ≤400ms(引用 token 如 `{duration-slower}` 除外)(对应检查 11, AUDIT G06)
+- [ ] 卡片类组件(组件类型含 card)radius MUST 用 `{radius-lg}`,禁用 `{radius-md}`(对应检查 12, AUDIT G07)
 
 ---
 
@@ -173,6 +178,11 @@ version: 1.0.0 # 页面版本号
 | organisms 重复定义(导航栏/dock 多页面重复) | 引用已有 organisms/*.md 而非重写 | 在 token.md 顶部声明 organisms 引用清单 |
 | 用户提供的 UI 不符合 draw-md 规格(缺布局章节) | 提示具体偏差(缺 token / 缺布局章节) | 引导用户重跑 draw-md,不要硬解析不规范输入 |
 | 页面组件无对应 framework 文档 | 在 index.md 索引表查最接近类型 | 用基础组件(button/text/list/layout)组合实现,标注"组合方案" |
+| 暗色模式 0 引用 | 在 frontmatter 补 dark token 引用或新增"## 暗色模式"章节 | 用 `{surface-dark}`/`{text-primary-dark}` 等标准命名 |
+| aria-label 缺失 | 在交互组件参数表新增 aria-label 字段 | 用语义化描述(如 "返回首页") |
+| 触控区 <44px | 扩大组件 padding 或调整 width/height | 用 touch-target 包装器扩展 hit area |
+| 动效 >400ms | 改用 `{duration-slower}` 400ms token | 拆分长动效为多段短动效 |
+| 卡片 radius-md | 改用 `{radius-lg}` 16px | 仅 input 等非卡片组件可用 radius-md |
 
 ---
 
