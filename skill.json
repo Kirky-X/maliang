@@ -2,7 +2,7 @@
   "name": "maliang",
   "description": "DESIGN.md 设计系统 + UI markdown 生成 + 三框架适配(HarmonyOS/Flutter/Element Plus)+ 设备预览 + UI 关系图管理 + IP 形象/视觉手册。13 种 design system 风格,12 个 references 维度规范,10 个子命令(design-md / redesign / draw-md / preview / draw-harmony / draw-flutter / draw-element / ui-graph / ip / ip-handbook),分层框架文档数据库,12 项 draw-md 校验(含 aria/touch-target/dark-mode/motion/radius)。",
   "license": "MIT",
-  "version": "0.3.0",
+  "version": "0.2.3",
   "author": "Kirky-X",
   "repo": "https://github.com/Kirky-X/maliang",
   "homepage": "https://github.com/Kirky-X/maliang",
