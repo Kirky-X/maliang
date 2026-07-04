@@ -84,9 +84,11 @@ TOUCH_TARGET_MIN = 44
 def parse_token_file(path):
     """解析 token.md,提取所有 token 名。
 
-    遍历所有 header 首列为 "token" 的表格,收集 body 行首列的 kebab-case 名。
-    覆盖:颜色(color-*)/字号(font-*)/图标(icon-*)/间距(spacing-*)/
-          圆角(radius-*)/边框(border-*)以及暗色模式表(同名去重)。
+    遍历所有 header 首列为 "token"(大小写不敏感)的表格,收集 body 行首列
+    的 kebab-case 名。兼容 {token-name} 与 token-name 两种写法(剥离 {}
+    后存储,与 TOKEN_REF_RE 捕获组对齐)。覆盖:颜色(color-*)/字号
+    (font-*)/图标(icon-*)/间距(spacing-*)/圆角(radius-*)/边框
+    (border-*)以及暗色模式表(同名去重)。
     返回 set of str;文件不存在返回空 set。
     """
     tokens = set()
@@ -103,13 +105,17 @@ def parse_token_file(path):
             continue
         cells = [c.strip() for c in stripped.strip("|").split("|")]
         first = cells[0] if cells else ""
-        if first == "token":
+        # 大小写不敏感匹配表头(兼容 "Token" / "token" / "TOKEN")
+        if first.lower() == "token":
             in_token_table = True
             continue
         if TABLE_SEP_RE.match(line):
             continue
-        if in_token_table and first and KEBAB_RE.fullmatch(first):
-            tokens.add(first)
+        if in_token_table and first:
+            # 剥离 `{token-name}` 的反引号和花括号,与 TOKEN_REF_RE 捕获组对齐
+            token_name = first.strip().strip("`").strip("{}").strip()
+            if token_name and KEBAB_RE.fullmatch(token_name):
+                tokens.add(token_name)
     return tokens
 
 

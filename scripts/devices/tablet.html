@@ -4,12 +4,40 @@
   <meta charset="UTF-8">
   <title>平板设备外壳模板 - {{DEVICE_NAME}}</title>
   <style>
-    /* 设备尺寸变量(由 preview 子命令从 device_models.py 注入) */
+    /* === Element Plus CSS 变量命名空间(设备外壳专用)==
+       颜色用 --el-device-* 前缀,与 Element Plus 主题变量隔离,
+       但命名风格对齐(--el-* 命名空间规范)。
+       与 phone.html 共享设计语言(钛金属 iPad Pro 风格)。 */
     :root {
+      /* 设备尺寸变量(由 preview 子命令从 device_models.py 注入) */
       --device-width: {{DEVICE_WIDTH}}px;
       --device-height: {{DEVICE_HEIGHT}}px;
       --device-corner-radius: {{DEVICE_CORNER_RADIUS}}px;
       --device-border-width: {{DEVICE_BORDER_WIDTH}}px;
+
+      /* 设备外观变量(钛金属 iPad Pro 风格,与 phone 共享色板) */
+      --el-device-titanium-light: #C8C9CB;
+      --el-device-titanium-mid: #8E8F92;
+      --el-device-titanium-dark: #5A5B5E;
+      --el-device-titanium-gradient: linear-gradient(135deg,
+        var(--el-device-titanium-light) 0%,
+        var(--el-device-titanium-mid) 40%,
+        var(--el-device-titanium-dark) 60%,
+        var(--el-device-titanium-mid) 80%,
+        var(--el-device-titanium-light) 100%);
+      --el-device-bezel: #0A0A0B;
+      --el-device-bezel-inner: #1C1C1E;
+      --el-device-screen-bg: #FFFFFF;
+      --el-device-camera-bg: #0A0A0B;
+      --el-device-camera-lens: radial-gradient(circle,
+        #1A1A2E 0%,
+        #0A0A0B 60%,
+        #000 100%);
+      --el-device-speaker-bg: #1C1C1E;
+      --el-device-button-bg: #2C2C2E;
+      --el-device-shadow-ambient: rgba(0, 0, 0, 0.18);
+      --el-device-shadow-key: rgba(0, 0, 0, 0.35);
+      --el-device-highlight: rgba(255, 255, 255, 0.45);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,77 +47,188 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: #f0f0f0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at 50% 30%, #E8E9EC 0%, #D1D3D8 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "HarmonyOS Sans", "Segoe UI", Roboto, sans-serif;
+      padding: 40px 20px;
       /* 平板尺寸较大,动态缩小整体显示(上限 0.6,避免视口溢出) */
       transform: scale(min(0.6, calc((100vh - 120px) / var(--device-height, 800))));
       transform-origin: center center;
     }
 
-    /* 平板外壳容器 */
+    /* === 平板外壳容器 ===
+       iPad Pro 钛金属边框,边框宽度约 7px(比手机更薄)。
+       四角圆角较大(iPad Pro 物理圆角约 18-19px)。 */
     .device-shell {
       position: relative;
       width: var(--device-width);
       height: var(--device-height);
       border-radius: var(--device-corner-radius);
-      border: var(--device-border-width) solid #1a1a1a;
-      background: #1a1a1a;
+      background: var(--el-device-titanium-gradient);
+      padding: var(--device-border-width);
       box-shadow:
-        0 0 0 2px #333,
-        0 20px 60px rgba(0, 0, 0, 0.3),
-        inset 0 0 4px rgba(255, 255, 255, 0.1);
+        /* 环境光(柔和散射) */
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+        /* 钛金属边框内高光 */
+        0 0 0 1.5px var(--el-device-titanium-dark) inset,
+        /* 屏幕黑边过渡 */
+        0 0 0 3px var(--el-device-bezel) inset,
+        /* 主投影(向下) */
+        0 30px 60px -15px var(--el-device-shadow-key),
+        /* 环境投影(向上扩散) */
+        0 10px 25px -10px var(--el-device-shadow-ambient),
+        /* 接触面阴影 */
+        0 3px 6px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
 
-    /* 屏幕(实际内容区域) */
+    /* 钛金属边框光泽(顶部高光) */
+    .device-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--device-corner-radius);
+      background: linear-gradient(180deg,
+        var(--el-device-highlight) 0%,
+        transparent 6%,
+        transparent 94%,
+        rgba(0, 0, 0, 0.3) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* === 屏幕(实际内容区域)==
+       屏幕圆角 = 外壳圆角 - 边框宽度,保持视觉连贯。 */
     .device-screen {
       width: 100%;
       height: 100%;
       border-radius: calc(var(--device-corner-radius) - var(--device-border-width));
       overflow: hidden;
-      background: #ffffff;
+      background: var(--el-device-screen-bg);
       position: relative;
+      z-index: 1;
     }
 
-    /* 平板无刘海,但有前置摄像头圆点(装饰) */
-    .camera-dot {
+    /* === 前置摄像头(iPad Pro 风格)==
+       短边中央的小圆点(横置时在长边;此处按竖置默认)。
+       7px 直径,位于边框中央(非屏幕内)。 */
+    .device-camera {
       position: absolute;
-      top: 6px;
+      top: 4px;
       left: 50%;
       transform: translateX(-50%);
-      width: 8px;
-      height: 8px;
-      background: #333;
+      width: 7px;
+      height: 7px;
+      background: var(--el-device-camera-bg);
       border-radius: 50%;
-      z-index: 100;
+      z-index: 50;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 0 2px var(--el-device-camera-lens);
     }
 
-    /* 侧边按钮(装饰,可选) */
-    .device-shell::before {
+    /* 摄像头镜头反光(装饰) */
+    .device-camera::after {
       content: "";
       position: absolute;
-      left: -2px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 3px;
-      height: 60px;
-      background: #333;
-      border-radius: 2px 0 0 2px;
+      top: 1px;
+      left: 1px;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(80, 120, 200, 0.6) 0%, transparent 70%);
     }
 
-    .device-shell::after {
+    /* === 侧边按键 ===
+       iPad Pro:右侧顶部音量上 + 音量下,右侧上方电源键(或 Touch ID)。
+       按键用绝对定位的伪元素,实际不占空间。 */
+    .device-buttons-right {
+      position: absolute;
+      right: -3px;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* 音量上 + 音量下(右侧上 1/4 区域,两段按键) */
+    .device-buttons-right::before,
+    .device-buttons-right::after {
       content: "";
       position: absolute;
-      right: -2px;
-      top: 50%;
-      transform: translateY(-50%);
       width: 3px;
-      height: 40px;
-      background: #333;
-      border-radius: 0 2px 2px 0;
+      background: linear-gradient(270deg,
+        var(--el-device-titanium-dark) 0%,
+        var(--el-device-button-bg) 30%,
+        var(--el-device-button-bg) 70%,
+        var(--el-device-titanium-dark) 100%);
+      border-radius: 0 1px 1px 0;
     }
 
-    /* 预览内容容器(由 preview 子命令注入实际页面内容) */
+    /* 音量上 */
+    .device-buttons-right::before {
+      top: 18%;
+      height: 30px;
+    }
+
+    /* 音量下 */
+    .device-buttons-right::after {
+      top: calc(18% + 40px);
+      height: 30px;
+    }
+
+    /* 电源键(右侧,音量键下方,独立 div 容器) */
+    .device-power-button {
+      position: absolute;
+      right: -3px;
+      top: calc(18% + 90px);
+      width: 3px;
+      height: 50px;
+      background: linear-gradient(270deg,
+        var(--el-device-titanium-dark) 0%,
+        var(--el-device-button-bg) 30%,
+        var(--el-device-button-bg) 70%,
+        var(--el-device-titanium-dark) 100%);
+      border-radius: 0 1px 1px 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* === 四扬声器开孔(iPad Pro 装饰)==
+       顶部和底部各一组 3 个开孔(共 4 组,这里简化为顶部+底部各一组)。
+       用 background-image 重复线条模拟扬声器栅格。 */
+    .device-speakers-top,
+    .device-speakers-bottom {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-image: repeating-linear-gradient(
+        90deg,
+        var(--el-device-speaker-bg) 0px,
+        var(--el-device-speaker-bg) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0.7;
+    }
+
+    .device-speakers-top {
+      top: -3px;
+      left: 30%;
+    }
+
+    .device-speakers-bottom {
+      bottom: -3px;
+      left: 70%;
+    }
+
+    /* === 预览内容容器 ===
+       由 preview 子命令注入实际页面内容(Element Plus 组件)。
+       无 home indicator(iPad 用手势导航)。 */
     .preview-content {
       width: 100%;
       height: 100%;
@@ -97,32 +236,39 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* 设备信息标签(调试用,可移除) */
+    /* === 设备信息标签(调试用)== */
     .device-label {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.78);
       color: #fff;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-family: monospace;
-      transform: scale(1); /* body 已用动态 scale,无需反向补偿 */
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      letter-spacing: 0.02em;
+      transform: scale(1);
       transform-origin: bottom left;
     }
   </style>
 </head>
 <body>
   <div class="device-shell">
-    <div class="camera-dot"></div>
+    <div class="device-camera"></div>
+    <div class="device-speakers-top"></div>
+    <div class="device-speakers-bottom"></div>
+    <div class="device-buttons-right"></div>
+    <div class="device-power-button"></div>
     <div class="device-screen">
       <div class="preview-content">
-        <!-- 页面内容由 preview 子命令注入 -->
+        <!-- 页面内容由 preview 子命令注入(Element Plus 组件) -->
         {{PREVIEW_CONTENT}}
       </div>
     </div>
   </div>
-  <div class="device-label">{{DEVICE_NAME}} - {{DEVICE_WIDTH}}x{{DEVICE_HEIGHT}}</div>
+  <div class="device-label">{{DEVICE_NAME}} · {{DEVICE_WIDTH}}×{{DEVICE_HEIGHT}}</div>
 </body>
 </html>

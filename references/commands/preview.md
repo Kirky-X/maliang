@@ -90,10 +90,20 @@ flowchart LR
 
 ### 设备外壳 CSS
 
-根据设备类型(phone / tablet)选择不同的外壳模板:
+根据设备类型(phone / tablet)选择不同的外壳模板。两者共享 `--el-device-*` CSS 变量命名空间(对齐 Element Plus `--el-*` 规范),采用钛金属渐变边框 + 多层阴影模拟真实设备外观:
 
-- **手机**(phone):圆角 + 刘海 + 边框,参考 [`scripts/devices/phone.html`](../../scripts/devices/phone.html)
-- **平板**(tablet):圆角 + 无刘海 + 边框,参考 [`scripts/devices/tablet.html`](../../scripts/devices/tablet.html)
+- **手机**(phone,iPhone 15 风格):钛金属 5-stop 渐变边框 + Dynamic Island(126×37px 胶囊) + 真实按键布局(静音键/音量上下/电源键) + Home Indicator(134×5px) + 6 层阴影,参考 [`scripts/devices/phone.html`](../../scripts/devices/phone.html)
+- **平板**(tablet,iPad Pro 风格):钛金属渐变边框(更薄 7px) + 前置摄像头圆点(带镜头反光) + 音量上下 + 电源键 + 四扬声器栅格 + 6 层阴影 + 动态 scale transform,参考 [`scripts/devices/tablet.html`](../../scripts/devices/tablet.html)
+
+**`--el-device-*` 变量命名空间**(preview 子命令注入 token 时优先映射):
+
+| 变量类别 | 示例变量 | 用途 |
+| -------- | -------- | ---- |
+| 钛金属色板 | `--el-device-titanium-light/mid/dark` | 边框渐变 5-stop |
+| 边框/屏幕 | `--el-device-bezel` / `--el-device-screen-bg` | 黑边过渡 + 屏幕底色 |
+| 装饰元素 | `--el-device-notch-bg` / `--el-device-camera-bg` / `--el-device-speaker-bg` | Dynamic Island / 摄像头 / 扬声器 |
+| 按键 | `--el-device-button-bg` | 侧边按键渐变 |
+| 阴影 | `--el-device-shadow-ambient/key/inner` | 6 层阴影分层 |
 
 ### 组件映射规则
 
