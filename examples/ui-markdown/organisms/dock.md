@@ -36,6 +36,7 @@ version: 1.2.0
 | 字体颜色 | `{color-brand-primary}`     | `{color-text-secondary}`    |
 | 字体大小 | `{font-size-mini}`    | `{font-size-mini}`    |
 | 热区     | `{icon-touch-target}` | `{icon-touch-target}` |
+| aria-label | 每个 tab 用对应 label 字段值(如"首页"/"发现"),容器 aria-label="底部导航" | 同左 |
 | action   | tap=→目标页; state=切换选中态+全局 tab 索引; db=UPDATE user_settings SET last_tab=?; api=无; long-press=无 | tap=→目标页; state=切换选中态; db=无; api=无; long-press=无 |
 
 tab 数 ≤ 5(米勒定律)。
@@ -73,3 +74,12 @@ tab 数 ≤ 5(米勒定律)。
 - 未选中态:图标用 `icon-stroke`,文字色 `{color-text-secondary}`
 - 切换动画:图标 200ms 渐变,文字色 150ms 渐变
 - badge 角标:右上角 8px 圆点 `{color-danger}`,数字>99 显示"99+"
+
+## 4. 暗色模式
+
+本组件暗色模式覆盖以下 token(暗色取值见 token.md 暗色章节):
+
+- `{color-surface-card}` → 暗色变体(深卡片底)
+- `{color-brand-primary}` → 暗色保持色相
+- `{color-text-secondary}` → 暗色变体(浅次要文字)
+- `{color-divider}` → 暗色变体(低对比分割线)

@@ -50,6 +50,7 @@ version: 1.2.0
 | 字体大小 | `{font-size-body}`                |
 | 字体颜色 | `{color-text-primary}`                  |
 | 分割线   | `{border-hairline}` + `{color-divider}` |
+| aria-label | 每行用对应 label 字段值(如"版本更新"/"用户协议"),容器 aria-label="功能列表" |
 | action   | tap=→对应目标页; state=按下高亮; db=无; api=无; long-press=无 |
 
 ### 3.1 item 字段结构
@@ -87,3 +88,12 @@ version: 1.2.0
 5. **意见反馈**:tap 触发 `action:open-feedback` → 打开反馈弹窗,提交 `POST /api/feedback {content, contact}`
 6. **分享应用**:tap 触发 `action:share-sheet` → 调用系统分享面板,分享内容含应用下载链接
 7. **官方网站**:tap 触发 `action:open-external` → 在系统浏览器打开 `https://maliang.example.com`(external=true)
+
+## 4. 暗色模式
+
+本页暗色模式覆盖以下 token(暗色取值见 token.md 暗色章节):
+
+- `{color-surface-base}` → 暗色变体(深底)
+- `{color-text-primary}` → 暗色变体(浅文字)
+- `{color-text-secondary}` → 暗色变体(浅次要文字)
+- `{color-divider}` → 暗色变体(低对比分割线)
