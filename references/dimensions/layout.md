@@ -219,8 +219,11 @@ DynamicLayout 是动态布局容器组件,支持在运行时**动态切换不同
 | -------- | ------------------------------- |
 | 宽度     | match-parent − 2×`{spacing-lg}` |
 | 高度     | 36px                            |
+| action   | submit=→ui/search.md?q={input-value}; focus=聚焦变白底; blur=失焦收起键盘; db=无; api=GET /api/search/suggest?q=?; long-press=无 |
 | ...      | ...                             |
 ```
+
+> 组件参数表的完整字段契约(含 action 五元组语义)见 [`draw-md.md`](../commands/draw-md.md)「组件参数表」段。
 
 ### 章节顺序约定
 
