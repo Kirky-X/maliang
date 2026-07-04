@@ -24,7 +24,7 @@ version: 1.2.0
 | ------------- | ------------------------------- |
 | 组件类型      | `input` + `icon`(P0 + P1,组合:搜索输入框 + 右侧搜索图标,引用 framework/index.md) |
 | 宽度          | match-parent − 2×`{spacing-lg}` |
-| 高度          | 36px                            |
+| 高度          | 44px                            |
 | 圆角          | `{radius-full}`(胶囊形)         |
 | 背景颜色      | `{color-surface-base}`(灰底胶囊)      |
 | 字体颜色      | `{color-text-placeholder}`            |
@@ -32,7 +32,8 @@ version: 1.2.0
 | input-type    | search                          |
 | placeholder   | "请输入搜索的关键词"            |
 | maxlength     | 30                              |
-| icon-right    | `{icon-search-filled}`,`{icon-size-md}`,填充样式,位于右侧 |
+| aria-label    | "搜索框"                        |
+| icon-right    | `{icon-search-filled}`,`{icon-size-md}`,填充样式,位于右侧,aria-label="搜索" |
 | action        | submit=→ui/search.md?q={input-value}; focus=聚焦变白底+弹出键盘; blur=失焦收起键盘; input=实时联想(可选); db=无; api=GET /api/search/suggest?q=?; long-press=无 |
 
 ## 3. 金刚区入口
@@ -47,6 +48,7 @@ version: 1.2.0
 | 字体大小 | `{font-size-caption}` |
 | 字体颜色 | `{color-text-secondary}`    |
 | 间距     | `{spacing-md}`        |
+| aria-label | 每个 item 用对应 label(如"信息流"/"排行榜"),容器 aria-label="金刚区入口" |
 | action   | tap=→对应目标页; state=按下高亮; db=无; api=无; long-press=无 |
 
 ### 3.1 item 字段结构
@@ -100,7 +102,17 @@ version: 1.2.0
 | `card-type`   | string  | 必填,枚举(single/multi/video) | 决定卡片布局 |
 | `target`      | string  | 必填,详情页路径       | tap 跳转目标          |
 
-## 5. 底部 dock
+## 5. 暗色模式
+
+本页暗色模式覆盖以下 token(暗色取值见 token.md 暗色章节):
+
+- `{color-surface-base}` → 暗色变体(深底)
+- `{color-surface-card}` → 暗色变体(深卡片)
+- `{color-text-primary}` → 暗色变体(浅文字)
+- `{color-text-secondary}` → 暗色变体(浅次要文字)
+- `{color-brand-primary}` → 暗色保持色相,略降饱和度
+
+## 6. 底部 dock
 
 引用 [`organisms/dock.md`](../organisms/dock.md)(组件类型:`navigation`):首页(选中) / 发现 / 消息 / 我的。
 - dock action:详见 organisms/dock.md 第 2 节,tap=→对应一级页面; state=切换选中态

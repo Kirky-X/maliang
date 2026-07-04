@@ -359,19 +359,30 @@ def check_secondary_pages(rel_path):
 def check_dark_mode_coverage(rel_path, lines, valid_tokens=None):
     """检查 8:暗色模式 token 引用覆盖(warning)。
 
-    扫描含 -dark 后缀的 token 引用(正则 \\{xxx-dark\\}),
-    0 引用则报 warning,提示暗色模式覆盖缺失(AUDIT-REPORT G01)。
+    合规判定(满足任一即合规,对齐 R-validation-007 约束 1):
+    - 含 -dark 后缀的 token 引用(正则 \\{xxx-dark\\}),OR
+    - 含 `## 暗色模式` 章节(含编号变体,如 `## 6. 暗色模式`)
+    两者均无则报 warning,提示暗色模式覆盖缺失(AUDIT-REPORT G01)。
     valid_tokens 参数为兼容现有 check_* 签名,本检查不依赖它。
     """
     results = []
-    has_dark = False
+    has_dark_token = False
+    has_dark_section = False
     for line in lines:
         if DARK_TOKEN_REF_RE.search(line):
-            has_dark = True
+            has_dark_token = True
             break
-    if not has_dark:
+    if not has_dark_token:
+        for line in lines:
+            stripped = line.lstrip("#").strip().lstrip()
+            # 兼容 "## 暗色模式" / "## 6. 暗色模式" / "### 暗色模式" 等
+            if "暗色模式" in stripped and not stripped.startswith("|"):
+                has_dark_section = True
+                break
+    if not has_dark_token and not has_dark_section:
         results.append(("WARN", rel_path, 0,
-                        "页面未引用任何 dark token,暗色模式覆盖缺失"))
+                        "页面未引用任何 dark token 且无'## 暗色模式'章节,"
+                        "暗色模式覆盖缺失"))
     return results
 
 
