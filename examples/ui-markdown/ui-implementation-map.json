@@ -1,0 +1,45 @@
+{
+  "built_at": "2026-07-05T06:00:08+08:00",
+  "mappings": [
+    {
+      "logical_ui": "organisms/dock.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "organisms/nav-bar.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/home.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/setting/about.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    }
+  ]
+}
