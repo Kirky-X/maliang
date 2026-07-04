@@ -67,7 +67,7 @@ version: 1.0.0 # 页面版本号
 
 1. **第一章 = 顶部导航**(引用 `organisms/` 里的导航栏组件)
 2. 中间章节 = 页面主体各区块(每区块一章)
-3. **最后一章 = 底部 dock**(引用 `organisms/` 里的 dock 栏组件)
+3. **最后一章 = 底部 dock**(引用 `organisms/` 里的 dock 栏组件,**仅一级页面含 dock;二级页面不含 dock,末章为页面主体最后一区**)
 
 每个章节内,子组件**从左到右**描述;内部组件用嵌套子章节展开。
 
@@ -87,11 +87,13 @@ version: 1.0.0 # 页面版本号
 | 背景颜色    | `{surface-card}`            | 引用 token |
 | 字体颜色    | `{text-primary}`            | 引用 token |
 | padding     | `{spacing-md} {spacing-lg}` | 引用 token |
+| action      | `tap=→目标页; state=按下高亮; db=无; api=无; long-press=无` | 交互行为五元组,见下 |
 
 - 颜色、字号、间距、圆角 **MUST 引用 `token.md` 的 token**,不在表里写裸值。
 - 尺寸(宽高)可写具体像素(实现层需要)。
 - 响应式:如有多断点,在表后补"响应式"说明(375 / 768 / 1024 各自差异)。
 - **组件类型**字段 MUST 引用 [`framework/index.md`](../framework/index.md) 的 45 类组件 slug(如 `button`/`input`/`list`/`navigation`),组合组件用 ` + ` 连接(如 `input + icon`)。单列参数表将该字段作为首行;双列对比表(如 dock 选中/未选中态对比)在表前用 `> **组件类型**:...` 引用块标注。
+- **action 字段**:描述组件交互行为,格式 `event=behavior; event=behavior; ...`。常用事件五元组:`tap`(点击)/`state`(状态变化)/`db`(数据库操作)/`api`(接口调用)/`long-press`(长按);输入类组件可扩展 `submit`/`focus`/`blur`/`input` 事件(如搜索框 action 含 `submit=→ui/search.md?q={input-value}`);容器组件(如 `navigation`)action 可全为"无",交互在子组件。action 字段内的 `{xxx}` 占位符为 URL/JS 模板参数(如 `{input-value}`),NOT token 引用,token 悬空检查 SHALL 跳过 action 行(见 [`validate-draw-md.py`](../../scripts/validate-draw-md.py) 检查 1)。
 
 ### 组件类型标注规范
 
@@ -153,9 +155,10 @@ version: 1.0.0 # 页面版本号
 
 - [ ] frontmatter 含 name/description/background/updated/version,background 引用 token
 - [ ] frontmatter 含 components 字段(数组),列出本页所有章节用到的组件 slug(含 organisms 引用的,去重)
-- [ ] 正文第一章 = 顶部导航,最后一章 = 底部 dock
-- [ ] 每个组件有参数表(宽/高/字号/圆角/背景/字色/padding)
+- [ ] 正文第一章 = 顶部导航;一级页面最后一章 = 底部 dock,二级页面无 dock(末章为主体最后一区)
+- [ ] 每个组件有参数表(宽/高/字号/圆角/背景/字色/padding/action)
 - [ ] 每个组件参数表首行声明"组件类型"字段,引用 framework/index.md 的 45 类组件 slug,组合组件用 ` + ` 连接
+- [ ] 每个组件参数表 MUST 含 action 字段,格式 `event=behavior; ...`(五元组 tap/state/db/api/long-press;输入类可扩展 submit/focus/blur/input;容器可全为"无")
 - [ ] 所有颜色值引用产物层 `examples/ui-markdown/token.md`,**无硬编码色值字面量**
 - [ ] 二级页面用子目录嵌套(如 `setting/about.md`)
 - [ ] 跨页面复用组件放 `organisms/`,页面引用而非重复定义

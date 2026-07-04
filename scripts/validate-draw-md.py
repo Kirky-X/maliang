@@ -17,6 +17,7 @@
   4. frontmatter 必填字段缺失(error)
   5. 章节顺序错误(warning,仅 ui/ 一级页面)
   6. 二级页面文件位置(error,仅 ui/ 直接子文件)
+  7. 组件参数表缺 action 字段(error)
 """
 import argparse
 import os
@@ -270,6 +271,26 @@ def check_frontmatter(rel_path, text):
     return results
 
 
+def check_action_field(rel_path, lines):
+    """检查 7:组件参数表缺 action 字段(error)。
+
+    每个组件参数表(header 含"参数")MUST 含"action"行,描述组件交互行为
+    五元组(tap/state/db/api/long-press;输入类可扩展 submit/focus/blur/input)。
+    双列对比表(如 dock 选中/未选中态)的 action 在表内,首列应为 "action"。
+    """
+    results = []
+    for header_line, rows in _extract_param_tables(lines):
+        has_action = False
+        for line_no, cells in rows:
+            if cells and cells[0] == "action":
+                has_action = True
+                break
+        if not has_action:
+            results.append(("ERROR", rel_path, header_line,
+                            "组件参数表缺 'action' 字段(交互行为五元组 tap/state/db/api/long-press)"))
+    return results
+
+
 def check_section_order(rel_path, lines):
     """检查 5:章节顺序错误(warning,仅 ui/ 一级页面)。
 
@@ -375,7 +396,7 @@ def main(argv):
     def rel(path):
         return os.path.relpath(path, target_dir)
 
-    # ui 文件:检查 1-4 全做;检查 5/6 仅直接子文件
+    # ui 文件:检查 1-4 + 7 全做;检查 5/6 仅直接子文件
     for abs_path in ui_files:
         rp = rel(abs_path)
         with open(abs_path, "r", encoding="utf-8") as f:
@@ -385,11 +406,12 @@ def main(argv):
         all_results.extend(check_color_literals(rp, lines))
         all_results.extend(check_component_slugs(rp, lines, valid_slugs))
         all_results.extend(check_frontmatter(rp, text))
+        all_results.extend(check_action_field(rp, lines))
         if os.path.dirname(rp) == "ui":
             all_results.extend(check_section_order(rp, lines))
             all_results.extend(check_secondary_pages(rp))
 
-    # organisms 文件:仅检查 1-4
+    # organisms 文件:检查 1-4 + 7
     for abs_path in org_files:
         rp = rel(abs_path)
         with open(abs_path, "r", encoding="utf-8") as f:
@@ -399,6 +421,7 @@ def main(argv):
         all_results.extend(check_color_literals(rp, lines))
         all_results.extend(check_component_slugs(rp, lines, valid_slugs))
         all_results.extend(check_frontmatter(rp, text))
+        all_results.extend(check_action_field(rp, lines))
 
     # 排序:error 先于 warn,再按 file、line
     severity_rank = {"ERROR": 0, "WARN": 1}
