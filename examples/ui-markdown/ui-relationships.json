@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-07-05T05:46:57+08:00",
+  "target_dir": "/home/dev/projects/skills/maliang/examples/ui-markdown",
+  "pages": [
+    {
+      "path": "organisms/dock.md",
+      "name": "dock",
+      "parent": null,
+      "depth": 0,
+      "components": [
+        "navigation",
+        "button",
+        "icon",
+        "text"
+      ]
+    },
+    {
+      "path": "organisms/nav-bar.md",
+      "name": "nav-bar",
+      "parent": null,
+      "depth": 0,
+      "components": [
+        "navigation",
+        "button",
+        "icon",
+        "text"
+      ]
+    },
+    {
+      "path": "ui/home.md",
+      "name": "home",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "input",
+        "icon",
+        "grid",
+        "button",
+        "list",
+        "card"
+      ]
+    },
+    {
+      "path": "ui/setting/about.md",
+      "name": "about",
+      "parent": "setting",
+      "depth": 2,
+      "components": [
+        "navigation",
+        "image",
+        "text",
+        "list",
+        "button",
+        "icon"
+      ]
+    }
+  ],
+  "navigations": []
+}
