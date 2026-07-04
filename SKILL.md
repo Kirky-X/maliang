@@ -6,7 +6,7 @@ license: MIT
 
 # maliang (马良) —— 设计系统技能
 
-七个子命令构成一条完整流水线:design-md(创建 DESIGN.md)→ redesign(改版现有 UI)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ draw-harmony/draw-flutter/draw-element(框架代码)。
+十个子命令构成一条完整流水线:design-md(创建 DESIGN.md)→ redesign(改版现有 UI)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ draw-harmony/draw-flutter/draw-element(框架代码)→ ui-graph(UI 关系管理)· ip(IP 形象)/ip-handbook(IP 视觉手册)。
 
 - **design-md**(上游)— 产出 prose-first 的 **DESIGN.md**(YAML token + Markdown 设计理由,Google Labs agent-first 格式)。支持"创建、应用、验证、导出"四个动作。解决"设计系统**是什么、为什么**"。
 - **redesign**(上游旁路)— 改版现有 UI,8 维度审计 + 保留规则 + 现代化杠杆 + 决策树。支持 Refresh / Restructure / Rebuild 三模式。解决"**现有设计如何变好**"。
@@ -15,6 +15,9 @@ license: MIT
 - **draw-harmony**(下游)— 将 draw-md 逻辑 UI 转换为 HarmonyOS(ArkTS)框架实现。解决"HarmonyOS **代码怎么写**"。
 - **draw-flutter**(下游)— 将 draw-md 逻辑 UI 转换为 Flutter 框架实现。解决"Flutter **代码怎么写**"。
 - **draw-element**(下游)— 将 draw-md 逻辑 UI 转换为 Element Plus 框架实现。解决"Element Plus **代码怎么写**"。
+- **ui-graph**(关系管理)— 从 ui-markdown/ 产出 ui-relationships.json(层级 + 跳转) + ui-hash-state.json(哈希基线) + ui-implementation-map.json(逻辑 UI ↔ 实现映射)。解决"页面关系怎么管、变更怎么追、实现缺口在哪"。
+- **ip**(IP 形象)— 基于 DESIGN.md 调性构造 prompt,优先调用 text_to_image API 生成图片,fallback 输出结构化 prompt 文档。解决"项目 IP **形象怎么生**"。
+- **ip-handbook**(IP 视觉手册)— 8 模块产出规格(三视图/动作延展/表情包/字体/色彩/版式/周边物料/通用要求),2K 高清 3:4。解决"IP 视觉系统**怎么落地**"。
 
 ## 子命令路由
 
@@ -32,8 +35,12 @@ license: MIT
 | 🔴 将 UI markdown 转换为 HarmonyOS(ArkTS)代码  | draw-harmony  | [`references/commands/draw-harmony.md`](references/commands/draw-harmony.md) |
 | 🔴 将 UI markdown 转换为 Flutter(Dart)代码    | draw-flutter  | [`references/commands/draw-flutter.md`](references/commands/draw-flutter.md) |
 | 🔴 将 UI markdown 转换为 Element Plus(Vue 3)代码 | draw-element | [`references/commands/draw-element.md`](references/commands/draw-element.md) |
+| 🔷 生成 / 查询 UI 关系图(层级 + 跳转 + 哈希 + 实现映射) | ui-graph | [`references/commands/ui-graph.md`](references/commands/ui-graph.md) |
+| 🔷 查询跳转目标未生成 / 异常跳转 / 未实现页面 | ui-graph | [`references/commands/ui-graph.md`](references/commands/ui-graph.md) |
+| 🔷 基于 DESIGN.md 生成 IP 形象(API 优先,fallback prompt) | ip | [`references/commands/ip.md`](references/commands/ip.md) |
+| 🔷 生成 IP 视觉手册(三视图/动作/表情/字体/色彩/版式/周边) | ip-handbook | [`references/commands/ip-handbook.md`](references/commands/ip-handbook.md) |
 
-> 🔴 标记的行需先确认 draw-md 产出存在;preview/draw-* 无 UI markdown 输入时应在子命令流程内 fallback 引导用户回退到 draw-md。
+> 🔴 标记的行需先确认 draw-md 产出存在;preview/draw-* 无 UI markdown 输入时应在子命令流程内 fallback 引导用户回退到 draw-md。🔷 标记的行属新增能力,ui-graph 需先有 draw-md 产出,ip/ip-handbook 需先有 DESIGN.md。
 
 进入子命令后,按其流程文档执行。检查点、边界情形、交付核对清单均在各子命令文档内 —— **本路由器不含流程主体**。
 
@@ -41,9 +48,10 @@ license: MIT
 
 - **不确定用哪个?** 先 `design-md`。没有 DESIGN.md 就无法产出可靠的 `draw-md` 硬 token,更无法进行框架适配。
 - **完整流程链路**(每步产出 = 下步输入): `design-md`(→DESIGN.md) → `draw-md`(→examples/ui-markdown/*.md) → `preview`(→preview_*.html) → `draw-harmony`/`draw-flutter`/`draw-element`(→框架代码)
-- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局)在 [`references/dimensions/`](references/dimensions/) 下,另含 color-palettes(调色板库)、design-systems(参考设计系统)、glass-effect(liquid glass 基础配方)、glass-advanced(liquid glass SVG+WebGL 进阶折射);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),七个子命令共享参考,不在本路由器重复。
+- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局)在 [`references/dimensions/`](references/dimensions/) 下,另含 color-palettes(调色板库)、design-systems(参考设计系统)、glass-effect(liquid glass 基础配方)、glass-advanced(liquid glass SVG+WebGL 进阶折射);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),十个子命令共享参考,不在本路由器重复。
 - 默认页面清单(App 15 页 + Web 15 页,含 P0/P1/P2 选用规则)在 [`references/default-pages/index.md`](references/default-pages/index.md) 下,供 `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用。
 - 框架组件文档(按钮/文本/列表 × 三框架)在 [`references/framework/`](references/framework/index.md) 下,三个 draw-* 子命令共享。
+- UI 关系管理工具 [`scripts/ui-graph.py`](scripts/ui-graph.py) 提供 7 个子命令(generate/list-missing/check-nav/compute-hash/diff-hash/build-impl-map/list-unimplemented),纯 Python 标准库实现,产出 ui-relationships.json(层级 + 跳转)、ui-hash-state.json(哈希基线)、ui-implementation-map.json(逻辑 UI ↔ 实现映射),供 `ui-graph` 子命令调用;配套 [`scripts/validate-draw-md.py`](scripts/validate-draw-md.py) 含 12 项检查(aria/touch-target/dark-mode/motion/radius 等),供 `preview` 子命令校验。
 
 ## 失败模式与 fallback
 
@@ -53,6 +61,8 @@ license: MIT
 | DESIGN.md 缺失关键 token(如无 color.text) | 在子命令流程内列出缺失 token 清单,询问用户补全 | 用 `{color-text-primary}` 等标准命名占位,标注"假设值,需 DESIGN.md 确认" |
 | draw-* 找不到组件文档(framework/ 无对应类型) | 在 index.md 索引表查最接近的组件类型 | 用基础组件(button/text/list/layout)组合实现,标注"无原生对应,本方案为组合" |
 | 用户提供的 UI markdown 不符合 draw-md 规格(见禁止事项 #3) | 提示具体偏差(缺 token / 缺布局章节) | 引导用户重跑 draw-md,不要硬解析不规范输入;preview 设备尺寸不在 scripts/ 时用最接近尺寸替代 |
+| ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 examples/ip-character/ |
+| ui-graph 找不到 ui-relationships.json(未 generate) | 提示先跑 `python3 scripts/ui-graph.py generate --target examples/ui-markdown/` | 若 ui-markdown/ 为空,引导回退到 draw-md 先产出页面 markdown |
 
 ## 禁止事项(反例黑名单)
 1. **禁止跳过 design-md** — 无 DESIGN.md 直接产出 UI markdown 或框架代码,会导致 token 引用悬空、视觉不一致。
