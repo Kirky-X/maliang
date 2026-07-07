@@ -179,6 +179,46 @@ agent_config() {
   return 1
 }
 
+# ---------- dest 路径安全校验 ----------
+# rm -rf 前验证目标路径形态,防止误删非 agent 目录(/、/etc、$HOME 等)。
+# 三重防护:
+#   1. 非空且非根
+#   2. 形态匹配已知 agent 的 <folder>/<subdir>/(folder/subdir 派生自 AGENTS 数组)
+#   3. 词法规范化后仍位于 target 之下(防 skill_name 含 .. 或绝对路径逃逸)
+# 用法: validate_dest_path <dest> <target>
+# 返回 0 = 通过; 1 = 拒绝(已打印原因)
+validate_dest_path() {
+  local dest="$1" target="$2"
+  if [[ -z "$dest" || "$dest" == "/" ]]; then
+    err "拒绝删除: dest 为空或根目录: '$dest'"
+    return 1
+  fi
+  # 词法规范化(readlink -m 不要求路径存在),先解析 .. 与符号链接,再做后续形态判断。
+  # 关键:形态匹配必须基于规范化后的路径,否则 skill_name 含 .. 时(如
+  # /target/.claude/skills/../../etc)字面形态匹配通过但实际指向 target 内非 agent 目录。
+  local normalized
+  normalized="$(readlink -m "$dest" 2>/dev/null || printf '%s' "$dest")"
+  if [[ "$normalized" != "$target"/* ]]; then
+    err "拒绝删除: dest 规范化后超出 target: '$dest' -> '$normalized' (target='$target')"
+    return 1
+  fi
+  local line folder subdir matched=0
+  for line in "${AGENTS[@]}"; do
+    folder="${line#*|}"; folder="${folder%%|*}"
+    subdir="${line##*|}"
+    if [[ "$normalized" == */"$folder"/"$subdir"/* ]]; then
+      matched=1
+      break
+    fi
+  done
+  if [[ $matched -eq 0 ]]; then
+    err "拒绝删除: dest 不在已知 agent 目录下: '$dest' -> '$normalized'"
+    info "合法形态: <target>/<folder>/<subdir>/<skill-name>(folder/subdir 见 list-agents)"
+    return 1
+  fi
+  return 0
+}
+
 # ---------- 子命令: install ----------
 cmd_install() {
   [[ $# -ge 1 ]] || { err "install 需要 <skill-name>"; usage; exit 1; }
@@ -212,6 +252,12 @@ cmd_install() {
     dest="$TARGET_DIR/$folder/$subdir/$skill_name"
 
     # 清理后重建，避免残留旧文件
+    # 安全校验:rm -rf 前验证 dest 形态(防误删 /、/etc、$HOME 等非 agent 目录)
+    if ! validate_dest_path "$dest" "$TARGET_DIR"; then
+      failed=1
+      printf '%-10s %-58s %s%s%s\n' "$agent" "$dest" "$RED" "REJECTED" "$RESET"
+      continue
+    fi
     rm -rf "$dest"
     mkdir -p "$dest"
 
@@ -369,6 +415,7 @@ cmd_uninstall() {
   local agents
   agents="$(resolve_agents)"
 
+  local failed=0
   printf '%s%-10s %-58s %-8s%s\n' "$BOLD" "AGENT" "PATH" "STATUS" "$RESET"
   printf '%.0s-' {1..80}; printf '\n'
 
@@ -381,12 +428,21 @@ cmd_uninstall() {
     dest="$TARGET_DIR/$folder/$subdir/$skill_name"
 
     if [[ -d "$dest" ]]; then
+      # 安全校验:rm -rf 前验证 dest 形态(防误删非 agent 目录)
+      if ! validate_dest_path "$dest" "$TARGET_DIR"; then
+        failed=1
+        printf '%-10s %-58s %s%s%s\n' "$agent" "$dest" "$RED" "REJECTED" "$RESET"
+        continue
+      fi
       rm -rf "$dest"
       printf '%-10s %-58s %s%s%s\n' "$agent" "$dest" "$GREEN" "REMOVED" "$RESET"
     else
       printf '%-10s %-58s %s%s%s\n' "$agent" "$dest" "$YELLOW" "ABSENT" "$RESET"
     fi
   done <<< "$agents"
+
+  [[ $failed -ne 0 ]] && exit 1
+  return 0
 }
 
 # ---------- 子命令: list-skills ----------

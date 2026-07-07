@@ -2,29 +2,39 @@
 """draw-md 产物文档规范性检查脚本。
 
 用法:
-    python3 scripts/validate-draw-md.py [target_dir] [--token-file PATH] [--framework-file PATH]
+    python3 scripts/validate-draw-md.py [target_dir] [--token-file PATH] [--framework-file PATH] [--format {text,json}]
 
 默认 target_dir = examples/ui-markdown/。
 默认 token-file  = {target_dir}/token.md
 默认 framework-file = references/framework/index.md
+默认 format      = text
 退出码: 0 = 全部通过; 1 = 有 error; 2 = 仅有 warning。
 依赖: Python 3 标准库(无第三方依赖)。
 
-检查项:
-  1. 颜色/icon token 悬空引用(error)
-  2. 颜色硬编码字面量(error)
-  3. 组件类型字段缺失或自创 slug(error/warning)
-  4. frontmatter 必填字段缺失(error)
-  5. 章节顺序错误(warning,仅 ui/ 一级页面)
-  6. 二级页面文件位置(error,仅 ui/ 直接子文件)
-  7. 组件参数表缺 action 字段(error)
-  8. 暗色模式 token 引用覆盖(warning)
-  9. aria-label 可访问性(warning)
-  10. 触控区 ≥44px(error)
-  11. 动效 ≤400ms(error)
-  12. 卡片 radius 违规(error)
+输出格式:
+  text (默认): 人类可读,含头部信息、逐条 [ERROR]/[WARN] 发现、末尾统计。
+  json:        机器可读,stdout 仅输出 JSON 数组,每个元素形如
+                {"file","line","severity","rule","message"}
+                (前置错误如目录/文件缺失时输出 [] 并将错误写至 stderr)。
+                退出码语义不变,调用方可据 exit code 判定通过与否。
+
+检查项(每项对应一个 rule 标识,见 R_* 常量):
+  1. 颜色/icon token 悬空引用(error)            rule=token-ref
+  2. 颜色硬编码字面量(error)                     rule=color-literal
+  3. 组件类型字段缺失或自创 slug(error/warning)  rule=component-slug
+  4. frontmatter 必填字段缺失(error)             rule=frontmatter
+  5. 章节顺序错误(warning,仅 ui/ 一级页面)       rule=section-order
+  6. 二级页面文件位置(error,仅 ui/ 直接子文件)   rule=page-location
+  7. 组件参数表缺 action 字段(error)             rule=action-field
+  8. 暗色模式 token 引用覆盖(warning)            rule=dark-mode
+  9. aria-label 可访问性(warning)                rule=aria-label
+  10. 触控区 ≥44px(error)                        rule=touch-target
+  11. 动效 ≤400ms(error)                         rule=motion-duration
+  12. 卡片 radius 违规(error)                    rule=card-radius
 """
+
 import argparse
+import json
 import os
 import re
 import sys
@@ -36,13 +46,27 @@ import sys
 
 # frontmatter 必填字段
 REQUIRED_FRONTMATTER_FIELDS = [
-    "name", "description", "background", "updated", "version", "components",
+    "name",
+    "description",
+    "background",
+    "updated",
+    "version",
+    "components",
 ]
 
 # 已知二级页面 slug(直接放在 ui/ 根目录算 error,应放子目录如 ui/setting/)
 SECONDARY_PAGE_SLUGS = {
-    "about", "feedback", "privacy", "terms", "login", "signup",
-    "forgot-password", "agreement", "about-us", "register", "reset-password",
+    "about",
+    "feedback",
+    "privacy",
+    "terms",
+    "login",
+    "signup",
+    "forgot-password",
+    "agreement",
+    "about-us",
+    "register",
+    "reset-password",
 }
 
 # token 引用形式 {token-name}(kebab-case)
@@ -76,10 +100,25 @@ CLICKABLE_SLUGS = {"button", "icon", "link"}
 # 触控区最小尺寸(px)
 TOUCH_TARGET_MIN = 44
 
+# 规则标识(用于 --format json 输出的 rule 字段;每项检查一个稳定标识)
+RULE_TOKEN_REF = "token-ref"
+RULE_COLOR_LITERAL = "color-literal"
+RULE_COMPONENT_SLUG = "component-slug"
+RULE_FRONTMATTER = "frontmatter"
+RULE_ACTION_FIELD = "action-field"
+RULE_SECTION_ORDER = "section-order"
+RULE_PAGE_LOCATION = "page-location"
+RULE_DARK_MODE = "dark-mode"
+RULE_ARIA_LABEL = "aria-label"
+RULE_TOUCH_TARGET = "touch-target"
+RULE_MOTION_DURATION = "motion-duration"
+RULE_CARD_RADIUS = "card-radius"
+
 
 # ---------------------------------------------------------------------------
 # 解析函数
 # ---------------------------------------------------------------------------
+
 
 def parse_token_file(path):
     """解析 token.md,提取所有 token 名。
@@ -170,7 +209,9 @@ def parse_frontmatter(text):
 
 def _strip_quotes(v):
     """去掉值两端的引号(单引号或双引号)。"""
-    if len(v) >= 2 and ((v[0] == '"' and v[-1] == '"') or (v[0] == "'" and v[-1] == "'")):
+    if len(v) >= 2 and (
+        (v[0] == '"' and v[-1] == '"') or (v[0] == "'" and v[-1] == "'")
+    ):
         return v[1:-1]
     return v
 
@@ -186,7 +227,11 @@ def _extract_param_tables(lines):
     n = len(lines)
     while i < n:
         line = lines[i]
-        if line.strip().startswith("|") and i + 1 < n and TABLE_SEP_RE.match(lines[i + 1]):
+        if (
+            line.strip().startswith("|")
+            and i + 1 < n
+            and TABLE_SEP_RE.match(lines[i + 1])
+        ):
             header_cells = [c.strip() for c in line.strip().strip("|").split("|")]
             if "参数" in header_cells:
                 rows = []
@@ -218,6 +263,7 @@ def _extract_slugs_from_value(value):
 # 检查函数(每个返回 list of (severity, file, line, message))
 # ---------------------------------------------------------------------------
 
+
 def check_token_references(rel_path, lines, valid_tokens):
     """检查 1:颜色/icon token 悬空引用(error)。
 
@@ -234,8 +280,9 @@ def check_token_references(rel_path, lines, valid_tokens):
         for m in TOKEN_REF_RE.finditer(line):
             name = m.group(1)
             if name not in valid_tokens:
-                results.append(("ERROR", rel_path, i,
-                                "悬空 token 引用: {" + name + "}"))
+                results.append(
+                    ("ERROR", rel_path, i, "悬空 token 引用: {" + name + "}")
+                )
     return results
 
 
@@ -250,11 +297,23 @@ def check_color_literals(rel_path, lines):
         if TABLE_SEP_RE.match(line):
             continue
         for m in HEX_COLOR_RE.finditer(line):
-            results.append(("ERROR", rel_path, i,
-                            "颜色硬编码字面量: " + m.group(0) + ",应引用 token"))
+            results.append(
+                (
+                    "ERROR",
+                    rel_path,
+                    i,
+                    "颜色硬编码字面量: " + m.group(0) + ",应引用 token",
+                )
+            )
         for m in RGBA_COLOR_RE.finditer(line):
-            results.append(("ERROR", rel_path, i,
-                            "颜色硬编码字面量: " + m.group(0) + ",应引用 token"))
+            results.append(
+                (
+                    "ERROR",
+                    rel_path,
+                    i,
+                    "颜色硬编码字面量: " + m.group(0) + ",应引用 token",
+                )
+            )
     return results
 
 
@@ -272,16 +331,24 @@ def check_component_slugs(rel_path, lines, valid_slugs):
                 type_row = (line_no, cells)
                 break
         if type_row is None:
-            results.append(("WARN", rel_path, header_line,
-                            "组件参数表缺'组件类型'字段"))
+            results.append(
+                ("WARN", rel_path, header_line, "组件参数表缺'组件类型'字段")
+            )
             continue
         line_no, cells = type_row
         value = cells[1] if len(cells) > 1 else ""
         for slug in _extract_slugs_from_value(value):
             if slug not in valid_slugs:
-                results.append(("ERROR", rel_path, line_no,
-                                "自创组件 slug: " + slug +
-                                ",应引用 framework/index.md 的 45 类"))
+                results.append(
+                    (
+                        "ERROR",
+                        rel_path,
+                        line_no,
+                        "自创组件 slug: "
+                        + slug
+                        + ",应引用 framework/index.md 的 45 类",
+                    )
+                )
     return results
 
 
@@ -291,12 +358,12 @@ def check_frontmatter(rel_path, text):
     fm = parse_frontmatter(text)
     for field in REQUIRED_FRONTMATTER_FIELDS:
         if field not in fm or not fm[field]:
-            results.append(("ERROR", rel_path, 0,
-                            "frontmatter 缺失字段: " + field))
+            results.append(("ERROR", rel_path, 0, "frontmatter 缺失字段: " + field))
     bg = _strip_quotes(fm.get("background", ""))
     if bg and not TOKEN_REF_RE.search(bg):
-        results.append(("ERROR", rel_path, 0,
-                        "frontmatter background 未引用 token: " + bg))
+        results.append(
+            ("ERROR", rel_path, 0, "frontmatter background 未引用 token: " + bg)
+        )
     return results
 
 
@@ -315,8 +382,14 @@ def check_action_field(rel_path, lines):
                 has_action = True
                 break
         if not has_action:
-            results.append(("ERROR", rel_path, header_line,
-                            "组件参数表缺 'action' 字段(交互行为五元组 tap/state/db/api/long-press)"))
+            results.append(
+                (
+                    "ERROR",
+                    rel_path,
+                    header_line,
+                    "组件参数表缺 'action' 字段(交互行为五元组 tap/state/db/api/long-press)",
+                )
+            )
     return results
 
 
@@ -336,11 +409,9 @@ def check_section_order(rel_path, lines):
     first_title = h2[0][1]
     last_title = h2[-1][1]
     if not ("导航" in first_title or "nav-bar" in first_title or "nav" in first_title):
-        results.append(("WARN", rel_path, h2[0][0],
-                        "章节顺序: 第一章非导航"))
+        results.append(("WARN", rel_path, h2[0][0], "章节顺序: 第一章非导航"))
     if not ("dock" in last_title or "底部" in last_title):
-        results.append(("WARN", rel_path, h2[-1][0],
-                        "章节顺序: 最后一章非 dock"))
+        results.append(("WARN", rel_path, h2[-1][0], "章节顺序: 最后一章非 dock"))
     return results
 
 
@@ -357,8 +428,7 @@ def check_secondary_pages(rel_path):
     slug = m.group(1)
     if slug in SECONDARY_PAGE_SLUGS:
         suggested = "ui/setting/" + slug + ".md"
-        results.append(("ERROR", rel_path, 0,
-                        "二级页面应放在子目录: " + suggested))
+        results.append(("ERROR", rel_path, 0, "二级页面应放在子目录: " + suggested))
     return results
 
 
@@ -386,9 +456,14 @@ def check_dark_mode_coverage(rel_path, lines, valid_tokens=None):
                 has_dark_section = True
                 break
     if not has_dark_token and not has_dark_section:
-        results.append(("WARN", rel_path, 0,
-                        "页面未引用任何 dark token 且无'## 暗色模式'章节,"
-                        "暗色模式覆盖缺失"))
+        results.append(
+            (
+                "WARN",
+                rel_path,
+                0,
+                "页面未引用任何 dark token 且无'## 暗色模式'章节,暗色模式覆盖缺失",
+            )
+        )
     return results
 
 
@@ -420,9 +495,14 @@ def check_aria_labels(rel_path, lines):
                 has_aria = True
                 break
         if not has_aria:
-            results.append(("WARN", rel_path, line_no,
-                            "交互组件 " + "+".join(interactive) +
-                            " 缺少 aria-label 字段"))
+            results.append(
+                (
+                    "WARN",
+                    rel_path,
+                    line_no,
+                    "交互组件 " + "+".join(interactive) + " 缺少 aria-label 字段",
+                )
+            )
     return results
 
 
@@ -451,8 +531,12 @@ def check_touch_target(rel_path, lines):
             if not row_cells:
                 continue
             field = row_cells[0].lower()
-            if ("width" not in field and "height" not in field
-                    and "宽度" not in field and "高度" not in field):
+            if (
+                "width" not in field
+                and "height" not in field
+                and "宽度" not in field
+                and "高度" not in field
+            ):
                 continue
             row_value = row_cells[1] if len(row_cells) > 1 else ""
             if "match-parent" in row_value.lower():
@@ -461,9 +545,14 @@ def check_touch_target(rel_path, lines):
             if m:
                 size = int(m.group(1))
                 if size < TOUCH_TARGET_MIN:
-                    results.append(("ERROR", rel_path, row_line_no,
-                                    "可点击组件 " + str(size) +
-                                    "px <44px,触控区不足"))
+                    results.append(
+                        (
+                            "ERROR",
+                            rel_path,
+                            row_line_no,
+                            "可点击组件 " + str(size) + "px <44px,触控区不足",
+                        )
+                    )
     return results
 
 
@@ -480,9 +569,14 @@ def check_motion_duration(rel_path, lines):
         for m in MS_DURATION_RE.finditer(line):
             duration = int(m.group(1))
             if duration > 400:
-                results.append(("ERROR", rel_path, i,
-                                "动效 " + str(duration) +
-                                "ms >400ms 硬约束违规"))
+                results.append(
+                    (
+                        "ERROR",
+                        rel_path,
+                        i,
+                        "动效 " + str(duration) + "ms >400ms 硬约束违规",
+                    )
+                )
     return results
 
 
@@ -515,14 +609,21 @@ def check_card_radius(rel_path, lines):
                 continue
             row_value = row_cells[1] if len(row_cells) > 1 else ""
             if "{radius-md}" in row_value:
-                results.append(("ERROR", rel_path, row_line_no,
-                                "卡片组件使用 radius-md 违规,应用 radius-lg"))
+                results.append(
+                    (
+                        "ERROR",
+                        rel_path,
+                        row_line_no,
+                        "卡片组件使用 radius-md 违规,应用 radius-lg",
+                    )
+                )
     return results
 
 
 # ---------------------------------------------------------------------------
 # 文件收集与主流程
 # ---------------------------------------------------------------------------
+
 
 def collect_md_files(root):
     """递归收集 root 下所有 .md 文件(绝对路径),按路径排序。"""
@@ -534,39 +635,112 @@ def collect_md_files(root):
     return sorted(result)
 
 
+def _tag(rule, check_results):
+    """为 4-tuple 检查结果附加 rule 字段,转为 5-tuple。
+
+    输入: check_* 返回的 (severity, file, line, message) 列表
+    输出: (severity, file, line, rule, message) 列表
+    """
+    return [(sev, f, ln, rule, msg) for (sev, f, ln, msg) in check_results]
+
+
+def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level):
+    """对单个文件运行检查 1-12,返回 5-tuple 列表 (severity, file, line, rule, message)。
+
+    检查 5 (section-order) / 检查 6 (page-location) 仅对 ui/ 直接子文件运行
+    (is_ui_top_level=True),其余 10 项对所有 ui/organisms 文件运行。
+    """
+    results = []
+    results.extend(
+        _tag(RULE_TOKEN_REF, check_token_references(rel_path, lines, valid_tokens))
+    )
+    results.extend(_tag(RULE_COLOR_LITERAL, check_color_literals(rel_path, lines)))
+    results.extend(
+        _tag(RULE_COMPONENT_SLUG, check_component_slugs(rel_path, lines, valid_slugs))
+    )
+    results.extend(_tag(RULE_FRONTMATTER, check_frontmatter(rel_path, text)))
+    results.extend(_tag(RULE_ACTION_FIELD, check_action_field(rel_path, lines)))
+    results.extend(
+        _tag(RULE_DARK_MODE, check_dark_mode_coverage(rel_path, lines, valid_tokens))
+    )
+    results.extend(_tag(RULE_ARIA_LABEL, check_aria_labels(rel_path, lines)))
+    results.extend(_tag(RULE_TOUCH_TARGET, check_touch_target(rel_path, lines)))
+    results.extend(_tag(RULE_MOTION_DURATION, check_motion_duration(rel_path, lines)))
+    results.extend(_tag(RULE_CARD_RADIUS, check_card_radius(rel_path, lines)))
+    if is_ui_top_level:
+        results.extend(_tag(RULE_SECTION_ORDER, check_section_order(rel_path, lines)))
+        results.extend(_tag(RULE_PAGE_LOCATION, check_secondary_pages(rel_path)))
+    return results
+
+
 def main(argv):
-    parser = argparse.ArgumentParser(
-        description="maliang draw-md 文档规范性检查")
-    parser.add_argument("target_dir", nargs="?", default="examples/ui-markdown",
-                        help="目标目录(默认 examples/ui-markdown)")
-    parser.add_argument("--token-file", default=None,
-                        help="token.md 路径(默认 {target_dir}/token.md)")
-    parser.add_argument("--framework-file", default=None,
-                        help="framework/index.md 路径(默认 references/framework/index.md)")
+    parser = argparse.ArgumentParser(description="maliang draw-md 文档规范性检查")
+    parser.add_argument(
+        "target_dir",
+        nargs="?",
+        default="examples/ui-markdown",
+        help="目标目录(默认 examples/ui-markdown)",
+    )
+    parser.add_argument(
+        "--token-file", default=None, help="token.md 路径(默认 {target_dir}/token.md)"
+    )
+    parser.add_argument(
+        "--framework-file",
+        default=None,
+        help="framework/index.md 路径(默认 references/framework/index.md)",
+    )
+    parser.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="输出格式: text(人类可读,默认) / json(机器可读,stdout 仅 JSON 数组)",
+    )
     args = parser.parse_args(argv[1:])
+    fmt = args.format
 
     target_dir = os.path.abspath(args.target_dir)
-    token_file = os.path.abspath(args.token_file or os.path.join(target_dir, "token.md"))
+    token_file = os.path.abspath(
+        args.token_file or os.path.join(target_dir, "token.md")
+    )
     framework_file = os.path.abspath(
-        args.framework_file or os.path.join(os.getcwd(), "references", "framework", "index.md"))
+        args.framework_file
+        or os.path.join(os.getcwd(), "references", "framework", "index.md")
+    )
 
-    # 头部输出
-    print("maliang draw-md 文档规范性检查")
-    print("=" * 32)
-    print("目标目录: " + target_dir)
-    print("Token 文件: " + token_file)
-    print("Framework 文件: " + framework_file)
-    print("")
+    # 头部输出(json 模式保持 stdout 纯净,仅末尾输出 JSON 数组)
+    if fmt == "text":
+        print("maliang draw-md 文档规范性检查")
+        print("=" * 32)
+        print("目标目录: " + target_dir)
+        print("Token 文件: " + token_file)
+        print("Framework 文件: " + framework_file)
+        print("")
 
     # 目录/文件存在性(缺失即终止,显性失败)
+    # json 模式:stdout 输出空数组 [],错误信息写 stderr,退出码 1
     if not os.path.isdir(target_dir):
-        print("[ERROR] 目标目录不存在: " + target_dir)
+        msg = "目标目录不存在: " + target_dir
+        if fmt == "json":
+            print("[]")
+            print("[ERROR] " + msg, file=sys.stderr)
+        else:
+            print("[ERROR] " + msg)
         return 1
     if not os.path.isfile(token_file):
-        print("[ERROR] token 文件不存在: " + token_file)
+        msg = "token 文件不存在: " + token_file
+        if fmt == "json":
+            print("[]")
+            print("[ERROR] " + msg, file=sys.stderr)
+        else:
+            print("[ERROR] " + msg)
         return 1
     if not os.path.isfile(framework_file):
-        print("[ERROR] framework 文件不存在: " + framework_file)
+        msg = "framework 文件不存在: " + framework_file
+        if fmt == "json":
+            print("[]")
+            print("[ERROR] " + msg, file=sys.stderr)
+        else:
+            print("[ERROR] " + msg)
         return 1
 
     valid_tokens = parse_token_file(token_file)
@@ -589,65 +763,66 @@ def main(argv):
         with open(abs_path, "r", encoding="utf-8") as f:
             text = f.read()
         lines = text.splitlines()
-        all_results.extend(check_token_references(rp, lines, valid_tokens))
-        all_results.extend(check_color_literals(rp, lines))
-        all_results.extend(check_component_slugs(rp, lines, valid_slugs))
-        all_results.extend(check_frontmatter(rp, text))
-        all_results.extend(check_action_field(rp, lines))
-        all_results.extend(check_dark_mode_coverage(rp, lines, valid_tokens))
-        all_results.extend(check_aria_labels(rp, lines))
-        all_results.extend(check_touch_target(rp, lines))
-        all_results.extend(check_motion_duration(rp, lines))
-        all_results.extend(check_card_radius(rp, lines))
-        if os.path.dirname(rp) == "ui":
-            all_results.extend(check_section_order(rp, lines))
-            all_results.extend(check_secondary_pages(rp))
+        all_results.extend(
+            run_checks(
+                rp, text, lines, valid_tokens, valid_slugs, os.path.dirname(rp) == "ui"
+            )
+        )
 
-    # organisms 文件:检查 1-4 + 7-12
+    # organisms 文件:检查 1-4 + 7-12(无 5/6)
     for abs_path in org_files:
         rp = rel(abs_path)
         with open(abs_path, "r", encoding="utf-8") as f:
             text = f.read()
         lines = text.splitlines()
-        all_results.extend(check_token_references(rp, lines, valid_tokens))
-        all_results.extend(check_color_literals(rp, lines))
-        all_results.extend(check_component_slugs(rp, lines, valid_slugs))
-        all_results.extend(check_frontmatter(rp, text))
-        all_results.extend(check_action_field(rp, lines))
-        all_results.extend(check_dark_mode_coverage(rp, lines, valid_tokens))
-        all_results.extend(check_aria_labels(rp, lines))
-        all_results.extend(check_touch_target(rp, lines))
-        all_results.extend(check_motion_duration(rp, lines))
-        all_results.extend(check_card_radius(rp, lines))
+        all_results.extend(
+            run_checks(rp, text, lines, valid_tokens, valid_slugs, False)
+        )
 
     # 排序:error 先于 warn,再按 file、line
     severity_rank = {"ERROR": 0, "WARN": 1}
     all_results.sort(key=lambda r: (severity_rank.get(r[0], 9), r[1], r[2]))
 
-    # 输出
-    error_count = 0
-    warn_count = 0
-    for severity, file, line, msg in all_results:
-        label = "[ERROR]" if severity == "ERROR" else "[WARN] "
-        if line > 0:
-            print("{} {}:{} {}".format(label, file, line, msg))
-        else:
-            print("{} {} {}".format(label, file, msg))
-        if severity == "ERROR":
-            error_count += 1
-        else:
-            warn_count += 1
+    # 统计
+    error_count = sum(1 for r in all_results if r[0] == "ERROR")
+    warn_count = sum(1 for r in all_results if r[0] == "WARN")
 
-    print("")
-    print("=" * 32)
-    print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
+    # 输出
+    if fmt == "json":
+        # 机器可读:stdout 仅输出 JSON 数组,每元素 {file,line,severity,rule,message}
+        findings = [
+            {
+                "file": f,
+                "line": ln,
+                "severity": sev,
+                "rule": rule,
+                "message": msg,
+            }
+            for (sev, f, ln, rule, msg) in all_results
+        ]
+        print(json.dumps(findings, ensure_ascii=False))
+    else:
+        for sev, f, ln, _rule, msg in all_results:
+            label = "[ERROR]" if sev == "ERROR" else "[WARN] "
+            if ln > 0:
+                print("{} {}:{} {}".format(label, f, ln, msg))
+            else:
+                print("{} {} {}".format(label, f, msg))
+        print("")
+        print("=" * 32)
+        print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
+
+    # 退出码:0=通过,1=有 error,2=仅有 warning(json 模式不打印退出码行,保持 stdout 纯净)
     if error_count > 0:
-        print("退出码: 1")
+        if fmt == "text":
+            print("退出码: 1")
         return 1
     if warn_count > 0:
-        print("退出码: 2")
+        if fmt == "text":
+            print("退出码: 2")
         return 2
-    print("退出码: 0")
+    if fmt == "text":
+        print("退出码: 0")
     return 0
 
 
