@@ -2,7 +2,7 @@
   "name": "maliang",
   "description": "前端设计生成技能，DESIGN.md 设计系统+UI markdown+三框架适配。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/Tailwind/CSS/DTCG/转 HarmonyOS/Flutter/Element Plus/redesign/重设计/refresh/restructure/rebuild",
   "license": "MIT",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "author": "Kirky-X",
   "repo": "https://github.com/Kirky-X/maliang",
   "homepage": "https://github.com/Kirky-X/maliang",

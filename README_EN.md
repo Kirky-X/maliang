@@ -1,7 +1,8 @@
 # Maliang (马良) — Design System Skill
 
-[![GitHub Release](https://img.shields.io/github/v/release/Kirky-X/maliang?style=flat-square)](https://github.com/Kirky-X/maliang/releases)
-[![GitHub License](https://img.shields.io/github/license/Kirky-X/maliang?style=flat-square)](LICENSE)
+[中文](README.md)
+
+[![GitHub Release](https://img.shields.io/github/v/release/Kirky-X/maliang?style=flat-square)](https://github.com/Kirky-X/maliang/releases) [![GitHub License](https://img.shields.io/github/license/Kirky-X/maliang?style=flat-square)](LICENSE)
 
 maliang is a design system skill for AI agents, using Google Labs agent-first format (YAML tokens + Markdown design rationale). It provides six subcommands forming a complete pipeline: `design-md` produces prose-first `DESIGN.md`, `draw-md` generates page-level hard-token UI markdown from `DESIGN.md`, `preview` renders real-time previews using Element Plus, and `draw-harmony` / `draw-flutter` / `draw-element` convert the logical UI markdown into framework-specific implementation code.
 
@@ -148,9 +149,11 @@ examples/
 
 ## Full Pipeline
 
-```
-design-md ──► draw-md ──► preview ──► draw-harmony / draw-flutter / draw-element
-(Design Sys) (Logic UI)  (Preview)    (Framework impl)
+```mermaid
+flowchart LR
+    A["design-md<br/>(Design Sys)"] --> B["draw-md<br/>(Logic UI)"]
+    B --> C["preview<br/>(Preview)"]
+    C --> D["draw-harmony / draw-flutter / draw-element<br/>(Framework impl)"]
 ```
 
 1. `design-md` outputs DESIGN.md (design system specification)
