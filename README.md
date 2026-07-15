@@ -1,7 +1,8 @@
 # Maliang (马良) —— 设计系统技能
 
-[![GitHub Release](https://img.shields.io/github/v/release/Kirky-X/maliang?style=flat-square)](https://github.com/Kirky-X/maliang/releases)
-[![GitHub License](https://img.shields.io/github/license/Kirky-X/maliang?style=flat-square)](LICENSE)
+[English](README_EN.md)
+
+[![GitHub Release](https://img.shields.io/github/v/release/Kirky-X/maliang?style=flat-square)](https://github.com/Kirky-X/maliang/releases) [![GitHub License](https://img.shields.io/github/license/Kirky-X/maliang?style=flat-square)](LICENSE)
 
 maliang 是一个面向 AI agent 的设计系统 skill,采用 Google Labs agent-first 格式(YAML token + Markdown 设计理由)。它通过六个子命令构成一条完整流水线:`design-md` 产出 prose-first 的 `DESIGN.md`,`draw-md` 从 `DESIGN.md` 产出页面级硬 token UI markdown,`preview` 使用 Element Plus 框架实时预览验证,`draw-harmony` / `draw-flutter` / `draw-element` 将逻辑 UI markdown 转换为具体框架实现代码。
 
@@ -148,9 +149,11 @@ examples/
 
 ## 完整流程链路
 
-```
-design-md ──► draw-md ──► preview ──► draw-harmony / draw-flutter / draw-element
-(设计系统)   (逻辑稿)    (预览验证)   (框架实现)
+```mermaid
+flowchart LR
+    A["design-md<br/>(设计系统)"] --> B["draw-md<br/>(逻辑稿)"]
+    B --> C["preview<br/>(预览验证)"]
+    C --> D["draw-harmony / draw-flutter / draw-element<br/>(框架实现)"]
 ```
 
 1. `design-md` 产出 DESIGN.md(设计系统规范)
