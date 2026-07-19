@@ -1,31 +1,31 @@
-# Menu 组件 API 文档
+# Menu Component API Documentation
 
-> ArkTS 菜单组件,`Menu`(菜单容器)+ `MenuItem`(菜单项)。通过 `bindMenu` / `bindContextMenu` 绑定到触发组件。
+> ArkTS menu components: `Menu` (menu container) + `MenuItem` (menu item). Bound to trigger components via `bindMenu` / `bindContextMenu`.
 
-## 组件定义
+## Component Definition
 
-`Menu` 不直接渲染,需通过 `bindMenu(builder)` 或 `bindContextMenu(builder, type)` 绑定到组件,点击/长按触发弹出。
+`Menu` does not render directly; it must be bound to components via `bindMenu(builder)` or `bindContextMenu(builder, type)`, triggered by click/long-press to pop up.
 
-## 绑定方法
+## Binding Methods
 
-| 方法 | 触发方式 |
+| Method | Trigger |
 | --- | --- |
-| `bindMenu(builder \| array)` | 点击触发 |
-| `bindContextMenu(builder, type)` | 长按/右键触发(ResponseType.LongPress / RightClick) |
+| `bindMenu(builder \| array)` | Click trigger |
+| `bindContextMenu(builder, type)` | Long-press/right-click trigger (ResponseType.LongPress / RightClick) |
 
-## MenuItem 属性
+## MenuItem Properties
 
-| 属性 | 类型 | 说明 |
+| Property | Type | Description |
 | --- | --- | --- |
-| content | string \| Resource | 菜单文字 |
-| icon | Resource | 菜单图标 |
-| symbolStyle | SymbolGlyphStyle | 符号图标样式 |
-| enabled | boolean | 是否可用 |
-| action | () => void | 点击回调 |
-| labelInfo | string \| Resource | 辅助说明 |
-| startIcon / endIcon | Resource | 起始/末尾图标 |
+| content | string \| Resource | Menu text |
+| icon | Resource | Menu icon |
+| symbolStyle | SymbolGlyphStyle | Symbol icon style |
+| enabled | boolean | Whether enabled |
+| action | () => void | Click callback |
+| labelInfo | string \| Resource | Auxiliary description |
+| startIcon / endIcon | Resource | Start/end icons |
 
-## 数组式 bindMenu(简化用法)
+## Array-style bindMenu (Simplified Usage)
 
 ```arkts
 .bindMenu([
@@ -34,7 +34,7 @@
 ])
 ```
 
-## 最小示例
+## Minimal Example
 
 ```arkts
 @Entry
@@ -54,13 +54,13 @@ struct MenuDemo {
 }
 ```
 
-## 关联组件
+## Related Components
 
-- [`dropdown`](../dropdown/component.md) — 下拉选择基于 Menu 组合
-- [`popover`](../popover/component.md) — 气泡提示(Popup)
+- [`dropdown`](../dropdown/component.md) — Dropdown selection based on Menu combination
+- [`popover`](../popover/component.md) — Bubble prompt (Popup)
 
-## 参考链接
+## Reference Links
 
-- ArkTS 官方文档 - 菜单: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-use-menu
-- 菜单控制 (Menu): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-popup-and-menu-components-menu
-- 全局菜单 (openMenu): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-popup-and-menu-components-uicontext-menu
+- ArkTS Official Documentation - Menu: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-use-menu
+- Menu Control (Menu): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-popup-and-menu-components-menu
+- Global Menu (openMenu): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-popup-and-menu-components-uicontext-menu

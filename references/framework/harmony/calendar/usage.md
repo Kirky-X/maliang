@@ -1,8 +1,8 @@
-# Calendar 使用场景与示例
+# Calendar Usage Scenarios and Examples
 
-> 列举 ArkTS 日历/日期选择的典型使用场景。所有颜色、间距、圆角通过 design token 引用。
+> Lists typical usage scenarios for ArkTS calendar/date selection. All colors, spacing, and border-radius are referenced via design tokens.
 
-## 场景 1:日期选择弹窗(DatePickerDialog)
+## Scenario 1: Date Selection Dialog (DatePickerDialog)
 
 ```arkts
 @Entry
@@ -31,7 +31,7 @@ struct DatePickPage {
 }
 ```
 
-## 场景 2:时间选择(TimePickerDialog)
+## Scenario 2: Time Selection (TimePickerDialog)
 
 ```arkts
 @Entry
@@ -58,7 +58,7 @@ struct TimePickPage {
 }
 ```
 
-## 场景 3:日期范围选择(两个 DatePicker)
+## Scenario 3: Date Range Selection (Two DatePickers)
 
 ```arkts
 @Entry
@@ -89,9 +89,9 @@ struct DateRangePage {
 }
 ```
 
-## 场景 4:内嵌日历(自定义网格实现)
+## Scenario 4: Embedded Calendar (Custom Grid Implementation)
 
-无 CalendarPicker 时,用 Grid 自行实现月历。
+When CalendarPicker is not available, use Grid to implement a monthly calendar.
 
 ```arkts
 @Entry
@@ -124,11 +124,11 @@ struct CustomCalendarPage {
 }
 ```
 
-## 注意事项
+## Notes
 
-1. **月份从 0 开始** — `DatePickerResult.month` 是 0-11,显示需 +1;容易出错。
-2. **DatePickerDialog 推荐** — 系统自带滚轮日期选择,体验一致;优先于自绘日历。
-3. **范围校验** — 自定义日期范围需校验 start ≤ end,避免逻辑错误。
-4. **自绘日历复杂** — 含跨月、闰年、星期对齐;非必要用系统 DatePicker。
-5. **padStart 补零** — 月份/日期不足两位补零,保证格式统一(如 `2026-07-01`)。
-6. **i18n 日期格式** — 不同地区日期格式不同,用 `intl.DateTimeFormat` 格式化。
+1. **Months start from 0** — `DatePickerResult.month` is 0-11, display needs +1; easy to make mistakes.
+2. **DatePickerDialog recommended** — system built-in wheel date picker, consistent UX; prefer over custom-drawn calendar.
+3. **Range validation** — custom date ranges need to validate start ≤ end, avoid logical errors.
+4. **Custom calendar is complex** — includes cross-month, leap year, weekday alignment; use system DatePicker unless necessary.
+5. **padStart zero-padding** — months/days less than two digits pad with zeros, ensure format consistency (e.g., `2026-07-01`).
+6. **i18n date format** — different regions have different date formats, use `intl.DateTimeFormat` for formatting.

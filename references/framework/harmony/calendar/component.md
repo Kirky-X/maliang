@@ -1,30 +1,30 @@
-# Calendar 组件 API 文档
+# Calendar Component API Documentation
 
-> ArkTS 日历组件 `Calendar` / `CalendarPicker`,用于日期选择与日历展示。
+> ArkTS calendar components `Calendar` / `CalendarPicker`, used for date selection and calendar display.
 
-## 组件定义
+## Component Definition
 
-| 组件 | 用途 |
+| Component | Purpose |
 | --- | --- |
-| `Calendar` | 日历展示(可能需配合日历服务) |
-| `CalendarPicker` | 日期选择器(独立组件,弹窗或内嵌) |
+| `Calendar` | Calendar display (may require calendar service integration) |
+| `CalendarPicker` | Date picker (standalone component, dialog or embedded) |
 
-## 核心属性(CalendarPicker 参考)
+## Core Properties (CalendarPicker Reference)
 
-| 属性 | 类型 | 说明 |
+| Property | Type | Description |
 | --- | --- | --- |
-| selectedDate | Date | 当前选中日期 |
-| startDate / endDate | Date | 可选范围 |
-| onDateChange | (date: Date) => void | 日期变化回调 |
-| onAccept | (date: Date) => void | 确认回调 |
+| selectedDate | Date | Currently selected date |
+| startDate / endDate | Date | Selectable range |
+| onDateChange | (date: Date) => void | Date change callback |
+| onAccept | (date: Date) => void | Confirmation callback |
 
-## 通用日期选择替代方案
+## Common Date Selection Alternatives
 
-由于 `CalendarPicker` 在不同 API 版本可用性不一,常用替代:
-- `DatePicker` — 滚轮式日期选择(年/月/日三列)
-- `DatePickerDialog` — 日期选择弹窗
+Due to `CalendarPicker` availability varying across API versions, common alternatives include:
+- `DatePicker` — wheel-style date selection (year/month/day three columns)
+- `DatePickerDialog` — date selection dialog
 
-## DatePickerDialog 用法
+## DatePickerDialog Usage
 
 ```arkts
 DatePickerDialog.show({
@@ -37,7 +37,7 @@ DatePickerDialog.show({
 })
 ```
 
-## 最小示例
+## Minimal Example
 
 ```arkts
 @Entry
@@ -60,13 +60,13 @@ struct CalendarDemo {
 }
 ```
 
-## 关联组件
+## Related Components
 
-- [`input`](../input/component.md) — 日期可输入到 TextInput
-- [`dialog`](../dialog/component.md) — 日期选择弹窗
+- [`input`](../input/component.md) — Date can be input into TextInput
+- [`dialog`](../dialog/component.md) — Date selection dialog
 
-## 参考链接
+## Reference Links
 
-- ArkTS 官方文档:无独立章节(Calendar/CalendarPicker 散见各 API 文档)
-- 相关组件:[`input`](../input/component.md) / [`dialog`](../dialog/component.md)
-- 弹窗概述: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-dialog-overview
+- ArkTS Official Documentation: No independent chapter (Calendar/CalendarPicker scattered across API documentation)
+- Related components: [`input`](../input/component.md) / [`dialog`](../dialog/component.md)
+- Dialog Overview: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-dialog-overview

@@ -1,8 +1,8 @@
-# Steps 使用场景与示例
+# Steps Usage Scenarios and Examples
 
-> ArkTS 无原生 Steps,本文件给出基于 Row+Icon 的组合实现方案。所有颜色、间距、圆角通过 design token 引用。
+> ArkTS does not have a native Steps component. This file provides a combined implementation solution based on Row+Icon. All colors, spacing, and border-radius are referenced via design tokens.
 
-## 场景 1:横向步骤条(订单流程)
+## Scenario 1: Horizontal Steps (Order Process)
 
 ```arkts
 @Entry
@@ -43,7 +43,7 @@ struct HorizontalStepsPage {
 }
 ```
 
-## 场景 2:纵向步骤条
+## Scenario 2: Vertical Steps
 
 ```arkts
 @Entry
@@ -78,7 +78,7 @@ struct VerticalStepsPage {
 }
 ```
 
-## 场景 3:可点击切换步骤
+## Scenario 3: Clickable Step Switching
 
 ```arkts
 @Entry
@@ -116,11 +116,11 @@ struct ClickableStepsPage {
 }
 ```
 
-## 注意事项
+## Notes
 
-1. **连接线 layoutWeight** — 横向步骤线用固定宽度,纵向用 `layoutWeight(1)` 撑满节点间。
-2. **状态三态** — finish(勾选/绿)、process(数字/主色)、wait(数字/灰);配色统一。
-3. **节点尺寸** — 圆点 24-32vp;数字居中用 `textAlign(Center)` + 固定宽高。
-4. **最后节点无线** — `if (idx < length - 1)` 控制连接线渲染。
-5. **纵向步骤** — 用 `Column` 主轴 + 每项 `Row`(轴线 + 内容),结构类似时间线。
-6. **响应式** — 步骤多时横向会挤压;移动端建议纵向,或步骤数 ≤ 4 时横向。
+1. **Connecting line layoutWeight** — horizontal steps use fixed width, vertical use `layoutWeight(1)` to fill between nodes.
+2. **Three states** — finish (checkmark/green), process (number/primary color), wait (number/gray); unified color scheme.
+3. **Node size** — circle 24-32vp; number centered using `textAlign(Center)` + fixed width/height.
+4. **Last node no line** — `if (idx < length - 1)` controls connecting line rendering.
+5. **Vertical steps** — use `Column` main axis + each item `Row` (axis + content), structure similar to timeline.
+6. **Responsive** — many steps horizontally will compress; mobile recommends vertical, or horizontal when step count ≤ 4.
