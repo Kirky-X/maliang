@@ -1,25 +1,25 @@
-# Tree 组件 API 文档
+# Tree Component API Documentation
 
-> **本组件为 maliang 组合方案,ArkTS 无原生 Tree 树形控件。** 通过 `List` + 递归 `@Builder` + 缩进实现树形结构。
+> **This component is a maliang combined solution; ArkTS has no native Tree control.** Implemented via `List` + recursive `@Builder` + indentation for tree structure.
 
-## 缺失原因
+## Reason for Absence
 
-ArkTS 没有 Element `<el-tree>` 那样的原生树控件。树本质是递归列表,用 `List` 承载节点,通过缩进(`margin.left`)与展开/折叠状态表达层级关系。
+ArkTS has no native tree control like Element `<el-tree>`. Trees are essentially recursive lists, using `List` to hold nodes, expressing hierarchy through indentation (`margin.left`) and expand/collapse state.
 
-## 替代方案
+## Alternative Solutions
 
-- **方案 1:List + 递归 @Builder** — 定义递归 builder,根据节点 children 渲染子节点,缩进表达层级。最灵活。
-- **方案 2:扁平化 List** — 维护扁平化数组(含 level 字段),展开/折叠时重算数组,渲染简单。适合大数据量。
+- **Solution 1: List + recursive @Builder** — define recursive builder, render child nodes based on node children, indentation expresses hierarchy. Most flexible.
+- **Solution 2: Flattened List** — maintain flattened array (with level field), recalculate array on expand/collapse, simple rendering. Suitable for large data volumes.
 
-## 跨框架对照
+## Cross-Framework Comparison
 
-| 框架 | 实现方式 |
+| Framework | Implementation |
 | --- | --- |
-| ArkTS | 无原生(本组合方案:List 递归) |
-| Flutter | `TreeView`(第三方包) |
+| ArkTS | No native (this combined solution: List recursion) |
+| Flutter | `TreeView` (third-party package) |
 | Element Plus | `<el-tree>` |
 
-## 最小示例
+## Minimal Example
 
 ```arkts
 interface TreeNode { name: string; children?: TreeNode[] }
@@ -68,13 +68,13 @@ struct TreeNodeItem {
 }
 ```
 
-## 关联组件
+## Related Components
 
-- [`list`](../list/component.md) — 树基于 List
-- [`collapse`](../collapse/component.md) — 折叠/展开机制
+- [`list`](../list/component.md) — Tree based on List
+- [`collapse`](../collapse/component.md) — Collapse/expand mechanism
 
-## 参考链接
+## Reference Links
 
-- ArkTS 官方文档:无独立章节(本组件为 maliang 组合方案)
-- 相关组件:[`list`](../list/component.md)
-- 创建列表 (List): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-layout-development-create-list
+- ArkTS Official Documentation: No independent chapter (this component is a maliang combined solution)
+- Related components: [`list`](../list/component.md)
+- Creating Lists (List): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-layout-development-create-list

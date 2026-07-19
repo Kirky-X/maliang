@@ -1,33 +1,33 @@
-# Steps 组件 API 文档
+# Steps Component API Documentation
 
-> **本组件为 maliang 组合方案,ArkTS 无原生 Steps 步骤条组件。** 通过 `Row` + `Icon`/`Circle` + 连接线组合实现横向/纵向步骤条。
+> **This component is a maliang combined solution; ArkTS has no native Steps component.** Implemented via `Row` + `Icon`/`Circle` + connecting lines for horizontal/vertical steps.
 
-## 缺失原因
+## Reason for Absence
 
-ArkTS 没有原生步骤条(类似 Element `<el-steps>`)。步骤条本质是节点(圆点/图标)+ 连接线 + 文字,用 `Row`(横向)/ `Column`(纵向)+ `ForEach` 渲染。
+ArkTS has no native steps component (similar to Element `<el-steps>`). Steps are essentially nodes (circles/icons) + connecting lines + text, rendered with `Row` (horizontal) / `Column` (vertical) + `ForEach`.
 
-## 替代方案
+## Alternative Solutions
 
-- **方案 1:Row + Icon + 连接线(横向)** — 节点用 `Circle` 或 `SymbolGlyph`,节点间用 `Divider`/`Column` 连接。
-- **方案 2:Column + 连接线(纵向)** — 纵向步骤,类似时间线结构。
+- **Solution 1: Row + Icon + connecting lines (horizontal)** — nodes use `Circle` or `SymbolGlyph`, nodes connected via `Divider`/`Column`.
+- **Solution 2: Column + connecting lines (vertical)** — vertical steps, similar timeline structure.
 
-## 步骤状态语义
+## Step State Semantics
 
-| 状态 | 节点样式 | 配色 |
+| State | Node Style | Color |
 | --- | --- | --- |
-| finish(已完成) | 勾选图标 | `{color-success}` |
-| process(进行中) | 数字/高亮 | `{color-button-primary-bg}` |
-| wait(未开始) | 数字/灰 | `{color-bg-secondary}` |
+| finish (completed) | Checkmark icon | `{color-success}` |
+| process (in progress) | Number/highlight | `{color-button-primary-bg}` |
+| wait (not started) | Number/gray | `{color-bg-secondary}` |
 
-## 跨框架对照
+## Cross-Framework Comparison
 
-| 框架 | 实现方式 |
+| Framework | Implementation |
 | --- | --- |
-| ArkTS | 无原生(本组合方案:Row+Icon) |
-| Flutter | 第三方步骤条包 |
+| ArkTS | No native (this combined solution: Row+Icon) |
+| Flutter | Third-party steps packages |
 | Element Plus | `<el-steps>` |
 
-## 最小示例
+## Minimal Example
 
 ```arkts
 @Entry
@@ -55,13 +55,13 @@ struct StepsDemo {
 }
 ```
 
-## 关联组件
+## Related Components
 
-- [`timeline`](../timeline/component.md) — 时间线与步骤条结构相似
-- [`icon`](../icon/component.md) — 步骤节点图标
+- [`timeline`](../timeline/component.md) — Timeline has similar structure to steps
+- [`icon`](../icon/component.md) — Step node icons
 
-## 参考链接
+## Reference Links
 
-- ArkTS 官方文档:无独立章节(本组件为 maliang 组合方案)
-- 相关组件:[`timeline`](../timeline/component.md) / [`icon`](../icon/component.md)
-- 创建列表 (List): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-layout-development-create-list
+- ArkTS Official Documentation: No independent chapter (this component is a maliang combined solution)
+- Related components: [`timeline`](../timeline/component.md) / [`icon`](../icon/component.md)
+- Creating Lists (List): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-layout-development-create-list

@@ -1,8 +1,8 @@
-# Menu 使用场景与示例
+# Menu Usage Scenarios and Examples
 
-> 列举 ArkTS 菜单组件的典型使用场景。所有颜色、间距、圆角通过 design token 引用。
+> Lists typical usage scenarios for ArkTS menu components. All colors, spacing, and border-radius are referenced via design tokens.
 
-## 场景 1:点击菜单(bindMenu 数组式)
+## Scenario 1: Click Menu (bindMenu Array Style)
 
 ```arkts
 @Entry
@@ -24,7 +24,7 @@ struct ClickMenuPage {
 }
 ```
 
-## 场景 2:长按上下文菜单(bindContextMenu)
+## Scenario 2: Long-press Context Menu (bindContextMenu)
 
 ```arkts
 @Entry
@@ -58,7 +58,7 @@ struct ContextMenuPage {
 }
 ```
 
-## 场景 3:图标 + 文字菜单(Builder 式)
+## Scenario 3: Icon + Text Menu (Builder Style)
 
 ```arkts
 @Entry
@@ -81,25 +81,25 @@ struct IconMenuPage {
 }
 ```
 
-## 场景 4:分组菜单
+## Scenario 4: Grouped Menu
 
 ```arkts
 @Builder groupMenu() {
   Menu() {
     MenuItem({ content: '新建' }).action(() => {})
     MenuItem({ content: '打开' }).action(() => {})
-    // 分隔线(无内容项)
+    // Separator (empty item)
     MenuItem({ content: '' }).enabled(false)
     MenuItem({ content: '退出' }).action(() => {})
   }
 }
 ```
 
-## 注意事项
+## Notes
 
-1. **数组式 vs Builder 式** — 简单文字菜单用数组式更简洁;需图标/分组/复杂样式用 Builder 式。
-2. **bindContextMenu 触发类型** — `ResponseType.LongPress`(移动端长按)/ `RightClick`(鼠标右键),按平台选择。
-3. **菜单自动关闭** — 点击 MenuItem 后菜单自动关闭,无需手动 dismiss。
-4. **action 必须有** — 数组式缺 action 静默无响应;Builder 式缺 action 仅关闭不执行。
-5. **图标尺寸** — MenuItem 内置图标尺寸固定,无需自行设置 width/height。
-6. **分组分隔线** — 暂无原生 Divider,用 `MenuItem({ content: '' }).enabled(false)` 模拟分隔。
+1. **Array style vs Builder style** — simple text menus use array style for conciseness; icons/groups/complex styles use Builder style.
+2. **bindContextMenu trigger type** — `ResponseType.LongPress` (mobile long-press) / `RightClick` (mouse right-click), choose by platform.
+3. **Menu auto-closes** — menu automatically closes after clicking MenuItem, no manual dismiss needed.
+4. **action must be present** — array style without action silently does nothing; Builder style without action only closes without executing.
+5. **Icon size** — MenuItem built-in icon size is fixed, no need to set width/height manually.
+6. **Group separator** — no native Divider available, simulate with `MenuItem({ content: '' }).enabled(false)`.
