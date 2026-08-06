@@ -27,10 +27,11 @@
   6. 二级页面文件位置(error,仅 ui/ 直接子文件)   rule=page-location
   7. 组件参数表缺 action 字段(error)             rule=action-field
   8. 暗色模式 token 引用覆盖(warning)            rule=dark-mode
-  9. aria-label 可访问性(warning)                rule=aria-label
+  9. aria-label 可访问性(error)                rule=aria-label
   10. 触控区 ≥44px(error)                        rule=touch-target
   11. 动效 ≤400ms(error)                         rule=motion-duration
   12. 卡片 radius 违规(error)                    rule=card-radius
+  13. z-index 字面量违规(error)                  rule=z-index
 """
 
 import argparse
@@ -38,6 +39,10 @@ import json
 import os
 import re
 import sys
+
+# 共用模块(同目录下的 maliang_common.py)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from maliang_common import parse_frontmatter as _shared_parse_frontmatter
 
 
 # ---------------------------------------------------------------------------
@@ -113,6 +118,12 @@ RULE_ARIA_LABEL = "aria-label"
 RULE_TOUCH_TARGET = "touch-target"
 RULE_MOTION_DURATION = "motion-duration"
 RULE_CARD_RADIUS = "card-radius"
+RULE_Z_INDEX = "z-index"
+
+# z-index 字面量(匹配 z-index: <数字> 形式,排除 token 引用 {z-index-*})
+Z_INDEX_LITERAL_RE = re.compile(
+    r"z-index\s*[:=]\s*\d+", re.IGNORECASE
+)
 
 
 # ---------------------------------------------------------------------------
@@ -190,30 +201,18 @@ def parse_framework_file(path):
 
 
 def parse_frontmatter(text):
-    """从 markdown 文本提取 YAML frontmatter(简单 flat 解析,无第三方依赖)。
+    """从 markdown 文本提取 YAML frontmatter(委托共用模块,支持多行字符串)。
 
-    仅支持顶层 `key: value` 行;不处理嵌套/多行字符串。
     返回 dict: 字段名 -> 原始值字符串(去首尾空白,保留引号)。
     无 frontmatter 返回空 dict。
     """
-    m = re.match(r"^---[ \t]*\n(.*?)\n---[ \t]*", text, re.DOTALL)
-    if not m:
-        return {}
-    result = {}
-    for line in m.group(1).split("\n"):
-        if ":" in line:
-            k, _, v = line.partition(":")
-            result[k.strip()] = v.strip()
-    return result
+    return _shared_parse_frontmatter(text)
 
 
 def _strip_quotes(v):
-    """去掉值两端的引号(单引号或双引号)。"""
-    if len(v) >= 2 and (
-        (v[0] == '"' and v[-1] == '"') or (v[0] == "'" and v[-1] == "'")
-    ):
-        return v[1:-1]
-    return v
+    """去掉值两端的引号(单引号或双引号)。委托共用模块。"""
+    from maliang_common import _strip_quotes as _sq
+    return _sq(v)
 
 
 def _extract_param_tables(lines):
@@ -497,7 +496,7 @@ def check_aria_labels(rel_path, lines):
         if not has_aria:
             results.append(
                 (
-                    "WARN",
+                    "ERROR",
                     rel_path,
                     line_no,
                     "交互组件 " + "+".join(interactive) + " 缺少 aria-label 字段",
@@ -620,6 +619,29 @@ def check_card_radius(rel_path, lines):
     return results
 
 
+def check_z_index_literals(rel_path, lines):
+    """检查 13:z-index 字面量(error)。
+
+    扫描 z-index: <数字> 形式(如 z-index: 999),报 error。
+    token 引用 {z-index-modal} 不含数字字面量,自然跳过。
+    跳过表格分隔行。
+    """
+    results = []
+    for i, line in enumerate(lines, start=1):
+        if TABLE_SEP_RE.match(line):
+            continue
+        for m in Z_INDEX_LITERAL_RE.finditer(line):
+            results.append(
+                (
+                    "ERROR",
+                    rel_path,
+                    i,
+                    "z-index 字面量: " + m.group(0) + ",应引用 {z-index-*} token",
+                )
+            )
+    return results
+
+
 # ---------------------------------------------------------------------------
 # 文件收集与主流程
 # ---------------------------------------------------------------------------
@@ -667,6 +689,7 @@ def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level
     results.extend(_tag(RULE_TOUCH_TARGET, check_touch_target(rel_path, lines)))
     results.extend(_tag(RULE_MOTION_DURATION, check_motion_duration(rel_path, lines)))
     results.extend(_tag(RULE_CARD_RADIUS, check_card_radius(rel_path, lines)))
+    results.extend(_tag(RULE_Z_INDEX, check_z_index_literals(rel_path, lines)))
     if is_ui_top_level:
         results.extend(_tag(RULE_SECTION_ORDER, check_section_order(rel_path, lines)))
         results.extend(_tag(RULE_PAGE_LOCATION, check_secondary_pages(rel_path)))
