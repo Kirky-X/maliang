@@ -39,7 +39,8 @@ version: 1.1.0
 
 ## 2. 字体(typography)
 
-字族:`"PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif`(中英文统一)。
+字族:UI 字体:`"PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif`(中英文统一)。
+Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景,与 UI 字体形成对比,对齐 ai-tells.md §2 “Inter 单字族禁令”)。
 
 | token                | 值   | 用途              |
 | -------------------- | ---- | ----------------- |
@@ -53,6 +54,8 @@ version: 1.1.0
 | font-weight-medium   | 500  | 小标题 / 强调正文 |
 | font-weight-semibold | 600  | 卡片标题 / 按钮   |
 | font-weight-bold     | 700  | 页面主标题        |
+| font-family-display  | "Fraunces", "Noto Serif SC", Georgia, serif | Display 场景(标题/品牌) |
+| font-family-ui       | "PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif | UI 场景(正文/标签) |
 | line-height-tight    | 1.2  | 标题              |
 | line-height-base     | 1.5  | 正文              |
 | line-height-relaxed  | 1.6  | 长文本阅读        |
@@ -93,17 +96,17 @@ version: 1.1.0
 
 ## 4. 间距(spacing)
 
-以 2px 为基准,所有值为 2 的倍数。
+布局节奏以 8px 为基准(容器宽度/模块间距/章节间距均为 8 的倍数),组件内部微调允许 2/4px。所有值为 2 的倍数。
 
 | token       | 值   | 用途                    |
 | ----------- | ---- | ----------------------- |
 | spacing-xs  | 4px  | 图标内 / 紧凑组内       |
 | spacing-sm  | 8px  | 相关元素组内            |
-| spacing-md  | 14px | 模块内边距 / 卡片内边距 |
-| spacing-lg  | 20px | 页面边距(安全区)        |
-| spacing-xl  | 24px | 模块间距                |
-| spacing-2xl | 32px | 宽松区块间距            |
-| spacing-3xl | 48px | 大分区 / 章节间距       |
+| spacing-md  | 16px | 模块内边距 / 卡片内边距 |
+| spacing-lg  | 24px | 页面边距(安全区)        |
+| spacing-xl  | 32px | 模块间距                |
+| spacing-2xl | 48px | 宽松区块间距            |
+| spacing-3xl | 64px | 大分区 / 章节间距       |
 
 ## 5. 圆角(radius)
 
@@ -126,6 +129,32 @@ version: 1.1.0
 | border-thick    | 4px   | 容器边界 / 分隔栏     |
 
 分割线颜色用 `{color-divider}`;标准边框用 `{color-border-base}`(见颜色表)。**慎用分割线**,分组优先用间距 > 底色 > 分割线。
+
+## 7. 层级(z-index)
+
+> 每层间隔 100,留扩展空间。同层子元素用局部 stacking context(`isolation: isolate`),不污染全局。代码中禁止 z-index 字面量,必须引用本表 token(performance.md §4)。
+
+| token              | 值   | 用途                    |
+| ------------------ | ---- | ----------------------- |
+| z-index-base       | 0    | 普通文档流              |
+| z-index-dropdown   | 100  | 下拉菜单                |
+| z-index-sticky     | 200  | 粘性导航                |
+| z-index-drawer     | 300  | 抽屉/侧边栏            |
+| z-index-modal      | 400  | 模态框/弹窗            |
+| z-index-toast      | 500  | Toast 通知              |
+| z-index-tooltip    | 600  | Tooltip(最高,浮于 modal 上) |
+
+## 8. 动效(motion)
+
+| token                  | 值    | 用途                          |
+| ---------------------- | ----- | ----------------------------- |
+| motion-duration-instant | 100ms | 微交互(按钮状态切换)          |
+| motion-duration-fast   | 200ms | 状态过渡(hover/pressed)       |
+| motion-duration-normal | 300ms | 入场动画                      |
+| motion-duration-slower | 400ms | 滚动揭示/复杂动画(硬上限)     |
+| motion-ease-default    | cubic-bezier(0.25, 0.1, 0.25, 1) | 通用缓动         |
+| motion-ease-out        | cubic-bezier(0, 0, 0.2, 1)      | 入场/揭示          |
+| motion-ease-in         | cubic-bezier(0.4, 0, 1, 1)      | 离场/消失          |
 
 ---
 

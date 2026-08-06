@@ -167,6 +167,7 @@ version: 1.0.0 # 页面版本号
 - [ ] 可点击组件(组件类型含 button/icon/link)width/height MUST ≥44px(对应检查 10, AUDIT G03)
 - [ ] 动效 duration MUST ≤400ms(引用 token 如 `{duration-slower}` 除外)(对应检查 11, AUDIT G06)
 - [ ] 卡片类组件(组件类型含 card)radius MUST 用 `{radius-lg}`,禁用 `{radius-md}`(对应检查 12, AUDIT G07)
+- [ ] z-index MUST 用 `{z-index-*}` token 引用,禁止字面量(对应检查 13)
 
 ---
 

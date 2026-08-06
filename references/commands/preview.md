@@ -132,7 +132,7 @@ flowchart LR
 
 ### 校验强化
 
-preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 12 项检查(含 5 项新检查:暗色/aria/触控区/动效/radius),不通过则回退 draw-md 修补。
+preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 13 项检查(含 6 项新检查:暗色/aria/触控区/动效/radius/z-index),不通过则回退 draw-md 修补。
 
 **aria-label 在 HTML 的映射规则:**
 - button → `<el-button aria-label="语义描述">`

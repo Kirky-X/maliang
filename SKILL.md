@@ -51,7 +51,7 @@ license: MIT
 - 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局)在 [`references/dimensions/`](references/dimensions/) 下,另含 color-palettes(调色板库)、design-systems(参考设计系统)、glass-effect(liquid glass 基础配方)、glass-advanced(liquid glass SVG+WebGL 进阶折射);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),十个子命令共享参考,不在本路由器重复。
 - 默认页面清单(App 15 页 + Web 15 页,含 P0/P1/P2 选用规则)在 [`references/default-pages/index.md`](references/default-pages/index.md) 下,供 `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用。
 - 框架组件文档(按钮/文本/列表 × 三框架)在 [`references/framework/`](references/framework/index.md) 下,三个 draw-* 子命令共享。
-- UI 关系管理工具 [`scripts/ui-graph.py`](scripts/ui-graph.py) 提供 7 个子命令(generate/list-missing/check-nav/compute-hash/diff-hash/build-impl-map/list-unimplemented),纯 Python 标准库实现,产出 ui-relationships.json(层级 + 跳转)、ui-hash-state.json(哈希基线)、ui-implementation-map.json(逻辑 UI ↔ 实现映射),供 `ui-graph` 子命令调用;配套 [`scripts/validate-draw-md.py`](scripts/validate-draw-md.py) 含 12 项检查(aria/touch-target/dark-mode/motion/radius 等),供 `preview` 子命令校验。
+- UI 关系管理工具 [`scripts/ui-graph.py`](scripts/ui-graph.py) 提供 7 个子命令(generate/list-missing/check-nav/compute-hash/diff-hash/build-impl-map/list-unimplemented),纯 Python 标准库实现,产出 ui-relationships.json(层级 + 跳转)、ui-hash-state.json(哈希基线)、ui-implementation-map.json(逻辑 UI ↔ 实现映射),供 `ui-graph` 子命令调用;配套 [`scripts/validate-draw-md.py`](scripts/validate-draw-md.py) 含 13 项检查(aria/touch-target/dark-mode/motion/radius/z-index 等),供 `preview` 子命令校验。
 
 ## 失败模式与 fallback
 
