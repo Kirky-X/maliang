@@ -25,6 +25,10 @@ import re
 import sys
 from datetime import datetime
 
+# 共用模块(同目录下的 maliang_common.py)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from maliang_common import parse_frontmatter as _shared_parse_frontmatter
+
 
 # ---------------------------------------------------------------------------
 # 常量
@@ -70,72 +74,47 @@ def parse_directory(target_dir):
 
 
 def parse_frontmatter(text):
-    """从 markdown 文本提取 YAML frontmatter(简单 flat 解析,无第三方依赖)。
+    """从 markdown 文本提取 YAML frontmatter(委托共用模块,支持多行字符串)。
 
-    仅支持顶层 `key: value` 行;不处理嵌套/多行字符串。
-    components 字段(inline `[a, b, c]`)解析为 list;其他字段保留为字符串
-    (保留引号,与 validate-draw-md.py 的 parse_frontmatter 行为一致)。
+    仅支持顶层 `key: value` 行; components 字段(inline `[a, b, c]`)解析为 list;
+    其他字段保留为字符串(保留引号)。
     返回 dict: 字段名 -> 值(components 为 list,其他为 str)。
     无 frontmatter 返回空 dict。
     """
-    m = re.match(r"^---[ \t]*\n(.*?)\n---[ \t]*", text, re.DOTALL)
-    if not m:
-        return {}
-    result = {}
-    for line in m.group(1).split("\n"):
-        if ":" not in line:
-            continue
-        k, _, v = line.partition(":")
-        k = k.strip()
-        v = v.strip()
-        if not k:
-            continue
-        if k == "components":
-            result[k] = _parse_inline_list(v)
-        else:
-            result[k] = v
-    return result
+    return _shared_parse_frontmatter(text)
 
 
-def _parse_inline_list(value):
-    """解析 inline YAML 数组 `[a, b, c]` 为 list。
-
-    支持格式:[a, b, c] / [a,b,c] / [ a , b ] / []。
-    非 `[...]` 格式时当作单元素 list(或空 list)。
-    """
-    v = value.strip()
-    if v.startswith("[") and v.endswith("]"):
-        inner = v[1:-1].strip()
-        if not inner:
-            return []
-        return [item.strip() for item in inner.split(",") if item.strip()]
-    return [v] if v else []
-
-
-# 提取 tap 跳转目标:tap=→<target>,target 为 [a-z][a-z0-9/-]* (遇 . / 空格 / 中文停止)
-TAP_NAV_RE = re.compile(r"tap=→([a-z][a-z0-9/-]*)")
+# 提取 tap 跳转目标:tap=→<target>
+# 支持:小写英文/驼峰/中文/连字符/斜杠/点号(遇空格/分号/竖线停止)
+TAP_NAV_RE = re.compile(r"tap=→([^\s|;]+)")
 
 
 def extract_navigations(text, from_path=None):
     """提取文本中所有 tap 跳转关系,返回 [{'to':..., 'event':'tap'}]。
 
-    用正则 tap=→([a-z][a-z0-9/-]*) 提取跳转目标:
-    - 跳过 `无`(正则不匹配,中文非 [a-z])/ `back`(history.back,非具体页面)
-    - 跳过中文/含空格目标(正则不匹配)
+    用正则 tap=→([^\\s|;]+) 提取跳转目标:
+    - 跳过 `无`/ `back`(history.back,非具体页面)
     - 归一化为 ui/<to>.md 路径:
-      * 原始值不以 ui/ 开头(如 setting/notifications)→ ui/<raw>.md
-      * 原始值已以 ui/ 开头(如 ui/message,正则遇 . 停止)→ <raw>.md(避免双重前缀)
+      * 原始值以 ui/ 开头且以 .md 结尾 → 保持原样
+      * 原始值以 ui/ 开头但不以 .md 结尾 → 补 .md
+      * 原始值不以 ui/ 开头 → ui/<raw>.md
 
     from_path 当前未使用(generate 聚合时添加 from 字段),保留参数以匹配
     T007 签名 extract_navigations(text, from_path)。
     """
     results = []
     for m in TAP_NAV_RE.finditer(text):
-        raw = m.group(1)
-        if raw in ("无", "back"):
+        raw = m.group(1).strip()
+        # 跳过非跳转目标
+        if raw in ("无", "back", "history.back"):
             continue
+        # 去除末尾标点(如中文句号、分号)
+        raw = raw.rstrip("。；;，,")
+        if not raw:
+            continue
+        # 归一化路径
         if raw.startswith("ui/"):
-            to_path = raw + ".md"
+            to_path = raw if raw.endswith(".md") else raw + ".md"
         else:
             to_path = "ui/" + raw + ".md"
         results.append({"to": to_path, "event": "tap"})

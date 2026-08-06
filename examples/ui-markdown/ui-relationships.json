@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-05T05:46:57+08:00",
-  "target_dir": "/home/dev/projects/skills/maliang/examples/ui-markdown",
+  "generated_at": "2026-08-06T10:13:10+08:00",
+  "target_dir": "/home/kirky/projects/skills/maliang/examples/ui-markdown",
   "pages": [
     {
       "path": "organisms/dock.md",
@@ -56,5 +56,54 @@
       ]
     }
   ],
-  "navigations": []
+  "navigations": [
+    {
+      "from": "organisms/dock.md",
+      "to": "ui/目标页.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "organisms/dock.md",
+      "to": "ui/目标页.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "organisms/nav-bar.md",
+      "to": "ui/上一页(history.back).md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "organisms/nav-bar.md",
+      "to": "ui/目标页或触发功能.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/对应目标页.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/卡片详情页.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/对应一级页面.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/setting/about.md",
+      "to": "ui/对应目标页.md",
+      "event": "tap",
+      "source_component": null
+    }
+  ]
 }
