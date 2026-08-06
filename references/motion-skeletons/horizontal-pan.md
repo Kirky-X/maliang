@@ -37,7 +37,7 @@ flowchart TD
   height: 100vh;
   display: flex;
   overflow: hidden;
-  will-change: transform;
+  /* will-change 不在 CSS 中常驻,由 JS 在动画前动态设置,动画后移除(performance.md §2) */
 }
 .pan-panel {
   flex: 0 0 100vw;
@@ -65,12 +65,26 @@ const panDistance = () => track.scrollWidth - window.innerWidth;
 const horizontalScroll = gsap.to(track, {
   x: () => -panDistance(),
   ease: 'none',
+  onStart: function() {
+    // 动画前动态设置 will-change(performance.md §2)
+    track.style.willChange = 'transform';
+  },
+  onComplete: function() {
+    // 动画完成后移除 will-change(performance.md §2)
+    track.style.willChange = 'auto';
+  },
   scrollTrigger: {
     trigger: '.pan-container',
     start: 'top top',
     end: () => `+=${panDistance()}`,
     scrub: 1,
     invalidateOnRefresh: true, // 窗口 resize 时重新计算
+    onUpdate: (self) => {
+      // 动画进行中保持 will-change,停止时移除
+      if (self.progress === 1) {
+        track.style.willChange = 'auto';
+      }
+    },
   },
 });
 
@@ -126,3 +140,4 @@ panels.forEach((panel, index) => {
 | resize 后位置错乱         | 检查 `invalidateOnRefresh`                |
 | panel 内图片懒加载未触发  | 用 ScrollTrigger `onEnter` 触发 lazy load |
 | reduced-motion 下仍平移   | kill 横向动画并改为 scroll-snap            |
+| track 闪烁                | 检查 JS 是否在动画前动态设置 `will-change` |
