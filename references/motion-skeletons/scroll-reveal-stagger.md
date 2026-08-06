@@ -31,14 +31,13 @@ flowchart TD
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  will-change: transform, opacity;
+  /* will-change 不在 CSS 中常驻,由 JS 在动画前动态设置,动画后移除(performance.md §2) */
 }
 /* reduced-motion 下:初始态取消 */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
     transform: none;
-    will-change: auto;
   }
 }
 ```
@@ -60,6 +59,13 @@ const staggerReveal = gsap.utils.toArray('.reveal-section').forEach(section => {
     duration: 0.5,
     stagger: 0.08,
     ease: 'power2.out',
+    onStart: function() {
+      // 动画前动态设置 will-change,动画后移除(performance.md §2)
+      this.targets().forEach(el => { el.style.willChange = 'transform, opacity'; });
+    },
+    onComplete: function() {
+      this.targets().forEach(el => { el.style.willChange = 'auto'; });
+    },
     scrollTrigger: {
       trigger: section,
       start: 'top 80%',
@@ -103,8 +109,14 @@ const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
+        // 动画前动态设置 will-change
+        entry.target.style.willChange = 'transform, opacity';
         setTimeout(() => {
           entry.target.classList.add('revealed');
+          // 动画完成后移除 will-change(performance.md §2)
+          entry.target.addEventListener('transitionend', () => {
+            entry.target.classList.add('revealed-done');
+          }, { once: true });
         }, index * 80); // stagger
         observer.unobserve(entry.target);
       }
@@ -126,6 +138,9 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   opacity: 1;
   transform: translateY(0);
 }
+.reveal.revealed-done {
+  will-change: auto; /* 动画完成后移除 will-change */
+}
 ```
 
 ## 强制规则
@@ -145,5 +160,5 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 | 元素初始态可见(未应用 CSS)| 检查 CSS 加载顺序,JS 在 CSS 之后          |
 | reduced-motion 下元素消失 | CSS 用 `@media` 兜底,JS 不依赖动画可用    |
 | stagger 看起来跳跃        | 检查 `ease` 是否设置(`power2.out` 推荐) |
-| 元素闪烁                  | 检查 `will-change` 是否设置                |
+| 元素闪烁                  | 检查 JS 是否在动画前动态设置 `will-change`  |
 | 长列表性能差              | 改用 IntersectionObserver,移除 GSAP       |

@@ -30,6 +30,7 @@ flowchart TD
   height: 400vh; /* 4 张卡 → 4 倍视口高度 */
 }
 .stack-card {
+  position: -webkit-sticky; /* Safari 兼容 */
   position: sticky;
   top: 0;
   height: 100vh;
@@ -37,7 +38,7 @@ flowchart TD
   align-items: center;
   justify-content: center;
   background: var(--color-bg-primary);
-  will-change: transform, opacity; /* Hardware Accel,见 performance.md */
+  /* will-change 不在 CSS 中常驻,由 JS 在动画前动态设置,动画后移除(performance.md §2) */
 }
 ```
 
@@ -58,11 +59,22 @@ cards.forEach((card, index) => {
     scale: 0.95,
     opacity: 0.5,
     ease: 'none',
+    onStart: function() {
+      // 动画前动态设置 will-change(performance.md §2)
+      card.style.willChange = 'transform, opacity';
+    },
     scrollTrigger: {
       trigger: cards[index + 1],
       start: 'top bottom',
       end: 'top top',
       scrub: 1,
+      onLeave: () => {
+        // 动画完成后移除 will-change(performance.md §2)
+        card.style.willChange = 'auto';
+      },
+      onLeaveBack: () => {
+        card.style.willChange = 'auto';
+      },
     },
   });
 });
@@ -81,13 +93,13 @@ if (prefersReducedMotion.matches) {
 - **必须**用 `transform` + `opacity`,不用 `top` / `margin`(见 [`performance.md`](../meta/performance.md) Hardware Accel)
 - **必须**用 `ScrollTrigger.scrub` 而非 scroll 事件监听
 - 卡片数量 ≤ 5 张(超过性能下降)
-- `will-change` 在动画期间设,ScrollTrigger `onLeave` 时清除
+- `will-change` 由 JS 在动画前动态设置,ScrollTrigger `onLeave`/`onLeaveBack` 时清除(performance.md §2)
 
 ## 失败模式
 
 | 触发条件                  | 处理                                       |
 | ------------------------- | ------------------------------------------ |
-| Safari sticky 兼容性      | 加 `-webkit-sticky`                        |
+| Safari sticky 兼容性      | CSS 已加 `-webkit-sticky` 前缀            |
 | 移动端 scroll 不流畅      | 加 `ScrollTrigger.config({ ignoreMobileResize: true })` |
-| 卡片闪烁                  | 检查 `will-change` 是否设置                |
+| 卡片闪烁                  | 检查 JS 是否在动画前动态设置 `will-change`  |
 | reduced-motion 下仍触发   | 在 ScrollTrigger 注册前判断并 kill         |
