@@ -34,6 +34,8 @@ bash scripts/sync-skills.sh maliang
 
 # 方式 2：手动拷贝到 agent 技能目录
 cp -r maliang/ ~/.zcode/skills/maliang/
+# 方式三：远程安装（GitHub 仓库）
+npx skills add Kirky-X/maliang --agent claude-code -y
 ```
 
 首跑依赖：仅需 Python 3.8+（脚本层全部标准库），无 requirements.txt。
