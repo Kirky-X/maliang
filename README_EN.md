@@ -35,6 +35,8 @@ bash scripts/sync-skills.sh maliang
 
 # Option 2: manual copy into an agent skills directory
 cp -r maliang/ ~/.zcode/skills/maliang/
+# Option 3: Remote install (GitHub repo)
+npx skills add Kirky-X/maliang --agent claude-code -y
 ```
 
 First-run requirements: Python 3.8+ only (scripts use the standard library exclusively); no requirements.txt.
