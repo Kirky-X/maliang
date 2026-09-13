@@ -59,6 +59,15 @@
 - **强制**:`prefers-reduced-motion` 降级到 Level 1-3(见 [`accessibility.md`](./accessibility.md))
 - **适用**:品牌站、作品集、产品发布页、3D 交互场景
 
+## 档位兑现规则(claimed = shown)
+
+> 宣称的档位必须兑现为真实产出。来源:taste-skill §5。
+
+- 宣称 `motion_intensity > 4` 的页面,交付时必须能**检出真实动画**(hero 入场 / 关键节滚动揭示 / CTA 物理反馈至少其一)——只声明档位不动手,视为坏的
+- 交付环境无法满足动效条件(静态导出 / 目标端禁动画 / 预览管线不支持)时,**主动降档到 3**,交付干净的静态页
+- 绝不交付半成品动效:有入场无揭示、动画只写一半、transition 挂空——降档是诚实,半成品是失约
+- preview 阶段核对:渲染产物中入场 / 滚动动画是否真实存在,与 frontmatter `dials.motion_intensity` 声明一致
+
 ## VISUAL_DENSITY(信息密度)
 
 ### Level 1-3 · 大量留白
@@ -115,6 +124,9 @@ dials:
 | 平台      | brief 显式声明                              | Web / iOS / Android / 跨端 / 大屏         |
 | 内容密度  | brief 中的内容量描述                        | 稀疏(品牌) / 中等(营销) / 紧凑(后台)   |
 | 品牌定位  | brief 中的品牌词 + 参考系统                 | 高端 / 大众 / 工具 / 创意 / 合规          |
+| 安静约束(**覆盖级**) | 无障碍优先受众 / 公共部门 / 强监管 / 信任型商务 / 儿童产品 | **覆盖审美偏好**,直接采用 trust-first 预设(VARIANCE 3-4 / MOTION 2-3) |
+
+> 安静约束是推断的**最高优先信号**(来源:taste-skill §0):命中时跳过逐信号推导与交集计算,直接采用 trust-first 预设;受众 / 品牌定位等其他信号只影响 DENSITY 微调,不得抬回 VARIANCE / MOTION。
 
 ### 信号 → dial 值映射(每类信号 × 推荐 range)
 

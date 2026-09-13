@@ -20,12 +20,44 @@
 | `micro-loading-spinner` | 转 spinner                                       | 短时加载(< 1s)                      |
 | `micro-loading-bar`   | 顶部进度条                                        | 长时加载 / 页面切换                   |
 
+## 频率法则:该不该动
+
+> 动画成本按操作频率判断,不是"越动越好"。来源:interface-design。
+
+| 使用频率                                     | 动画策略                     |
+| -------------------------------------------- | ---------------------------- |
+| 每天 100+ 次的操作(快捷键、命令面板等)     | 禁止动画,延迟即成本         |
+| 偶发表面(modal / drawer / toast / popover) | 标准入场 / 退场动画          |
+| 首次运行(onboarding / 空状态)              | 才可加惊喜动效               |
+
+## 时长预算表
+
+> 按组件类型的 duration 上限;全局上限 UI 一律 < 300ms(仅 modal / drawer 类大表面可放宽到 400ms)。来源:interface-design。
+
+| 组件类型          | 时长预算   |
+| ----------------- | ---------- |
+| 按压反馈          | 100-160ms  |
+| tooltip / popover | 125-200ms  |
+| dropdown / menu   | 150-250ms  |
+| modal / drawer    | 200-400ms  |
+
+> **全库统一分层口径**(其他文档涉及动效时长时以此为准,冲突数值保留但须注"见 micro-interactions 分层口径"):
+> 1. **反馈类**(按压 / tooltip / toast 等元素级反馈)duration **< 300ms**;
+> 2. **浮层转场**(modal / drawer / popover 入退场)**≤ 400ms**——`validate-draw-md.py` 检查 11 硬门(ERROR);如确需更长转场,须同步调整脚本阈值并说明理由,或改用 `{duration-*}` token 引用(不含字面量 ms,脚本自然跳过);
+> 3. **装饰 / 骨架类长动效**(缓动库入场、滚动揭示、skeleton shimmer)**≤ 600ms** 且**必须可跳过**(prefers-reduced-motion 降级或用户可跳过);
+> 4. **stagger 间隔单档 ≤ 80ms**;装饰档放宽到 ≤ 120ms 须 MOTION_INTENSITY ≥ 8(见 [`dials.md`](../meta/dials.md))。
+>
+> 上表数值是第 1/2 层的按组件细分;骨架 / 滚动揭示等装饰类长动效不受本表上限约束,按第 3 层执行(缓动库入场 150-600ms、dials L4-7 ≤400ms、motion-skeletons ≤600ms 与之相容)。
+
 ## 使用规则
 
 - 所有交互元素必须实现 `micro-press-scale` + `micro-focus-ring`(强制,见 [`principles.md`](../meta/principles.md) 第 14 定律)
 - `micro-haptic` 仅移动端,且 vibration ≤ 50ms
 - `micro-cursor-custom` 慎用,会破坏无障碍(见 [`accessibility.md`](../meta/accessibility.md))
 - Loading 反馈:≤ 200ms 不显示,200ms-1s 用 spinner,> 1s 用 skeleton(见 [`principles.md`](../meta/principles.md) 第 14 定律)
+- 入场**禁止** `ease-in` 类加速曲线(首帧可见延迟,像卡顿);入场一律用 ease-out `cubic-bezier(0.23, 1, 0.32, 1)`
+- **禁止**元素从 `scale(0)` 出现(突变突兀);从 `scale(0.95) + opacity: 0` 起步,popover / dropdown 从触发器原点缩放
+- 退场必须比入场**更快更轻**(时长约为入场的 60-80%,幅度更小)
 - 所有微交互必须实现 `prefers-reduced-motion` 降级
 
 ## 在 draw-md 中的写法
@@ -93,10 +125,11 @@
 | `ease-spring`    | `cubic-bezier(0.34, 1.56, 0.64, 1)` | 弹性(过冲回弹)       | 按下回弹、卡片落下(MOTION ≥ 7) |
 | `ease-snappy`    | `cubic-bezier(0.16, 1, 0.3, 1)` | 干脆(快速减速)       | 按钮反馈、toggle          |
 | `ease-glass`     | `cubic-bezier(0.32, 0.72, 0, 1)` | 液态玻璃感(平滑长尾) | Liquid Glass 元素过渡     |
+| `ease-out-expo`  | `cubic-bezier(0.23, 1, 0.32, 1)` | 入场标准 ease-out(快起步,长尾减速) | 微交互入场一律用此(三禁令指定;来源:interface-design) |
 
 **使用规则**:
 - 状态过渡 duration ≤ 150ms → 用 `ease-snappy`
-- 入场动画 duration 150-600ms → 用 `ease-out-soft`
+- 入场动画 duration 150-600ms(属第 3 层装饰/入场长动效档,见时长预算表分层口径)→ 用 `ease-out-soft`
 - 退场动画 → 用 `ease-in-soft`
 - MOTION_INTENSITY ≥ 7 且需弹性 → 用 `ease-spring`(过冲 ≤ 1.2,防眩晕)
 - Liquid Glass 元素(见 [`glass-advanced.md`](../dimensions/glass-advanced.md))→ 用 `ease-glass`

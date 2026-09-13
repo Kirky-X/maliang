@@ -48,6 +48,50 @@
 
 ---
 
+## 页面 × 支撑资产映射(30 页)
+
+> 每个页面类型的三层落点:首选 [vocabulary](../vocabulary/) 模式 → [模板墙](../templates/INDEX.md) 条目 → [framework](../framework/index.md) 组件类(该列均为 framework 索引表中的组件类型 slug)。标注"缺口"的是暂无现成支撑、建议后续补充的资产。
+
+### App 端(15 页)
+
+| 页面 | vocabulary 模式支撑 | 模板墙条目 | framework 组件类 |
+| ---- | ------------------- | ---------- | ---------------- |
+| home | [hero](../vocabulary/hero.md)、[galleries](../vocabulary/galleries.md)、[navigation](../vocabulary/navigation.md)(nav-bottom-tab/nav-dock) | [mobile-layouts](../templates/page/mobile-layouts.md)、[landing-patterns](../templates/landing-patterns.md) | navigation, grid, image, list, carousel, fab |
+| discover | [search](../vocabulary/search.md)(search-bar/filter-chip)、[scroll](../vocabulary/scroll.md)(scroll-infinite/scroll-pull-refresh)、[galleries](../vocabulary/galleries.md) | [mobile-layouts](../templates/page/mobile-layouts.md) | input, tabs, grid, carousel, tag |
+| messages | [popups](../vocabulary/popups.md)(popup-sheet 等弹层会话)、[states](../vocabulary/states.md)(空态/未读聚合);会话流(chat)模式缺口,建议后续补 chat 词汇 | 无专项(可借 [mobile-layouts](../templates/page/mobile-layouts.md) 卡片节奏) | notification, message, list, badge, avatar, tabs |
+| mine | [cards](../vocabulary/cards.md)(card-media-left/card-action 功能入口卡) | 无专项 | avatar, card, list, badge, switch |
+| login | [auth](../vocabulary/auth.md)(auth-split-brand/auth-password/auth-social)、[forms](../vocabulary/forms.md)(validate-on-submit) | 无专项(设计语言任选) | input, button, checkbox, icon |
+| signup | [auth](../vocabulary/auth.md)(auth-toggle-mode/auth-otp)、[forms](../vocabulary/forms.md)(input-otp/form-basic) | 无 | form, input, checkbox, button |
+| forgot-password | [forms](../vocabulary/forms.md)(input-otp/error-summary)、[auth](../vocabulary/auth.md) | 无 | form, input, button, message |
+| settings | [forms](../vocabulary/forms.md)(form-section);设置分组/子入口模式为弱支撑 | 无 | list, switch, select, slider, theme, popconfirm |
+| about | [typography](../vocabulary/typography.md)、[layout](../vocabulary/layout.md)(弱支撑) | [editorial-swiss](../templates/editorial-swiss.md) | text, image, list, divider |
+| privacy / terms | [typography](../vocabulary/typography.md)(弱支撑);法务长文页结构模式缺口,建议后续补 legal-doc 模式 | [editorial-swiss](../templates/editorial-swiss.md) | text, divider |
+| feedback | [forms](../vocabulary/forms.md)(field-group/input-character-count) | 无 | form, input, radio, upload, button |
+| empty-state | [states](../vocabulary/states.md)(state-empty-first-use/no-results/clear-filters/starter) | 无 | image, button, text |
+| network-error | [states](../vocabulary/states.md)(state-error-network/state-offline) | 无 | button, image, message |
+| not-found | [states](../vocabulary/states.md)(state-error-crash 近似);404 专属出口(搜索/回首页)模式缺口 | 无 | button, image |
+
+### Web 端(15 页)
+
+| 页面 | vocabulary 模式支撑 | 模板墙条目 | framework 组件类 |
+| ---- | ------------------- | ---------- | ---------------- |
+| home | [hero](../vocabulary/hero.md)、[galleries](../vocabulary/galleries.md)、[navigation](../vocabulary/navigation.md) | [landing-patterns](../templates/landing-patterns.md)、[editorial-split](../templates/page/editorial-split.md) | navigation, grid, image, button, carousel |
+| about | [typography](../vocabulary/typography.md)(type-editorial)、[layout](../vocabulary/layout.md)(layout-two-column) | [editorial-swiss](../templates/editorial-swiss.md)、[editorial-split](../templates/page/editorial-split.md) | text, image, grid, timeline |
+| contact | [forms](../vocabulary/forms.md)(form-basic/field-group/error-summary) | 无 | form, input, select, button |
+| login | [auth](../vocabulary/auth.md)、[forms](../vocabulary/forms.md) | 无专项(设计语言任选) | input, button, checkbox, card |
+| signup | [auth](../vocabulary/auth.md)(auth-otp)、[forms](../vocabulary/forms.md)(input-otp) | 无 | form, input, checkbox, button |
+| forgot-password | [forms](../vocabulary/forms.md)(input-otp/error-summary) | 无 | form, input, button |
+| verify-email | [forms](../vocabulary/forms.md)(input-otp/field-group)、[auth](../vocabulary/auth.md)(auth-otp/auth-magic-link);验证成功/链接过期页面状态暂缺专属模式,暂借 [states](../vocabulary/states.md) 的 state-error-crash 语义 | 无 | input, form, button, message |
+| dashboard | [charts](../vocabulary/charts.md)、[tables](../vocabulary/tables.md)(table-sortable/table-paginated);chart 组件类缺口(framework 索引表无 chart 类),建议后续补 chart 组件类 | [data-dense-dashboard](../templates/data-dense-dashboard.md)、[dashboard-styles](../templates/page/dashboard-styles.md) | statistic, table, card, tabs, menu, skeleton |
+| settings | [forms](../vocabulary/forms.md)(form-section/form-autosave) | 无 | form, input, select, switch, radio, upload |
+| profile | [cards](../vocabulary/cards.md)(card-media-bg 头像区)、[forms](../vocabulary/forms.md)(field-group/input-masked) | 无 | avatar, upload, form, input, card |
+| not-found | [states](../vocabulary/states.md)(state-error-crash 近似) | 无 | button, image |
+| server-error | [states](../vocabulary/states.md)(state-error-crash:错误插画 + 重试/返回,覆盖 5xx 语义;无 5xx 专属模式) | 无 | button, image, message |
+| forbidden | [states](../vocabulary/states.md)(state-error-permission:权限说明 + 申请入口) | 无 | button, image |
+| privacy / terms | [typography](../vocabulary/typography.md)(弱支撑);法务长文页结构模式缺口,建议后续补 legal-doc 模式 | [editorial-swiss](../templates/editorial-swiss.md) | text, divider |
+
+---
+
 ## 选用规则
 
 ### P0 必备

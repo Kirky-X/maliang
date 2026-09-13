@@ -23,7 +23,7 @@
 
 相对亮度公式:`L = 0.2126 * R + 0.7152 * G + 0.0722 * B`(其中 R/G/B 经 gamma 校正)。对比度 = `(L_lighter + 0.05) / (L_darker + 0.05)`。
 
-工具:`npx @google/design.md lint` 自动计算;或 WebAIM Contrast Checker。
+工具:`npx @google/design.md@0.4.0 lint` 自动计算;或 WebAIM Contrast Checker。
 
 ## 2. prefers-reduced-motion(降低动效偏好)
 
@@ -103,7 +103,7 @@
 | 屏幕阅读器          | 图片必 `alt`(装饰性 `alt=""`),按钮必 `aria-label`(无文字时)          |
 | 表单标签            | `<label>` 关联或 `aria-label`,占位符不替代标签                          |
 | 跳转链接            | 页面首项 "Skip to main content",Tab 可聚焦                              |
-| 移动端热区          | 触摸目标 ≥ 44pt × 44pt(Touch CRITICAL,见 [`rules-priority.md`](./rules-priority.md)) |
+| 移动端热区          | 原生移动端(iOS/Android/鸿蒙)触摸目标 ≥ 44pt/48dp/44vp(平台规范);Web 最低 24×24 CSS px、推荐 44px(Touch CRITICAL,见 [`rules-priority.md`](./rules-priority.md);分层 slug 见 [`ux-rules.md`](./ux-rules.md) 第 5 节) |
 | 焦点顺序            | DOM 顺序 = 视觉顺序,不靠 `tabindex` 正整数手动调                       |
 | 动态内容            | `aria-live="polite"`(通知)/ `aria-live="assertive"`(错误)            |
 
@@ -116,8 +116,37 @@ Pre-Flight Check 中以下为硬性失败项(见 [`preview.md`](../commands/prev
 - [ ] 暗色模式 token 缺失或对比度不达标
 - [ ] `backdrop-filter` 无 `prefers-reduced-transparency` 降级
 - [ ] 交互元素无 focus ring(`outline: none` 无替代)
-- [ ] 触摸目标 < 44pt
+- [ ] 触摸目标低于端型阈值(原生移动端 < 44pt/48dp/44vp;Web < 24×24 CSS px,推荐 44px,见 [`ux-rules.md`](./ux-rules.md) web-target-size-24)
 - [ ] 图片缺 `alt`
+
+## 7. WCAG 2.2 增量准则
+
+> 来源:ui-ux-pro-max-skill quick-reference §1 + ux-guidelines.csv(WCAG 2.2 AA/AAA 新准则条目),2026-09-07 精选。以下为 WCAG 2.2 相对 2.1 的增量,评审与自查逐条核对;各条完整 Do/Don't 见 [`ux-rules.md`](./ux-rules.md) 对应 slug。
+
+| 准则(slug)                     | 级别 | 一句话规则                                                                                                            |
+| ------------------------------ | ---- | --------------------------------------------------------------------------------------------------------------------- |
+| focus-not-obscured             | AA   | 粘性头部、横幅、浮层与聊天挂件不得完全遮挡键盘焦点元素,用 `scroll-padding` 偏移或允许关闭/移开持久浮层                   |
+| focus-not-obscured-enhanced    | AAA  | 焦点组件的任何部分都不得被作者创建的内容遮挡(整个组件可见,而非仅部分)                                                    |
+| focus-appearance               | AAA  | 焦点指示器面积至少 2 CSS px 周长且状态对比 ≥ 3:1——"焦点可见"本身不够,细且低对比的 outline 不合格                          |
+| dragging-alternative           | AA   | 任何拖拽操作(排序/调大小/移动)必须提供单击指针替代(按钮/菜单/点选)并保留键盘操作                                          |
+| target-size-minimum(24px)      | AA   | Web 指针目标 ≥ 24×24 CSS px,或满足间距等效/内联/必要等豁免;原生 44pt/48dp 不等于 Web 达标                                |
+| consistent-help                | A    | 联系人工、自助帮助、自动帮助等重复出现的帮助入口在全站相对位置保持一致                                                    |
+| redundant-entry                | A    | 同一流程内已提供的信息自动填充或允许选择,不强制重输(地址/账号等)                                                          |
+| accessible-authentication      | AA   | 允许密码管理器与粘贴,提供通行密钥/OAuth 等非认知路径;禁粘贴且手抄 OTP 无替代即不达标                                      |
+| auto-rotation-controls         | WAI  | 轮播等自动移动内容必须提供上一/下一与暂停/停止控件,聚焦/hover 或 reduced-motion 时停止自动前进                            |
+| contextual-live-badge-updates  | WAI  | 徽章数量/状态变化以完整上下文短语播报(如"购物车 3 件"),不裸播数字,不设多个互相竞争的 live region                          |
+
+## 8. 韧性文本与紧凑组件
+
+> 来源:ui-ux-pro-max-skill quick-reference §5-§7(生产高频翻车的文本布局韧性规则)。核心思想:布局要活在"不可预测的内容"下——用户改名、调大系统字号、粘贴长 URL 时界面不破。稳定 slug 与完整 Do/Don't 见 [`ux-rules.md`](./ux-rules.md) 第 6 节。
+
+| 规则 ID                      | 规则                   | Do                                                                                          | Don't                                              |
+| ---------------------------- | ---------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| heading-line-balance         | 标题换行平衡是渐进增强  | `text-wrap: balance` 仅作增强,失效时自然换行仍可读;跨宽度/字体/语言实测                        | 承诺精确末行;全局不间断空格或硬 `<br>` 强拗断行        |
+| long-token-wrapping          | 长 token 必须可断行     | URL/ID/用户内容用 `overflow-wrap: anywhere`,flex/grid 文本子项允许收缩(`min-width: 0`)         | 对正文 prose 用 `word-break: break-all`              |
+| chip-collection-reflow       | 紧凑标签集合先换行再缩短 | 空间不足先允许换行;`+n` 溢出摘要必须是可操作的披露(可展开看到被藏值)                           | 把所有 chip 硬塞一行裁切;`+n` 只是隐藏值              |
+| cancellable-state-transitions| 动画可被打断且终态正确  | 快速状态切换取消/替换前序微交互,直接设置终态语义并清理副作用                                   | 依赖 animationend/transitionend 保证状态正确(被打断即坏) |
+| number-tabular               | 数据数字用等宽数字      | 表格数字列/价格/计时用 tabular-nums 防列宽抖动                                                | 常规比例数字导致整列微跳                              |
 
 ## 与其他文档的关系
 

@@ -64,6 +64,34 @@ flowchart LR
 | popover | `<el-popover>` / `<el-tooltip>` / `<el-popconfirm>` | [component.md](../framework/element/popover/component.md) + [api.md](../framework/element/popover/api.md) |
 | message | `ElMessage` | [component.md](../framework/element/message/component.md) + [api.md](../framework/element/message/api.md) |
 | drawer | `<el-drawer>` | [component.md](../framework/element/drawer/component.md) + [api.md](../framework/element/drawer/api.md) |
+| checkbox | `<el-checkbox>` + `<el-checkbox-group>` | [component.md](../framework/element/checkbox/component.md) + [api.md](../framework/element/checkbox/api.md) |
+| select | `<el-select>` + `<el-option>` | [component.md](../framework/element/select/component.md) + [api.md](../framework/element/select/api.md) |
+| upload | `<el-upload>` | [component.md](../framework/element/upload/component.md) + [api.md](../framework/element/upload/api.md) |
+| date-picker | `<el-date-picker>` / `<el-time-picker>` / `<el-time-select>` | [component.md](../framework/element/date-picker/component.md) + [api.md](../framework/element/date-picker/api.md) |
+| notification | `ElNotification` | [component.md](../framework/element/notification/component.md) + [api.md](../framework/element/notification/api.md) |
+| slider | `<el-slider>` | [component.md](../framework/element/slider/component.md) + [api.md](../framework/element/slider/api.md) |
+| segmented | `<el-segmented>`(2.7+) | [component.md](../framework/element/segmented/component.md) + [api.md](../framework/element/segmented/api.md) |
+| rate | `<el-rate>` | [component.md](../framework/element/rate/component.md) + [api.md](../framework/element/rate/api.md) |
+| popconfirm | `<el-popconfirm>` | [component.md](../framework/element/popconfirm/component.md) + [api.md](../framework/element/popconfirm/api.md) |
+| fab | 组合方案(`position: fixed` + `<el-button circle>`) | [component.md](../framework/element/fab/component.md) + [api.md](../framework/element/fab/api.md) |
+| statistic | `<el-statistic>` / `<el-descriptions>` | [component.md](../framework/element/statistic/component.md) + [api.md](../framework/element/statistic/api.md) |
+| card | `<el-card>` | [component.md](../framework/element/card/component.md) + [api.md](../framework/element/card/api.md) |
+| table | `<el-table>`(含 sortable/filter 列属性) | [component.md](../framework/element/table/component.md) + [api.md](../framework/element/table/api.md) |
+| tag | `<el-tag>` | [component.md](../framework/element/tag/component.md) + [api.md](../framework/element/tag/api.md) |
+| avatar | `<el-avatar>` | [component.md](../framework/element/avatar/component.md) + [api.md](../framework/element/avatar/api.md) |
+| badge | `<el-badge>` | [component.md](../framework/element/badge/component.md) + [api.md](../framework/element/badge/api.md) |
+| pagination | `<el-pagination>` | [component.md](../framework/element/pagination/component.md) + [api.md](../framework/element/pagination/api.md) |
+| steps | `<el-steps>` + `<el-step>` | [component.md](../framework/element/steps/component.md) + [api.md](../framework/element/steps/api.md) |
+| divider | `<el-divider>` | [component.md](../framework/element/divider/component.md) + [api.md](../framework/element/divider/api.md) |
+| calendar | `<el-calendar>`(展示型;录入见 date-picker) | [component.md](../framework/element/calendar/component.md) + [api.md](../framework/element/calendar/api.md) |
+| collapse | `<el-collapse>` + `<el-collapse-item>` | [component.md](../framework/element/collapse/component.md) + [api.md](../framework/element/collapse/api.md) |
+| skeleton | `<el-skeleton>` | [component.md](../framework/element/skeleton/component.md) + [api.md](../framework/element/skeleton/api.md) |
+| breadcrumb | `<el-breadcrumb>` + `<el-breadcrumb-item>` | [component.md](../framework/element/breadcrumb/component.md) + [api.md](../framework/element/breadcrumb/api.md) |
+| timeline | `<el-timeline>` + `<el-timeline-item>` | [component.md](../framework/element/timeline/component.md) + [api.md](../framework/element/timeline/api.md) |
+| tree | `<el-tree>` | [component.md](../framework/element/tree/component.md) + [api.md](../framework/element/tree/api.md) |
+| alert | `<el-alert>` | [component.md](../framework/element/alert/component.md) + [api.md](../framework/element/alert/api.md) |
+| dropdown | `<el-dropdown>`(动作菜单;选值见 select) | [component.md](../framework/element/dropdown/component.md) + [api.md](../framework/element/dropdown/api.md) |
+| loading | `v-loading` 指令 / `ElLoading` 服务 | [component.md](../framework/element/loading/component.md) + [api.md](../framework/element/loading/api.md) |
 
 ### Token 映射规则
 

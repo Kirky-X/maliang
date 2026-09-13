@@ -16,6 +16,7 @@
 | `hero-card-stack`     | 卡片堆叠 + 滚动揭示(配合 sticky-stack 骨架)     | 产品功能介绍、案例展示                |
 | `hero-video-loop`     | 短视频循环 + 文字浮层                             | 消费品、产品演示、IP 落地页           |
 | `hero-text-only`      | 纯文字 + 排版,无图                               | 设计师作品集、极简品牌、文档站        |
+| `hero-inline-image-type` | 巨型标题词间嵌入小尺寸语境照片(行高对齐、圆角、作视觉标点) | VARIANCE ≥ 7 的品牌 / 作品集站;移动端退化为标题下方堆叠(依赖 [`visual-assets.md`](../meta/visual-assets.md) 图片策略,来源:taste-skill stitch-skill §4) |
 
 ## 使用规则
 

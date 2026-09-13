@@ -81,7 +81,7 @@ radius-sm                  # 圆角:小
 
 ## 导出格式
 
-> 本节定义 token 在不同目标平台的**格式规范**。CLI 命令(`npx @google/design.md export`)见 [`design-md.md`](../commands/design-md.md) Phase 3。本文只管"导出后的格式长什么样 + 命名如何转换"。
+> 本节定义 token 在不同目标平台的**格式规范**。CLI 命令(`npx @google/design.md@0.4.0 export`)见 [`design-md.md`](../commands/design-md.md) Phase 3。本文只管"导出后的格式长什么样 + 命名如何转换"。
 
 ### 1. W3C DTCG(Design Tokens Community Group)
 

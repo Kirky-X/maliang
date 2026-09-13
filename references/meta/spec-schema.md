@@ -20,6 +20,78 @@ components: map # see Components section
 
 ---
 
+## Schema 版本戳
+
+DESIGN.md 头部(front matter 之前)须带 schema 版本戳注释:
+
+```html
+<!-- maliang:design-schema 1 -->
+```
+
+- 戳标识的是 **schema 结构版本**(顶层键与章节约定),不是产物 release 版本
+- schema 结构变化(增删顶层键 / 字段语义调整)时递增 N;仅改 token 值不递增
+- 下游工具(validate / ui-graph)读戳识别 schema 漂移,避免用旧解析约定读新文件
+- 来源:impeccable(`<!-- impeccable:product-schema 1 -->`)与 ui-ux-pro-max 数据治理
+
+---
+
+## 决策账本(decisions)
+
+顶层可选键。跨会话的设计决策记忆:已记录的取值是"决定而非缺陷",后续会话先读账本再动 UI,漂移即违规。该键为 maliang 扩展键,不属 Google linter 已知键,lint 保持静默(见 `unknown-key` 规则)。
+
+```yaml
+decisions:
+  - decision: 深度策略用 borders-only,不用投影
+    rationale: 后台工具,用户要密度;阴影显"浮"
+    date: 2026-01-15
+    scope: 全站
+```
+
+| 字段        | 类型   | 必选 | 说明                                       |
+| ----------- | ------ | ---- | ------------------------------------------ |
+| `decision`  | string | 是   | 决策内容(一句话,可被引用)               |
+| `rationale` | string | 是   | 为什么(含被拒绝的替代项更佳)             |
+| `date`      | string | 是   | 决策日期 `YYYY-MM-DD`                      |
+| `scope`     | string | 否   | 生效范围(页面 / 组件 / 全站,默认全站)   |
+
+- 迭代 / redesign 交付后,把本轮新出现的设计决策追加进账本,防止跨轮次漂移
+- 来源:interface-design `system.md` Decisions 表(Decision | Rationale | Date)
+
+---
+
+## 用户研究块(users)
+
+顶层可选键。承接 design-md Phase 0a 的"用户三产出"(画像 / 旅程 / JTBD),供 `critique` 任务脚本与 analytics 漏斗引用。该键为 maliang 扩展键,不属 Google linter 已知键,lint 保持静默(同 `decisions`)。
+
+```yaml
+users:
+  personas:
+    - name: 首次置业的租房客
+      goal: 3 分钟内判断这套房值不值得约看
+      pain: 图片与实景不符,怕白跑一趟
+      ability: 移动端熟练,只在通勤时浏览
+  journey:
+    - task: 约看一套房
+      steps:
+        - step: 刷列表
+          touchpoint: 筛选器
+          emotion-break: 房源太多无从下手
+        - step: 看详情
+          touchpoint: 房源详情页
+  jtbd: 当我加班到晚上九点刷到一套房时,我要 30 秒内确认它靠谱,以便明天一早就能约看。
+```
+
+| 字段              | 类型 | 必选 | 说明                                                          |
+| ----------------- | ---- | ---- | ------------------------------------------------------------- |
+| `users.personas`  | list | 否   | 1-3 个画像:`name` / `goal` / `pain` / `ability`,各 ≤ 5 行 |
+| `users.journey`   | list | 否   | 主任务旅程:`task` + `steps[]`(step / touchpoint / emotion-break) |
+| `users.jtbd`      | string | 否 | 1-2 句"当…时,我要…,以便…"                                |
+
+- 无真实用户研究时整块省略,或写一行 `research: none` 声明"未做用户研究,按 surface-modes 模式假设"(低置信)
+- **分工**:本块是**设计态研究产物**,回答"这个产品的用户是谁";[`../commands/critique.md`](../commands/critique.md) 评审 A-3 的 persona 表是**评审态固定走查人格**(急性老手等 5 类),回答"任何界面都会栽在哪"——后者可从前者的 journey 取任务素材,但两者不互相替代
+
+---
+
 ## 颜色 token
 
 **类型**: `map<string, Color>`
@@ -49,6 +121,17 @@ colors:
 `primary`, `secondary`, `tertiary`, `neutral`, `surface`, `on-surface`, `error`
 
 Material Design 3 (MD3) 配对 token(`on-primary`、`primary-container` 等)被识别为同级,不会被标记为孤立。
+
+**文字四级色阶**(推荐,非规范性):
+
+| token                  | 用途       |
+| ---------------------- | ---------- |
+| `color-text-primary`   | 默认正文   |
+| `color-text-secondary` | 辅助说明   |
+| `color-text-tertiary`  | 元数据     |
+| `color-text-muted`     | 禁用       |
+
+只用两级说明层级太扁。来源:interface-design(Text hierarchy)。
 
 ---
 
@@ -244,7 +327,7 @@ components:
 
 ## Linter 规则(9 条)
 
-`npx @google/design.md lint` 命令运行九条规则。每条以固定严重级别触发——权威来源是 `packages/cli/src/linter/linter/rules/*.ts`(规则 `name:` + `severity`),下表为其镜像。
+`npx @google/design.md@0.4.0 lint` 命令运行九条规则。每条以固定严重级别触发——权威来源是 `packages/cli/src/linter/linter/rules/*.ts`(规则 `name:` + `severity`),下表为其镜像。
 
 | #   | 规则                | 严重级别 | 检查内容                                                                                                                                                  |
 | --- | ------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |

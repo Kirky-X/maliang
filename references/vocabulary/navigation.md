@@ -16,6 +16,10 @@
 | `nav-command-palette` | ⌘K 命令面板                                       | DevTool、SaaS、生产力工具             |
 | `nav-floating-pill`   | 浮动药丸式导航,滚动时显隐                        | 长滚动页(单页营销 / 品牌站)         |
 | `nav-stepper`         | 步进式导航(1/2/3)                                | 流程页(结账、注册、向导)            |
+| `nav-floating-island` | 浮岛导航:悬浮胶囊 + 汉堡→X 形变 + 蒙版错峰揭示   | 品牌 / 创意站;移动端降级为全宽 dock(来源:taste-skill soft-skill §5.A) |
+| `nav-fab`             | 悬浮操作按钮:右下角单 FAB(一屏仅一个主操作),滚动下滑出现 / 上滑收起联动,避开底部导航安全区 | 移动 App 新建/发布/写等一级操作入口                |
+
+> 来源注:`nav-fab` 为**审计补全**(2026-09-08 组件覆盖审计):对照 Material 3 FAB(含 Extended FAB)、Ant Design FloatButton、Flutter FloatingActionButton 组件清单。
 
 ## 使用规则
 

@@ -27,8 +27,9 @@
   6. 二级页面文件位置(error,仅 ui/ 直接子文件)   rule=page-location
   7. 组件参数表缺 action 字段(error)             rule=action-field
   8. 暗色模式 token 引用覆盖(warning)            rule=dark-mode
-  9. aria-label 可访问性(error)                rule=aria-label
-  10. 触控区 ≥44px(error)                        rule=touch-target
+  9. 交互组件缺 aria-label(error)               rule=aria-label
+  10. 触控目标分端判定(原生 <44 error;           rule=touch-target
+      Web/未知 <24 error、24-43 warning)
   11. 动效 ≤400ms(error)                         rule=motion-duration
   12. 卡片 radius 违规(error)                    rule=card-radius
   13. z-index 字面量违规(error)                  rule=z-index
@@ -102,23 +103,32 @@ INTERACTIVE_SLUGS = {"button", "icon", "input", "link"}
 # 可点击组件 slug(触控区需 ≥44px)
 CLICKABLE_SLUGS = {"button", "icon", "link"}
 
-# 触控区最小尺寸(px)
+# 触控目标分端阈值(px,对齐 ux-rules.md §5 分层口径):
+# - 原生移动端(iOS/Android/鸿蒙)按平台规范 44pt/48dp/44vp,<44 判 ERROR;
+# - Web 按 WCAG 2.2 2.5.8 AA 最低 24×24 CSS px,<24 判 ERROR,24-43 判 WARN
+#   (提示 Web 最低 24px 合规,推荐 44px)。
+# 平台来源:页面 frontmatter 可选 platform 字段(draw-md 契约未强制声明);
+# 未声明按 Web/未知处理,不误杀 24-43px 的合规 Web 目标。
 TOUCH_TARGET_MIN = 44
+TOUCH_TARGET_MIN_WEB = 24
+MOBILE_PLATFORMS = {"ios", "android", "harmony", "harmonyos", "arkts", "flutter"}
 
-# 规则标识(用于 --format json 输出的 rule 字段;每项检查一个稳定标识)
-RULE_TOKEN_REF = "token-ref"
-RULE_COLOR_LITERAL = "color-literal"
-RULE_COMPONENT_SLUG = "component-slug"
-RULE_FRONTMATTER = "frontmatter"
-RULE_ACTION_FIELD = "action-field"
-RULE_SECTION_ORDER = "section-order"
-RULE_PAGE_LOCATION = "page-location"
-RULE_DARK_MODE = "dark-mode"
-RULE_ARIA_LABEL = "aria-label"
-RULE_TOUCH_TARGET = "touch-target"
-RULE_MOTION_DURATION = "motion-duration"
-RULE_CARD_RADIUS = "card-radius"
-RULE_Z_INDEX = "z-index"
+# 规则标识(用于 --format json 输出的 rule 字段;每项检查一个稳定标识)。
+# ux-rules 回链:能对上 references/meta/ux-rules.md slug 的在行内标注 slug,
+# 对不上的注明"无 ux-rules 对应"(结构/token 契约项),与 ux-rules.md 文末声明一致。
+RULE_TOKEN_REF = "token-ref"              # 无 ux-rules 对应(token.md 契约项)
+RULE_COLOR_LITERAL = "color-literal"      # 无 ux-rules 对应(token.md 契约项)
+RULE_COMPONENT_SLUG = "component-slug"    # 无 ux-rules 对应(framework 契约项)
+RULE_FRONTMATTER = "frontmatter"          # 无 ux-rules 对应(结构合规项)
+RULE_ACTION_FIELD = "action-field"        # 无 ux-rules 对应(draw-md 契约项)
+RULE_SECTION_ORDER = "section-order"      # 无 ux-rules 对应(结构合规项)
+RULE_PAGE_LOCATION = "page-location"      # 无 ux-rules 对应(结构合规项)
+RULE_DARK_MODE = "dark-mode"              # 无 ux-rules 对应(color.md 第 5 节)
+RULE_ARIA_LABEL = "aria-label"            # ux-rules slug: aria-labels
+RULE_TOUCH_TARGET = "touch-target"        # ux-rules slug: touch-target-44 + web-target-size-24
+RULE_MOTION_DURATION = "motion-duration"  # 无 ux-rules 对应(micro-interactions.md 时长预算)
+RULE_CARD_RADIUS = "card-radius"          # 无 ux-rules 对应(radius.md 阶梯)
+RULE_Z_INDEX = "z-index"                  # 无 ux-rules 对应(token.md z-index 档)
 
 # z-index 字面量(匹配 z-index: <数字> 形式,排除 token 引用 {z-index-*})
 Z_INDEX_LITERAL_RE = re.compile(
@@ -200,6 +210,38 @@ def parse_framework_file(path):
     return slugs
 
 
+def parse_vocabulary_slugs(vocab_dir):
+    """解析 references/vocabulary/*.md,收集术语库登记的模式 slug。
+
+    审计 P0 配套:framework 45 类是组件抽象,charts/search 等术语库模式是
+    区块抽象,组件类型字段引用术语库模式名(如 chart-line)需在契约下合法
+    表达,不应按自创 slug 报 error。取各表首列反引号包裹的 kebab-case slug
+    (与 parse_framework_file 同风格,非表格/非纯 slug 单元格自然跳过)。
+    返回 set of str;目录不存在返回空 set。
+    """
+    slugs = set()
+    if not os.path.isdir(vocab_dir):
+        return slugs
+    cell_re = re.compile(r"`([a-z][a-z0-9-]*)`")
+    for fn in sorted(os.listdir(vocab_dir)):
+        if not fn.endswith(".md"):
+            continue
+        path = os.path.join(vocab_dir, fn)
+        if not os.path.isfile(path):
+            continue
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f.read().splitlines():
+                stripped = line.strip()
+                if not stripped.startswith("|"):
+                    continue
+                cells = [c.strip() for c in stripped.strip("|").split("|")]
+                first = cells[0] if cells else ""
+                m = cell_re.fullmatch(first)
+                if m:
+                    slugs.add(m.group(1))
+    return slugs
+
+
 def parse_frontmatter(text):
     """从 markdown 文本提取 YAML frontmatter(委托共用模块,支持多行字符串)。
 
@@ -256,6 +298,25 @@ def _extract_slugs_from_value(value):
         "`navigation`(P1,导航容器)"            -> ["navigation"]
     """
     return re.findall(r"`([^`]+)`", value)
+
+
+def _find_blockquote_type(lines, header_line):
+    """在参数表(header 行)上方最多 3 行内查找 `> **组件类型**:` 引用块。
+
+    draw-md.md 规定:双列对比表(如 dock 选中/未选中态)的组件类型标注在
+    表前引用块中。找到返回 (line_no, slugs),否则返回 None。
+    """
+    blockquote_re = re.compile(r"^>\s*\*\*组件类型\*\*[:：]?(.*)$")
+    for offset in range(1, 4):
+        idx = header_line - 1 - offset
+        if idx < 0:
+            break
+        m = blockquote_re.match(lines[idx].strip())
+        if m:
+            return (idx + 1, _extract_slugs_from_value(m.group(1)))
+        if lines[idx].strip().startswith("|"):
+            break  # 遇到另一张表即停
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -316,12 +377,21 @@ def check_color_literals(rel_path, lines):
     return results
 
 
-def check_component_slugs(rel_path, lines, valid_slugs):
+def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
     """检查 3:组件类型字段缺失或自创 slug(error/warning)。
 
     参数表(header 含"参数")无"组件类型"行 -> warning;
-    组件类型值含不在 45 类中的 slug -> error。
+    组件类型值含不在 45 类且不在术语库的 slug -> error。
+    references/vocabulary/*.md 登记的模式 slug(如 chart-line / filter-chip)
+    放行:framework 45 类是组件抽象,charts/search 等术语库模式是区块抽象,
+    需在组件类型字段合法表达(审计 P0-3);由 main() 解析 vocabulary 目录传入。
+    双列对比表允许用表前 `> **组件类型**:` 引用块标注(draw-md.md 规范),
+    引用块与表格行二选一即可,两者皆无才报 warning。
     """
+
+    def _invented(slug):
+        return slug not in valid_slugs and not (vocab_slugs and slug in vocab_slugs)
+
     results = []
     for header_line, rows in _extract_param_tables(lines):
         type_row = None
@@ -330,6 +400,23 @@ def check_component_slugs(rel_path, lines, valid_slugs):
                 type_row = (line_no, cells)
                 break
         if type_row is None:
+            blockquote = _find_blockquote_type(lines, header_line)
+            if blockquote is not None:
+                bq_line_no, bq_slugs = blockquote
+                for slug in bq_slugs:
+                    if _invented(slug):
+                        results.append(
+                            (
+                                "ERROR",
+                                rel_path,
+                                bq_line_no,
+                                "自创组件 slug: "
+                                + slug
+                                + ",应引用 framework/index.md 45 类"
+                                + "或 references/vocabulary/ 已登记 slug",
+                            )
+                        )
+                continue
             results.append(
                 ("WARN", rel_path, header_line, "组件参数表缺'组件类型'字段")
             )
@@ -337,7 +424,7 @@ def check_component_slugs(rel_path, lines, valid_slugs):
         line_no, cells = type_row
         value = cells[1] if len(cells) > 1 else ""
         for slug in _extract_slugs_from_value(value):
-            if slug not in valid_slugs:
+            if _invented(slug):
                 results.append(
                     (
                         "ERROR",
@@ -345,7 +432,8 @@ def check_component_slugs(rel_path, lines, valid_slugs):
                         line_no,
                         "自创组件 slug: "
                         + slug
-                        + ",应引用 framework/index.md 的 45 类",
+                        + ",应引用 framework/index.md 45 类"
+                        + "或 references/vocabulary/ 已登记 slug",
                     )
                 )
     return results
@@ -467,10 +555,10 @@ def check_dark_mode_coverage(rel_path, lines, valid_tokens=None):
 
 
 def check_aria_labels(rel_path, lines):
-    """检查 9:交互组件 aria-label 可访问性(warning)。
+    """检查 9:交互组件 aria-label 可访问性(error)。
 
     识别交互组件参数表(组件类型含 button/icon/input/link 之一),
-    检查参数表是否含 aria-label 字段,缺失返回 warning(AUDIT-REPORT G02)。
+    检查参数表是否含 aria-label 字段,缺失返回 error(AUDIT-REPORT G02)。
     容器组件(navigation 等)不检查。
     """
     results = []
@@ -505,14 +593,19 @@ def check_aria_labels(rel_path, lines):
     return results
 
 
-def check_touch_target(rel_path, lines):
-    """检查 10:可点击组件触控区 ≥44px(error)。
+def check_touch_target(rel_path, lines, platform=""):
+    """检查 10:可点击组件触控目标分端判定。
 
-    识别可点击组件(组件类型含 button/icon/link 之一),
-    解析 width/height 字段(正则 \\d+px),<44px 返回 error(AUDIT-REPORT G03)。
+    识别可点击组件(组件类型含 button/icon/link 之一),解析 width/height
+    字段(正则 \\d+px),按端分阈值(AUDIT-REPORT G03 + P0 触控口径分裂修复):
+    - platform ∈ MOBILE_PLATFORMS(原生移动端): <44px 判 ERROR
+      (44pt/48dp/44vp 平台规范档);
+    - Web 或平台未声明: <24px 判 ERROR(WCAG 2.2 2.5.8 AA 下限),24-43px
+      判 WARN(提示 Web 最低 24×24 合规,推荐 44px)。
     match-parent 跳过(非定值,继承父级)。
     """
     results = []
+    native = platform in MOBILE_PLATFORMS
     for header_line, rows in _extract_param_tables(lines):
         type_row = None
         for line_no, cells in rows:
@@ -543,13 +636,39 @@ def check_touch_target(rel_path, lines):
             m = PX_VALUE_RE.search(row_value)
             if m:
                 size = int(m.group(1))
-                if size < TOUCH_TARGET_MIN:
+                if native:
+                    if size < TOUCH_TARGET_MIN:
+                        results.append(
+                            (
+                                "ERROR",
+                                rel_path,
+                                row_line_no,
+                                "可点击组件 "
+                                + str(size)
+                                + "px <44px(原生移动端 44pt/48dp/44vp),触控区不足",
+                            )
+                        )
+                elif size < TOUCH_TARGET_MIN_WEB:
                     results.append(
                         (
                             "ERROR",
                             rel_path,
                             row_line_no,
-                            "可点击组件 " + str(size) + "px <44px,触控区不足",
+                            "可点击组件 "
+                            + str(size)
+                            + "px <24px,低于 Web WCAG 2.2 2.5.8 AA 下限",
+                        )
+                    )
+                elif size < TOUCH_TARGET_MIN:
+                    results.append(
+                        (
+                            "WARN",
+                            rel_path,
+                            row_line_no,
+                            "可点击组件 "
+                            + str(size)
+                            + "px:Web 最低 24px 合规,推荐 44px;"
+                            "移动端产物应在 frontmatter 声明 platform",
                         )
                     )
     return results
@@ -666,19 +785,25 @@ def _tag(rule, check_results):
     return [(sev, f, ln, rule, msg) for (sev, f, ln, msg) in check_results]
 
 
-def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level):
+def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level,
+               vocab_slugs=None):
     """对单个文件运行检查 1-12,返回 5-tuple 列表 (severity, file, line, rule, message)。
 
     检查 5 (section-order) / 检查 6 (page-location) 仅对 ui/ 直接子文件运行
     (is_ui_top_level=True),其余 10 项对所有 ui/organisms 文件运行。
+    触控分端判定(检查 10)读取 frontmatter 可选 platform 字段。
     """
     results = []
+    platform = _strip_quotes(parse_frontmatter(text).get("platform", "")).lower()
     results.extend(
         _tag(RULE_TOKEN_REF, check_token_references(rel_path, lines, valid_tokens))
     )
     results.extend(_tag(RULE_COLOR_LITERAL, check_color_literals(rel_path, lines)))
     results.extend(
-        _tag(RULE_COMPONENT_SLUG, check_component_slugs(rel_path, lines, valid_slugs))
+        _tag(
+            RULE_COMPONENT_SLUG,
+            check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs),
+        )
     )
     results.extend(_tag(RULE_FRONTMATTER, check_frontmatter(rel_path, text)))
     results.extend(_tag(RULE_ACTION_FIELD, check_action_field(rel_path, lines)))
@@ -686,7 +811,9 @@ def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level
         _tag(RULE_DARK_MODE, check_dark_mode_coverage(rel_path, lines, valid_tokens))
     )
     results.extend(_tag(RULE_ARIA_LABEL, check_aria_labels(rel_path, lines)))
-    results.extend(_tag(RULE_TOUCH_TARGET, check_touch_target(rel_path, lines)))
+    results.extend(
+        _tag(RULE_TOUCH_TARGET, check_touch_target(rel_path, lines, platform))
+    )
     results.extend(_tag(RULE_MOTION_DURATION, check_motion_duration(rel_path, lines)))
     results.extend(_tag(RULE_CARD_RADIUS, check_card_radius(rel_path, lines)))
     results.extend(_tag(RULE_Z_INDEX, check_z_index_literals(rel_path, lines)))
@@ -713,6 +840,12 @@ def main(argv):
         help="framework/index.md 路径(默认 references/framework/index.md)",
     )
     parser.add_argument(
+        "--vocabulary-dir",
+        default=None,
+        help="references/vocabulary 目录路径(默认 references/vocabulary);"
+        "其登记的模式 slug(如 chart-line)在组件类型校验中放行",
+    )
+    parser.add_argument(
         "--format",
         choices=["text", "json"],
         default="text",
@@ -729,6 +862,10 @@ def main(argv):
         args.framework_file
         or os.path.join(os.getcwd(), "references", "framework", "index.md")
     )
+    vocabulary_dir = os.path.abspath(
+        args.vocabulary_dir
+        or os.path.join(os.getcwd(), "references", "vocabulary")
+    )
 
     # 头部输出(json 模式保持 stdout 纯净,仅末尾输出 JSON 数组)
     if fmt == "text":
@@ -737,6 +874,7 @@ def main(argv):
         print("目标目录: " + target_dir)
         print("Token 文件: " + token_file)
         print("Framework 文件: " + framework_file)
+        print("Vocabulary 目录: " + vocabulary_dir)
         print("")
 
     # 目录/文件存在性(缺失即终止,显性失败)
@@ -765,9 +903,18 @@ def main(argv):
         else:
             print("[ERROR] " + msg)
         return 1
+    if not os.path.isdir(vocabulary_dir):
+        msg = "vocabulary 目录不存在: " + vocabulary_dir
+        if fmt == "json":
+            print("[]")
+            print("[ERROR] " + msg, file=sys.stderr)
+        else:
+            print("[ERROR] " + msg)
+        return 1
 
     valid_tokens = parse_token_file(token_file)
     valid_slugs = parse_framework_file(framework_file)
+    vocab_slugs = parse_vocabulary_slugs(vocabulary_dir)
 
     # 收集待检查文件
     ui_dir = os.path.join(target_dir, "ui")
@@ -788,7 +935,8 @@ def main(argv):
         lines = text.splitlines()
         all_results.extend(
             run_checks(
-                rp, text, lines, valid_tokens, valid_slugs, os.path.dirname(rp) == "ui"
+                rp, text, lines, valid_tokens, valid_slugs,
+                os.path.dirname(rp) == "ui", vocab_slugs=vocab_slugs,
             )
         )
 
@@ -799,7 +947,10 @@ def main(argv):
             text = f.read()
         lines = text.splitlines()
         all_results.extend(
-            run_checks(rp, text, lines, valid_tokens, valid_slugs, False)
+            run_checks(
+                rp, text, lines, valid_tokens, valid_slugs, False,
+                vocab_slugs=vocab_slugs,
+            )
         )
 
     # 排序:error 先于 warn,再按 file、line

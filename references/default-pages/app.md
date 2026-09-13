@@ -52,9 +52,13 @@ App 启动后的主入口页,聚合核心功能入口与内容流,承担分发�
 
 统一收口系统通知、互动消息与客服会话,支持未读聚合与分组浏览。
 
+> 模式支撑见 [popups.md](../vocabulary/popups.md)(弹层会话)与 [states.md](../vocabulary/states.md)(空态/未读聚合),组件类用 notification/message/badge/avatar(见 [framework/index.md](../framework/index.md));会话流(chat)模式暂缺,建议后续补 chat 词汇。
+
 ## mine
 
 用户个人中心,展示身份信息并聚合账户、设置与功能入口。
+
+> 模式支撑见 [cards.md](../vocabulary/cards.md)(card-media-left / card-action 功能入口卡),组件类用 avatar/card/list/badge(见 [framework/index.md](../framework/index.md))。
 
 ## login
 

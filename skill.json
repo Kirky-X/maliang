@@ -1,8 +1,8 @@
 {
   "name": "maliang",
-  "description": "前端设计生成技能，DESIGN.md 设计系统+UI markdown+三框架适配。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/Tailwind/CSS/DTCG/转 HarmonyOS/Flutter/Element Plus/redesign/重设计/refresh/restructure/rebuild",
+  "description": "前端设计生成技能，覆盖 UIUX 全生命周期（研究→定义→设计→实现→验证→交付→迭代），DESIGN.md 设计系统+UI markdown+三框架适配。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS/Flutter/Element Plus/redesign/重设计/refresh/restructure/rebuild/去AI味/deslop/可用性评审/critique/设计语言模板/液态玻璃/模板墙",
   "license": "MIT",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "author": "Kirky-X",
   "repo": "https://github.com/Kirky-X/maliang",
   "homepage": "https://github.com/Kirky-X/maliang",

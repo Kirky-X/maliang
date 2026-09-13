@@ -20,8 +20,10 @@
 | 雅各布定律      | 用户习惯其他产品            | 走平台惯例,别发明交互              |
 | **第 13 定律 · 动画动机** | 所有动画必须有动机(状态变化 / 空间引导 / 反馈),装饰性动画会降低可用性 | 无动机的动画直接砍掉;每段动画先回答"为什么动" |
 | **第 14 定律 · 完整交互状态** | 交互元素必须覆盖 Loading / Empty / Error / Tactile Feedback 四类状态 | 缺任一类即"半成品",preview 阶段硬性失败 |
+| **第 15 定律 · 视觉焦点** | 每屏只有一个用户要做的事,它必须赢(尺寸 / 对比 / 位置 / 留白联合起效),其余元素**刻意降级**——只升不降不是层级 | weight beats size:同字号用字重(400/500/600)+ 三档色分层级;交付前过 squint test(眯眼后层级仍可读、无刺眼物) |
 
 > 第 13 / 14 定律来源:taste-skill。第 13 定律与 [`dials.md`](./dials.md) MOTION_INTENSITY 联动:Level 1-3 严格只允许有动机动画;第 14 定律的 Tactile Feedback 与 [`vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 联动。
+> 第 15 定律来源:interface-design(Visual Hierarchy:One focal point / weight beats size)。
 
 ## 二、UI 技巧(48 项,按主题)
 

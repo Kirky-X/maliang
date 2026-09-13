@@ -41,13 +41,13 @@ yarn-error.log*
 *.log
 # Meta
 .meta
-# 测试代码（开发期使用，不入仓库）
-tests/
-**/tests/
-**/test/
+# tests/ 与 test-prompts.json 自 0.2.7 起入仓库:CI 验证门
+# (.github/workflows/validate.yml → scripts/ci-gate.sh)依赖 tests/ fixture 测试,
+# test-prompts.json 为 skill 行为评测用例,均随版本分发
+# 插件 hook 状态(本地会话产物)
+.mimosa/
 # Darwin skill 优化产物（开发期使用，不入仓库）
 results.tsv
-test-prompts.json
 darwin-result-card.png
 # Python cache
 *.pyc

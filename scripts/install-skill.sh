@@ -339,6 +339,12 @@ cmd_update() {
   info "拉取最新版本..."
   if [[ -d "$PROJECT_ROOT/.git" ]]; then
     if ! git -C "$PROJECT_ROOT" pull --ff-only 2>/dev/null; then
+      # reset --hard 会吞掉未提交修改（规则12：禁止静默丢数据）——脏工作树时中止
+      if [[ -n "$(git -C "$PROJECT_ROOT" status --porcelain 2>/dev/null)" ]]; then
+        err "git pull 失败，且工作区有未提交修改。为避免 reset --hard 吞掉改动，已中止。"
+        err "请先 commit/stash 后重跑，或手动处理：git -C $PROJECT_ROOT status"
+        exit 1
+      fi
       warn "git pull 失败，尝试 git fetch + reset"
       git -C "$PROJECT_ROOT" fetch origin 2>/dev/null || true
       local current_branch

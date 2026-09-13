@@ -126,7 +126,7 @@ dials:
 
 ### CLI 不可用(无 npm / node 环境)
 
-`npx @google/design.md` 无法运行时手动处理:Tailwind v4 → 手写 `@theme{--color-primary:#...}`;Tailwind v3 → 手写 `theme.extend.colors/fontSize` 对象;Lint → 对照 [`spec-schema.md`](../meta/spec-schema.md) 逐项人工检查。告知用户:"CLI 不可用,已手动处理,可能未覆盖全部 9 条 lint 规则。"
+`npx @google/design.md@0.4.0` 无法运行时手动处理:Tailwind v4 → 手写 `@theme{--color-primary:#...}`;Tailwind v3 → 手写 `theme.extend.colors/fontSize` 对象;Lint → 对照 [`spec-schema.md`](../meta/spec-schema.md) 逐项人工检查。告知用户:"CLI 不可用,已手动处理,可能未覆盖全部 9 条 lint 规则。"
 
 ### 输入 CSS/Tailwind 不完整或不一致
 
@@ -148,7 +148,7 @@ dials:
 
 ### Lint 返回错误
 
-`npx @google/design.md lint` 报错时:列出全部 error 级问题(不静默忽略);可自动修复的直接修(`colour:`→`colors:`、补 `#`、`fontWeight:"700"`→`fontWeight:700`);需判断的(orphaned token、unknown property)先问用户意图;修复后重跑 lint 确认 exit 0。
+`npx @google/design.md@0.4.0 lint` 报错时:列出全部 error 级问题(不静默忽略);可自动修复的直接修(`colour:`→`colors:`、补 `#`、`fontWeight:"700"`→`fontWeight:700`);需判断的(orphaned token、unknown property)先问用户意图;修复后重跑 lint 确认 exit 0。
 
 ### 图片质量不足(Phase 1C)
 

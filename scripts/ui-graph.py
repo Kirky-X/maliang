@@ -429,7 +429,13 @@ def build_impl_map(target_dir, preview_root, code_root):
     mappings = []
     for page in pages:
         slug = _logical_ui_slug(page["path"])
-        preview_html = preview_map.get(slug)
+        # preview 命名约定为 preview_<page-name>_<device>.html(preview.md 产出物),
+        # 故 slug 精确相等或以 <slug>_ 设备后缀均视为匹配
+        preview_html = None
+        for pslug, ppath in preview_map.items():
+            if pslug == slug or pslug.startswith(slug + "_"):
+                preview_html = ppath
+                break
         framework_code = {
             "harmony": fw_map["harmony"].get(slug),
             "flutter": fw_map["flutter"].get(slug),

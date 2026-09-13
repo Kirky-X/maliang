@@ -200,7 +200,7 @@ brief → 产品类型推理(见 product-reasoning.md)→ 匹配下表"适用场
 - **定位**:原子化 CSS 框架,非组件库但提供 token 系统
 - **适用场景**:任何 Web 项目(作为 token 底座)、文档站、开发者工具
 - **token 命名**:`colors.primary.500`、`spacing.4`、`fontSize.lg`(对象路径 + 编号档位)
-- **桥接建议**:DESIGN.md 用 `npx @google/design.md export --format json-tailwind` 直接导出为 `tailwind.config.js` 的 `theme` 对象;`spacing:` base 必须 4 或 8(对齐 Tailwind 默认)
+- **桥接建议**:DESIGN.md 用 `npx @google/design.md@0.4.0 export --format json-tailwind` 直接导出为 `tailwind.config.js` 的 `theme` 对象;`spacing:` base 必须 4 或 8(对齐 Tailwind 默认)
 
 ### 选包约束(硬性)
 

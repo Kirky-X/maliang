@@ -18,6 +18,11 @@
 | `card-tinted`         | 浅色背景 tint(非白)                             | 高亮项、选中态、分组                  |
 | `card-skeleton`       | 加载占位骨架                                      | Loading 状态(见 [`principles.md`](../meta/principles.md) 第 14 定律) |
 | `card-empty`          | 空状态卡(插画 + 文案 + CTA)                     | 空列表(见 [`principles.md`](../meta/principles.md) 第 14 定律) |
+| `card-double-bezel`   | 双层嵌套容器:外壳 `bg-*/5` + ring 发丝边 + `p-1.5` + 大圆角,内核独立底色 + 内高光 + 同心圆角 `calc(外圆角 - 0.375rem)` | 高级感工艺卡、设置组、统计卡(来源:taste-skill soft-skill) |
+| `card-tilt-depth`     | 卡片层深 tilt:0.4 / 1.0 / 1.6 三档层深,hover 视差(层移/旋转参数详见 [buttons.md](buttons.md)) | 精品内容卡、作品集、封面卡(来源:视频研究 v07) |
+| `card-stat`           | 数值卡:大数值 + 标签 + delta 涨跌,数字用等宽数字(tabular-nums) | KPI 概览、仪表盘指标卡(样式基准见 [data-dense-dashboard](../templates/data-dense-dashboard.md) 模板) |
+
+> 来源注:`card-stat` 为**审计补全**(2026-09-08 组件覆盖审计):对照 Ant Design Statistic 组件清单(IBM Carbon / Material 3 无独立对应,由卡片组合);键值对详情展示归 [tables.md](tables.md) `table-descriptions`。
 
 ## 使用规则
 

@@ -34,7 +34,7 @@ version: 1.2.0
 | 热区     | `{icon-touch-target}`       |
 | 字体颜色 | `{color-text-primary}`            |
 | aria-label | "返回上一页"              |
-| action   | tap=→上一页(history.back); state=无; db=无; api=无; long-press=无 |
+| action   | tap=history.back(返回上一页); state=无; db=无; api=无; long-press=无 |
 
 ### 2.2 中间:标题
 
@@ -56,7 +56,7 @@ version: 1.2.0
 | 字体颜色  | `{color-text-primary}`(主操作用 `{color-brand-primary}`) |
 | 热区      | `{icon-touch-target}`                        |
 | aria-label | "顶部操作按钮"(具体由页面上下文决定,如"消息"/"设置") |
-| action    | tap=→目标页或触发功能; state=按下高亮; db=视功能; api=视功能; long-press=无 |
+| action    | tap=由页面引用方声明(见各页面首章); state=按下高亮; db=视功能; api=视功能; long-press=无 |
 
 ## 3. 暗色模式
 

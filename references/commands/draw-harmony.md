@@ -64,6 +64,34 @@ flowchart LR
 | popover | `Popup` / `bindPopup` | [component.md](../framework/harmony/popover/component.md) + [usage.md](../framework/harmony/popover/usage.md) |
 | message | `promptAction.showToast` | [component.md](../framework/harmony/message/component.md) + [usage.md](../framework/harmony/message/usage.md) |
 | drawer | `bindSheet` | [component.md](../framework/harmony/drawer/component.md) + [usage.md](../framework/harmony/drawer/usage.md) |
+| checkbox | `Checkbox` + `CheckboxGroup` | [component.md](../framework/harmony/checkbox/component.md) + [usage.md](../framework/harmony/checkbox/usage.md) |
+| select | `Select`(数据录入;动作菜单见 menu) | [component.md](../framework/harmony/select/component.md) + [usage.md](../framework/harmony/select/usage.md) |
+| upload | 组合方案(PhotoViewPicker/DocumentViewPicker + List + Progress) | [component.md](../framework/harmony/upload/component.md) + [usage.md](../framework/harmony/upload/usage.md) |
+| date-picker | `DatePickerDialog` / `TimePickerDialog`(录入;浏览见 calendar) | [component.md](../framework/harmony/date-picker/component.md) + [usage.md](../framework/harmony/date-picker/usage.md) |
+| notification | 组合方案(Stack 顶部横幅,常驻可操作) | [component.md](../framework/harmony/notification/component.md) + [usage.md](../framework/harmony/notification/usage.md) |
+| slider | `Slider` | [component.md](../framework/harmony/slider/component.md) + [usage.md](../framework/harmony/slider/usage.md) |
+| segmented | `SegmentButton`(`@ohos.arkui.advanced`) | [component.md](../framework/harmony/segmented/component.md) + [usage.md](../framework/harmony/segmented/usage.md) |
+| rate | `Rating` | [component.md](../framework/harmony/rate/component.md) + [usage.md](../framework/harmony/rate/usage.md) |
+| popconfirm | 组合方案(bindPopup 自定义气泡 / AlertDialog 轻确认) | [component.md](../framework/harmony/popconfirm/component.md) + [usage.md](../framework/harmony/popconfirm/usage.md) |
+| fab | 组合方案(Stack + 圆形 Button,滚动联动) | [component.md](../framework/harmony/fab/component.md) + [usage.md](../framework/harmony/fab/usage.md) |
+| statistic | 组合方案(Text 组合:数值 + 标签 + delta / 键值对 Row) | [component.md](../framework/harmony/statistic/component.md) + [usage.md](../framework/harmony/statistic/usage.md) |
+| card | 组合方案(`Column` + 圆角/阴影装饰属性) | [component.md](../framework/harmony/card/component.md) + [usage.md](../framework/harmony/card/usage.md) |
+| table | 组合方案(`Grid` / `List` 组合) | [component.md](../framework/harmony/table/component.md) + [usage.md](../framework/harmony/table/usage.md) |
+| tag | 组合方案(`Text` + 背景色圆角 / `Badge`) | [component.md](../framework/harmony/tag/component.md) + [usage.md](../framework/harmony/tag/usage.md) |
+| avatar | 组合方案(`Image` + `borderRadius(radius-full)` 裁剪) | [component.md](../framework/harmony/avatar/component.md) + [usage.md](../framework/harmony/avatar/usage.md) |
+| badge | `Badge` | [component.md](../framework/harmony/badge/component.md) + [usage.md](../framework/harmony/badge/usage.md) |
+| pagination | 组合方案(`Row` + `Button` 页码组) | [component.md](../framework/harmony/pagination/component.md) + [usage.md](../framework/harmony/pagination/usage.md) |
+| steps | 组合方案(`Row` + `Icon`/圆点 + 连接线) | [component.md](../framework/harmony/steps/component.md) + [usage.md](../framework/harmony/steps/usage.md) |
+| divider | `Divider` | [component.md](../framework/harmony/divider/component.md) + [usage.md](../framework/harmony/divider/usage.md) |
+| calendar | `Calendar` / `CalendarPicker`(展示;录入见 date-picker) | [component.md](../framework/harmony/calendar/component.md) + [usage.md](../framework/harmony/calendar/usage.md) |
+| collapse | 组合方案(`List` + `if` 条件渲染 + 展开状态) | [component.md](../framework/harmony/collapse/component.md) + [usage.md](../framework/harmony/collapse/usage.md) |
+| skeleton | 组合方案(占位块 + 闪烁动画) | [component.md](../framework/harmony/skeleton/component.md) + [usage.md](../framework/harmony/skeleton/usage.md) |
+| breadcrumb | 组合方案(`Row` + `Text` + `SymbolGlyph` 分隔符) | [component.md](../framework/harmony/breadcrumb/component.md) + [usage.md](../framework/harmony/breadcrumb/usage.md) |
+| timeline | 组合方案(`List` + 竖线 + 节点圆点) | [component.md](../framework/harmony/timeline/component.md) + [usage.md](../framework/harmony/timeline/usage.md) |
+| tree | 组合方案(`List` + 递归 `@Builder` + 缩进) | [component.md](../framework/harmony/tree/component.md) + [usage.md](../framework/harmony/tree/usage.md) |
+| alert | `AlertDialog` / `promptAction.showDialog` | [component.md](../framework/harmony/alert/component.md) + [usage.md](../framework/harmony/alert/usage.md) |
+| dropdown | 组合方案(`Button` + `bindMenu`/`Menu`) | [component.md](../framework/harmony/dropdown/component.md) + [usage.md](../framework/harmony/dropdown/usage.md) |
+| loading | `LoadingProgress` | [component.md](../framework/harmony/loading/component.md) + [usage.md](../framework/harmony/loading/usage.md) |
 
 ### Token 映射规则
 

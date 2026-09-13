@@ -108,7 +108,7 @@
 
 ### 自动校验
 
-- design-md Phase 3 Lint 阶段:`npx @google/design.md lint` 自动计算每个组件 `backgroundColor` / `textColor` 配对的 WCAG 对比度,低于 AA 触发 warning
+- design-md Phase 3 Lint 阶段:`npx @google/design.md@0.4.0 lint` 自动计算每个组件 `backgroundColor` / `textColor` 配对的 WCAG 对比度,低于 AA 触发 warning
 - preview 阶段 Pre-Flight Check:扫描所有文字与背景配对,违反 = 硬性失败
 - 工具:WebAIM Contrast Checker / Chrome DevTools Contrast Ratio 检查器
 

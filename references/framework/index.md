@@ -1,8 +1,41 @@
 # 框架资源总览
 
 > 本文件是 `references/framework/` 分层框架文档数据库的入口,为 `draw-harmony` / `draw-flutter` / `draw-element` 三个子命令提供组件映射参考。
-> 每个框架下按组件类型组织(共 45 类,3 现有 + 42 新增),每类组件含两份文档(文件名遵循各框架生态术语惯例)。
+> 每个框架下按组件类型组织(共 56 类,3 现有 + 53 新增),每类组件含两份文档(文件名遵循各框架生态术语惯例)。
 > 部分组件在某框架无原生对应时,以 N/A 占位文件说明缺失原因与替代方案,保持目录结构对称。
+
+---
+
+## 复用阶梯(Use What Exists)
+
+> 来源:interface-design SKILL.md "Use What Exists",2026-09-07 吸收。任何控件与样式落地前先沿阶梯下行:能复用就不手造,能组合就不新造。适用于三个 draw-* 子命令的全部产出。
+
+### 控件三级阶梯
+
+| 级别 | 选择               | 说明                                                                                                        |
+| ---- | ------------------ | ----------------------------------------------------------------------------------------------------------- |
+| 1    | 原生 HTML / 系统组件 | 首选各框架原生控件(`<button>`/`<select>`、ArkTS Toggle、Flutter Switch 等),自带键盘、无障碍与手势行为           |
+| 2    | 成熟 headless 原语  | 行为复杂且原生不够用时,选成熟 headless 库(Radix/React Aria 类)或框架生态内验证过的实现,只做视觉定制             |
+| 3    | 手搓(最后手段)      | 必须交付完整行为契约:**键盘导航、焦点陷阱、ARIA、click-outside、scroll-lock**——缺任一即 broken 而非"不一致",按不可交付处理 |
+
+### 样式四级阶梯
+
+| 级别 | 选择        | 说明                                                   |
+| ---- | ----------- | ------------------------------------------------------ |
+| 1    | 设计系统     | 优先用 DESIGN.md 既有 token 与组件规格                   |
+| 2    | 提取组件     | 出现**第二次真实复用**时才提取成组件,不过早抽象           |
+| 3    | 语义 token   | 无组件可复用时,用语义 token 组合表达                     |
+| 4    | 工具类一次性 | 最后才是一次性工具类;同一样式第三次出现即回退到级 2 提取   |
+
+### 结构性 hack 禁令
+
+| 禁止               | 典型形态                          | 正确做法                     |
+| ------------------ | --------------------------------- | ----------------------------- |
+| 负 margin 抵消父 padding | `margin: -16px` 对冲容器内边距    | 调整容器 padding,或将内容移出容器 |
+| 逃生舱 calc()      | `calc(100% - 47px)` 之类魔法数字  | 用 flex/grid 分配空间,让布局系统计算 |
+| 绝对定位绕布局流    | `position: absolute` 硬压坐标摆位 | 回到正常布局流重组结构         |
+
+> 判据:**正确答案比 hack 更简单**。写出 hack 前先问"是哪层布局结构错了"。
 
 ---
 
@@ -16,7 +49,7 @@
 | text | 文本展示 | [component.md](./harmony/text/component.md) + [usage.md](./harmony/text/usage.md) | [widget.md](./flutter/text/widget.md) + [properties.md](./flutter/text/properties.md) | [component.md](./element/text/component.md) + [api.md](./element/text/api.md) |
 | list | 行列表容器 | [component.md](./harmony/list/component.md) + [usage.md](./harmony/list/usage.md) | [widget.md](./flutter/list/widget.md) + [properties.md](./flutter/list/properties.md) | [component.md](./element/list/component.md) + [api.md](./element/list/api.md) |
 
-### P0 类(4 类,三框架都有原生组件)
+### P0 类(6 类,三框架都有原生组件)
 
 | 组件类型 | 描述 | HarmonyOS(ArkTS) | Flutter(Dart) | Element Plus(Vue 3) |
 | -------- | ---- | ------------------ | ------------- | ------------------- |
@@ -24,8 +57,10 @@
 | image | 图片展示 | [component.md](./harmony/image/component.md) + [usage.md](./harmony/image/usage.md) | [widget.md](./flutter/image/widget.md) + [properties.md](./flutter/image/properties.md) | [component.md](./element/image/component.md) + [api.md](./element/image/api.md) |
 | tabs | 标签页切换 | [component.md](./harmony/tabs/component.md) + [usage.md](./harmony/tabs/usage.md) | [widget.md](./flutter/tabs/widget.md) + [properties.md](./flutter/tabs/properties.md) | [component.md](./element/tabs/component.md) + [api.md](./element/tabs/api.md) |
 | input | 单行文本输入 | [component.md](./harmony/input/component.md) + [usage.md](./harmony/input/usage.md) | [widget.md](./flutter/input/widget.md) + [properties.md](./flutter/input/properties.md) | [component.md](./element/input/component.md) + [api.md](./element/input/api.md) |
+| checkbox | 多选框(三态) | [component.md](./harmony/checkbox/component.md) + [usage.md](./harmony/checkbox/usage.md) | [widget.md](./flutter/checkbox/widget.md) + [properties.md](./flutter/checkbox/properties.md) | [component.md](./element/checkbox/component.md) + [api.md](./element/checkbox/api.md) |
+| select | 下拉选择器(数据录入) | [component.md](./harmony/select/component.md) + [usage.md](./harmony/select/usage.md) | [widget.md](./flutter/select/widget.md) + [properties.md](./flutter/select/properties.md) | [component.md](./element/select/component.md) + [api.md](./element/select/api.md) |
 
-### P1 类(21 类,跨框架覆盖,部分 N/A)
+### P1 类(25 类,跨框架覆盖,部分 N/A)
 
 | 组件类型 | 描述 | HarmonyOS(ArkTS) | Flutter(Dart) | Element Plus(Vue 3) |
 | -------- | ---- | ------------------ | ------------- | ------------------- |
@@ -50,8 +85,12 @@
 | popover | 浮层提示(Popover/Tooltip) | [component.md](./harmony/popover/component.md) + [usage.md](./harmony/popover/usage.md)(ArkTS 原生名 Popup) | [N/A](./flutter/popover/widget.md)(Flutter 无 Popover widget) | [component.md](./element/popover/component.md) + [api.md](./element/popover/api.md)(Popover + Tooltip + Popconfirm) |
 | message | 即时反馈消息(Toast/SnackBar) | [component.md](./harmony/message/component.md) + [usage.md](./harmony/message/usage.md)(ArkTS 原生名 Toast) | [widget.md](./flutter/message/widget.md) + [properties.md](./flutter/message/properties.md)(Flutter 原生名 SnackBar) | [component.md](./element/message/component.md) + [api.md](./element/message/api.md) |
 | drawer | 抽屉/侧边栏 | [component.md](./harmony/drawer/component.md) + [usage.md](./harmony/drawer/usage.md)(ArkTS 原生名 bindSheet) | [widget.md](./flutter/drawer/widget.md) + [properties.md](./flutter/drawer/properties.md) | [component.md](./element/drawer/component.md) + [api.md](./element/drawer/api.md) |
+| upload | 文件/图片上传 | [component.md](./harmony/upload/component.md) + [usage.md](./harmony/upload/usage.md)(组合方案:Picker + List + Progress) | [widget.md](./flutter/upload/widget.md) + [properties.md](./flutter/upload/properties.md)(组合方案:image_picker/file_picker) | [component.md](./element/upload/component.md) + [api.md](./element/upload/api.md) |
+| date-picker | 日期时间选择(录入) | [component.md](./harmony/date-picker/component.md) + [usage.md](./harmony/date-picker/usage.md)(DatePickerDialog/TimePickerDialog) | [widget.md](./flutter/date-picker/widget.md) + [properties.md](./flutter/date-picker/properties.md)(showDatePicker/showTimePicker) | [component.md](./element/date-picker/component.md) + [api.md](./element/date-picker/api.md)(el-date-picker/el-time-picker) |
+| notification | 常驻通知(消息中心) | [component.md](./harmony/notification/component.md) + [usage.md](./harmony/notification/usage.md)(组合方案:Stack 顶部横幅) | [widget.md](./flutter/notification/widget.md) + [properties.md](./flutter/notification/properties.md)(组合方案:MaterialBanner) | [component.md](./element/notification/component.md) + [api.md](./element/notification/api.md)(ElNotification) |
+| slider | 滑块(数值/区间录入) | [component.md](./harmony/slider/component.md) + [usage.md](./harmony/slider/usage.md) | [widget.md](./flutter/slider/widget.md) + [properties.md](./flutter/slider/properties.md)(Slider/RangeSlider) | [component.md](./element/slider/component.md) + [api.md](./element/slider/api.md) |
 
-### P2 类(17 类,通用性中-高,部分单框架)
+### P2 类(22 类,通用性中-高,部分单框架)
 
 | 组件类型 | 描述 | HarmonyOS(ArkTS) | Flutter(Dart) | Element Plus(Vue 3) |
 | -------- | ---- | ------------------ | ------------- | ------------------- |
@@ -72,6 +111,11 @@
 | collapse | 折叠面板 | [component.md](./harmony/collapse/component.md) + [usage.md](./harmony/collapse/usage.md)(组合方案) | [widget.md](./flutter/collapse/widget.md) + [properties.md](./flutter/collapse/properties.md)(Flutter 用 ExpansionTile) | [component.md](./element/collapse/component.md) + [api.md](./element/collapse/api.md) |
 | steps | 步骤条 | [component.md](./harmony/steps/component.md) + [usage.md](./harmony/steps/usage.md)(组合方案) | [widget.md](./flutter/steps/widget.md) + [properties.md](./flutter/steps/properties.md) | [component.md](./element/steps/component.md) + [api.md](./element/steps/api.md) |
 | divider | 分割线 | [component.md](./harmony/divider/component.md) + [usage.md](./harmony/divider/usage.md) | [widget.md](./flutter/divider/widget.md) + [properties.md](./flutter/divider/properties.md) | [component.md](./element/divider/component.md) + [api.md](./element/divider/api.md) |
+| segmented | 分段控制器(互斥切换) | [component.md](./harmony/segmented/component.md) + [usage.md](./harmony/segmented/usage.md)(ArkTS 原生名 SegmentButton) | [widget.md](./flutter/segmented/widget.md) + [properties.md](./flutter/segmented/properties.md)(Flutter 原生名 SegmentedButton) | [component.md](./element/segmented/component.md) + [api.md](./element/segmented/api.md)(2.7+) |
+| rate | 评分(星级输入/展示) | [component.md](./harmony/rate/component.md) + [usage.md](./harmony/rate/usage.md)(ArkTS 原生名 Rating) | [widget.md](./flutter/rate/widget.md) + [properties.md](./flutter/rate/properties.md)(组合方案:Row + Icon) | [component.md](./element/rate/component.md) + [api.md](./element/rate/api.md) |
+| popconfirm | 气泡二次确认(破坏性操作) | [component.md](./harmony/popconfirm/component.md) + [usage.md](./harmony/popconfirm/usage.md)(组合方案:bindPopup 自定义) | [widget.md](./flutter/popconfirm/widget.md) + [properties.md](./flutter/popconfirm/properties.md)(组合方案:showDialog 紧凑弹窗) | [component.md](./element/popconfirm/component.md) + [api.md](./element/popconfirm/api.md) |
+| fab | 悬浮操作按钮 | [component.md](./harmony/fab/component.md) + [usage.md](./harmony/fab/usage.md)(组合方案:Stack + 圆形 Button) | [widget.md](./flutter/fab/widget.md) + [properties.md](./flutter/fab/properties.md)(Flutter 原生名 FloatingActionButton) | [component.md](./element/fab/component.md) + [api.md](./element/fab/api.md)(组合方案:fixed 定位 + el-button) |
+| statistic | 统计数值/键值对详情 | [component.md](./harmony/statistic/component.md) + [usage.md](./harmony/statistic/usage.md)(组合方案:Text 组合) | [widget.md](./flutter/statistic/widget.md) + [properties.md](./flutter/statistic/properties.md)(组合方案:Text + Row/Table) | [component.md](./element/statistic/component.md) + [api.md](./element/statistic/api.md)(el-statistic/el-descriptions) |
 
 ---
 
@@ -110,6 +154,10 @@
 | 气泡/提示 | Popup | (无) | Popover/Tooltip/Popconfirm | `popover` |
 | 即时反馈 | Toast | SnackBar | Message | `message` |
 | 抽屉/模态 | bindSheet | Drawer | Drawer | `drawer` |
+| 分段控制 | SegmentButton | SegmentedButton | Segmented | `segmented` |
+| 评分 | Rating | (无,组合方案) | Rate | `rate` |
+| 悬浮按钮 | (无,组合方案) | FloatingActionButton | (无,组合方案) | `fab` |
+| 日期录入 | DatePickerDialog | showDatePicker | DatePicker | `date-picker` |
 
 各框架文档内部注明原生名,目录名统一用 slug。
 

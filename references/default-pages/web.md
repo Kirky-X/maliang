@@ -68,6 +68,8 @@ Web 站点首页,承载品牌传达、核心功能入口与转化引导。
 
 注册后或敏感操作触发的邮箱所有权验证,支持重发倒计时。
 
+> 模式支撑见 [forms.md](../vocabulary/forms.md)(input-otp / field-group)与 [auth.md](../vocabulary/auth.md)(auth-otp / auth-magic-link),组件类用 input/form/button/message;验证成功/链接过期页面状态暂缺专属模式,暂借 [states.md](../vocabulary/states.md) 的 state-error-crash 语义。
+
 ## dashboard
 
 后台系统主工作台,聚合关键数据指标、图表与快捷操作。
@@ -80,6 +82,8 @@ Web 站点首页,承载品牌传达、核心功能入口与转化引导。
 
 编辑当前用户个人资料,含头像与基础信息维护。
 
+> 模式支撑见 [cards.md](../vocabulary/cards.md)(card-media-bg 头像区)与 [forms.md](../vocabulary/forms.md)(field-group / input-masked),组件类用 avatar/upload/form/input(见 [framework/index.md](../framework/index.md))。
+
 ## not-found
 
 路径不存在时的友好提示,提供返回首页入口。
@@ -88,9 +92,13 @@ Web 站点首页,承载品牌传达、核心功能入口与转化引导。
 
 服务异常时的提示页,引导用户联系支持或稍后重试。
 
+> 模式支撑见 [states.md](../vocabulary/states.md) 的 state-error-crash(错误插画 + 重试/返回,覆盖 5xx 语义),组件类用 button/image/message。
+
 ## forbidden
 
 无权限访问时的提示页,提供登录入口或申请权限引导。
+
+> 模式支撑见 [states.md](../vocabulary/states.md) 的 state-error-permission(锁形插画 + 权限说明 + 申请入口),组件类用 button/image。
 
 ## privacy
 

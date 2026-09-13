@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预览 - 首页(iPhone 15)</title>
+  <!-- 由 preview 子命令从 examples/ui-markdown/ui/home.md 生成,设备: iPhone 15(393×852) -->
+  <!-- SRI 提示:integrity 哈希随 CDN 资源版本变化。当前哈希对应 element-plus@2.4.4 与 vue@3.4.21;更新版本时必须用 `openssl dgst -sha384 -binary <file> | openssl base64 -A` 重新生成并替换 integrity 属性值,否则浏览器会因 SRI 不匹配拒绝加载资源导致预览无法渲染。 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-plus@2.4.4/dist/index.css"
+        integrity="sha384-kkb0OalbI4Ig9NU9d8J+OvUzucgmMGl8jmxwJ2nEw/vqiyQbd0rplhuU5TfnNNYp"
+        crossorigin="anonymous">
+  <script src="https://unpkg.com/vue@3.4.21/dist/vue.global.js"
+          integrity="sha384-8CdW77YPqMZ3v22pThUIR22Qp1FB5oisZG2WE3OpE0l1fTHAIsdIwjQZFf/rmQ/B"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/element-plus@2.4.4/dist/index.full.min.js"
+          integrity="sha384-BN4M9h5H6vfLYw9pv5Lgjk5VHdDVkm1zzsgkZ1DhGfWie/dDmCsQDVCA728TX0ry"
+          crossorigin="anonymous"></script>
+  <style>
+    /* token.md 硬值注入(亮色):所有取值来自 examples/ui-markdown/token.md */
+    :root {
+      --color-brand-primary: #5B7CFA;
+      --color-surface-base: #F7F8FA;
+      --color-surface-card: #FFFFFF;
+      --color-text-primary: #1A1D21;
+      --color-text-secondary: #6B7280;
+      --color-danger: #EF4444;
+      --color-divider: #F0F1F3;
+      --color-border-base: #E5E7EB;
+      --font-size-h3: 16px;
+      --font-size-body: 14px;
+      --font-size-caption: 12px;
+      --font-size-mini: 10px;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --line-height-base: 1.5;
+      --icon-size-lg: 24px;
+      --icon-size-xl: 32px;
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --radius-subtle: 4px;
+      --radius-rounded: 8px;
+      --radius-full: 9999px;
+      --border-thin: 1px;
+      --border-hairline: 0.5px;
+      --z-index-sticky: 200;
+      --motion-duration-instant: 100ms;
+      --motion-duration-fast: 200ms;
+      --motion-ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+      /* 非文本派生色(状态/外壳/封面占位,非 token.md 表内值,集中在此管理) */
+      --focus-ring: rgba(91, 124, 250, 0.55);
+      --state-hover: rgba(26, 29, 33, 0.05);
+      --shadow-card: rgba(26, 29, 33, 0.06);
+      --shell-shadow: rgba(26, 29, 33, 0.18);
+      --device-bezel: #0A0A0C;
+      --ti-a: #DDE1E6;
+      --ti-b: #F2F4F7;
+      --ti-c: #B8BEC7;
+      --studio: #E9EBEE;
+      --cover-a1: #5B7CFA;
+      --cover-a2: #8AA2FC;
+      --cover-b1: #3D5EDB;
+      --cover-b2: #6F8CF8;
+      --cover-c1: #7C93FA;
+      --cover-c2: #A9BAFD;
+      --cover-d1: #4C6BE8;
+      --cover-d2: #93A9FA;
+    }
+
+    body {
+      margin: 0;
+      background: var(--color-surface-base);
+      color: var(--color-text-primary);
+      font-family: "PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .stage {
+      display: flex;
+      justify-content: center;
+      padding: var(--spacing-lg);
+      min-height: 900px;
+      background: var(--studio);
+      box-sizing: border-box;
+    }
+
+    /* 设备外壳(iPhone 15 风格,纯 CSS) */
+    .device-shell {
+      padding: 13px;
+      border-radius: 64px;
+      background: linear-gradient(145deg, var(--ti-a), var(--ti-b) 45%, var(--ti-c));
+      box-shadow: 0 24px 48px var(--shell-shadow);
+      height: fit-content;
+    }
+
+    .device-screen {
+      position: relative;
+      width: 393px;
+      height: 852px;
+      border-radius: 52px;
+      background: var(--color-surface-base);
+      overflow: hidden;
+    }
+
+    .dynamic-island {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      margin-left: -63px;
+      width: 126px;
+      height: 37px;
+      border-radius: var(--radius-full);
+      background: var(--device-bezel);
+      z-index: var(--z-index-sticky);
+    }
+
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      margin-left: -67px;
+      width: 134px;
+      height: 5px;
+      border-radius: var(--radius-full);
+      background: var(--device-bezel);
+      z-index: var(--z-index-sticky);
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--color-surface-card);
+      color: var(--color-text-primary);
+      padding: var(--spacing-sm) var(--spacing-md);
+      z-index: var(--z-index-sticky);
+    }
+
+    .skip-link:focus {
+      left: var(--spacing-md);
+    }
+
+    /* 图标笔画:仅经 stroke/fill 属性取色(非文本着色) */
+    .glyph {
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .glyph-brand { stroke: var(--color-brand-primary); }
+    .glyph-muted { stroke: var(--color-text-secondary); }
+    .glyph-ink { stroke: var(--color-text-primary); }
+    .glyph-fill { fill: var(--color-brand-primary); stroke: none; }
+
+    /* 顶部导航 */
+    .nav-bar {
+      margin-top: 54px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing-md);
+    }
+
+    .nav-title {
+      font-size: var(--font-size-h3);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .icon-btn {
+      position: relative;
+      width: var(--icon-size-lg);
+      height: var(--icon-size-lg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .icon-btn .glyph { width: var(--icon-size-lg); height: var(--icon-size-lg); }
+
+    .dot {
+      position: absolute;
+      top: -2px;
+      right: -3px;
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: var(--color-danger);
+    }
+
+    /* 页面主体 */
+    .page-body {
+      padding: var(--spacing-md) var(--spacing-lg) 140px;
+    }
+
+    .search-pill {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      border-radius: var(--radius-full);
+      background: var(--color-surface-base);
+      border: var(--border-thin) solid var(--color-border-base);
+      padding: 0 var(--spacing-md);
+      transition: background var(--motion-duration-fast) var(--motion-ease-default), border-color var(--motion-duration-fast) var(--motion-ease-default);
+    }
+
+    .search-pill:focus-within {
+      background: var(--color-surface-card);
+      border-color: var(--color-brand-primary);
+    }
+
+    .search-pill .el-input__wrapper {
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .search-pill .glyph { width: var(--icon-size-lg); height: var(--icon-size-lg); }
+
+    input::placeholder {
+      /* 占位文字改用 text-secondary:placeholder token(#9CA3AF)在本底上仅 2.55:1,不达 WCAG 4.5:1 */
+      color: var(--color-text-secondary);
+    }
+
+    /* 金刚区入口 */
+    .entries {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-md);
+      margin: var(--spacing-lg) 0;
+    }
+
+    .entry {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-sm) 0;
+      background: none;
+      border: none;
+      border-radius: var(--radius-subtle);
+    }
+
+    .entry .glyph { width: var(--icon-size-xl); height: var(--icon-size-xl); }
+
+    .entry-label {
+      font-size: var(--font-size-caption);
+      color: var(--color-text-secondary);
+    }
+
+    /* 内容流:双列卡片瀑布 */
+    .feed {
+      column-count: 2;
+      column-gap: var(--spacing-md);
+    }
+
+    .card {
+      break-inside: avoid;
+      margin: 0 0 var(--spacing-md);
+      background: var(--color-surface-card);
+      border-radius: var(--radius-rounded);
+      overflow: hidden;
+      border: none;
+      text-align: left;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      transition: transform var(--motion-duration-instant) var(--motion-ease-default), box-shadow var(--motion-duration-fast) var(--motion-ease-default);
+    }
+
+    .cover { width: 100%; aspect-ratio: 4 / 3; }
+
+    .tone-a { background: linear-gradient(160deg, var(--cover-a1), var(--cover-a2)); }
+    .tone-b { background: linear-gradient(160deg, var(--cover-b1), var(--cover-b2)); }
+    .tone-c { background: linear-gradient(160deg, var(--cover-c1), var(--cover-c2)); }
+    .tone-d { background: linear-gradient(160deg, var(--cover-d1), var(--cover-d2)); }
+
+    .card-body { padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm); }
+
+    .card-title {
+      margin: 0 0 var(--spacing-xs);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-base);
+      color: var(--color-text-primary);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--font-size-caption);
+      color: var(--color-text-secondary);
+    }
+
+    /* 交互状态:五态齐备(hover/active/focus/disabled + 按压反馈) */
+    .entry:hover, .icon-btn:hover { background: var(--state-hover); }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 2px 8px var(--shadow-card); }
+    .entry:active, .tab:active, .icon-btn:active { transform: scale(0.97); }
+    .card:active { transform: scale(0.98); }
+    .icon-btn:disabled { opacity: 0.4; }
+
+    .icon-btn:focus-visible,
+    .entry:focus-visible,
+    .tab:focus-visible,
+    .card:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--focus-ring);
+    }
+
+    /* 底部 dock */
+    .dock {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      padding-bottom: 20px;
+      background: var(--color-surface-card);
+      border-top: var(--border-hairline) solid var(--color-divider);
+    }
+
+    .tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding-top: 8px;
+      position: relative;
+      background: none;
+      border: none;
+    }
+
+    .tab::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: var(--icon-size-lg);
+      height: 2px;
+      border-radius: var(--radius-full);
+    }
+
+    .tab.is-selected::before { background: var(--color-brand-primary); }
+
+    .tab .glyph { width: var(--icon-size-lg); height: var(--icon-size-lg); }
+
+    .dock-label {
+      font-size: var(--font-size-mini);
+      color: var(--color-text-secondary);
+    }
+
+    .dock-label.is-selected {
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .entry, .tab, .icon-btn, .search-pill { transition: none; }
+      .card:hover { transform: none; }
+    }
+
+    /* 暗色模式:token.md 暗色章节取值,同名变量在 media 内覆盖;置于样式表末尾 */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-surface-base: #141413;
+        --color-surface-card: #1F1F1E;
+        --color-text-primary: #F5F4ED;
+        --color-text-secondary: #A8A29E;
+        --color-divider: rgba(255, 255, 255, 0.06);
+        --color-border-base: rgba(255, 255, 255, 0.08);
+      }
+
+      .card {
+        background: var(--color-surface-card);
+        color: var(--color-text-primary);
+      }
+
+      .dock { background: var(--color-surface-card); }
+
+      body {
+        background: var(--color-surface-base);
+        color: var(--color-text-primary);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="stage">
+      <div class="device-shell">
+        <div class="device-screen">
+          <a class="skip-link" href="#main">跳转到主内容</a>
+          <div class="dynamic-island" aria-hidden="true"></div>
+
+          <header class="nav-bar">
+            <button class="icon-btn" aria-label="菜单" @click="onMenu">
+              <svg class="glyph glyph-ink" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="4" y1="7" x2="20" y2="7"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="17" x2="14" y2="17"></line>
+              </svg>
+            </button>
+            <span class="nav-title">首页</span>
+            <button class="icon-btn" aria-label="消息" @click="onTab(tapMessage)">
+              <svg class="glyph glyph-ink" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H10l-4 4v-4H7a3 3 0 0 1-3-3z"></path>
+              </svg>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+          </header>
+
+          <main id="main" class="page-body">
+            <div class="search-pill">
+              <el-input v-model="keyword" placeholder="请输入搜索的关键词" aria-label="搜索框"
+                        @keyup.enter="onSearch" clearable>
+                <template #suffix>
+                  <svg class="glyph glyph-muted" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                  </svg>
+                </template>
+              </el-input>
+            </div>
+
+            <section class="entries" aria-label="金刚区入口">
+              <button v-for="e in entries" :key="e.id" class="entry" @click="onEntry(e)">
+                <svg class="glyph glyph-brand" viewBox="0 0 24 24" aria-hidden="true" v-html="e.icon"></svg>
+                <span class="entry-label">{{ e.label }}</span>
+              </button>
+            </section>
+
+            <section class="feed" aria-label="内容流">
+              <article v-for="c in feed" :key="c.id" class="card" @click="onCard(c)">
+                <div class="cover" :class="c.tone" aria-hidden="true"></div>
+                <div class="card-body">
+                  <h2 class="card-title">{{ c.title }}</h2>
+                  <div class="card-meta">
+                    <span>{{ c.author }}</span>
+                    <span>{{ c.stats }}</span>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </main>
+
+          <nav class="dock" aria-label="底部导航">
+            <button v-for="t in tabs" :key="t.id" class="tab" :class="{ 'is-selected': t.selected }"
+                    :aria-label="t.label" @click="onTab(t)">
+              <svg class="glyph" :class="t.selected ? 'glyph-fill' : 'glyph-muted'"
+                   viewBox="0 0 24 24" aria-hidden="true" v-html="t.icon"></svg>
+              <span class="dock-label" :class="{ 'is-selected': t.selected }">{{ t.label }}</span>
+            </button>
+          </nav>
+
+          <div class="home-indicator" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ICONS = {
+      feed: '<line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="16" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line>',
+      rank: '<rect x="5" y="12" width="4" height="8" rx="1"></rect><rect x="10" y="7" width="4" height="13" rx="1"></rect><rect x="15" y="10" width="4" height="10" rx="1"></rect>',
+      category: '<rect x="4" y="4" width="7" height="7" rx="1"></rect><rect x="13" y="4" width="7" height="7" rx="1"></rect><rect x="4" y="13" width="7" height="7" rx="1"></rect><rect x="13" y="13" width="7" height="7" rx="1"></rect>',
+      activity: '<circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path>',
+      wallet: '<rect x="3" y="6" width="18" height="13" rx="2"></rect><path d="M3 10h18"></path><circle cx="17" cy="14.5" r="1"></circle>',
+      service: '<path d="M4 13a8 8 0 0 1 16 0"></path><rect x="3" y="13" width="4" height="6" rx="2"></rect><rect x="17" y="13" width="4" height="6" rx="2"></rect>',
+      home: '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path>',
+      discover: '<circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5l-2 5-5 2 2-5z"></path>',
+      messages: '<path d="M4 7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H10l-4 4v-4H7a3 3 0 0 1-3-3z"></path>',
+      mine: '<circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path>'
+    };
+
+    const { createApp } = Vue;
+    const app = createApp({
+      data() {
+        return {
+          keyword: "",
+          tapMessage: null,
+          entries: [
+            { id: "feed", label: "信息流", target: "ui/feed.md", icon: ICONS.feed },
+            { id: "rank", label: "排行榜", target: "ui/rank.md", icon: ICONS.rank },
+            { id: "category", label: "分类", target: "ui/category.md", icon: ICONS.category },
+            { id: "activity", label: "活动", target: "ui/activity.md", icon: ICONS.activity },
+            { id: "wallet", label: "钱包", target: "ui/wallet.md", icon: ICONS.wallet },
+            { id: "service", label: "客服", target: "ui/service.md", icon: ICONS.service }
+          ],
+          feed: [
+            { id: "a1", tone: "tone-a", title: "城市漫步手账:用光影记录一条老街的下午", author: "林间摄影", stats: "2,847 赞" },
+            { id: "b2", tone: "tone-b", title: "把通勤变成阅读时间的 5 个小方法", author: "深夜书房", stats: "1,273 赞" },
+            { id: "c3", tone: "tone-c", title: "自烘焙入门:第一只可颂的成败实录", author: "黄油笔记", stats: "876 赞" },
+            { id: "d4", tone: "tone-d", title: "周末市集寻宝:旧物改造出一张工作台", author: "木作日常", stats: "3,204 赞" }
+          ],
+          tabs: [
+            { id: "home", label: "首页", selected: true, icon: ICONS.home },
+            { id: "discover", label: "发现", selected: false, icon: ICONS.discover },
+            { id: "messages", label: "消息", selected: false, icon: ICONS.messages },
+            { id: "mine", label: "我的", selected: false, icon: ICONS.mine }
+          ]
+        };
+      },
+      methods: {
+        onSearch() {
+          if (!this.keyword) {
+            ElementPlus.ElMessage.warning("请输入关键词后再搜索");
+            return;
+          }
+          ElementPlus.ElMessage.success("搜索: " + this.keyword);
+        },
+        onEntry(e) {
+          ElementPlus.ElMessage("金刚区跳转目标: " + e.target + "(见 home.md §3.2)");
+        },
+        onCard(c) {
+          ElementPlus.ElMessage("打开卡片: " + c.title);
+        },
+        onTab(t) {
+          if (!t) return;
+          this.tabs.forEach(x => { x.selected = (x.id === t.id); });
+          ElementPlus.ElMessage("切换到「" + t.label + "」");
+        },
+        onMenu() {
+          ElementPlus.ElMessage("打开抽屉菜单");
+        }
+      }
+    });
+    app.use(ElementPlus);
+    app.mount("#app");
+  </script>
+</body>
+</html>

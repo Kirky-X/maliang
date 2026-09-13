@@ -2,6 +2,23 @@
 
 > 本文件是 [`preview.md`](./preview.md) 第 5 节的**完整检查项清单**,从 preview.md 拆出以控制主文件行数。
 > 交付前**机械扫描**(可脚本化,非主观判断)。任一项失败即"硬性失败",不可交付,必须返工。来源:taste-skill + ui-ux-pro-max-skill。
+>
+> **Canonical 声明**:本清单是全流水线(design-md / draw-md / preview / redesign)唯一的交付前检查清单;其他文档只引用本文件,不复制条目。
+>
+> **脚本覆盖**:49/113 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
+> 其余 64 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
+> 未标记项按分区语义与 5.13 的 MANUAL/脚本能力归属判断。
+> 静态扫描通过是底线而非达标证明 —— 运行时项必须在 preview 第 4 节浏览器验证中逐项确认。
+
+## 5.0 · Process 区(动态实测,5 项,先于全部分区执行)
+
+> 来源:ui-ux-pro-max pro-rules canonical 清单。以下是**过程性动作**——必须在真实渲染环境动手实测,静态扫描无法替代;先做本区,再进入 5.1-5.14 静态 / 运行时复选。
+
+- [ ] **375px 窄屏实测**:布局在 375px 宽度下无横向溢出、无挤压变形 <sub>[运行时]</sub>
+- [ ] **横屏旋转实测**:旋转后布局自适应,无错位 / 内容丢失 <sub>[运行时]</sub>
+- [ ] **`prefers-reduced-motion` 下实测**:动画降级生效,信息无丢失 <sub>[运行时]</sub>
+- [ ] **最大系统字号(200%)实测**:文字放大后不截断 / 不重叠,布局不破 <sub>[运行时]</sub>
+- [ ] **暗色模式独立测对比**:切到暗色后逐区域核对对比度(非简单反色) <sub>[运行时]</sub>
 
 ## 5.1 · AI Tells(15 项,见 [`ai-tells.md`](../meta/ai-tells.md))
 - [ ] 无 Tailwind 渐变文字 + 中性灰背景组合
@@ -33,14 +50,18 @@
 - [ ] `will-change` 非常驻(动画完成后移除)
 
 ## 5.3 · Accessibility · WCAG 对比度(8 项,见 [`accessibility.md`](../meta/accessibility.md))
-- [ ] 所有正文文字对比度 ≥ 4.5:1
-- [ ] 所有大文本对比度 ≥ 3:1
-- [ ] UI 组件(border / 图标)对比度 ≥ 3:1
-- [ ] `placeholder` 文字对比度 ≥ 4.5:1
-- [ ] 暗色模式下对比度仍达标
-- [ ] 非用纯红/纯绿表达信息(色盲友好)
-- [ ] `disabled` 文字对比度 ≥ 3:1
-- [ ] `focused` focus ring 对比度 ≥ 3:1
+
+> 脚本化:`preview-check.py` 静态解析 `<style>` 内 color × background 组合(正文/大文本/placeholder/disabled/暗色 media 内规则);渐变、透明、CDN 框架默认色无法静态解析,不猜测。
+> 对比度计算规则:正文 ≥ 4.5:1;大文本(≥ 24px,或 ≥ 18.66px 且 weight ≥ 700)≥ 3:1;disabled ≥ 3:1。
+
+- [ ] 所有正文文字对比度 ≥ 4.5:1 <sub>[脚本 contrast.low]</sub>
+- [ ] 所有大文本对比度 ≥ 3:1 <sub>[脚本 contrast.low]</sub>
+- [ ] UI 组件(border / 图标)对比度 ≥ 3:1 <sub>[运行时:渲染后测量]</sub>
+- [ ] `placeholder` 文字对比度 ≥ 4.5:1 <sub>[脚本 contrast.low]</sub>
+- [ ] 暗色模式下对比度仍达标 <sub>[脚本:仅覆盖 @media 内重声明规则;继承组合需运行时确认]</sub>
+- [ ] 非用纯红/纯绿表达信息(色盲友好) <sub>[脚本 contrast.pure-red-green]</sub>
+- [ ] `disabled` 文字对比度 ≥ 3:1 <sub>[脚本 contrast.low]</sub>
+- [ ] `focused` focus ring 对比度 ≥ 3:1 <sub>[运行时:渲染后测量]</sub>
 
 ## 5.4 · Accessibility · 用户偏好(6 项)
 - [ ] 装饰性动画含 `prefers-reduced-motion` 降级
@@ -73,14 +94,19 @@
 - [ ] 命名全部 kebab-case,无 camelCase / snake_case 混用
 
 ## 5.7 · 完整交互状态(8 项,见 [`principles.md`](../meta/principles.md) 第 14 定律)
-- [ ] 所有按钮含 default / hover / pressed / focused / disabled 五态
-- [ ] 所有可点击卡片含 hover / pressed 反馈
-- [ ] Loading 状态有骨架 / spinner(> 200ms 操作)
-- [ ] Empty 状态有插画 + 文案 + CTA
-- [ ] Error 状态有错误说明 + 重试 CTA
-- [ ] Tactile Feedback(`micro-press-scale` 或 `micro-hover-lift`)
-- [ ] 状态过渡 duration ≤ 150ms(状态过渡)
-- [ ] 表单提交后有 toast 反馈(成功 / 失败)
+
+> 脚本化:静态代理 — 页面存在交互元素而 `<style>` 缺对应状态选择器时报告;
+> 框架 CDN(Element Plus 等)自带状态样式时降级为 warning。`outline: none` 且无
+> `:focus` 替代为确定性 error。业务状态需运行时验证。
+
+- [ ] 所有按钮含 default / hover / pressed / focused / disabled 五态 <sub>[脚本 state.no-*(静态代理,warning)]</sub>
+- [ ] 所有可点击卡片含 hover / pressed 反馈 <sub>[脚本 state.no-hover/active]</sub>
+- [ ] Loading 状态有骨架 / spinner(> 200ms 操作) <sub>[运行时]</sub>
+- [ ] Empty 状态有插画 + 文案 + CTA <sub>[运行时]</sub>
+- [ ] Error 状态有错误说明 + 重试 CTA <sub>[运行时]</sub>
+- [ ] Tactile Feedback(`micro-press-scale` 或 `micro-hover-lift`) <sub>[脚本 state.no-tactile(:active 内 transform)]</sub>
+- [ ] 状态过渡 duration ≤ 150ms(状态过渡) <sub>[脚本 anim.duration(600ms 上限,150ms 需运行时确认)]</sub>
+- [ ] 表单提交后有 toast 反馈(成功 / 失败) <sub>[运行时]</sub>
 
 ## 5.8 · LLM 截断信号(8 项,见 [`llm-behavior.md`](../meta/llm-behavior.md))
 - [ ] 最后一个章节字数 ≥ 前面章节均值的 50%
@@ -125,17 +151,34 @@
 - [ ] Hero CTA ≤ 2 个(见 [`hero.md`](../vocabulary/hero.md) H3)
 
 ## 5.13 · Core Web Vitals(5 项)
-- [ ] **LCP ≤ 2.5s**:最大内容绘制(Hero 图/标题)在 2.5s 内完成;超 4s = 差
-- [ ] **CLS ≤ 0.1**:累计布局偏移;所有图片/字体含尺寸预留(`<img width height>` / `aspect-ratio` / `font-display: swap`)
-- [ ] **INP ≤ 200ms**:交互到下一帧延迟;长任务(> 50ms)拆分,重计算用 `requestIdleCallback`
-- [ ] **FCP ≤ 1.8s**:首次内容绘制;首屏 JS ≤ 100KB gzip,字体不阻塞
-- [ ] **TBT ≤ 200ms**:总阻塞时间;主线程长任务(> 50ms)总和 ≤ 200ms
+
+> **全部 [运行时]** — LCP/CLS/INP/FCP/TBT 是运行时指标,静态无法测量,需浏览器
+> 实测(Chrome DevTools Performance 面板 / Lighthouse / web-vitals 库)。5.2 的
+> img 尺寸、font-display 是其静态前置条件。
+
+- [ ] **LCP ≤ 2.5s**:最大内容绘制(Hero 图/标题)在 2.5s 内完成;超 4s = 差 <sub>[运行时]</sub>
+- [ ] **CLS ≤ 0.1**:累计布局偏移;所有图片/字体含尺寸预留(`<img width height>` / `aspect-ratio` / `font-display: swap`) <sub>[运行时;前置项已由 5.2 脚本覆盖]</sub>
+- [ ] **INP ≤ 200ms**:交互到下一帧延迟;长任务(> 50ms)拆分,重计算用 `requestIdleCallback` <sub>[运行时]</sub>
+- [ ] **FCP ≤ 1.8s**:首次内容绘制;首屏 JS ≤ 100KB gzip,字体不阻塞 <sub>[运行时]</sub>
+- [ ] **TBT ≤ 200ms**:总阻塞时间;主线程长任务(> 50ms)总和 ≤ 200ms <sub>[运行时]</sub>
+
+## 5.14 · 交付完备性(6 项,见 [`default-pages/index.md`](../default-pages/index.md))
+
+> 来源:taste-skill redesign-skill"AI 通常忘记的东西"清单。多为运行时 / 站点级检查,产物对应 `default-pages` 中的 privacy/terms/not-found 等页面。
+
+- [ ] 法务链接齐备(隐私政策 / 服务条款,页脚可达) <sub>[运行时]</sub>
+- [ ] 返回导航:每个非首页有明确"返回上一级 / 首页"路径 <sub>[运行时]</sub>
+- [ ] 自定义 404 页存在且有出口(搜索 / 回首页) <sub>[运行时]</sub>
+- [ ] 表单有客户端校验(必填 / 格式错误内联提示,非仅提交后报错) <sub>[运行时]</sub>
+- [ ] skip-to-content 链接存在且为键盘 Tab 首个可达项 <sub>[脚本:静态可查存在性;位置需运行时]</sub>
+- [ ] favicon 存在(含移动端 bookmark 图标) <sub>[运行时;可静态抽检 head 引用]</sub>
 
 ## 统计与执行规则
 
-**统计**:5.1 (15) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (10) + 5.7 (8) + 5.8 (8) + 5.9 (7) + 5.10 (6) + 5.11 (5) + 5.12 (6) + 5.13 (5) = **102 项**
+**统计**:5.0 (5) + 5.1 (15) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (10) + 5.7 (8) + 5.8 (8) + 5.9 (7) + 5.10 (6) + 5.11 (5) + 5.12 (6) + 5.13 (5) + 5.14 (6) = **113 项**
 
 ### 执行规则
-- 全部 102 项均为**机械检查**(可脚本化,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
-- 修复后重跑全部 102 项(不可只跑失败项),通过后进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
-- em-dash / 中英文空格 / 标点一致性为**软警告**(warning,非硬性失败),其余 99 项为硬性失败
+- 全部 113 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
+- 5.0 Process 区先于 5.1-5.14 执行(动态实测是过程性动作,不因静态扫描通过而豁免)
+- 修复后重跑全部 113 项(不可只跑失败项),通过后进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
+- em-dash / 中英文空格 / 标点一致性为**软警告**(warning,非硬性失败),其余 110 项为硬性失败

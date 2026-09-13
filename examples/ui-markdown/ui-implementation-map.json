@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T06:00:08+08:00",
+  "built_at": "2026-09-05T02:52:13+08:00",
   "mappings": [
     {
       "logical_ui": "organisms/dock.md",
@@ -23,6 +23,16 @@
     },
     {
       "logical_ui": "ui/home.md",
+      "preview_html": "examples/preview/preview_home_iphone15.html",
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": "examples/element-plus/views/Home.vue"
+      },
+      "status": "implemented"
+    },
+    {
+      "logical_ui": "ui/mine.md",
       "preview_html": null,
       "framework_code": {
         "harmony": null,
