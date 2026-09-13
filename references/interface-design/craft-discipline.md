@@ -1,4 +1,6 @@
 ---
+
+> Source: merged from the craft 方法集 by  (MIT) — https://github.com//interface-design
 name: interface-design
 description: Craft-first interface design for dashboards, admin panels, SaaS apps, tools, settings pages, data interfaces, and interactive products. Use when designing, building, reviewing, auditing, or refining product UI where visual craft, layout hierarchy, tokens, states, visual direction, or design-system consistency matter. Not for marketing pages, landing pages, campaigns, or brand-only work.
 ---
