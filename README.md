@@ -1,215 +1,117 @@
-# Maliang (马良) —— 设计系统技能
+# Maliang（马良）— 前端设计生成技能
 
-[English](README_EN.md)
+> 覆盖 UIUX 全生命周期的设计系统 skill（研究→定义→设计→实现→验证→交付→迭代）：`DESIGN.md` 设计系统 + 页面级硬 token UI markdown + 三框架代码适配，一条流水线跑通。
 
-[![GitHub Release](https://img.shields.io/github/v/release/Kirky-X/maliang?style=flat-square)](https://github.com/Kirky-X/maliang/releases) [![GitHub License](https://img.shields.io/github/license/Kirky-X/maliang?style=flat-square)](LICENSE)
+[![version](https://img.shields.io/github/v/tag/Kirky-X/maliang?style=flat-square)](https://github.com/Kirky-X/maliang/tags) [![license](https://img.shields.io/github/license/Kirky-X/maliang?style=flat-square)](LICENSE) [![python](https://img.shields.io/badge/python-3.8%2B-blue?style=flat-square)](scripts/)
 
-maliang 是一个面向 AI agent 的设计系统 skill,采用 Google Labs agent-first 格式(YAML token + Markdown 设计理由)。它通过六个子命令构成一条完整流水线:`design-md` 产出 prose-first 的 `DESIGN.md`,`draw-md` 从 `DESIGN.md` 产出页面级硬 token UI markdown,`preview` 使用 Element Plus 框架实时预览验证,`draw-harmony` / `draw-flutter` / `draw-element` 将逻辑 UI markdown 转换为具体框架实现代码。
+中文 | [English](README_EN.md)
 
-六个子命令构成完整流水线:`design-md`(上游)→ `draw-md`(中游)→ `preview`(验证)→ `draw-harmony` / `draw-flutter` / `draw-element`(下游)。各子命令的完整路由表与流程文档见 [SKILL.md](SKILL.md)。
+## ✨ 功能特性
 
-## 安装
+**11 个子命令**覆盖全生命周期（完整路由表见 [SKILL.md](SKILL.md)）：
 
-### 方式一:通过 `skills` 包安装(推荐)
+| 子命令 | 阶段 | 功能 |
+| ------ | ---- | ---- |
+| `design-md` | 定义 | 创建/应用/验证/导出 prose-first 的 DESIGN.md（YAML token + 设计理由，含 persona/journey/JTBD 用户研究） |
+| `redesign` | 迭代 | 改版现有 UI：9 维审计 + Refresh / Restructure / Rebuild / Deslop（去 AI 味）四模式 |
+| `draw-md` | 设计 | 从 DESIGN.md 产出页面级硬 token UI markdown（颜色/字体/间距全引用 token） |
+| `preview` | 验证 | Element Plus + iOS/Android 设备外壳实时预览 |
+| `critique` | 验证 | Nielsen 10 启发式 0–4 评分 + persona 走查 + 认知负荷清单，产出评分快照/趋势/backlog |
+| `draw-harmony` / `draw-flutter` / `draw-element` | 实现 | 转换为 HarmonyOS(ArkTS) / Flutter(Dart) / Element Plus(Vue 3) 框架代码 |
+| `ui-graph` | 交付 | UI 关系图（层级 + 跳转 + 哈希基线 + 实现映射），变更追踪与实现缺口查询 |
+| `ip` / `ip-handbook` | 交付 | IP 形象生成（API 优先，fallback prompt）/ IP 视觉手册（8 模块，2K 3:4） |
 
-需 [Node.js](https://nodejs.org/) 18+ 和 `skills` npm 包(v1.5.12+)。`skills` 是 open agent skills 生态的 CLI,支持 68+ agents(Claude Code / Trae / Cursor / Codex / OpenCode 等)。
+- **设计资产库**：12 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 18 篇组件命名词汇 + 八维规范（色/字/图/距/角/线/布局/海拔）
+- **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
+- **已并入资产**：原 interface-design skill 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（sha e3d624b，2026-09-12），critique 的 UI 合规/a11y 清单读取该快照
+- **脚本验证层**：`validate-draw-md.py`（13 项检查）、`preview-check.py`（49/113 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（7 子命令）、`ci-gate.sh` 统一入口——纯 Python 标准库
 
-```bash
-# 安装到 Claude Code
-npx skills add https://github.com/Kirky-X/maliang.git --agent claude-code -y
-
-# 等价简写(owner/repo)
-npx skills add Kirky-X/maliang --agent claude-code -y
-
-# 安装到 Trae
-npx skills add Kirky-X/maliang --agent trae -y
-
-# 列出仓库中可被发现的所有 skills(不安装)
-npx skills add https://github.com/Kirky-X/maliang.git --list
-```
-
-安装后 skill 文件位于对应 agent 的 skills 目录(如 `.claude/skills/maliang/`)。
-
-### 方式二:传统 git clone
+## 📦 安装
 
 ```bash
-git clone https://github.com/Kirky-X/maliang.git
-# 将 SKILL.md + references/ + examples/ + scripts/ 链接或复制到 agent skills 目录
-# 各 runtime 的 skills 目录路径示例(任选其一):
-#   Claude Code:  ~/.claude/skills/maliang/
-#   Trae:         ~/.trae-cn/skills/maliang/
-#   Cursor:       ~/.cursor/skills/maliang/
-#   Codex:        ~/.codex/skills/maliang/
+# 方式 1：从本仓库根一键部署（同步到 ~/.zcode/skills/ 与 ~/.claude/skills/，LF 强制归一）
+bash scripts/sync-skills.sh maliang
+
+# 方式 2：手动拷贝到 agent 技能目录
+cp -r maliang/ ~/.zcode/skills/maliang/
 ```
 
-## 使用示例
+首跑依赖：仅需 Python 3.8+（脚本层全部标准库），无 requirements.txt。
 
-maliang 作为 skill 被 agent 加载后,通过自然语言意图触发,无需显式命令。子命令详细描述与用户意图路由见 [SKILL.md 路由表](./SKILL.md)。
+## 🚀 快速开始
 
-| 子命令 | 一句话功能 |
-| ------ | ---------- |
-| design-md | 产出 prose-first 的 DESIGN.md |
-| draw-md | 产出页面级硬 token UI markdown |
-| preview | 用 Element Plus 实时预览验证 |
-| draw-harmony | 转换为 HarmonyOS(ArkTS) |
-| draw-flutter | 转换为 Flutter |
-| draw-element | 转换为 Element Plus(Vue 3) |
+前置：skill 已部署到 agent 技能目录；`{SKILL_DIR}` 指安装目录，`--target` 指向用户项目路径（禁止拿 skill 自带 `examples/` 当分析目标）。
 
-## 能力概览
-
-### `references/` —— 子命令流程 + 维度规范 + 框架文档
-
-六个子命令共享的参考文档:
-
-| 文件                                                         | 维度                                |
-| ------------------------------------------------------------ | ----------------------------------- |
-| [`design-md.md`](references/commands/design-md.md)                    | design-md 子命令流程(上游)        |
-| [`draw-md.md`](references/commands/draw-md.md)                        | draw-md 子命令流程(中游)          |
-| [`preview.md`](references/commands/preview.md)                        | preview 子命令流程(验证)          |
-| [`draw-harmony.md`](references/commands/draw-harmony.md)              | draw-harmony 子命令流程(HarmonyOS) |
-| [`draw-flutter.md`](references/commands/draw-flutter.md)              | draw-flutter 子命令流程(Flutter)   |
-| [`draw-element.md`](references/commands/draw-element.md)              | draw-element 子命令流程(Element)   |
-| [`philosophy.md`](references/meta/philosophy.md)                  | prose-first 方法论                  |
-| [`principles.md`](references/meta/principles.md)                  | 设计原则(Do's and Don'ts)         |
-| [`token.md`](references/meta/token.md)                            | token 总规范                       |
-| [`spec-schema.md`](references/meta/spec-schema.md)                | DESIGN.md schema 与 lint 规则表    |
-| [`color.md`](references/dimensions/color.md)                            | 色彩维度                            |
-| [`color-palettes.md`](references/dimensions/color-palettes.md)          | 色板维度                            |
-| [`font.md`](references/dimensions/font.md)                              | 字体维度                            |
-| [`icon.md`](references/dimensions/icon.md)                              | 图标维度                            |
-| [`spacing.md`](references/dimensions/spacing.md)                        | 间距维度                            |
-| [`radius.md`](references/dimensions/radius.md)                          | 圆角维度                            |
-| [`border.md`](references/dimensions/border.md)                          | 描边维度                            |
-| [`framework/index.md`](references/framework/index.md)        | 框架资源总览(组件类型索引)        |
-
-### `references/framework/` —— 分层框架文档数据库
-
-```
-references/framework/
-├── index.md                          # 框架资源总览,含组件类型索引
-├── harmony/                          # HarmonyOS(ArkTS)
-│   ├── button/{component,usage}.md
-│   ├── text/{component,usage}.md
-│   └── list/{component,usage}.md
-├── flutter/                          # Flutter(Dart)
-│   ├── button/{widget,properties}.md
-│   ├── text/{widget,properties}.md
-│   └── list/{widget,properties}.md
-└── element/                          # Element Plus(Vue 3)
-    ├── button/{component,api}.md
-    ├── text/{component,api}.md
-    └── list/{component,api}.md
+```text
+为这个项目创建 DESIGN.md               # → design-md
+出首页和设置页的 UI markdown            # → draw-md（需先有 DESIGN.md）
+审查一下这个页面的可用性                # → critique（Nielsen 10 + persona 走查）
+把这个页面转成 HarmonyOS 代码           # → draw-harmony
 ```
 
-### `examples/` —— 13 种 design system 风格 + UI markdown 示例
+脚本层可直接独立运行：
 
-```
-examples/
-├── design-system/              # 13 种风格的 DESIGN.md 示例
-│   ├── DESIGN.md               # 根示例
-│   ├── material-design/
-│   ├── skeuomorphism/
-│   ├── minimalism/
-│   ├── cyberpunk/
-│   ├── illustrative/
-│   ├── swiss-style/
-│   ├── glassmorphism/
-│   ├── neomorphism/
-│   ├── y2k/
-│   ├── editorial/
-│   ├── brutalism/
-│   └── heritage/
-└── ui-markdown/                # draw-md 产出示例
-    ├── token.md                # 页面 token 表
-    ├── ui/
-    │   ├── home.md             # 首页规格
-    │   └── setting/about.md    # 关于页规格
-    └── organisms/
-        ├── nav-bar.md          # 导航栏(跨页面复用)
-        └── dock.md             # Dock(跨页面复用)
+```bash
+python3 {SKILL_DIR}/scripts/ui-graph.py generate --target ui-markdown/      # 生成 UI 关系图
+python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target ui-markdown/     # 导航死链检查
+python3 {SKILL_DIR}/scripts/validate-draw-md.py ui-markdown/ --format text  # 13 项规范性检查
+bash {SKILL_DIR}/scripts/ci-gate.sh                                          # CI 验证门（单测 + 三验证器）
 ```
 
-### `scripts/` —— 辅助脚本 + 设备模型
-
-- [`design_md_to_token_md.py`](scripts/design_md_to_token_md.py) — 从 DESIGN.md 提取 token 表
-- [`device_models.py`](scripts/device_models.py) — iOS/Android 手机与平板设备尺寸配置(6 款设备)
-- [`devices/phone.html`](scripts/devices/phone.html) — 手机设备外壳 HTML/CSS 模板(带刘海)
-- [`devices/tablet.html`](scripts/devices/tablet.html) — 平板设备外壳 HTML/CSS 模板(无刘海)
-
-#### 支持的设备尺寸
-
-| 设备名 | 平台 | 类型 | 尺寸(宽×高) |
-| ------ | ---- | ---- | ------------- |
-| iPhone 15 Pro Max | iOS | phone | 430×932 |
-| iPhone 15 | iOS | phone | 393×852 |
-| iPhone SE 3rd | iOS | phone | 375×667 |
-| iPad Pro 12.9" | iOS | tablet | 1024×1366 |
-| iPad Air | iOS | tablet | 820×1180 |
-| Samsung Galaxy Tab S8 | Android | tablet | 1600×2560 |
-
-## 完整流程链路
+### 全景流程（mermaid）
 
 ```mermaid
 flowchart LR
     A["design-md<br/>(设计系统)"] --> B["draw-md<br/>(逻辑稿)"]
     B --> C["preview<br/>(预览验证)"]
-    C --> D["draw-harmony / draw-flutter / draw-element<br/>(框架实现)"]
+    C --> D["critique<br/>(可用性评审)"]
+    D --> E["draw-harmony / draw-flutter / draw-element<br/>(框架实现)"]
+    E -.迭代回流.-> A
 ```
 
-1. `design-md` 产出 DESIGN.md(设计系统规范)
-2. `draw-md` 从 DESIGN.md 产出页面级 UI markdown(逻辑稿)
-3. `preview` 用 Element Plus + 设备外壳预览验证逻辑稿效果
-4. `draw-harmony` / `draw-flutter` / `draw-element` 将逻辑稿转换为具体框架代码
+## ✅ 测试与验证
 
-## FAQ
+pytest 实测（2026-09-13，Python 3.12）：
 
-### `skills` 包版本要求?
-
-需 `skills` npm 包 **v1.5.12+**(本仓库实测 v1.5.14)。`skills` 是 [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) 生态的 CLI,支持 68+ agents。用 `npx skills@latest` 自动获取最新版。
-
-### ui-md 去哪了?
-
-`ui-md` 子命令已重命名为 `draw-md`(v0.1.0),以与下游 `draw-harmony` / `draw-flutter` / `draw-element` 系列命名对齐。功能完全不变,只需将触发语中的 `ui-md` 改为 `draw-md` 即可。
-
-### 哪些源格式被支持?
-
-实跑验证(2026-06-30,`skills` v1.5.14)四种 `npx skills add` 源格式兼容性:
-
-| 命令格式                                           | 兼容性 | 说明                                          |
-| -------------------------------------------------- | :----: | --------------------------------------------- |
-| `npx skills add https://github.com/Kirky-X/maliang.git` |   ✓    | Full GitHub URL + .git 后缀,推荐             |
-| `npx skills add https://github.com/Kirky-X/maliang`     |   ✓    | Full GitHub URL(无 .git),自动补全后缀      |
-| `npx skills add Kirky-X/maliang`                   |   ✓    | owner/repo 简写,自动展开为 Full URL,推荐   |
-| `npx skills add Kirky-X/maliang.git`               |   ✗    | **不支持** — skills 包 bug:生成 `maliang.git.git` 双后缀,clone 失败。改用 `Kirky-X/maliang`(不带 .git)或 Full URL |
-
-**结论**:推荐使用前三种格式。避免 `owner/repo.git` 简写(skills v1.5.14 有双后缀 bug)。
-
-### 远程安装提示"No skills found"?
-
-确认 GitHub 仓库 `Kirky-X/maliang` 已 push 含 `SKILL.md`(根目录,YAML frontmatter 含 `name` + `description`)的最新代码。`skills` 包通过 `git clone` 获取仓库后扫描 `SKILL.md`,仓库为空或缺少 `SKILL.md` 会报该错。
-
-### `skills add` 提示"Installation complete"但 `.claude/skills/maliang/` 不存在?
-
-这是 `skills` 包 v1.5.14 的已知问题:命令报告成功但未实际复制文件。**Workaround**:手动复制 skill 文件到 agent skills 目录(以下为各 runtime 路径示例,Claude Code / Trae / Cursor / Codex 任选其一):
-
-```bash
-# Claude Code
-mkdir -p ~/.claude/skills/maliang
-cp -r SKILL.md skill.json references examples scripts ~/.claude/skills/maliang/
-
-# Trae
-mkdir -p ~/.trae-cn/skills/maliang
-cp -r SKILL.md skill.json references examples scripts ~/.trae-cn/skills/maliang/
-
-# Cursor
-mkdir -p ~/.cursor/skills/maliang
-cp -r SKILL.md skill.json references examples scripts ~/.cursor/skills/maliang/
-
-# Codex
-mkdir -p ~/.codex/skills/maliang
-cp -r SKILL.md skill.json references examples scripts ~/.codex/skills/maliang/
+```text
+$ python3 -m pytest tests -q
+........................................................................  [ 76%]
+......................                                                   [100%]
+94 passed in 0.07s
 ```
 
-## 许可证
+4 个测试文件（双列 fixture，"应报 + 不应报"成对覆盖）：`test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md`。
 
-MIT
+CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework ✓、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 49/113 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
+
+## 📁 目录结构
+
+```text
+maliang/
+├── SKILL.md                 # 入口：11 子命令路由 + meta 加载时序 + 失败模式 + 禁止事项
+├── skill.json               # 元数据（v0.3.0，MIT）
+├── references/
+│   ├── commands/            # 11 个子命令流程文档
+│   ├── meta/                # 规范层：token / principles / ux-rules / lifecycle / accessibility …
+│   │                        #   含 web-interface-guidelines.md 快照（sha e3d624b）
+│   ├── interface-design/    # 原 interface-design skill 并入（craft 纪律 / 严格评审）
+│   ├── dimensions/          # 八维规范 + 调色板库 + 液态玻璃配方
+│   ├── framework/           # 56 类组件 × 三框架文档（harmony / flutter / element）
+│   ├── templates/           # 模板墙：12 种设计语言 + 整页模式 + 落地页编排
+│   ├── vocabulary/          # 18 篇组件命名词汇
+│   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
+├── scripts/                 # ui-graph / validate-draw-md / preview-check / ci-gate / device_models / devices/
+├── examples/                # 13 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
+└── tests/                   # pytest 套件（94 用例，4 文件）
+```
+
+## 🔮 边界
+
+- **不适用**：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成
+- **一次性改版**：不想沉淀 design token 的整站翻新交给 `redesign-existing-projects` skill；maliang 的 redesign 面向要回流 decisions 账本的持续改版
+- **代码质量/架构审查**归 [diting](../diting/)；**安全扫描**归 [tiangang](../tiangang/)
+- **流程硬约束**：无 DESIGN.md 严禁直接进入 draw-md / draw-* 下游（token 引用悬空）；禁止硬编码颜色/字号/间距，一律 `{token-name}` 占位
+
+## 📄 License 与归属
+
+MIT License（© 2026 Kirky-X）。`references/interface-design/` 来自已并入的原 interface-design skill；`references/meta/web-interface-guidelines.md` 为 [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) 的本地快照（sha e3d624b，钉定 2026-09-12）。
