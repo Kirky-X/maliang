@@ -7,4 +7,4 @@
 - `commands/design-deslop.md` — diff 范围的去视觉 slop 快评 → 配合 maliang `deslop/去 AI 味` 使用
 - `reference/` — 给用户项目用的 `.interface-design/system.md` 输出模板与示例（非 agent 参考材料）
 
-原顶层 skill 已退役至仓库 `.attic/interface-design-upstream`。斜杠命令形态的引用已改为自然语言。
+原顶层 skill 已退役并合并入本目录。斜杠命令形态的引用已改为自然语言。
