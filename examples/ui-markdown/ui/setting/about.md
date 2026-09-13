@@ -51,7 +51,7 @@ version: 1.2.0
 | 字体颜色 | `{color-text-primary}`                  |
 | 分割线   | `{border-hairline}` + `{color-divider}` |
 | aria-label | 每行用对应 label 字段值(如"版本更新"/"用户协议"),容器 aria-label="功能列表" |
-| action   | tap=→对应目标页; state=按下高亮; db=无; api=无; long-press=无 |
+| action   | tap=跳转至 item.target(见 §3.2); state=按下高亮; db=无; api=无; long-press=无 |
 
 ### 3.1 item 字段结构
 

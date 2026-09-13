@@ -8,20 +8,28 @@
 退出码: 0 = 全部通过; 1 = 有 error; 2 = 仅有 warning。
 依赖: Python 3 标准库(无第三方依赖)。
 
-覆盖 preview-checklist.md 中可脚本化的检查项(约 60/102 项),
+覆盖 preview-checklist.md 中可脚本化的检查项(实测 49/113 项),
 其余需浏览器/视觉验证的项标记为 MANUAL。
 
 检查分组(对应 preview-checklist.md §5.1-§5.13):
   5.1  AI Tells       — lorem ipsum / 整数凑数 / unsplash / Google Fonts 阻塞
   5.2  Performance    — img 尺寸 / font-display / z-index / backdrop-filter / will-change
+  5.3  WCAG 对比度    — 正文/大文本/placeholder/disabled 对比度 / 暗色模式 / 纯红绿
+                        (静态解析 <style> 内 color×background 组合;CDN 框架默认色与
+                         focus ring 为 MANUAL)
   5.4  用户偏好       — prefers-reduced-motion / prefers-color-scheme / prefers-reduced-transparency
-  5.5  交互可达       — alt / aria-label / skip-link / tabindex / label
+  5.5  交互可达       — alt / aria-label / skip-link / tabindex / label / focus ring
   5.6  Token 完整性   — {token} 残留 / 硬编码颜色字号间距 / z-index / kebab-case
+                        (:root 内的 CSS 变量定义是 token 解析锚点,豁免硬编码检查)
+  5.7  交互状态       — hover/active/focus/disabled/tactile 存在性(静态代理,框架
+                        CDN 提供的样式降级为 warning;outline:none 无替代为 error)
   5.8  LLM 截断信号   — // .../TODO / 空泛词 / placeholder 占比
   5.9  动画动机       — duration / stagger / translateY / easing / linear
   5.10 排版细节       — em-dash / eyebrow / 标题字数 / 中英空格 / 标点
   5.11 视觉一致性锁   — 阴影档位 / 字号档位
   5.12 Hero 适配      — 100svh / picture+srcset / video poster / CTA 数
+  5.13 Core Web Vitals — 运行时指标(LCP/CLS/INP/FCP/TBT),全部 MANUAL,
+                        需浏览器实测;5.2 的 img 尺寸/font-display 是其静态前置
 """
 
 import argparse
@@ -114,12 +122,70 @@ SRCSET_RE = re.compile(r"srcset\s*=", re.IGNORECASE)
 PICTURE_TAG_RE = re.compile(r"<picture\b", re.IGNORECASE)
 VIDEO_TAG_RE = re.compile(r"<video\b[^>]*>", re.IGNORECASE)
 
+# --- 5.3 WCAG 对比度 ---
+STYLE_BLOCK_RE = re.compile(r"<style[^>]*>(.*?)</style>", re.DOTALL | re.IGNORECASE)
+CSS_COMMENT_RE = re.compile(r"/\*.*?\*/", re.DOTALL)
+CSS_CUSTOM_PROP_RE = re.compile(r"(--[\w-]+)\s*:\s*([^;}]+)")
+HEX_COLOR_FULL_RE = re.compile(
+    r"^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$"
+)
+RGB_FUNC_FULL_RE = re.compile(r"^rgba?\(([^)]*)\)$", re.IGNORECASE)
+CSS_VAR_USE_RE = re.compile(
+    r"^var\(\s*(--[\w-]+)\s*(?:,\s*([^)]+?))?\s*\)$", re.IGNORECASE
+)
+GRADIENT_RE = re.compile(r"gradient\(", re.IGNORECASE)
+PLACEHOLDER_PSEUDO_RE = re.compile(r"::placeholder|:placeholder-shown", re.IGNORECASE)
+DISABLED_SELECTOR_RE = re.compile(r":disabled|\[disabled\]|[.\[]" + r"[\w-]*disabled", re.IGNORECASE)
+FONT_SIZE_PX_RE = re.compile(r"^([\d.]+)(px|rem|em)$", re.IGNORECASE)
+FONT_WEIGHT_RE = re.compile(r"^(?:\d{3}|bold)$", re.IGNORECASE)
+PURE_RED_GREEN_RE = re.compile(
+    r"^#(?:f00|ff0000|008000|0f0|00ff00)$|^rgba?\(\s*(?:255\s*,\s*0+\s*,\s*0+|0+\s*,\s*128\s*,\s*0+|0+\s*,\s*255\s*,\s*0+)\s*\)$",
+    re.IGNORECASE,
+)
+
+# 有限命名色表(对比度静态解析用;覆盖常见 fallback 值)
+NAMED_COLORS = {
+    "white": (255, 255, 255, 1), "black": (0, 0, 0, 1),
+    "red": (255, 0, 0, 1), "green": (0, 128, 0, 1),
+    "blue": (0, 0, 255, 1), "yellow": (255, 255, 0, 1),
+    "orange": (255, 165, 0, 1), "purple": (128, 0, 128, 1),
+    "gray": (128, 128, 128, 1), "grey": (128, 128, 128, 1),
+    "silver": (192, 192, 192, 1), "lime": (0, 255, 0, 1),
+    "maroon": (128, 0, 0, 1), "navy": (0, 0, 128, 1),
+    "olive": (128, 128, 0, 1), "teal": (0, 128, 128, 1),
+    "aqua": (0, 255, 255, 1), "cyan": (0, 255, 255, 1),
+    "fuchsia": (255, 0, 255, 1), "magenta": (255, 0, 255, 1),
+    "pink": (255, 192, 203, 1), "brown": (165, 42, 42, 1),
+    "transparent": (0, 0, 0, 0),
+}
+
+# --- 5.7 交互状态 ---
+STATE_HOVER_RE = re.compile(r":hover\b")
+STATE_ACTIVE_RE = re.compile(r":active\b")
+STATE_FOCUS_RE = re.compile(r":focus(?:-visible)?\b")
+STATE_DISABLED_RE = re.compile(r":disabled|\[disabled\]|[\.\[][\w-]*disabled|\bdisabled\s*:", re.IGNORECASE)
+ACTIVE_BLOCK_RE = re.compile(r":active[^{]*\{([^}]*)\}", re.IGNORECASE)
+OUTLINE_NONE_RE = re.compile(r"outline\s*:\s*(?:none|0)\s*[;}]", re.IGNORECASE)
+FOCUS_ALT_RE = re.compile(
+    r":focus[^{]*\{[^}]*(?:outline[^;:}]*\s*:[^;}]*(?:none|0)|box-shadow)", re.IGNORECASE
+)
+FOCUS_RING_OVERRIDE_RE = re.compile(
+    r":focus(?:-visible)?[^{]*\{[^}]*box-shadow", re.IGNORECASE
+)
+
 # --- HTML 解析辅助 ---
 ALT_ATTR_RE = re.compile(r"""<img\b[^>]*\balt\s*=\s*["']""", re.IGNORECASE)
 ARIA_LABEL_RE = re.compile(r"""aria-label\s*=\s*["']""", re.IGNORECASE)
 LABEL_TAG_RE = re.compile(r"<label\b", re.IGNORECASE)
 INPUT_TAG_RE = re.compile(r"<(?:input|select|textarea)\b", re.IGNORECASE)
 BUTTON_TAG_RE = re.compile(r"<(?:button|a)\b[^>]*>", re.IGNORECASE)
+# 完整 <button> 元素(开标签 + 内部内容),供可访问名静态判定(5.5.5)
+BUTTON_ELEM_RE = re.compile(
+    r"""<button\b([^>]*)>(.*?)</button>""", re.IGNORECASE | re.DOTALL
+)
+IMG_WITH_ALT_RE = re.compile(
+    r"""<img\b[^>]*\balt\s*=\s*["'][^"']+["']""", re.IGNORECASE
+)
 
 
 # ---------------------------------------------------------------------------
@@ -199,9 +265,13 @@ def check_5_1_ai_tells(text, fname):
     # 5.1.11: 整数凑数(100/1k/10k 等)
     for i, line in enumerate(lines, 1):
         for m in INTEGER_NUMBER_RE.finditer(line):
-            # 排除 CSS 属性值和 HTML 标签
+            # 排除 CSS 属性值、HTML 数值属性与自定义属性(如 --motion-duration-instant: 100ms)
             ctx = line[max(0, m.start() - 30):m.end() + 30]
-            if re.search(r"(?:font-size|width|height|margin|padding|gap)\s*:", ctx):
+            if re.search(
+                r"(?:font-size|width|height|margin|padding|gap|z-index|opacity"
+                r"|duration|delay|scale|stroke|tabindex|weight|flex|max-|min-"
+                r"|border|radius|srcset|blob)[\w-]*\s*[=:]", ctx,
+            ):
                 continue
             results.append(_r("ERROR", i, "ai-tells.integer-number",
                               "整数凑数: " + m.group(0) + ",应使用带尾数的真实风数据"))
@@ -277,6 +347,211 @@ def check_5_2_performance(text, parser, fname):
     return results
 
 
+# --- 5.3 WCAG 对比度(静态 CSS 解析) ---
+
+def _collect_css_rules(css_text):
+    """把一段 CSS 拆成规则列表 [(selector, declarations_text, media)]。
+
+    处理一层 @media 嵌套;忽略 @font-face/@keyframes 等非选择器块。
+    调用方需先剥离注释。
+    """
+    rules = []
+
+    def _split_blocks(segment, media):
+        i, n = 0, len(segment)
+        while i < n:
+            brace = segment.find("{", i)
+            if brace == -1:
+                break
+            selector = segment[i:brace].strip()
+            # 找配对右括号(允许一层嵌套)
+            depth, j = 1, brace + 1
+            while j < n and depth:
+                if segment[j] == "{":
+                    depth += 1
+                elif segment[j] == "}":
+                    depth -= 1
+                j += 1
+            body = segment[brace + 1:j - 1]
+            if selector.startswith("@"):
+                if selector.startswith(("@media", "@supports")):
+                    _split_blocks(body, selector.split("(")[0].strip().lstrip("@"))
+                # @font-face / @keyframes 等跳过
+            elif ";" not in selector and "{" not in selector:
+                rules.append((selector, body, media))
+            i = j
+
+    _split_blocks(css_text, None)
+    return rules
+
+
+def _parse_declarations(decls_text):
+    """把声明文本解析为 dict(prop 小写 -> value 原文)。"""
+    result = {}
+    for decl in decls_text.split(";"):
+        if ":" not in decl:
+            continue
+        prop, _, value = decl.partition(":")
+        prop = prop.strip().lower()
+        if prop:
+            result[prop] = value.strip()
+    return result
+
+
+def _resolve_css_value(value, var_map, depth=0):
+    """解析 var(--x, fallback) 引用,返回最终字面值;解析失败返回 None。"""
+    if depth > 8 or value is None:
+        return None
+    value = value.strip()
+    m = CSS_VAR_USE_RE.match(value)
+    if m:
+        name, fallback = m.group(1), m.group(2)
+        if name in var_map:
+            return _resolve_css_value(var_map[name], var_map, depth + 1)
+        if fallback is not None:
+            return _resolve_css_value(fallback, var_map, depth + 1)
+        return None
+    return value
+
+
+def _color_to_rgba(value):
+    """把颜色字面值转 (r, g, b, a);不支持的形式(渐变/相对色)返回 None。"""
+    if not value:
+        return None
+    v = value.strip().lower()
+    if GRADIENT_RE.search(v) or v in ("inherit", "initial", "currentcolor", "none"):
+        return None
+    if HEX_COLOR_FULL_RE.match(v):
+        h = v[1:]
+        if len(h) in (3, 4):
+            h = "".join(c * 2 for c in h)
+        r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+        a = int(h[6:8], 16) / 255.0 if len(h) == 8 else 1.0
+        return (r, g, b, a)
+    m = RGB_FUNC_FULL_RE.match(v)
+    if m:
+        parts = [p.strip() for p in m.group(1).split(",")]
+        if len(parts) < 3:
+            return None
+        try:
+            rgb = []
+            for p in parts[:3]:
+                rgb.append(int(round(float(p.rstrip("%")) * 2.55 if p.endswith("%") else float(p))))
+            a = float(parts[3]) if len(parts) > 3 else 1.0
+            return (rgb[0], rgb[1], rgb[2], a)
+        except ValueError:
+            return None
+    return NAMED_COLORS.get(v)
+
+
+def _rel_luminance(rgb):
+    """WCAG 相对亮度。rgb = (r, g, b)。"""
+    def chan(c):
+        c = c / 255.0
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    return (0.2126 * chan(rgb[0]) + 0.7152 * chan(rgb[1]) + 0.0722 * chan(rgb[2]))
+
+
+def _contrast_ratio(fg, bg):
+    """对比度;fg 含 alpha 时先合成到 bg 上。"""
+    if fg[3] < 1.0:
+        fg = tuple(
+            round(fg[i] * fg[3] + bg[i] * (1 - fg[3])) for i in range(3)
+        ) + (1.0,)
+    l1, l2 = _rel_luminance(fg[:3]), _rel_luminance(bg[:3])
+    lighter, darker = max(l1, l2), min(l1, l2)
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def check_5_3_contrast(text, parser, fname):
+    """5.3 WCAG 对比度可自动化检查(6 项/8 项)。
+
+    静态解析 <style> 块:对每条同时声明 color 与 background 的规则计算对比度。
+    覆盖:正文 ≥4.5 / 大文本 ≥3 / disabled ≥3 / placeholder ≥4.5 /
+    暗色模式(@media 内规则) / 纯红绿告警。
+    MANUAL:UI 组件边框 ≥3、focus ring ≥3(需渲染后测量)。
+    无法解析的组合(渐变/透明/未知变量)跳过不猜测 — 静态扫描通过是底线,
+    不是对比度达标的证明,渲染验证仍由 preview 第 4 节承担。
+    """
+    results = []
+    for style_block in STYLE_BLOCK_RE.findall(text):
+        block_start = text.find(style_block)  # 近似行号(内容重复块取首个)
+        css = CSS_COMMENT_RE.sub("", style_block)
+        rules = _collect_css_rules(css)
+
+        # 自定义属性表:light = 非媒体查询内定义;每类 media 单独合并覆盖
+        light_vars = {}
+        media_vars = {}
+        for _, body, media in rules:
+            for m in CSS_CUSTOM_PROP_RE.finditer(body):
+                name, val = m.group(1), m.group(2).strip()
+                if media is None:
+                    light_vars[name] = val
+                else:
+                    media_vars.setdefault(media, dict(light_vars))[name] = val
+
+        default_bg = None
+        for selector, body, media in rules:
+            var_map = light_vars if media is None else media_vars.get(media, light_vars)
+            decls = _parse_declarations(body)
+            fg_raw = decls.get("color")
+            bg_raw = decls.get("background-color") or decls.get("background")
+
+            # 记录页面默认背景(body / :root / html)
+            sel_l = selector.strip().lower()
+            if bg_raw:
+                bg_def = _color_to_rgba(_resolve_css_value(bg_raw, var_map))
+                if bg_def and bg_def[3] >= 1.0 and (
+                    sel_l in ("body", ":root", "html", "*", ".device-screen")
+                    or sel_l.endswith("body")
+                ):
+                    default_bg = bg_def
+
+            if not fg_raw:
+                continue
+
+            fg_color = _color_to_rgba(_resolve_css_value(fg_raw, var_map))
+            if bg_raw:
+                bg_resolved = _resolve_css_value(bg_raw, var_map)
+                effective_bg = _color_to_rgba(bg_resolved) if bg_resolved else None
+            else:
+                effective_bg = default_bg  # 未声明背景时沿用页面默认
+            if fg_color is None or effective_bg is None:
+                continue  # 渐变/透明/无法解析 → MANUAL,不猜测
+
+            # 阈值:disabled 3.0;大文本(≥24px,或 ≥18.66px 且 weight≥700)3.0;其余 4.5
+            threshold, kind = 4.5, "text"
+            if DISABLED_SELECTOR_RE.search(selector):
+                threshold, kind = 3.0, "disabled"
+            elif PLACEHOLDER_PSEUDO_RE.search(selector):
+                threshold, kind = 4.5, "placeholder"
+            else:
+                fs = FONT_SIZE_PX_RE.match(decls.get("font-size", ""))
+                if fs:
+                    size_px = float(fs.group(1)) * (
+                        16.0 if fs.group(2).lower() in ("rem", "em") else 1.0
+                    )
+                    fw = decls.get("font-weight", "")
+                    fw_bold = fw.isdigit() and float(fw) >= 700
+                    if size_px >= 24 or (size_px >= 18.66 and fw_bold):
+                        threshold, kind = 3.0, "large-text"
+
+            ratio = _contrast_ratio(fg_color, effective_bg)
+            line_no = text[:block_start].count("\n") + 1
+            if ratio < threshold:
+                results.append(_r(
+                    "ERROR", line_no, "contrast.low",
+                    "{}对比度 {:.2f}:1 < {:.1f}:1(selector: {})".format(
+                        kind, ratio, threshold, selector.strip()[:40]),
+                ))
+            if kind == "text" and PURE_RED_GREEN_RE.match(fg_raw.strip().lower()):
+                results.append(_r(
+                    "WARN", line_no, "contrast.pure-red-green",
+                    "纯红/纯绿表达信息,色盲不友好(selector: {})".format(selector.strip()[:40]),
+                ))
+    return results
+
+
 # --- 5.4 用户偏好 ---
 
 def check_5_4_user_prefs(text, fname):
@@ -310,6 +585,28 @@ def check_5_4_user_prefs(text, fname):
 
 # --- 5.5 交互可达 ---
 
+def _has_accessible_name(open_tag, inner):
+    """静态判断按钮是否有可访问名(5.5.5,ux-rules slug: aria-labels)。
+
+    满足任一即视为有名:
+    - aria-label / aria-labelledby 属性(含 Vue 绑定 :aria-label / v-bind:aria-label)
+    - title 属性(含 :title 绑定)
+    - 非空可见文本(剥标签后仍有字符)
+    - 模板插值文本({{ }},渲染后由数据提供)
+    - 内嵌 <img alt="非空">(图标按钮的图片名)
+    """
+    if re.search(r"(?<![\w-])aria-label(?:ledby)?\s*[=:]", open_tag, re.IGNORECASE):
+        return True
+    if re.search(r"(?<![\w-])title\s*[=:]", open_tag, re.IGNORECASE):
+        return True
+    text_content = re.sub(r"<[^>]+>", " ", inner)
+    if "{{" in inner or text_content.strip():
+        return True
+    if IMG_WITH_ALT_RE.search(inner):
+        return True
+    return False
+
+
 def check_5_5_accessibility(text, parser, fname):
     """5.5 交互可达可自动化检查(5 项/8 项)。"""
     results = []
@@ -321,16 +618,14 @@ def check_5_5_accessibility(text, parser, fname):
             results.append(_r("ERROR", line, "a11y.img-alt",
                               "img 缺少 alt 属性"))
 
-    # 5.5.5: 无文字按钮缺少 aria-label
-    for btn in parser.buttons:
-        line = btn.get("_line", 0)
-        # 简化: 检查按钮是否有 aria-label 或 aria-labelledby
-        has_label = "aria-label" in btn or "aria-labelledby" in btn
-        # 检查按钮是否包含文字内容(简化: 检查 title 属性)
-        if not has_label and "title" not in btn:
-            # 仅标记可能的图标按钮(无文字)
-            pass  # 需要 DOM 内容分析,简化为 WARN
-        # 注: 完整检查需 DOM 树遍历,此处仅检查属性
+    # 5.5.5: 无文字按钮缺少可访问名(ux-rules aria-labels,静态判定:
+    # aria 属性 / title / 可见文本 / 插值绑定 / 内嵌 img alt 任一即可)
+    for m in BUTTON_ELEM_RE.finditer(text):
+        line = text[:m.start()].count("\n") + 1
+        if _has_accessible_name(m.group(1), m.group(2)):
+            continue
+        results.append(_r("ERROR", line, "a11y.aria-label",
+                          "按钮无可访问名(缺 aria-label/aria-labelledby 且无文本/title/alt)"))
 
     # 5.5.7: Skip to main content
     if not SKIP_LINK_RE.search(text):
@@ -368,7 +663,14 @@ def check_5_5_accessibility(text, parser, fname):
 # --- 5.6 Token 完整性 ---
 
 def check_5_6_tokens(text, fname):
-    """5.6 Token 完整性可自动化检查(6 项/10 项)。"""
+    """5.6 Token 完整性可自动化检查(5 项/10 项)。
+
+    覆盖:{token} 残留 / 硬编码颜色 / 硬编码字号(5.6.3)/ 硬编码间距(5.6.4)
+    / kebab-case。:root 内的 CSS 变量定义是 token 解析锚点,豁免硬编码检查。
+    严重级:硬编码字号 ERROR;硬编码间距 WARN(静态代理 — 既有 preview 产物
+    存在 token 与 px 混排,shorthand 上下文静态无法完全确认;checklist 将其列为
+    硬性失败,以脚本输出严重级为准时按 WARN 处置)。
+    """
     results = []
     lines = text.splitlines()
 
@@ -383,17 +685,43 @@ def check_5_6_tokens(text, fname):
                               "{token} 占位符残留: {" + m.group(1) + "}"))
 
     # 5.6.2: 硬编码颜色(在 style/CSS 中)
-    # 仅检查 <style> 块内的颜色
+    # 仅检查 <style> 块内的颜色;:root 内的 CSS 自定义属性定义是 token.md
+    # 解析后的合法落点(preview.md §3"CSS 变量已从 token.md 注入 :root"),
+    # 其值豁免 — 但 :root 内非自定义属性声明仍受检。
+    # 声明级剥离(非按行):LLM 生成的 HTML 常把多个变量挤在一行。
+    # CSS 注释先剥离:注释中的色值是文档说明,不是生效样式。
     style_blocks = re.findall(r"<style[^>]*>(.*?)</style>", text, re.DOTALL | re.IGNORECASE)
-    for block in style_blocks:
+    css_var_def_re = re.compile(r"--[\w-]+\s*:[^;}]*;?")
+
+    def _strip_root_var_defs(block):
+        block = CSS_COMMENT_RE.sub("", block)
+
+        def _repl(m):
+            return css_var_def_re.sub("", m.group(0))
+        return re.sub(r":root[^{]*\{[^}]*\}", _repl, block)
+
+    for raw_block in style_blocks:
+        # 行号锚点须在剥离前用原文块定位(剥离注释/var 定义后 text.find 会失配)
+        block_start_offset = text.find(raw_block)
+        block = _strip_root_var_defs(raw_block)
         for m in HEX_COLOR_RE.finditer(block):
-            line_no = text[:text.find(block)].count("\n") + block[:m.start()].count("\n") + 1
+            line_no = text[:block_start_offset].count("\n") + block[:m.start()].count("\n") + 1
             results.append(_r("ERROR", line_no, "token.hardcoded-color",
                               "硬编码颜色: " + m.group(0)))
         for m in RGBA_COLOR_RE.finditer(block):
-            line_no = text[:text.find(block)].count("\n") + block[:m.start()].count("\n") + 1
+            line_no = text[:block_start_offset].count("\n") + block[:m.start()].count("\n") + 1
             results.append(_r("ERROR", line_no, "token.hardcoded-color",
                               "硬编码颜色: " + m.group(0)))
+        # 5.6.3: 硬编码字号(CSS 注释已在剥离 var 定义时移除,文档说明豁免)
+        for m in HARDCODED_PX_FONT_RE.finditer(block):
+            line_no = text[:block_start_offset].count("\n") + block[:m.start()].count("\n") + 1
+            results.append(_r("ERROR", line_no, "token.hardcoded-font-size",
+                              "硬编码字号: " + m.group(0) + ",应引用 font-size token"))
+        # 5.6.4: 硬编码间距(静态代理,降级 WARN,见函数 docstring)
+        for m in HARDCODED_PX_SPACING_RE.finditer(block):
+            line_no = text[:block_start_offset].count("\n") + block[:m.start()].count("\n") + 1
+            results.append(_r("WARN", line_no, "token.hardcoded-spacing",
+                              "硬编码间距: " + m.group(0) + ",应引用 spacing token"))
 
     # 5.6.10: CSS 变量命名 kebab-case(无 camelCase / snake_case)
     css_var_re = re.compile(r"--([a-zA-Z][\w-]*)")
@@ -411,10 +739,61 @@ def check_5_6_tokens(text, fname):
     return results
 
 
+# --- 5.7 完整交互状态(静态代理) ---
+
+def check_5_7_states(text, parser, fname):
+    """5.7 完整交互状态可自动化检查(6 项/8 项)。
+
+    静态代理:页面存在交互元素(button/a/input)而 <style> 缺对应状态选择器时报告。
+    框架 CDN(Element Plus 等)自带状态样式,静态无法确认 → 状态存在性降级为
+    WARN;outline:none 且无 :focus 替代是确定性违规 → ERROR。
+    MANUAL:Loading/Empty/Error 业务状态、toast 反馈(需运行时交互验证)。
+    """
+    results = []
+    has_interactive = bool(parser.buttons or parser.links or parser.inputs)
+    style_text = "\n".join(STYLE_BLOCK_RE.findall(text))
+
+    # 5.7.9(确定性): outline: none 而无 :focus 替代(focus ring 移除)
+    outline_match = OUTLINE_NONE_RE.search(text)
+    if outline_match:
+        has_focus_alt = bool(
+            FOCUS_ALT_RE.search(text) and FOCUS_RING_OVERRIDE_RE.search(text)
+        )
+        line = text[:outline_match.start()].count("\n") + 1
+        if not has_focus_alt:
+            results.append(_r("ERROR", line, "state.focus-ring-removed",
+                              "outline: none 且 :focus 无 box-shadow/outline 替代(focus ring 不可见)"))
+
+    if not has_interactive or not style_text:
+        return results
+
+    # 5.7.1: 五态存在性(WARN — 可能由框架 CDN 提供)
+    if not STATE_HOVER_RE.search(style_text):
+        results.append(_r("WARN", 0, "state.no-hover",
+                          "存在交互元素但 <style> 无 :hover 态(若由框架 CDN 提供可忽略)"))
+    if not STATE_ACTIVE_RE.search(style_text):
+        results.append(_r("WARN", 0, "state.no-active",
+                          "存在交互元素但 <style> 无 :active 态(若由框架 CDN 提供可忽略)"))
+    if not STATE_FOCUS_RE.search(style_text):
+        results.append(_r("WARN", 0, "state.no-focus",
+                          "存在交互元素但 <style> 无 :focus/:focus-visible 态(若由框架 CDN 提供可忽略)"))
+    if not STATE_DISABLED_RE.search(style_text):
+        results.append(_r("WARN", 0, "state.no-disabled",
+                          "存在交互元素但 <style> 无 disabled 态(若由框架 CDN 提供可忽略)"))
+
+    # 5.7.6: Tactile Feedback(:active 内有 transform 按压反馈)
+    active_blocks = ACTIVE_BLOCK_RE.findall(style_text)
+    if active_blocks and not any("transform" in b for b in active_blocks):
+        results.append(_r("WARN", 0, "state.no-tactile",
+                          ":active 态无 transform 按压反馈(建议 scale(0.97))"))
+
+    return results
+
+
 # --- 5.8 LLM 截断信号 ---
 
 def check_5_8_llm_truncation(text, fname):
-    """5.8 LLM 截断信号可自动化检查(4 项/8 项)。"""
+    """5.8 LLM 截断信号可自动化检查(2 项/8 项)。"""
     results = []
     lines = text.splitlines()
 
@@ -439,13 +818,15 @@ def check_5_9_animation(text, fname):
     """5.9 动画动机可自动化检查(4 项/7 项)。"""
     results = []
 
-    # 5.9.3: 入场动画 duration ≤ 600ms
+    # 5.9.3: 入场动画 duration ≤ 400ms
+    # （与 validate-draw-md.py 检查11 的 400ms 硬约束对齐——原先这里放宽到 600ms，
+    #   400-600ms 区间实现违反规格时双门全绿，属双门槛漂移，已统一为 400ms）
     for m in DURATION_MS_RE.finditer(text):
         duration = int(m.group(1))
-        if duration > 600:
+        if duration > 400:
             line = text[:m.start()].count("\n") + 1
             results.append(_r("ERROR", line, "anim.duration",
-                              "动画 duration " + str(duration) + "ms > 600ms"))
+                              "动画 duration " + str(duration) + "ms > 400ms"))
 
     # 5.9.4: stagger 间隔 ≤ 120ms
     for m in STAGGER_MS_RE.finditer(text):
@@ -475,7 +856,7 @@ def check_5_9_animation(text, fname):
 # --- 5.10 排版细节 ---
 
 def check_5_10_typography(text, fname):
-    """5.10 排版细节可自动化检查(5 项/6 项,全部为 warning)。"""
+    """5.10 排版细节可自动化检查(3 项/6 项,全部为 warning)。"""
     results = []
     lines = text.splitlines()
 
@@ -625,7 +1006,9 @@ def run_all_checks(text, fname):
 
     for check_fn in [
         check_5_2_performance,
+        check_5_3_contrast,
         check_5_5_accessibility,
+        check_5_7_states,
         check_5_12_hero,
     ]:
         results.extend(check_fn(text, parser, fname))
@@ -703,7 +1086,7 @@ def main(argv):
         print("")
         print("=" * 40)
         print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
-        print("覆盖: ~60/102 项(可脚本化);其余 42 项需浏览器/视觉验证(MANUAL)")
+        print("覆盖: 49/113 项(实测可脚本化);其余 64 项需浏览器/视觉/运行时验证(MANUAL,见 5.13)")
 
     if error_count > 0:
         if fmt == "text":

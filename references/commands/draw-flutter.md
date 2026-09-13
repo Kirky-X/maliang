@@ -64,6 +64,34 @@ flowchart LR
 | popover | N/A(Flutter 无原生 Popover,用 `showDialog`/`Overlay` 组合) | [N/A](../framework/flutter/popover/widget.md) |
 | message | `ScaffoldMessenger.showSnackBar` | [widget.md](../framework/flutter/message/widget.md) + [properties.md](../framework/flutter/message/properties.md) |
 | drawer | `Drawer` / `Scaffold.drawer` | [widget.md](../framework/flutter/drawer/widget.md) + [properties.md](../framework/flutter/drawer/properties.md) |
+| checkbox | `Checkbox` / `CheckboxListTile`(tristate 三态) | [widget.md](../framework/flutter/checkbox/widget.md) + [properties.md](../framework/flutter/checkbox/properties.md) |
+| select | `DropdownButtonFormField` / `DropdownMenu`(选值;动作菜单见 menu) | [widget.md](../framework/flutter/select/widget.md) + [properties.md](../framework/flutter/select/properties.md) |
+| upload | 组合方案(`image_picker` / `file_picker` + ListView + LinearProgressIndicator) | [widget.md](../framework/flutter/upload/widget.md) + [properties.md](../framework/flutter/upload/properties.md) |
+| date-picker | `showDatePicker` / `showTimePicker` / `CalendarDatePicker`(录入;浏览见 calendar) | [widget.md](../framework/flutter/date-picker/widget.md) + [properties.md](../framework/flutter/date-picker/properties.md) |
+| notification | 组合方案(`ScaffoldMessenger.showMaterialBanner` 常驻横幅) | [widget.md](../framework/flutter/notification/widget.md) + [properties.md](../framework/flutter/notification/properties.md) |
+| slider | `Slider` / `RangeSlider` | [widget.md](../framework/flutter/slider/widget.md) + [properties.md](../framework/flutter/slider/properties.md) |
+| segmented | `SegmentedButton`(M3) | [widget.md](../framework/flutter/segmented/widget.md) + [properties.md](../framework/flutter/segmented/properties.md) |
+| rate | 组合方案(`Row` + `Icon` 星星 / `flutter_rating_bar` 包) | [widget.md](../framework/flutter/rate/widget.md) + [properties.md](../framework/flutter/rate/properties.md) |
+| popconfirm | 组合方案(`showDialog` 紧凑确认弹窗) | [widget.md](../framework/flutter/popconfirm/widget.md) + [properties.md](../framework/flutter/popconfirm/properties.md) |
+| fab | `FloatingActionButton` / `.extended` | [widget.md](../framework/flutter/fab/widget.md) + [properties.md](../framework/flutter/fab/properties.md) |
+| statistic | 组合方案(`Text` + `FontFeature.tabularFigures` / `Table`) | [widget.md](../framework/flutter/statistic/widget.md) + [properties.md](../framework/flutter/statistic/properties.md) |
+| card | `Card`(`Card.filled` / `Card.outlined`) | [widget.md](../framework/flutter/card/widget.md) + [properties.md](../framework/flutter/card/properties.md) |
+| table | `Table` / `DataTable`(`PaginatedDataTable` 分页) | [widget.md](../framework/flutter/table/widget.md) + [properties.md](../framework/flutter/table/properties.md) |
+| tag | `Chip` / `ActionChip` / `ChoiceChip` | [widget.md](../framework/flutter/tag/widget.md) + [properties.md](../framework/flutter/tag/properties.md) |
+| avatar | `CircleAvatar` / `Container` + `ClipPath` | [widget.md](../framework/flutter/avatar/widget.md) + [properties.md](../framework/flutter/avatar/properties.md) |
+| badge | `Badge`(M3) | [widget.md](../framework/flutter/badge/widget.md) + [properties.md](../framework/flutter/badge/properties.md) |
+| pagination | 组合方案(`Row` + `TextButton` / `PaginatedDataTable`) | [widget.md](../framework/flutter/pagination/widget.md) + [properties.md](../framework/flutter/pagination/properties.md) |
+| steps | `Stepper` + `Step` | [widget.md](../framework/flutter/steps/widget.md) + [properties.md](../framework/flutter/steps/properties.md) |
+| divider | `Divider` / `VerticalDivider` | [widget.md](../framework/flutter/divider/widget.md) + [properties.md](../framework/flutter/divider/properties.md) |
+| calendar | `CalendarDatePicker`(展示;录入见 date-picker) | [widget.md](../framework/flutter/calendar/widget.md) + [properties.md](../framework/flutter/calendar/properties.md) |
+| collapse | `ExpansionTile` / `ExpansionPanelList` | [widget.md](../framework/flutter/collapse/widget.md) + [properties.md](../framework/flutter/collapse/properties.md) |
+| skeleton | 组合方案(`Container` 占位 + Shimmer) | [widget.md](../framework/flutter/skeleton/widget.md) + [properties.md](../framework/flutter/skeleton/properties.md) |
+| breadcrumb | 组合方案(`Wrap` + `Text` + `Icon(chevron_right)`) | [widget.md](../framework/flutter/breadcrumb/widget.md) + [properties.md](../framework/flutter/breadcrumb/properties.md) |
+| timeline | 组合方案(`Column` + 圆点竖线 Row) | [widget.md](../framework/flutter/timeline/widget.md) + [properties.md](../framework/flutter/timeline/properties.md) |
+| tree | 组合方案(`ExpansionTile` + `ListView` / `treeview` 包) | [widget.md](../framework/flutter/tree/widget.md) + [properties.md](../framework/flutter/tree/properties.md) |
+| alert | `showDialog` + `AlertDialog` | [widget.md](../framework/flutter/alert/widget.md) + [properties.md](../framework/flutter/alert/properties.md) |
+| dropdown | `DropdownButton` / `PopupMenuButton`(菜单) | [widget.md](../framework/flutter/dropdown/widget.md) + [properties.md](../framework/flutter/dropdown/properties.md) |
+| loading | `CircularProgressIndicator` / `LinearProgressIndicator` | [widget.md](../framework/flutter/loading/widget.md) + [properties.md](../framework/flutter/loading/properties.md) |
 
 ### Token 映射规则
 

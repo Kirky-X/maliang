@@ -37,7 +37,7 @@ version: 1.2.0
 | 字体大小 | `{font-size-mini}`    | `{font-size-mini}`    |
 | 热区     | `{icon-touch-target}` | `{icon-touch-target}` |
 | aria-label | 每个 tab 用对应 label 字段值(如"首页"/"发现"),容器 aria-label="底部导航" | 同左 |
-| action   | tap=→目标页; state=切换选中态+全局 tab 索引; db=UPDATE user_settings SET last_tab=?; api=无; long-press=无 | tap=→目标页; state=切换选中态; db=无; api=无; long-press=无 |
+| action   | tap=跳转至 §3.1 target 声明的一级页面; state=切换选中态+全局 tab 索引; db=UPDATE user_settings SET last_tab=?; api=无; long-press=无 | tap=跳转至 §3.1 target 声明的一级页面; state=切换选中态; db=无; api=无; long-press=无 |
 
 tab 数 ≤ 5(米勒定律)。
 

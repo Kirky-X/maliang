@@ -149,7 +149,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 - **必须**用 `transform` + `opacity`,不用 `top` / `margin`
 - **必须**用 `ScrollTrigger.once: true` 或 `observer.unobserve`,避免反复触发
 - `translateY` 偏移 ≤ 30px(超过易引起眩晕,违反无障碍)
-- `stagger` 间隔 ≤ 120ms(超过显得拖沓)
+- `stagger` 间隔 ≤ 120ms(超过显得拖沓);单档基准 ≤ 80ms,120ms 为 MOTION_INTENSITY ≥ 8 的装饰档(见 [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 时长预算表分层口径)
 - `duration` ≤ 600ms
 - 同屏揭示元素 ≤ 8 个(超过性能下降)
 

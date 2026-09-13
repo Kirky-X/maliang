@@ -6,7 +6,7 @@
 
 [google/design.md](https://github.com/google-labs-code/design.md) 让 AI 编码代理对设计系统有持久、结构化的理解。一份 DESIGN.md 文件 = **YAML 前置 token**(颜色/字体/间距/组件,机器可读)+ **Markdown 正文**(设计理由与边界用法,人类可读)。
 
-**CLI**: `npx @google/design.md`(Windows 用 `npx designmd`)。全局安装:`npm install -g @google/design.md`
+**CLI**: `npx @google/design.md@0.4.0`(Windows 用 `npx designmd`)。全局安装:`npm install -g @google/design.md`
 
 ---
 
@@ -32,9 +32,43 @@
 
 ## Phase 0: Brief Inference(推理设计方向)
 
-> 进入 design-md 流程的**第一件事**。从用户的简短 brief(产品描述 / 截图 / 关键词)推理出设计方向,作为 Phase 1 写 prose 的输入。完整推理规则见 [`meta/product-reasoning.md`](../meta/product-reasoning.md)。
+> 进入 design-md 流程的**第一件事**。Phase 0 分三步:**0a 领域探索**(进入产品的世界,查表前必经)→ **0b 类型查表校准**(类型推档)→ **0c Suggest+Ask 提案块**(方向确认后才动手)。从用户的简短 brief(产品描述 / 截图 / 关键词)推理出设计方向,作为 Phase 1 写 prose 的输入。完整推理规则见 [`meta/product-reasoning.md`](../meta/product-reasoning.md)。
 
-### 步骤
+### 0a · 领域探索(四产出)
+
+动手查表之前,先进入"产品的世界",产出四件套:
+
+| 产出              | 要求                                                   | 判定                            |
+| ----------------- | ------------------------------------------------------ | ------------------------------- |
+| **Domain** 领域词汇 | 该领域的概念 / 隐喻 / 词汇清单                        | ≥ 5 个                          |
+| **Color world** 色彩世界 | 该世界物理空间里天然存在的颜色(材质 / 光线 / 环境) | ≥ 5 个                          |
+| **Signature** 签名元素 | 只可能属于这个产品的唯一元素                      | 说不出 → 继续探索,禁止进入 0b   |
+| **Defaults** 品类默认 | 点名 3 个该品类的惯性默认,并逐条声明拒绝           | 恰好 3 个,逐条拒绝             |
+
+**自检**:把产品名从四产出中删掉,还能认出它是做什么的吗?认不出 = 探索还停留在品类通用层,回 0a 继续。
+
+**用户三产出(四产出之后、0b 查表之前的小步)**:回答"谁在用"——
+
+| 产出                 | 要求                                                     | 判定                   |
+| -------------------- | -------------------------------------------------------- | ---------------------- |
+| **Persona** 用户画像 | 1-3 个核心用户:目标 / 痛点 / 能力边界(各 ≤ 5 行)      | 有真实细节,非品类套话 |
+| **Journey** 用户旅程 | 主任务旅程 3-6 步:步骤 / 触点 / 情绪断点               | 至少标出 1 个情绪断点 |
+| **JTBD** 核心任务    | 1-2 句"当…时,我要…,以便…"                            | 每句能指导一处设计取舍 |
+
+**降级声明**:没有用户研究输入时,显式写"未做用户研究,按 surface-modes 模式假设"(模式判定见 [`surface-modes.md`](../meta/surface-modes.md))并标低置信;禁止编造用户细节伪装成研究结论。三产出写入 DESIGN.md frontmatter 的 `users:` 块(字段与最小示例见 [`spec-schema.md`](../meta/spec-schema.md))。
+
+**竞品拆解(可选小步)**:手头有竞品截图 / URL 时,选 2-3 个做速记对照表,结论写入 DESIGN.md 附录:
+
+| 维度 | 记什么                           |
+| ---- | -------------------------------- |
+| 首屏 | 首屏传递什么、主操作是什么       |
+| 导航 | 层级深度与结构(顶部 tab / 侧栏) |
+| 密度 | 疏密取向与留白策略               |
+| 色彩 | 主色相与强调色用法               |
+
+**禁止照抄**:拆解回答"它为什么好、哪些可搬";可搬项仍须过 [`templates/variation-engine.md`](../templates/variation-engine.md) 的反品类默认校验,与 Signature 冲突的舍弃。
+
+### 0b · 类型查表校准
 
 1. **提取 brief 关键词**:从用户输入识别产品类型 / 用户群 / 业务目标 / 平台 / 情绪关键词
 2. **匹配产品类型**:对照 [`product-reasoning.md`](../meta/product-reasoning.md) 第 2 节 12 个示例,命中则采用其推理结果;未命中查询 [`color-palettes.md`](../dimensions/color-palettes.md) 192 套桶
@@ -51,12 +85,31 @@
   Dials: VARIANCE=x / MOTION=x / DENSITY=x
   参考系统:[1-2 个]
 
-方向确认无误?确认后进入 Phase 1 生成 DESIGN.md。
+校准结果确认无误?确认后进入 0c 提案块。
 ```
+
+### 0c · Suggest+Ask 提案块
+
+将 0a 四产出与 0b 查表结果合并为一个提案块,请用户确认设计方向:
+
+```
+🧭 设计方向提案:
+  Domain:[领域词汇清单]
+  Color world:[该世界的天然色 → 映射到 primary/neutral/tertiary]
+  Signature:[唯一签名元素]
+  Rejecting:[点名拒绝的 3 个品类惯性默认]
+  Direction:[一句话方向 + Dials + 参考系统]
+```
+
+**🔴 CHECKPOINT · 方向提案确认**:提案块必须真正暂停,等待用户文字回复后才进入 Phase 1;用户可只改其中一项(如只换 Signature),其余项视为确认。
 
 ### Brief 不充分时 / 与 Phase 1 衔接
 
 若 brief 缺关键词(如只说"做个 App"),不要硬推理:进入 Phase 1B 访谈模式补全,必须人工确认。推理结果写入 DESIGN.md frontmatter 的 `product:` 块(见 [`product-reasoning.md`](../meta/product-reasoning.md) 第 3 节),Phase 1 写 prose 时引用作为"为什么"的依据。
+
+### 信息架构前置(草案)
+
+进入页面设计(`draw-md`)之前,先落一份 IA 草案:**页面清单**(每个主任务各需要哪几页,可对照 [`default-pages/index.md`](../default-pages/index.md) 增删)+ **主跳转图**(哪页 → 哪页、带什么状态分支,一张 mermaid 即可)。标注:**`ui-graph generate` 的关系图以此草案为准**——事后从已产出页面反向派生变事前约定,逐页产出时页面边界与跳转不再靠临场。衔接:`ui-graph` 读该草案作期望基线,`check-nav` 校验实现页是否补齐 flow(见 [`ui-graph.md`](./ui-graph.md))。
 
 ---
 
@@ -183,6 +236,13 @@ components:
 
 ## Phase 2: Apply DESIGN.md
 
+### Step 0 — 写入前防覆盖检查
+
+任何会写入 / 覆写 DESIGN.md 的动作(创建、更新、合并)执行前,先检查项目根目录是否已有 DESIGN.md:
+
+- **不存在** → 正常写入;
+- **已存在** → 先用 `npx @google/design.md@0.4.0 diff DESIGN.old.md DESIGN.new.md`(或逐节 diff)汇报既有文件与新内容的差异——将新增 / 修改 / 删除哪些 token 与 prose 段落,等待用户显式确认后才写入。**禁止静默覆盖**;既有 decisions 表条目默认原样保留,除非用户逐条同意删除。
+
 ### Step 1 — Parse and Internalize
 
 Read the DESIGN.md completely. Extract all token values into a lookup table. Then read the prose — it contains usage guardrails that tokens alone cannot express (e.g., "use tertiary for at most one CTA per screen", "labels are always uppercase").
@@ -203,8 +263,8 @@ Read the DESIGN.md completely. Extract all token values into a lookup table. The
 
 | 栈          | 推荐方式                       | 命令                                                                         |
 | ----------- | ------------------------------ | ---------------------------------------------------------------------------- |
-| Tailwind v4 | CLI 导出 CSS `@theme` 块       | `npx @google/design.md export --format css-tailwind DESIGN.md > theme.css`   |
-| Tailwind v3 | CLI 导出 JSON config           | `npx @google/design.md export --format json-tailwind DESIGN.md > theme.json` |
+| Tailwind v4 | CLI 导出 CSS `@theme` 块       | `npx @google/design.md@0.4.0 export --format css-tailwind DESIGN.md > theme.css`   |
+| Tailwind v3 | CLI 导出 JSON config           | `npx @google/design.md@0.4.0 export --format json-tailwind DESIGN.md > theme.json` |
 | 纯 CSS/SCSS | 手动生成 `:root { --color-* }` | 见下方 CSS 示例                                                              |
 | 原生平台    | 手动转换(见 Edge Cases 节)     | —                                                                            |
 
@@ -244,8 +304,8 @@ Actively check generated code against the **Do's and Don'ts** section. Common ex
 ### Lint a DESIGN.md
 
 ```bash
-npx @google/design.md lint DESIGN.md
-npx @google/design.md lint --format json DESIGN.md   # machine-readable output
+npx @google/design.md@0.4.0 lint DESIGN.md
+npx @google/design.md@0.4.0 lint --format json DESIGN.md   # machine-readable output
 ```
 
 Nine rules, each at a fixed severity (`error` / `warning` / `info`). **完整 9 条规则名、severity、触发场景、JSON output contract 全部见 [`spec-schema.md`](../meta/spec-schema.md) → Linter Rules**(权威镜像,不在此重复)。`contrast-ratio` 自动检查 WCAG AA(4.5:1);exit code 1 当存在 `error` 级 finding;`warning`/`info` 为建议性。Fix all `error` first, then triage `warning` by intent.
@@ -254,14 +314,26 @@ Nine rules, each at a fixed severity (`error` / `warning` / `info`). **完整 9 
 
 ```bash
 # Diff 两版本(token-level changes, regressions 时 exit 1)
-npx @google/design.md diff DESIGN.old.md DESIGN.new.md
+npx @google/design.md@0.4.0 diff DESIGN.old.md DESIGN.new.md
 # Export W3C DTCG (.json) for Figma/Style Dictionary(Tailwind v3/v4 见 Phase 2 Step 2)
-npx @google/design.md export --format dtcg DESIGN.md > tokens.json
+npx @google/design.md@0.4.0 export --format dtcg DESIGN.md > tokens.json
 # Inject spec/rule table into agent prompt(无 prior context 时用)
-npx @google/design.md spec --rules-only --format json
+npx @google/design.md@0.4.0 spec --rules-only --format json
 ```
 
 `spec` 命令的核心用途:在 agent 无 prior context 时**把 spec/rule table 注入其 prompt**,使其遵循 canonical sections and rules 而非猜测;这不是简单的"打印 spec",是让 agent 拿到与 linter 同一份规则表的桥梁。
+
+### 决策回写(交付末尾固定动作)
+
+每次 design-md 交付的末尾,固定附一格"决策账本",汇总本轮新出现的设计决定(为什么选这个方向 / 为什么拒绝某个默认 / 为什么定这个值):
+
+```
+📝 本轮新决策 → 提议写入 DESIGN.md decisions 表:
+  | 决策 | 理由 | 日期 | 范围 |
+  | ...  | ...  | ...  | ...  |
+```
+
+逐条列出后请用户确认:同意的追加进 DESIGN.md 的 decisions 表(决策 | 理由 | 日期 | 范围,与 [`spec-schema.md`](../meta/spec-schema.md) decisions 四字段 {decision, rationale, date, scope} 一致,scope 省略时默认全站),供后续会话读取("已决定,不是缺陷");拒绝的条目丢弃,不得静默写入。
 
 ---
 

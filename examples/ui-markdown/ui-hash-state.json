@@ -1,0 +1,31 @@
+{
+  "computed_at": "2026-09-05T02:33:48+08:00",
+  "target_dir": "/home/kirky/projects/skills/maliang/examples/ui-markdown",
+  "files": [
+    {
+      "path": "organisms/dock.md",
+      "sha256": "027eca9f2af7b9f94218535d30a95117bb6b3bc55b28e8e346ed2c828ce372e2",
+      "size": 4938
+    },
+    {
+      "path": "organisms/nav-bar.md",
+      "sha256": "0d24dbb211a2b63a36d86008eaf85bbceb93ecd7db5778e8c70a1608578dc94d",
+      "size": 3011
+    },
+    {
+      "path": "ui/home.md",
+      "sha256": "1eef5f67fdc6ff9f539cb9b04785164de7aab7f39a9c1226b4f81003c6eb6335",
+      "size": 5874
+    },
+    {
+      "path": "ui/mine.md",
+      "sha256": "162570032261f19ee673c2b4860387be7b418bf303038f86c58c5e2e92499f00",
+      "size": 4866
+    },
+    {
+      "path": "ui/setting/about.md",
+      "sha256": "d5c93078163983424b60b4a6101da777f76f0b87692549ade6fd58cc4d12abe4",
+      "size": 5511
+    }
+  ]
+}

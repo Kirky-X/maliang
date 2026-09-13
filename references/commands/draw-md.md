@@ -54,12 +54,29 @@ description: 首页 — 商品瀑布流 + 金刚区入口 # 一句话页面用�
 background: "{surface-base}" # 页面背景,MUST 引用 token.md 的 token(非硬编码色值)
 updated: 2026-06-30 # 更新时间(ISO 日期)
 version: 1.0.0 # 页面版本号
+mode: persuade # 可选:页面模式(persuade|operate|read|experience),判法见 meta/surface-modes.md
+pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(命名对齐 references/vocabulary/ 18 篇;框架代码由 draw-* 阶段映射)
 ---
 ```
 
 - `background` 等任何颜色字段 **MUST 是 token 引用**(如 `{surface-base}`),**禁止硬编码字面量**(如 `#FFFFFF` / `rgba(0,0,0,0.8)`)。这是 draw-md 的硬约束(见验证点 5.2)。
 - `updated` 用 ISO 日期(`YYYY-MM-DD`)。
 - `version` 语义化版本。
+- `mode` 为可选字段:标注页面模式(`persuade|operate|read|experience`),判法见 [`surface-modes.md`](../meta/surface-modes.md);省略时按页面性质自行判定,不阻断验证。
+- `pattern` 为可选字段(数组):引用 [`references/vocabulary/`](../vocabulary/) 各篇命名表中登记的模式 slug(如 charts.md 的 `chart-line`、tables.md 的 `table-sortable`、forms.md 的 `form-wizard`),**命名对齐 vocabulary 18 篇,框架代码由 draw-* 阶段映射**,详见下方「模式引用(`pattern:` 字段)」。
+
+### 方向契约块(frontmatter 之后、首个布局章节之前,每页 MUST 含)
+
+≤ 150 词的**方向契约块**——建造前承诺、建成后逐条审计的反向锚:
+
+| 字段                     | 内容                                  | 一句话判据                                   |
+| ------------------------ | ------------------------------------- | -------------------------------------------- |
+| `thesis`                 | 一句话论点:这一页要证明什么          | 删掉产品名后仍指向本产品才算数               |
+| `own-world`              | 本页占据的世界(物理空间 / 材质 / 光线) | 能推出色彩与质感,而非品类通用词             |
+| `first-viewport`         | 首屏构图承诺                          | 一小时后访客还能描述什么?答不上 = 未 committed |
+| `signature-interaction`  | 招牌交互                              | 指不出具体组件与触发方式 = 还没有            |
+
+> **检查点:读起来像情绪 = 方向还没定**。"温暖而有质感"是情绪,不是方向;四个字段都落到具体决定(哪个组件 / 哪种材质 / 哪个动作),契约才算成立。契约兑现核对与 preview 现有能力对齐:signature-interaction 由 preview 既有 Swap / Signature 自检覆盖,thesis / first-viewport 归入 Brand Fit 人工复核(见 [`preview.md`](./preview.md) 决定性自检与 Brand Fit 维度)。
 
 ### 正文:按视觉顺序的布局章节
 
@@ -73,13 +90,26 @@ version: 1.0.0 # 页面版本号
 
 > 布局类型选用与嵌套规则见 [`layout.md`](../dimensions/layout.md)。
 
+### 组件意图头(新增组件的参数表节前 MUST 附)
+
+每个**新增**组件的参数表之前,先附 4 行意图头,回答"为什么是这些值";**复用既有组件**(organisms / 前页已定义)可引用 DESIGN.md 或已有定义代替,不必重写:
+
+```
+意图:[这个组件为谁做什么,该什么感觉]
+焦点:[本屏焦点是否在此;若不是,它如何刻意降级]
+深度策略:[borders-only / subtle-shadows / layered / tint-shift 四选一,见 dimensions/elevation.md]
+密度:[与页面 VISUAL_DENSITY 档位的关系;密集区如何控制]
+```
+
+说不出意图头的 WHY,说明该组件还在默认值里,停下想清楚再写参数表。
+
 ### 组件参数表(每个组件 MUST 含)
 
 每个组件用一张表描述可实现参数:
 
 | 参数        | 值                          | 说明       |
 | ----------- | --------------------------- | ---------- |
-| 组件类型    | `button` + `icon`(组合)     | 引用 [framework/index.md](../framework/index.md) 的 45 类组件 slug,组合用 ` + ` 连接 |
+| 组件类型    | `button` + `icon`(组合)     | 引用 [framework/index.md](../framework/index.md) 的 56 类组件 slug,组合用 ` + ` 连接 |
 | 宽度 width  | 375px(或 `match-parent`)    | 组件宽度   |
 | 高度 height | 64px                        | 组件高度   |
 | 字体大小    | `{font-size-md}`            | 引用 token |
@@ -88,16 +118,18 @@ version: 1.0.0 # 页面版本号
 | 字体颜色    | `{text-primary}`            | 引用 token |
 | padding     | `{spacing-md} {spacing-lg}` | 引用 token |
 | action      | `tap=→目标页; state=按下高亮; db=无; api=无; long-press=无` | 交互行为五元组,见下 |
+| intent      | 让"提交"在首屏无需滚动可达,故固定 44px 高 + primary 底 | 决定理由(核心组件 SHOULD,见下) |
 
 - 颜色、字号、间距、圆角 **MUST 引用 `token.md` 的 token**,不在表里写裸值。
 - 尺寸(宽高)可写具体像素(实现层需要)。
+- **intent 字段**:每页 ≤ 3 个核心组件(hero / 主操作 / 关键转化点)SHOULD 声明,一句话回答"**这些值为什么成立**"——它承载 DESIGN.md 的意图落到参数表的最后一环,防止"从 prose 到硬值"的传递中意图丢失。写决定,不写描述:❌"一个主要按钮" ✅"首屏唯一 CTA,故 primary 底 + 44px 触控区 + 固定高度"。非核心组件可省略。
 - 响应式:如有多断点,在表后补"响应式"说明(375 / 768 / 1024 各自差异)。
-- **组件类型**字段 MUST 引用 [`framework/index.md`](../framework/index.md) 的 45 类组件 slug(如 `button`/`input`/`list`/`navigation`),组合组件用 ` + ` 连接(如 `input + icon`)。单列参数表将该字段作为首行;双列对比表(如 dock 选中/未选中态对比)在表前用 `> **组件类型**:...` 引用块标注。
+- **组件类型**字段 MUST 引用 [`framework/index.md`](../framework/index.md) 的 56 类组件 slug(如 `button`/`input`/`list`/`navigation`),组合组件用 ` + ` 连接(如 `input + icon`)。单列参数表将该字段作为首行;双列对比表(如 dock 选中/未选中态对比)在表前用 `> **组件类型**:...` 引用块标注。
 - **action 字段**:描述组件交互行为,格式 `event=behavior; event=behavior; ...`。常用事件五元组:`tap`(点击)/`state`(状态变化)/`db`(数据库操作)/`api`(接口调用)/`long-press`(长按);输入类组件可扩展 `submit`/`focus`/`blur`/`input` 事件(如搜索框 action 含 `submit=→ui/search.md?q={input-value}`);容器组件(如 `navigation`)action 可全为"无",交互在子组件。action 字段内的 `{xxx}` 占位符为 URL/JS 模板参数(如 `{input-value}`),NOT token 引用,token 悬空检查 SHALL 跳过 action 行(见 [`validate-draw-md.py`](../../scripts/validate-draw-md.py) 检查 1)。
 
 ### 组件类型标注规范
 
-每个组件参数表 MUST 声明"组件类型"字段,引用 [`framework/index.md`](../framework/index.md) 的 45 类组件 slug,实现 draw-md 产出与 framework 组件索引的端到端对齐:
+每个组件参数表 MUST 声明"组件类型"字段,引用 [`framework/index.md`](../framework/index.md) 的 56 类组件 slug,实现 draw-md 产出与 framework 组件索引的端到端对齐:
 
 - **单组件**:直接写 slug,如 `button`、`input`、`text`、`navigation`
 - **组合组件**:用 ` + ` 连接,如 `input + icon`(搜索框)、`grid + button + icon`(金刚区)、`list + card`(内容流)
@@ -107,7 +139,31 @@ version: 1.0.0 # 页面版本号
 - **跨页面复用**:引用 `organisms/` 的章节,在引用行括号内注明组件类型,如"引用 organisms/nav-bar.md(组件类型:`navigation`)"
 - **frontmatter components 字段**:数组形式,按页面出现顺序列出所有组件 slug(去重,含 organisms 引用的),供下游 draw-* 子命令快速识别本页组件清单
 
-**与 framework/index.md 的映射约束**:组件类型字段值 SHALL 与 framework/index.md 的 45 类组件 slug 完全对齐,不得自创 slug。若需新组件类型,先按 framework/index.md「新增组件流程」补充,再在本字段引用。
+**与 framework/index.md 的映射约束**:组件类型字段值 SHALL 与 framework/index.md 的 56 类组件 slug 完全对齐,不得自创 slug。若需新组件类型,先按 framework/index.md「新增组件流程」补充,再在本字段引用。
+
+### 模式引用(`pattern:` 字段)
+
+`组件类型` 字段只允许 framework 组件类 slug;而 [`references/vocabulary/`](../vocabulary/) 的 18 篇术语库(含 charts / search 等**区块级**模式,如 `chart-line`、`search-bar`)不是组件类,不进 `组件类型` 字段。它们经 frontmatter 的 `pattern:` 字段合法表达:
+
+- `pattern: <vocabulary-slug 列表>` — 直接引用 vocabulary 各篇命名表登记的 slug(如 charts.md 的 `chart-line`、tables.md 的 `table-sortable`、forms.md 的 `form-wizard`),**命名对齐 vocabulary 18 篇,框架代码由 draw-* 阶段映射**:draw-harmony / draw-flutter / draw-element 查 framework 对应类(如 `chart-line` → 图表依赖或 canvas 组合、`table-sortable` → `el-table` 排序列)落地实现。
+- **自创 slug 禁令不变**:`组件类型` 字段引用的必须是 framework/index.md 组件类;vocabulary 模式名只出现在 `pattern:` 字段,两套命名各司其职(组件抽象 vs 区块抽象),不得互相混写。
+- pattern 声明的模式仍需按 vocabulary 篇章的"在 draw-md 中的写法"给出参数表/参数说明,pattern 字段是该写法的契约化登记入口。
+
+示例(dashboard 页,frontmatter 节选):
+
+```yaml
+---
+name: dashboard
+description: 运营看板 — KPI 概览 + 趋势图 + 明细表
+background: "{surface-base}"
+updated: 2026-09-08
+version: 1.0.0
+mode: operate
+pattern: [chart-line, table-sortable]
+---
+```
+
+该页正文中,图表区块的组件类型写作 `text + statistic`(数值区)并附 `pattern` 已在 frontmatter 登记的说明;下游 draw-element 读到 `chart-line` 后按 vocabulary/charts.md 的框架建议选择图表实现,而非把 `chart-line` 当组件 slug 输出。
 
 ---
 
@@ -154,11 +210,14 @@ version: 1.0.0 # 页面版本号
 ## 约束汇总(硬性)
 
 - [ ] frontmatter 含 name/description/background/updated/version,background 引用 token
+- [ ] 每页 frontmatter 之后 MUST 含方向契约块(thesis / own-world / first-viewport / signature-interaction,≤ 150 词)
+- [ ] 每个新增组件参数表前 MUST 附 4 行组件意图头(意图/焦点/深度策略/密度);复用既有组件可引用 DESIGN.md 代替
 - [ ] frontmatter 含 components 字段(数组),列出本页所有章节用到的组件 slug(含 organisms 引用的,去重)
 - [ ] 正文第一章 = 顶部导航;一级页面最后一章 = 底部 dock,二级页面无 dock(末章为主体最后一区)
 - [ ] 每个组件有参数表(宽/高/字号/圆角/背景/字色/padding/action)
-- [ ] 每个组件参数表首行声明"组件类型"字段,引用 framework/index.md 的 45 类组件 slug,组合组件用 ` + ` 连接
+- [ ] 每个组件参数表首行声明"组件类型"字段,引用 framework/index.md 的 56 类组件 slug,组合组件用 ` + ` 连接
 - [ ] 每个组件参数表 MUST 含 action 字段,格式 `event=behavior; ...`(五元组 tap/state/db/api/long-press;输入类可扩展 submit/focus/blur/input;容器可全为"无")
+- [ ] 每页 ≤ 3 个核心组件(hero/主操作/关键转化点)参数表 SHOULD 含 intent 字段(一句话决定理由;非硬性,_validator_ 不检查)
 - [ ] 所有颜色值引用产物层 `examples/ui-markdown/token.md`,**无硬编码色值字面量**
 - [ ] 二级页面用子目录嵌套(如 `setting/about.md`)
 - [ ] 跨页面复用组件放 `organisms/`,页面引用而非重复定义
@@ -191,6 +250,6 @@ version: 1.0.0 # 页面版本号
 
 - **禁止在组件参数表写裸色值**(如 `#FFFFFF`、`rgba(0,0,0,0.8)`):色值脱离 token 体系会导致多端不一致与主题切换失效。MUST 引用 `examples/ui-markdown/token.md` 的 token(如 `{surface-card}`)。
 - **禁止引用规范层 `references/meta/token.md`**:它只定义命名规则、不含色值,引用它会让下游 draw-* 无法解析出具体值。MUST 引用产物层 `examples/ui-markdown/token.md`(RGBA + HEX 硬值)。
-- **禁止组件类型字段自创 slug**(如 `search-bar`、`tab-item`):脱离 framework 索引会导致下游 draw-* 映射失败。MUST 引用 [`framework/index.md`](../framework/index.md) 的 45 类组件 slug,组合组件用 ` + ` 连接(如 `input + icon`)。
+- **禁止组件类型字段自创 slug**(如 `search-bar`、`tab-item`):脱离 framework 索引会导致下游 draw-* 映射失败。MUST 引用 [`framework/index.md`](../framework/index.md) 的 56 类组件 slug,组合组件用 ` + ` 连接(如 `input + icon`)。
 - **禁止跨页面复用组件在多页重复定义**:重复定义会造成维护漂移与 token 不一致。MUST 放入 `organisms/` 单独成文,各页面通过名称引用。
 - **禁止二级页面文件直接放 `ui/` 根目录**(如 `ui/about.md`):扁平放置会让页面层级丢失、无法表达导航嵌套。MUST 用子目录(如 `ui/setting/about.md`)。

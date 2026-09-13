@@ -49,7 +49,7 @@ version: 1.2.0
 | 字体颜色 | `{color-text-secondary}`    |
 | 间距     | `{spacing-md}`        |
 | aria-label | 每个 item 用对应 label(如"信息流"/"排行榜"),容器 aria-label="金刚区入口" |
-| action   | tap=→对应目标页; state=按下高亮; db=无; api=无; long-press=无 |
+| action   | tap=跳转至 item.target 声明页面(见 §3.2); state=按下高亮; db=无; api=无; long-press=无 |
 
 ### 3.1 item 字段结构
 
@@ -86,7 +86,7 @@ version: 1.2.0
 | 卡片圆角 | `{radius-rounded}` |
 | 卡片间距 | `{spacing-md}`     |
 | padding  | `{spacing-md}`     |
-| action   | tap=→卡片详情页; state=按下底色变浅; db=无; api=GET /api/feed?cursor=?; long-press=弹出菜单(分享/收藏/举报) |
+| action   | tap=跳转至 item.target 声明详情页(见 §4.1); state=按下底色变浅; db=无; api=GET /api/feed?cursor=?; long-press=弹出菜单(分享/收藏/举报) |
 
 ### 4.1 卡片 item 字段结构
 
@@ -115,4 +115,4 @@ version: 1.2.0
 ## 6. 底部 dock
 
 引用 [`organisms/dock.md`](../organisms/dock.md)(组件类型:`navigation`):首页(选中) / 发现 / 消息 / 我的。
-- dock action:详见 organisms/dock.md 第 2 节,tap=→对应一级页面; state=切换选中态
+- dock action:tap=切换至 dock.md §3.1 target 声明的一级页面; state=切换选中态+全局 tab 索引
