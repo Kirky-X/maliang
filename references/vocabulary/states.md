@@ -20,6 +20,22 @@
 | `state-offline` | 持久但不打扰的离线指示/横幅,说明仍可用范围 | 断网或离线操作(Material "offline by choice";ServiceNow 连接异常模板) |
 | `state-partial-load` | 分批渲染 + 失败区块"重试"入口 | 分批渐进加载部分失败(Carbon progressive loading,可配 Load more) |
 
+## 交互态扩展(选中/多选/反色)
+
+> 页面级状态之外的"整页切态"与自适应状态命名。来源:UI 交互教学视频转录提取(2026-09,西瓜同学)。
+
+| 模式名 | 视觉特征 | 适用场景 |
+| --- | --- | --- |
+| `state-selection-mode` | 长按进入多选:长按一张卡整页切态——卡片缩一档让出勾选圈,标题变已选数,底部升起操作条 | 相册/文件/邮件批量操作 |
+| `state-focus-spotlight` | 选中聚焦其余后退:选中项放大提亮,同层未选中降饱和+缩小+轻微模糊 | 媒体选择、方案对比(MOTION ≥ 6) |
+| `state-adaptive-invert` | 悬浮元素亮度自适应反色:悬浮按钮/文字按背后区域明暗自动反色,滚动中连续过渡 | 悬浮 FAB/播放按钮压在内容图上 |
+| `state-skeleton-equal` | 骨架屏等高落位:占位块与真实内容同尺寸,骨架高度=内容高度,防止到达时跳动 | 首屏列表/卡片加载(`state-skeleton` 的强制细则) |
+
+- `state-selection-mode` 进入/退出必须动画过渡(卡片位移+勾选圈淡入),底部操作条入场 ≤ 300ms;系统返回键先退多选态再退页面
+- `state-focus-spotlight` 未选中项降饱和 60% + 模糊 2px + 缩小 0.96 为上限,过强会像禁用态(与 [`states.md`](#) 禁用语义区分)
+- `state-adaptive-invert` 以元素背后采样区域亮度切换 `color: white/black`,过渡 200ms 连续插值,禁止硬切
+- 骨架屏高度必须用与真实内容相同的布局结构渲染(同一组件两态),禁止固定假高度
+
 ## 使用规则
 
 - principles 第 14 定律:Loading / Empty / Error / Tactile 四类状态必须齐备,缺任一类即半成品;本表命名前三类,Tactile Feedback 见 [`micro-interactions.md`](micro-interactions.md)

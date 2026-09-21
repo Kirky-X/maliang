@@ -18,8 +18,27 @@
 | `nav-stepper`         | 步进式导航(1/2/3)                                | 流程页(结账、注册、向导)            |
 | `nav-floating-island` | 浮岛导航:悬浮胶囊 + 汉堡→X 形变 + 蒙版错峰揭示   | 品牌 / 创意站;移动端降级为全宽 dock(来源:taste-skill soft-skill §5.A) |
 | `nav-fab`             | 悬浮操作按钮:右下角单 FAB(一屏仅一个主操作),滚动下滑出现 / 上滑收起联动,避开底部导航安全区 | 移动 App 新建/发布/写等一级操作入口                |
+| `nav-tab-spring-underline` | 顶部标签页跟手下划线:下划线随拖动半路跟手,松手落定,选中标签自动滚动居中 | 顶部多 tab(资讯、订单分类)                     |
+| `nav-tab-liquid`      | 液态 tab 指示器:选中背景移动中先拉长再收缩最后回弹,像液体流过去 | 分段切换(MOTION ≥ 7)                          |
+| `nav-large-title-collapse` | 大标题折叠:缩放/横移/上移/底色全挂同一个滚动进度,大标题随滚动收进导航栏 | iOS 式列表页、个人主页                       |
+| `nav-bottom-action-bar` | 吸底操作栏:关键信息+主按钮常驻底部,避开手势安全区(environ safe-area) | 详情页购买栏、多选操作栏                      |
 
-> 来源注:`nav-fab` 为**审计补全**(2026-09-08 组件覆盖审计):对照 Material 3 FAB(含 Extended FAB)、Ant Design FloatButton、Flutter FloatingActionButton 组件清单。
+## 侧边栏骨架六式(后台/桌面端)
+
+> SaaS/后台侧边栏的组合骨架命名。来源:UI 交互教学视频转录提取(2026-09,西瓜同学)。
+
+| 模式名 | 视觉特征 | 适用场景 |
+| --- | --- | --- |
+| `nav-sidebar-float` | 悬浮导视:脱离屏幕边缘浮起,大圆角+低透明度柔和投影 | 品牌化后台、设计工具 |
+| `nav-sidebar-dark-heavy` | 深色重底:整页浅色、深色集中给侧栏,当前项才亮 | 传统企业后台 |
+| `nav-sidebar-glass` | 磨砂玻璃侧栏:半透明白+背景模糊+1px 亮边(配 [`../dimensions/glass-effect.md`](../dimensions/glass-effect.md)) | 现代 SaaS(与 `nav-sidebar-float` 常组合) |
+| `nav-sidebar-rail-double` | 双层图标轨:72px 窄图标轨切模块+240px 二级面板 | IDE、深度后台(模块×页面两维) |
+| `nav-sidebar-collapse-hover` | 悬停折叠展开:宽度 72→240 平滑过渡,文字延时 80ms 淡入 | 空间紧张的后台(与 rail 组合) |
+| `nav-sidebar-grouped` | 分组留白+底部用户区:分组间距、组名小灰字、底部固定头像与用量,中间列表独立滚动 | 默认推荐,所有多分组后台 |
+
+> 侧边栏通用规则:中间导航列表独立滚动,顶部(产品标识)与底部(用户/用量)固定;当前项用填充底色而非仅变色。
+
+> 来源注:`nav-tab-spring-underline` 至 `nav-bottom-action-bar` 及侧边栏六式为**转录补全**(2026-09-22,UI 交互教学视频转录提取)。
 
 ## 使用规则
 
