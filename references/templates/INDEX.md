@@ -29,6 +29,7 @@
 | [gradient-on-dark](page/gradient-on-dark.md) | 暗底流光型 | 近黑底 + 一条三色渐变只喂标题 + 5% 噪点防 banding | 5-8 / 2-5 / 1-4 | style | v05 |
 | [depth-corridor](page/depth-corridor.md) | 纵深长廊型 | 作品排成一条路，透视 1500 + 滚动冲量，越远越暗 | 5-8 / 5-8 / 1-4 | style | v05 |
 | [dashboard-styles](page/dashboard-styles.md) | Dashboard 风格集 | 一文件四风格（极简商务/清爽轻量/暗黑科技/高饱和撞色）+ 配色占比公式与三问自查 | 2-6 / 1-3 / 7-10 | production | v14/v08 |
+| [ai-console](page/ai-console.md) | AI 工作台 / Agent 控制台 | 三时态同屏 + 运行流取代图表 + 九种运行状态 + 流内审批卡 + 成本一等公民（叠加 Operate 模式） | 2-4 / 2-4 / 6-9 | production | finesse 吸收 2026-09 |
 | [mobile-layouts](page/mobile-layouts.md) | 移动端高级布局五式 | 图片主导/卡片节奏/大字留白/沉浸氛围/极简编辑，五套移动端设计语言 | 3-7 / 1-3 / 2-6 | production | v21 |
 | [scroll-band-gallery](page/scroll-band-gallery.md) | 滚动图带六式 | 图墙收拢成带/扇/筒/环/扭/隧道六种几何形态的滚动动效骨架 | 5-8 / 5-9 / 1-4 | style | v06 |
 

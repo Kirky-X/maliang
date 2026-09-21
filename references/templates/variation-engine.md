@@ -61,3 +61,57 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
 3. **反品类默认**：列出该品类最惯用的 2-3 个组合并显式拒绝，除非 brief 明确要求；"能从品类猜出你的组合 = 自检失败"。
 4. **与模板墙联动**：选定组合后到 [`INDEX.md`](INDEX.md) 找 category/dials 匹配的模板做具象化参照；模板是配方可参考，轴组合是身份须保持。
 5. **挑战者捐赠**（可选强化）：让另一方向作为"挑战者"先行构思 5 分钟，verdict 三档（win/competitive/declined）；即使 declined，也必须从挑战者身上指认一项纪律反哺选定方向——"捐赠纪律，绝不搬运外衣"。
+
+## 跨次构建记忆（Build Log + Stamp）
+
+> 规则 2 的"与最近一次产出对比"以前无可执行的读取路径，只能靠叙述。本节让"Don't Repeat"真正可执行：**PROJECT 内一致性**由 DESIGN.md 锁定（第 7 页必须像第 1 页），**跨次差异**由构建日志驱动（第 7 次构建必须不同于第 6 次）——两个目标相反，禁止共用一份文件。来源：Adapted from finesse-ui divergence §4（MIT），2026-09 吸收，轴替换为本引擎七轴。
+
+### 构建日志 `.maliang/build-log.json`
+
+项目根目录。JSON 数组，**新条目在前**，最多保留 **20** 条：
+
+```json
+[
+  {
+    "date": "2026-09-22",
+    "page": "acme-launch",
+    "mode": "Experience",
+    "axes": {
+      "theme": "Deep Dark Mode",
+      "background": "tactile textured surface",
+      "typography": "editorial serif+sans",
+      "hero": "massive image-first",
+      "section": "gallery-led cadence",
+      "signature": "layered-crop + quote-wall + bento + marquee",
+      "motion": "pinned narrative + scrubbing reveal"
+    },
+    "dials": { "variance": 7, "motion": 6, "density": 3 },
+    "brief": "工业键盘发布页"
+  }
+]
+```
+
+首次写入时创建 `.maliang/` 目录，并把 `.maliang/` 加入项目 `.gitignore`。
+
+### 盖章 Stamp —— 无日志时的回退
+
+页面 CSS 的第一个非空行（或内联 `<style>` 顶部）写入同一组坐标：
+
+```css
+/* maliang · mode=Experience · A=deep-dark · B=tactile-texture · C=editorial-serif
+ * D=image-first · E=gallery-led · F=crop+quote+bento+marquee · G=pinned+scrub · V7M6D3 */
+```
+
+日志是主记忆（本机连续构建快），盖章是回退（随代码走：新 clone、协作者、被单独拷走的 HTML 都能读）。**两者分工成立的前提是盖章被提交而日志被 ignore**——丢掉任何一个，项目都会静默退回无记忆状态。无 `build-log.json` 时，grep 目标代码里的 `/* maliang ·` 反推一条记录。
+
+### 接线表（两端都是强制的）
+
+| 时机 | 动作 |
+| --- | --- |
+| design-md Phase 0（Design Read 之前） | 读 `.maliang/build-log.json`；无则 grep `/* maliang ·` 盖章反推；都无 = 首次构建，无约束 |
+| Phase 0 组合声明（旁边） | **把轮换说出来**——用一句话陈述新组合与最近一条在哪几根轴上不同，写进决策记录 |
+| design-md 收尾（自检通过后） | 数组头部 prepend 一条、裁到 20 条；把盖章写进 CSS 首行 |
+
+### 阈值
+
+沿用强制规则 2：新组合与日志最近一条**逐轴对比，≥5 轴相同即须重选**（等价于差异 ≥3 轴才放行）。补全历史页（dials 从未被记录）时只写七轴、省略 dials 数值——**编造的 dial 比缺席更糟**，下一次构建会把它当真值去轮换。
