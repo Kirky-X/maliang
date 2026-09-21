@@ -18,6 +18,12 @@
 | `scroll-progress`       | 顶部 / 侧边进度条                               | 长文章、教程、流程页                  |
 | `scroll-driven-anim`    | 滚动驱动动画(数字 / 图表)                     | 数据展示、产品发布                    |
 | `scroll-virtualized`    | 长列表虚拟滚动                                  | 表格 > 100 行、IM 消息列表            |
+| `scroll-scrub-bind`     | 动画进度绑定滚动位置(scrub):可逆,停住时动画停在对应进度 | 滚动叙事、大标题折叠(配合 `nav-large-title-collapse`) |
+| `scroll-velocity-blur`  | 甩动方向性模糊:滚动越快内容沿运动方向模糊越明显,停止立刻恢复清晰 | 媒体墙、高速 Feed(MOTION ≥ 8)        |
+| `scroll-center-focus`   | 中心聚焦放大:靠近屏幕中心的内容放大,离开缩小,建立视觉焦点 | 轮播、卡片流(配合 `scroll-snap`)      |
+| `scroll-depth-layers`   | 景深分层滚动:三层内容不同滚动速度/模糊半径/亮度,全由滚动进度驱动 | 品牌叙事首屏(MOTION ≥ 7)             |
+| `scroll-overscroll-damp` | 边缘阻尼:列表到顶继续拉越拉越沉拉不穿,松手弹回;顶图随下拉放大 | 移动 App 原生质感(下拉刷新前传)      |
+
 
 ## 使用规则
 
