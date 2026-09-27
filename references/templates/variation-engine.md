@@ -62,6 +62,16 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
 4. **与模板墙联动**：选定组合后到 [`INDEX.md`](INDEX.md) 找 category/dials 匹配的模板做具象化参照；模板是配方可参考，轴组合是身份须保持。
 5. **挑战者捐赠**（可选强化）：让另一方向作为"挑战者"先行构思 5 分钟，verdict 三档（win/competitive/declined）；即使 declined，也必须从挑战者身上指认一项纪律反哺选定方向——"捐赠纪律，绝不搬运外衣"。
 
+## 单次发散会话伪分歧自检
+
+
+- **构建前声明分歧轴**：每个变体动手前，一句话说出它在五根轴——layout / density / personality / motion / interaction model——中的哪根上发散；说不出的变体不配进列表。
+- **方向词命名**：变体用方向词命名（"安静""编辑感""致密""游戏感"），禁止 Option A/B/C——名字讲不出方向，说明方向不存在。
+- **同向即替换**：两个候选若只差强调色或文案，它们是同一个方向；把其中一个换成真正的替代（换布局、换交互模型、换动效叙事）。
+- **完成判据**：每个变体有名有轴，且 no two variants share an axis position——任一变体单独拿出来都是可独立发布的答案。
+- **收敛则砍并明说**：构建中若两个变体收敛了，砍掉一个并显式告知；"两个真不同的方向"胜过"凑满三个"。
+- **发散不降 craft bar**：每个变体单独满足完整 craft 标准（入场 ease-out、UI 动效 ≤400ms、只动 transform/opacity、处理 reduced-motion）；粗糙的变体不会拓宽探索面，只会输在执行并浪费一次方向采样。
+
 ## 跨次构建记忆（Build Log + Stamp）
 
 

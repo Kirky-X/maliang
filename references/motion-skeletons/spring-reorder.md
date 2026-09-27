@@ -97,7 +97,7 @@ function commitOrder() { /* 按 order 持久化排序;DOM 归零 translate */ }
 
 - **必须**实现 `prefers-reduced-motion` 降级:让位无动画直接换位(见 [`accessibility.md`](../meta/accessibility.md) 第 2 节)
 - 被拖项 `transition: none` 纯跟手;**只改数据槽位**,让位项才开过渡(两端同时过渡是抖动根源)
-- 让位统一用 `ease-spring`(过冲 ≤ 1.2,见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 缓动库),`overwrite: 'auto'` 防止叠加
+- 让位统一用 `ease-spring`(过冲 ≤ 1.2,见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 缓动库),`overwrite: 'auto'` 防止叠加。**近似边界**:`cubic-bezier(0.34, 1.56, 0.64, 1)` 是预烘焙近似弹簧,仅适用于让位项——目标是槽位、一次性过渡、用户不会再抓住它;若列表项可被中途再拖起(可中断场景),CSS 过渡无法抓取反转,该项落定改走 [`interruptible-motion.md`](interruptible-motion.md) 的 JS 弹簧两参数模型(damping + response)
 - 行高一致用 `index * H` 计算;变高列表改为逐项实测 rect
 - 松手落定后必须 `commitOrder` 归零 translate 并同步 DOM 顺序,二次拖拽前状态必须干净
 - 触觉反馈:进入新槽位时 vibration ≤ 10ms(见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) `micro-haptic`)

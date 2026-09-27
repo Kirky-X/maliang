@@ -43,6 +43,34 @@
 
 **同一项目 DESIGN.md 只声明一种深度策略**（脚本暂未覆盖，列为 preview 人工复核项）。
 
+## 五、阴影物理（多层软阴影配方）
+
+
+1. **统一光源方向**：全站阴影共享同一光源——默认正上方，阴影只向 y 正方向偏移（`offsetX` 恒为 0）；同页出现左飞一个、右飞一个的阴影即光源错乱，审计按 CRITICAL 级不一致处理。
+2. **多层几何递增栈（2-5 层）**：单层阴影发平；把 2-5 层按几何倍数递增（offset 与 blur 逐层翻倍）叠出真实悬浮感。层级越高层数越多（卡片 2 层、弹层 4 层）：
+
+   ```css
+   /* 卡片：2 层 */
+   box-shadow:
+     0 1px 2px hsl(var(--shadow-hue) / 0.10),
+     0 2px 4px hsl(var(--shadow-hue) / 0.10);
+   /* 弹层：4 层 */
+   box-shadow:
+     0 1px 2px  hsl(var(--shadow-hue) / 0.07),
+     0 2px 4px  hsl(var(--shadow-hue) / 0.07),
+     0 4px 8px  hsl(var(--shadow-hue) / 0.07),
+     0 8px 16px hsl(var(--shadow-hue) / 0.07);
+   ```
+
+3. **blur = 2 × offset**：每层 blur 取该层垂直偏移的 2 倍（y4 配 blur8、y8 配 blur16）。blur 远大于 offset 会虚成光晕，小于则成硬边——两条都是审计眼里的"阴影不对劲"。
+4. **阴影着色禁纯黑**：纯黑/纯灰阴影发脏。用背景色的 hue 调成带色深色（蓝灰底配 `hsl(220 30% 12%)` 一类，而非 `#000`），透明度每层 0.06-0.12 起。与 [`meta/ai-tells.md`](../meta/ai-tells.md) "暗底堆黑阴影" Tell 同源——暗底上阴影本就不可见，堆了只剩渲染开销。
+5. **禁直接动画多层阴影**：transition/animation 作用在 `box-shadow` 上会让每层逐帧重绘。两套阴影（静止/悬浮）分别放宿主元素与 `::after` 伪元素，只动画伪元素 `opacity`——opacity 走合成器，不触重绘。
+
+**跨平台换算**：
+
+- **Flutter**：`BoxShadow` 原生接受多层（`boxShadow: [BoxShadow(...), ...]`），逐层套本节配方（`blurRadius` = 2 × `offset.dy`）即可。
+- **ArkTS**：`shadow()` 的 `ShadowOptions` 单次只描述一层；多层用同尺寸容器叠放近似，实际项目通常收敛为栈内等价单层（offset 取最深一层、radius 同步取大、颜色透明度合并调低），视觉误差在软阴影下可接受。
+
 ## 与其他规范联动
 
 - [`meta/surface-modes.md`](../meta/surface-modes.md)：级联校准表"深度策略默认"行——Operate 默认 `borders-only` 或 `subtle-shadows`，Read 默认 `borders-only`，Persuade 默认 `subtle-shadows`，Experience 任一但全站唯一。
