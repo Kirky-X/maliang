@@ -1,6 +1,6 @@
 ---
 name: maliang
-description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）。边界：一次性改版不沉淀 token 用 redesign-existing-projects；代码质量/架构审查用 diting；安全扫描用 tiangang"
+description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版不沉淀 token 用 redesign-existing-projects；代码质量/架构审查用 diting；安全扫描用 tiangang"
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
 ---
@@ -10,7 +10,7 @@ license: MIT
 > **脚本调用约定**：`python3 scripts/…` 中的相对路径以**本 skill 的安装目录**为基准（CWD 假设）。
 > 在用户项目中执行时，一律以 `{SKILL_DIR}` 绝对路径调用，如 `python3 {SKILL_DIR}/scripts/ui-graph.py …`；`--target`/`--framework-file` 等输入参数显式指向用户项目路径，禁止把 skill 自带的 `examples/` 当作分析目标。
 
-十一个子命令覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代,总图见 [`references/meta/lifecycle.md`](references/meta/lifecycle.md)):design-md(创建 DESIGN.md,含领域探索与决策账本)→ redesign(改版现有 UI)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ critique(可用性评审)→ draw-harmony/draw-flutter/draw-element(框架代码)→ ui-graph(UI 关系管理)· ip(IP 形象)/ip-handbook(IP 视觉手册)。
+十二个子命令覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代,总图见 [`references/meta/lifecycle.md`](references/meta/lifecycle.md)):design-md(创建 DESIGN.md,含领域探索与决策账本)→ redesign(改版现有 UI)→ explore(方向未定时多方案发散-比较-收敛)→ draw-md(页面级 UI markdown)→ preview(预览验证)→ critique(可用性评审)→ draw-harmony/draw-flutter/draw-element(框架代码)→ ui-graph(UI 关系管理)· ip(IP 形象)/ip-handbook(IP 视觉手册)。
 
 - **design-md**(上游)— 产出 prose-first 的 **DESIGN.md**(YAML token + Markdown 设计理由,Google Labs agent-first 格式)。支持"创建、应用、验证、导出"四个动作。解决"设计系统**是什么、为什么**"。
 - **redesign**(上游旁路)— 改版现有 UI,9 维审计(含 SEO 与追踪) + 保留规则。支持 Refresh / Restructure / Rebuild / Deslop 四模式。解决"**现有设计如何变好**"。
@@ -34,9 +34,11 @@ license: MIT
 | 应用 DESIGN.md 到前端代码                   | design-md     | [`references/commands/design-md.md`](references/commands/design-md.md) |
 | lint / diff / 导出 / 验证 DESIGN.md         | design-md     | [`references/commands/design-md.md`](references/commands/design-md.md) |
 | 🔷 改版 / 重设计现有 UI(Refresh/Restructure/Rebuild/Deslop 去AI味) | redesign | [`references/commands/redesign.md`](references/commands/redesign.md) |
+| 🔷 方向性微调(bolder 更大胆 / quieter 更安静 / distill 更精炼,保持视觉世界不变,redesign 轻档前置) | redesign | [`references/commands/redesign.md`](references/commands/redesign.md) |
 | 🔷 单个组件 brief(做个按钮 / 单个输入框 / toast 等单元素,8 状态硬门) | component | [`references/commands/component.md`](references/commands/component.md) |
 | 产出页面级 UI markdown(token 表 + 页面规格) | draw-md       | [`references/commands/draw-md.md`](references/commands/draw-md.md)     |
 | 跨页面复用组件(导航栏 / dock)规格化         | draw-md       | [`references/commands/draw-md.md`](references/commands/draw-md.md)     |
+| 🔷 方向未定,先比较多套方案再定稿(布局/密度/人格/交互模型真不同,默认 3 至多 5) | explore | [`references/commands/explore.md`](references/commands/explore.md) |
 | 🔴 预览 UI markdown 效果(设备外壳 + Element)| preview       | [`references/commands/preview.md`](references/commands/preview.md)     |
 | 🔷 可用性评审 / 评分(Nielsen+persona 走查+认知负荷) | critique | [`references/commands/critique.md`](references/commands/critique.md)   |
 | 🔴 将 UI markdown 转换为 HarmonyOS(ArkTS)代码  | draw-harmony  | [`references/commands/draw-harmony.md`](references/commands/draw-harmony.md) |
@@ -51,6 +53,23 @@ license: MIT
 
 进入子命令后,按其流程文档执行。检查点、边界情形、交付核对清单均在各子命令文档内 —— **本路由器不含流程主体**。
 
+### 任务规模分档(轻档 / 全档)
+
+> 来源：frontend-design-practicalswan(任务规模比例感思想)，2026-09 吸收。
+
+| 档位 | 判据 | 流程 |
+| --- | --- | --- |
+| 轻档 | 项目**已有 DESIGN.md**,且改动范围 = 单组件(component 子命令)或单页局部调整 | 不重走 design-md 与全页清单流程:直接 draw-md 改目标页(单组件走 component)+ preview 抽查该页/该组件 |
+| 全档 | 新项目 / 新页面类型 / 多页改动 / 方向未定(先 explore)/ 无 DESIGN.md | 完整链路 design-md → draw-md → preview → draw-* |
+
+**轻档不是门禁豁免**。以下**不可裁剪项**任何档位完整执行:
+
+1. **a11y 检查** — aria-label、触控目标 ≥44px、对比度、`prefers-*` 偏好(CRITICAL 类,见 [`references/meta/rules-priority.md`](references/meta/rules-priority.md) 冲突裁决规则 4,不可妥协);
+2. **preview 硬门禁** — validate-draw-md 检查与 preview 评审 disposition 照常;轻档的「抽查」指只跑改动页,不是跳过或降阈值;
+3. draw-md 硬约束(token 引用 / 暗色引用 / 动效 ≤400ms)随改动页逐条过(见 [`references/commands/draw-md.md`](references/commands/draw-md.md) 约束汇总)。
+
+无 DESIGN.md 时的轻档请求按「失败模式与 fallback」第一行处理:引导先走 design-md,分档不提供例外。
+
 ### meta 文档加载时序(阶段 × 必读)
 
 规范层 references/meta/ 不要求一次全读——按所处阶段加载,规划类工作不加载执行期文档:
@@ -59,8 +78,9 @@ license: MIT
 | --- | --- | --- |
 | design-md(创建系统) | [`product-reasoning.md`](references/meta/product-reasoning.md)、[`principles.md`](references/meta/principles.md) | [`dials.md`](references/meta/dials.md)、[`spec-schema.md`](references/meta/spec-schema.md)、[`analytics-events.md`](references/meta/analytics-events.md)(埋点事件表)、[`content-guide.md`](references/meta/content-guide.md)、[templates/README.md](references/templates/README.md)(选型四步) |
 | redesign(改版) | [`ai-tells.md`](references/meta/ai-tells.md)、[`rules-priority.md`](references/meta/rules-priority.md) | [`dials.md`](references/meta/dials.md)、[`accessibility.md`](references/meta/accessibility.md)、[`surface-modes.md`](references/meta/surface-modes.md)、[`ux-rules.md`](references/meta/ux-rules.md) |
+| explore(方向未定多方案比较) | [`dials.md`](references/meta/dials.md)、[`surface-modes.md`](references/meta/surface-modes.md)、[`token.md`](references/meta/token.md) | [`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`ux-rules.md`](references/meta/ux-rules.md) |
 | draw-md(产出页面规格) | [`token.md`](references/meta/token.md)、[`ai-tells.md`](references/meta/ai-tells.md) | [`surface-modes.md`](references/meta/surface-modes.md)、[`visual-assets.md`](references/meta/visual-assets.md)、[templates/INDEX.md](references/templates/INDEX.md)、[`ux-rules.md`](references/meta/ux-rules.md)、[`llm-behavior.md`](references/meta/llm-behavior.md)(长产物防截断)、[`performance.md`](references/meta/performance.md) |
-| preview(验证交付) | [`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`performance.md`](references/meta/performance.md) | [`ux-rules.md`](references/meta/ux-rules.md)、[`accessibility.md`](references/meta/accessibility.md)、[`content-guide.md`](references/meta/content-guide.md) |
+| preview(验证交付) | [`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`performance.md`](references/meta/performance.md) | [`ux-rules.md`](references/meta/ux-rules.md)、[`accessibility.md`](references/meta/accessibility.md)、[`content-guide.md`](references/meta/content-guide.md)、[`hardening.md`](references/meta/hardening.md)(生产化加固) |
 | critique(可用性深评) | [`surface-modes.md`](references/meta/surface-modes.md)、[`principles.md`](references/meta/principles.md) | [`accessibility.md`](references/meta/accessibility.md)、[`ux-rules.md`](references/meta/ux-rules.md) |
 | draw-harmony/flutter/element | [`performance.md`](references/meta/performance.md)、[`accessibility.md`](references/meta/accessibility.md) | [`token.md`](references/meta/token.md)(命名回填)、[`ux-rules.md`](references/meta/ux-rules.md) |
 | ip / ip-handbook | [`product-reasoning.md`](references/meta/product-reasoning.md) | [`content-guide.md`](references/meta/content-guide.md) |
@@ -71,14 +91,14 @@ license: MIT
 
 - **不确定用哪个?** 先 `design-md`。没有 DESIGN.md 就无法产出可靠的 `draw-md` 硬 token,更无法进行框架适配。
 - **完整流程链路**(每步产出 = 下步输入): `design-md`(→DESIGN.md) → `draw-md`(→examples/ui-markdown/*.md) → `preview`(→preview_*.html) → [`critique`](references/commands/critique.md)(→评分快照) → `draw-harmony`/`draw-flutter`/`draw-element`(→框架代码);迭代经 `redesign`/`ui-graph` 回流 decisions 账本。
-- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局 / 海拔)在 [`references/dimensions/`](references/dimensions/) 下(含 color-palettes 调色板库、design-systems 参考设计系统、glass-effect/glass-advanced 液态玻璃配方、elevation 表面海拔、h5-frame H5 手机专属页容器契约);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),十一个子命令共享参考,不在本路由器重复。桌面页到手机上的六条机械故障见 [`references/meta/mobile-floor.md`](references/meta/mobile-floor.md)。
+- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局 / 海拔)在 [`references/dimensions/`](references/dimensions/) 下(含 color-palettes 调色板库、design-systems 参考设计系统、glass-effect/glass-advanced 液态玻璃配方、elevation 表面海拔、h5-frame H5 手机专属页容器契约);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),十二个子命令共享参考,不在本路由器重复。桌面页到手机上的六条机械故障见 [`references/meta/mobile-floor.md`](references/meta/mobile-floor.md)。
 - **模板墙**在 [`references/templates/`](references/templates/INDEX.md):12 种设计语言(液态玻璃/M3 Expressive/Fluent 2/Bento/瑞士编辑/OLED 暗色/数据仪表盘等) + 整页模式(编辑分栏/纵深长廊/Dashboard 风格集/移动端五式/滚动图带/AI 工作台) + 落地页编排 + 性格方向卡;选型走 README 四步路由 + [variation-engine](references/templates/variation-engine.md) 七轴组合 + [跨次构建记忆](references/templates/variation-engine.md)(build-log + CSS 盖章,≥5 轴相同即重选)。
-- **术语库**在 [`references/vocabulary/`](references/vocabulary/),共 22 篇模式命名词汇,draw-md 组件命名对齐:cards / galleries / hero / layout / micro-interactions / navigation / scroll / typography / **popups(弹窗) / buttons(按钮反馈) / charts(图表选型) / forms(表单) / auth(登录认证) / tables(数据表格) / search(搜索筛选) / onboarding(新手引导) / states(页面状态) / commerce(定价转化)**(后 7 篇源自对 GOV.UK、WAI-ARIA、Carbon、NN/g、Atlassian、Baymard 等专业站点的抓取研究,2026-09-08) / **progress-confirm(进度确认) / pickers(选择器交互) / number-motion(数字动效) / sheet-drawer(抽屉与浮层链路)**(后 4 篇源自 UI 交互教学视频转录提取,2026-09-22)。动效骨架([`references/motion-skeletons/`](references/motion-skeletons/))共 9 篇:sticky-stack / horizontal-pan / scroll-reveal-stagger 之外,新增 interruptible-motion(可中断动画) / shared-element(共享元素转场 FLIP) / spring-reorder(拖拽排序弹簧让位) / gesture-arbitration(手势方向仲裁) / metaball-tether(液滴粘连拖拽) / circular-reveal(圆形扩散主题切换)。**动效选型先读 [`motion-skeletons/ROUTING.md`](references/motion-skeletons/ROUTING.md)**:效果×路线双轴、GATE 四查、六路线成本表、十族效果目录(含各族 slop form 反模式)、四拍节奏表。
+- **术语库**在 [`references/vocabulary/`](references/vocabulary/),共 22 篇模式命名词汇,draw-md 组件命名对齐:cards / galleries / hero / layout / micro-interactions / navigation / scroll / typography / **popups(弹窗) / buttons(按钮反馈) / charts(图表选型) / forms(表单) / auth(登录认证) / tables(数据表格) / search(搜索筛选) / onboarding(新手引导) / states(页面状态) / commerce(定价转化)**(后 7 篇源自对 GOV.UK、WAI-ARIA、Carbon、NN/g、Atlassian、Baymard 等专业站点的抓取研究,2026-09-08) / **progress-confirm(进度确认) / pickers(选择器交互) / number-motion(数字动效) / sheet-drawer(抽屉与浮层链路)**(后 4 篇源自 UI 交互教学视频转录提取,2026-09-22)。动效骨架([`references/motion-skeletons/`](references/motion-skeletons/))共 10 篇:sticky-stack / horizontal-pan / scroll-reveal-stagger 之外,新增 interruptible-motion(可中断动画) / shared-element(共享元素转场 FLIP) / spring-reorder(拖拽排序弹簧让位) / gesture-arbitration(手势方向仲裁) / metaball-tether(液滴粘连拖拽) / circular-reveal(圆形扩散主题切换) / smooth-scroll(惯性平滑滚动,仅 Web 营销站)。**动效选型先读 [`motion-skeletons/ROUTING.md`](references/motion-skeletons/ROUTING.md)**:效果×路线双轴、GATE 四查、六路线成本表、十族效果目录(含各族 slop form 反模式)、四拍节奏表。
 - **结构化 UX 规则**在 [`references/meta/ux-rules.md`](references/meta/ux-rules.md)(slug + Do/Don't + 严重级,脚本检查是它的机械化子集);页面模式判定见 [`surface-modes.md`](references/meta/surface-modes.md),图片策略见 [`visual-assets.md`](references/meta/visual-assets.md)。
 - 数据埋点规范(事件命名 / 漏斗三件套 / 改版基线比对)见 [`references/meta/analytics-events.md`](references/meta/analytics-events.md);用户研究三产出(persona / journey / JTBD)见 design-md Phase 0a([`references/commands/design-md.md`](references/commands/design-md.md))。
 - 默认页面清单(App 15 页 + Web 15 页,含 P0/P1/P2 选用规则)在 [`references/default-pages/index.md`](references/default-pages/index.md) 下,供 `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用。
 - 框架组件文档(按钮/文本/列表 × 三框架)在 [`references/framework/`](references/framework/index.md) 下,三个 draw-* 子命令共享。
-- UI 关系管理工具 [`scripts/ui-graph.py`](scripts/ui-graph.py) 提供 7 个子命令(generate/list-missing/check-nav/compute-hash/diff-hash/build-impl-map/list-unimplemented),纯 Python 标准库实现,产出 ui-relationships.json(层级 + 跳转)、ui-hash-state.json(哈希基线)、ui-implementation-map.json(逻辑 UI ↔ 实现映射),供 `ui-graph` 子命令调用;配套 [`scripts/validate-draw-md.py`](scripts/validate-draw-md.py) 含 13 项检查(aria/touch-target/dark-mode/motion/radius/z-index 等),供 `preview` 子命令校验。
+- UI 关系管理工具 [`scripts/ui-graph.py`](scripts/ui-graph.py) 提供 7 个子命令(generate/list-missing/check-nav/compute-hash/diff-hash/build-impl-map/list-unimplemented),纯 Python 标准库实现,产出 ui-relationships.json(层级 + 跳转)、ui-hash-state.json(哈希基线)、ui-implementation-map.json(逻辑 UI ↔ 实现映射),供 `ui-graph` 子命令调用;配套 [`scripts/validate-draw-md.py`](scripts/validate-draw-md.py) 含 15 项检查(aria/touch-target/dark-mode/motion/radius/z-index 等),供 `preview` 子命令校验。
 
 ## 失败模式与 fallback
 

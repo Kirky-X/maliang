@@ -14,11 +14,54 @@
 
 ---
 
+## 0. 轻档入口(先判够不够 redesign)
+
+四模式是重量级流程。给页面**加新内容**走 design-md;对**已有产物**做定向小改,先过本节两道判定,够不上就别进大流程:
+
+| 判定 | 问的问题 | 命中走哪 |
+| --- | --- | --- |
+| 单点微调 | 只改一处(一个按钮 / 一段间距 / 一句文案)? | 下方「单点微调」 |
+| 方向性精修 | 视觉世界不变,只往一个方向调? | 下方「三动词精修」 |
+| 都不命中 | 涉及布局重排 / 多区域 / 换风格 | 正常进第 1 节 Mode Detection |
+
+**与大改的边界**:命中轻档 = 改动可枚举、不动布局骨架、不动信息架构。只要出现「要重排一个 section」「要换字体族」「要动 CTA 流程」任一,立即升级四模式;**禁止在轻档里累积成隐蔽大改**——同一页面连续多轮轻档仍解决不了,那就是 Restructure,回头正式立项,不要第八轮微调。
+
+### 单点微调(来源:stitch,2026-09 吸收)
+
+定向编辑一次只改一处,指令按三段具体化,缺一段先问清再动手:
+
+| 段 | 要写清什么 | 反例(不合格) |
+| --- | --- | --- |
+| 位置 | 文件 / 页面 / 组件 + 选择器或行号 | "把那儿改一下" |
+| 视觉 | 改什么属性,从什么值到什么值 | "调亮一点" |
+| 结构 | 明确不动 DOM 结构、不动交互行为 | —(动结构即升级四模式) |
+
+- 一次只改一处:用户一句话 = 一处改动;列了 3 处 = 分三轮逐处确认,不打包顺手改
+- **布局正确禁推倒重生成**:目标位置布局没问题就原位改值,禁止借机整块重新生成——那是 redesign 四模式的活
+- 改完只给 Before/After 两行,不落审计报告
+
+### 三动词精修(来源:impeccable,2026-09 吸收)
+
+"保持视觉世界不变,只调一个方向"。前提是**骨架测试**:布局骨架与信息架构已对,只是强度不对;骨架不对,升级四模式。
+
+| 动词 | 方向 | 手段(逐项过 [ai-tells](../meta/ai-tells.md) 禁区) |
+| --- | --- | --- |
+| bolder | 往强调调 | 拉大对比 / 加重层级 / 提一档密度或动效 |
+| quieter | 往收敛调 | 减色 / 减动效 / 减装饰(对照 [micro-interactions](../vocabulary/micro-interactions.md) 动效预算逐项减) |
+| distill | 削到本质 | 删元素而非改元素——每屏只留一个主角,删完再看 |
+
+- 只调一个方向:一次只选一个动词;"又想更醒目又想更安静" = 需求未收敛,退回澄清,不折中执行
+- 分模式降噪:目标强度按 surface 模式校准(见 [`surface-modes.md`](../meta/surface-modes.md) 级联表)——Operate 页的 bolder 也不得越过 Restrained 上限
+
+---
+
 ## 流程总览
 
 ```mermaid
 flowchart LR
-  A["1. Mode Detection"] --> B["2. Audit<br/>9 维度"]
+  A0["0. 轻档判定"] -->|"命中轻档"| Z["轻档执行"]
+  A0 -->|"不够轻档"| A["1. Mode Detection<br/>四模式"]
+  A --> B["2. Audit<br/>9 维度"]
   B --> C["3. Preserve Rules"]
   C --> D["4. Modernize Levers"]
   D --> E["5. Decision Tree"]
@@ -53,7 +96,7 @@ Refresh / Restructure 是**替换**,不是给旧样式抛光。旧貌是"主体�
 识别为 Refresh·Deslop 时,不走第 2 节 9 维审计,改走**两遍式**:
 
 1. **第一遍 · 眯眼看渲染**(构图级 slop):无焦点 / 扁层级 / 单调布局 / 怯色 / 边框代空间——只记构图问题,先不动手;
-2. **第二遍 · 扫 diff**(行级签名):对照 [`ai-tells.md`](../meta/ai-tells.md) 只扫本次改动行内的 AI 签名(默认字族 / 紫蓝渐变 / 整数假数据等)。
+2. **第二遍 · 扫 diff**(行级签名):对照 [`ai-tells.md`](../meta/ai-tells.md) 只扫本次改动行内的 AI 签名(默认字族 / 紫蓝渐变 / 整数假数据等)。机械可判子集先跑 `python3 {SKILL_DIR}/scripts/detect-tells.py <改动文件...>`(确定性正则扫描,豁免口径按 ai-tells.md 第 0 节三豁免 + tell-exempt 标注;来源:impeccable,2026-09 吸收),脚本命中项人工复核后,再逐行扫品味类签名。
 
 **行为保持铁律**:只动改动行的视觉呈现——不改交互行为、不改文案语义、不改数据结构;拿不准是不是 slop → 回 ai-tells.md 豁免总则判断,说不出"让用户付出什么代价"就不动。结构性问题(层级 / 焦点级失败)标记出来转交完整评审,不在本通道硬修。
 
@@ -101,7 +144,23 @@ Refresh / Restructure 是**替换**,不是给旧样式抛光。旧貌是"主体�
 - [ ] MOTION_INTENSITY 档位(见 [`dials.md`](../meta/dials.md))是否合适?
 - [ ] `prefers-reduced-motion` 降级是否实现?
 - [ ] 触摸目标 ≥ 44pt?
-- **审计输出**:Interactivity Score 1-5 + 具体问题清单
+- [ ] 每处动效判断(新增或保留)是否记录了「建议/否决 + 理由」?(否决例:`命令面板 — 高频键盘路径,动效只添延迟 — 判定:否决`;来源:find-animation-opportunities,2026-09 吸收)
+- **审计输出**:Interactivity Score 1-5 + 具体问题清单 + 动效建议/否决记录
+
+#### 动效机会扫描 · 六类动效缝(来源:find-animation-opportunities,2026-09 吸收)
+
+对现成代码库反向搜索"哪里缺一拍动效",逐缝检查并记录判据:
+
+| 缝 | 症状 | Web 检查信号 | 框架等价信号(逐条转译,勿照搬 Web 语境) |
+| --- | --- | --- | --- |
+| feedback gaps | 可按压件按下无任何反馈 | 选择器无 `:active` / pressed 态 | Harmony 无 pressed 态;Flutter 无按压水波层(InkWell 缺失);Element 无 `:active` / active 类 |
+| teleporting state | 条件渲染瞬现:面板突开、内容闪现 | `{isOpen && <Panel/>}`、`display:none ↔ block` 直切 | Harmony `if (this.visible)` 直接挂载;Flutter 三元直挂无 AnimatedSwitcher;Element `v-if` 直切无 `<transition>` 包裹 |
+| missing spatial story | 浮层与触发器无空间关联,凭空出现 | 居中 modal 无来源参照 | 三框架同判:弹层与触发器无位置/尺寸呼应(共享元素/对位转场缺失) |
+| group entrances | 整墙同时弹入 | `.map(` 列表 + 单一 fade 同步触发 | Harmony `ForEach` 子项无 stagger;Flutter 列表无 interval 动画;Element `v-for` 无 stagger 延迟 |
+| gesture seams | 拖拽生硬:松手瞬移、拖到一半无回弹 | drag handler 无速度/动量处理 | Harmony 手势无弹簧收尾;Flutter 无 SpringDescription/Fling 物理收尾;Element 无拖拽动量处理 |
+| delight budget | 高情绪时刻(支付成功 / 里程碑 / 完成态)被画平 | 关键成功态与普通态视觉无差异 | 三框架同判:成功页/完成反馈无任何庆祝表达 |
+
+> **与 GATE 的分工**:GATE([`motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) §1)是**生成前自检**——写第一个 keyframe 前过四查;本清单是**审计期反向搜索**——对现成代码找"哪里缺一拍"。方向相反,判据同源:扫出的每条缝,补拍前仍须过 GATE 四查,过不了(如高频操作件补按压动效)就写否决记录,不硬补;确要补拍的时长一律遵循 maliang ≤400ms 强制口径(validate-draw-md.py 检查 11)。
 
 ### 维度 5 · Content(内容)
 
@@ -298,6 +357,8 @@ redesign 子命令产出:
 
 > 概念错配类条目要明说"这不是 polish 能修的"——概念错了就建议升级 Restructure / Rebuild,不偷换。
 
+**改动清单输出顺序**(来源:web-design-pascalorg,2026-09 吸收):按 **结构 → 视觉系统 → 交互动效 → polish** 四组依赖序分组,上游组未修完不输出下游组——结构没定就纠结阴影色值 = 顺序错误。**止损规则**:讨论下探到 polish 组细节,而上游仍有未修结构项(如 768px 断版)→ 立即回结构组。
+
 文件命名:`redesign_<page-name>_<mode>.md`(如 `redesign_home_refresh.md`)。
 
 **变更公告写法**(给人看,不是机器 diff):一段式 What's new——开头一句改了什么(≤ 2 个要点)→ 中间一句对用户的实际好处 → 结尾一句过渡期提示(旧入口 / 快捷方式去哪了)。写结果不写实现:写"筛选和收藏合并成了一个抽屉",不写"我们重构了筛选状态树"。机器侧差异由 `ui-graph` 哈希比对承载,公告只补"人话"层。
@@ -312,6 +373,9 @@ redesign 子命令产出:
 - [ ] 永不静默改动清单 MUST 在交付时高亮,主要改动段需用户独立确认
 - [ ] Refresh 模式 MUST 选 ≤ 3 个杠杆,Rebuild 模式应路由到 design-md 不走本文
 - [ ] 审计 Score 必须真实评估,不可全部给 3/5 凑数
+- [ ] 轻档命中 MUST 走第 0 节并在结论声明所走轻档,轻档内禁止累积成大改
+- [ ] 维度 4 审计 MUST 完成六类动效缝扫描,并逐处记录动效「建议/否决 + 理由」
+- [ ] 改动清单 MUST 按 结构→视觉系统→交互动效→polish 依赖序分组输出
 
 ---
 

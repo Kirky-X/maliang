@@ -5,20 +5,24 @@
 >
 > **Canonical 声明**:本清单是全流水线(design-md / draw-md / preview / redesign)唯一的交付前检查清单;其他文档只引用本文件,不复制条目。
 >
-> **脚本覆盖**:49/113 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
-> 其余 64 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
+> **脚本覆盖**:49/135 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
+> 其余 86 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
 > 未标记项按分区语义与 5.13 的 MANUAL/脚本能力归属判断。
-> 静态扫描通过是底线而非达标证明 —— 运行时项必须在 preview 第 4 节浏览器验证中逐项确认。
+> 静态扫描通过是底线而非达标证明 —— 运行时项必须在 preview 第 4 节浏览器验证中逐项确认,
+> 且每项结论按 preview.md「证据四分类」标注证据来源,禁止从单一分数声称合规。
 
-## 5.0 · Process 区(动态实测,5 项,先于全部分区执行)
+## 5.0 · Process 区(动态实测,7 项,先于全部分区执行)
 
-> 来源:ui-ux-pro-max pro-rules canonical 清单。以下是**过程性动作**——必须在真实渲染环境动手实测,静态扫描无法替代;先做本区,再进入 5.1-5.14 静态 / 运行时复选。
+> 来源:ui-ux-pro-max pro-rules canonical 清单。以下是**过程性动作**——必须在真实渲染环境动手实测,静态扫描无法替代;先做本区,再进入 5.1-5.16 静态 / 运行时复选。
+> 2026-09 吸收(来源:frontend-design-practicalswan):补入两个压力实测项——设计只对理想数据成立=未完成,压力数据是实测动作,判定细则见 5.16 与 [`../meta/hardening.md`](../meta/hardening.md)。
 
 - [ ] **375px 窄屏实测**:布局在 375px 宽度下无横向溢出、无挤压变形 <sub>[运行时]</sub>
 - [ ] **横屏旋转实测**:旋转后布局自适应,无错位 / 内容丢失 <sub>[运行时]</sub>
 - [ ] **`prefers-reduced-motion` 下实测**:动画降级生效,信息无丢失 <sub>[运行时]</sub>
 - [ ] **最大系统字号(200%)实测**:文字放大后不截断 / 不重叠,布局不破 <sub>[运行时]</sub>
 - [ ] **暗色模式独立测对比**:切到暗色后逐区域核对对比度(非简单反色) <sub>[运行时]</sub>
+- [ ] **长内容/本地化膨胀实测**:用最长真实内容与译语膨胀文本(德/俄等常见 +30-40%)填充后,布局不破、关键操作不截断 <sub>[运行时]</sub>
+- [ ] **慢/失败依赖实测**:接口超时、失败、离线时页面有分状态处置与恢复路径,无无限 spinner <sub>[运行时]</sub>
 
 ## 5.1 · AI Tells(15 项,见 [`ai-tells.md`](../meta/ai-tells.md))
 - [ ] 无 Tailwind 渐变文字 + 中性灰背景组合
@@ -93,7 +97,7 @@
 - [ ] Typography 复合对象字段完整(fontFamily/size/weight/lineHeight)
 - [ ] 命名全部 kebab-case,无 camelCase / snake_case 混用
 
-## 5.7 · 完整交互状态(8 项,见 [`principles.md`](../meta/principles.md) 第 14 定律)
+## 5.7 · 完整交互状态(11 项,见 [`principles.md`](../meta/principles.md) 第 14 定律)
 
 > 脚本化:静态代理 — 页面存在交互元素而 `<style>` 缺对应状态选择器时报告;
 > 框架 CDN(Element Plus 等)自带状态样式时降级为 warning。`outline: none` 且无
@@ -105,8 +109,11 @@
 - [ ] Empty 状态有插画 + 文案 + CTA <sub>[运行时]</sub>
 - [ ] Error 状态有错误说明 + 重试 CTA <sub>[运行时]</sub>
 - [ ] Tactile Feedback(`micro-press-scale` 或 `micro-hover-lift`) <sub>[脚本 state.no-tactile(:active 内 transform)]</sub>
-- [ ] 状态过渡 duration ≤ 150ms(状态过渡) <sub>[脚本 anim.duration(600ms 上限,150ms 需运行时确认)]</sub>
+- [ ] 状态过渡 duration ≤ 150ms(状态过渡) <sub>[脚本 anim.duration(400ms 上限,150ms 需运行时确认)]</sub>
 - [ ] 表单提交后有 toast 反馈(成功 / 失败) <sub>[运行时]</sub>
+- [ ] 同一意图的 CTA 全页只一个标签(如联系意图不得"联系我们 / Get in Touch"混用,意图归类判据见 [`../meta/content-guide.md`](../meta/content-guide.md) §2) <sub>[运行时]</sub>
+- [ ] 主 CTA 按钮文案单行显示:移动端实测按钮高度 ≤ 1.5×行高,折行 = 硬失败(先缩短文案或放宽容器 max-width,而非接受两行) <sub>[运行时:机械查按钮高度/行高]</sub>
+- [ ] 动作全流程动词一致:按钮、toast、错误提示对同一动作用同一动词词根(如按钮"发布" → toast"已发布" → 错误"发布失败",见 content-guide §2) <sub>[运行时]</sub>
 
 ## 5.8 · LLM 截断信号(8 项,见 [`llm-behavior.md`](../meta/llm-behavior.md))
 - [ ] 最后一个章节字数 ≥ 前面章节均值的 50%
@@ -121,7 +128,7 @@
 ## 5.9 · 第 13 定律 · 动画动机(7 项,见 [`principles.md`](../meta/principles.md))
 - [ ] 每段动画可回答"为什么动"(状态变化 / 空间引导 / 反馈)
 - [ ] 无装饰性循环动画(MOTION_INTENSITY ≤ 5 时)
-- [ ] 入场动画 duration ≤ 600ms
+- [ ] 入场动画 duration ≤ 400ms(装饰/骨架类长动效按 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 分层第 3 层 ≤ 600ms 且必须可跳过,>400ms 须以 `{duration-*}` token 引用——字面量被脚本按 ≤400ms 硬查)
 - [ ] stagger 间隔 ≤ 120ms
 - [ ] translateY 偏移 ≤ 30px(防眩晕)
 - [ ] 缓动函数非默认 `linear`(用 ease-out / cubic-bezier)
@@ -135,12 +142,15 @@
 - [ ] 中英文混排含空格(中英之间 1 空格,如"使用 React 框架")
 - [ ] 标点符号中英文一致(中文用全角,英文用半角,不混用)
 
-## 5.11 · 视觉一致性锁(5 项)
+## 5.11 · 视觉一致性锁(8 项)
 - [ ] **主题锁**:单页 ≤ 1 个主题色(品牌主色),其余为中性色 + 语义色;多主题色 = 视觉混乱
 - [ ] **色彩锁**:palette 不漂移——所有颜色必须可追溯到 DESIGN.md `colors:` 块的 token,无游离色值
 - [ ] **形状锁**:圆角风格一致——同类组件圆角档位一致(如所有卡片 `rounded.lg`、所有按钮 `rounded.md`),不混用 sharp/round
 - [ ] 阴影档位 ≤ 3 档(sm/md/lg),不出现 5+ 种阴影深度
 - [ ] 字号档位 ≤ 7 档(typography scale),不出现 9+ 种字号
+- [ ] **原生面锁**:浏览器原生面已主题化——文本选区 `::selection` 与输入光标 `caret-color` 从主题 token 派生,非浏览器默认(Web 项;Harmony/Flutter n/a) <sub>[运行时;可静态抽检样式存在性]</sub>
+- [ ] 滚动条与焦点环颜色在暗色 / 品牌界面已主题派生(无默认白滚动条、默认蓝焦点环;Web 项) <sub>[运行时;可静态抽检样式存在性]</sub>
+- [ ] 链接下划线偏移 `text-underline-offset` 调至光学正确,数据列/比较数字用 `tabular-nums`(Web 项,判据见 [`../meta/ux-rules.md`](../meta/ux-rules.md) §11;Harmony/Flutter n/a) <sub>[运行时;可静态抽检样式存在性]</sub>
 
 ## 5.12 · Hero 适配(6 项,见 [`hero.md`](../vocabulary/hero.md))
 - [ ] **移动端 Hero**:标题在 393px 宽度下不换行超 3 行;CTA 在移动端单列堆叠(非左右并排)
@@ -173,12 +183,46 @@
 - [ ] skip-to-content 链接存在且为键盘 Tab 首个可达项 <sub>[脚本:静态可查存在性;位置需运行时]</sub>
 - [ ] favicon 存在(含移动端 bookmark 图标) <sub>[运行时;可静态抽检 head 引用]</sub>
 
+## 5.15 · 真机验证(8 项,全部需真机)
+
+> 来源:mobile-native(emilkowalski/skills,MIT)+ frontend-design-practicalswan,2026-09 吸收。
+> 以下各项**模拟环境不可信**——桌面 DevTools 设备模拟无法复现真机行为,必须在实体设备实测(模拟器仅用于布局快速校验,见 preview.md 约束汇总)。故障机理与修复见 [`../meta/mobile-floor.md`](../meta/mobile-floor.md)。
+>
+> **真机调试路径**(本区各项的执行前提):
+> - 通用:开发服务监听 `0.0.0.0`,手机与电脑同 LAN,手机浏览器访问 `http://<电脑 LAN IP>:<端口>`,或 USB 连接后端口转发;
+> - iOS:Mac Safari「开发」(Develop)菜单选到目标设备页面检查;
+> - Android:手机 Chrome 访问 `chrome://inspect` 经 USB 调试连 DevTools;
+> - 没有测试机时,淘汰旧手机是最便宜的测试矩阵(低端 Android 尤其暴露性能与键盘问题)。
+
+- [ ] **粘滞 hover 实测**:触屏 tap 后 hover 样式不残留(信息与状态切换不依赖 `:hover` 独占) <sub>[运行时]</sub>
+- [ ] **tap 高亮实测**:`-webkit-tap-highlight-color` 有意设置,按压有 `:active` 联动反馈 <sub>[运行时]</sub>
+- [ ] **URL 栏对视口单位实测**:地址栏收展时 100vh 元素不截断 / 不抖动(`svh`/`dvh` 实机行为核对) <sub>[运行时]</sub>
+- [ ] **聚焦缩放实测**:聚焦任一输入框页面不强制缩放(输入字号 ≥ 16px) <sub>[运行时]</sub>
+- [ ] **overscroll 实测**:根层无意外下拉刷新劫持,内层滚动容器回弹不连带整页(双层判据见 [`../meta/web-interface-guidelines.md`](../meta/web-interface-guidelines.md)) <sub>[运行时]</sub>
+- [ ] **safe-area 实测**:刘海 / 手势条设备上导航与主要操作不被遮挡 <sub>[运行时]</sub>
+- [ ] **软键盘实测**:键盘弹起不遮挡焦点输入框,布局行为符合预期 <sub>[运行时]</sub>
+- [ ] **PWA standalone 实测**:添加到主屏后 standalone 模式下布局与导航完整 <sub>[运行时]</sub>
+
+## 5.16 · 生产化加固(6 项,见 [`../meta/hardening.md`](../meta/hardening.md))
+
+> 来源:impeccable harden 思想(pbakaus/impeccable,Apache-2.0),2026-09 吸收,中文自研。
+> 核心判据:**设计只对完美数据成立 = 未完成**。5.0 的两项压力实测是本区的执行动作;判定细则、三框架 i18n 判据与 verify 清单见 hardening.md。
+> 可脚本化子集(固定宽度文本容器、非逻辑属性)由 validate-draw-md.py 演进承接,本清单不重复其条目。
+
+- [ ] **极端输入谱系**:单字符、超长无空格 token、emoji(含多码位序列)、RTL 文本、千级列表逐类实测,渲染不破不截断 <sub>[运行时]</sub>
+- [ ] **错误场景分状态**:4xx / 5xx / 超时 / 离线各有具体文案与恢复动作(非笼统一句"出错了") <sub>[运行时]</sub>
+- [ ] **并发双击防重**:提交请求进行中按钮进入 loading / 禁用,双击不产生双提交 <sub>[运行时]</sub>
+- [ ] **i18n 三判据**:译语 30-40% 空间余量实测;布局方向用逻辑属性 / start-end 语义(非物理 left-right);日期、货币、复数走格式化接口(三框架判据见 hardening.md §3) <sub>[运行时]</sub>
+- [ ] **被中断手势恢复**:`pointercancel`(来电 / 系统手势接管)后无残留状态,下次拖拽无需刷新即可正常工作 <sub>[运行时]</sub>
+- [ ] **加固 verify 清单**:交付前逐项过 hardening.md 尾附 verify 清单,结果按证据四分类写入产物报告 <sub>[运行时]</sub>
+
 ## 统计与执行规则
 
-**统计**:5.0 (5) + 5.1 (15) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (10) + 5.7 (8) + 5.8 (8) + 5.9 (7) + 5.10 (6) + 5.11 (5) + 5.12 (6) + 5.13 (5) + 5.14 (6) = **113 项**
+**统计**:5.0 (7) + 5.1 (15) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (10) + 5.7 (11) + 5.8 (8) + 5.9 (7) + 5.10 (6) + 5.11 (8) + 5.12 (6) + 5.13 (5) + 5.14 (6) + 5.15 (8) + 5.16 (6) = **135 项**
 
 ### 执行规则
-- 全部 113 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
-- 5.0 Process 区先于 5.1-5.14 执行(动态实测是过程性动作,不因静态扫描通过而豁免)
-- 修复后重跑全部 113 项(不可只跑失败项),通过后进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
-- em-dash / 中英文空格 / 标点一致性为**软警告**(warning,非硬性失败),其余 110 项为硬性失败
+- 全部 135 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
+- 5.0 Process 区先于 5.1-5.16 执行(动态实测是过程性动作,不因静态扫描通过而豁免)
+- 5.15 真机验证在浏览器验证之后、交付声明之前执行(模拟环境通过的项不因此豁免真机复测)
+- 修复后重跑全部 135 项(不可只跑失败项),通过后进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
+- em-dash / 中英文空格 / 标点一致性为**软警告**(warning,非硬性失败),其余 132 项为硬性失败

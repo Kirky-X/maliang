@@ -134,6 +134,8 @@ flowchart LR
 
 preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 13 项检查(含 6 项新检查:暗色/aria/触控区/动效/radius/z-index),不通过则回退 draw-md 修补。
 
+**AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/detect-tells.py <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集,来源:impeccable hooks 思想,2026-09 吸收)。命中非豁免 tell = 硬性失败;豁免沿用 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的「三豁免 + tell-exempt 标注」机制。扫描结果与人工自查(第 6 节)互为通道,合并时按下方「双通道不变式」标注。
+
 **aria-label 在 HTML 的映射规则:**
 - button → `<el-button aria-label="语义描述">`
 - icon → `<el-icon aria-label="语义描述">`
@@ -156,37 +158,55 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 13 项检查(�
 
 **双通道不变式**:LLM 自查(第 6 节)与确定性检测(`preview-check.py`)是两条通道——**先完成自查、再读检测结果**(检测输出是确定性的,但仍会锚定判断);两边结果合并时,每条发现必须标注通道(`[自查]` / `[脚本]` / `[双方]`)。
 
+### 证据四分类(产物报告必填字段)
+
+> 来源:frontend-design-practicalswan + mobile-native,2026-09 吸收。
+> 每项校验/验证结论必须标注以下四类证据之一;**禁止从单一分数声称合规**——"5 维 15 分"或"135 项全过"不构成证据,证据是"凭什么知道"。
+
+| 类别 | 含义 | 合格证据形态 |
+| ---- | ---- | ------------ |
+| `automated` | 脚本 / 工具跑出 | `preview-check.py` / `validate-draw-md.py` 输出摘要(含命令与参数) |
+| `measured` | 量测数值 | CWV 指标 / 对比度比值 / 触控目标尺寸,附数值 + 测量工具与环境 |
+| `manual` | 人工实测 | 浏览器 / 真机逐项确认,注明设备型号、系统、浏览器与网络环境 |
+| `unverified` | 未验证 | 显式列出未验证项与原因,禁止默认通过、禁止留空 |
+
+- "看起来没问题"不是 `manual`;四类之外的说法不算证据;
+- `unverified` 非空时 disposition 不得为 `deliver`(只能 `fix` / `blocked`);
+- 与双通道不变式互补:通道标注**谁发现了问题**,证据分类标注**凭什么断言已解决**。
+
 ---
 
-## 5. Pre-Flight Check(113 项机械检查)
+## 5. Pre-Flight Check(135 项机械检查)
 
 > 交付前**机械扫描**(可脚本化,非主观判断)。任一项失败即"硬性失败",不可交付,必须返工。来源:taste-skill + ui-ux-pro-max-skill。
 
-**完整 113 项检查清单见 [`preview-checklist.md`](./preview-checklist.md)**(从本文件拆出以控制行数),按 15 个分组:
+**完整 135 项检查清单见 [`preview-checklist.md`](./preview-checklist.md)**(从本文件拆出以控制行数),按 17 个分组:
 
 | 分组       | 项数 | 覆盖范围                                                  |
 | ---------- | ---- | --------------------------------------------------------- |
-| 5.0 Process 动态实测 | 5    | 375px/横屏旋转/reduced-motion/200% 字号/暗色对比(先于全部分区) |
+| 5.0 Process 动态实测 | 7    | 375px/横屏旋转/reduced-motion/200% 字号/暗色对比/长内容与本地化膨胀/慢与失败依赖(先于全部分区) |
 | 5.1 AI Tells | 15   | 渐变/圆角/字族/容器宽度/定价/Lucide 等通用 AI 味         |
 | 5.2 Performance | 10   | 图片尺寸/字体/动画属性/z-index/JS 体积/虚拟滚动           |
 | 5.3 WCAG 对比度 | 8    | 正文/大文本/UI 组件/placeholder/暗色模式/色盲             |
 | 5.4 用户偏好 | 6    | reduced-motion/reduced-transparency/双跑预览              |
 | 5.5 交互可达 | 8    | Tab/focus ring/触摸目标/alt/aria-label/Skip 链接          |
 | 5.6 Token 完整性 | 10   | CSS 变量/硬编码/三层引用/kebab-case                       |
-| 5.7 完整交互状态 | 8    | 五态/Loading/Empty/Error/Tactile/toast                    |
+| 5.7 完整交互状态 | 11   | 五态/Loading/Empty/Error/Tactile/toast/同义 CTA 去重/按钮折行/动词一致 |
 | 5.8 LLM 截断信号 | 8    | 章节字数/代码块完整/placeholder/文案具体性                |
 | 5.9 动画动机 | 7    | 动机可答/装饰循环/duration/stagger/translateY/缓动        |
 | 5.10 排版细节 | 6    | **em-dash 中文场景**/eyebrow 计数/标题字数/中英空格/标点  |
-| 5.11 视觉一致性锁 | 5    | **主题锁/色彩锁/形状锁**/阴影档位/字号档位                |
+| 5.11 视觉一致性锁 | 8    | **主题锁/色彩锁/形状锁/原生面锁**/阴影档位/字号档位        |
 | 5.12 Hero 适配 | 6    | 移动端/桌面端 Hero/100svh/srcset/poster/CTA 数            |
 | 5.13 Core Web Vitals | 5    | **LCP/CLS/INP/FCP/TBT** 阈值                              |
 | 5.14 交付完备性 | 6    | 法务链接/返回导航/404/表单校验/skip-link/favicon          |
+| 5.15 真机验证 | 8    | 粘滞 hover/tap 高亮/URL 栏视口/聚焦缩放/overscroll/safe-area/软键盘/PWA standalone(全部需真机) |
+| 5.16 生产化加固 | 6    | 极端输入/错误分状态/并发防重/i18n 三判据/中断手势恢复/verify 清单(见 hardening.md) |
 
 ### 执行规则
-- 113 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
-- 49 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理);其余 64 项为**运行时项**(标记 [运行时],见 checklist),在第 4 节浏览器验证中逐项确认
-- 修复后重跑全部 113 项(不可只跑失败项),通过后进入第 6 节 Pre-Delivery Checklist(主观维度)
-- em-dash / 中英文空格 / 标点一致性为**软警告**(warning),其余 110 项为硬性失败
+- 135 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
+- 49 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理);其余 86 项为**运行时项**(标记 [运行时],见 checklist),在第 4 节浏览器验证中逐项确认;5.15 真机验证项在第 4 节之后、交付声明之前按 checklist 调试路径实测
+- 修复后重跑全部 135 项(不可只跑失败项),通过后进入第 6 节 Pre-Delivery Checklist(主观维度)
+- em-dash / 中英文空格 / 标点一致性为**软警告**(warning),其余 132 项为硬性失败
 
 ### 误报过滤(What is NOT a failure)
 
