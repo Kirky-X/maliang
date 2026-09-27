@@ -62,6 +62,17 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
 4. **与模板墙联动**：选定组合后到 [`INDEX.md`](INDEX.md) 找 category/dials 匹配的模板做具象化参照；模板是配方可参考，轴组合是身份须保持。
 5. **挑战者捐赠**（可选强化）：让另一方向作为"挑战者"先行构思 5 分钟，verdict 三档（win/competitive/declined）；即使 declined，也必须从挑战者身上指认一项纪律反哺选定方向——"捐赠纪律，绝不搬运外衣"。
 
+## 单次发散会话伪分歧自检
+
+> 作用域不同的**第二套轴**：上文七轴管**跨项目防雷同**（选型枚举，项目级、写入 DESIGN.md），本节五轴管**单次发散会话内的运行时自检**（方案级、不落 DESIGN.md）——多方案 prototype、方向探索时启用，两套轴禁止混用。来源：prototype skill 伪分歧判据，2026-09 吸收；并反哺强制规则 5 的挑战者捐赠——挑战者脑内构思同样过本自检，防止挑战者只是选定方向的换色版。
+
+- **构建前声明分歧轴**：每个变体动手前，一句话说出它在五根轴——layout / density / personality / motion / interaction model——中的哪根上发散；说不出的变体不配进列表。
+- **方向词命名**：变体用方向词命名（"安静""编辑感""致密""游戏感"），禁止 Option A/B/C——名字讲不出方向，说明方向不存在。
+- **同向即替换**：两个候选若只差强调色或文案，它们是同一个方向；把其中一个换成真正的替代（换布局、换交互模型、换动效叙事）。
+- **完成判据**：每个变体有名有轴，且 no two variants share an axis position——任一变体单独拿出来都是可独立发布的答案。
+- **收敛则砍并明说**：构建中若两个变体收敛了，砍掉一个并显式告知；"两个真不同的方向"胜过"凑满三个"。
+- **发散不降 craft bar**：每个变体单独满足完整 craft 标准（入场 ease-out、UI 动效 ≤400ms、只动 transform/opacity、处理 reduced-motion）；粗糙的变体不会拓宽探索面，只会输在执行并浪费一次方向采样。
+
 ## 跨次构建记忆（Build Log + Stamp）
 
 > 规则 2 的"与最近一次产出对比"以前无可执行的读取路径，只能靠叙述。本节让"Don't Repeat"真正可执行：**PROJECT 内一致性**由 DESIGN.md 锁定（第 7 页必须像第 1 页），**跨次差异**由构建日志驱动（第 7 次构建必须不同于第 6 次）——两个目标相反，禁止共用一份文件。来源：Adapted from finesse-ui divergence §4（MIT），2026-09 吸收，轴替换为本引擎七轴。

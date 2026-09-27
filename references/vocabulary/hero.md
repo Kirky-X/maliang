@@ -24,6 +24,9 @@
 - 模式名与 [`motion-skeletons/`](../motion-skeletons/) 联动:`hero-parallax` 必须配 sticky-stack 或 scroll-reveal-stagger
 - 同一站点跨页 Hero 模式 ≤ 2 种(避免混乱)
 - 触发 [`ai-tells.md`](../meta/ai-tells.md) 第 1 节"紫蓝粉渐变背景"的,改用 `hero-text-only` 或 `hero-split`
+- **内容选择原则**:Hero 打开该主题世界**最具特征之物**,形式任选(headline、图片、动画、live demo、交互时刻皆可)——先定"放什么",再回命名表选承载它的模式;来源:frontend-design-anthropic,2026-09 吸收
+- "大数字 + 小标签 + 支撑数据 + 渐变 accent"是默认套路,仅当它确实是该主题的最佳呈现时才用;命中品类惯性默认的,按 [`design-md.md`](../commands/design-md.md) Defaults 品类默认机制逐条声明拒绝
+- `hero-canvas` 落地前必须先过 [`performance.md`](../meta/performance.md) Canvas/WebGL 预算节(目的性门槛/降级/资源生命周期);装饰性粒子背景直接拒绝
 
 ## 在 draw-md 中的写法
 

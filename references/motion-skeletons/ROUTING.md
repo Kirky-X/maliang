@@ -43,7 +43,7 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 | 路线 | 重量 | 负责 | reduced-motion 静止形态 | 死法 |
 | --- | --- | --- | --- | --- |
-| **R1 · CSS transition / keyframes** | 0 | 状态变化、微交互、入场、环境循环 | 已写好的终态 | 试图做时序——无 timeline 无 scrub，`animation-delay` 链不可维护 |
+| **R1 · CSS transition / keyframes** | 0 | 状态变化、微交互、入场、环境循环 | 已写好的终态 | 试图做时序——无 timeline 无 scrub，`animation-delay` 链不可维护；**手势驱动动效**——过渡无法中途抓取反转、无法继承手指速度，一律改走 JS 弹簧（见 [`interruptible-motion.md`](interruptible-motion.md) 核心原则法则④） |
 | **R2 · 原生滚动驱动**（`animation-timeline`） | 0 | 视差、进度、逐项到达、sticky 揭示 | 中段进度帧 | 无 pin、无跨元素编排；需无支持时的优雅退化 |
 | **R3 · View Transitions + WAAPI** | 0 | 列表增删、筛选重排、路由切换、展开塌陷 | 即时切换无补间 | 忘写无转换 fallback，旧浏览器硬闪 |
 | **R4 · GSAP + ScrollTrigger** | ~60KB | pin 叙事、横向轨、scrub、`containerAnimation` | kill 掉 ScrollTrigger，tween 置终态 | 拿去做 R1/R2 免费能干的活——**最常见的越权** |
@@ -102,7 +102,8 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 → 骨架：[`spring-reorder.md`](spring-reorder.md) / [`metaball-tether.md`](metaball-tether.md) / [`interruptible-motion.md`](interruptible-motion.md)。
 
 ### 3.9 State transition · 状态转场
-变体：列表增删 / 筛选重排 / 路由切换 / 展开塌陷 / 排序 / 标签页滑动 / 骨架到内容 / 乐观更新。默认 **R3**，SPECTACLE 2-5。
+变体：列表增删 / 筛选重排 / 路由切换 / 展开塌陷 / 排序 / 标签页滑动 / 骨架到内容 / 乐观更新 / **图标级状态切换**（menu↔close、play↔pause、eye 显示↔隐藏、主题日月——morph 变体，设计决策见 [`../dimensions/icon.md`](../dimensions/icon.md) 动效图标节）。默认 **R3**，SPECTACLE 2-5。
+**微状态机视角**：把图标当作「一个元素 + 多个命名状态」（空 / 收藏、锁定 / 解锁），morph 表达的是状态迁移本身——收藏、锁定类按钮用同一图标在不同命名状态间形变，比「两个图标瞬换」多传达一层因果。适用约束（仅 stroke 同源图标、两端同网格、统一描边）见 icon.md；库选型与下载一律走 xizhi。
 **slop form**：没有——这一族的问题是被**长期缺席**。
 **死法**：从来不做。**唯一属于 Operate/产品向页面的动效族**，仪表盘不再像页面刷新靠的就是它。
 → 骨架：[`shared-element.md`](shared-element.md) / [`circular-reveal.md`](circular-reveal.md) / [`../vocabulary/sheet-drawer.md`](../vocabulary/sheet-drawer.md)。
@@ -133,3 +134,22 @@ body::before {
 | 4 | 反馈拍 | 3.8-3.9（Operate 页的唯一拍） |
 
 **anti-slop 自检**：把你页面的每一拍对着 §3 对应族的 slop form 读一遍——命中任何一条，重选变体或换族。
+
+## §5 时序模型：spring / easing / linear / 无动画
+
+> 按动效的**驱动源**选时序模型，不按「想要什么感觉」。来源：web-design-pascalorg（Spring Physics vs Easing Decision Framework），2026-09 吸收，中文重写。
+>
+> **时长从属声明**：本节只取决策框架；一切时长数值以 maliang 强制口径为准（反馈 <300ms、浮层转场 ≤400ms，见 [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 分层口径，从属 [`rules-priority`](../meta/rules-priority.md) 裁决层）。上游 500ms drawer 一类数值与本口径冲突，弃用。
+
+| 驱动源 | 模型 | 理由 | 落点 |
+| --- | --- | --- | --- |
+| 用户驱动（拖拽、甩动、滑动） | **spring** | 中断后存活、保留速度；必须把 pointer 速度传入（velocity 交接） | [`interruptible-motion.md`](interruptible-motion.md) 两参数模型 + 三公式 |
+| 系统驱动（状态变化、反馈、转场） | **easing** | 起止清晰、时序可预测；入场 ease-out、退场 ease-in，可反转过渡镜像缓动 | [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 缓动曲线库 |
+| 时间表征（进度、加载、循环） | **linear** | 时间与进度 1:1；仅限 spinner / 进度条类连续动效 | — |
+| 高频键盘 / 命令操作 | **无动画** | 每天上百次，延迟即成本（频率法则一票否决） | [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 频率法则 |
+
+**回弹要用真弹簧，不用 easing 伪装**：过冲落定（bounce-and-settle）是弹簧的语义，cubic-bezier 近似只够一次性过渡（近似边界见 [`spring-reorder.md`](spring-reorder.md)）；Web 侧起步参数换算成 damping/response 后按两参数模型声明。**动效嫌慢先砍 duration，不动缓动曲线**——慢几乎总是时长问题。
+
+**exit 原则**：入场 ≠ 退场。退场比入场幅度小、更快——用固定小位移（如 `y: -12px`）表达方向即可，不做全程撤离动画；叠一层轻 `blur(4px)` 软化消失感。退场元素禁交互（指针事件关闭），防止用户点到正在离开的东西。
+
+**View Transitions 注记**：跨页 / 跨容器共享元素转场的**原生方案**是 View Transitions API（本文件 R3 路线），列表增删、路由切换优先走它而非 JS 库；无支持浏览器必须留即时切换 fallback（R3 死法栏）。

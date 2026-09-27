@@ -16,7 +16,7 @@ flowchart TD
 ## 核心原则
 
 - **锁定一次性**:首次越阈值即锁,指针抬起前不重判(中途换轴是最常见抖动根源)
-- **位移+速度双判**:松手时距离过阈值**或**瞬时速度超阈值即完成动作(见 [`vocabulary/scroll.md`](../vocabulary/scroll.md) 的速度语义)
+- **位移+速度双判**:松手时距离过阈值**或**瞬时速度超阈值即完成动作(见 [`vocabulary/scroll.md`](../vocabulary/scroll.md) 的速度语义);甩动落点先**动量投影**再吸附最近槽位(公式见 [`interruptible-motion.md`](interruptible-motion.md) 手势物理三公式②),速度符号决定 commit/reverse——下方 `flung` 分支的 `vx` 符号判向即其最小实现
 - 未锁轴保持原状,不跟随任何小位移(否则像"松的")
 
 ## HTML 结构
@@ -95,6 +95,15 @@ function currentIndex() { return Math.round(-gsap.getProperty(pager, 'x') / page
 - 锁定竖轴时立刻把控制权交还页面滚动(`touch-action: pan-y` 配合),禁止再拦截
 - 点按(总位移 < 6px)不计为滑动手势,正常派发 click
 - 页面级转场动画时长 ≤ 400ms(见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 分层口径)
+- 回弹 / 落定用 JS 弹簧驱动;本骨架的手势段禁用 CSS transition 驱动(CSS 过渡无法中途抓取反转,见 [`ROUTING.md`](ROUTING.md) R1 死法栏)
+
+## 帧级平滑
+
+> 顺滑是「帧里有什么」的问题,不只是帧率问题。来源:apple-design(§11),2026-09 吸收。
+
+- **per-frame 位移守住感知阈值**:每帧位置增量过小会产生频闪感(strobing);手势速度天然连续,但动画回弹段若逐帧位移忽大忽小,肉眼读作卡顿——回弹用弹簧连续插值(见 [`interruptible-motion.md`](interruptible-motion.md) 两参数模型),禁止分段补间。
+- **极快速运动用 motion blur / stretch 编码速度**:轻微拉伸或模糊比一条生硬的锐利轨迹更可读;Web 无原生 motion blur,用 `scale` 沿运动轴向拉伸(stretch)近似。
+- **只动 compositor 友好属性**:逐帧跟随只允许 `transform` / `opacity`,配 `will-change` 在运动临近前提示(不常驻 CSS);触 `width`/`top`/`filter` 的逐帧计算必然掉帧。
 
 ## 失败模式
 

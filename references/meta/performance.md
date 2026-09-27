@@ -97,7 +97,49 @@ z-index:
 | JS       | `defer` 或 `type="module"`,首屏 JS ≤ 100KB gzip                    |
 | 第三方   | 延迟到 `requestIdleCallback` 或用户交互后加载                       |
 
-## 6. Preview 阶段的性能检查
+### 预测性预取(按 intent,勿滥发)
+
+- **光标轨迹预测**:光标仍在移动途中就计算去向并预取,比 `onMouseEnter`(等用户停下、已到达)早开始,挽回约 100-200ms 感知延迟
+- **hitSlop 扩大预测区**:给目标元素外扩一圈不可见预测区(如 20px),更早触发预取且无视觉变化;键盘导航按焦点接近度预取(还差几个 tab stop 时开始)
+- **触屏 fallback**:触屏无光标轨迹,降级为 `touchstart` 预取或 viewport 策略
+- **按 intent 预取,不按 viewport**:禁止预取所有可见链接——多数可见链接用户根本不会点
+- **适用场景收敛**:数据密集 dashboard、慢 API 的 MPA、电商收益明显;静态站导航本就即时,直接跳过
+
+> 本小节来源:web-design-pascalorg,2026-09 吸收。
+
+## 6. Canvas/WebGL 预算
+
+> 规范层。canvas/WebGL(粒子、流体、着色器背景、3D 场景)的取舍与护栏。通用工程约束,不绑任何库版本;dispose 清单为 Web/Element 场景专属,Harmony/Flutter 无手动 WebGL context 管理问题。来源:build-awwwards-quality-sites,2026-09 吸收。
+
+**目的性门槛**:
+
+- shader/3D 仅当**实质性支撑艺术方向**(去掉它页面表达力明显受损)才允许;装饰性背景噪音(无语义粒子、跟风光标拖尾)直接拒绝
+- 提案时必须能一句话回答"为什么静态图/视频不行"——答不上来就不用
+
+**单一职责**:
+
+- canvas 是**视觉从属层**,从属于语义内容:文字、按钮、表单必须是真实 DOM,canvas 只承载氛围或数据可视化,禁止把可交互内容画进 canvas
+- 一个视口内至多 1 个主动渲染的 canvas
+
+**性能护栏**:
+
+- **DPR 封顶**:`Math.min(devicePixelRatio, 2)`,禁止裸用 devicePixelRatio(高分屏 3x 渲染开销翻倍无感知收益)
+- **离屏/隐藏暂停**:canvas 滚出视口或标签页不可见时暂停渲染循环(`IntersectionObserver` + `visibilitychange`),恢复可见再重启
+- **指针节流**:指针驱动 uniform/粒子时,事件写入按 rAF 合帧,禁止每个 `pointermove` 直接写 GPU uniform
+- **禁每帧分配**:渲染循环内禁止 new 对象/新建数组/创建材质纹理——帧内分配触发 GC 卡顿;资源一律初始化时建好复用
+
+**降级(静态 poster)**:
+
+- 必须备静态 poster(图片或渐变),在 `prefers-reduced-motion` 或 WebGL 不可用/初始化失败时**完全替换** canvas,不留黑块
+- 检测顺序:`getContext` 特性检测失败 → poster;上下文创建成功但首帧渲染抛错 → 同样转 poster(降级必须用户可见,禁止默认成功)
+
+**资源生命周期(dispose 清单,Web/Element 场景专属)**:
+
+- 组件卸载时依次释放 geometry、material、texture、renderer,移除监听器并 `cancelAnimationFrame`;使用框架 scene 管理器时按其生命周期约定销毁
+- 处理 `webglcontextlost` / `webglcontextrestored`:lost 时暂停渲染循环并展示 poster,restored 后重建资源再恢复循环
+- hero 场景选型入口见 [`hero.md`](../vocabulary/hero.md) 的 `hero-canvas` 词条,落地前先过本节门槛
+
+## 7. Preview 阶段的性能检查
 
 在 [`preview.md`](../commands/preview.md) 的 Pre-Flight Check 中,以下为硬性失败项:
 

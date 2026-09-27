@@ -19,6 +19,11 @@
 | `state-error-permission` | 锁形插画 + 权限说明 + 申请入口/联系管理员 | 无权限访问(Carbon:permissions 类错误需要更高的具体度) |
 | `state-offline` | 持久但不打扰的离线指示/横幅,说明仍可用范围 | 断网或离线操作(Material "offline by choice";ServiceNow 连接异常模板) |
 | `state-partial-load` | 分批渲染 + 失败区块"重试"入口 | 分批渐进加载部分失败(Carbon progressive loading,可配 Load more) |
+| `state-stale-data` | 数据过期标记/横幅("数据截至 XX:XX") + 立即刷新按钮;旧数据保持可读不隐藏 | 后台数据已更新而页面未刷新、实时性非关键的列表/详情(practicalswan:stale 与 retry 并列为必备状态) |
+| `state-auth-expired` | 会话过期说明(直述原因) + 重新登录入口;登录成功后返回中断位置并恢复未提交输入 | 会话/令牌过期、权限变更;登录页选型走 [`auth.md`](auth.md),本条只命名页面状态 |
+| `state-destructive-undo` | 三段防护:前置确认(直述后果,焦点置安全侧)→ 执行后可撤销 toast(undo + 倒计时)→ 撤销/关闭后焦点恢复到触发元素 | 删除、移除、批量操作等破坏性动作(practicalswan:confirmation/cancellation/undo/recovery) |
+
+> 末 3 行(数据过期/认证失效/破坏性防护)来源:frontend-design-practicalswan,2026-09 吸收。
 
 ## 交互态扩展(选中/多选/反色)
 
@@ -46,6 +51,9 @@
 - 与 cards.md / popups.md 分工:页面级状态归本表;卡片局部骨架/空态复用 [`cards.md`](cards.md) 的 `card-skeleton` / `card-empty`;弹窗内的成功反馈走 [`popups.md`](popups.md) 的 `popup-modal-to-success`
 - 空态插画策略见 [../meta/visual-assets.md](../meta/visual-assets.md);状态文案写法见 [../meta/content-guide.md](../meta/content-guide.md)
 - 无障碍:状态切换须对屏幕阅读器可感知(loading/busy/失败均需通知,Carbon)
+- **操作成功前不得显示成功**:乐观更新必须能对账失败并回滚,失败立即转错误态——"假成功"比加载慢更伤信任(practicalswan:never show success before the operation succeeds)
+- **保留可恢复输入**:任何失败、过期、中断都不得清空用户已填内容(表单值、草稿、筛选条件);重新登录或重试后原样恢复(practicalswan:retain recoverable user input)
+- **状态转换可理解**:异步状态变化必须可感知(视觉过渡 + 屏幕阅读器通知),用户能说出"刚才发生了什么、现在处于什么状态"(practicalswan:keep state transitions understandable;三条行为规则来源:frontend-design-practicalswan,2026-09 吸收)
 
 ## 在 draw-md 中的写法
 

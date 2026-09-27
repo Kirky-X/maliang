@@ -38,6 +38,7 @@ Read files, check against rules below. Output concise but comprehensive—sacrif
 
 - Inputs need `autocomplete` and meaningful `name`
 - Use correct `type` (`email`, `tel`, `url`, `number`) and `inputmode`
+- Keyboard dispatch: `inputmode="numeric"` for verification codes, `"decimal"` for money; `autocapitalize="none"` + `autocorrect="off"` on usernames/codes; `enterkeyhint` matches the action (`go`/`search`/`send`/`next`/`done`)
 - Never block paste (`onPaste` + `preventDefault`)
 - Labels clickable (`htmlFor` or wrapping control)
 - Disable spellcheck on emails, codes, usernames (`spellCheck={false}`)
@@ -101,12 +102,25 @@ Read files, check against rules below. Output concise but comprehensive—sacrif
 
 ### Touch & Interaction
 
+> 2026-09 吸收（overscroll 双层 / 键盘分派 / user-select 二分 / hover 双条件门禁 / tap-highlight 联动）：mobile-native（emilkowalski/skills，MIT）。
+
 - `touch-action: manipulation` (prevents double-tap zoom delay)
-- `-webkit-tap-highlight-color` set intentionally
-- `overscroll-behavior: contain` in modals/drawers/sheets
+- `-webkit-tap-highlight-color` set intentionally — killing it obligates explicit `:active` press feedback on every interactive element (see Gesture Feel below), or touch loses all feedback
+- `overscroll-behavior` is two-layer: root scroller `none` only in app-like shells to kill pull-to-refresh hijack (content/docs pages keep default); inner scroll containers `contain`—modals/drawers/sheets included
+- Never fake it with `touchmove` + `preventDefault`: blocks native scrolling, forces non-passive listeners, janks frames
 - During drag: disable text selection, `inert` on dragged elements
+- `user-select: none` only on control chrome (buttons, tabs, sliders) with `-webkit-touch-callout: none`; content text (paragraphs, code, captions) must stay selectable; never on `body`
 - Drag/swipe/pinch/path gestures need tap/click and keyboard alternatives unless essential
 - `autoFocus` sparingly—desktop only, single primary input; avoid on mobile
+
+### Gesture Feel
+
+> 来源：apple-design §10（emilkowalski/skills，MIT），2026-09 吸收。
+
+- Highlight on touch-down (`:active`), commit on release—press feedback is not commitment
+- Dragging past the cancel threshold must visibly cancel (state + position revert), not silently swallow the gesture
+- Run all plausible gesture recognizers in parallel and cancel the losers once disambiguated—never a recognizer that only reports its final state
+- Double-tap detection puts an ambiguity delay on every single tap; accept that cost consciously or drop the double-tap (axis-lock / hysteresis thresholds live in [`../motion-skeletons/gesture-arbitration.md`](../motion-skeletons/gesture-arbitration.md), not restated here)
 
 ### Safe Areas & Layout
 
@@ -137,6 +151,7 @@ Read files, check against rules below. Output concise but comprehensive—sacrif
 
 - Buttons/links need `hover:` state (visual feedback)
 - Interactive states increase contrast: hover/active/focus more prominent than rest
+- Wrap hover-only styles in `@media (hover: hover) and (pointer: fine)` — both conditions: touch devices fake fine pointers or latch hover on tap, leaving a stuck hover state until the next tap elsewhere
 
 ### Content & Copy
 

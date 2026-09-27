@@ -46,3 +46,38 @@
 ## 颜色
 
 图标颜色**继承文字色**(同 token),不单独定义图标色。状态变化(选中/禁用)遵循文字色的透明度/色相规则,与文字一致。
+
+## 动效图标(设计决策层)
+
+> 本节只回答**何时用、何约束、何降级**;图标库选型与资产下载一律走 xizhi skill(其路由已覆盖 lordicon 动效图标与 morphicons 变形库),maliang 不复述其 API,防双处维护。来源:morphicons + lordicon(思想),2026-09 吸收;lordicon 原 GitHub 仓库已 deprecated,细节以 lordicon.com 官方现行文档为准。
+
+### 何时值得动效化
+
+对齐动效 GATE「有动机」([`ROUTING.md`](../motion-skeletons/ROUTING.md) §1):只有**状态语义需要动画来传达**时才做——状态切换(morph)、进行中(loading)、操作确认(click)。纯装饰性循环图标是 AI 味,砍。频率法则同样适用:每天几十次出现的图标,降为近乎无感或不做。
+
+### 触发语义选型
+
+| 触发 | 交互意图 | 典型例子 |
+| --- | --- | --- |
+| `in` | 元素入场时播一遍 | 页面加载后的品牌图标 |
+| `click` | 点击确认反馈 | 提交按钮的✓ |
+| `hover` | 悬停提示可交互 | 导航图标微动 |
+| `morph` | 状态 A↔B 形变 | menu↔close、播放↔暂停、主题日月 |
+| `loop` | 持续进行中 | loading、同步中 |
+| `boomerang` | 去程即回程,单次 | 点赞弹一下回原位 |
+| `sequence` | 多段叙事 | 引导、空状态小剧场 |
+
+### 加载防 CLS 占位(三模式)
+
+动效资产(Lottie JSON / JS 库)异步加载,不给占位会顶跳布局:
+
+1. **同形静态占位**——先渲染同图标集的静态版,资产就绪后替换;
+2. **固定尺寸盒**——容器写死 `width`/`height` 或 `aspect-ratio`,资产晚到不改变布局;
+3. **骨架占位**——列表/卡片场景用 `micro-skeleton` 兜底。
+
+### 硬约束
+
+- **reduced-motion 必须有静止终态**:`prefers-reduced-motion: reduce` 时停在终态帧(或静态版),禁空白;与 GATE「有静止终态」同源。图标 morph 属动效降级三档的 **user 档**(跟随系统设置即可,见 [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 三档口径)。
+- **颜色走 token**:`currentColor` 或 `{color-*}` token,禁在动效资产内写死 hex——与上文「颜色继承文字色」同一决策,资产内嵌颜色会击穿主题切换。
+- **morph 适用边界**:仅 stroke 同源图标、两端同一网格系统、统一描边粗细;跨图标集 morph 会形变穿帮。
+- 状态切换优先复用静态切档的语义(线性↔填充表选中态),morph 只在切换本身值得传达时叠加,不重复表达。

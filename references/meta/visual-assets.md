@@ -18,6 +18,15 @@
 3. **Logo 墙必须真 SVG**：优先 Simple Icons / devicon 官方源；虚构品牌则配自造 SVG 字标（几何标记即可，禁止文字假装 logo）。
 4. **LOGO-ONLY 规则**：Logo 墙下方禁止配"Trusted by 1000+ teams"式品类说明文字凑数。
 
+## 头像与插画（真实性与授权）
+
+> 来源：build-awwwards-quality-sites，2026-09 吸收；与硬禁令 3 的虚构品牌条款对齐口径——自造元素允许用于**显式虚构**场景，禁止冒充真实证明。
+
+- **头像必须真实照片**：证言 / 团队 / 背书场景的头像一律使用真实照片（用户提供或已授权素材）；禁止首字母块、插画头像、无脸剪影顶替。
+- **禁止生成人像冒充真实背书**：生成人像只能用于显式虚构场景并随产物标注；不得呈现为真实客户 / 员工 / 背书者。措辞联动：无可验证证据不得描述为"获奖 / 认可"（见 [`ai-tells.md`](ai-tells.md) 第 4 节）。
+- **插画禁模型手绘拼凑**：不得用模型手写 SVG / CSS / canvas 路径拼"插画"；插画走图像生成工具或授权素材（上文四级优先级 1 / 3）。例外：品牌标记、界面图标、数据图表（分别走 [`../dimensions/icon.md`](../dimensions/icon.md) 与 [`vocabulary/galleries.md`](../vocabulary/galleries.md) 的既有规范）。
+- 本节为 [`../templates/landing-patterns.md`](../templates/landing-patterns.md) L02"证言带真实头像"与 Testimonial"身份可溯"筛选标准提供规则支撑。
+
 ## 数量基线
 
 | 页面模式（surface-modes） | 真图基线 |

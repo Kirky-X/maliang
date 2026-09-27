@@ -1,7 +1,7 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
-> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。来源:ui-ux-pro-max-skill(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。
-> 与脚本的关系:`scripts/validate-draw-md.py` 现有 13 项检查中 2 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24,回链见脚本 R_* 常量行内注释),其余 11 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
+> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。来源:ui-ux-pro-max-skill(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条为 2026-09 吸收增补(impeccable 思想,Apache-2.0,中文自研);§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批),全库共 47 条。
+> 与脚本的关系:`scripts/validate-draw-md.py` 现有 15 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 11 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
 
@@ -26,7 +26,7 @@
 | slug                | 一句话规则                   | Do(怎么做)                        | Don't(别怎么做)           | 端   | Severity |
 | ------------------- | ---------------------------- | ---------------------------------- | -------------------------- | ---- | -------- |
 | form-labels         | 每个输入框有可见 label        | label for 关联或包裹输入框          | placeholder 当唯一标签      | 全端 | ERROR    |
-| input-type-keyboard | 语义输入类型唤起正确键盘      | email/tel/number/url + inputmode   | 一律 text 再靠用户手改      | 全端 | WARN     |
+| input-type-keyboard | 语义输入类型唤起正确键盘      | email/tel/number/url 语义 type;inputmode 分派(numeric→验证码、decimal→金额);用户名/验证码加 autocapitalize=none + autocorrect=off;enterkeyhint 匹配动作语义(go/search/send/next/done)   | 一律 text 再靠用户手改,或键盘属性缺配   | 全端 | WARN     |
 | inline-validation   | 校验在失焦后触发             | blur 后标记错误,提交前留纠错机会;GOV.UK 反对失焦校验,强监管/政府类表单改为提交时统一校验(双模式取舍见 [../vocabulary/forms.md](../vocabulary/forms.md)) | 每键报错                     | 全端 | WARN     |
 | redundant-entry     | 同流程已填信息自动复用        | 自动填充先前值或提供选择            | 强制重输同一地址/账号       | 全端 | WARN     |
 
@@ -65,6 +65,7 @@
 | chip-collection-reflow      | chip 集合先换行再缩短          | 允许换行;`+n` 折叠必须是可点开的披露               | 全塞一行裁切,`+n` 只是藏值      | 全端 | WARN     |
 | number-tabular              | 数据数字用等宽数字             | 表格数字/价格/计时用 tabular-nums 防列宽抖动        | 比例数字导致整列微跳            | 全端 | ADVISORY |
 | truncation-strategy         | 截断必须留全文路径             | ellipsis + tooltip/展开,键盘可达                   | 只在 hover 出 tooltip           | 全端 | WARN     |
+| fixed-width-text            | 文本容器禁固定宽度             | min-width / max-width / match-parent / flex 弹性,留换行与缩放余量 | 给 text 组件写死 `width: Npx`(超长词/emoji/RTL 溢出截断);登记:2026-09 整合审查(validate-draw-md 检查 14 回链) | 全端 | WARN     |
 
 ## 7. 错误处理
 
@@ -101,9 +102,32 @@
 | safe-area-awareness  | 主要操作避开刘海/手势条/边缘 | 用安全区 padding 包住导航与主按钮 | 底部按钮被手势条遮挡              | ArkTS/Flutter  | WARN     |
 | viewport-units       | 移动端全屏高度用 dvh        | min-h-dvh 或兼容浏览器 chrome    | `100vh` 被地址栏裁切              | Web            | WARN     |
 
+## 11. 浏览器原生面主题化
+
+> 来源:impeccable 思想(pbakaus/impeccable,Apache-2.0),2026-09 吸收(W3-10),中文自研。
+> 浏览器渲染的原生面(选区、光标、滚动条、焦点环、下划线)也是**设计面**:不做主题化时,它们以浏览器默认形态突兀在品牌界面里。全部为 Web 项;**Harmony/Flutter n/a**——原生组件体系无此面,主题化走各自平台机制(见 [`../commands/draw-harmony.md`](../commands/draw-harmony.md) / [`../commands/draw-flutter.md`](../commands/draw-flutter.md))。等宽数字已在 §6 number-tabular,此处不重复。
+
+| slug              | 一句话规则                    | Do(怎么做)                                        | Don't(别怎么做)                | 端   | Severity |
+| ----------------- | ----------------------------- | -------------------------------------------------- | ------------------------------- | ---- | -------- |
+| selection-style   | 文本选区颜色是设计面           | `::selection` 配主题前景/背景对(从 token 派生)      | 依赖浏览器默认蓝选区             | Web  | ADVISORY |
+| caret-color       | 输入光标与文本色同源           | `caret-color` 从主题 token 派生,暗色下可见          | 暗色界面留默认黑光标不可见       | Web  | ADVISORY |
+| scrollbar-theme   | 滚动条随主题着色               | `scrollbar-color`(或 `::-webkit-scrollbar`)与界面主题一致 | 暗色界面闪默认白滚动条     | Web  | ADVISORY |
+| focus-ring-token  | 焦点环颜色从主题派生           | 焦点环用主题色且满足对比度(可见性要求见 focus-states) | 默认蓝焦点环与品牌色打架       | Web  | ADVISORY |
+| underline-offset  | 链接下划线光学对位             | `text-underline-offset` + `text-decoration-thickness` 调至不压字形 | 默认下划线穿过降部 | Web  | ADVISORY |
+
+## 12. 国际化与方向
+
+> 来源:2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),validate-draw-md.py 检查 15 回链本节 slug。物理方向属性(left/right)不随书写方向翻转,RTL 语境下布局不镜像;逻辑属性(start/end / -inline-*)一次编写双向成立。行内 `ltr-only` 标注为显式豁免(确与方向无关时使用)。HarmonyOS / Flutter 有各自的方向镜像机制,本条 CSS 属性名仅 Web 端可核对。
+
+| slug               | 一句话规则                    | Do(怎么做)                                        | Don't(别怎么做)                | 端   | Severity |
+| ------------------ | ----------------------------- | -------------------------------------------------- | ------------------------------- | ---- | -------- |
+| physical-property  | 布局方向用逻辑属性             | margin/padding/border 用 `-inline-start/end`,text-align 用 `start/end` | 物理属性硬编码 left/right(或 text-align: left/right)且无 ltr-only 标注 | Web  | WARN     |
+
 ## 与其他文档的关系
 
 - WCAG 2.2 增量准则与韧性文本细则的展开版见 [`accessibility.md`](./accessibility.md) 第 7/8 节;触控目标分层口径(原生 44pt/48dp/44vp、Web 最低 24px/推荐 44px)与其 §5 强制项、§6 预检项、§7 target-size-minimum 一致
 - 对比度阈值与 prefers-* 强制支持的完整规范见 [`accessibility.md`](./accessibility.md),本文 color-contrast 等条目是其规则出处
 - 复用阶梯与结构性 hack 禁令见 [`framework/index.md`](../framework/index.md)
 - `scripts/validate-draw-md.py` 各检查项在脚本 R_* 常量行内注释标注本文 slug 回链:aria-label → aria-labels、touch-target → touch-target-44 / web-target-size-24,其余 11 项为结构/token 契约项注明"无 ux-rules 对应";新增脚本检查时先在本文登记规则条目
+- §11 浏览器原生面主题化的交付检查点在 [`preview-checklist.md`](../commands/preview-checklist.md) 5.11「原生面锁」三条(Web 项;Harmony/Flutter n/a)
+- overscroll 双层模型 / 键盘属性分派 / user-select 控件-内容二分的完整口径见 [`web-interface-guidelines.md`](./web-interface-guidelines.md)(input-type-keyboard 是其表单侧对齐条目)

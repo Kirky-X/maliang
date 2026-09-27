@@ -30,17 +30,19 @@
 
 ```html
 <meta name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+      content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="theme-color" content="#3f95dd">
 ```
 
 - `viewport-fit=cover` 让 `env(safe-area-inset-*)` 返回真实数值——没有它 safe-area 全部静默变 `0px`，内容钻进刘海底下。
-- `maximum-scale=1, user-scalable=no` 防双击缩放破坏固定框感。**唯一例外**：文字型阅读页（文章/长文官网）删掉这两项——从需要捏合缩放的人手里夺走能力，而纯滚动页没有固定框收益可保护。
+- **永不禁缩放**（2026-09 维护者裁决，来源 mobile-native Hard Rule 4）：禁写 `maximum-scale=1 / user-scalable=no`——那是禁果式修法，从需要捏合缩放的用户手里夺走能力（WCAG 1.4.4 缩放不受限）。输入聚焦自动放大的「因」是输入框字号 < 16px，用下面重置里的 16px 规则修因，不禁缩放禁果。
+- `interactive-widget=resizes-content`（Android Chrome 生效，他端静默忽略）：软键盘弹出时**挤压**视口而非覆盖，Android 键盘行为与 iOS 对齐——固定底栏不再被键盘盖住、焦点输入框不被遮挡。
 - `theme-color` 把浏览器 chrome 染成页面色。
 
 ```css
 * { box-sizing: border-box; margin: 0; padding: 0;
-    -webkit-tap-highlight-color: transparent; }   /* 杀灰闪 */
+    -webkit-tap-highlight-color: transparent; }   /* 杀灰闪;代价是每个交互件必须有 :active 按压反馈(见 ../meta/web-interface-guidelines.md Gesture Feel) */
+input, textarea, select { font-size: 16px; }       /* ≥16px 真机聚焦不触发整页放大——「永不禁缩放」的修因配套 */
 html, body { height: 100%; overflow-x: clip; }
 body { overflow: hidden; background: #08090b;      /* 桌面包围色 */
        display: flex; align-items: center; justify-content: center; }

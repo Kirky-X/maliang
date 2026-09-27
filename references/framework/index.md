@@ -3,6 +3,40 @@
 > 本文件是 `references/framework/` 分层框架文档数据库的入口,为 `draw-harmony` / `draw-flutter` / `draw-element` 三个子命令提供组件映射参考。
 > 每个框架下按组件类型组织(共 56 类,3 现有 + 53 新增),每类组件含两份文档(文件名遵循各框架生态术语惯例)。
 > 部分组件在某框架无原生对应时,以 N/A 占位文件说明缺失原因与替代方案,保持目录结构对称。
+> **API 基线(2026-09-28 实测)**:HarmonyOS NEXT 6.0.0(API 20) / Flutter 3.47.5(stable) / Element Plus 2.14.6;超基线 API 标 `⚠`,分 `safe to plan around` / `unsafe to write today` 两级并附降级写法,详见下文「API 基线」节。来源:write-swift 候选 1(工具链基线声明),2026-09 吸收。
+
+---
+
+## API 基线(2026-09-28 实测)
+
+`framework/` 组件文档与三个 `draw-*` 子命令产出均以本节基线为准,避免 ArkTS/Flutter/EP 快速演进导致生成代码版本错配。
+
+| 框架 | API 基线 | 发布日期 | 来源(查询日期 2026-09-28) |
+| ---- | -------- | -------- | ------------------------- |
+| HarmonyOS NEXT | 6.0.0 Release(API 20) | 2025-09-25 | API level:OpenHarmony 官方 docs `v6.0-release.md`(新增 API 锚点后缀 20,一手);版本与日期:媒体对「HarmonyOS 6.0.0(20) Release」的一致转述(二手)。华为官方版本说明页(developer.huawei.com/consumer/cn/doc/harmonyos-releases)为 JS 渲染页,程序化抓取失败,未能直接采信 |
+| Flutter | 3.47.5(stable 通道) | 2026-09-18 | Flutter 官方 releases JSON(storage.googleapis.com/flutter_infra_release/releases/releases_linux.json)的 `current_release.stable`,hash `6a19cca5`(一手);注意 flutter/flutter 的 GitHub Releases 已停更,勿以其为准 |
+| Element Plus | 2.14.6 | 2026-09-18 | `gh api repos/element-plus/element-plus/releases/latest`(一手) |
+
+> **HarmonyOS 待人工复核**:开发套件 26.0.0(API 号自 26.0.0 起改用 SemVer,对应 HarmonyOS 7.0 / OpenHarmony 7.0)已于 2026-08-29 发布——此信息目前仅媒体转述,官方页未能程序化核实。存量设备仍以 6.x 为主,故基线暂取一手可验证的 6.0.0(API 20);人工在官方版本说明页复核后可上调基线并同步本表与三个 `draw-*.md` 头部声明。
+
+### 超基线 API 两级语义
+
+`framework/` 文档与 `draw-*` 产出中,凡依赖高于基线的 API 一律标 `⚠`,按可写性分两级:
+
+| 级别 | 判定 | 处理 |
+| ---- | ---- | ---- |
+| `⚠ safe to plan around` | 已稳定发布(正式 Release)但超出基线 | 设计与 token 层可正常写入规划;实现时必须附版本/能力检测与降级写法 |
+| `⚠ unsafe to write today` | 处于 Beta/预览,或仅来自未核实来源 | 禁止写入产出代码;直接按降级写法用基线内 API 或成熟组合方案实现同等效果 |
+
+### 降级写法
+
+| 框架 | 降级模式 |
+| ---- | -------- |
+| HarmonyOS(ArkTS) | 优先基线内等价属性;确需新 API 时用 `canIUse()`(SysCap 能力检测)写降级分支 |
+| Flutter(Dart) | 优先基线内 widget;新 API 用主题/平台分支或生态稳定包兜底,禁止 pin 未稳定 channel |
+| Element Plus(Vue 3) | 优先基线内组件与 CSS 变量;新 API 做特性检测(typeof/版本判断)后走降级组件或样式 |
+
+> 判据:产出代码必须能在存量主流系统版本上运行;拿不准时一律按 `unsafe to write today` 处理。
 
 ---
 

@@ -53,7 +53,7 @@
 
 ## 生产级硬规则
 
-> 交付前机械检查,任一违反 = 硬性失败。补充 [`ai-tells.md`](../meta/ai-tells.md) 第 9 节"三列卡片禁令"之外的布局专属约束。
+> 交付前机械检查,任一违反 = 硬性失败。补充 [`ai-tells.md`](../meta/ai-tells.md) 第 9 节"三列卡片禁令"之外的布局专属约束。L3 格子数禁令与 L4 家族多样性增补来源:taste-skill,2026-09 吸收。
 
 ### L1 · Zigzag 上限(≤ 3 重复)
 
@@ -72,12 +72,14 @@
 - `layout-bento-grid` 单个 bento 区域内单元数 ≤ 6 个
 - 超过 6 个 = 视觉拥挤,拆为多个 bento 区域(中间用留白或分隔标题断开)
 - 单元大小差异:必须有 1 个"主单元"(≥ 2×2)+ 多个"次单元"(1×1 或 1×2),禁止全等大(否则退化为 `layout-grid-uniform`)
+- 格子数 = 内容条数:3 项内容 → 3 格(1+2 或 2+1 非对称),5 项 → 5 格(hero+4 等);网格中部或尾部出现空格子 = 规划错误,**重塑网格形状,禁止贴空白块凑对称**
 
 ### L4 · Section 布局重复禁令(≤ 2 个相同布局连续)
 
 - 同一布局模式连续重复 ≤ 2 次(如 `layout-bento-grid` → `layout-bento-grid` → `layout-bento-grid` = 违规)
 - 第 3 个 section 必须切换布局(如改为 `layout-single-column` / `layout-split-screen` / `layout-full-bleed`)
-- 允许:相同布局非连续出现(如 bento → single → bento = 合规)
+- 布局家族多样性下限:8 节及以上的页面,使用的布局家族 ≥ 4 种(家族 = 本文档命名表,10 个模式各计 1 族);`layout-single-column` / `layout-stacked` 基础流式不计入种类统计,防止用正文流凑数
+- 同一布局家族整页至多出现 1 次("精选案例"区不得长得像"我们做什么"区);本条**废止**上述"非连续复用合规"口径——bento → single → bento 现在违规,同一家族第 2 次出现必须换家族
 
 ### L5 · Marquee 单页 ≤ 1
 

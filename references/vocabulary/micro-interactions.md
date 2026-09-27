@@ -19,16 +19,23 @@
 | `micro-drag-handle`   | 拖拽手柄 hover 显示                                | 可拖拽列表、可调大小面板              |
 | `micro-loading-spinner` | 转 spinner                                       | 短时加载(< 1s)                      |
 | `micro-loading-bar`   | 顶部进度条                                        | 长时加载 / 页面切换                   |
+| `micro-icon-morph`    | 图标在两个命名状态间形变(菜单↔关闭、播放↔暂停)   | 图标级状态切换(见 [`icon.md`](../dimensions/icon.md) 动效图标节) |
+| `micro-hold-confirm`  | hold-to-confirm:长按 2s 环形填充,松手 200ms 回弹 | 破坏性操作防误触(删除/清空/支付)      |
 
 ## 频率法则:该不该动
 
-> 动画成本按操作频率判断,不是"越动越好"。来源:interface-design。
+> 动画成本按操作频率判断,不是"越动越好"。来源:interface-design;中间档、键盘否决与 utility 法则:find-animation-opportunities + apple-design + prototype + web-design-pascalorg 四源印证,2026-09 吸收。
 
 | 使用频率                                     | 动画策略                     |
 | -------------------------------------------- | ---------------------------- |
 | 每天 100+ 次的操作(快捷键、命令面板等)     | 禁止动画,延迟即成本         |
+| 每天几十次的操作(hover 状态、列表导航、频繁 toggle) | 否决,或仅近乎无感的反馈(快而轻) |
 | 偶发表面(modal / drawer / toast / popover) | 标准入场 / 退场动画          |
 | 首次运行(onboarding / 空状态)              | 才可加惊喜动效               |
+
+**键盘一票否决**:键盘发起的操作(命令面板、快捷键、焦点跳转)是一票否决项,不是判断题——这类操作每天重复上百次,动画让它们显得慢、迟滞、与手脱节。参照 Raycast:无任何开合动画,就是最优体验。
+
+**utility 法则(多模态反馈的节制)**:动效 / 声音 / 触觉只在有意义时刻给(成功、错误、提交、吸附落定);过度反馈会训练用户忽略一切反馈。三条判据:因果性(反馈必须明显由真实触发事件引起,且性格匹配动作的物理感)、同帧性(视觉 / 声音 / 触觉同帧触发,相互延迟即穿帮)、效用性(只在值得处给——本条即频率表与上方两段的统一口径,不另设第二套节制标准)。
 
 ## 时长预算表
 
@@ -43,11 +50,11 @@
 
 > **全库统一分层口径**(其他文档涉及动效时长时以此为准,冲突数值保留但须注"见 micro-interactions 分层口径"):
 > 1. **反馈类**(按压 / tooltip / toast 等元素级反馈)duration **< 300ms**;
-> 2. **浮层转场**(modal / drawer / popover 入退场)**≤ 400ms**——`validate-draw-md.py` 检查 11 硬门(ERROR);如确需更长转场,须同步调整脚本阈值并说明理由,或改用 `{duration-*}` token 引用(不含字面量 ms,脚本自然跳过);
-> 3. **装饰 / 骨架类长动效**(缓动库入场、滚动揭示、skeleton shimmer)**≤ 600ms** 且**必须可跳过**(prefers-reduced-motion 降级或用户可跳过);
+> 2. **浮层转场**(modal / drawer / popover 入退场)**≤ 400ms**——`validate-draw-md.py` 检查 11 硬门(ERROR);如确需更长转场,须同步调整脚本阈值并说明理由,或改用 `{duration-*}` token 引用(不含字面量 ms,脚本自然跳过)。**弹簧路线豁免**:弹簧无固定时长,声明为弹簧驱动(`motion-model: spring`)且显式给出弹簧参数(damping / response 等)的行不受 400ms 硬门约束,脚本仅留 WARN 痕;只写 spring 不写参数仍按违规报 ERROR(豁免是显式条件,不是阈值放宽,见 [`interruptible-motion.md`](../motion-skeletons/interruptible-motion.md) 弹簧两参数模型);
+> 3. **装饰 / 骨架类长动效**(滚动揭示、skeleton shimmer 等非入场循环 / 长动效)**≤ 600ms** 且**必须可跳过**(prefers-reduced-motion 降级或用户可跳过)。**入场 / 转场类不适用本档**,一律按第 2 层 ≤400ms 执行(2026-09 整合收敛:原「缓动库入场 150-600ms」与 validate-draw-md 检查 11、preview-check 5.9.3 两道 400ms 硬门冲突,按预览侧既有收敛决策统一)。本档 >400ms 的动效在 draw-md 规格中必须以 `{duration-*}` token 引用表达(不含字面量 ms,检查 11 自然跳过),禁直写字面量 ms;preview 实现侧受 preview-check 5.9.3 无条件 400ms 门约束,>400ms 装饰档要在实现层落地,须预览验证组先在其脚本开显式豁免口径(参照检查 11 弹簧豁免的显式条件模式),未开前实现一律 ≤400ms;
 > 4. **stagger 间隔单档 ≤ 80ms**;装饰档放宽到 ≤ 120ms 须 MOTION_INTENSITY ≥ 8(见 [`dials.md`](../meta/dials.md))。
 >
-> 上表数值是第 1/2 层的按组件细分;骨架 / 滚动揭示等装饰类长动效不受本表上限约束,按第 3 层执行(缓动库入场 150-600ms、dials L4-7 ≤400ms、motion-skeletons ≤600ms 与之相容)。
+> 上表数值是第 1/2 层的按组件细分;骨架 / 滚动揭示等装饰类长动效不受本表上限约束,按第 3 层执行(缓动库入场 ≤400ms、dials L4-7 ≤400ms、motion-skeletons ≤600ms 装饰循环与之相容)。
 
 ## 使用规则
 
@@ -58,7 +65,32 @@
 - 入场**禁止** `ease-in` 类加速曲线(首帧可见延迟,像卡顿);入场一律用 ease-out `cubic-bezier(0.23, 1, 0.32, 1)`
 - **禁止**元素从 `scale(0)` 出现(突变突兀);从 `scale(0.95) + opacity: 0` 起步,popover / dropdown 从触发器原点缩放
 - 退场必须比入场**更快更轻**(时长约为入场的 60-80%,幅度更小)
-- 所有微交互必须实现 `prefers-reduced-motion` 降级
+- **动效降级三档**(2026-09 维护者裁决采用三档分级,取代旧「所有微交互一律降级」口径;思想来源 morphicons `reducedMotion` 策略,2026-09 吸收):
+  - **`user`(默认档)**——小幅沟通性微转场(第 1 层 <300ms 元素级反馈、icon morph):跟随系统 `prefers-reduced-motion` 设置,开启时直达**静止终态**即可,静止终态必须完整传达状态;无需专门设计降级编排;
+  - **`always`(强制降级档)**——功能性与大幅动效(第 2 层浮层转场、入场编排,第 3 层滚动揭示 / skeleton):**必须**自带降级形态(位移改淡入、编排改瞬时切换、循环改静止),不做降级视为未完成;
+  - **`never`(例外档)**——动效即交互本体、降级即功能损坏的场合(拖拽跟手、弹簧物理反馈):允许不降级,须在使用处说明理由。
+- `micro-hold-confirm` 的「2s」是**长按判定窗口**(随按压持续的进度填充),非一次性转场时长,不受 400ms 硬门约束;draw-md 产物中勿写成 `duration: 2000ms`(会触发检查 11),应写 `long-press=hold 2s` 类交互语义
+- Web 端入场过渡可渐进增强 `@starting-style`(元素首次渲染 / 从 `display:none` 出现时的过渡起点)
+
+> **@starting-style 注记(仅 Web)**:兼容性 Chrome 117+ / Edge 117+ / Safari 17.5+ / Firefox 129+(2024 Baseline Newly Available,来源 caniuse/MDN);且 `@supports at-rule (@starting-style)` 特性检测尚不可用(CSSWG #10648)。**不可作唯一入场路径**——不支持浏览器中元素会直接以终态出现,这本身可接受;但若初态依赖它隐藏元素(如从 `opacity:0` 过渡),必须保证无支持时不残缺:默认态写终态,起点只放进 `@starting-style` 块;JS fallback 为元素插入后强制 reflow 再移除初始 class,或直接接受无动画直显。HarmonyOS / Flutter 无对应概念,n/a。
+
+## 声音反馈
+
+> 小篇幅决策节,不升级为独立维度。来源:web-design-pascalorg(候选 6),2026-09 吸收。
+
+| 场景                       | 用声? | 说明                         |
+| -------------------------- | ----- | ---------------------------- |
+| 支付成功 / 提交完成        | 用    | 有意义的结果时刻             |
+| 错误 / 告警                | 用    | 需要穿透视觉注意力时         |
+| 吸附落定 / 拖拽完成        | 可用  | 与触觉成对,同帧触发         |
+| 打字 / hover / 普通导航    | 禁    | 高频操作加声是噪声(见频率法则 utility 法则) |
+
+**三硬规则**:
+1. 每个声音必须有**视觉等价物**——声音是增强通道,禁作唯一反馈(无障碍底线);
+2. 必须有**关闭开关**——应用内静音开关,且默认跟随系统静音状态;
+3. **尊重系统偏好**——系统静音 / 勿扰模式下不发声,不打破用户全局预期。
+
+**三框架落点(各一行)**:Web → Web Audio API 预解码短音效(禁 `<audio>` 元素即时播放,加载延迟毁掉因果性);HarmonyOS → soundPool 短音效(`@ohos.multimedia`,API 细节以官方现行文档为准);Flutter → audioplayers / soundpool 类插件预加载播放。
 
 ## 在 draw-md 中的写法
 
@@ -129,7 +161,7 @@
 
 **使用规则**:
 - 状态过渡 duration ≤ 150ms → 用 `ease-snappy`
-- 入场动画 duration 150-600ms(属第 3 层装饰/入场长动效档,见时长预算表分层口径)→ 用 `ease-out-soft`
+- 入场动画 duration 150-400ms(入场属转场节奏,受两道脚本 400ms 硬门;2026-09 收敛,原 150-600ms 作废,不入第 3 层装饰档)→ 用 `ease-out-soft`
 - 退场动画 → 用 `ease-in-soft`
 - MOTION_INTENSITY ≥ 7 且需弹性 → 用 `ease-spring`(过冲 ≤ 1.2,防眩晕)
 - Liquid Glass 元素(见 [`glass-advanced.md`](../dimensions/glass-advanced.md))→ 用 `ease-glass`
