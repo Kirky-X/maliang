@@ -1,4 +1,4 @@
-"""validate-draw-md.py 全部 13 项检查的 fixture 单元测试。
+"""validate-draw-md.py 全部 15 项检查的 fixture 单元测试。
 
 双列 fixture 约定(对齐 impeccable TDD 流程):每项检查至少 1 个"应报"用例
 + 1 个"不应报"用例;规则实现为纯函数,直接以合成行列表调用。
@@ -314,6 +314,115 @@ class TestMotionDuration(unittest.TestCase):
         # 不应报: 400ms 恰好达标
         results = vdm.check_motion_duration("ui/home.md", ["duration: 400ms"])
         self.assertEqual(results, [])
+
+    def test_spring_route_with_params_downgrades_to_warn(self):
+        # 弹簧豁免: 显式 spring 路线 + damping/response 参数 → WARN 留痕
+        line = ("| transition | motion-model: spring(response=0.4, damping=1.0), "
+                "settle-cap 500ms | 弹簧无固定时长 |")
+        results = vdm.check_motion_duration("ui/home.md", [line])
+        self.assertTrue(any(r[0] == "WARN" for r in results))
+        self.assertFalse(any(r[0] == "ERROR" for r in results))
+
+    def test_spring_route_without_params_still_error(self):
+        # 豁免条件不成立: 只写 spring 路线未给参数 → 仍 ERROR,提示补参数
+        line = "| transition | motion-model: spring, 500ms | 缺参数 |"
+        results = vdm.check_motion_duration("ui/home.md", [line])
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+        self.assertFalse(any(r[0] == "WARN" for r in results))
+
+    def test_ease_spring_bezier_not_exempt(self):
+        # ease-spring 是 cubic-bezier 近似(固定时长),不含 spring 调用形式,
+        # 不得匹配豁免 → 500ms 仍 ERROR
+        line = "| transition | 500ms ease-spring | 近似弹簧 |"
+        results = vdm.check_motion_duration("ui/home.md", [line])
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+        self.assertFalse(any(r[0] == "WARN" for r in results))
+
+
+class TestFixedWidthText(unittest.TestCase):
+    def test_text_fixed_width_warns(self):
+        # 应报(warn,ux-rules slug fixed-width-text §6): text 组件定宽,超长文本不鲁棒
+        lines = _rows_to_lines([
+            "| 组件类型 | `text` | |",
+            "| 宽度 width | 200px | |",
+        ])
+        results = vdm.check_fixed_width_text("ui/home.md", lines)
+        self.assertTrue(any(r[0] == "WARN" for r in results))
+        self.assertFalse(any(r[0] == "ERROR" for r in results))
+
+    def test_text_min_width_passes(self):
+        # 不应报: min-/max- 是加固定边界,非定宽
+        lines = _rows_to_lines([
+            "| 组件类型 | `text` | |",
+            "| 宽度 width | min-width: 120px | |",
+        ])
+        results = vdm.check_fixed_width_text("ui/home.md", lines)
+        self.assertEqual(results, [])
+
+    def test_text_match_parent_passes(self):
+        # 不应报: match-parent 非定值
+        lines = _rows_to_lines([
+            "| 组件类型 | `text` | |",
+            "| 宽度 width | match-parent | |",
+        ])
+        results = vdm.check_fixed_width_text("ui/home.md", lines)
+        self.assertEqual(results, [])
+
+    def test_non_text_component_skipped(self):
+        # 不应报: 非 text 组件定宽不属本检查(button 定宽另行由触控检查管)
+        lines = _rows_to_lines([
+            "| 组件类型 | `button` | |",
+            "| 宽度 width | 200px | |",
+        ])
+        results = vdm.check_fixed_width_text("ui/home.md", lines)
+        self.assertEqual(results, [])
+
+
+class TestPhysicalProperty(unittest.TestCase):
+    def test_margin_left_warns(self):
+        # 应报(warn,ux-rules slug physical-property §12): 物理方向属性应改逻辑属性
+        for bad in ["| 外边距 | margin-left: 8px | |",
+                    "| 内边距 | padding-right: 12px | |",
+                    "| 边框 | border-left: 1px solid | |"]:
+            results = vdm.check_physical_property("ui/home.md", [bad])
+            self.assertTrue(any(r[0] == "WARN" for r in results), bad)
+            self.assertFalse(any(r[0] == "ERROR" for r in results), bad)
+
+    def test_text_align_left_warns(self):
+        results = vdm.check_physical_property(
+            "ui/home.md", ["| 对齐 | text-align: left | |"])
+        self.assertTrue(any(r[0] == "WARN" for r in results))
+        self.assertFalse(any(r[0] == "ERROR" for r in results))
+
+    def test_logical_properties_pass(self):
+        # 不应报: 逻辑属性
+        for good in ["| 外边距 | margin-inline-start: 8px | |",
+                     "| 对齐 | text-align: start | |"]:
+            results = vdm.check_physical_property("ui/home.md", [good])
+            self.assertEqual(results, [])
+
+    def test_ltr_only_annotation_exempt(self):
+        # 不应报: 行内 ltr-only 显式标注豁免
+        results = vdm.check_physical_property(
+            "ui/home.md", ["| 外边距 | margin-left: 8px (ltr-only) | 方向无关 |"])
+        self.assertEqual(results, [])
+
+    def test_run_checks_covers_new_rules(self):
+        # run_checks 聚合层含 fixed-width-text / physical-property 两个新 rule
+        text = (
+            "---\nname: x\ndescription: d\nbackground: \"{surface-base}\"\n"
+            "updated: 2026-01-01\nversion: 1.0.0\ncomponents: [text]\n---\n"
+        )
+        lines = _rows_to_lines([
+            "| 组件类型 | `text` | |",
+            "| 宽度 width | 200px | |",
+            "| 外边距 | margin-left: 8px | |",
+        ])
+        results = vdm.run_checks("ui/home.md", text, lines, VALID_TOKENS,
+                                 VALID_SLUGS, False)
+        rules = {r[3] for r in results}
+        self.assertIn("fixed-width-text", rules)
+        self.assertIn("physical-property", rules)
 
 
 class TestCardRadius(unittest.TestCase):
