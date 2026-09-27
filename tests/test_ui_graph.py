@@ -115,6 +115,54 @@ class TestUiGraph(unittest.TestCase):
             ug.parse_directory(str(Path(self.root) / "no-such-dir"))
 
 
+class TestDiffHash(unittest.TestCase):
+    """diff-hash 基线对比:无快照容错(视为 added)/无变更/修改与删除检出。
+
+    无 ui-hash-state.json 时不作硬失败,视为空基线(对齐 ui-graph.md
+    失败模式表:输出"无历史快照,所有文件视为 added",提示先跑 compute-hash);
+    此语义同时是 critique backlog 指纹失效判定的基础。
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = _make_tree(
+            self._tmp.name, "tap=→ui/setting/about.md; state=无; db=无; api=无")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_missing_baseline_treated_as_added(self):
+        # 不应阻断: 无快照视为空基线,全部页面计入 added(token.md 仍排除)
+        result = ug.diff_hash(self.root)
+        self.assertTrue(result["baseline_missing"])
+        self.assertEqual(result["added"],
+                         ["ui/home.md", "ui/setting/about.md"])
+        self.assertNotIn("token.md", result["added"])
+        self.assertEqual(result["modified"], [])
+        self.assertEqual(result["deleted"], [])
+
+    def test_unchanged_reports_no_diff(self):
+        # 不应报: 建基线后无任何改动,三列表全空且 baseline_missing=False
+        ug.compute_hash(self.root)
+        result = ug.diff_hash(self.root)
+        self.assertFalse(result["baseline_missing"])
+        self.assertEqual(
+            (result["added"], result["modified"], result["deleted"]),
+            ([], [], []))
+
+    def test_modified_and_deleted_detected(self):
+        # 应报: 逐字节比对——home.md 改一个字节即 modified,删除即 deleted
+        ug.compute_hash(self.root)
+        home = Path(self.root) / "ui" / "home.md"
+        patched = home.read_text(encoding="utf-8") + "\n<!-- touched -->\n"
+        home.write_text(patched, encoding="utf-8")
+        (Path(self.root) / "ui" / "setting" / "about.md").unlink()
+        result = ug.diff_hash(self.root)
+        self.assertEqual(result["modified"], ["ui/home.md"])
+        self.assertEqual(result["deleted"], ["ui/setting/about.md"])
+        self.assertEqual(result["added"], [])
+
+
 class TestBuildImplMap(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
