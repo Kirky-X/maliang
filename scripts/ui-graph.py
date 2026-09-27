@@ -317,19 +317,22 @@ def compute_hash(target_dir):
 
 
 def diff_hash(target_dir):
-    """对比当前哈希与 ui-hash-state.json,返回 {'added', 'modified', 'deleted'}。
+    """对比当前哈希与 ui-hash-state.json,返回 {'baseline_missing', 'added', 'modified', 'deleted'}。
 
+    - baseline_missing: 历史快照不存在(True 时视为空基线,不作硬失败)
     - added: 当前存在但历史快照中没有
     - modified: 两边都有但 sha256 不同
     - deleted: 历史快照中有但当前不存在
+    无历史快照时视为空基线:全部当前文件计入 added,由调用方打印提示
+    引导先跑 compute-hash(ui-graph.md 失败模式表约定,禁止静默吞掉)。
     """
     state_path = os.path.join(target_dir, "ui-hash-state.json")
-    if not os.path.isfile(state_path):
-        raise FileNotFoundError(
-            "ui-hash-state.json 不存在: " + state_path + ",请先运行 compute-hash")
-    with open(state_path, "r", encoding="utf-8") as f:
-        old_state = json.load(f)
-    old_files = {f["path"]: f["sha256"] for f in old_state.get("files", [])}
+    baseline_missing = not os.path.isfile(state_path)
+    old_files = {}
+    if not baseline_missing:
+        with open(state_path, "r", encoding="utf-8") as f:
+            old_state = json.load(f)
+        old_files = {f["path"]: f["sha256"] for f in old_state.get("files", [])}
 
     rel_paths = parse_directory(target_dir)
     current_files = {}
@@ -343,7 +346,8 @@ def diff_hash(target_dir):
     modified = sorted([p for p in current_files
                        if p in old_files and old_files[p] != current_files[p]])
     deleted = sorted([p for p in old_files if p not in current_files])
-    return {"added": added, "modified": modified, "deleted": deleted}
+    return {"baseline_missing": baseline_missing,
+            "added": added, "modified": modified, "deleted": deleted}
 
 
 # ---------------------------------------------------------------------------
@@ -600,6 +604,8 @@ def _cmd_diff_hash(target):
     except FileNotFoundError as e:
         print("[ERROR] " + str(e))
         return 1
+    if result.get("baseline_missing"):
+        print("无历史快照,所有文件视为 added(提示:先运行 compute-hash 建基线)")
     total = len(result["added"]) + len(result["modified"]) + len(result["deleted"])
     if total == 0:
         print("无变更")

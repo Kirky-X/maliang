@@ -8,10 +8,11 @@
 退出码: 0 = 全部通过; 1 = 有 error; 2 = 仅有 warning。
 依赖: Python 3 标准库(无第三方依赖)。
 
-覆盖 preview-checklist.md 中可脚本化的检查项(实测 49/113 项),
+覆盖 preview-checklist.md 中可脚本化的检查项(实测 49/135 项),
 其余需浏览器/视觉验证的项标记为 MANUAL。
 
-检查分组(对应 preview-checklist.md §5.1-§5.13):
+检查分组(对应 preview-checklist.md §5.1-§5.13;§5.0 为运行时过程区,
+§5.14-§5.16 为交付完备/真机/加固运行时项,脚本均不覆盖):
   5.1  AI Tells       — lorem ipsum / 整数凑数 / unsplash / Google Fonts 阻塞
   5.2  Performance    — img 尺寸 / font-display / z-index / backdrop-filter / will-change
   5.3  WCAG 对比度    — 正文/大文本/placeholder/disabled 对比度 / 暗色模式 / 纯红绿
@@ -1086,7 +1087,7 @@ def main(argv):
         print("")
         print("=" * 40)
         print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
-        print("覆盖: 49/113 项(实测可脚本化);其余 64 项需浏览器/视觉/运行时验证(MANUAL,见 5.13)")
+        print("覆盖: 49/135 项(实测可脚本化);其余 86 项需浏览器/视觉/运行时验证(MANUAL,见 checklist §5.0 与 §5.14-§5.16 及各分区运行时项)")
 
     if error_count > 0:
         if fmt == "text":

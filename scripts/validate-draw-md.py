@@ -30,9 +30,14 @@
   9. 交互组件缺 aria-label(error)               rule=aria-label
   10. 触控目标分端判定(原生 <44 error;           rule=touch-target
       Web/未知 <24 error、24-43 warning)
-  11. 动效 ≤400ms(error)                         rule=motion-duration
+  11. 动效 ≤400ms(error;弹簧路线显式豁免时降      rule=motion-duration
+      级 WARN,豁免须同时声明 spring 路线与
+      damping/response 参数)
   12. 卡片 radius 违规(error)                    rule=card-radius
   13. z-index 字面量违规(error)                  rule=z-index
+  14. 文本容器固定宽度(warn,组件类型含 text)    rule=fixed-width-text
+  15. CSS 物理方向属性(warn,行内 ltr-only        rule=physical-property
+      标注豁免)
 """
 
 import argparse
@@ -129,10 +134,41 @@ RULE_TOUCH_TARGET = "touch-target"        # ux-rules slug: touch-target-44 + web
 RULE_MOTION_DURATION = "motion-duration"  # 无 ux-rules 对应(micro-interactions.md 时长预算)
 RULE_CARD_RADIUS = "card-radius"          # 无 ux-rules 对应(radius.md 阶梯)
 RULE_Z_INDEX = "z-index"                  # 无 ux-rules 对应(token.md z-index 档)
+RULE_FIXED_WIDTH_TEXT = "fixed-width-text"        # ux-rules slug: fixed-width-text(§6, WARN)
+RULE_PHYSICAL_PROPERTY = "physical-property"      # ux-rules slug: physical-property(§12, WARN)
 
 # z-index 字面量(匹配 z-index: <数字> 形式,排除 token 引用 {z-index-*})
 Z_INDEX_LITERAL_RE = re.compile(
     r"z-index\s*[:=]\s*\d+", re.IGNORECASE
+)
+
+# 弹簧路线显式标记(检查 11 豁免条件之一):motion-model: spring /
+# timing: spring / spring-route 注记 / spring(...) 调用形式。
+# ease-spring 是 cubic-bezier 近似(有固定时长,仍受 400ms 硬门),不含
+# spring( 调用形式与独立 spring 词,不会误匹配。
+SPRING_ROUTE_RE = re.compile(
+    r"motion-model\s*[:=]\s*spring|timing\s*[:=]\s*spring\b|\bspring-route\b"
+    r"|spring\s*\(",
+    re.IGNORECASE,
+)
+
+# 弹簧参数声明(检查 11 豁免条件之二):damping / dampingFraction /
+# bounce / response / stiffness 之一带数值。豁免必须同时声明参数,
+# 防止只写 spring 二字即绕过硬门(显式条件,非放宽阈值)。
+SPRING_PARAMS_RE = re.compile(
+    r"(?:damping(?:fraction)?|bounce|response|stiffness)\s*[:=]\s*-?\d+(?:\.\d+)?",
+    re.IGNORECASE,
+)
+
+# CSS 物理方向属性(harden 可正则子集):margin/padding/border 的
+# left/right 物理变体,RTL 语境应改逻辑属性 -inline-start/-inline-end。
+# top/bottom 不随书写方向翻转,不收;`(?<![\w-])` 防 "sub-margin-left" 类误配。
+PHYSICAL_MARGIN_PADDING_RE = re.compile(
+    r"(?<![\w-])(?:margin|padding|border)-(?:left|right)\s*[:=]",
+    re.IGNORECASE,
+)
+TEXT_ALIGN_PHYSICAL_RE = re.compile(
+    r"text-align\s*[:=]\s*(left|right)\b", re.IGNORECASE
 )
 
 
@@ -675,18 +711,52 @@ def check_touch_target(rel_path, lines, platform=""):
 
 
 def check_motion_duration(rel_path, lines):
-    """检查 11:动效 duration ≤400ms(error)。
+    """检查 11:动效 duration ≤400ms(error),弹簧路线显式豁免。
 
     扫描 \\d+ms 模式,>400 返回 error(AUDIT-REPORT G06)。
     引用 token(如 {duration-slower})不含 \\d+ms,自然跳过。
+    spring 豁免(显式条件,非放宽阈值):同一行同时声明
+    弹簧路线(SPRING_ROUTE_RE:motion-model: spring / spring(...) /
+    spring-route)与弹簧参数(SPRING_PARAMS_RE:damping/response 等
+    带数值)时,该行 ms 值解释为落定保险丝,降级 WARN 留痕——弹簧无
+    固定时长,400 上限只是兜底断路器。只写 spring 路线不写参数,豁免
+    不成立,仍报 error 并提示补参数;完全无 spring 标记照旧 error。
     """
     results = []
     for i, line in enumerate(lines, start=1):
         if TABLE_SEP_RE.match(line):
             continue
+        has_route = SPRING_ROUTE_RE.search(line) is not None
+        has_params = SPRING_PARAMS_RE.search(line) is not None
         for m in MS_DURATION_RE.finditer(line):
             duration = int(m.group(1))
-            if duration > 400:
+            if duration <= 400:
+                continue
+            if has_route and has_params:
+                results.append(
+                    (
+                        "WARN",
+                        rel_path,
+                        i,
+                        "动效 "
+                        + str(duration)
+                        + "ms >400ms:弹簧路线豁免(spring 路线与 damping/response"
+                        " 参数均已声明),ms 值按落定保险丝留痕",
+                    )
+                )
+            elif has_route:
+                results.append(
+                    (
+                        "ERROR",
+                        rel_path,
+                        i,
+                        "动效 "
+                        + str(duration)
+                        + "ms >400ms 硬约束违规:声明了弹簧路线但未给 damping/"
+                        "response 等参数,豁免条件不成立",
+                    )
+                )
+            else:
                 results.append(
                     (
                         "ERROR",
@@ -761,6 +831,97 @@ def check_z_index_literals(rel_path, lines):
     return results
 
 
+def check_fixed_width_text(rel_path, lines):
+    """检查 14:文本容器固定宽度(warn)。
+
+    ux-rules slug: fixed-width-text(§6 文本韧性,WARN 级)。
+    harden 可正则子集:组件类型含 text 的参数表,width/宽度 字段
+    为 \\d+px 定值即报 warn——文本容器定宽对超长输入(超长词/未断行
+    长串/emoji/RTL)不鲁棒,应改 min-width / max-width / match-parent /
+    flex 弹性。min-/max- 前缀是加固定边界而非定宽,放行。
+    """
+    results = []
+    for header_line, rows in _extract_param_tables(lines):
+        type_row = None
+        for line_no, cells in rows:
+            if cells and cells[0] == "组件类型":
+                type_row = (line_no, cells)
+                break
+        if type_row is None:
+            continue
+        line_no, cells = type_row
+        value = cells[1] if len(cells) > 1 else ""
+        slugs = _extract_slugs_from_value(value)
+        if not any("text" in s for s in slugs):
+            continue
+        for row_line_no, row_cells in rows:
+            if not row_cells:
+                continue
+            field = row_cells[0].lower()
+            if ("width" not in field and "宽度" not in field) or "height" in field:
+                continue
+            if field.strip().startswith(("min-", "max-")) or "min-" in field or "max-" in field:
+                continue
+            row_value = row_cells[1] if len(row_cells) > 1 else ""
+            if "match-parent" in row_value.lower():
+                continue
+            if PX_VALUE_RE.fullmatch(row_value.strip().strip("`")):
+                results.append(
+                    (
+                        "WARN",
+                        rel_path,
+                        row_line_no,
+                        "文本容器固定宽度 "
+                        + row_value
+                        + ",超长文本不鲁棒(溢出/截断);改 min-width/max-width/"
+                        "match-parent/flex(ux-rules: fixed-width-text)",
+                    )
+                )
+    return results
+
+
+def check_physical_property(rel_path, lines):
+    """检查 15:CSS 物理方向属性(warn),行内 ltr-only 标注豁免。
+
+    ux-rules slug: physical-property(§12 国际化与方向,WARN 级)。
+    harden 可正则子集:margin/padding/border-left|right 与
+    text-align: left|right 在 RTL 语境需镜像,应改逻辑属性
+    -inline-start/-inline-end 与 text-align: start|end。
+    确与方向无关的写法可在行内标注 ltr-only 豁免(显式声明优于静默)。
+    """
+    results = []
+    for i, line in enumerate(lines, start=1):
+        if TABLE_SEP_RE.match(line):
+            continue
+        if "ltr-only" in line.lower():
+            continue
+        for m in PHYSICAL_MARGIN_PADDING_RE.finditer(line):
+            results.append(
+                (
+                    "WARN",
+                    rel_path,
+                    i,
+                    "物理方向属性 "
+                    + m.group(0).rstrip(":=").strip()
+                    + ",RTL 语境应改逻辑属性 -inline-start/-inline-end"
+                    "(确与方向无关可加 ltr-only 标注;ux-rules: physical-property)",
+                )
+            )
+        for m in TEXT_ALIGN_PHYSICAL_RE.finditer(line):
+            results.append(
+                (
+                    "WARN",
+                    rel_path,
+                    i,
+                    "text-align: "
+                    + m.group(1)
+                    + ",应改 start/end 逻辑值(RTL 自动镜像;"
+                    "确与方向无关可加 ltr-only 标注;ux-rules: physical-property)",
+                )
+            )
+    return results
+
+
 # ---------------------------------------------------------------------------
 # 文件收集与主流程
 # ---------------------------------------------------------------------------
@@ -787,10 +948,10 @@ def _tag(rule, check_results):
 
 def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level,
                vocab_slugs=None):
-    """对单个文件运行检查 1-12,返回 5-tuple 列表 (severity, file, line, rule, message)。
+    """对单个文件运行检查 1-4、7-15,返回 5-tuple 列表 (severity, file, line, rule, message)。
 
     检查 5 (section-order) / 检查 6 (page-location) 仅对 ui/ 直接子文件运行
-    (is_ui_top_level=True),其余 10 项对所有 ui/organisms 文件运行。
+    (is_ui_top_level=True),其余项对所有 ui/organisms 文件运行。
     触控分端判定(检查 10)读取 frontmatter 可选 platform 字段。
     """
     results = []
@@ -817,6 +978,12 @@ def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level
     results.extend(_tag(RULE_MOTION_DURATION, check_motion_duration(rel_path, lines)))
     results.extend(_tag(RULE_CARD_RADIUS, check_card_radius(rel_path, lines)))
     results.extend(_tag(RULE_Z_INDEX, check_z_index_literals(rel_path, lines)))
+    results.extend(
+        _tag(RULE_FIXED_WIDTH_TEXT, check_fixed_width_text(rel_path, lines))
+    )
+    results.extend(
+        _tag(RULE_PHYSICAL_PROPERTY, check_physical_property(rel_path, lines))
+    )
     if is_ui_top_level:
         results.extend(_tag(RULE_SECTION_ORDER, check_section_order(rel_path, lines)))
         results.extend(_tag(RULE_PAGE_LOCATION, check_secondary_pages(rel_path)))
