@@ -302,7 +302,7 @@ Run these against your output; if any fails, iterate before presenting.
 
 # After Completing a Task
 
-Always offer to save: "Want me to save these patterns for future sessions?" If yes, write to `.interface-design/system.md`:
+Always offer to save: "Want me to save these patterns for future sessions?" If yes, write to `.interface-design/system.md` (use [`reference/system-template.md`](reference/system-template.md) as the skeleton; filled examples in `reference/examples/`):
 
 - Direction and feel
 - Depth strategy (borders/shadows/layered) and spacing base unit

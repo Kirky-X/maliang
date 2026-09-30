@@ -59,6 +59,10 @@ radius-sm                  # 圆角:小
 
 引用方向单向收窄:**组件层只引用语义层,语义层只引用基础层;禁止跨层直连**(component → primitive)。
 
+## 溯源(命名之外的 token 元数据)
+
+本文只管**命名**;token 为什么取这个值由溯源承担——DESIGN.md 里每个 token 顶层键的行尾注释指回产生它的决策 id(`primary: "#212121" # D-P1-1`),无本地依据的写 `# no-decision: <来源>`。编号规则、一族同源与拆条判据、三类违规(悬空溯源 / 孤儿 token / 空原则)与判定留痕见 [`token-provenance.md`](token-provenance.md)。
+
 ## 暗色模式
 
 `light` 省略,`dark` 加 `-dark` 后缀。明暗切换通过**语义 token 的主题映射**实现,而非复制整套 primitive。
