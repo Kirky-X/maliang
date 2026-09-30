@@ -55,7 +55,16 @@ def _parse_scalar(val):
         return ""
     if (val.startswith('"') and val.endswith('"')) or \
        (val.startswith("'") and val.endswith("'")):
-        return val[1:-1]
+        inner = val[1:-1]
+        if val.startswith('"'):
+            # 双引号标量还原 YAML 转义,与 PyYAML 语义对齐(`\"` → `"`,
+            # `\\` → `\`);占位符两段替换保证 `\\\"` 这类连续转义不误配。
+            inner = (
+                inner.replace("\\\\", "\x00")
+                .replace('\\"', '"')
+                .replace("\x00", "\\")
+            )
+        return inner
     try:
         if re.fullmatch(r"-?\d+", val):
             return int(val)
@@ -66,9 +75,44 @@ def _parse_scalar(val):
     return val
 
 
+def _strip_comment(raw):
+    """去掉行尾 YAML 注释(引号外的 ` #`),保住 `"#212121"` 这类带 # 的值。
+
+    token 溯源注释(`primary: "#212121" # D-P1-1`)依赖这一步:不剥离会让
+    降级解析器把注释吃进标量,并把 `headline-lg: # D-P2-1` 误判成标量而非子块。
+    引号内反斜杠转义整体拷贝(`\"` 不闭合引号),否则 `"a\" # x"` 会在值中间
+    误剥注释截断标量,`"a\"b" # 注释` 的行尾注释则剥不掉。
+    """
+    out = []
+    quote = None
+    i = 0
+    while i < len(raw):
+        ch = raw[i]
+        if quote:
+            out.append(ch)
+            if ch == "\\" and i + 1 < len(raw):
+                out.append(raw[i + 1])
+                i += 2
+                continue
+            if ch == quote:
+                quote = None
+            i += 1
+            continue
+        if ch in "\"'":
+            quote = ch
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "#" and (i == 0 or raw[i - 1] in " \t"):
+            break
+        out.append(ch)
+        i += 1
+    return "".join(out).rstrip()
+
+
 def parse_frontmatter_indent(yaml_str):
     """基于缩进的降级解析器,支持两层 map + 标量(heritage 结构够用)。"""
-    lines = yaml_str.split("\n")
+    lines = [_strip_comment(ln) for ln in yaml_str.split("\n")]
     n = len(lines)
     state = {"i": 0}
 
