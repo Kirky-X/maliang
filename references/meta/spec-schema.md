@@ -25,13 +25,14 @@ components: map # see Components section
 DESIGN.md 头部(front matter 之前)须带 schema 版本戳注释:
 
 ```html
-<!-- maliang:design-schema 1 -->
+<!-- maliang:design-schema 2 -->
 ```
 
 - 戳标识的是 **schema 结构版本**(顶层键与章节约定),不是产物 release 版本
 - schema 结构变化(增删顶层键 / 字段语义调整)时递增 N;仅改 token 值不递增
-- 下游工具(validate / ui-graph)读戳识别 schema 漂移,避免用旧解析约定读新文件
+- 戳供**人与 agent** 识别 schema 版本;下游工具(validate / ui-graph)读戳自动校验为**规划项**——当前仓内无脚本消费该戳,勿假设存在自动漂移检测
 - 来源:impeccable(`<!-- impeccable:product-schema 1 -->`)与 ui-ux-pro-max 数据治理
+- **2 号变更**:`decisions` 增 `id` 必选字段;token 顶层键可带行尾溯源注释(见下方「token 溯源」)
 
 ---
 
@@ -41,21 +42,43 @@ DESIGN.md 头部(front matter 之前)须带 schema 版本戳注释:
 
 ```yaml
 decisions:
-  - decision: 深度策略用 borders-only,不用投影
+  - id: D-P1-1
+    decision: 深度策略用 borders-only,不用投影
     rationale: 后台工具,用户要密度;阴影显"浮"
     date: 2026-01-15
     scope: 全站
 ```
 
-| 字段        | 类型   | 必选 | 说明                                       |
-| ----------- | ------ | ---- | ------------------------------------------ |
-| `decision`  | string | 是   | 决策内容(一句话,可被引用)               |
-| `rationale` | string | 是   | 为什么(含被拒绝的替代项更佳)             |
-| `date`      | string | 是   | 决策日期 `YYYY-MM-DD`                      |
-| `scope`     | string | 否   | 生效范围(页面 / 组件 / 全站,默认全站)   |
+| 字段        | 类型   | 必选 | 说明                                                          |
+| ----------- | ------ | ---- | ------------------------------------------------------------- |
+| `id`        | string | 是   | 决策 id `D-P<原则序号>-<决策序号>`,编号规则见 [`token-provenance.md`](token-provenance.md) |
+| `decision`  | string | 是   | 决策内容(一句话,可被引用)                                    |
+| `rationale` | string | 是   | 为什么(含被拒绝的替代项更佳)                                  |
+| `date`      | string | 是   | 决策日期 `YYYY-MM-DD`                                         |
+| `scope`     | string | 否   | 生效范围(页面 / 组件 / 全站,默认全站)                        |
 
 - 迭代 / redesign 交付后,把本轮新出现的设计决策追加进账本,防止跨轮次漂移
-- 来源:interface-design `system.md` Decisions 表(Decision | Rationale | Date)
+- `id` 一经分配不复用:决策被推翻后保留条目并标注取代关系,新决策接下一个序号
+- 来源:interface-design `system.md` Decisions 表(Decision | Rationale | Date);`id` 与溯源约定 2026-09 吸收自 oh-my-design derivation chain(MIT)
+
+---
+
+## token 溯源(行尾注释)
+
+`colors` / `typography` / `rounded` / `spacing` / `components` 的**顶层键**可带行尾溯源注释,指回产生该值的决策 id:
+
+```yaml
+colors:
+  primary: "#212121" # D-P1-1
+  tertiary: "#2563EB" # D-P1-1 强调色稀缺即信号
+spacing:
+  md: 16px # D-P3-1
+```
+
+- 颜色值**必须加引号**:`#` 只有在前置空白或行首时才起注释作用,`primary: #212121` 会被解析成空值
+- 无本地决策依据的 token 写 `# no-decision: <继承/提取来源>`,不随手编 id
+- 一条决策可覆盖一族同源 token;混装不同取舍的族须拆成多条
+- 编号规则、三类违规(悬空溯源 / 孤儿 token / 空原则)、判定留痕要求见 [`token-provenance.md`](token-provenance.md);交付门禁见 [`numbered-gates.md`](numbered-gates.md) A 组
 
 ---
 

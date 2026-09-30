@@ -15,6 +15,7 @@
 | User Intent                           | Phase                                              |
 | ------------------------------------- | -------------------------------------------------- |
 | 任意 design-md 触发                   | → **Phase 0**: Brief Inference(推理设计方向)     |
+| 0c 方向确认后、填模板前                | → **Phase 0d**: 决策表(带 id,供 token 反向引用)  |
 | "Create a DESIGN.md for my project"   | → **Phase 1A/1B**: Generate from code or interview |
 | "Extract tokens from my CSS/Tailwind" | → **Phase 1A**: Analyze code                       |
 | Provides a screenshot/mockup          | → **Phase 1C**: Extract from image                 |
@@ -32,7 +33,7 @@
 
 ## Phase 0: Brief Inference(推理设计方向)
 
-> 进入 design-md 流程的**第一件事**。Phase 0 分三步:**0a 领域探索**(进入产品的世界,查表前必经)→ **0b 类型查表校准**(类型推档)→ **0c Suggest+Ask 提案块**(方向确认后才动手)。从用户的简短 brief(产品描述 / 截图 / 关键词)推理出设计方向,作为 Phase 1 写 prose 的输入。完整推理规则见 [`meta/product-reasoning.md`](../meta/product-reasoning.md)。
+> 进入 design-md 流程的**第一件事**。Phase 0 分四步:**0a 领域探索**(进入产品的世界,查表前必经)→ **0b 类型查表校准**(类型推档)→ **0c Suggest+Ask 提案块**(方向确认后才动手)→ **0d 决策表**(把方向拆成带 id 的决策,供 Phase 1 的 token 反向引用)。从用户的简短 brief(产品描述 / 截图 / 关键词)推理出设计方向,作为 Phase 1 写 prose 的输入。完整推理规则见 [`meta/product-reasoning.md`](../meta/product-reasoning.md)。
 
 ### 0a · 领域探索(四产出)
 
@@ -120,6 +121,25 @@
 
 **🔴 CHECKPOINT · 方向提案确认**:提案块必须真正暂停,等待用户文字回复后才进入 Phase 1;用户可只改其中一项(如只换 Signature),其余项视为确认。
 
+### 0d · 决策表(方向定了,值还没定时的中间产物)
+
+> 0c 确认的是**方向**,Phase 1 直接落 token 会跳过"为什么是这个值"。0d 是两者之间的桥:把方向拆成带 id 的决策条目,Phase 1 的 token 逐条回指这些 id。
+
+0c 确认后、Phase 1 之前,把方向声明的立场拆成 **2–3 条原则**(写进 DESIGN.md `## Overview`),每条原则下写决策表:
+
+| 决策类别(全列,逐条落)                                                     |
+| ------------------------------------------------------------------------ |
+| 圆角档位 · 深度策略(投影 / 描边 / 纯色调) · 强调色预算 · 字号阶梯 · 动效时长与缓动 · 信息密度 · 布局语法 · 文案语气 |
+
+每条决策写一行:`id | 决策内容 | 理由 | 反对的默认`。id 规则为 `D-P<原则序号>-<决策序号>`(`P1`/`P2`/`P3` 对应三条原则),编号与溯源约定见 [`../meta/token-provenance.md`](../meta/token-provenance.md)。
+
+**硬约束**:
+
+- **先有决策,再有 token**。跳过本步直接填模板,得到的 token 值是即兴值——这是 design-md 最常见的产出缺陷,不是效率。
+- **原则必须改到值**。一条原则若落不到任何 token 上,它是散文不是立场:让规则落到值上,或从 Overview 删掉(判据见 [`../meta/token-provenance.md`](../meta/token-provenance.md) V3)。
+- **理由要写被拒绝的默认**。写不出"我拒绝了什么"的决策是凑数,合并进同条。
+- 本步**不必单独请用户确认**(与 0c 的 CHECKPOINT 不同),但决策表要在 Phase 1 交付时随 DESIGN.md 一并展示,用户可推翻单条;被推翻的 id 保留并标取代关系,不静默消失。
+
 ### Brief 不充分时 / 与 Phase 1 衔接
 
 若 brief 缺关键词(如只说"做个 App"),不要硬推理:进入 Phase 1B 访谈模式补全,必须人工确认。推理结果写入 DESIGN.md frontmatter 的 `product:` 块(见 [`product-reasoning.md`](../meta/product-reasoning.md) 第 3 节),Phase 1 写 prose 时引用作为"为什么"的依据。
@@ -139,7 +159,8 @@
 1. **Extract token candidates**: scan for color values(所有合法 CSS 颜色格式,见 [`spec-schema.md`](../meta/spec-schema.md) 颜色 token 节)、`font-family`/`font-size`/`font-weight`、spacing values (`px`, `rem`)、border-radius values
 2. **Assign semantic roles**: group colors by function (primary action, body text, surface, border, error); name typography levels by usage (headline, body, label, caption)
 3. **Infer scale**: 统计所有 spacing 数值,若 ≥70% 是 8 的倍数 → base=8px;否则 base=4px。归一化时四舍五入到最近的 base 倍数
-4. **Write prose rationale**: for each token group, write 2-4 sentences explaining the design intent, not just the values
+4. **Attach provenance**: 每个提取到的 token 顶层键挂一条 0d 决策 id(`primary: "#212121" # D-P1-1`);**0d 决策表里没有、提取时也判断不出取舍的键,写 `# no-decision: <提取自 file:line>` 显式声明**,不随手编 id。缺这一步的 DESIGN.md 交付在门禁 G02 被拦(见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md))
+5. **Write prose rationale**: for each token group, write 2-4 sentences explaining the design intent, not just the values
 
 **🔴 CHECKPOINT · 提取确认**:在填写模板之前,先展示 token 提取结果供用户核对:
 
@@ -149,8 +170,9 @@
   Fonts:  [family] [sizes]
   Spacing: base=8px → xs/sm/md/lg/xl
   Radius:  sm=4px, md=8px
+  溯源:  M 个 token 键 → 决策 id N 个 / no-decision K 个
 
-归类准确吗?有遗漏或需调整的角色划分?
+归类准确吗?有遗漏或需调整的角色划分?哪个值取错了?
 ```
 
 用户确认后,填写 DESIGN.md 模板并写完所有 markdown 章节。
@@ -186,42 +208,51 @@
 
 ## DESIGN.md Template
 
+> 模板中的 `# D-P<n>-<m>` 是 **token 溯源注释**:每个 token 顶层键指回 `decisions` 里产生它的那条决策。无本地依据的键写 `# no-decision: <来源>`,不随手编 id。编号规则、一族同源判据与违规处置见 [`../meta/token-provenance.md`](../meta/token-provenance.md)。
+
 ```
 ---
 version: alpha
 name: <Product Name>
 description: <one-line brand summary>
+decisions:                          # 0d 决策表;id 供 token 行尾溯源,字段见 spec-schema.md
+  - id: D-P1-1                      # 原则 P1 下的第 1 条决策
+    decision: <一句话决策,可被 token 引用>
+    rationale: <为什么,含被拒绝的默认>
+    date: 2026-01-15
+    scope: 全站
+  # 原则 P1/P2/P3 对应 ## Overview 里的 2-3 条立场
 colors:
-  primary: "#..."
-  secondary: "#..."
-  tertiary: "#..."        # accent / CTA
-  neutral: "#..."         # backgrounds, surfaces
+  primary: "#..." # D-P1-1
+  secondary: "#..." # D-P1-2
+  tertiary: "#..." # D-P1-1        # accent / CTA
+  neutral: "#..." # D-P1-2         # backgrounds, surfaces
 typography:
-  headline-lg:
+  headline-lg: # D-P2-1
     fontFamily: ...
     fontSize: 48px
     fontWeight: 700
     lineHeight: 1.1
     letterSpacing: -0.02em
-  body-md:
+  body-md: # D-P2-1
     fontFamily: ...
     fontSize: 16px
     fontWeight: 400
     lineHeight: 1.6
   # 完整阶梯(headline-md/body-lg/label-sm 等)见 spec-schema.md 推荐命名
 rounded:
-  sm: 4px
-  md: 8px
-  lg: 16px
-  full: 9999px
+  sm: 4px # D-P3-1
+  md: 8px # D-P3-1
+  lg: 16px # D-P3-1
+  full: 9999px # D-P3-2
 spacing:
-  xs: 4px
-  sm: 8px
-  md: 16px
-  lg: 32px
-  xl: 64px
+  xs: 4px # D-P3-1
+  sm: 8px # D-P3-1
+  md: 16px # D-P3-1
+  lg: 32px # no-decision: 继承品牌规范
+  xl: 64px # D-P3-1
 components:
-  button-primary:
+  button-primary: # D-P1-3
     backgroundColor: "{colors.primary}"
     textColor: "{colors.neutral}"
     typography: "{typography.label-sm}"
@@ -232,6 +263,7 @@ components:
 
 ## Overview
 <Brand personality, target audience, emotional tone. 2-4 sentences.>
+<P1/P2/P3 三条原则,每条须落得到下方至少一个 token 值——只写在散文里不改值的原则不算立场,见 token-provenance.md V3。>
 ## Colors
 <Role of each palette. Where it should/shouldn't appear.>
 ## Typography
@@ -346,13 +378,22 @@ npx @google/design.md@0.4.0 spec --rules-only --format json
 
 ```
 📝 本轮新决策 → 提议写入 DESIGN.md decisions 表:
-  | 决策 | 理由 | 日期 | 范围 |
-  | ...  | ...  | ...  | ...  |
+  | id | 决策 | 理由 | 日期 | 范围 |
+  | D-P1-4 | ... | ... | ... | ... |
 ```
 
-逐条列出后请用户确认:同意的追加进 DESIGN.md 的 decisions 表(决策 | 理由 | 日期 | 范围,与 [`spec-schema.md`](../meta/spec-schema.md) decisions 四字段 {decision, rationale, date, scope} 一致,scope 省略时默认全站),供后续会话读取("已决定,不是缺陷");拒绝的条目丢弃,不得静默写入。
+逐条列出后请用户确认:同意的追加进 DESIGN.md 的 decisions 表(五字段 {id, decision, rationale, date, scope},与 [`spec-schema.md`](../meta/spec-schema.md) decisions 一致,scope 省略时默认全站),供后续会话读取("已决定,不是缺陷");拒绝的条目丢弃,不得静默写入。**新决策的 id 接当前最大序号往后排,不复用已被推翻的 id。**
 
-**方向字段约定(防跨项目收敛,克制扩展)**:方向类决策按"vibe 名 + 色板(名 + 核心 hex)+ display/body 字体"打包写入 decision 字段(如 `vibe:午夜灯箱;色板:#10233F/#E8452C;字体:Clash Display + Karla`),scope 标全站;**不新增账本列**,四字段结构不变。后续项目的 Phase 0a freshness 自检以此记录作为"近期项目"判定依据。
+**同格附溯源核对**(缺任一行视为未判定,门禁 G23 阻断交付,格式与判据见 [`../meta/token-provenance.md`](../meta/token-provenance.md) §5):
+
+```
+溯源核对(YYYY-MM-DD):
+  决策 N 条 / token 顶层键 M 个 / no-decision K 个
+  V1 悬空:0 · V2 孤儿:0 · V3 空原则:0
+  孤儿清单(应为空,非空则逐条列 key):—
+```
+
+**方向字段约定(防跨项目收敛,克制扩展)**:方向类决策按"vibe 名 + 色板(名 + 核心 hex)+ display/body 字体"打包写入 decision 字段(如 `vibe:午夜灯箱;色板:#10233F/#E8452C;字体:Clash Display + Karla`),scope 标全站;**不新增账本列**,五字段结构不变。后续项目的 Phase 0a freshness 自检以此记录作为"近期项目"判定依据。
 
 ---
 
@@ -362,12 +403,13 @@ npx @google/design.md@0.4.0 spec --rules-only --format json
 - [ ] prose-first 格式:YAML token + Markdown 设计理由(解释"为什么"非"是什么"),禁止纯 JSON/CSS 变量文件
 - [ ] 4 个动作(创建/应用/验证/导出)输入输出 MUST 明确,不得跳过验证直接导出
 - [ ] 引用 heritage 范例 MUST 用相对路径;导出格式 MUST 支持 Tailwind/CSS/W3C DTCG/lint 至少 3 种
+- [ ] **token MUST 溯源**:五个块的顶层键 MUST 带 `# D-P<n>-<m>` 或 `# no-decision: <来源>`;`## Overview` 每条原则 MUST 落到至少一个 token 上(硬门见 [`../meta/token-provenance.md`](../meta/token-provenance.md))
 
 ---
 
 ## Output Quality Checklist
 
-交付前核对:YAML 无语法错误 · colors 均以 `#` 开头 · typography 至少含 fontFamily/fontSize/fontWeight/lineHeight · spacing 遵循统一 base scale · components 用 `{path.to.token}` 引用而非重复字面值 · prose 解释"为什么"而非只列数值 · Do's and Don'ts ≥4条且具体可执行 · 章节顺序为 Overview→Colors→Typography→Layout→Elevation→Shapes→Components→Do's and Don'ts · CLI 可用时跑一遍 lint 修完所有 error
+交付前核对:YAML 无语法错误 · colors 均以 `"#"` 开头加引号(引号是溯源注释生效的前提) · 每个 token 顶层键带溯源 id 或 `no-decision` · 每个 id 在 `decisions` 中查得到 · `## Overview` 的每条原则至少被一个 token 引用 · 溯源核对三行已留痕 · typography 至少含 fontFamily/fontSize/fontWeight/lineHeight · spacing 遵循统一 base scale · components 用 `{path.to.token}` 引用而非重复字面值 · prose 解释"为什么"而非只列数值 · Do's and Don'ts ≥4条且具体可执行 · 章节顺序为 Overview→Colors→Typography→Layout→Elevation→Shapes→Components→Do's and Don'ts · CLI 可用时跑一遍 lint 修完所有 error · 过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) A 组门禁
 
 ---
 
@@ -380,6 +422,8 @@ npx @google/design.md@0.4.0 spec --rules-only --format json
 ## Reference Files
 
 - [`design-md-advanced.md`](./design-md-advanced.md) — Phase 4 变体引擎 + Edge Cases & Fallbacks
-- [`spec-schema.md`](../meta/spec-schema.md) — 完整 token 类型定义 + 权威 Linter Rules 表(9 条规则名 + severity)
+- [`spec-schema.md`](../meta/spec-schema.md) — 完整 token 类型定义 + decisions 五字段 + 溯源注释格式 + 权威 Linter Rules 表(9 条规则名 + severity)
+- [`../meta/token-provenance.md`](../meta/token-provenance.md) — 决策 id 编号规则 + token 溯源写法 + 三类违规(悬空/孤儿/空原则)+ 判定留痕,0d 决策表与 Phase 1/3 溯源环节的 canonical
+- [`../meta/numbered-gates.md`](../meta/numbered-gates.md) — 交付前编号门禁(design-md 交付过 A 组)
 - [`philosophy.md`](../meta/philosophy.md) — DESIGN.md 写作三原则(prose 优先 / 具体参考 / 负约束),Phase 1 写 prose 前必读
 - [`../../examples/design-system/heritage/DESIGN.md`](../../examples/design-system/heritage/DESIGN.md) — 生产级 DESIGN.md 范例,含完整 component 变体(hover/active/disabled/chip/input)

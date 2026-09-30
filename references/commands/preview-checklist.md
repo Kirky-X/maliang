@@ -5,6 +5,8 @@
 >
 > **Canonical 声明**:本清单是全流水线(design-md / draw-md / preview / redesign)唯一的交付前检查清单;其他文档只引用本文件,不复制条目。
 >
+> **本清单不豁免编号门禁**:本清单是「全量机械检查」(该项过没过),[`../meta/numbered-gates.md`](../meta/numbered-gates.md) 是「否决门」(这种形态不许交)。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。门禁在本清单全过之后、第 6 节 Pre-Delivery Checklist 之前逐条过,执行纪律见 [`preview.md`](./preview.md) 第 5 节「编号门禁」。
+>
 > **脚本覆盖**:49/135 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
 > 其余 86 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
 > 未标记项按分区语义与 5.13 的 MANUAL/脚本能力归属判断。
@@ -224,5 +226,5 @@
 - 全部 135 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
 - 5.0 Process 区先于 5.1-5.16 执行(动态实测是过程性动作,不因静态扫描通过而豁免)
 - 5.15 真机验证在浏览器验证之后、交付声明之前执行(模拟环境通过的项不因此豁免真机复测)
-- 修复后重跑全部 135 项(不可只跑失败项),通过后进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
+- 修复后重跑全部 135 项(不可只跑失败项),通过后先过编号门禁 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) G01–G28,再进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
 - em-dash / 中英文空格 / 标点一致性为**软警告**(warning,非硬性失败),其余 132 项为硬性失败

@@ -205,8 +205,19 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 ### 执行规则
 - 135 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
 - 49 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理);其余 86 项为**运行时项**(标记 [运行时],见 checklist),在第 4 节浏览器验证中逐项确认;5.15 真机验证项在第 4 节之后、交付声明之前按 checklist 调试路径实测
-- 修复后重跑全部 135 项(不可只跑失败项),通过后进入第 6 节 Pre-Delivery Checklist(主观维度)
+- 修复后重跑全部 135 项(不可只跑失败项),通过后先过**编号门禁**(见下),再进入第 6 节 Pre-Delivery Checklist(主观维度)
 - em-dash / 中英文空格 / 标点一致性为**软警告**(warning),其余 132 项为硬性失败
+
+### 编号门禁(135 项之外的否决层)
+
+> 135 项回答「该项过没过」,编号门禁回答「**这种形态不许交**」。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。
+
+过 135 项之后、第 6 节之前,逐条过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) 的 **G01–G28**(A 溯源与 token / B 可访问性与触控 / C 视觉签名 / D 交互与状态 / E 布局与响应 / F 交付与可核验性)。执行纪律:
+
+- **全量过,不摘要**——把门禁压缩成「主要几条」等于丢门,门禁的价值正在于覆盖了没被想到的形态
+- **有据才判**——「源码里没看到违反」必须附判定记录(命中行号清单 / 检查点结论),缺证据视为未判定;token 溯源三项另须留 [`../meta/token-provenance.md`](../meta/token-provenance.md) §5 的三行核对
+- **不豁免不降级**——唯一合法出路是修复;确属 ai-tells §0 的正当形态时走其显式记录要求,静默豁免 = 失败
+- **CRITICAL 一票否决**——B 组任一失败不得被任何评分补偿(见 [`../meta/rules-priority.md`](../meta/rules-priority.md) 冲突裁决规则 1 与加权评分从属声明)
 
 ### 误报过滤(What is NOT a failure)
 
@@ -223,7 +234,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 
 ## 6. Pre-Delivery Checklist(5 维交付前检查)
 
-> Pre-Flight Check 通过后的**主观维度评审**。5 个维度,每维度 1-5 分,任一维度 < 3 分不交付。来源:taste-skill。
+> Pre-Flight Check(135 项)与编号门禁(G01–G28)**双双通过后**的**主观维度评审**。5 个维度,每维度 1-5 分,任一维度 < 3 分不交付。来源:taste-skill。
 > 评审必须与生成**隔离执行**(见下方"评审隔离"),评审者输出以受限词表 disposition 开头。
 
 ### 评审隔离(审查与生成分离)
