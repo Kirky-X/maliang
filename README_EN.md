@@ -8,12 +8,13 @@ English | [中文](README.md)
 
 ## ✨ Features
 
-**11 subcommands** covering the full lifecycle (full routing table in [SKILL.md](SKILL.md)):
+**12 subcommands** covering the full lifecycle (full routing table in [SKILL.md](SKILL.md)):
 
 | Subcommand | Stage | Function |
 | ---------- | ----- | -------- |
 | `design-md` | Define | Create/apply/validate/export a prose-first DESIGN.md (YAML tokens + design rationale, with persona/journey/JTBD user research) |
 | `redesign` | Iterate | Revamp existing UI: 9-dimension audit + Refresh / Restructure / Rebuild / Deslop (AI-slop removal) modes |
+| `explore` | Define | When direction is undecided: diverge 3–5 genuinely different options → compare via preview renders → commit to the winner (see [explore.md](references/commands/explore.md)) |
 | `draw-md` | Design | Produce page-level hard-token UI markdown from DESIGN.md (colors/fonts/spacing all token-referenced) |
 | `preview` | Verify | Live preview with Element Plus inside iOS/Android device shells |
 | `critique` | Verify | Nielsen 10 heuristics scored 0–4 + persona walkthrough + cognitive-load checklist; emits score snapshots/trends/backlog |
@@ -24,7 +25,7 @@ English | [中文](README.md)
 - **Design asset library**: template wall with 12 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 22 component-naming vocabulary docs + eight dimension specs (color / type / icon / spacing / radius / border / layout / elevation)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Merged assets**: the former interface-design skill now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12) — critique reads it for UI-compliance/a11y checklists
-- **Script verification layer**: `validate-draw-md.py` (13 checks), `preview-check.py` (49/113 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
+- **Script verification layer**: `validate-draw-md.py` (15 checks), `preview-check.py` (49/135 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
 
 ## 📦 Installation
 
@@ -85,7 +86,7 @@ $ python3 -m pytest tests -q
 
 Four test files (two-column fixtures pairing "should flag" with "should not flag"): `test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md`.
 
-CI gate measured: `bash scripts/ci-gate.sh` → `Result: PASS` (unit tests ✓, validate-draw-md ✓, validate-framework ✓, ui-graph check-nav ✓, preview-check 0 errors / 3 warnings covering 49/113 items — the rest need browser-based manual verification). Push/PR runs the same gate automatically via `.github/workflows/validate.yml`.
+CI gate measured: `bash scripts/ci-gate.sh` → `Result: PASS` (unit tests ✓, validate-draw-md ✓, validate-framework ✓, ui-graph check-nav ✓, preview-check 0 errors / 3 warnings covering 49/135 items — the rest need browser-based manual verification). Push/PR runs the same gate automatically via `.github/workflows/validate.yml`.
 
 ## 📁 Directory Structure
 

@@ -2,7 +2,7 @@
 
 > 规范层。LLM 在生成 UI 时会反复出现一组可识别的"AI 味"签名,这些签名既不专业也易被一眼识破。本文档为硬性禁止清单,生成任何 UI markdown / 框架代码 / 预览 HTML 时,必须自我对照并避开。来源:taste-skill。
 
-每条 Tell 分为「症状」「为什么是 Tell」「替代做法」三段。9 个子分类按出现频率排序。
+每条 Tell 分为「症状」「为什么是 Tell」「替代做法」三段。13 个子分类（§1–§13）按出现频率排序,§0 为豁免总则。
 
 ## 0. 豁免总则(何时不适用)
 
@@ -271,7 +271,7 @@ Fraunces / Playfair Display / Cormorant / Lora / Crimson / Newsreader / Syne / S
 
 ## 自检流程
 
-生成任何 UI 产物后,在 preview 阶段(见 [`../commands/preview.md`](../commands/preview.md) 的 Pre-Flight Check)对照本清单逐项检查,触发任一 Tell 即返工。9 子分类无优先级,均为硬性禁止;冲突时按 [`rules-priority.md`](./rules-priority.md) 的 Style(HIGH) 档处理。
+生成任何 UI 产物后,在 preview 阶段(见 [`../commands/preview.md`](../commands/preview.md) 的 Pre-Flight Check)对照本清单逐项检查,触发任一 Tell 即返工。各子分类无优先级,均为硬性禁止;冲突时按 [`rules-priority.md`](./rules-priority.md) 的 Style(HIGH) 档处理。
 
 **先过豁免总则再判违规**:命中 Tell 后先查第 0 节三条豁免(DESIGN.md 批准 / 世界类型自洽 / 内容真有动机),豁免成立则显式记录后放行。宁要 3 个高信念发现,不要 40 条 cosmetic 清单——说不出"这条 Tell 让用户付出什么代价/为何读作通用"的,是口味不是缺陷,删除。
 

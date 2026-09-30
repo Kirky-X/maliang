@@ -3,6 +3,11 @@ name: maliang
 description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版不沉淀 token 用 redesign-existing-projects；代码质量/架构审查用 diting；安全扫描用 tiangang"
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
+metadata:
+  version: "0.3.1"
+  author: "Kirky-X"
+  repo: "https://github.com/Kirky-X/maliang"
+  tags: "design-system, design-token, ui-markdown, DESIGN.md, w3c-dtcg, harmonyos, flutter, element-plus, preview, device-models, ui-graph, ip-character, ip-handbook, accessibility, dark-mode"
 ---
 
 # maliang (马良) —— 设计系统技能
@@ -110,6 +115,7 @@ license: MIT
 | 用户提供的 UI markdown 不符合 draw-md 规格(见禁止事项 #3) | 提示具体偏差(缺 token / 缺布局章节) | 引导用户重跑 draw-md,不要硬解析不规范输入;preview 设备尺寸不在 scripts/ 时用最接近尺寸替代 |
 | ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 examples/ip-character/(首次回填时创建该目录) |
 | ui-graph 找不到 ui-relationships.json(未 generate) | 提示先跑 `python3 scripts/ui-graph.py generate --target examples/ui-markdown/` | 若 ui-markdown/ 为空,引导回退到 draw-md 先产出页面 markdown |
+| explore 方向未定时无 DESIGN.md | 引导先走 design-md Phase 0a 领域探索 | 用户坚持探索时,用克制默认外观 + 临时 token 占位,显式标注「待 DESIGN.md 建立后回填」,方向清单未经确认不进入实体化 |
 
 ## 禁止事项(反例黑名单)
 1. **禁止跳过 design-md** — 无 DESIGN.md 直接产出 UI markdown 或框架代码,会导致 token 引用悬空、视觉不一致。

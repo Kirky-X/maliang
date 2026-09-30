@@ -132,7 +132,7 @@ flowchart LR
 
 ### 校验强化
 
-preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 13 项检查(含 6 项新检查:暗色/aria/触控区/动效/radius/z-index),不通过则回退 draw-md 修补。
+preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(含 8 项新检查:暗色/aria/触控区/动效/radius/z-index/固定宽度文本容器/非逻辑属性),不通过则回退 draw-md 修补。
 
 **AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/detect-tells.py <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集,来源:impeccable hooks 思想,2026-09 吸收)。命中非豁免 tell = 硬性失败;豁免沿用 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的「三豁免 + tell-exempt 标注」机制。扫描结果与人工自查(第 6 节)互为通道,合并时按下方「双通道不变式」标注。
 

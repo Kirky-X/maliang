@@ -8,12 +8,13 @@
 
 ## ✨ 功能特性
 
-**11 个子命令**覆盖全生命周期（完整路由表见 [SKILL.md](SKILL.md)）：
+**12 个子命令**覆盖全生命周期（完整路由表见 [SKILL.md](SKILL.md)）：
 
 | 子命令 | 阶段 | 功能 |
 | ------ | ---- | ---- |
 | `design-md` | 定义 | 创建/应用/验证/导出 prose-first 的 DESIGN.md（YAML token + 设计理由，含 persona/journey/JTBD 用户研究） |
 | `redesign` | 迭代 | 改版现有 UI：9 维审计 + Refresh / Restructure / Rebuild / Deslop（去 AI 味）四模式 |
+| `explore` | 定义 | 方向未定时多方案发散-比较-收敛：实体化 3–5 个真不同方案 → preview 渲染比较 → 选定胜者（见 [explore.md](references/commands/explore.md)） |
 | `draw-md` | 设计 | 从 DESIGN.md 产出页面级硬 token UI markdown（颜色/字体/间距全引用 token） |
 | `preview` | 验证 | Element Plus + iOS/Android 设备外壳实时预览 |
 | `critique` | 验证 | Nielsen 10 启发式 0–4 评分 + persona 走查 + 认知负荷清单，产出评分快照/趋势/backlog |
@@ -24,7 +25,7 @@
 - **设计资产库**：12 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 22 篇组件命名词汇 + 八维规范（色/字/图/距/角/线/布局/海拔）
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **已并入资产**：原 interface-design skill 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（sha e3d624b，2026-09-12），critique 的 UI 合规/a11y 清单读取该快照
-- **脚本验证层**：`validate-draw-md.py`（13 项检查）、`preview-check.py`（49/113 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（7 子命令）、`ci-gate.sh` 统一入口——纯 Python 标准库
+- **脚本验证层**：`validate-draw-md.py`（15 项检查）、`preview-check.py`（49/135 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（7 子命令）、`ci-gate.sh` 统一入口——纯 Python 标准库
 
 ## 📦 安装
 
@@ -56,7 +57,7 @@ npx skills add Kirky-X/maliang --agent claude-code -y
 ```bash
 python3 {SKILL_DIR}/scripts/ui-graph.py generate --target ui-markdown/      # 生成 UI 关系图
 python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target ui-markdown/     # 导航死链检查
-python3 {SKILL_DIR}/scripts/validate-draw-md.py ui-markdown/ --format text  # 13 项规范性检查
+python3 {SKILL_DIR}/scripts/validate-draw-md.py ui-markdown/ --format text  # 15 项规范性检查
 bash {SKILL_DIR}/scripts/ci-gate.sh                                          # CI 验证门（单测 + 三验证器）
 ```
 
@@ -84,7 +85,7 @@ $ python3 -m pytest tests -q
 
 4 个测试文件（双列 fixture，"应报 + 不应报"成对覆盖）：`test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md`。
 
-CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework ✓、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 49/113 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
+CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework ✓、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 49/135 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
 
 ## 📁 目录结构
 
@@ -93,7 +94,7 @@ maliang/
 ├── SKILL.md                 # 入口：11 子命令路由 + meta 加载时序 + 失败模式 + 禁止事项
 ├── skill.json               # 元数据（v0.3.0，MIT）
 ├── references/
-│   ├── commands/            # 11 个子命令流程文档
+│   ├── commands/            # 12 个子命令流程文档
 │   ├── meta/                # 规范层：token / principles / ux-rules / lifecycle / accessibility …
 │   │                        #   含 web-interface-guidelines.md 快照（sha e3d624b）
 │   ├── interface-design/    # 原 interface-design skill 并入（craft 纪律 / 严格评审）

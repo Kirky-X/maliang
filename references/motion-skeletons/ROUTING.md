@@ -62,7 +62,7 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 变体：长廊 / 星球内壁 / 圆环 / 隧道 / 螺旋 / 书架墙 / 蜂巢 / 竖井。默认 **R6**，SPECTACLE 7-9，需 ≥12 项真实内容才配做。
 **slop form**：WebGL 发光六边形线框无限隧道——墙上没有任何内容。
 **死法**：相近深度面板互相翻转遮挡 → 闪烁。
-→ 滚动驱动变体见 [`scroll-band-gallery.md`](templates/page/scroll-band-gallery.md)。
+→ 滚动驱动变体见 [`scroll-band-gallery.md`](../templates/page/scroll-band-gallery.md)。
 
 ### 3.2 Particle · 粒子场
 变体：星云 / 网络图 / DNA 螺旋 / 流场 / 磁力线 / 噪声漂移 / 文字聚散 / 星轨。默认 **R5**（2D 场用 Canvas 2D，深度用 Three.js），SPECTACLE 6-9。
