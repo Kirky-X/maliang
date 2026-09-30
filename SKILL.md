@@ -76,13 +76,13 @@ license: MIT
 
 | 阶段(子命令) | 动手前必读 | 按需查阅 |
 | --- | --- | --- |
-| design-md(创建系统) | [`product-reasoning.md`](references/meta/product-reasoning.md)、[`principles.md`](references/meta/principles.md) | [`dials.md`](references/meta/dials.md)、[`spec-schema.md`](references/meta/spec-schema.md)、[`analytics-events.md`](references/meta/analytics-events.md)(埋点事件表)、[`content-guide.md`](references/meta/content-guide.md)、[templates/README.md](references/templates/README.md)(选型四步) |
+| design-md(创建系统) | [`product-reasoning.md`](references/meta/product-reasoning.md)、[`principles.md`](references/meta/principles.md)、[`ux-laws.md`](references/meta/ux-laws.md)(定律层“为什么”) | [`dials.md`](references/meta/dials.md)、[`spec-schema.md`](references/meta/spec-schema.md)、[`analytics-events.md`](references/meta/analytics-events.md)(埋点事件表)、[`content-guide.md`](references/meta/content-guide.md)、[templates/README.md](references/templates/README.md)(选型四步) |
 | redesign(改版) | [`ai-tells.md`](references/meta/ai-tells.md)、[`rules-priority.md`](references/meta/rules-priority.md) | [`dials.md`](references/meta/dials.md)、[`accessibility.md`](references/meta/accessibility.md)、[`surface-modes.md`](references/meta/surface-modes.md)、[`ux-rules.md`](references/meta/ux-rules.md) |
 | explore(方向未定多方案比较) | [`dials.md`](references/meta/dials.md)、[`surface-modes.md`](references/meta/surface-modes.md)、[`token.md`](references/meta/token.md) | [`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`ux-rules.md`](references/meta/ux-rules.md) |
-| draw-md(产出页面规格) | [`token.md`](references/meta/token.md)、[`ai-tells.md`](references/meta/ai-tells.md) | [`surface-modes.md`](references/meta/surface-modes.md)、[`visual-assets.md`](references/meta/visual-assets.md)、[templates/INDEX.md](references/templates/INDEX.md)、[`ux-rules.md`](references/meta/ux-rules.md)、[`llm-behavior.md`](references/meta/llm-behavior.md)(长产物防截断)、[`performance.md`](references/meta/performance.md) |
+| draw-md(产出页面规格) | [`token.md`](references/meta/token.md)、[`ai-tells.md`](references/meta/ai-tells.md) | [`surface-modes.md`](references/meta/surface-modes.md)、[`visual-assets.md`](references/meta/visual-assets.md)、[`copy-strategy.md`](references/meta/copy-strategy.md)(Persuade 页面文案策略)、[templates/INDEX.md](references/templates/INDEX.md)、[`ux-rules.md`](references/meta/ux-rules.md)、[`llm-behavior.md`](references/meta/llm-behavior.md)(长产物防截断)、[`performance.md`](references/meta/performance.md) |
 | preview(验证交付) | [`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`performance.md`](references/meta/performance.md) | [`ux-rules.md`](references/meta/ux-rules.md)、[`accessibility.md`](references/meta/accessibility.md)、[`content-guide.md`](references/meta/content-guide.md)、[`hardening.md`](references/meta/hardening.md)(生产化加固) |
 | critique(可用性深评) | [`surface-modes.md`](references/meta/surface-modes.md)、[`principles.md`](references/meta/principles.md) | [`accessibility.md`](references/meta/accessibility.md)、[`ux-rules.md`](references/meta/ux-rules.md) |
-| draw-harmony/flutter/element | [`performance.md`](references/meta/performance.md)、[`accessibility.md`](references/meta/accessibility.md) | [`token.md`](references/meta/token.md)(命名回填)、[`ux-rules.md`](references/meta/ux-rules.md) |
+| draw-harmony/flutter/element | [`performance.md`](references/meta/performance.md)、[`accessibility.md`](references/meta/accessibility.md)、[`polish-craft.md`](references/meta/polish-craft.md)(微雕手艺,多数条目 web-only) | [`token.md`](references/meta/token.md)(命名回填)、[`ux-rules.md`](references/meta/ux-rules.md) |
 | ip / ip-handbook | [`product-reasoning.md`](references/meta/product-reasoning.md) | [`content-guide.md`](references/meta/content-guide.md) |
 
 > 元规则:[`rules-priority.md`](references/meta/rules-priority.md) 与 [`philosophy.md`](references/meta/philosophy.md) 是全阶段裁决层,冲突时优先于各阶段文档;[`lifecycle.md`](references/meta/lifecycle.md) 是全生命周期总图(七段×载体×检查点);[`llm-behavior.md`](references/meta/llm-behavior.md) 在产出 > 2 屏的长文档时必读。
@@ -108,7 +108,7 @@ license: MIT
 | DESIGN.md 缺失关键 token(如无 color.text) | 在子命令流程内列出缺失 token 清单,询问用户补全 | 用 `{color-text-primary}` 等标准命名占位,标注"假设值,需 DESIGN.md 确认" |
 | draw-* 找不到组件文档(framework/ 无对应类型) | 在 index.md 索引表查最接近的组件类型 | 用基础组件(button/text/list/layout)组合实现,标注"无原生对应,本方案为组合" |
 | 用户提供的 UI markdown 不符合 draw-md 规格(见禁止事项 #3) | 提示具体偏差(缺 token / 缺布局章节) | 引导用户重跑 draw-md,不要硬解析不规范输入;preview 设备尺寸不在 scripts/ 时用最接近尺寸替代 |
-| ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 examples/ip-character/ |
+| ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 examples/ip-character/(首次回填时创建该目录) |
 | ui-graph 找不到 ui-relationships.json(未 generate) | 提示先跑 `python3 scripts/ui-graph.py generate --target examples/ui-markdown/` | 若 ui-markdown/ 为空,引导回退到 draw-md 先产出页面 markdown |
 
 ## 禁止事项(反例黑名单)

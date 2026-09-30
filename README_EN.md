@@ -21,7 +21,7 @@ English | [中文](README.md)
 | `ui-graph` | Deliver | UI relationship graph (hierarchy + navigation + hash baseline + implementation map), change tracking and implementation-gap queries |
 | `ip` / `ip-handbook` | Deliver | IP character generation (API first, prompt fallback) / IP visual handbook (8 modules, 2K 3:4) |
 
-- **Design asset library**: template wall with 12 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 18 component-naming vocabulary docs + eight dimension specs (color / type / icon / spacing / radius / border / layout / elevation)
+- **Design asset library**: template wall with 12 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 22 component-naming vocabulary docs + eight dimension specs (color / type / icon / spacing / radius / border / layout / elevation)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Merged assets**: the former interface-design skill now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12) — critique reads it for UI-compliance/a11y checklists
 - **Script verification layer**: `validate-draw-md.py` (13 checks), `preview-check.py` (49/113 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
@@ -101,7 +101,7 @@ maliang/
 │   ├── dimensions/          # eight dimension specs + palette library + liquid-glass recipes
 │   ├── framework/           # 56 component classes × three frameworks (harmony / flutter / element)
 │   ├── templates/           # template wall: 12 design languages + full-page patterns + landing-page orchestration
-│   ├── vocabulary/          # 18 component-naming vocabulary docs
+│   ├── vocabulary/          # 22 component-naming vocabulary docs
 │   └── default-pages/       # default page lists (15 app + 15 web pages, P0–P2)
 ├── scripts/                 # ui-graph / validate-draw-md / preview-check / ci-gate / device_models / devices/
 ├── examples/                # 13 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue)

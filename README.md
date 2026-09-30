@@ -21,7 +21,7 @@
 | `ui-graph` | 交付 | UI 关系图（层级 + 跳转 + 哈希基线 + 实现映射），变更追踪与实现缺口查询 |
 | `ip` / `ip-handbook` | 交付 | IP 形象生成（API 优先，fallback prompt）/ IP 视觉手册（8 模块，2K 3:4） |
 
-- **设计资产库**：12 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 18 篇组件命名词汇 + 八维规范（色/字/图/距/角/线/布局/海拔）
+- **设计资产库**：12 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 22 篇组件命名词汇 + 八维规范（色/字/图/距/角/线/布局/海拔）
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **已并入资产**：原 interface-design skill 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（sha e3d624b，2026-09-12），critique 的 UI 合规/a11y 清单读取该快照
 - **脚本验证层**：`validate-draw-md.py`（13 项检查）、`preview-check.py`（49/113 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（7 子命令）、`ci-gate.sh` 统一入口——纯 Python 标准库
@@ -100,7 +100,7 @@ maliang/
 │   ├── dimensions/          # 八维规范 + 调色板库 + 液态玻璃配方
 │   ├── framework/           # 56 类组件 × 三框架文档（harmony / flutter / element）
 │   ├── templates/           # 模板墙：12 种设计语言 + 整页模式 + 落地页编排
-│   ├── vocabulary/          # 18 篇组件命名词汇
+│   ├── vocabulary/          # 22 篇组件命名词汇
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
 ├── scripts/                 # ui-graph / validate-draw-md / preview-check / ci-gate / device_models / devices/
 ├── examples/                # 13 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
