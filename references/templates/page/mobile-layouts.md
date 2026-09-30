@@ -69,4 +69,4 @@ platforms: 移动端
 
 ## 来源链接
 - temp/video-analysis/v21.md（五式参数标注帧转写）
-- 相关：temp/video-analysis/v03.md（App 布局量化对照 STAGGER/SCALE/ASYMMETRY/OVERLAP/WHITESPACE，见 references/vocabulary/layout.md）
+- 相关：temp/video-analysis/v03.md（App 布局量化对照 STAGGER/SCALE/ASYMMETRY/OVERLAP/WHITESPACE，见 ../../vocabulary/layout.md）

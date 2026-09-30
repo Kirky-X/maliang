@@ -16,7 +16,7 @@
 | [`token.md`](../meta/token.md)(本目录)    | 规范层 | token **命名规则**(kebab-case、层级、语义),受 [`philosophy.md`](../meta/philosophy.md) 约束 | **否**     |
 | `examples/ui-markdown/token.md`(产物层) | 产物层 | token **硬值**(RGBA + HEX)                                                            | **是**     |
 
-**draw-md 产出物的 frontmatter 与参数表 MUST 引用产物层 `examples/ui-markdown/token.md`,禁止引用规范层 `references/meta/token.md`**(后者不含色值,引用它会导致下游无法解析)。规范层 token.md 仅在"如何命名一个新 token"时参考。
+**draw-md 产出物的 frontmatter 与参数表 MUST 引用产物层 `examples/ui-markdown/token.md`,禁止引用规范层 `../meta/token.md`**(后者不含色值,引用它会导致下游无法解析)。规范层 token.md 仅在"如何命名一个新 token"时参考。
 
 ---
 
@@ -187,7 +187,7 @@ pattern: [chart-line, table-sortable]
 2. 用户明确要求"全量产出"/"补齐默认页面"。
 
 **步骤行为**:
-1. 读取 [`references/default-pages/index.md`](../default-pages/index.md),根据端型展示默认页面清单:
+1. 读取 [`../default-pages/index.md`](../default-pages/index.md),根据端型展示默认页面清单:
    - App 端项目 → 引用 [`app.md`](../default-pages/app.md)(15 页:home/discover/messages/mine/login/signup/forgot-password/settings/about/privacy/terms/feedback/empty-state/network-error/not-found)
    - Web 端项目 → 引用 [`web.md`](../default-pages/web.md)(15 页:home/about/contact/login/signup/forgot-password/verify-email/dashboard/settings/profile/not-found/server-error/forbidden/privacy/terms)
    - 跨端项目 → 两端清单各自适用,共享 design token 保证视觉一致
@@ -274,7 +274,7 @@ pattern: [chart-line, table-sortable]
 ## 禁止事项(反例)
 
 - **禁止在组件参数表写裸色值**(如 `#FFFFFF`、`rgba(0,0,0,0.8)`):色值脱离 token 体系会导致多端不一致与主题切换失效。MUST 引用 `examples/ui-markdown/token.md` 的 token(如 `{surface-card}`)。
-- **禁止引用规范层 `references/meta/token.md`**:它只定义命名规则、不含色值,引用它会让下游 draw-* 无法解析出具体值。MUST 引用产物层 `examples/ui-markdown/token.md`(RGBA + HEX 硬值)。
+- **禁止引用规范层 `../meta/token.md`**:它只定义命名规则、不含色值,引用它会让下游 draw-* 无法解析出具体值。MUST 引用产物层 `examples/ui-markdown/token.md`(RGBA + HEX 硬值)。
 - **禁止组件类型字段自创 slug**(如 `search-bar`、`tab-item`):脱离 framework 索引会导致下游 draw-* 映射失败。MUST 引用 [`framework/index.md`](../framework/index.md) 的 56 类组件 slug,组合组件用 ` + ` 连接(如 `input + icon`)。
 - **禁止跨页面复用组件在多页重复定义**:重复定义会造成维护漂移与 token 不一致。MUST 放入 `organisms/` 单独成文,各页面通过名称引用。
 - **禁止二级页面文件直接放 `ui/` 根目录**(如 `ui/about.md`):扁平放置会让页面层级丢失、无法表达导航嵌套。MUST 用子目录(如 `ui/setting/about.md`)。
