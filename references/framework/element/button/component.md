@@ -29,7 +29,7 @@
 
 ### 场景 1:五种语义类型
 
-`type` 取值 `primary` / `success` / `warning` / `danger` / `info`,分别映射到对应功能色 token(功能色语义全局一致,见 references/dimensions/color.md)。
+`type` 取值 `primary` / `success` / `warning` / `danger` / `info`,分别映射到对应功能色 token(功能色语义全局一致,见 ../../../dimensions/color.md)。
 
 ```vue
 <template>
@@ -166,6 +166,6 @@ async function fetchData() {
 
 <script setup>
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
-// disabled → 降透明度 {opacity-disabled},保留语义色可读性(见 references/dimensions/color.md §7)
+// disabled → 降透明度 {opacity-disabled},保留语义色可读性(见 ../../../dimensions/color.md §7)
 </script>
 ```

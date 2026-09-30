@@ -14,7 +14,7 @@
 | `truncated` | `boolean`                                                  | `false`    | 单行截断:超出省略号(`overflow:hidden; text-overflow:ellipsis; white-space:nowrap`) |
 | `line-clamp`| `number`                                                   | —          | 多行截断行数(配合 `-webkit-line-clamp`);留空则不截断          |
 
-> 字号层级与字重策略遵循 references/dimensions/font.md;文字色透明度梯度遵循 references/dimensions/font.md §文字透明度梯度(主文 100% / 次文 80% / 辅助 60% …)。
+> 字号层级与字重策略遵循 ../../../dimensions/font.md;文字色透明度梯度遵循 ../../../dimensions/font.md §文字透明度梯度(主文 100% / 次文 80% / 辅助 60% …)。
 
 ## 事件(Events)
 

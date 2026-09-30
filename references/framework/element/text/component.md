@@ -63,7 +63,7 @@
 
 ### 场景 2:三种字号
 
-`size` 取值 `large` / `default` / `small`,映射到字号 token(对应 references/dimensions/font.md 的层级)。
+`size` 取值 `large` / `default` / `small`,映射到字号 token(对应 ../../../dimensions/font.md 的层级)。
 
 ```vue
 <template>
