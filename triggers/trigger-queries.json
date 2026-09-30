@@ -1,0 +1,26 @@
+{
+  "skill": "maliang",
+  "queries": [
+    {"q": "给这个 SaaS 产品设计一套 dashboard 界面", "expect": "trigger"},
+    {"q": "帮我出几版首页设计方案，方向还没定", "expect": "trigger"},
+    {"q": "把设计稿里的颜色和字号提取成 design token", "expect": "trigger"},
+    {"q": "审查一下我的 UI，检查可访问性问题", "expect": "trigger"},
+    {"q": "这个页面想走液态玻璃风格，帮我落地", "expect": "trigger"},
+    {"q": "生成 DESIGN.md，把这套设计语言沉淀下来", "expect": "trigger"},
+    {"q": "把这套 design token 导出成 Tailwind 配置", "expect": "trigger"},
+    {"q": "先梳理用户旅程，再定 persona", "expect": "trigger"},
+    {"q": "这张设置页设计得 AI 味太重，帮我 deslop", "expect": "trigger"},
+    {"q": "输出这个页面每个区块的组件规格", "expect": "trigger"},
+    {"q": "对这个 landing page 做一次五秒测试", "expect": "trigger"},
+    {"q": "把这个现有官网整体重新设计一遍，质感要高级", "expect": "no", "owner": "external"},
+    {"q": "这个落地页太模板化了，帮我 redesign 一下", "expect": "no", "owner": "external"},
+    {"q": "帮我 review 这次 PR 的代码质量", "expect": "no", "owner": "diting"},
+    {"q": "扫描前端代码里的 XSS 和 CSRF 漏洞", "expect": "no", "owner": "tiangang"},
+    {"q": "ElTable 怎么自定义列内容？", "expect": "no", "owner": "element-dev"},
+    {"q": "这个 Flutter 页面布局溢出了，帮我修一下", "expect": "no", "owner": "flutter-dev"},
+    {"q": "给这个新品牌出一套 logo 和品牌规范板", "expect": "no", "owner": "external"},
+    {"q": "做用户访谈提炼需求洞察，输出机会点", "expect": "no", "owner": "kueiku"},
+    {"q": "画一张注册流程的流程图", "expect": "no", "owner": "cangjie"},
+    {"q": "生成一张产品首页的高保真效果图", "expect": "no", "owner": "wudaozi"}
+  ]
+}
