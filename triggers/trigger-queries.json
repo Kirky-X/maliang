@@ -12,6 +12,7 @@
     {"q": "这张设置页设计得 AI 味太重，帮我 deslop", "expect": "trigger"},
     {"q": "输出这个页面每个区块的组件规格", "expect": "trigger"},
     {"q": "对这个 landing page 做一次五秒测试", "expect": "trigger"},
+    {"q": "给这个页面做 UI 设计，出几版风格稿", "expect": "trigger", "mirror": "cangjie"},
     {"q": "把这个现有官网整体重新设计一遍，质感要高级", "expect": "no", "owner": "external"},
     {"q": "这个落地页太模板化了，帮我 redesign 一下", "expect": "no", "owner": "external"},
     {"q": "帮我 review 这次 PR 的代码质量", "expect": "no", "owner": "diting"},
