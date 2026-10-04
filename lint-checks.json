@@ -1,0 +1,12 @@
+{
+  "external_paths": [
+    "ui/",
+    "setting/",
+    "temp/",
+    "google/",
+    "organisms/",
+    "examples/",
+    "docs/",
+    "reference/"
+  ]
+}
