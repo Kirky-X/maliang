@@ -37,6 +37,7 @@ bash scripts/install-skill.sh install maliang --target <project-dir>
 
 # Option 2: manual copy into an agent skills directory
 cp -r maliang/ ~/.zcode/skills/maliang/
+
 # Option 3: Remote install (GitHub repo)
 npx skills add Kirky-X/maliang --agent claude-code -y
 ```
