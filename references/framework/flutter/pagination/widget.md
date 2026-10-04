@@ -14,7 +14,7 @@ Flutter Material Design 3 **未提供名为 `Pagination` / `Pager` 的独立 Wid
 | 桌面端完整分页 | `NavigationRail` / 自定义 `Row` + `IconButton` |
 | 第三方分页包 | `pagination_view` / `infinite_scroll_pagination` |
 
-> Flutter 推荐使用"无限滚动 + 渐进加载"代替传统分页器,详见 `scroll/properties.md` 中的 `ScrollController` 监听。
+> Flutter 推荐使用"无限滚动 + 渐进加载"代替传统分页器,详见 `../scroll/properties.md` 中的 `ScrollController` 监听。
 
 ## 推荐替代方案
 

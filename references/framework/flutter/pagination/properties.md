@@ -8,7 +8,7 @@ Flutter 不存在 `Pagination` 类。本文档汇总替代实现(`TextButton` + 
 
 ## 替代方案 1:TextButton / FilledButton(页码按钮)
 
-详见 `button/properties.md`。核心属性:
+详见 `../button/properties.md`。核心属性:
 
 | 属性名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |

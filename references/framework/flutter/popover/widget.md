@@ -40,7 +40,7 @@ MenuAnchor(
 )
 ```
 
-详见 `menu/widget.md`。
+详见 `../menu/widget.md`。
 
 ### 2. 信息提示 → Tooltip
 
@@ -66,7 +66,7 @@ showDialog(
 )
 ```
 
-详见 `dialog/widget.md`。
+详见 `../dialog/widget.md`。
 
 ### 4. 非模态自定义浮层 → Overlay + OverlayEntry
 

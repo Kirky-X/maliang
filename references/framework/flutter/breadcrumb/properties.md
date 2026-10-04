@@ -23,7 +23,7 @@ Flutter 不存在 `Breadcrumb` 类。本文档汇总替代实现(`Wrap` + `TextB
 
 ## 替代方案 2:TextButton(可点击节点)
 
-详见 `button/properties.md`。核心属性:
+详见 `../button/properties.md`。核心属性:
 
 | 属性名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
@@ -42,7 +42,7 @@ Flutter 不存在 `Breadcrumb` 类。本文档汇总替代实现(`Wrap` + `TextB
 
 ## 替代方案 3:MenuAnchor(下拉节点)
 
-详见 `menu/properties.md`。核心属性:
+详见 `../menu/properties.md`。核心属性:
 
 | 属性名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |

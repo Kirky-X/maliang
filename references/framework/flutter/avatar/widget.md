@@ -2,7 +2,7 @@
 
 ## Widget 定义
 
-Flutter Material Design 3 提供圆形头像 `CircleAvatar` 与方形/自定义形状头像能力。M3 还引入 `Badge` 配合头像展示未读数(详见 `badge/widget.md`)。
+Flutter Material Design 3 提供圆形头像 `CircleAvatar` 与方形/自定义形状头像能力。M3 还引入 `Badge` 配合头像展示未读数(详见 `../badge/widget.md`)。
 
 | Avatar 类型 | 类 | 基类 | 用途 |
 | --- | --- | --- | --- |

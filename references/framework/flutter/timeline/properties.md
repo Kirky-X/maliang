@@ -52,7 +52,7 @@ Flutter 不存在 `Timeline` 类。本文档汇总替代实现(`Column` + `Row` 
 
 ## 替代方案 3:Stepper(步骤式时间线)
 
-详见 `steps/properties.md`。核心属性:
+详见 `../steps/properties.md`。核心属性:
 
 | 属性名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |

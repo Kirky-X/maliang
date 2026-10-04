@@ -12,7 +12,7 @@ Flutter Material Design 3 **未提供名为 `Timeline` 的独立 Widget**。其�
 | 横向时间线 | `Row` + `Column`(顶部圆点+线,底部内容) |
 | 自定义样式时间线 | `CustomPaint` + 自定义绘制 |
 | 第三方时间线 | `timeline_tile` 包(推荐) |
-| 步骤式时间线 | `Stepper`(详见 `steps/widget.md`) |
+| 步骤式时间线 | `Stepper`(详见 `../steps/widget.md`) |
 
 ## 推荐替代方案
 
@@ -190,7 +190,7 @@ TimelineTile(
 
 ### 4. 步骤式时间线 → Stepper
 
-若时间线表示流程步骤,使用 `Stepper`(详见 `steps/widget.md`):
+若时间线表示流程步骤,使用 `Stepper`(详见 `../steps/widget.md`):
 
 ```dart
 Stepper(
