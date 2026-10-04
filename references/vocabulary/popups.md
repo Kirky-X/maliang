@@ -20,7 +20,7 @@
 | `popup-error`             | 错误浮层/错误条:错误图标 + 重试动作 + 可关闭    | 重试为唯一主操作;常驻直到用户关闭或问题解决               | 登录失败、请求失败等操作失败反馈;表单错误汇总另见 [forms.md](forms.md) 的 `error-summary` |
 | `banner-notification`     | 常驻通知横幅:页面级持久消息,可多行排版,带操作位与关闭 | 驻留至用户关闭或问题解除;与 toast(短暂、单条、无操作位)按驻留性/可操作性区分;离线提示衔接 [states.md](states.md) `state-offline` | 系统公告、离线/同步提醒、需操作的应用内通知(framework `notification` 类) |
 
-> 来源注:`popup-confirm` / `popup-error` 两行为**审计补全**(auth.md/states.md 引用需求),非"视频研究 v01 10 SHEETS"来源;其余 10 模式均为实测动链。
+> 来源注:`popup-confirm` / `popup-error` 两行为**审计补全**(auth.md 与 states.md 的引用需求),非"视频研究 v01 10 SHEETS"来源;其余 10 模式均为实测动链。
 > 来源注:`banner-notification` 为**审计补全**(2026-09-08 组件覆盖审计):对照 Ant Design Notification、IBM Carbon Notification(inline)、Material 3 Banner 组件清单,非"视频研究 v01 10 SHEETS"实测来源。
 > 注:`popup-spring-in` 的"翘起 0.24s + 落位 0.66s"为**序列两段值**(合计 0.9s),非单段 transition;单段 transition >400ms 会触发 `validate-draw-md.py` 硬门(ERROR,见 [`micro-interactions.md`](micro-interactions.md) 时长预算表注),实现时拆 keyframes 分段或压缩至 400ms 内。
 

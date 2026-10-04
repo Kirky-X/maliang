@@ -179,7 +179,7 @@
 
 ## 命名 slug 统一约定
 
-为跨框架一致性,5 类存在命名冲突的组件统一采用 Element 名作为 slug:
+为跨框架一致性,以下 9 类原生名不一致的组件统一采用固定 slug;其中 8 类 slug 取自 Element 原生名(kebab-case 形式),仅 fab 因 Element 无原生组件(组合方案实现)而沿用 Flutter 原生名 FloatingActionButton 的缩写:
 
 | 概念 | ArkTS 原生名 | Flutter 原生名 | Element 原生名 | 统一 slug |
 | ---- | ------------ | -------------- | -------------- | --------- |

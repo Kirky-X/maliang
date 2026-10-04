@@ -8,12 +8,13 @@ English | [中文](README.md)
 
 ## ✨ Features
 
-**12 subcommands** covering the full lifecycle (full routing table in [SKILL.md](SKILL.md)):
+**13 subcommands** covering the full lifecycle (full routing table in [SKILL.md](SKILL.md)):
 
 | Subcommand | Stage | Function |
 | ---------- | ----- | -------- |
 | `design-md` | Define | Create/apply/validate/export a prose-first DESIGN.md (YAML tokens + design rationale, with persona/journey/JTBD user research) |
 | `redesign` | Iterate | Revamp existing UI: 9-dimension audit + Refresh / Restructure / Rebuild / Deslop (AI-slop removal) modes |
+| `component` | Design | Single-component brief (a button / a single input / toast and the like, 8-state hard gate), component flow instead of draw-md's page machinery |
 | `explore` | Define | When direction is undecided: diverge 3–5 genuinely different options → compare via preview renders → commit to the winner (see [explore.md](references/commands/explore.md)) |
 | `draw-md` | Design | Produce page-level hard-token UI markdown from DESIGN.md (colors/fonts/spacing all token-referenced) |
 | `preview` | Verify | Live preview with Element Plus inside iOS/Android device shells |
@@ -26,13 +27,13 @@ English | [中文](README.md)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Merged assets**: the former interface-design skill now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12) — critique reads it for UI-compliance/a11y checklists
 - **Script verification layer**: `validate-draw-md.py` (15 checks), `preview-check.py` (49/135 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
+- **Auxiliary scripts**: `install-skill.sh` (installer, see Installation below), `design_md_to_token_md.py` (auto-generates the product-layer token.md from a DESIGN.md), `skill_lint.py` (repo-level SKILL.md hygiene lint)
 
 ## 📦 Installation
 
 ```bash
-# Option 1: one-command deploy from this repository root
-# (syncs to ~/.zcode/skills/ and ~/.claude/skills/, LF-normalized)
-bash scripts/sync-skills.sh maliang
+# Option 1: bundled installer (installs into a target project's agent directory; 9 agent types incl. claude/cursor/windsurf, defaults --target . --agent claude)
+bash scripts/install-skill.sh install maliang --target <project-dir>
 
 # Option 2: manual copy into an agent skills directory
 cp -r maliang/ ~/.zcode/skills/maliang/
@@ -58,7 +59,7 @@ The script layer runs standalone too:
 ```bash
 python3 {SKILL_DIR}/scripts/ui-graph.py generate --target ui-markdown/      # build the UI relationship graph
 python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target ui-markdown/     # navigation dead-link check
-python3 {SKILL_DIR}/scripts/validate-draw-md.py ui-markdown/ --format text  # 13 compliance checks
+python3 {SKILL_DIR}/scripts/validate-draw-md.py ui-markdown/ --format text  # 15 compliance checks
 bash {SKILL_DIR}/scripts/ci-gate.sh                                          # CI gate (tests + 3 validators)
 ```
 
@@ -75,27 +76,28 @@ flowchart LR
 
 ## ✅ Tests & Verification
 
-Measured pytest run (2026-09-13, Python 3.12):
+Measured pytest run (2026-10-04, Python 3.12):
 
 ```text
 $ python3 -m pytest tests -q
-........................................................................  [ 76%]
+........................................................................  [ 43%]
+........................................................................  [ 86%]
 ......................                                                   [100%]
-94 passed in 0.07s
+166 passed in 0.11s
 ```
 
-Four test files (two-column fixtures pairing "should flag" with "should not flag"): `test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md`.
+Eight test files: `test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md` / `test_detect_tells` / `test_dark_palette_derive` / `test_design_md_frontmatter` / `test_doc_consistency` (plus the `_load.py` helper module).
 
-CI gate measured: `bash scripts/ci-gate.sh` → `Result: PASS` (unit tests ✓, validate-draw-md ✓, validate-framework ✓, ui-graph check-nav ✓, preview-check 0 errors / 3 warnings covering 49/135 items — the rest need browser-based manual verification). Push/PR runs the same gate automatically via `.github/workflows/validate.yml`.
+CI gate measured: `bash scripts/ci-gate.sh` → `Result: PASS` (unit tests ✓, validate-draw-md ✓, validate-framework △ warnings only, ui-graph check-nav ✓, preview-check 0 errors / 3 warnings covering 49/135 items — the rest need browser-based manual verification). Push/PR runs the same gate automatically via `.github/workflows/validate.yml`.
 
 ## 📁 Directory Structure
 
 ```text
 maliang/
-├── SKILL.md                 # Entry: 11-subcommand router + meta load order + failure modes + prohibitions
-├── skill.json               # Metadata (v0.3.0, MIT)
+├── SKILL.md                 # Entry: 13-subcommand router + meta load order + failure modes + prohibitions
+├── skill.json               # Metadata (v0.3.1, MIT)
 ├── references/
-│   ├── commands/            # 11 subcommand workflow docs
+│   ├── commands/            # 13 subcommand workflow docs + 2 auxiliary docs (design-md-advanced / preview-checklist)
 │   ├── meta/                # Spec layer: token / principles / ux-rules / lifecycle / accessibility …
 │   │                        #   incl. web-interface-guidelines.md snapshot (sha e3d624b)
 │   ├── interface-design/    # merged from the former interface-design skill (craft discipline / strict review)
@@ -104,9 +106,9 @@ maliang/
 │   ├── templates/           # template wall: 12 design languages + full-page patterns + landing-page orchestration
 │   ├── vocabulary/          # 22 component-naming vocabulary docs
 │   └── default-pages/       # default page lists (15 app + 15 web pages, P0–P2)
-├── scripts/                 # ui-graph / validate-draw-md / preview-check / ci-gate / device_models / devices/
-├── examples/                # 13 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue)
-└── tests/                   # pytest suite (94 cases, 4 files)
+├── scripts/                 # ui-graph / validate-draw-md / preview-check / validate-framework / ci-gate / install-skill / skill_lint / design_md_to_token_md / detect-tells / dark-palette-derive / device_models / maliang_common / devices/
+├── examples/                # 12 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue)
+└── tests/                   # pytest suite (166 cases, 8 files)
 ```
 
 ## 🔮 Boundaries

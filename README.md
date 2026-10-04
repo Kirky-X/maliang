@@ -8,12 +8,13 @@
 
 ## ✨ 功能特性
 
-**12 个子命令**覆盖全生命周期（完整路由表见 [SKILL.md](SKILL.md)）：
+**13 个子命令**覆盖全生命周期（完整路由表见 [SKILL.md](SKILL.md)）：
 
 | 子命令 | 阶段 | 功能 |
 | ------ | ---- | ---- |
 | `design-md` | 定义 | 创建/应用/验证/导出 prose-first 的 DESIGN.md（YAML token + 设计理由，含 persona/journey/JTBD 用户研究） |
 | `redesign` | 迭代 | 改版现有 UI：9 维审计 + Refresh / Restructure / Rebuild / Deslop（去 AI 味）四模式 |
+| `component` | 设计 | 单个组件 brief（做个按钮 / 单个输入框 / toast 等单元素，8 状态硬门），走组件流程替代 draw-md 页面机制 |
 | `explore` | 定义 | 方向未定时多方案发散-比较-收敛：实体化 3–5 个真不同方案 → preview 渲染比较 → 选定胜者（见 [explore.md](references/commands/explore.md)） |
 | `draw-md` | 设计 | 从 DESIGN.md 产出页面级硬 token UI markdown（颜色/字体/间距全引用 token） |
 | `preview` | 验证 | Element Plus + iOS/Android 设备外壳实时预览 |
@@ -26,12 +27,13 @@
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **已并入资产**：原 interface-design skill 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（sha e3d624b，2026-09-12），critique 的 UI 合规/a11y 清单读取该快照
 - **脚本验证层**：`validate-draw-md.py`（15 项检查）、`preview-check.py`（49/135 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（7 子命令）、`ci-gate.sh` 统一入口——纯 Python 标准库
+- **辅助脚本**：`install-skill.sh`（安装器，见下文安装）、`design_md_to_token_md.py`（DESIGN.md → 产物层 token.md 自动生成）、`skill_lint.py`（仓库级 SKILL.md 工程体检）
 
 ## 📦 安装
 
 ```bash
-# 方式 1：从本仓库根一键部署（同步到 ~/.zcode/skills/ 与 ~/.claude/skills/，LF 强制归一）
-bash scripts/sync-skills.sh maliang
+# 方式 1：仓库自带安装器（安装到目标项目的 agent 目录，支持 claude/cursor/windsurf 等 9 类 agent，默认 --target . --agent claude）
+bash scripts/install-skill.sh install maliang --target <项目目录>
 
 # 方式 2：手动拷贝到 agent 技能目录
 cp -r maliang/ ~/.zcode/skills/maliang/
@@ -74,27 +76,28 @@ flowchart LR
 
 ## ✅ 测试与验证
 
-pytest 实测（2026-09-13，Python 3.12）：
+pytest 实测（2026-10-04，Python 3.12）：
 
 ```text
 $ python3 -m pytest tests -q
-........................................................................  [ 76%]
+........................................................................  [ 43%]
+........................................................................  [ 86%]
 ......................                                                   [100%]
-94 passed in 0.07s
+166 passed in 0.11s
 ```
 
-4 个测试文件（双列 fixture，"应报 + 不应报"成对覆盖）：`test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md`。
+8 个测试文件：`test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md` / `test_detect_tells` / `test_dark_palette_derive` / `test_design_md_frontmatter` / `test_doc_consistency`（另有 `_load.py` 公共夹具）。
 
-CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework ✓、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 49/135 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
+CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework △ 仅 warning、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 49/135 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
 
 ## 📁 目录结构
 
 ```text
 maliang/
-├── SKILL.md                 # 入口：11 子命令路由 + meta 加载时序 + 失败模式 + 禁止事项
-├── skill.json               # 元数据（v0.3.0，MIT）
+├── SKILL.md                 # 入口：13 子命令路由 + meta 加载时序 + 失败模式 + 禁止事项
+├── skill.json               # 元数据（v0.3.1，MIT）
 ├── references/
-│   ├── commands/            # 12 个子命令流程文档
+│   ├── commands/            # 13 份子命令流程文档 + 2 份附属文档（design-md-advanced / preview-checklist）
 │   ├── meta/                # 规范层：token / principles / ux-rules / lifecycle / accessibility …
 │   │                        #   含 web-interface-guidelines.md 快照（sha e3d624b）
 │   ├── interface-design/    # 原 interface-design skill 并入（craft 纪律 / 严格评审）
@@ -103,9 +106,9 @@ maliang/
 │   ├── templates/           # 模板墙：12 种设计语言 + 整页模式 + 落地页编排
 │   ├── vocabulary/          # 22 篇组件命名词汇
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
-├── scripts/                 # ui-graph / validate-draw-md / preview-check / ci-gate / device_models / devices/
-├── examples/                # 13 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
-└── tests/                   # pytest 套件（94 用例，4 文件）
+├── scripts/                 # ui-graph / validate-draw-md / preview-check / validate-framework / ci-gate / install-skill / skill_lint / design_md_to_token_md / detect-tells / dark-palette-derive / device_models / maliang_common / devices/
+├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
+└── tests/                   # pytest 套件（166 用例，8 文件）
 ```
 
 ## 🔮 边界

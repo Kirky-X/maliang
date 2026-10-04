@@ -8,7 +8,7 @@ Flutter 不存在 `Popover` 类。本文档汇总替代实现(`MenuAnchor` / `To
 
 ## 替代方案 1:MenuAnchor(菜单弹出)
 
-详见 `menu/properties.md`。核心属性:
+详见 `../menu/properties.md`。核心属性:
 
 | 属性名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
@@ -62,7 +62,7 @@ Overlay.of(context, {bool rootOverlay = false, Widget? debugRequiredFor})
 
 ## 替代方案 4:showDialog(模态对话框)
 
-详见 `dialog/properties.md`。核心参数:
+详见 `../dialog/properties.md`。核心参数:
 
 | 属性名 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
