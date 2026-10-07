@@ -1,6 +1,6 @@
 ---
 name: maliang
-description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版不沉淀 token 用 redesign-existing-projects；代码质量/架构审查用 diting；安全扫描用 tiangang"
+description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版不沉淀 token 用 redesign-existing-projects；代码质量/架构审查用 diting；安全扫描用 tiangang；框架运行时开发、编译报错、测试→hap-dev/flutter-dev/element-dev；组件文档查询→element-dev；通用文生图→wudaozi（本 skill 的 ip 仅限项目 IP 形象场景）"
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
 metadata:
