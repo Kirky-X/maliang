@@ -4,7 +4,7 @@ description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定�
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
   author: "Kirky-X"
   repo: "https://github.com/Kirky-X/maliang"
   tags: "design-system, design-token, ui-markdown, DESIGN.md, w3c-dtcg, harmonyos, flutter, element-plus, preview, device-models, ui-graph, ip-character, ip-handbook, accessibility, dark-mode"
