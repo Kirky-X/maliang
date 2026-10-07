@@ -115,7 +115,7 @@ metadata:
 | DESIGN.md 缺失关键 token(如无 color.text) | 在子命令流程内列出缺失 token 清单,询问用户补全 | 用 `{color-text-primary}` 等标准命名占位,标注"假设值,需 DESIGN.md 确认" |
 | draw-* 找不到组件文档(framework/ 无对应类型) | 在 index.md 索引表查最接近的组件类型 | 用基础组件(button/text/list/layout)组合实现,标注"无原生对应,本方案为组合" |
 | 用户提供的 UI markdown 不符合 draw-md 规格(见禁止事项 #3) | 提示具体偏差(缺 token / 缺布局章节) | 引导用户重跑 draw-md,不要硬解析不规范输入;preview 设备尺寸不在 scripts/ 时用最接近尺寸替代 |
-| ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 examples/ip-character/(首次回填时创建该目录) |
+| ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 examples/ip/(首次回填时创建该目录) |
 | ui-graph 找不到 ui-relationships.json(未 generate) | 提示先跑 `python3 scripts/ui-graph.py generate --target examples/ui-markdown/` | 若 ui-markdown/ 为空,引导回退到 draw-md 先产出页面 markdown |
 | explore 方向未定时无 DESIGN.md | 引导先走 design-md Phase 0a 领域探索 | 用户坚持探索时,用克制默认外观 + 临时 token 占位,显式标注「待 DESIGN.md 建立后回填」,方向清单未经确认不进入实体化 |
 
