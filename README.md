@@ -105,7 +105,7 @@ maliang/
 │   ├── dimensions/          # 八维规范 + 调色板库 + 液态玻璃配方
 │   ├── framework/           # 56 类组件 × 三框架文档（harmony / flutter / element）
 │   ├── templates/           # 模板墙：12 种设计语言 + 整页模式 + 落地页编排
-│   ├── vocabulary/          # 23 篇组件命名词汇（含 pro-motion 专业动效组件）
+│   ├── vocabulary/          # 23 篇组件命名词汇（含 pro-motion 专业交互组件）
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
 ├── scripts/                 # ui-graph / validate-draw-md / preview-check / validate-framework / ci-gate / install-skill / skill_lint / design_md_to_token_md / detect-tells / dark-palette-derive / device_models / maliang_common / devices/
 ├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
