@@ -100,6 +100,7 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 **slop form**：自定义光标——一个点拖着迟滞的圆环。
 **死法**：触屏上交付（必须 `&& FINE`）；或用到每个链接上直到读起来像抽搐。
 → 骨架：[`spring-reorder.md`](spring-reorder.md) / [`metaball-tether.md`](metaball-tether.md) / [`interruptible-motion.md`](interruptible-motion.md)。
+→ 组件命名：`card-tilt-glare` / `sheet-velocity-anchor` / `press-scale-overshoot` / `stagger-spring-cascade` 见 [`../vocabulary/pro-motion.md`](../vocabulary/pro-motion.md)。
 
 ### 3.9 State transition · 状态转场
 变体：列表增删 / 筛选重排 / 路由切换 / 展开塌陷 / 排序 / 标签页滑动 / 骨架到内容 / 乐观更新 / **图标级状态切换**（menu↔close、play↔pause、eye 显示↔隐藏、主题日月——morph 变体，设计决策见 [`../dimensions/icon.md`](../dimensions/icon.md) 动效图标节）。默认 **R3**，SPECTACLE 2-5。
@@ -107,11 +108,14 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 **slop form**：没有——这一族的问题是被**长期缺席**。
 **死法**：从来不做。**唯一属于 Operate/产品向页面的动效族**，仪表盘不再像页面刷新靠的就是它。
 → 骨架：[`shared-element.md`](shared-element.md) / [`circular-reveal.md`](circular-reveal.md) / [`../vocabulary/sheet-drawer.md`](../vocabulary/sheet-drawer.md)。
+→ 组件命名：`capsule-fluid-morph` / `shared-element-expand` 见 [`../vocabulary/pro-motion.md`](../vocabulary/pro-motion.md)。
 
 ### 3.10 Atmosphere · 氛围
 变体：颗粒 / 扫描线 / 辉光脉动 / 渐晕呼吸 / 光标光源 / 呼吸背景 / 噪声叠层 / 色温漂移。默认 **R1**（颗粒用一段内联 SVG `feTurbulence`），SPECTACLE 2-5。
 **slop form**：全页背后一层全屏动画渐变网格。
 **死法**：给颗粒做动画（贵，且是噪声上叠噪声）。**颗粒冻结；此层 opacity > 0.06 的东西一律不动画。**
+
+> 边框光晕类（旋转渐变描边 + 呼吸弥散背光）走组件命名 [`border-conic-glow`](../vocabulary/pro-motion.md)，实现口径见该篇使用规则。
 
 ```css
 /* Grain——值得背下来唯一的氛围原语。零素材零 JS。 */
