@@ -22,6 +22,8 @@
 | `nav-tab-liquid`      | 液态 tab 指示器:选中背景移动中先拉长再收缩最后回弹,像液体流过去 | 分段切换(MOTION ≥ 7)                          |
 | `nav-large-title-collapse` | 大标题折叠:缩放/横移/上移/底色全挂同一个滚动进度,大标题随滚动收进导航栏 | iOS 式列表页、个人主页                       |
 | `nav-bottom-action-bar` | 吸底操作栏:关键信息+主按钮常驻底部,避开手势安全区(environ safe-area) | 详情页购买栏、多选操作栏                      |
+| `nav-tabbar-auto-hide` | 底栏滚动方向感知显隐:下滚收起(内容全宽沉浸),上滚即唤出 | 信息流 / 浏览型页(流程 / 详情页禁用,操作导航须常驻) |
+| `nav-predictive-back` | 预测性返回:返回手势中预览目标页,松手确认跳转,中途松开回弹取消 | Android / 鸿蒙系统级返回转场(M3 Expressive) |
 
 ## 侧边栏骨架六式(后台/桌面端)
 
