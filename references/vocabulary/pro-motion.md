@@ -1,6 +1,6 @@
 # 专业动效组件模式命名词汇
 
-> 模式词汇库。专业级交互组件两节 16 组:移动动效组件 8 组(3D 倾斜流光、胶囊流体形变、共享元素展开、磁吸游标码表、速度锚点抽屉、光晕边框、弹簧交错流、按压超调反馈)与桌面 Web 交互组件 8 组(滚动钉住叙事、情境光标、磁吸按钮、图标展开标签、导航悬停指示块、角落扩散悬停、分档拖动条、跟手读数柱状图,见文末节)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 3 组已有实现,本篇只做命名收编与挂接,不重复实现。
+> 模式词汇库。专业级交互组件两节 18 组:移动动效组件 8 组(3D 倾斜流光、胶囊流体形变、共享元素展开、磁吸游标码表、速度锚点抽屉、光晕边框、弹簧交错流、按压超调反馈)与桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、图标展开标签、导航悬停指示块、角落扩散悬停、分档拖动条、跟手读数柱状图、悬停跟随预览图、圆形扩散换肤,见文末节)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 3 组已有实现,本篇只做命名收编与挂接,不重复实现。
 
 ## 命名表
 
@@ -65,7 +65,7 @@
 
 ## 桌面 Web 交互组件
 
-> 8 个桌面 Web 交互组件,统一来自同一套设计系统演示(ROUE / CARVE),两条跨组件统一纪律随行:①全片同一种回弹力度(一条曲线用到底);②主色只给当前交互的一块。均为指针驱动,交付前先过本节门控。来源:专业交互组件视频截图提取(2026-10,同系列)。
+> 10 个桌面 Web 交互组件,统一来自同一套设计系统演示(ROUE / CARVE),两条跨组件统一纪律随行:①全片同一种回弹力度(一条曲线用到底);②主色只给当前交互的一块。均为指针驱动,交付前先过本节门控。来源:专业交互组件视频截图提取(2026-10,同系列)。
 
 ### 命名表
 
@@ -79,6 +79,8 @@
 | `card-corner-fill` | 角落扩散悬停 Corner Fill Hover | 悬停时主色以角上圆形按钮为圆心 clip-path circle 扩散铺满功能块,文字同步反色,箭头旋转 45° | 功能卡 / 指标卡悬停态 |
 | `picker-snap-level` | 分档拖动条 Snapping Level Slider | 圆角轨道 + 圆形拖柄;拖动时数字按离散档位滚动切换,已经过轨道填充主色;松手弹簧吸附最近档位 | 档位 / 力度 / 强度调节(slider-liquid 的离散档变体) |
 | `chart-scrub-readout` | 跟手读数柱状图 Scrubbing Bar Chart | 细竖柱密集排列;横向移动时竖向指示线与圆形读数标签跟手,指示线左侧柱体主色、右侧压暗,顶部数值平滑滚动 | 桌面端时序数据扫读(chart-magnet-cursor 的桌面 hover 变体) |
+| `list-hover-preview` | 悬停跟随预览图 Hover Image Reveal | 文字列表每行绑定一图;悬停时图片 0.8 缩放淡入并带惯性跟随光标,切换行时新图 0.9 缩放弹入覆盖,移出列表缩小淡出 | 列表行 → 图片的桌面预览(移动端对应 sheet-drawer.md `preview-longpress-peek`) |
+| `theme-circular-reveal` | 圆形扩散换肤 Circular Theme Reveal | 以主题按钮为圆心 View Transitions + clip-path circle 扩散换肤,太阳图标同步变月亮,再次点击反向收回 | 主题切换(已有实现:[circular-reveal.md](../motion-skeletons/circular-reveal.md) 骨架;日月 morph 见 [`../dimensions/icon.md`](../dimensions/icon.md)) |
 
 ### AI 描述词对照
 
@@ -94,6 +96,8 @@
 | 06 | 角落扩散悬停 | 以功能块右上角圆形箭头按钮为扩散中心,悬停时使用 clip-path circle 将主色从按钮位置扩散至整个功能块,文字颜色同步反转,箭头旋转 45 度。(Skill统一:橙色只给当前这一块) |
 | 07 | 分档拖动条 | 圆角长条轨道上放置圆形拖柄;拖动时数字按离散档位滚动切换,已经过的轨道填充主色;松手后拖柄使用弹簧缓动吸附到最近档位。 |
 | 08 | 跟手读数柱状图 | 细竖柱密集排列;鼠标横向移动时,竖向指示线和圆形读数标签跟随位置移动,指示线左侧柱体使用主色,右侧压暗,顶部数值随位置平滑滚动。 |
+| 09 | 悬停跟随预览图 | 文字列表每行绑定一张图片;悬停时图片从 0.8 倍缩放并淡入,同时带惯性跟随光标;切换行时新图从 0.9 倍缩放弹入覆盖旧图,移出列表后缩小淡出。 |
+| 10 | 圆形扩散换肤 | 以主题切换按钮中心为圆心,使用 View Transitions 配合 clip-path circle,让新配色从半径 0 逐渐扩散覆盖整个页面;太阳图标同步变成月亮,再次点击时沿相反方向收回。(Skill统一:深浅两套配色现成可用) |
 
 ### 使用规则
 
@@ -109,6 +113,8 @@
 - `picker-snap-level`:档位 ≤ 7;拖动中数字按档滚动切换(num-ticker),已过轨道填充即时更新;松手吸附最近档,一次性过渡用 btn-spring 曲线近似,跟手中途可反向(真弹簧见 [interruptible-motion.md](../motion-skeletons/interruptible-motion.md))
 - `chart-scrub-readout`:左侧主色 / 右侧压暗表达「当前 / 非当前」;读数标签跟手,数值滚动属反馈档 ≤ 400ms;数据点 > 500 先降采样(沿用 `chart-magnet-cursor` 口径);移动端换用 `chart-magnet-cursor` 触摸版
 - 反馈档时长 ≤ 400ms 硬门同样适用本节(跟随 / 展开 / 填充均为状态反馈,见 [micro-interactions.md](micro-interactions.md) 分层口径)
+- `list-hover-preview`:预览图 fixed 容器 rAF lerp 跟随光标(惯性系数 0.1-0.2),只动 transform;切行换图交叉淡入 + 0.9→1 弹入(一次性过渡),列表行本身禁动;预览图预载相邻行,防切换闪空;降级为行内静态缩略图
+- `theme-circular-reveal`:实现全挂 [circular-reveal.md](../motion-skeletons/circular-reveal.md)(View Transitions 首选、降级双层 DOM、裁切不缩放、reduced-motion 直接切换);日月图标 morph 与扩散同帧启动;再次点击沿相反方向收回(收场复现入场轨迹,链路铁律);换肤只换 token 值不改 token 结构,深浅两套现成可用
 
 ### 在 draw-md 中的写法
 

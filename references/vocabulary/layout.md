@@ -1,6 +1,6 @@
 # 布局模式命名词汇
 
-> 模式词汇库。draw-md 阶段描述页面整体布局时使用的标准化命名。来源:taste-skill;仪表盘 6 模式见文末「仪表盘页面布局」节(专业布局术语视频截图提取,2026-10)。
+> 模式词汇库。draw-md 阶段描述页面整体布局时使用的标准化命名。来源:taste-skill;仪表盘与移动端整页布局见文末两节(专业布局术语视频截图提取,2026-10)。
 
 ## 命名表
 
@@ -78,7 +78,7 @@
 
 - 同一布局模式连续重复 ≤ 2 次(如 `layout-bento-grid` → `layout-bento-grid` → `layout-bento-grid` = 违规)
 - 第 3 个 section 必须切换布局(如改为 `layout-single-column` / `layout-split-screen` / `layout-full-bleed`)
-- 布局家族多样性下限:8 节及以上的页面,使用的布局家族 ≥ 4 种(家族 = 本文档命名表与仪表盘表共 16 个模式,各计 1 族);`layout-single-column` / `layout-stacked` 基础流式不计入种类统计,防止用正文流凑数
+- 布局家族多样性下限:8 节及以上的页面,使用的布局家族 ≥ 4 种(家族 = 本文档三张命名表共 22 个模式,各计 1 族);`layout-single-column` / `layout-stacked` 基础流式不计入种类统计,防止用正文流凑数
 - 同一布局家族整页至多出现 1 次("精选案例"区不得长得像"我们做什么"区);本条**废止**上述"非连续复用合规"口径——bento → single → bento 现在违规,同一家族第 2 次出现必须换家族
 
 ### L5 · Marquee 单页 ≤ 1
@@ -150,4 +150,57 @@
 - pattern: layout-kanban-columns
 - columns: 5 × 216px, header: name+count, scroll: horizontal-snap
 - drag: spring-reorder
+```
+
+## 移动端页面布局
+
+> 整页级移动 App / 小程序布局公式:标题、搜索、分类、主块、列表的量化排法。与 [`../templates/page/mobile-layouts.md`](../templates/page/mobile-layouts.md)「移动端五式」分工:五式选设计语言气质,本节选整页布局公式,先五式后本节叠加使用。来源:移动端布局术语视频截图提取(2026-10,APP · MINI PROGRAM UI LAYOUT 系列 01-06)。
+
+### 命名表
+
+| 模式名 | 视频组件 | 视觉特征 | 适用场景 |
+| --- | --- | --- | --- |
+| `layout-wide-caps-list` | 大字标题加整宽大图列表 Wide Caps Image List | 两行宽体大写标题 + 圆角搜索栏(右配黑色圆形筛选钮)+ 分类标签选中黑底;每项整宽圆角大图(16:10),图下一行名称 / 参数 / 圆形箭头钮,逐项进入 | 商品 / 房源目录类列表首屏 |
+| `layout-hero-overlay` | 大图头块叠信息 Hero Image Overlay | 头块圆角大图约占屏高 1/3,标题 / 倒计时 / 主按钮(×3)直接压图上,深色渐变保可读;下方等宽日期块当前项近黑(#151213)实心,底部平滑曲线串数值,圆点随当前项移动 | 旅行 / 天气 / 日程类首页 |
+| `layout-black-hero` | 黑白两档主次 Black Hero Hierarchy | 浅灰底(#F4F3F4),主信息块近黑(#0B0708)配白字,其余信息块一律白;分类选中项同样变黑;下方黑色横幅(×2)呼应;全页禁第三种强调色 | 阅读 / 工具类首页的两档层级 |
+| `layout-bento-grid` | 大色块网格 Bento Grid(移动端规格) | 已有模式,本行补移动端量化:首块整行品牌色填充,超大数字 + 环形进度;标题超粗(900)中英两行;其余四列等宽小格浅色低饱和,圆角统一 24 | 习惯 / 统计 / 仪表类首屏 |
+| `layout-poster-dial` | 海报大字加半圆转盘 Poster Dial Layout | 方块粗体巨字标题(52px)叠双色;半圆弧转盘选项沿弧排列(30°/项),选中项转到指针正上方并放大;下方超大等宽数字 + 单一主按钮;底部撞色底栏 | 专注 / 计时类单任务页(转盘交互见 [pickers.md](pickers.md) `picker-radial-arc`) |
+| `layout-stacked-deck` | 叠放堆栈 Stacked Deck | 主图居中占屏宽 82%,后面两张依次缩到 0.94 / 0.88 向上错开露边;上拖过阈值最前一张飞出、后卡依次补位,页码同步更新 | 房型 / 内容卡切换(拖拽细节见 [buttons.md](buttons.md) `card-stack-pull` + `card-fling`) |
+
+### AI 描述词对照
+
+> 视频提示词原文;落 draw-md 时按模式名与使用规则参数化,不整段照抄。
+
+| # | 布局 | AI 描述词 |
+| --- | --- | --- |
+| 01 | 大字标题加整宽大图列表 | 宽体标题大图列表(Wide Caps Image List):顶部两行宽体大写无衬线标题,下面一条圆角搜索栏右侧配黑色圆形筛选按钮,再下一排分类标签,选中项黑底;列表每一项是整宽圆角大图,图下一行放名称、参数和圆形箭头按钮,上下滑动逐项进入。 |
+| 02 | 大图头块叠信息 | 大图头块叠信息(Hero Image Overlay):顶部一块圆角大图,高度约占屏幕三分之一,标题、倒计时和主按钮直接压在图上,图上叠深色渐变保证可读;下方白底信息块里一排等宽日期块,当前项用近黑色实心填充,底部一条平滑曲线串起每天的数值,圆点跟着当前项移动。 |
+| 03 | 黑白两档主次 | 黑白两档层级(Black Hero Hierarchy):页面用浅灰底,最主要的信息块用近黑色填充配白字,其余信息块一律白色;顶部分类横向滚动,选中项同样变成近黑色;下方再放一条黑色横幅与主块呼应;全页不用第三种强调色。 |
+| 04 | 大色块网格 | 便当盒网格(Bento Grid):首块占满整行、用品牌亮黄填充,放一个超大数字,右侧一个环形进度;页面其余部分用浅灰底;标题用超粗黑体中英两行;下面四列等宽小格,每格用浅色低饱和打底,圆角统一 24。 |
+| 05 | 海报大字加半圆转盘 | 海报巨字转盘(Poster Dial Layout):顶部用方块粗体英文巨字做标题,黑白两色叠在紫色底上;中间一段半圆弧形转盘,选项沿弧排列,选中项转到指针正上方并放大;下方一个超大等宽数字和一个黑色主按钮;底部一条撞色底栏。 |
+| 06 | 叠放堆栈 | 叠放堆栈切换(Stacked Deck):顶部两行细长宽体标题加一排分类;主图居中占屏幕宽度 82%,后面两张依次缩到 0.94 和 0.88 倍、向上错开露出边缘;向上拖过阈值时最前面一张飞出,后面依次补位,底部页码同步更新。 |
+
+### 使用规则
+
+- 6 模式为整页级主布局,单页选 1 种;先用移动端五式定气质,再用本节定布局;L4 家族统计计入(各计 1 族)
+- `layout-wide-caps-list`:大图 16:10 统一比例,首屏 3 行为限;逐项进入挂 [pro-motion.md](pro-motion.md) `stagger-spring-cascade`;黑色筛选钮是主色唯一落点,分类标签选中黑底与其同色
+- `layout-hero-overlay`:压图文字必须深色渐变托底(对比度达标,见 [accessibility.md](../meta/accessibility.md));日期块当前项实心填充是状态语义;曲线串数值走 [charts.md](charts.md),圆点移动 ≤ 400ms
+- `layout-black-hero`:全页两档色(浅灰 / 近黑)禁第三种强调色(与 dashboard-styles「重色只给一处」同源纪律);选中态 = 变黑,禁用描边 / 变色双轨;黑色横幅 ×2 为呼应上限
+- `layout-bento-grid`:移动端规格沿用主表 L3(单元 ≤ 6、主单元 ≥ 2×2);全页一个圆角值(24);环形进度走 [charts.md](charts.md) `chart-ring-draw`
+- `layout-poster-dial`:转盘档位 ≤ 7,30°/项为基准,选中项放大 ≤ 1.2 倍;中文标题禁照搬英文方块字(换字重不换字体);撞色底栏是全页唯一撞色落点
+- `layout-stacked-deck`:堆叠层 ≤ 3(前 + 后两张),缩放 0.94 / 0.88 等差;飞出阈值 + 速度判据见 [gesture-arbitration.md](../motion-skeletons/gesture-arbitration.md),速度翻张参数见 `card-fling`;补位与页码同帧更新
+- 移动端全部触控驱动,无 hover;触控目标 ≥ 44px;`prefers-reduced-motion` 降级:逐项进入直接显示、转盘 / 堆栈直接切换
+
+### 在 draw-md 中的写法
+
+```markdown
+## Layout (van-list)
+- pattern: layout-wide-caps-list
+- title: 2-line-caps, image_ratio: 16:10, rows: 3
+- entry: stagger-spring-cascade
+
+## Layout (focus-timer)
+- pattern: layout-poster-dial
+- title: 52px-block, dial: { arc: 180deg, step: 30deg, magnify: 1.2 }
+- cta: single-primary, bar: contrast-color
 ```
