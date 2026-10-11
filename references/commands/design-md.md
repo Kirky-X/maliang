@@ -226,11 +226,23 @@
 
 ### 1C. From Screenshot or Image
 
+基础五步(全图扫描):
+
 1. Extract dominant colors → assign to `primary`, `secondary`, `tertiary`, `neutral` roles
 2. Identify type hierarchy (size ratios, weight contrast between heading and body)
 3. Measure spacing patterns (card padding, vertical rhythm, section gaps)
 4. Note corner radius character (sharp ≈ 0-2px, subtle ≈ 4-8px, rounded ≈ 12-16px+)
 5. Document visible component patterns (button styles, card structure, input fields)
+
+分维度细提取(逐维精读,基础五步的展开;来源:taste-skill image-to-code §21-25,2026-10 吸收,措辞自著):
+
+- **文字**(§21):区分真 UI 文本与图片内嵌文字;记录正文行高与最大行宽;短标签 vs 句子级文案的字号档位
+- **字阶**(§22):display/heading/body/caption 各档的实际 px 与字重;标题-正文的对比手法(字号差/字重差/大小写/字距);数字与正文是否异族(mono 数字)
+- **间距**(§23):同一节奏单位反复测 3 处取众数(卡片内边距、节与节间隔、栅格列距);识别 4/8px 基数;密与疏段的交替模式
+- **按钮/组件**(§24):主次按钮的填充-描边-文字三态;圆角档位与高度;hover/active 可见状态;卡片层级(有无嵌套、阴影语言)
+- **色彩**(§25):主色在 UI 中的复现率(按钮/链接/焦点环是否同源);强调色克制度(一处点睛 vs 多处铺开);中性色梯度档数;深浅模式下语义色是否换相
+
+**阴影与网格专项**(从截图反推时最易漏):阴影是层级手段还是装饰(偏移/模糊/透明度三元组记实);布局网格是栏式还是自由流;跨 section 的对齐基线是否一致。
 
 ---
 

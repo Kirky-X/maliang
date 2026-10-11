@@ -23,6 +23,12 @@
 
 ---
 
+## 轻量档 · 文生图方向板(可选)
+
+用户只要**快速看视觉方向**(风格/氛围/布局意象),尚不需要可交互比较器与可发布规格时,可用本档替代第 3-4 步的重链路:把各方向词交给 wudaozi t2i **分节出图**——每个方向按节出横图,每节一张、逐张标注 `Section X of N`,跨帧锁同一 brand world;出图纪律(张数、design bible、禁裁剪旧图、生成前自查)照 [`wudaozi`](../../../wudaozi/references/multi-image-discipline.md) 的 multi-image-discipline 执行,构图锚点按内容选,不吃「左文右图」的条件反射默认。
+
+边界:方向板是**意象参考,不是规格**——不含 token、不可发布、不满足 draw-md 硬约束;用户选定方向后必须回到主流程第 3 步实体化成 draw-md 规格(值引用 token),方向板不得经 keep 直接晋级生产面。来源:imagegen-frontend-web(license 未考,思想内化),2026-10 吸收。
+
 ## 流程
 
 ### 1. 定界与侦察
