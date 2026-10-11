@@ -11,9 +11,11 @@
 | [fluent-2](fluent-2.md) | Fluent 2 设计系统 | 微软 token 驱动克制中性：1px 描边 + 双层软阴影 + 亚克力浮层 | 2-5 / 2-5 / 4-8 | production |
 | [bento-grid](bento-grid.md) | 便当盒网格 | 不等尺寸瓷砖拼贴，一格一主题、大格叙事小格点缀 | 5-8 / 2-6 / 3-7 | production |
 | [editorial-swiss](editorial-swiss.md) | 瑞士编辑排版风 | 排版即设计：栅格 + 无衬线大字 + 留白 + 1px 分割，零装饰 | 3-6 / 1-4 / 2-5 | production |
+| [warm-minimal](warm-minimal.md) | 暖极简编辑风 | editorial-swiss 暖色变体：暖骨白画布 + 灰阶层级 + 四组退饱和淡彩点睛 | 2-5 / 1-4 / 2-5 | style |
 | [dark-oled](dark-oled.md) | OLED 暗色模式 | 纯黑/近黑分层 + 白字 87/60/38 三档 + 彩色降饱和（可叠加任意模板） | 2-6 / 2-6 / 3-8 | production |
 | [data-dense-dashboard](data-dense-dashboard.md) | 数据密集型仪表盘 | 4/8px 网格 + KPI 卡片 + 表格明细 + 等宽数字的高密度面板 | 2-4 / 1-3 / 7-10 | production |
 | [neo-brutalism](neo-brutalism.md) | 新粗野主义 | 粗黑描边 + 零模糊硬投影 + 高饱和平涂 + 超粗大字 | 7-10 / 3-7 / 3-6 | style |
+| [tactical-terminal](tactical-terminal.md) | 战术遥测终端 | 暗色 CRT 终端 + 白磷光 + 航空红唯一 accent + mono 高密度遥测（可叠[退化效果](../dimensions/effects-degradation.md)） | 7-10 / 1-3 / 7-10 | style |
 | [claymorphism](claymorphism.md) | 黏土拟态 | 超大圆角 + 内外三件套阴影的软黏土立体感 | 5-8 / 3-6 / 2-5 | style |
 | [glassmorphism](glassmorphism.md) | 玻璃拟态（经典磨砂） | 白色磨砂浮卡 + 彩色 blob 背景（静态贴片，≠液态玻璃的光学透镜，二选一） | 4-7 / 2-5 / 2-5 | style |
 | [aurora-gradient](aurora-gradient.md) | 极光渐变 | 模糊光斑缓慢流动的氛围背景（Stripe 范式） | 4-8 / 3-7 / 1-4 | style |
