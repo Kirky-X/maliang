@@ -1,6 +1,6 @@
-# 专业动效组件模式命名词汇
+# 专业交互组件模式命名词汇
 
-> 模式词汇库。专业级交互组件两节 18 组:移动动效组件 8 组(3D 倾斜流光、胶囊流体形变、共享元素展开、磁吸游标码表、速度锚点抽屉、光晕边框、弹簧交错流、按压超调反馈)与桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、图标展开标签、导航悬停指示块、角落扩散悬停、分档拖动条、跟手读数柱状图、悬停跟随预览图、圆形扩散换肤,见文末节)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 3 组已有实现,本篇只做命名收编与挂接,不重复实现。
+> 模式词汇库。专业级交互组件两节 24 组:移动动效组件 14 组(3D 倾斜流光、胶囊流体形变、磁吸游标码表、速度锚点抽屉、光晕边框、弹簧交错流、按压超调反馈、面板分层爆炸、堆叠滑动切换、多选聚叠、按钮一分为二、滚动变小窗、分类联动滚动等)与桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、图标展开标签、悬停跟随预览图、圆形扩散换肤等)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 3 组已有实现,本篇只做命名收编与挂接,不重复实现。
 
 ## 命名表
 
@@ -14,10 +14,16 @@
 | `border-conic-glow` | 动态弥散光晕边框 Conic Glow | conic 渐变描边绕卡片旋转,底部一层呼吸弥散背光同步晕染 | 强调卡、AI 生成内容卡、状态高亮卡 |
 | `stagger-spring-cascade` | 物理弹簧交错流 Stagger Cascade | 列表项按固定间隔依次入场,每项带微弱弹性过冲向上滑入 | 列表/图墙首屏入场(spring 变体;ease-out 基准版见 [scroll-reveal-stagger.md](../motion-skeletons/scroll-reveal-stagger.md)) |
 | `press-scale-overshoot` | 弹性微缩触觉反馈 Press Scale | 按压弹性压缩 + 深度内阴影,释放轻微超调回弹 | 主操作按钮、卡片按压(增强档;强制基线见 [micro-interactions.md](micro-interactions.md) `micro-press-scale`) |
+| `panel-explode-layers` | 面板分层爆炸视图 Layered Exploded Panel | 长按面板 3D 侧立(X 52° / Z -28°),四层沿 Z 轴等差推出(0/70/140/210),每层错 6 帧;松手弹簧合拢 | 长按检视堆叠详情(长按判定见 [buttons.md](buttons.md) `press-peek`) |
+| `card-swipe-deck` | 堆叠滑动切换 Swipe Card Stack | 顶层跟手,旋转 = 横向位移 × 0.06°/px;超宽 35% 松手沿手势甩出,下层 +12px 上移从 0.94 放大到 1 补位,被甩张回底层排队 | 卡组循环切换(挂 [buttons.md](buttons.md) `card-stack-pull` + `card-fling`) |
+| `select-gather-stack` | 多选聚成一叠 Multi Select Stack | 长按进多选;拖动时勾中项从各自位置飞向手指,错 3 帧、缩 0.8 倍带 ±8° 旋转聚成一摞,角标计数弹出;松手整摞落进目标 | 相册多选 / 批量操作(多选态见 [buttons.md](buttons.md) `select-mode-shift`) |
+| `btn-split-morph` | 按钮一分为二 Split Button Morph | 点击后按钮从中线裂成左右两个,缝 0→16px、内圆角过渡到满圆,文字换暂停 / 结束;点结束沿原路合拢 | 播放 / 计时控制的主操作钮(位置钉死同 `button-submit-morph`) |
+| `scroll-mini-player` | 滚动变小窗 Scroll to Mini Player | 列表滚动距离归一化 0→1 单值驱动:视频宽 470→200、位置顶部→右下角,播放不中断;过阈值吸附角落,点击沿同一路径放大还原 | 列表页视频 / 音频常驻小窗(scrub 挂 [scroll.md](scroll.md) `scroll-scrub-bind`) |
+| `nav-scroll-spy` | 分类联动滚动 Scroll Spy Category | 右侧列表滚动,按分组标题进入顶部位置计算当前分类,左侧高亮条弹性平移;点击分类右侧平滑滚到分组标题,滚动期间禁反向触发 | 分组菜单 / 目录联动(左导航右列表) |
 
 ## AI 描述词对照
 
-> 视频给出的 8 组提示词原文;落成 maliang 产物时按使用规则换算成模式参数,不整段照抄进 draw-md。
+> 视频给出的 14 组提示词原文;落成 maliang 产物时按使用规则换算成模式参数,不整段照抄进 draw-md。
 
 | # | 组件 | AI 描述词 |
 | --- | --- | --- |
@@ -29,6 +35,12 @@
 | 06 | 动态弥散光晕边框 | 为 Card 添加旋转渐变描边(Conic Gradient Border),底部附带动态模糊的呼吸弥散背光。 |
 | 07 | 物理弹簧交错流 | 列表元素入场使用交错动画(Stagger Delay),每个子项带微弱弹性向上滑入(Spring Cascade)。 |
 | 08 | 弹性微缩触觉反馈 | 按钮按压添加 scale(0.96) 物理弹性压缩与深度内阴影,释放时触发轻微超调回弹(Spring Overshoot)。 |
+| 09 | 面板分层爆炸视图 | 面板分层爆炸视图(Layered Exploded Panel):长按时面板用 perspective 1200px 绕 X 轴转 52 度、绕 Z 轴转 -28 度侧立,四层沿 Z 轴分别推到 0、70、140、210,每层错开 6 帧起步;松手用 cubic-bezier(.34,1.36,.5,1) 弹簧合拢。 |
+| 10 | 堆叠滑动切换 | 堆叠滑动切换(Swipe Card Stack):顶层跟手位移,旋转角度等于横向位移乘 0.06 度;位移超过宽度的 35% 松手就沿手势方向甩出屏幕,不就弹回原位;下面两层同步上移 12 并从 0.94 放大到 1,被甩走的那张回到最底层继续排队。 |
+| 11 | 多选聚成一叠 | 多选聚拢拖动(Multi Select Stack):长按进入多选,勾中项显示选中标记;开始拖动时,选中项从各自位置飞向手指,每项错开 3 帧,缩到 0.8 倍并带 ±8 度旋转叠成一摞,右上角数量角标弹出;松手整摞落进目标。 |
+| 12 | 按钮一分为二 | 按钮分裂形变(Split Button Morph):点击后按钮从中线裂成左右两个,中间的缝用 cubic-bezier(.34,1.36,.5,1) 从 0 撑到 16,内侧圆角过渡到满圆,文字换成暂停和结束;点结束两半沿原路合拢。 |
+| 13 | 滚动变小窗 | 滚动触发画中画(Scroll to Mini Player):把列表滚动距离归一化成 0 到 1,视频的宽度从 470 缩到 200、位置从顶部移到右下角,全部写成这个值的函数,播放不中断;滚过阈值后吸附到角落,点击小窗沿同一路径放大还原,列表回到顶部。 |
+| 14 | 分类联动滚动 | 左右分类联动(Scroll Spy Category):右侧列表滚动时,按每个分组标题进入顶部的位置计算当前分类,左侧高亮条用 cubic-bezier(.2,.9,.22,1) 平移到对应项;点击左侧分类时右侧平滑滚到该分组标题,滚动期间不反向触发高亮跳动。 |
 
 ## 使用规则
 
@@ -40,7 +52,13 @@
 - `border-conic-glow`:旋转用超尺寸伪元素整层 `transform: rotate`(conic-gradient 画在伪元素上),禁动画角度自定义属性(逐帧重绘);背光呼吸只动 `opacity`,blur 半径静态预设;呼吸周期 2-4s,计一拍氛围档(见 ROUTING §3.10 与 [`../meta/dials.md`](../meta/dials.md))
 - `stagger-spring-cascade`:间隔 ≤ 120ms、单项 duration ≤ 600ms、过冲 ≤ 1.02(「微弱弹性」上限,超过即卡通感);其余沿用 scroll-reveal-stagger 骨架强制规则
 - `press-scale-overshoot`:基线仍为 `micro-press-scale`(scale 0.97,100-160ms 按压档);本篇增强档(scale 0.96)仅限主操作按钮,压缩与内阴影必须同时给——内阴影是深度语义,缺了就只是缩小;释放超调用 cubic-bezier(.34,1.56,.64,1) 近似(见 [buttons.md](buttons.md) `btn-spring`),逐帧跟指针才上真弹簧(ROUTING §3.8)
-- 全部 8 组必须给 `prefers-reduced-motion` 静止终态:倾斜/旋转/呼吸停在构图帧,FLIP 直接切换(见 ROUTING §1 GATE 与 [accessibility.md](../meta/accessibility.md))
+- 全部 14 组必须给 `prefers-reduced-motion` 静止终态:倾斜/旋转/呼吸停在构图帧,FLIP 直接切换(见 ROUTING §1 GATE 与 [accessibility.md](../meta/accessibility.md))
+- `panel-explode-layers`:长按 400ms 判定挂 `press-peek`;层距等差 70px、≤ 4 层;爆炸是瞬时检视态,松手必须合拢回原位(检视不改变布局);合拢曲线与 `press-scale-overshoot` 同源弹簧
+- `card-swipe-deck`:甩出判据 = 位移超宽 35% 或速度达标(双判据,见 [gesture-arbitration.md](../motion-skeletons/gesture-arbitration.md));下层补位 +12px / 0.94→1 与顶层甩出同帧;被甩张回队尾循环,页码同步;同屏 ≤ 4 张
+- `select-gather-stack`:聚拢每项错 3 帧,缩放 0.8 倍、散转 ±8° 为上限;角标计数随勾选实时增减;松手落进目标后逐项归位回收(从哪里来回哪里去);取消勾选的项不参与聚拢
+- `btn-split-morph`:裂缝 0→16px 与文字切换同步;两半钮各自热区 ≥ 44px;全程位置钉死(同 `button-submit-morph` 铁律);结束态两半沿原路合拢,禁淡出重排
+- `scroll-mini-player`:全部属性写成归一化进度单值的函数(单驱动,禁多计时器);播放状态跨形变保持(媒体元素不重挂载);两档状态(全宽 / MINI),过阈值吸附;还原走同一路径且列表回顶;reduced-motion 直接跳两态
+- `nav-scroll-spy`:当前分类判据 = 分组标题进入顶部;高亮条平移 ≤ 300ms;点击分类平滑滚动到分组标题,滚动期间单向锁(禁 spy 反向触发高亮跳动,滚完再交回);分组 ≤ 9
 
 ## 在 draw-md 中的写法
 
@@ -61,6 +79,14 @@
 ## List (spots-grid)
 - pattern: stagger-spring-cascade
 - stagger: 100ms, duration: 500ms, overshoot: 1.02, direction: up
+
+## Panel (camp-detail)
+- pattern: panel-explode-layers
+- tilt: { x: 52deg, z: -28deg }, layers: 4, gap: 70px, stagger: 6f
+
+## Deck (trip-cards)
+- pattern: card-swipe-deck
+- rotate: 0.06deg/px, fling: { distance: 35%, velocity: true }, underlift: { y: 12, scale: 0.94→1 }
 ```
 
 ## 桌面 Web 交互组件
