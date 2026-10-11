@@ -112,7 +112,7 @@ flowchart TD
 - 扩展优先级:被多个产品类型引用 > 单一产品类型;公开可访问 > 私有 / 内部
 - 不收录:纯模板站(Bootstrap / Material 默认);已停更 / 失效的设计系统
 
-## brief → 设计系统包映射表(11 个组件库 / token 系统)
+## brief → 设计系统包映射表(12 个组件库 / token 系统)
 
 > 上文 11 个"真实参考系统"侧重**视觉特征借鉴**;本表侧重**可引入的组件库 / token 系统**,从 brief 推理该选哪个包作为实现基础。每个包含定位 / 适用场景 / token 命名风格 / 与 maliang DESIGN.md 的桥接建议。来源:taste-skill。
 
@@ -123,7 +123,7 @@ brief → 产品类型推理(见 product-reasoning.md)→ 匹配下表"适用场
   → maliang DESIGN.md 的 token 用该包的命名风格导出 → 组件直接用该包或包装
 ```
 
-### 11 个设计系统包
+### 12 个设计系统包
 
 #### 1. Fluent UI(Microsoft)
 
@@ -201,6 +201,32 @@ brief → 产品类型推理(见 product-reasoning.md)→ 匹配下表"适用场
 - **适用场景**:任何 Web 项目(作为 token 底座)、文档站、开发者工具
 - **token 命名**:`colors.primary.500`、`spacing.4`、`fontSize.lg`(对象路径 + 编号档位)
 - **桥接建议**:DESIGN.md 用 `npx @google/design.md@0.4.0 export --format json-tailwind` 直接导出为 `tailwind.config.js` 的 `theme` 对象;`spacing:` base 必须 4 或 8(对齐 Tailwind 默认)
+
+#### 12. Material Web(Google)
+
+- **定位**:Google Material 3 官方 Web 组件库(Material Web Components),Material Theming 驱动
+- **适用场景**:Google 风 UI、Material 味产品、Android 生态伴侣 Web 端、需要 M3 动态主题的项目
+- **token 命名**:`--md-sys-color-primary`、`--md-sys-shape-corner-medium`、`--md-ref-palette-blue500`(kebab + `md-sys/ref` 命名空间)
+- **桥接建议**:DESIGN.md `colors:` 映射到 `md-sys-color-*` 语义槽位(`primary` → `--md-sys-color-primary`);圆角用 `md-sys-shape-corner-*` 档位而不是自造半径。注意:Material 默认外观易触发 [`ai-tells.md`](../meta/ai-tells.md) "通用感",必须走 M3 Theming 深度定制(与下方选包约束一致)
+
+### 官方包安装与文档入口速查
+
+> 选定包后先装官方包再动手,禁止手抄官方 CSS。来源:taste-skill design-taste-frontend §2 / Appendix A·B,2026-10 吸收。
+
+| 包 | 安装 | 文档入口 |
+| --- | --- | --- |
+| Material Web | `npm install @material/web` | m3.material.io/develop/web |
+| Fluent UI | `npm install @fluentui/react-components`(无框架:`npm install @fluentui/web-components @fluentui/tokens`) | fluent2.microsoft.design |
+| Carbon | `npm install @carbon/react @carbon/styles` | carbondesignsystem.com |
+| Polaris | Shopify app 在 head 注入 `polaris.js` + `shopify-api-key` meta | shopify.dev/docs/api/app-home/web-components |
+| Atlaskit | `yarn add @atlaskit/css-reset @atlaskit/tokens @atlaskit/button` | atlassian.design |
+| Primer | `npm install --save @primer/css`(营销页:`npm install @primer/react-brand`) | github.com/primer |
+| GOV.UK | `npm install govuk-frontend` | design-system.service.gov.uk |
+| USWDS | `npm install uswds` | designsystem.digital.gov |
+| Bootstrap | `npm install bootstrap` | getbootstrap.com |
+| Radix Themes | `npm install @radix-ui/themes` | radix-ui.com/themes |
+| shadcn/ui | `npx shadcn@latest init` + `npx shadcn@latest add button card badge input` | ui.shadcn.com |
+| Tailwind CSS | `npm install tailwindcss` | tailwindcss.com |
 
 ### 选包约束(硬性)
 
