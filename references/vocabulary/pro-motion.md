@@ -1,6 +1,6 @@
 # 专业交互组件模式命名词汇
 
-> 模式词汇库。专业级交互组件三节 39 组:移动动效组件 24 组(倾斜流光、流体形变、磁吸码表、面板分层爆炸、堆叠滑动切换、旋钮转盘、滑动确认、拖放吸入、分段进度、透视轮播等)、桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、悬停跟随预览图、圆形扩散换肤等)与形变组件 5 组(搜索框展开、FAB 展开面板、提交状态反馈、图标变形、标签指示条)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 12 组已有实现,本篇做命名收编与挂接,不重复实现。
+> 模式词汇库。专业级交互组件三节 44 组:移动动效组件 24 组(倾斜流光、流体形变、磁吸码表、面板分层爆炸、堆叠滑动切换、旋钮转盘、滑动确认、拖放吸入、分段进度、透视轮播等)、桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、悬停跟随预览图、圆形扩散换肤等)与形变组件 10 组(搜索框展开、FAB 展开面板、提交状态反馈、图标变形、标签指示条、步进器形变、列表展开详情、列表网格形变、顶栏收起、菜单圆形揭示)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 13 组已有实现,本篇做命名收编与挂接,不重复实现。
 
 ## 命名表
 
@@ -198,7 +198,7 @@
 
 ## 形变组件
 
-> 5 个同容器形变组件(MORPH COMPONENT 系列):同一个容器走一条曲线连续插值到终态,不拆组件、不做透明度交叉,内容等容器落定后再入场,关闭沿同一条曲线反向收回。来源:形变组件视频截图提取(2026-10,MORPH COMPONENT 系列)。与移动节 `capsule-fluid-morph`(通用胶囊→面板)、`press-scale-overshoot`(按压微形变)同族,本节聚焦跨形态大形变。
+> 10 个同容器形变组件(MORPH COMPONENT 系列 01-10):同一个容器走一条曲线连续插值到终态,不拆组件、不做透明度交叉,内容等容器落定后再入场,关闭沿同一条曲线反向收回。来源:形变组件视频截图提取(2026-10,MORPH COMPONENT 系列)。与移动节 `capsule-fluid-morph`(通用胶囊→面板)、`press-scale-overshoot`(按压微形变)同族,本节聚焦跨形态大形变。
 
 ### 命名表
 
@@ -209,10 +209,15 @@
 | `btn-commit-morph` | 提交状态反馈 Button to Loader to Success | 点击宽度收到圆形,沿边缘绘制环形进度;走满环合拢,勾形 strokeDasharray 描边画出,再横向展开成结果条;三态共用一个容器位置不变 | 表单提交 / 支付(已有实现:[buttons.md](buttons.md) `btn-commit-morph`) |
 | `icon-path-morph` | 图标变形 SVG Path Morph | 中线透明度与横向缩放同时归零,上下两线各旋 45° 合成关闭;播放三角按同一组顶点插值成暂停两竖;全程只改顶点坐标,不切图、不做透明度交叉 | 图标状态切换(汉堡特例见 [buttons.md](buttons.md) `icon-morph-burger`;设计决策见 [`../dimensions/icon.md`](../dimensions/icon.md) 动效图标节) |
 | `nav-tab-liquid` | 标签指示条 Elastic Tab Indicator | 切换时前沿先走奔向目标,后沿延后 6 帧追赶,宽度中途拉到 2 倍以上再收回,末端带一次轻微超调 | 分段 / tab 切换(已有实现:[navigation.md](navigation.md) `nav-tab-liquid`) |
+| `btn-stepper-morph` | 按钮变步进器 Add to Stepper | 加入按钮宽 44 弹到 156(弹簧曲线),左侧浮出减号、中间竖向位移滚动数字、右侧保留加号;数量归零反向收回成圆钮,减号与数值透明度跟宽度走 | 数量选择:购物 / 打包清单 |
+| `list-inline-expand` | 列表展开详情 Inline Expand | 选中项高度 88→268 连续过渡,后项跟着位移同距离;详情图 / 文字 / 标签按高度进度分三层依次淡入;展开收起同一条曲线,不跳页不用弹层 | 列表内详情:订单 / 房型 / 邮件 |
+| `card-layout-morph` | 列表切换网格 FLIP Layout Morph | 先记每项切换前后矩形,位移缩放反向补偿,沿带弧度路径缓动到新格位,相邻项错 3 帧;图片比例裁切不挤压,不销毁重建节点 | 列表 ↔ 网格换版式(已有实现:[buttons.md](buttons.md) `card-layout-morph`) |
+| `nav-collapsing-search` | 顶栏随滚动收起 Collapsing Bar | 滚动进度归一化 0→1 单值驱动:搜索框宽 / 高 / 圆角 / 位置 / 标题字号全是该值的函数,滚到底收成右上角 44 圆形图标;反向连续还原,松手不另起动动画,列表不参与形变 | 长列表页顶栏(同原理兄弟:[navigation.md](navigation.md) `nav-large-title-collapse`) |
+| `menu-circular-reveal` | 菜单铺满全屏 Circular Reveal | 以菜单按钮中心为圆心,clip-path 半径 0 扩到对角线铺满整屏;菜单项等覆盖率过 85% 后每项 4 帧交错进入,关闭半径沿原路收回,底层页面不动不缩放 | 全屏菜单 / 抽屉替代(机制同 [circular-reveal.md](../motion-skeletons/circular-reveal.md) 骨架) |
 
 ### AI 描述词对照
 
-> 视频提示词原文(系列 10 例,本批收录 01-05);落 draw-md 时按模式名与使用规则参数化,不整段照抄。
+> 视频提示词原文(系列 10 例全量);落 draw-md 时按模式名与使用规则参数化,不整段照抄。
 
 | # | 组件 | AI 描述词 |
 | --- | --- | --- |
@@ -221,6 +226,11 @@
 | 03 | 提交状态反馈 | 按钮状态形变链(Button to Loader to Success):点击后宽度从 470 收到 76 变成圆形,沿边缘绘制环形进度;走满后环合拢,勾形用 strokeDasharray 描边画出来,再横向展开成结果条。三个状态共用一个容器,位置从头到尾不变。 |
 | 04 | 图标变形 | 图标做路径形变(SVG Path Morph):菜单三条横线的中间一条透明度与横向缩放同时归零,上下两条各旋转 45 度合成关闭图标;播放三角按同一组顶点插值成暂停两竖。全程只改顶点坐标,不切图、不做透明度交叉。 |
 | 05 | 标签指示条 | 标签指示器液态拉伸(Elastic Tab Indicator):切换时前沿先走 cubic-bezier(.2,.9,.22,1) 奔向目标,后沿延后 6 帧起步追赶,宽度中途被拉到两倍以上再收回,末端带一次轻微超调;用 left 和 width 驱动,别用 scaleX,圆角会被拉扁。 |
+| 06 | 按钮变步进器 | 加入按钮展开为数量步进器(Add to Stepper):点击后宽度从 44 用 cubic-bezier(.34,1.36,.5,1) 弹到 156,左侧浮出减号、中间是竖向位移的滚动数字、右侧保留加号;数量回到零时反向收回成一颗圆按钮,减号和数值的透明度跟着宽度走。 |
+| 07 | 列表展开详情 | 列表项就地展开(Inline Expand):选中项高度从 88 连续过渡到 268,后面每一项跟着位移同样的距离;详情里的图、文字、标签按高度进度分三层依次淡入。展开和收起共用一条曲线,不跳页也不用弹层。 |
+| 08 | 列表切换网格 | 列表与网格布局形变(FLIP Layout Morph):先记录每一项切换前后的矩形,再用位移和缩放做反向补偿,各自沿带弧度的路径缓动到新格位,相邻项错开 3 帧;图片按比例裁切不挤压,过程中不销毁重建节点,也不重新加载。 |
+| 09 | 顶栏随滚动收起 | 顶栏随滚动收起(Collapsing Search Bar):把滚动进度归一化 0 到 1,搜索框的宽、高、圆角、位置和标题字号全部写成这个值的函数,滚到底收成右上角 44 的圆形图标;反向滚动连续还原,松手不另起动动画,列表本身不参与形变。 |
+| 10 | 菜单铺满全屏 | 圆形揭示转场(Circular Reveal):以菜单按钮中心为圆心,clip-path 的裁切半径从 0 扩到画面对角线长度,覆盖层铺满整屏;菜单项等覆盖率过 85% 后按每项 4 帧交错进入,关闭时半径沿原路收回按钮,底层页面不移动也不缩放。 |
 
 ### 使用规则
 
@@ -231,6 +241,11 @@
 - `btn-commit-morph`:三态(提交 / 加载 / 结果)共用容器位置钉死;环形进度沿边缘绘制(周描边);勾用 strokeDasharray 描边画出(画的过程可见);结果条横向展开后禁再变
 - `icon-path-morph`:只改 SVG 顶点坐标(path d 插值),禁两张图透明度交叉;两端顶点数必须一致(不足先补齐再插值);stroke 同源图标才可 morph(icon.md 约束);汉堡、播放暂停为最小 Morph 对
 - `nav-tab-liquid`:前沿 / 后沿分离驱动(前沿先走、后沿 6 帧追赶),宽度峰值 ≥ 2 倍再收回,末端轻微超调一次;**用 left + width 驱动,禁 scaleX(圆角会被拉扁)**;MOTION ≥ 7 档(navigation.md 既有门槛)
+- `btn-stepper-morph`:44→156 弹性曲线(过冲 ≤ 1.1);减号 / 数值透明度绑定宽度进度,宽度未到位禁可点;数值竖向滚动切换(num-ticker);归零反向收回;步进范围 0-9,禁无上限
+- `list-inline-expand`:详情增量 ≤ 3 倍行高(88→268 为基准);后项位移与展开同帧同曲线(无阶梯延迟);内容三层淡入按高度进度 33% / 66% 分段触发;再点收起走同一条曲线反向;`aria-expanded` 必标(见 [accessibility.md](../meta/accessibility.md))
+- `card-layout-morph`:收编行——位置 / 尺寸 / 圆角插值口径全挂 [buttons.md](buttons.md);本行补:FLIP 反向补偿 + 弧线路径 + 相邻项错 3 帧;图片 object-fit 裁切不挤压;DOM 节点复用,禁销毁重建(保滚动位置与加载态)
+- `nav-collapsing-search`:归一化单值驱动全部属性(`scroll-mini-player` 同款单驱动);收起终点 44×44 圆形图标;反向滚动连续还原,松手不另起补间(无弹簧补位);列表内容不参与形变;大标题变体直接用 `nav-large-title-collapse`
+- `menu-circular-reveal`:机制复用 [circular-reveal.md](../motion-skeletons/circular-reveal.md) 骨架(View Transitions 首选、降级双层 DOM、reduced-motion 直接切换);菜单项等覆盖率 ≥ 85% 后每项 4 帧交错入场;关闭半径沿原路收回按钮;底层页面不动不缩放(全屏覆盖,与 `sheet-backdrop-triplet` 的模态退后三件套区分)
 
 ### 在 draw-md 中的写法
 
@@ -243,4 +258,12 @@
 ## Tab (view-switch)
 - pattern: nav-tab-liquid
 - lead_then_tail: 6f, width_peak: 2x, overshoot: once, driver: left+width
+
+## Stepper (gear-count)
+- pattern: btn-stepper-morph
+- width: 44→156, count: 0-9, roll: vertical-ticker, alpha: bind-width
+
+## Nav (list-topbar)
+- pattern: nav-collapsing-search
+- drive: scroll-normalized, end: 44px-circle, restore: continuous
 ```
