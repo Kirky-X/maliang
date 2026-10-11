@@ -27,7 +27,7 @@
 
 ### 1. 定界与侦察
 
-一次探索聚焦**一个页面 / 一个区块**;范围横跨多页时,挑杠杆最大的一个,其余列为后续轮次。动手前摸清各方向要站住的地面:DESIGN.md token(色彩 / 字体 / 间距 / 圆角 / 时长)、三个 dial 档位(DESIGN_VARIANCE / MOTION_INTENSITY / VISUAL_DENSITY)、页面模式(见 [`../meta/surface-modes.md`](../meta/surface-modes.md))、渲染语境(端型 / 容器 / 邻接区块)。
+一次探索聚焦**一个页面 / 一个区块**;范围横跨多页时,挑杠杆最大的一个,其余列为后续轮次。动手前摸清各方向要站住的地面:DESIGN.md token(色彩 / 字体 / 间距 / 圆角 / 时长)、三个 dial 档位(DESIGN_VARIANCE / MOTION_INTENSITY / VISUAL_DENSITY)、页面模式(见 [`../meta/surface-modes.md`](../meta/surface-modes.md))、渲染语境(端型 / 容器 / 邻接区块)。**数据型界面(首屏含数值 / 进度 / 结论条)加一步:按 [`../meta/workbench-structures.md`](../meta/workbench-structures.md) 判主副结构**——主结构拥有 hook 与首屏主导显示,发散方向不得违反它(`pipeline` 主结构的首屏是看板不是表格);首屏数据条款按 [`../meta/data-floor.md`](../meta/data-floor.md) §2 过绑定表,过不了的方向不进比较器。
 
 > 🔴 **CHECKPOINT · 前置输入**:无 DESIGN.md 时先引导用户走 design-md;用户坚持探索的,按 SKILL.md「失败模式与 fallback」第一行同款处理——用克制默认外观 + 临时 token 占位,并显式标注「待 DESIGN.md 建立后回填」。方向清单未经用户确认不进入实体化。
 

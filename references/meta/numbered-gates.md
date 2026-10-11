@@ -188,6 +188,22 @@
 
 ---
 
+## G 组 · 定义层成立性(数据与存活)
+
+> 本组判的不是页面长得对不对,而是**定义层成立不成立**:首屏的数据有没有底座、定义扛不扛得住第二周。判据 canonical 在 [`data-floor.md`](data-floor.md) 与 [`day-two-blacklist.md`](day-two-blacklist.md),本组只收交付判定。
+
+### G29 · 首屏数据无底座
+- **违反什么**:首屏 / hook 区出现数值、进度、结论条、指标卡,而该数据分句没有绑定表一行(无字段 / 无写入方 / 无冷启动台词);或呈现 `--` / 空表 / 编造演示数;或断连 / 跳过日无专属台词;或 `integration` 字段未声明 exists_today。
+- **怎么判定**:人工判定,逐个首屏数据分句对 [`data-floor.md`](data-floor.md) §2 绑定表;design-md 交付时检查 `constraints:` 块是否含绑定表与 day 1/2/7 三行台词(数据型产品)。CRITICAL 级,一票否决。
+- **怎么修**:给字段挂写入方(优先 `system` 副作用写入,见 data-floor §4 Move 0);今天不存在的集成数字离场进 depends_on;补冷启动台词;首屏禁假演示数(与 [`../vocabulary/states.md`](../vocabulary/states.md) 的 state-empty-starter 边界按 data-floor §7 裁决)。
+
+### G30 · 定义级死法命中
+- **违反什么**:spec / 提案 / 构思命中 [`day-two-blacklist.md`](day-two-blacklist.md) 任一 D/S 条目(如幸运签 hook、演示数据谎、百科轨超 1/3、列表页地狱)。
+- **怎么判定**:人工判定,按黑名单清单跑两域各自全量(含 D0/D0′ 两条前置);定义级输入(spec / proposal / 构思)即可触发,不要求先有建成页面。CRITICAL 级(D1/D6/S1/S3/S6 等上线日即死项),一票否决。
+- **怎么修**:按黑名单该条的 Fix 修;无法在定义层修复的(如集成今天不存在)按 G29 同规则离场处理。
+
+---
+
 ## 与既有文档的关系
 
 | 主题                     | canonical 在哪                                        | 本文角色                                   |
@@ -195,6 +211,9 @@
 | 全量机械检查             | [`../commands/preview-checklist.md`](../commands/preview-checklist.md) | 门禁不替代它,只在其之上加否决             |
 | 规则库 / slug / 严重级   | [`ux-rules.md`](ux-rules.md)                         | 门禁条目映射到 slug,不重写规则             |
 | AI 味黑名单 / 豁免总则   | [`ai-tells.md`](ai-tells.md)                         | C 组只列复发形态,豁免走其 §0               |
+| 定义层死法黑名单         | [`day-two-blacklist.md`](day-two-blacklist.md)       | G30 判定其 D/S 条目的命中                   |
+| 数据底座判据             | [`data-floor.md`](data-floor.md)                     | G29 引用其绑定表与冷启动协议                 |
+| 产品结构分类             | [`workbench-structures.md`](workbench-structures.md) | 定义期输入(结构判定),不替代任何视觉层规范 |
 | 优先级裁决 / CRITICAL    | [`rules-priority.md`](rules-priority.md)             | 一票否决沿用其规则 1 与从属声明            |
 | token 溯源判据           | [`token-provenance.md`](token-provenance.md)         | A 组引用其 V1–V3                           |
 | 评审 / 证据 / disposition | [`../commands/preview.md`](../commands/preview.md)   | F 组引用其证据四分类与评审隔离             |

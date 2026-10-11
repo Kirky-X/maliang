@@ -96,7 +96,7 @@ CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓�
 ```text
 maliang/
 ├── SKILL.md                 # 入口：13 子命令路由 + meta 加载时序 + 失败模式 + 禁止事项
-├── skill.json               # 元数据（v0.3.1，MIT）
+├── skill.json               # 元数据（MIT）
 ├── references/
 │   ├── commands/            # 13 份子命令流程文档 + 2 份附属文档（design-md-advanced / preview-checklist）
 │   ├── meta/                # 规范层：token / principles / ux-rules / lifecycle / accessibility …

@@ -225,6 +225,14 @@ pattern: [chart-line, table-sortable]
 
 > 🔴 **线框边界**:线框是**内部思考工具,不进交付文档**——`examples/ui-markdown/` 产物只含 frontmatter + 布局章节 + 参数表,禁止出现 ASCII 图;定稿即弃,定稿理由落进方向契约块的 `first-viewport`。需要把多套方向渲染成真预览对比时,升级走 [`explore`](./explore.md) 子命令,不走线框。
 
+### 步骤 2.7(数据型产品):结构判定 + 数据底座
+
+> 首屏含数值 / 进度 / 榜单 / 结论条 / 指标卡(判型见 [`../meta/data-floor.md`](../meta/data-floor.md) §0)的数据型产品,**逐页产出前必过本步**;纯内容站跳过。
+
+**① 结构判定**:按 [`../meta/workbench-structures.md`](../meta/workbench-structures.md) 判定产品的主结构(必要时加一个副结构),写在页面规格的首屏章节注释里。主结构拥有 hook 与首屏主导显示——`pipeline` 主结构的首屏是看板不是表格,`ledger` 主结构配 delta 句式 hook;结构丢失时页面看起来很好却什么也不做(判定表与「消失一个月会丢什么」速查见该文件)。
+
+**② 数据底座绑定表**:首屏每个数据分句按 `data-floor.md` §2 填绑定表(字段 / 写入方 / 何时写 / 第一天空 / 断连日五列),有空格即不批准;`integration` 字段写明 exists_today;day 1/2/7 冷启动台词三行写全。design-md 已随 `constraints:` 块落库绑定表的,此处核对一致性;页面级新增数据条款在此补判定,交付时按门禁 G29 复核。
+
 3. **逐页产出** —— 每个页面一份 markdown:frontmatter(背景引用 token)+ 顶部导航章 → 主体章 → 底部 dock 章,每组件一张参数表(值引用 token)。
 4. **自检** —— grep 确认所有颜色字段是 token 引用而非字面量(对应验证点 5.2)。
 
