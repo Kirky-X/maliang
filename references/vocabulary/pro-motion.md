@@ -1,6 +1,6 @@
 # 专业交互组件模式命名词汇
 
-> 模式词汇库。专业级交互组件三节 44 组:移动动效组件 24 组(倾斜流光、流体形变、磁吸码表、面板分层爆炸、堆叠滑动切换、旋钮转盘、滑动确认、拖放吸入、分段进度、透视轮播等)、桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、悬停跟随预览图、圆形扩散换肤等)与形变组件 10 组(搜索框展开、FAB 展开面板、提交状态反馈、图标变形、标签指示条、步进器形变、列表展开详情、列表网格形变、顶栏收起、菜单圆形揭示)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 13 组已有实现,本篇做命名收编与挂接,不重复实现。
+> 模式词汇库。专业级交互组件四节 49 组:移动动效组件 24 组(倾斜流光、流体形变、磁吸码表、面板分层爆炸、堆叠滑动切换、旋钮转盘、滑动确认、拖放吸入、分段进度、透视轮播等)、桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、悬停跟随预览图、圆形扩散换肤等)、形变组件 10 组(搜索框展开、FAB 展开面板、提交状态反馈、图标变形、标签指示条、步进器形变、列表展开详情、列表网格形变、顶栏收起、菜单圆形揭示)与质感氛围组件 5 组(液态玻璃栏、封面氛围光、景深滚动、圆柱卷收、液滴拖拽)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 15 组已有实现,本篇做命名收编与挂接,不重复实现。
 
 ## 命名表
 
@@ -266,4 +266,51 @@
 ## Nav (list-topbar)
 - pattern: nav-collapsing-search
 - drive: scroll-normalized, end: 44px-circle, restore: continuous
+```
+
+## 质感与氛围组件
+
+> 5 个由内容驱动的材质与光影组件(液态玻璃 / 取色光晕 / 景深 / 圆柱 / 液滴):共同点是参数来自内容本身(图色、亮度、滚动进度、拖拽距离),不是独立装饰——ROUTING §3.10 氛围族管背景层(颗粒 / 渐晕),本节管内容表面的材质感。全节为性能重税组,交付前必须过降级口径。来源:质感组件视频截图提取(2026-10)。
+
+### 命名表
+
+| 模式名 | 视频组件 | 视觉特征 | 适用场景 |
+| --- | --- | --- | --- |
+| `nav-liquid-glass` | 液态玻璃栏 Liquid Glass | 导航栏背景模糊 + 轻微折射(×1.06 / 10px),边缘高光随滚动位移;玻璃明暗与文字颜色按下方内容亮度自适应(白 / 黑两档) | 沉浸内容页顶栏(配方见 [`../dimensions/glass-effect.md`](../dimensions/glass-effect.md) / [`glass-advanced.md`](../dimensions/glass-advanced.md)) |
+| `media-ambient-glow` | 封面取色氛围光 Ambient Glow | 提取封面主色生成环境光晕,图片外围铺大半径柔光(约 300px);换图时色值连续插值过渡 | 媒体卡 / 播放页 / 封面主导详情 |
+| `scroll-depth-layers` | 景深分层滚动 Depth Scroll | 内容分三层,按层级给不同滚动速度、模糊半径和亮度,全部由滚动进度驱动 | 品牌叙事首屏(已有实现:[scroll.md](scroll.md) `scroll-depth-layers`) |
+| `list-cylinder-scroll` | 圆柱卷收列表 Cylinder Scroll | 列表项按距视区中心距离插值旋转角度、缩放和亮度,边缘项渐隐 | 长列表的 3D 卷收浏览(ROUTING R6 零依赖 CSS 3D) |
+| `metaball-tether` | 液滴粘连拖拽 Metaball Drag | 拖动元素与原位之间生成液态连接,按距离收缩颈部,超阈值断开并让两端回弹成圆 | 元素拖出 / 归组(已有实现:[metaball-tether.md](../motion-skeletons/metaball-tether.md) 骨架) |
+
+### AI 描述词对照
+
+> 视频提示词原文;落 draw-md 时按模式名与使用规则参数化,不整段照抄。
+
+| # | 组件 | AI 描述词 |
+| --- | --- | --- |
+| 01 | 液态玻璃栏 | 导航栏改为液态玻璃(Liquid Glass),背景模糊加轻微折射,边缘高光随滚动位移,玻璃和文字颜色按下方内容亮度自适应。 |
+| 02 | 封面取色氛围光 | 提取封面主色生成环境光晕(Ambient Glow),图片外围铺大半径柔光,换图时色值做连续插值过渡。 |
+| 03 | 景深分层滚动 | 内容分三层做景深滚动(Depth of Field Scroll),按层级给不同滚动速度、模糊半径和亮度,全部由滚动进度驱动。 |
+| 04 | 圆柱卷收列表 | 列表项按在视区里的位置做圆柱形变(Cylinder Scroll),依距离中心插值旋转角度、缩放和亮度,边缘项渐隐。 |
+| 05 | 液滴粘连拖拽 | 拖动元素与原位之间生成液态连接(Metaball Drag),按距离收缩颈部,超过阈值断开并让两端回弹成圆。 |
+
+### 使用规则
+
+- 性能门控:全节为 blur / 折射 / 取色重税组,中端机实测 < 50fps 即降配或砍档(ROUTING §1 GATE 4);`prefers-reduced-motion` 降级为静态材质帧(玻璃不位移、光晕常亮、景深退单层、圆柱退平面列表)
+- `nav-liquid-glass`:玻璃配方照抄 [`glass-effect.md`](../dimensions/glass-effect.md) 四层(blur + 饱和 + 边缘高光 + 内外阴影),进阶折射走 [`glass-advanced.md`](../dimensions/glass-advanced.md)(feDisplacementMap,×1.06 / 10px);自适应 = 取样下方内容亮度**分档**切玻璃明暗与文字色(白 / 黑两档),禁连续插值(闪烁);边缘高光随滚动位移只动 transform;面板自身 backdrop-filter 静态写死,禁插值
+- `media-ambient-glow`:主色提取用 canvas 下采样(≤ 64px)取 Dominant;光晕 = 大半径径向渐变层,只动 opacity / transform,层级在内容**之后**禁遮内容;换图色值旧→新插值 ≤ 400ms;光晕上的文字对比度两档都要达标
+- `scroll-depth-layers`:收编行——速度 / 模糊 / 亮度三轴挂 [scroll.md](scroll.md);本行补量化基准:前 / 中 / 后速度 1·0.6·0.25,blur 0·5·14;层数 ≤ 3;blur 半径静态预设,禁逐帧插值
+- `list-cylinder-scroll`:R6 零依赖 CSS 3D(见 ROUTING §2),每项 rotateX / scale / 亮度按距视口中心距离插值;边缘项用 opacity 渐隐,禁 display 移除;中心行保持正对可读;项高恒定禁挤压;可见项 ≤ 9
+- `metaball-tether`:收编行——液态连接 / 颈部收缩 / 断开回弹全挂 [metaball-tether.md](../motion-skeletons/metaball-tether.md) 骨架(SVG filter);本行补:断开后拖拽元素落入目标槽(SNAPPED 态),中途松手沿原路回连
+
+### 在 draw-md 中的写法
+
+```markdown
+## Nav (immersive-topbar)
+- pattern: nav-liquid-glass
+- refract: 1.06/10px, highlight: scroll-shift, adaptive: luminance-2step
+
+## Card (media-hero)
+- pattern: media-ambient-glow
+- dominant: canvas-64px, glow_r: 300px, transition: 400ms
 ```
