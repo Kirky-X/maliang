@@ -24,8 +24,9 @@
 | `rating-display` | 星型评分 + 数值 + 评分人数,支持半星精度 | 商品详情、评论列表、商家评分头部 | 星与数值并显;只显星不显数值 = 藏精度 |
 | `rating-input` | 评分输入:点击/拖动设星,支持半星,配标签提示(差/一般/好) | 评价提交、服务打分 | 已选值即时回显,提交前可改;无预期不默认预选 |
 | `rating-no-score` | 无分控评:不显均分,仅展示评分人数或好评比例 | 评分样本过少、防刷分层场景 | 均分须配最低样本数阈值;异常评分先降级为比例展示 |
+| `cart-fly-arc` | 商品缩略图沿贝塞尔弧线飞向购物车角标,角标同步翻数 | 电商加购、批量收藏 | 缩略图缩小淡出于角标处;角标走 `num-badge-flip`(挂 [number-motion.md](number-motion.md));连加逐次发球不并轨 |
 
-> 来源注:`rating-display` / `rating-input` / `rating-no-score` 3 行为**审计补全**(2026-09-08 组件覆盖审计):Ant Design Rate 为一等组件,IBM Carbon 与 Material 3 无原生(生态方案);framework `rate` 类提供控件层支撑。
+> 来源注:`rating-display` / `rating-input` / `rating-no-score` 3 行为**审计补全**(2026-09-08 组件覆盖审计):Ant Design Rate 为一等组件,IBM Carbon 与 Material 3 无原生(生态方案);framework `rate` 类提供控件层支撑。`cart-fly-arc` 为**外部对标补全**(2026-10)。
 
 ## 使用规则
 
