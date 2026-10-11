@@ -21,8 +21,10 @@
 | `card-double-bezel`   | 双层嵌套容器:外壳 `bg-*/5` + ring 发丝边 + `p-1.5` + 大圆角,内核独立底色 + 内高光 + 同心圆角 `calc(外圆角 - 0.375rem)` | 高级感工艺卡、设置组、统计卡(来源:taste-skill soft-skill) |
 | `card-tilt-depth`     | 卡片层深 tilt:0.4 / 1.0 / 1.6 三档层深,hover 视差(层移/旋转参数详见 [buttons.md](buttons.md)) | 精品内容卡、作品集、封面卡(来源:视频研究 v07) |
 | `card-stat`           | 数值卡:大数值 + 标签 + delta 涨跌,数字用等宽数字(tabular-nums) | KPI 概览、仪表盘指标卡(样式基准见 [data-dense-dashboard](../templates/data-dense-dashboard.md) 模板) |
+| `card-swipe-verdict`  | 左右甩卡判定:顶层卡跟手平移+随位移旋转(±15° 上限),右拖浮绿色判定章/左拖浮红色否定章,过阈值(120px)松手沿拖向加速甩出,下一张 0.95→1 补位;不足弹回中间(与 [buttons.md](buttons.md) `card-stack-pull` 互见:彼条纵向抽卡;与 [pro-motion.md](pro-motion.md) `card-swipe-deck` 互见:彼条卡组循环切换,本条二选一判定即终结) | 匹配、选片、二选一评审卡堆 |
+| `swipe-row-delete`    | 行级左滑删除:行跟手左移露出删除钮,松手按阈值分流——过线(80px)吸附停在露钮位、不足弹回、过半宽直接删除(该行滑出淡出+高度收 0+下行平滑补位,约 300ms ease-out);删除有去向,禁止整块瞬间消失 | 消息/条目列表行 |
 
-> 来源注:`card-stat` 为**审计补全**(2026-09-08 组件覆盖审计):对照 Ant Design Statistic 组件清单(IBM Carbon / Material 3 无独立对应,由卡片组合);键值对详情展示归 [tables.md](tables.md) `table-descriptions`。
+> 来源注:`card-stat` 为**审计补全**(2026-09-08 组件覆盖审计):对照 Ant Design Statistic 组件清单(IBM Carbon / Material 3 无独立对应,由卡片组合);键值对详情展示归 [tables.md](tables.md) `table-descriptions`。`card-swipe-verdict` / `swipe-row-delete` 2 行为**转录补全**(2026-10,UI 交互教学视频转录提取)。
 
 ## 使用规则
 
