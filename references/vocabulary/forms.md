@@ -26,8 +26,12 @@
 | `select-basic`             | 常规下拉:点开弹层单选,无输入过滤,选中即收起                                   | 3-10 项短列表选择(分类/状态/时段);与 `select-searchable` 构成选项量级连续谱:<3 项用 radio 组,>10 项用 `select-searchable` |
 | `upload-click` / `upload-drag` | 点击按钮选文件 / 拖拽区上传(拖入即高亮);文件类型与大小前置校验,上传中显进度、失败可重试;两变体共享"触发器 + 文件列表 + 进度 + 失败重试"结构 | 头像、附件、凭证、商品图上传                 |
 | `field-date`               | 日期/时间选择字段:点按唤起选择器录入,与展示型日历(framework `calendar` 类)是录入/浏览两个交互域 | 预订、筛选区间、排期等日期/时间录入              |
+| `input-tags-removable`     | 可删除标签组:点叉号标签缩成圆点淡出,后续标签依次平滑补位,输入框高度随之收缩 | 收件人/标签录入(来源见下方来源注)               |
+| `input-floating-label`     | 浮动标题输入框:聚焦时提示文字缩小上移成左上角标题,边框高亮;为空失焦复原 | 表单空间紧张的移动端                            |
+| `input-inline-mention`     | 正文联想浮层:输入时在光标旁弹出联想列表,实时筛选,选中以小标签嵌入正文,浮层收起 | 富文本 @提及/引用                               |
+| `validate-error-shake`     | 错误水平轻晃:校验失败该输入框水平轻晃一下+边框变红,提示文字从下方滑入,修正后自动收起 | 移动端行内错误反馈(与 `validate-inline` 组合,口径见 [`ux-rules.md`](../meta/ux-rules.md) inline-validation) |
 
-> 来源注:`field-checkbox-group`、`select-basic`、`upload-click`/`upload-drag`、`field-date` 4 行为**审计补全**(2026-09-08 组件覆盖审计):对照 Ant Design(Checkbox/Select/Upload/DatePicker)、IBM Carbon(Checkbox/Dropdown/FileUploader/DatePicker)、Material 3(Selection controls/Menu/Date picker)组件清单;非 GOV.UK/W3C 原始来源。
+> 来源注:`field-checkbox-group`、`select-basic`、`upload-click`/`upload-drag`、`field-date` 4 行为**审计补全**(2026-09-08 组件覆盖审计):对照 Ant Design(Checkbox/Select/Upload/DatePicker)、IBM Carbon(Checkbox/Dropdown/FileUploader/DatePicker)、Material 3(Selection controls/Menu/Date picker)组件清单;非 GOV.UK/W3C 原始来源。`input-tags-removable` / `input-floating-label` / `input-inline-mention` / `validate-error-shake` 4 行为**转录补全**(2026-10,UI 交互教学视频转录提取)。
 
 ## 使用规则
 

@@ -1,6 +1,6 @@
 # 数字动效模式命名词汇
 
-> 模式词汇库。数字变化的动态表达命名:数字是界面中最敏感的元素,变化的"方式"传达变化的"来源"。来源:UI 交互教学视频转录提取(2026-09,叨叨AI/西瓜同学);与 [`micro-interactions.md`](micro-interactions.md) `scroll-driven-anim`、[`charts.md`](charts.md) 联动。
+> 模式词汇库。数字变化的动态表达命名:数字是界面中最敏感的元素,变化的"方式"传达变化的"来源"。来源:UI 交互教学视频转录提取(2026-09);与 [`micro-interactions.md`](micro-interactions.md) `scroll-driven-anim`、[`charts.md`](charts.md) 联动。
 
 ## 命名表
 

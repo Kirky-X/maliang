@@ -1,6 +1,6 @@
 # Metaball Tether —— 液滴粘连拖拽骨架
 
-> Framework 模板。拖动浮标时,浮标与原锚点之间拉出一条"液态桥":近则粗、远则细,超过断开阈值桥断裂,两端各自弹回圆形。SVG gooey filter + 贝塞尔桥实现。来源:UI 交互教学视频转录提取(2026-09,西瓜同学)。MOTION_INTENSITY 5-8 适用(见 [`dials.md`](../meta/dials.md))。
+> Framework 模板。拖动浮标时,浮标与原锚点之间拉出一条"液态桥":近则粗、远则细,超过断开阈值桥断裂,两端各自弹回圆形。SVG gooey filter + 贝塞尔桥实现。来源:UI 交互教学视频转录提取(2026-09)。MOTION_INTENSITY 5-8 适用(见 [`dials.md`](../meta/dials.md))。
 
 ## 视觉效果
 

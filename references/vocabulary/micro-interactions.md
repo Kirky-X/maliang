@@ -71,6 +71,7 @@
   - **`never`(例外档)**——动效即交互本体、降级即功能损坏的场合(拖拽跟手、弹簧物理反馈):允许不降级,须在使用处说明理由。
 - `micro-hold-confirm` 的「2s」是**长按判定窗口**(随按压持续的进度填充),非一次性转场时长,不受 400ms 硬门约束;draw-md 产物中勿写成 `duration: 2000ms`(会触发检查 11),应写 `long-press=hold 2s` 类交互语义
 - Web 端入场过渡可渐进增强 `@starting-style`(元素首次渲染 / 从 `display:none` 出现时的过渡起点)
+- **动效描述句式**(**转录补全**,2026-10):向 AI 或 draw-md 描述动效时,禁止笼统的「加点高级动效」;必须写成「什么元素 + 在什么情况下 + 以什么方式运动(+ 过渡细节 + 结束状态/复原方式)」——如「标题从下方向上逐行出现,每行错开 0.06 秒」「松手后继续滑动一小段距离再慢慢停下」;示例数值按本表口径收敛(错峰单档 ≤ 80ms、时长按层级预算)
 
 > **@starting-style 注记(仅 Web)**:兼容性 Chrome 117+ / Edge 117+ / Safari 17.5+ / Firefox 129+(2024 Baseline Newly Available,来源 caniuse/MDN);且 `@supports at-rule (@starting-style)` 特性检测尚不可用(CSSWG #10648)。**不可作唯一入场路径**——不支持浏览器中元素会直接以终态出现,这本身可接受;但若初态依赖它隐藏元素(如从 `opacity:0` 过渡),必须保证无支持时不残缺:默认态写终态,起点只放进 `@starting-style` 块;JS fallback 为元素插入后强制 reflow 再移除初始 class,或直接接受无动画直显。HarmonyOS / Flutter 无对应概念,n/a。
 

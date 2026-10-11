@@ -1,6 +1,6 @@
 # Shared Element —— 共享元素转场骨架(FLIP)
 
-> Framework 模板。列表小图原地放大成详情页大图(位置/尺寸/圆角连续过渡),关闭时原路缩回列表位。核心是 FLIP:First(记起点)-Last(记终点)-Invert(先钉在起点)-Play(过渡到终点)。来源:UI 交互教学视频转录提取(2026-09,叨叨AI/西瓜同学)。MOTION_INTENSITY 3-7 适用(见 [`dials.md`](../meta/dials.md))。
+> Framework 模板。列表小图原地放大成详情页大图(位置/尺寸/圆角连续过渡),关闭时原路缩回列表位。核心是 FLIP:First(记起点)-Last(记终点)-Invert(先钉在起点)-Play(过渡到终点)。来源:UI 交互教学视频转录提取(2026-09)。MOTION_INTENSITY 3-7 适用(见 [`dials.md`](../meta/dials.md))。
 
 ## 视觉效果
 

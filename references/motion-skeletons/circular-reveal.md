@@ -1,6 +1,6 @@
 # Circular Reveal —— 圆形扩散主题切换骨架
 
-> Framework 模板。主题切换(明↔暗)以**触点为圆心**做 `clip-path: circle()` 扩散揭示新主题:裁切不缩放,底下内容不变形。优先 View Transitions API,降级双层 DOM。来源:UI 交互教学视频转录提取(2026-09,叨叨AI)。MOTION_INTENSITY 3-7 适用(见 [`dials.md`](../meta/dials.md))。
+> Framework 模板。主题切换(明↔暗)以**触点为圆心**做 `clip-path: circle()` 扩散揭示新主题:裁切不缩放,底下内容不变形。优先 View Transitions API,降级双层 DOM。来源:UI 交互教学视频转录提取(2026-09)。MOTION_INTENSITY 3-7 适用(见 [`dials.md`](../meta/dials.md))。
 
 ## 视觉效果
 

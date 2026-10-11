@@ -1,6 +1,6 @@
 # 选择器交互模式命名词汇
 
-> 模式词汇库。超越"下拉列表"的选择器交互模式命名:圆周手势、速度物理、径向菜单、跟手放大。来源:UI 交互教学视频转录提取(2026-09,叨叨AI/西瓜同学);键盘下拉部分与 [`forms.md`](forms.md) 互补。
+> 模式词汇库。超越"下拉列表"的选择器交互模式命名:圆周手势、速度物理、径向菜单、跟手放大。来源:UI 交互教学视频转录提取(2026-09);键盘下拉部分与 [`forms.md`](forms.md) 互补。
 
 ## 命名表
 
@@ -15,10 +15,16 @@
 | `picker-searchable-dropdown` | 可搜索下拉:输入过滤 + 键盘上下移动 + 回车确认,全程不碰鼠标 | 选项 > 15 的后台表单(与 [`tables.md`](tables.md) 筛选联动) |
 | `picker-single-collapse` | 单选下拉:固定少量选项,选完自动收起 | ≤ 5 个固定选项 |
 | `input-auto-format` | 智能格式化输入框:日期自动补 `/`、时间补 `:`,框内常驻单位与字数 | 手机号/银行卡/日期金额录入(归 forms 亦通) |
+| `picker-type-dial` | 字号刻度拨盘:一排横向刻度数字,当前值居中高亮、两侧渐隐;拨动时目标属性实时联动,停下列吸附最近刻度 | 键盘附件条/格式工具条(字号、笔刷粗细等连续档位) |
+| `picker-swatch-strip` | 滑动选色条:横向色块排,经过的色块依次放大弹起,松手选中,界面主题色随之平滑过渡 | 主题色/标签色选择(`picker-magnify-strip` 的选色变体,增量为主题色全局联动) |
+| `picker-slot-range-drag` | 拖动连选时段:按住拖过相邻格子连选合并成一条,两端把手可单独调整起止,时间实时回显 | 排期/预约的时间段选择 |
+| `picker-date-strip` | 横向周日期条:选中底色滑到所点日期,左右滑整周翻页,月份标题同步更新 | 日程/打卡类首页的日期切换 |
+
+> 来源注:`picker-type-dial` / `picker-swatch-strip` / `picker-slot-range-drag` / `picker-date-strip` 4 行为**转录补全**(2026-10,UI 交互教学视频转录提取)。
 
 ## 使用规则
 
-- 吸附类(`picker-wheel-decay` / `picker-knob-dial`)松手判定 = 距离 + 速度双阈值,速度参与格数(见 [`../motion-skeletons/gesture-arbitration.md`](../motion-skeletons/gesture-arbitration.md) 速度语义)
+- 吸附类(`picker-wheel-decay` / `picker-knob-dial` / `picker-type-dial`)松手判定 = 距离 + 速度双阈值,速度参与格数(见 [`../motion-skeletons/gesture-arbitration.md`](../motion-skeletons/gesture-arbitration.md) 速度语义)
 - 吸附落格必须有 ≤ 120ms 的对齐动画 + 触觉反馈(vibration ≤ 10ms,见 [`micro-interactions.md`](../micro-interactions.md))
 - `picker-radial-arc` 展开项 3-6 个,扇区角度 ≥ 45°(触控热区 ≥ 44px);移动端禁用悬停态
 - `picker-magnify-strip` 缩放峰值 ≤ 1.5 倍,相邻联动衰减按高斯分布,松手才确认(滑动过程不触发选择)

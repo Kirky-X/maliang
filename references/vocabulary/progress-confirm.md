@@ -1,6 +1,6 @@
 # 进度与确认模式命名词汇
 
-> 模式词汇库。用"过程感"替代二次确认弹窗与干瘪进度条的模式命名:进度可视化融进组件本体,确认动作带阈值与回弹。来源:UI 交互教学视频转录提取(2026-09,叨叨AI/西瓜同学),与 [`micro-interactions.md`](micro-interactions.md)、[`popups.md`](popups.md) 互补。
+> 模式词汇库。用"过程感"替代二次确认弹窗与干瘪进度条的模式命名:进度可视化融进组件本体,确认动作带阈值与回弹。来源:UI 交互教学视频转录提取(2026-09),与 [`micro-interactions.md`](micro-interactions.md)、[`popups.md`](popups.md) 互补。
 
 ## 命名表
 
@@ -13,6 +13,10 @@
 | `progress-timeline-card` | 进度时间线卡:节点三态(完成/当前/未到),当前节点高亮并展开详情 | 物流跟踪、审批流、订单状态 |
 | `step-overshoot` | 步骤条超调回弹:完成一步进度先冲过一点再收回,像用力走完 | 多步向导完成反馈(MOTION ≥ 6) |
 | `undo-toast-countdown` | 撤销倒计时进度化:撤销剩余时间做成 toast 内嵌进度条,走完即消失 | 删除后撤销、发送后撤回 |
+| `progress-save-ring` | 保存按钮变进度环:点击后文字收缩成圆形,边缘一圈环形进度走满,再撑开变回按钮,文字切成「打开」(与 [`sheet-drawer.md`](sheet-drawer.md) `button-submit-morph` 互见:本条环形绑定真实进度,彼条定时长转场+对勾收尾) | 上传/保存类按钮的提交全程反馈 |
+| `confirm-copy-tick` | 复制成功翻转:复制图标原地翻成对勾,上方冒出「已复制」小提示,约 1s 后一起复原 | 复制链接/代码/口令按钮 |
+
+> 来源注:`progress-save-ring` / `confirm-copy-tick` 2 行为**转录补全**(2026-10,UI 交互教学视频转录提取)。环形进度与「约 1s 后复原」为进度/驻留语义,非转场时长,draw-md 勿写 `duration: 1000ms` 类字面量(防检查 11 误报,先例同 [`micro-interactions.md`](micro-interactions.md) `micro-hold-confirm`)。
 
 ## 使用规则
 
