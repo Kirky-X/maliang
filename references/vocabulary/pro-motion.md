@@ -1,6 +1,6 @@
 # 专业交互组件模式命名词汇
 
-> 模式词汇库。专业级交互组件两节 32 组:移动动效组件 22 组(倾斜流光、流体形变、磁吸码表、速度锚点抽屉、面板分层爆炸、堆叠滑动切换、多选聚叠、按钮一分为二、旋钮转盘、滑动确认、长按浮起预览、拖放吸入等)与桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、悬停跟随预览图、圆形扩散换肤等)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 8 组已有实现,本篇只做命名收编与挂接,不重复实现。
+> 模式词汇库。专业级交互组件三节 39 组:移动动效组件 24 组(倾斜流光、流体形变、磁吸码表、面板分层爆炸、堆叠滑动切换、旋钮转盘、滑动确认、拖放吸入、分段进度、透视轮播等)、桌面 Web 交互组件 10 组(滚动钉住叙事、情境光标、磁吸按钮、悬停跟随预览图、圆形扩散换肤等)与形变组件 5 组(搜索框展开、FAB 展开面板、提交状态反馈、图标变形、标签指示条)。来源:专业交互组件视频截图提取(2026-10,含 AI 描述词原文;同源前篇 2026-09-22 即 number-motion / sheet-drawer)。与 [ROUTING](../motion-skeletons/ROUTING.md)(选型)、[micro-interactions.md](micro-interactions.md)(时长预算)互补——`chart-magnet-cursor` 等 12 组已有实现,本篇做命名收编与挂接,不重复实现。
 
 ## 命名表
 
@@ -28,10 +28,12 @@
 | `btn-slide-confirm` | 滑动确认 Slide to Confirm | 滑块滑动确认,文字流光扫过,超 80% 触发,不足弹回 | 危险 / 重要操作的滑动确认 |
 | `preview-longpress-peek` | 长按浮起预览 Context Preview | 列表项长按上下文预览,背景模糊压暗,选中项浮起,菜单弹簧展开 | 列表快捷预览(已有实现:[sheet-drawer.md](sheet-drawer.md) `preview-longpress-peek`) |
 | `drop-target-attract` | 拖到目标吸入 Drop Target | 拖拽靠近时目标放大张开迎候,松手元素缩小吸入 | 文件归档 / 拖放分拣(拖拽弹簧见 [spring-reorder.md](../motion-skeletons/spring-reorder.md)) |
+| `progress-segmented` | 分段进度条 Segmented Story Progress | Stories 式分段自动走,按住暂停,点左右半区切上 / 下一项 | 图集浏览、引导页、快看内容流(已有实现:[progress-confirm.md](progress-confirm.md) `progress-segmented`) |
+| `gallery-cover-flow` | 景随图换的轮播 Cover Flow | 横向 3D 透视轮播,当前项居中放大,侧卡 ±46° 侧立;切换时背景取当前图模糊混色与标题同步过渡 | 相册 / 目的地浏览(基础轮播见 [galleries.md](galleries.md) `gallery-carousel`) |
 
 ## AI 描述词对照
 
-> 视频给出的 22 组提示词原文;落成 maliang 产物时按使用规则换算成模式参数,不整段照抄进 draw-md。
+> 视频给出的 24 组提示词原文;落成 maliang 产物时按使用规则换算成模式参数,不整段照抄进 draw-md。
 
 | # | 组件 | AI 描述词 |
 | --- | --- | --- |
@@ -57,6 +59,8 @@
 | 20 | 滑动确认 | 滑动确认组件(Slide to Confirm),文字流光扫过,超过 80% 触发,不足弹回。 |
 | 21 | 长按浮起预览 | 列表项长按上下文预览(Context Menu Preview),背景模糊压暗,选中项浮起,菜单弹簧展开。 |
 | 22 | 拖到目标吸入 | 拖拽放置目标(Drop Target),靠近时目标放大张开,松手元素缩小吸入。 |
+| 23 | 分段进度条 | 分段进度条(Segmented Story Progress),按住暂停,点击左右区域切换。 |
+| 24 | 景随图换的轮播 | 横向 3D 透视轮播(Cover Flow),当前项居中放大,切换时背景与标题同步过渡。 |
 
 ## 使用规则
 
@@ -68,7 +72,7 @@
 - `border-conic-glow`:旋转用超尺寸伪元素整层 `transform: rotate`(conic-gradient 画在伪元素上),禁动画角度自定义属性(逐帧重绘);背光呼吸只动 `opacity`,blur 半径静态预设;呼吸周期 2-4s,计一拍氛围档(见 ROUTING §3.10 与 [`../meta/dials.md`](../meta/dials.md))
 - `stagger-spring-cascade`:间隔 ≤ 120ms、单项 duration ≤ 600ms、过冲 ≤ 1.02(「微弱弹性」上限,超过即卡通感);其余沿用 scroll-reveal-stagger 骨架强制规则
 - `press-scale-overshoot`:基线仍为 `micro-press-scale`(scale 0.97,100-160ms 按压档);本篇增强档(scale 0.96)仅限主操作按钮,压缩与内阴影必须同时给——内阴影是深度语义,缺了就只是缩小;释放超调用 cubic-bezier(.34,1.56,.64,1) 近似(见 [buttons.md](buttons.md) `btn-spring`),逐帧跟指针才上真弹簧(ROUTING §3.8)
-- 全部 22 组必须给 `prefers-reduced-motion` 静止终态:倾斜/旋转/呼吸停在构图帧,FLIP 直接切换(见 ROUTING §1 GATE 与 [accessibility.md](../meta/accessibility.md))
+- 全部 24 组必须给 `prefers-reduced-motion` 静止终态:倾斜/旋转/呼吸停在构图帧,FLIP 直接切换(见 ROUTING §1 GATE 与 [accessibility.md](../meta/accessibility.md))
 - `panel-explode-layers`:长按 400ms 判定挂 `press-peek`;层距等差 70px、≤ 4 层;爆炸是瞬时检视态,松手必须合拢回原位(检视不改变布局);合拢曲线与 `press-scale-overshoot` 同源弹簧
 - `card-swipe-deck`:甩出判据 = 位移超宽 35% 或速度达标(双判据,见 [gesture-arbitration.md](../motion-skeletons/gesture-arbitration.md));下层补位 +12px / 0.94→1 与顶层甩出同帧;被甩张回队尾循环,页码同步;同屏 ≤ 4 张
 - `select-gather-stack`:聚拢每项错 3 帧,缩放 0.8 倍、散转 ±8° 为上限;角标计数随勾选实时增减;松手落进目标后逐项归位回收(从哪里来回哪里去);取消勾选的项不参与聚拢
@@ -83,6 +87,8 @@
 - `btn-slide-confirm`:阈值 80%(过了八成才算数),不足弹回且禁停在半途;文字流光 = 背景层位移,只动 transform;确认态锁定后禁再滑;与 `micro-hold-confirm` 分工:hold 适合原地持续按压,slide 适合大按钮 + 明确方向感
 - `preview-longpress-peek`:收编行——长按 400ms / 背景压暗虚化 / 三路手势全挂 [sheet-drawer.md](sheet-drawer.md);本行补:菜单弹簧展开过冲 ≤ 1.05,菜单项 ≤ 5
 - `drop-target-attract`:靠近判据 = 拖拽元素与目标边缘距离 ≤ 24px;目标张开 ≤ 1.1 倍;松手元素缩小吸入(0.9→0 淡出)目标计数 +1 后回弹落定;目标禁用态不响应张开(误触保护)
+- `progress-segmented`:收编行——口径全挂 [progress-confirm.md](progress-confirm.md);本行补:按住暂停即停帧(进度冻结不回退),松手续走;点击左右半区按进度方向就近切换
+- `gallery-cover-flow`:侧卡 ±46° 侧立,当前项居中放大 ≤ 1.15 倍;背景从当前图取主色 blur 铺底(混合 37%),切换时背景与标题同帧过渡;同屏卡数 ≤ 7(3D 层数上限)
 
 ## 在 draw-md 中的写法
 
@@ -188,4 +194,53 @@
 ## Card (metric-tile)
 - pattern: card-corner-fill
 - origin: corner-button, spread: clip-circle, invert: text-color, icon_rotate: 45deg
+```
+
+## 形变组件
+
+> 5 个同容器形变组件(MORPH COMPONENT 系列):同一个容器走一条曲线连续插值到终态,不拆组件、不做透明度交叉,内容等容器落定后再入场,关闭沿同一条曲线反向收回。来源:形变组件视频截图提取(2026-10,MORPH COMPONENT 系列)。与移动节 `capsule-fluid-morph`(通用胶囊→面板)、`press-scale-overshoot`(按压微形变)同族,本节聚焦跨形态大形变。
+
+### 命名表
+
+| 模式名 | 视频组件 | 视觉特征 | 适用场景 |
+| --- | --- | --- | --- |
+| `search-circle-morph` | 搜索框展开 Circle to Search Bar | 圆形图标按钮形变为搜索输入框:宽 56→470、圆角 999→16 同曲线 360ms 连续插值;图标同步左移到内边距处,占位文字与光标等宽落定后再淡入,全程不切换组件 | 工具栏搜索(行为选型见 [search.md](search.md) `search-on-demand`) |
+| `panel-grow-from-plus` | 加号展开面板 FAB to Sheet | 同一容器宽高 64→470×300、圆角 32→28 约 480ms;面板选项等容器落定后按每项 4 帧交错淡入,关闭沿同曲线反向收回 | FAB 新建 / 加购清单(已有实现:[sheet-drawer.md](sheet-drawer.md);通用胶囊形变见 `capsule-fluid-morph`) |
+| `btn-commit-morph` | 提交状态反馈 Button to Loader to Success | 点击宽度收到圆形,沿边缘绘制环形进度;走满环合拢,勾形 strokeDasharray 描边画出,再横向展开成结果条;三态共用一个容器位置不变 | 表单提交 / 支付(已有实现:[buttons.md](buttons.md) `btn-commit-morph`) |
+| `icon-path-morph` | 图标变形 SVG Path Morph | 中线透明度与横向缩放同时归零,上下两线各旋 45° 合成关闭;播放三角按同一组顶点插值成暂停两竖;全程只改顶点坐标,不切图、不做透明度交叉 | 图标状态切换(汉堡特例见 [buttons.md](buttons.md) `icon-morph-burger`;设计决策见 [`../dimensions/icon.md`](../dimensions/icon.md) 动效图标节) |
+| `nav-tab-liquid` | 标签指示条 Elastic Tab Indicator | 切换时前沿先走奔向目标,后沿延后 6 帧追赶,宽度中途拉到 2 倍以上再收回,末端带一次轻微超调 | 分段 / tab 切换(已有实现:[navigation.md](navigation.md) `nav-tab-liquid`) |
+
+### AI 描述词对照
+
+> 视频提示词原文(系列 10 例,本批收录 01-05);落 draw-md 时按模式名与使用规则参数化,不整段照抄。
+
+| # | 组件 | AI 描述词 |
+| --- | --- | --- |
+| 01 | 搜索框展开 | 圆形图标按钮形变为搜索输入框(Circle to Search Bar):宽度从 56 到 470、圆角从 999 到 16,用同一条 cubic-bezier(.2,.9,.22,1) 在 360ms 内连续插值;图标同步左移到内边距处,占位文字和光标等宽度落定后再淡入,全程不切换组件。 |
+| 02 | 加号展开面板 | 悬浮按钮形变为底部面板(FAB to Sheet):同一个容器的宽高从 64 连续过渡到 470 乘 300、圆角从 32 到 28,走 cubic-bezier(.2,.9,.22,1) 约 480ms;面板里的选项等容器落定后按每项 4 帧交错淡入,关闭时沿同一条曲线反向收回原位。 |
+| 03 | 提交状态反馈 | 按钮状态形变链(Button to Loader to Success):点击后宽度从 470 收到 76 变成圆形,沿边缘绘制环形进度;走满后环合拢,勾形用 strokeDasharray 描边画出来,再横向展开成结果条。三个状态共用一个容器,位置从头到尾不变。 |
+| 04 | 图标变形 | 图标做路径形变(SVG Path Morph):菜单三条横线的中间一条透明度与横向缩放同时归零,上下两条各旋转 45 度合成关闭图标;播放三角按同一组顶点插值成暂停两竖。全程只改顶点坐标,不切图、不做透明度交叉。 |
+| 05 | 标签指示条 | 标签指示器液态拉伸(Elastic Tab Indicator):切换时前沿先走 cubic-bezier(.2,.9,.22,1) 奔向目标,后沿延后 6 帧起步追赶,宽度中途被拉到两倍以上再收回,末端带一次轻微超调;用 left 和 width 驱动,别用 scaleX,圆角会被拉扁。 |
+
+### 使用规则
+
+- 形变四铁律:①同一容器从起点连续插值到终态,禁拆成两个组件交叉淡切;②全程一条缓动曲线(本系列基准 cubic-bezier(.2,.9,.22,1));③容器落定后内容才入场(交错淡入),关闭沿同一条曲线反向收回(链路铁律);④形变只动 transform 与几何属性,禁中途改布局语义
+- 时长:输入框 / 面板类形变属浮层转场档 ≤ 400ms(视频 480ms 弃用,先例同 ROUTING §5 时长从属声明);tab 指示条属反馈档 ≤ 300ms
+- `search-circle-morph`:圆角 999→16 与宽度同帧插值(圆→胶囊→圆角矩形连续过渡);占位文字与光标等容器宽度落定(≥ 90% 进度)后再淡入,禁提前溢出;图标左移距离 = 内边距常量
+- `panel-grow-from-plus`:宽高与圆角同步插值;选项每项 4 帧交错;关闭反向收回原位(锚点丢失降级缩放淡出,沿 sheet-drawer 口径);任意胶囊→面板的通用形变走 `capsule-fluid-morph`,本模式限 FAB(+) 起点
+- `btn-commit-morph`:三态(提交 / 加载 / 结果)共用容器位置钉死;环形进度沿边缘绘制(周描边);勾用 strokeDasharray 描边画出(画的过程可见);结果条横向展开后禁再变
+- `icon-path-morph`:只改 SVG 顶点坐标(path d 插值),禁两张图透明度交叉;两端顶点数必须一致(不足先补齐再插值);stroke 同源图标才可 morph(icon.md 约束);汉堡、播放暂停为最小 Morph 对
+- `nav-tab-liquid`:前沿 / 后沿分离驱动(前沿先走、后沿 6 帧追赶),宽度峰值 ≥ 2 倍再收回,末端轻微超调一次;**用 left + width 驱动,禁 scaleX(圆角会被拉扁)**;MOTION ≥ 7 档(navigation.md 既有门槛)
+
+### 在 draw-md 中的写法
+
+```markdown
+## Search (toolbar-search)
+- pattern: search-circle-morph
+- width: 56→470, radius: 999→16, duration: 360ms, curve: cubic-bezier(.2,.9,.22,1)
+- placeholder: fade-after-settle, icon: shift-inset
+
+## Tab (view-switch)
+- pattern: nav-tab-liquid
+- lead_then_tail: 6f, width_peak: 2x, overshoot: once, driver: left+width
 ```
