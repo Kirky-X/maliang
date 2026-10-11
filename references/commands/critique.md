@@ -8,6 +8,7 @@
 
 - [`draw-md.md`](./draw-md.md) / [`preview.md`](./preview.md) 之后的**可选深度评审**:"帮我看看这页好不好用 / 有哪里反直觉 / 用户会不会卡住"
 - [`redesign.md`](./redesign.md) 之前的**诊断**:"用户反馈用不明白"——先量化病灶,再定 Refresh / Restructure / Rebuild
+- **定义级 audit**(无建成页面也可触发):spec / proposal / 构思阶段问"这东西能活过第二周吗"——走第四问,按 [`../meta/day-two-blacklist.md`](../meta/day-two-blacklist.md) 跑清单
 - 不触发:只问"token / 合规 / 机械检查" → preview;只问"视觉风格与改版" → redesign
 
 ### 合规清单（web-interface-guidelines）
@@ -23,6 +24,7 @@
 | 规格对不对(机械检查 135 项)?          | preview Pre-Flight                |
 | **好不好用(用户能否顺利完成任务)?**  | **本命令(critique)**             |
 | 方向对不对(该不该重做)?              | redesign 模式判定                 |
+| **活不活得过第二周(定义级)?**        | **本命令扩展:定义级 audit** —— 输入可以是 spec / proposal / 构思,不要求先有建成页面;按 [`../meta/day-two-blacklist.md`](../meta/day-two-blacklist.md) 跑对应域(D-list 个人域 / S-list 系统域,混合型两边跑)全量清单,命中即 definition-level defect。汇报只用用户语言、不出现条号,按 time-to-death 排序 |
 
 ### 轻档 · 用户测试问集(不落全量评分)
 
