@@ -3,83 +3,83 @@ version: alpha
 name: Minimalism
 description: 瑞士国际主义平面设计的数字延续——网格先行、留白即层级、单一蓝色强调色驱动所有交互。
 colors:
-  primary: "#212121"
-  secondary: "#9D9D9D"
-  tertiary: "#2563EB"
-  neutral: "#F5F5F5"
-  surface: "#FFFFFF"
-  on-surface: "#212121"
+  primary: "#212121"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  secondary: "#9D9D9D"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  tertiary: "#2563EB"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  neutral: "#F5F5F5"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  surface: "#FFFFFF"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  on-surface: "#212121"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
 typography:
-  headline-lg:
+  headline-lg:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     fontFamily: Inter
     fontSize: 48px
     fontWeight: 600
     lineHeight: 1.1
     letterSpacing: -0.02em
-  headline-md:
+  headline-md:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     fontFamily: Inter
     fontSize: 32px
     fontWeight: 600
     lineHeight: 1.2
     letterSpacing: -0.01em
-  body-md:
+  body-md:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     fontFamily: Inter
     fontSize: 16px
     fontWeight: 400
     lineHeight: 1.6
-  body-sm:
+  body-sm:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     fontFamily: Inter
     fontSize: 14px
     fontWeight: 400
     lineHeight: 1.5
-  label-sm:
+  label-sm:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     fontFamily: Inter
     fontSize: 12px
     fontWeight: 500
     lineHeight: 1
     letterSpacing: 0.04em
 rounded:
-  sm: 4px
-  md: 8px
-  lg: 16px
-  full: 9999px
+  sm: 4px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  md: 8px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  lg: 16px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  full: 9999px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
 spacing:
-  base: 8px
-  xs: 4px
-  sm: 8px
-  md: 16px
-  lg: 32px
-  xl: 64px
-  gutter: 24px
-  grid-columns: 12
+  base: 8px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  xs: 4px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  sm: 8px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  md: 16px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  lg: 32px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  xl: 64px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  gutter: 24px  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
+  grid-columns: 12  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
 components:
-  button-primary:
+  button-primary:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     backgroundColor: "{colors.primary}"
     textColor: "{colors.surface}"
     typography: "{typography.label-sm}"
     rounded: "{rounded.md}"
     padding: 12px 24px
-  button-primary-hover:
+  button-primary-hover:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     backgroundColor: "{colors.tertiary}"
-  button-secondary:
+  button-secondary:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     backgroundColor: "transparent"
     textColor: "{colors.primary}"
     typography: "{typography.label-sm}"
     rounded: "{rounded.md}"
     padding: 11px 23px
-  chip:
+  chip:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     backgroundColor: "{colors.neutral}"
     textColor: "{colors.primary}"
     typography: "{typography.label-sm}"
     rounded: "{rounded.full}"
     padding: 4px 12px
-  input:
+  input:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     backgroundColor: "{colors.surface}"
     textColor: "{colors.primary}"
     typography: "{typography.body-md}"
     rounded: "{rounded.sm}"
     padding: 10px 14px
-  input-focus:
+  input-focus:  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
     textColor: "{colors.primary}"
 ---
 
