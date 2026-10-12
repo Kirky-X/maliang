@@ -92,6 +92,11 @@ class TestSiblingSkills(unittest.TestCase):
         cfg_path = repo / "lint-checks.json"
         if not cfg_path.is_file():
             self.skipTest("lint-checks.json 不存在")
+        if not any(
+            p.is_dir() and p != repo and (p / "SKILL.md").is_file()
+            for p in repo.parent.iterdir()
+        ):
+            self.skipTest("工作区无兄弟仓(CI 单仓检出)，真实配置检查无对象")
         cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
         rules = [c for c in cfg.get("checks", []) if c.get("type") == "sibling-skills"]
         if not rules:
