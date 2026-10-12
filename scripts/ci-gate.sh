@@ -12,17 +12,11 @@
 #                               仅限 EXIT-CODES.md「与旧口径的对照」表登记的
 #                               未迁移脚本(validate-draw-md.py / validate-framework.py),
 #                               迁移切换后本门必须改回 strict。
-#   退出码 1(advisory 门)    → 报告放行(不拦截):仅限下方「advisory 登记」列出的
-#                               目标——其发现是本批门禁上线前既存的历史债,清账后
-#                               改回 strict;退出码 2 在 advisory 档仍拦截。
 #   其他退出码                → 拦截(异常退出)
 #
-# advisory 登记(2026-10-12,本批接线时实测既存发现):
-#   - validate-design-md.py @ examples/design-system/DESIGN.md — 29 处 V2 孤儿 token
-#     (示例 DESIGN.md 早于 token 溯源契约);清账方式:补 # no-decision:/决策 id。
-#   - validate-generated.py @ examples/element-plus/ — Home.vue 8 处颜色字面量(G04);
-#     清账方式:回 design-md 补 token 或改用已登记值。
-#   两处清账后把本文件的 gate_if_script 调用改回 strict(去掉 --advisory)。
+# 历史债备忘:接线时曾登记的两处 advisory(examples/design-system 29 处孤儿 token、
+# examples/element-plus 8 处颜色字面量)已于同日清账——DESIGN.md 补 no-decision 注释、
+# token.md 登记扩展色;两门已转 strict,无未清项。
 #
 # 分层接线原则(design.md Decision 4):ci-gate 只接**无浏览器可跑**的脚本;
 # 浏览器依赖门(verify-states.py / verify-interactive.py)不进 CI 默认路径,
@@ -36,7 +30,7 @@
 #   5. preview-check.py     — 若 examples/preview/ 存在则跑 Pre-Flight 自动化检查
 #   6. check-claims.py      — 公开声明对账(计数唯一来源 / 必现短语 / 禁用语表)
 #   7. evidence-check.py    — 若 examples/ 下有取证 report.json 则跑齐套校验
-#   8. validate-design-md.py / validate-generated.py — 交付后自动接入(存在即跑)
+#   8. validate-design-md.py / validate-generated.py — 交付后自动接入(存在即跑,strict)
 #   9. ledger.py verify     — 项目反馈账本存在时校验
 #  10. 浏览器依赖门清单      — 不运行,只打印手动入口与「未测量不得记为通过」口径
 
@@ -47,10 +41,9 @@ FAIL=0
 GATE_LOG_DIR="$(mktemp -d)"
 trap 'rm -rf "${GATE_LOG_DIR}"' EXIT
 
-# gate [--warn-pass|--advisory] <名称> <命令...>
+# gate [--warn-pass] <名称> <命令...>
 #   --warn-pass: EXIT-CODES.md 登记的迁移中脚本专用(2=仅 warning 时放行,
 #                但必须输出自证 0 errors;其余非 0 一律拦截)
-#   --advisory:  历史债登记门(1=报告放行,不拦截;2=未能检查仍拦截)
 gate() {
   local mode="strict"
   if [ "${1:-}" = "--warn-pass" ]; then
@@ -67,27 +60,6 @@ gate() {
   local log="${GATE_LOG_DIR}/$(echo "${name}" | tr -c '[:alnum:]' '_').log"
   "$@" 2>&1 | tee "${log}"
   local rc=${PIPESTATUS[0]}
-  if [ "${mode}" = "advisory" ]; then
-    if [ "${rc}" -eq 0 ]; then
-      echo "[GATE] ✓ ${name}"
-    elif [ "${rc}" -eq 1 ]; then
-      local advisory_n advisory_max
-      advisory_n="$(sed -n 's/.*检查结果: \([0-9][0-9]*\) errors.*/\1/p' "${log}" | tail -1)"
-      advisory_max="${ADVISORY_MAX:-}"
-      if [ -n "${advisory_max}" ] && [ -n "${advisory_n}" ] && [ "${advisory_n}" -gt "${advisory_max}" ]; then
-        echo "[GATE] ✗ ${name} — advisory 发现数 ${advisory_n} 超过登记基线 ${advisory_max}(疑似新回归,拦截;清账后改回 strict)"; FAIL=1
-      else
-        echo "[GATE] △ ${name} — 报告放行(advisory:发现数 ${advisory_n:-?} 未超登记基线 ${advisory_max:-?},均为门禁上线前既存历史债;清账后改回 strict)"
-      fi
-    elif [ "${rc}" -eq 2 ]; then
-      echo "[GATE] ✗ ${name} — 没能检查(退出码 2/UNMEASURED);未测量不得记为通过"
-      FAIL=1
-    else
-      echo "[GATE] ✗ ${name} — 异常退出码 ${rc}"
-      FAIL=1
-    fi
-    return 0
-  fi
   if [ "${mode}" = "warn-pass" ]; then
     if [ "${rc}" -eq 1 ]; then
       echo "[GATE] ✗ ${name} — 存在 error 级发现(退出码 1)"
@@ -130,7 +102,7 @@ gate_if_script() {
   local script="$1"
   shift
   local mode=""
-  if [ "${1:-}" = "--advisory" ] || [ "${1:-}" = "--warn-pass" ]; then
+  if [ "${1:-}" = "--warn-pass" ]; then
     mode="$1"
     shift
   fi
@@ -200,9 +172,9 @@ fi
 
 # 8. A1 侧无浏览器脚本:交付即接入(目标以各自 --help 为准)
 #    advisory 原因与清账方式见头部「advisory 登记」;清账后改回 strict。
-ADVISORY_MAX=29 gate_if_script scripts/validate-design-md.py --advisory "validate-design-md(DESIGN.md 溯源交叉检查;advisory:历史债登记,基线 29)" \
+gate_if_script scripts/validate-design-md.py "validate-design-md(DESIGN.md 溯源交叉检查)" \
   python3 scripts/validate-design-md.py examples/design-system/DESIGN.md
-ADVISORY_MAX=8 gate_if_script scripts/validate-generated.py --advisory "validate-generated(生成码机械校验;advisory:历史债登记,基线 8)" \
+gate_if_script scripts/validate-generated.py "validate-generated(生成码机械校验)" \
   python3 scripts/validate-generated.py examples/element-plus/
 
 # 9. 项目反馈账本(存在才校验;账本是项目级 .maliang/feedback/ 状态,不存在即未启用)

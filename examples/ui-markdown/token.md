@@ -37,6 +37,20 @@ version: 1.1.0
 | color-link            | #3B82F6 <span style="background:#3B82F6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span>     | rgba(59,130,246,1)  | 链接文字             |
 | color-overlay         | #00000080 <span style="background:#00000080;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(0,0,0,0.5)     | 遮罩层(弹窗背景)     |
 
+**扩展色**（示例页卡片封面渐变与悬停叠色，供 `examples/element-plus` 使用）：
+
+| token | 值 | 用途 |
+| --- | --- | --- |
+| color-state-hover | rgba(26, 29, 33, 0.05) | 悬停态叠色(文字色 5% 透明度) |
+| color-cover-a1 | #5B7CFA | 封面 A 渐变起 |
+| color-cover-a2 | #8AA2FC | 封面 A 渐变止 |
+| color-cover-b1 | #3D5EDB | 封面 B 渐变起 |
+| color-cover-b2 | #6F8CF8 | 封面 B 渐变止 |
+| color-cover-c1 | #7C93FA | 封面 C 渐变起 |
+| color-cover-c2 | #A9BAFD | 封面 C 渐变止 |
+| color-cover-d1 | #4C6BE8 | 封面 D 渐变起 |
+| color-cover-d2 | #93A9FA | 封面 D 渐变止 |
+
 ## 2. 字体(typography)
 
 字族:UI 字体:`"PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif`(中英文统一)。
