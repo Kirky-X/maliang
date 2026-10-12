@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+  verify-interactive fixture:信号 A(死状态契约)。
+  按钮声明 aria-pressed 却没有任何处理器 —— 点击后整页毫无变化。
+  期望:FAIL(exit 1),报 [A dead]。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>verify-interactive fixture: 死状态契约</title>
+<style>body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }</style>
+</head>
+<body>
+  <main id="main">
+    <button class="favorite" type="button" aria-pressed="false">收藏</button>
+  </main>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # 编号门禁 —— 交付前的二元否决清单
 
-> 规范层。清单式 reference 满仓都是(ai-tells 的 Tell、ux-rules 的 slug、preview-checklist 的 135 项),但它们多数回答「这样好不好」,不回答「不这样能不能交」。本文只收**二元门禁**:每条要么 PASS 要么 FAIL,无灰区,任一命中即不许交付,修复后重跑全部。
+> 规范层。清单式 reference 满仓都是(ai-tells 的 Tell、ux-rules 的 slug、preview-checklist 的 140 项),但它们多数回答「这样好不好」,不回答「不这样能不能交」。本文只收**二元门禁**:每条要么 PASS 要么 FAIL,无灰区,任一命中即不许交付,修复后重跑全部。
 >
 > 每条门禁三段写死:**违反什么**(可被指认的字面形态)/ **怎么判定**(证据从哪来)/ **怎么修**(指回可执行的文档)。软提示式表述(「注意质量」「保持一致」「尽量避免」)一律不构成门禁。机制来源:oh-my-design 的 numbered slop gates(编号 + 二元 + 机器可判项必须留 grep 证据,MIT,2026-09 吸收,条目与判据中文自研)。
 
@@ -13,16 +13,18 @@
 3. **不豁免、不降级**。唯一合法出路是修复。确有正当理由(如 DESIGN.md 显式批准某个 AI Tells 值)时,走 [`ai-tells.md`](ai-tells.md) §0 豁免总则的**显式记录**要求,静默豁免 = FAIL。
 4. **CRITICAL 一票否决**。任一 CRITICAL 门 FAIL,不得被任何评分补偿——沿用 [`rules-priority.md`](rules-priority.md) 冲突裁决规则 1 与「加权评分从属声明」。
 5. **修复后重跑全部**,不可只跑失败项(与 [`../commands/preview-checklist.md`](../commands/preview-checklist.md) 执行规则一致)。
+6. **未测量不得记为通过**。退出码 2 / UNMEASURED 表示「**没能检查**」(路径不存在 / 没装浏览器 / 无目标),不是「检查通过」——Nothing was measured. This is not a pass;调用方禁止把 2 当 0,报告禁止把未测量项写成 PASS。三态 canonical 声明见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md)(0 = 看了没问题 / 1 = 看了有问题 / 2 = 没能检查);凡「本轮未实测」的项,判定结论只能记 UNMEASURED。来源:ux-ui-agent-skills(#16),2026-10 吸收。
 
 **严重级**:CRITICAL(可访问性 / 功能损坏,一票否决)· HIGH(AI 味 / 系统一致性,阻断交付)· MEDIUM(打磨项,不阻断但须在报告列为 known issue)。
 
-**与 135 项清单的关系**:本文**不替代** [`preview-checklist.md`](../commands/preview-checklist.md),也不重复其条目。135 项是「全量机械检查」,本文是「否决门」——门禁条目均可映射到 135 项的分区或 ai-tells / ux-rules 的既有条目,映射关系写在各条的「怎么判定」里。**两处都过才算过**:清单过了不豁免门禁,门禁过了不豁免清单。本节是这条规则的**唯一 canonical 表述**——其余文档(SKILL.md / lifecycle.md / preview.md / preview-checklist.md)提及此规则时只留一句提示并链接到本节,不各自复述全文;修订规则语义只改本节。
+**与 140 项清单的关系**:本文**不替代** [`preview-checklist.md`](../commands/preview-checklist.md),也不重复其条目。140 项是「全量机械检查」,本文是「否决门」——门禁条目均可映射到 140 项的分区或 ai-tells / ux-rules 的既有条目,映射关系写在各条的「怎么判定」里。**两处都过才算过**:清单过了不豁免门禁,门禁过了不豁免清单。本节是这条规则的**唯一 canonical 表述**——其余文档(SKILL.md / lifecycle.md / preview.md / preview-checklist.md)提及此规则时只留一句提示并链接到本节,不各自复述全文;修订规则语义只改本节。
 
 ---
 
 ## A 组 · 溯源与 token(设计系统自洽)
 
 > 「悬空溯源 / 孤儿 token / 空原则」三类违规名的 canonical 定义在 [`token-provenance.md`](token-provenance.md) §4(V1/V2/V3);本组 G01–G03 只收交付门禁判定,判据以彼处为准。
+> **机械判定**:V1–V3 由 [`../../scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定(四处交叉:顶层键有 id 或 no-decision → id 在 decisions 可查 → 每条原则至少被一个 token 引用 → no-decision 占比),人工仅复核脚本标 unconfirmed 的项;脚本输出摘要随判定记录留痕。来源:hue(#31),2026-10 吸收。
 
 ### G01 · 悬空溯源
 - **违反什么**:token 注释里的决策 id 在 `decisions[]` 中查不到,或 `D-P<n>` 指向的 `## Overview` 原则不存在。
@@ -78,6 +80,11 @@
 - **怎么判定**:人工判定,对应 ux-rules slug `color-not-only`(ERROR)。
 - **怎么修**:附图标或文案;颜色只作强化,不单独承载语义。
 
+### G31 · 状态态对比度未实测(CRITICAL)
+- **违反什么**:交互元素的 default / hover / focus 任一次态下,文本或图形对比度低于阈值(图形控件 3:1;文本 4.5:1,大文本 ≥ 24px 或 ≥ 18.66px 且 bold 取 3:1);或本轮**未实测**却记为通过(无浏览器时把 UNMEASURED 当 PASS)。
+- **怎么判定**:[`../../scripts/verify-states.py`](../../scripts/verify-states.py) 取三态真实计算样式,沿祖先链回溯有效背景;native checkbox/radio/switch 与 disabled / opacity:0 按 WCAG 1.4.3 / 1.4.11 豁免;退出码 2 / UNMEASURED 记「未判定」,不得记 PASS(§0 第 6 条)。对应 ux-rules slug `color-contrast`;执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」;坏 fixture(静态通过、hover 失败)在 tests/。
+- **怎么修**:调字色 / 底色或换对比更高的 token 组合,修复后重跑三态;未测的补测再交。来源:ux-ui-agent-skills(#13),2026-10 吸收。
+
 ---
 
 ## C 组 · 视觉签名(AI 味硬命中)
@@ -128,6 +135,11 @@
 - **怎么判定**:人工判定。对应 [`principles.md`](principles.md) 第 13 定律(动画动机)。
 - **怎么修**:只给需要告知的结果做反馈;轮播加暂停控件或移出自动播放。
 
+### G32 · 交互状态契约未兑现
+- **违反什么**:声明了状态契约(`aria-pressed` / `aria-expanded` / `aria-checked` / `aria-selected` / `aria-sort`,或 switch / tab / menuitemcheckbox / menuitemradio / option 角色)的已启用可见控件,**真实点击后文档内无任何变化**——无属性翻转、无 DOM 变更、无焦点转移;控件承诺了状态却不兑现。
+- **怎么判定**:[`../../scripts/verify-interactive.py`](../../scripts/verify-interactive.py) 信号 A;每次点击在**新加载页面**上进行(一个控件不能遮住另一个);控件上的 `data-demo-state` 是作者手写的「这是状态渲染、不是活控件」声明,按豁免处理。**无状态契约的普通按钮**点击无效果仅 advisory(静态演示按钮是合法形态),不构成本门失败。对应 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么修**:接上 handler 让状态属性真正变化;或撤掉 `aria-*` 与相应可交互外观——不承诺做不到的事。来源:ux-ui-agent-skills(#14),2026-10 吸收。
+
 ---
 
 ## E 组 · 布局与响应
@@ -162,7 +174,7 @@
 - **怎么修**:补齐记录后重跑 G01–G03;决策表未获用户确认的不静默写入账本。
 
 ### G24 · 静态声明代替实测
-- **违反什么**:「看起来没问题」「整体达标」作为验证结论,没有判定记录 / 实测截图 / grep 命中清单;或 135 项清单的运行时项用静态扫描结论顶替。
+- **违反什么**:「看起来没问题」「整体达标」作为验证结论,没有判定记录 / 实测截图 / grep 命中清单;或 140 项清单的运行时项用静态扫描结论顶替。
 - **怎么判定**:报告首行 disposition 与证据四分类(见 [`../commands/preview.md`](../commands/preview.md) 证据四分类)是否填全。
 - **怎么修**:按 preview.md 的证据四分类补齐;无法实测的项如实标 `unresolved`,不许默认通过。
 
@@ -185,6 +197,36 @@
 - **违反什么**:开发用状态切换器 / 调试面板出现在产品 UI 里;或页面文案里出现文件名、字段名、框架术语。
 - **怎么判定**:人工判定 + 预览产物巡检。
 - **怎么修**:状态切换器移出产物(只留在 preview 调试页),文案换成用户语言。
+
+### G33 · 状态变化不可见
+- **违反什么**:状态属性翻转了(读屏能听到),但控件**自身**的计算样式 / 文本 / 几何完全一致——视障用户之外的人看不到任何变化(invisible state)。
+- **怎么判定**:[`../../scripts/verify-interactive.py`](../../scripts/verify-interactive.py) 信号 C:状态值确实移动,且外观指纹(自身与内部元素的样式 + 文本 + 几何)前后一致(等过渡结束再比);状态值未移动的点击(点已选中的项 / 当前 tab)是 no-op,不算命中。
+- **怎么修**:给控件自身一个视觉状态——轨道填充、图标切换、标签变化;`aria-checked` 单独只服务读屏,不构成视觉状态。来源:ux-ui-agent-skills(#14),2026-10 吸收。
+
+### G34 · 跨轮结论无同条件对比
+- **违反什么**:「改善了 / 退步了 / 趋势向好」的结论建立在两轮**评估条件不一致**上——评估页集与分母、设备与视口、字号与内容、模式任一字段不同;或产物轮次目录被覆盖(旧轮次被新证据写掉);或把尺寸一致 / 像素差异直接当「还原度」。
+- **怎么判定**:对账两轮评估记录的四个条件字段 + 检查轮次目录(每轮一律新目录,拒绝覆盖);比较报告以尺寸一致代替视觉判断即为命中——**误差不等于还原度,尺寸一致 ≠ 视觉通过**。对应 [`../commands/preview.md`](../commands/preview.md)「取证契约」跨轮比较条件指纹与 [`../commands/critique.md`](../commands/critique.md) 产物·趋势节。
+- **怎么修**:条件不一致时**拒绝比较并重建基线**(同条件重取两轮证据,或重选页集并注明分母变化);本轮证据不覆盖上一轮;像素差异只用于定位变化,不折算成还原度百分比。来源:draw-ui(#8),2026-10 吸收。
+
+### G35 · 生成码未校验
+- **违反什么**:交付的框架生成码(`examples/element-plus/` 等生成码目录)存在以下任一——token 占位符残留(`{token}` 未解析);颜色字面量无法回溯 token.md;组件标签 / Widget 不在 [`../framework/index.md`](../framework/index.md) 白名单;类名无定义(模板里每个 class 必须在同文件 style 或框架基础类有定义,使用即需有出处)。
+- **怎么判定**:[`../../scripts/validate-generated.py`](../../scripts/validate-generated.py) + ci-gate.sh 新 gate(目标为生成码目录);输出摘要作判定记录。只对**生成码**生效,手写业务代码不在此门。
+- **怎么修**:补回 token 引用(先回 design-md 补 token 再引用);补类定义;非白名单标签换白名单组件。**诚实范围**:本门只证明组件**产出**合规(服务端 / 静态检查),**不证明点击行为**——交互真实性另按 G32 / G33 实测。来源:ux-ui-agent-skills(#15),2026-10 吸收。
+
+### G36 · 证据无活收据
+- **违反什么**:报告声称「已解决 / 已通过」的项拿不出**活收据**(门禁名 / 被测文件路径 + 测量前取的 SHA-256 / 退出码 / 关键数字 / 时间戳);或收据已作废(EXPIRED:被测文件在测量后被编辑);或引用了上一会话的收据充当本轮证据。
+- **怎么判定**:[`../../scripts/receipts.py`](../../scripts/receipts.py) `--check` 三态 OK / EXPIRED / UNMEASURED——**哈希变了证据作废**(旧数字描述的是旧状态);上一会话收据永不复用;**写不出收据 = 当作未记录**。口径见 [`../commands/preview.md`](../commands/preview.md)「证据四分类」哈希条款;与 G24(静态声明代替实测)互补:G24 管「有没有实测」,本门管「实测证据还活着吗」。
+- **怎么修**:对当前产物重跑门禁生成新收据;暂时测不了就把结论降为 `unverified` 并显式列出未测量项;禁止用记忆中的数字充当收据。来源:ux-ui-agent-skills(#17) + styleseed(#19),2026-10 吸收。
+
+### G37 · 一次性要求写成长期禁令
+- **违反什么**:单次任务的一次性要求(「这页先这样」「这个圆角临时调一下」)被直接写成长期规则 / 长期禁令——进规则库、进长期账本,或写进后续所有人必须遵守的约束。
+- **怎么判定**:新增规则 / 禁令是否附**原话摘录 + 级别 + 何时适用**三字段,以及反馈账本候选的事件依据;一次性需求入长期账本即为命中。边界:设计决策进 design-md `decisions` 账本(记「为什么是这样」),用户反馈规则进 [`feedback-ledger.md`](feedback-ledger.md)(记「谁要求了什么、何时生效」),两者不混。
+- **怎么修**:把该要求收回本次交付说明,或作为 scope 限于本变更的候选记录;确属长期规则的走 observed → proposed → accepted → published 状态机(附 evidence 路径),发布后重跑门禁失败则 rollback。来源:styleseed(#28),2026-10 吸收。
+
+### G38 · token 覆盖率不足
+- **违反什么**:DESIGN.md 里定义、但从未在任何交付视图中出现的 token(EVERY token must show up at least once);或缺少自证视图(token 全量展板 + 一张高密度产品屏),无法证明 token 落到真实产品 UI——「营销页好看、密集屏散架」是无门可拦的系统级失败,**app screen is the proof**。
+- **怎么判定**:渲染 token 全量展板 + 高密度产品屏,逐个 token 对账出现 ≥ 1 次;密度底线:Dashboard 4-8 指标块 + 1 图 + 1 表,List-detail 10+ 项。对应 [`../commands/design-md.md`](../commands/design-md.md) Phase 3 交付物。
+- **怎么修**:在视图里用上该 token,或回 design-md 删掉它——无人用的 token 就是装饰性 token,与 [`token-provenance.md`](token-provenance.md) §4 V2 联动。来源:hue(#34),2026-10 吸收。
 
 ---
 
@@ -216,4 +258,7 @@
 | 产品结构分类             | [`workbench-structures.md`](workbench-structures.md) | 定义期输入(结构判定),不替代任何视觉层规范 |
 | 优先级裁决 / CRITICAL    | [`rules-priority.md`](rules-priority.md)             | 一票否决沿用其规则 1 与从属声明            |
 | token 溯源判据           | [`token-provenance.md`](token-provenance.md)         | A 组引用其 V1–V3                           |
-| 评审 / 证据 / disposition | [`../commands/preview.md`](../commands/preview.md)   | F 组引用其证据四分类与评审隔离             |
+| 评审 / 证据 / disposition | [`../commands/preview.md`](../commands/preview.md)   | F 组引用其证据四分类、哈希条款与评审隔离   |
+| 反馈→规则账本            | [`feedback-ledger.md`](feedback-ledger.md)           | G37 判定其状态机与五字段                   |
+| 数据可视化诚实性         | [`../vocabulary/charts.md`](../vocabulary/charts.md) | 清单 5.14 数据型页面判据引用其「诚实性与极值」节 |
+| 退出码三态 / 未测量      | [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md) | §0 第 6 条引用其 0/1/2 语义        |

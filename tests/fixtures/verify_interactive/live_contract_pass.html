@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+  verify-interactive fixture:三信号全绿(对照)。
+  aria-pressed 真的翻转 + 外观同步变化(背景填充),契约兑现。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>verify-interactive fixture: 活契约</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }
+  .favorite { background: #FFFFFF; color: #1A1A1A; border: 1px solid #1A1A1A; padding: 8px 16px; }
+  .favorite[aria-pressed="true"] { background: #1A1A1A; color: #FFFFFF; }
+</style>
+</head>
+<body>
+  <main id="main">
+    <button class="favorite" type="button" aria-pressed="false">收藏</button>
+  </main>
+  <script>
+    const btn = document.querySelector('.favorite');
+    btn.addEventListener('click', () => {
+      btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    });
+  </script>
+</body>
+</html>

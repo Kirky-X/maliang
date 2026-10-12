@@ -10,8 +10,8 @@
 ---
 name: <kebab-case-id>          # 全库唯一
 title: 中文名
-category: design-language      # design-language | page-pattern | landing-pattern | character-direction
-status: production             # production(生产级) | style(风格级) | experimental(实验级)
+category: design-language      # design-language | page-pattern | landing-pattern | character-direction | donor
+status: production             # production(生产级) | style(风格级) | experimental(实验级) | unverified(未验证/待复核)
 source: <官方来源/出处项目>      # 必须可溯源；禁止"网上看到的"
 era: <年份/版本>
 verified: <YYYY-MM-DD>         # 最后人工核验日期；超 365 天须复核或降级
@@ -32,6 +32,7 @@ platforms: <适用平台>
 | `page-pattern` | 整页级模式（编辑分栏型、纵深长廊型、Dashboard 原型…），源自视频研究与实战案例 | 同上 |
 | `landing-pattern` | 落地页章节编排 + CTA 策略（[landing-patterns.md](landing-patterns.md)） | — |
 | `character-direction` | 性格方向卡（精密密度 / 温暖亲和…，与 product-reasoning 产品类型正交的第二轴） | — |
+| `donor` | 品牌供体值库（Linear / Vercel / Stripe / Raycast…「偷值不偷感觉」，见 [donors/README.md](../donors/README.md)） | 见 donors/ |
 
 ## 3. 选型路由（四步，进入 design-md 方向阶段时执行）
 
@@ -43,9 +44,11 @@ platforms: <适用平台>
 ## 4. 治理规则
 
 - **来源可溯**：无 `source` 的条目不得入库；数值参数必须有出处（官方文档 / 案例实测 / 视频研究转写）。
-- **状态语义**：`production` 可直接上生产；`style` 须先匹配品牌气质、勿与系统级语言混搭；`experimental` 上生产前必须过可访问性审查（WCAG AA）。
+- **状态语义**：`production` 可直接上生产；`style` 须先匹配品牌气质、勿与系统级语言混搭；`experimental` 上生产前必须过可访问性审查（WCAG AA）；`unverified`（未验证 / 待复核）是**正式状态**——条目可以入库但未达 production，使用时必须在产物中标注该状态，不得静默当 production 用。
+- **晋升规则（升 `production` 前必须全部满足）**：① **≥2 个独立参照集**（两个互不相关的来源都指向同一套值，不是同一来源的复述）；② **明确反例**（写清这套值在什么页面 / 什么内容下不适用）；③ **≥2 类页面渲染样本**（至少在两类不同页面类型上渲染验证过，如营销页 + 工作台）；④ **回归检查**（升级后重跑既有检查，确认未把已批准的项目值改回默认）。四条件缺一不得升 production；未达标的一律标 `unverified` 或 `experimental`。
+- **证据时效**：「历史证据不得当作新主张」——旧日期的验证记录只证明当时的状态，改过值 / 换过来源 / 超过 365 天的，须重新核验并把 `verified` 更新到新日期，不得沿用旧证据支撑新主张。
 - **废弃重定向**：过时条目不删除，frontmatter 加 `replaced-by: <id>`，正文首行标注"已废弃，见 xxx"（防断链、防模型"以防万一"复用旧模板）。
-- **新增门禁**：新条目必须字段齐全 + 反模式节非空 + 与既有条目查重（避免同质条目膨胀）。
+- **新增门禁**：新条目必须字段齐全 + 反模式节非空 + 与既有条目查重（避免同质条目膨胀）；入库时即标真实状态，未验证的不得先标 production 再补证。
 - **覆盖关系**：模板值是"默认建议"，项目 DESIGN.md 的 token 可覆盖；冲突时以 DESIGN.md 为准（SOT 唯一）。
 
 ## 5. 与 ai-tells 的联动

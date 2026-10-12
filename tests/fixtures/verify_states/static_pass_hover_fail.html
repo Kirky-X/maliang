@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+  verify-states fixture:静态通过、悬停失败(核心坏 fixture)。
+  default 态 #1A1A1A on #FFFFFF ≈ 17.4:1 通过;hover 态文字被抽成
+  #D8D8D8 on #FFFFFF ≈ 1.43:1 —— 纯静态扫描(只看默认态)会放过它,
+  真浏览器状态态门禁必须拒绝。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>verify-states fixture: 静态通过、hover 失败</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }
+  .submit { background: #FFFFFF; color: #1A1A1A; border: 1px solid #1A1A1A; padding: 8px 16px; }
+  .submit:hover { color: #D8D8D8; }
+</style>
+</head>
+<body>
+  <main id="main">
+    <button class="submit" type="button">提交订单</button>
+  </main>
+</body>
+</html>

@@ -5,10 +5,11 @@
     python3 scripts/preview-check.py <html_file_or_dir> [--format {text,json}]
 
 输入: 单个 HTML 预览文件,或含 HTML 文件的目录。
-退出码: 0 = 全部通过; 1 = 有 error; 2 = 仅有 warning。
+退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
+        仅 warning 为提示,不拦截(退出码 0);无 HTML 文件属「没能检查」(退出码 2)。
 依赖: Python 3 标准库(无第三方依赖)。
 
-覆盖 preview-checklist.md 中可脚本化的检查项(实测 49/135 项),
+覆盖 preview-checklist.md 中可脚本化的检查项(实测 51/140 项),
 其余需浏览器/视觉验证的项标记为 MANUAL。
 
 检查分组(对应 preview-checklist.md §5.1-§5.13;§5.0 为运行时过程区,
@@ -22,6 +23,8 @@
   5.5  交互可达       — alt / aria-label / skip-link / tabindex / label / focus ring
   5.6  Token 完整性   — {token} 残留 / 硬编码颜色字号间距 / z-index / kebab-case
                         (:root 内的 CSS 变量定义是 token 解析锚点,豁免硬编码检查)
+                        + CSS 静默失败:孤儿类选择器 / 未定义 var()(#30,来源 hue
+                        validate.mjs 的 css-orphans 与 css-vars 两条检查,2026-10 吸收)
   5.7  交互状态       — hover/active/focus/disabled/tactile 存在性(静态代理,框架
                         CDN 提供的样式降级为 warning;outline:none 无替代为 error)
   5.8  LLM 截断信号   — // .../TODO / 空泛词 / placeholder 占比
@@ -173,6 +176,41 @@ FOCUS_ALT_RE = re.compile(
 FOCUS_RING_OVERRIDE_RE = re.compile(
     r":focus(?:-visible)?[^{]*\{[^}]*box-shadow", re.IGNORECASE
 )
+
+# --- 5.6 CSS 静默失败(孤儿类选择器 / 未定义 var()) ---
+# 来源:hue scripts/validate.mjs::collectUsedClasses / extractClassSelectors /
+# checkCssVars(css-orphans 与 css-vars 两条检查),2026-10 吸收。
+CLASS_ATTR_RE = re.compile(
+    r"""class\s*=\s*(?:"([^"]*)"|'([^']*)'|\\"([^"\\]*)\\")""", re.IGNORECASE
+)
+STRING_LITERAL_RE = re.compile(r"""(['"`])((?:\\.|(?!\1)[^\\])*)\1""", re.DOTALL)
+CLASS_TOKEN_RE = re.compile(r"^[A-Za-z][\w-]*$")
+SCRIPT_BLOCK_RE = re.compile(r"<script\b[^>]*>(.*?)</script>", re.DOTALL | re.IGNORECASE)
+CSS_AT_BLOCK_RE = re.compile(r"@(?:-webkit-|-moz-|-o-)?(?:keyframes|font-face)\b")
+CSS_CLASS_IN_SELECTOR_RE = re.compile(r"\.([A-Za-z0-9_-]+)")
+CSS_VAR_DEF_RE = re.compile(r"(--[A-Za-z0-9_-]+)\s*:")
+CSS_VAR_SETPROPERTY_RE = re.compile(r"""setProperty\(\s*['"`](--[A-Za-z0-9_-]+)""")
+CSS_VAR_USE_ANY_RE = re.compile(r"var\(\s*(--[A-Za-z0-9_-]+)")
+
+# 框架 CDN 运行时生成的类 / 变量前缀:检测到对应框架时,这些名字静态不可见,不参与比对
+FRAMEWORK_PREFIXES = (
+    ("el-", ("element-plus", "elementplus")),
+    ("ant-", ("ant-design", "antd", "ant.design")),
+    ("van-", ("vant",)),
+    ("arco-", ("arco-design", "arco.design", "arco-design")),
+    ("n-", ("naive-ui", "naiveui")),
+)
+
+
+def _detected_framework_prefixes(text):
+    """返回当前文件加载的框架 CDN 对应的类/变量前缀集合。"""
+    lower = text.lower()
+    return {
+        prefix
+        for prefix, markers in FRAMEWORK_PREFIXES
+        if any(marker in lower for marker in markers)
+    }
+
 
 # --- HTML 解析辅助 ---
 ALT_ATTR_RE = re.compile(r"""<img\b[^>]*\balt\s*=\s*["']""", re.IGNORECASE)
@@ -740,6 +778,146 @@ def check_5_6_tokens(text, fname):
     return results
 
 
+# --- 5.6 CSS 静默失败:孤儿类选择器 / 未定义 var()(#30) ---
+
+def _remove_css_at_blocks(css):
+    """剔除 @keyframes / @font-face 块(含配对花括号),避免其内容被当成选择器。"""
+    while True:
+        m = CSS_AT_BLOCK_RE.search(css)
+        if not m:
+            return css
+        open_brace = css.find("{", m.start())
+        if open_brace == -1:
+            return css[: m.start()]
+        depth, i = 1, open_brace + 1
+        while i < len(css) and depth:
+            if css[i] == "{":
+                depth += 1
+            elif css[i] == "}":
+                depth -= 1
+            i += 1
+        css = css[: m.start()] + css[i:]
+
+
+def _iter_css_selectors(css):
+    """遍历样式表中的选择器,产出 (选择器原文, 在 css 中的起始下标)。
+
+    调用方需先剥离注释与 @keyframes/@font-face;@media/@supports 外层前导
+    跳过,其内部规则照常产出。
+    """
+    for m in re.finditer(r"([^{}]+)\{", css):
+        selector = m.group(1).strip()
+        if not selector or selector.startswith("@"):
+            continue
+        for part in selector.split(","):
+            part = part.strip()
+            if not part or part.startswith("@") or part in ("from", "to"):
+                continue
+            if re.search(r"%\s*$", part):
+                continue
+            yield part, m.start()
+
+
+def collect_used_classes(text):
+    """收集全文档出现过的类名(宁宽勿窄,只用于孤儿比对)。
+
+    覆盖三类写法:class="..." 属性(含 Vue :class / v-bind:class 绑定)、
+    绑定值里的字符串字面量(如 :class="{ 'is-selected': ok }")、
+    <script> 块里的全部字符串字面量(classList.add('x') / className = 'a b')。
+    """
+    used = set()
+
+    def _add_tokens(value):
+        for token in value.split():
+            if CLASS_TOKEN_RE.match(token):
+                used.add(token)
+
+    for m in CLASS_ATTR_RE.finditer(text):
+        value = m.group(1) or m.group(2) or m.group(3) or ""
+        _add_tokens(value)
+        for lit in STRING_LITERAL_RE.finditer(value):
+            _add_tokens(lit.group(2))
+
+    for block in SCRIPT_BLOCK_RE.findall(text):
+        for lit in STRING_LITERAL_RE.finditer(block):
+            _add_tokens(lit.group(2))
+
+    return used
+
+
+def check_5_6_css_orphans(text, fname):
+    """5.6 CSS 静默失败之一:孤儿类选择器(样式表定义、页面没有任何元素用到)。
+
+    静态比对:类选择器(剥离属性选择器与伪类/伪元素后取 .class)vs 全文档类
+    使用面。框架 CDN 在运行时生成的类(检测到 Element Plus 时的 el-* 等)
+    静态不可见,不参与比对。后果量级:一个 1320px max-width 容器因类名写错
+    静默退化为 721px,纯静态门(对比度/axe)看不出来。
+    来源:hue scripts/validate.mjs::checkCssOrphans,2026-10 吸收。
+    """
+    results = []
+    used = collect_used_classes(text)
+    framework_prefixes = _detected_framework_prefixes(text)
+    reported = set()
+
+    for raw_block in STYLE_BLOCK_RE.findall(text):
+        block_start = text.find(raw_block)
+        css = _remove_css_at_blocks(CSS_COMMENT_RE.sub("", raw_block))
+        for selector, idx in _iter_css_selectors(css):
+            cleaned = re.sub(r"\[[^\]]*\]", "", selector)              # 属性选择器
+            cleaned = re.sub(r"::?[a-zA-Z-]+(\([^)]*\))?", "", cleaned)  # 伪类/伪元素
+            for cm in CSS_CLASS_IN_SELECTOR_RE.finditer(cleaned):
+                cls = cm.group(1)
+                if cls in used or cls in reported:
+                    continue
+                if any(cls.startswith(p) for p in framework_prefixes):
+                    continue
+                reported.add(cls)
+                line_no = text[:block_start].count("\n") + css[:idx].count("\n") + 1
+                results.append(_r(
+                    "ERROR", line_no, "css.orphan-class",
+                    '类选择器 "{}" 定义了但页面无元素使用(.{};checklist §5.6)'
+                    .format(selector.strip()[:48], cls),
+                ))
+    return results
+
+
+def check_5_6_css_vars(text, fname):
+    """5.6 CSS 静默失败之二:var(--x) 使用但本文件从未定义。
+
+    定义面:CSS 声明 `--x:`、内联 style、JS setProperty("--x")。
+    框架 CDN 自带主题变量(el-* 等,由外部样式表在运行时提供)降级 WARN 并
+    注明,不误报 ERROR。来源:hue scripts/validate.mjs::checkCssVars,2026-10 吸收。
+    """
+    results = []
+    defined = set(CSS_VAR_DEF_RE.findall(text))
+    defined.update(CSS_VAR_SETPROPERTY_RE.findall(text))
+    framework_prefixes = _detected_framework_prefixes(text)
+
+    missing = {}
+    for m in CSS_VAR_USE_ANY_RE.finditer(text):
+        name = m.group(1)
+        if name not in defined:
+            missing.setdefault(name, []).append(m.start())
+
+    for name, offsets in sorted(missing.items()):
+        line_no = text[: offsets[0]].count("\n") + 1
+        bare = name[2:]  # 去掉 -- 前缀再比框架前缀
+        if any(bare.startswith(p) for p in framework_prefixes):
+            results.append(_r(
+                "WARN", line_no, "css.undefined-var",
+                "var({}) 使用 {} 次,本文件未定义(疑似框架 CDN 主题变量,"
+                "静态不可确认;checklist §5.6)".format(name, len(offsets)),
+            ))
+        else:
+            results.append(_r(
+                "ERROR", line_no, "css.undefined-var",
+                "var({}) 使用 {} 次但本文件从未定义(--{} 在任何 :root/"
+                "setProperty 中都找不到;checklist §5.6)".format(
+                    name, len(offsets), name[2:]),
+            ))
+    return results
+
+
 # --- 5.7 完整交互状态(静态代理) ---
 
 def check_5_7_states(text, parser, fname):
@@ -1016,6 +1194,8 @@ def run_all_checks(text, fname):
 
     results.extend(check_5_4_user_prefs(text, fname))
     results.extend(check_5_6_tokens(text, fname))
+    results.extend(check_5_6_css_orphans(text, fname))
+    results.extend(check_5_6_css_vars(text, fname))
     results.extend(check_5_8_llm_truncation(text, fname))
     results.extend(check_5_9_animation(text, fname))
     results.extend(check_5_10_typography(text, fname))
@@ -1046,13 +1226,13 @@ def main(argv):
         print("")
 
     if not files:
-        msg = "未找到 HTML 文件: " + target
+        msg = "未找到 HTML 文件(没能检查,非通过): " + target
         if fmt == "json":
             print("[]")
             print("[ERROR] " + msg, file=sys.stderr)
         else:
             print("[ERROR] " + msg)
-        return 1
+        return 2
 
     all_results = []
     for fpath in files:
@@ -1087,16 +1267,16 @@ def main(argv):
         print("")
         print("=" * 40)
         print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
-        print("覆盖: 49/135 项(实测可脚本化);其余 86 项需浏览器/视觉/运行时验证(MANUAL,见 checklist §5.0 与 §5.14-§5.16 及各分区运行时项)")
+        print("覆盖: 51/140 项(实测可脚本化);其余 89 项需浏览器/视觉/运行时验证(MANUAL,见 checklist §5.0 与 §5.14-§5.16 及各分区运行时项)")
+        if warn_count and not error_count:
+            print("仅 warning:按 scripts/EXIT-CODES.md 不拦截(#16)")
 
+    # 退出码(见 scripts/EXIT-CODES.md):0=看了没问题(允许 warning 提示);
+    # 1=有 error;2=没能检查(在文件收集处返回)
     if error_count > 0:
         if fmt == "text":
             print("退出码: 1")
         return 1
-    if warn_count > 0:
-        if fmt == "text":
-            print("退出码: 2")
-        return 2
     if fmt == "text":
         print("退出码: 0")
     return 0

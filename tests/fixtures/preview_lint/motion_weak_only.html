@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--
+  preview-lint.js 动效探针 fixture:唯一动画是 1px 微幅位移。
+  期望:load 相位 summary 有 elements,但 weak(p) 为真 →
+  issues 输出「动画幅度太小,看不出来（最大位移 1px…）」。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>motion weak fixture</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }
+  @keyframes nudge { from { transform: translateY(1px); } to { transform: translateY(0); } }
+  .nudge { animation: nudge 400ms ease-out both; }
+</style>
+</head>
+<body>
+  <main id="main">
+    <p class="nudge">几乎不动的元素</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+  preview-lint.js 探针 fixture:14 类可量测问题各摆一个最小样例。
+  用法:注入 preview-lint.js(先于页面脚本)后调用 __maliangLint(),
+  期望至少命中 12 类(emojiIcon 需要 ≥2 处;englishLabel 需要中文页面)。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>preview-lint probe</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; margin: 8px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
+  .numbered { font-size: 12px; }
+  .stripe { border-left: 4px solid #E5484D; padding-left: 8px; }
+  .grad { background: linear-gradient(90deg, #7C3AED, #DB2777); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 28px; }
+  .outer { border: 1px solid #DDDDDD; border-radius: 12px; padding: 16px; }
+  .inner { border: 1px solid #CCCCCC; border-radius: 8px; padding: 24px; }
+  .lowcontrast { color: #B0B0B0; }
+  .small { font-size: 11px; width: 220px; line-height: 1.2; }
+  .long { font-size: 14px; line-height: 1.6; width: 760px; }
+  .tinted { background: #1E3A8A; padding: 24px; }
+  .tinted p { color: #BEBEBE; margin: 0; }
+  .gapped { margin: 2px 0; }
+  .far-below { margin-top: 48px; }
+</style>
+</head>
+<body>
+  <div style="opacity:0"><p>首屏即将入场但停在透明状态的内容块</p></div>
+
+  <span class="eyebrow">OUR PROCESS</span>
+  <h2>工作流程</h2>
+
+  <span class="numbered">02 / 方法</span>
+  <h2>第二步</h2>
+
+  <p class="stripe">彩色单侧边线的段落,说明性文字。</p>
+  <div class="grad">渐变文字标题</div>
+
+  <div class="outer"><div class="inner">卡片里套卡片,内层也有边框和圆角。</div></div>
+
+  <div>😀</div><div>🎉</div><div>😀 3</div>
+
+  <p>DASHBOARD ANALYTICS</p><p>REPORT SUMMARY</p>
+
+  <p class="lowcontrast">低对比度正文,应当报告出来</p>
+
+  <div class="tinted"><p>有色底上的灰字,应当报告出来</p></div>
+
+  <p class="small">这段正文只有十一像素,而且行高过紧,需要写成两行以上才会被 smallText 与 tightLeading 同时检查到位,继续填充文字。</p>
+
+  <p>上一段内容。</p>
+  <h3 class="gapped">标题离上文太近的标题</h3>
+  <p class="far-below">下文内容。</p>
+
+  <p class="long">这是一段超长行宽的正文,用于触发正文行太长的检查;继续填充更多的中文文字让宽度被明显超出常规阅读栏宽,从而可被 longMeasure 命中,这里再补充足够多的字保证它是多行文本而不是一行,继续写下去直到三行以上。</p>
+</body>
+</html>

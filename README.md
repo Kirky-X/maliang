@@ -23,10 +23,10 @@
 | `ui-graph` | 交付 | UI 关系图（层级 + 跳转 + 哈希基线 + 实现映射），变更追踪与实现缺口查询 |
 | `ip` / `ip-handbook` | 交付 | IP 形象生成（API 优先，fallback prompt）/ IP 视觉手册（8 模块，2K 3:4） |
 
-- **设计资产库**：12 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 24 篇组件命名词汇 + 八维规范（色/字/图/距/角/线/布局/海拔）
+- **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 24 篇组件命名词汇 + 八维规范（色/字/图/距/角/线/布局/海拔）
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **已并入资产**：原 interface-design skill 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（sha e3d624b，2026-09-12），critique 的 UI 合规/a11y 清单读取该快照
-- **脚本验证层**：`validate-draw-md.py`（15 项检查）、`preview-check.py`（49/135 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（7 子命令）、`ci-gate.sh` 统一入口——纯 Python 标准库
+- **脚本验证层**：`validate-draw-md.py`（15 项检查）、`preview-check.py`（51/140 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（7 子命令）、`ci-gate.sh` 统一入口——纯 Python 标准库
 - **辅助脚本**：`install-skill.sh`（安装器，见下文安装）、`design_md_to_token_md.py`（DESIGN.md → 产物层 token.md 自动生成）、`skill_lint.py`（仓库级 SKILL.md 工程体检）
 
 ## 📦 安装
@@ -84,12 +84,12 @@ $ python3 -m pytest tests -q
 ........................................................................  [ 43%]
 ........................................................................  [ 86%]
 ......................                                                   [100%]
-166 passed in 0.11s
+327 passed in 0.11s
 ```
 
-8 个测试文件：`test_maliang_common` / `test_preview_check` / `test_ui_graph` / `test_validate_draw_md` / `test_detect_tells` / `test_dark_palette_derive` / `test_design_md_frontmatter` / `test_doc_consistency`（另有 `_load.py` 公共夹具）。
+测试文件清单以 [`tests/`](tests) 单一来源为准（计数一致性由 `test_doc_consistency` 断言守护）；本批新增验证层脚本各有对应测试与 fixtures。
 
-CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework △ 仅 warning、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 49/135 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
+CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework △ 仅 warning、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 51/140 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
 
 ## 📁 目录结构
 
@@ -104,13 +104,28 @@ maliang/
 │   ├── interface-design/    # 原 interface-design skill 并入（craft 纪律 / 严格评审）
 │   ├── dimensions/          # 八维规范 + 调色板库 + 液态玻璃配方
 │   ├── framework/           # 56 类组件 × 三框架文档（harmony / flutter / element）
-│   ├── templates/           # 模板墙：12 种设计语言 + 整页模式 + 落地页编排
+│   ├── templates/           # 模板墙：14 种设计语言 + 整页模式 + 落地页编排
 │   ├── vocabulary/          # 24 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息）
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
-├── scripts/                 # ui-graph / validate-draw-md / preview-check / validate-framework / ci-gate / install-skill / skill_lint / design_md_to_token_md / detect-tells / dark-palette-derive / device_models / maliang_common / devices/
+├── scripts/                 # 验证层：preview-check / preview-lint.js / verify-states / verify-interactive / validate-design-md / validate-generated / extract-tokens / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate（退出码 canonical 见 scripts/EXIT-CODES.md）；基础层：ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / design_md_to_token_md / dark-palette-derive / device_models / maliang_common / devices/
 ├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
-└── tests/                   # pytest 套件（166 用例，8 文件）
+└── tests/                   # pytest 套件（327 用例，22 文件）
 ```
+
+## 🧭 维护归属
+
+每条规则只有一个 canonical 文档（来源：draw-ui 维护方式，2026-10 吸收）；复述位置由 `scripts/check-claims.py` 与 `skill_lint.py` 的 count-matches 规则对账，禁止手改分叉：
+
+| 规则 / 机制 | canonical 文档 |
+| --- | --- |
+| 设计语言计数（模板墙） | `references/templates/INDEX.md` |
+| 编号门禁 G01–G38 | `references/meta/numbered-gates.md` |
+| 140 项 Pre-Flight 清单与计数 | `references/commands/preview-checklist.md`（脚本侧计数由 `tests/test_doc_consistency.py` 断言守护） |
+| 退出码三态语义 | `scripts/EXIT-CODES.md` |
+| token 溯源与决策 id | `references/meta/token-provenance.md` |
+| 品牌供体值库 | `references/donors/README.md` |
+| 用户反馈账本 | `references/meta/feedback-ledger.md` |
+| 取证 / 验证流程 | `references/commands/preview.md` + `preview-checklist.md` |
 
 ## 🔮 边界
 

@@ -9,12 +9,18 @@
 扫描,留给 ai-tells.md 的人工对照流程——确定性判断用代码,品味判断留给人与
 LLM 评审。
 
-检测规则(与 ai-tells.md 对应):
+检测规则(与 ai-tells.md 对应,均进「硬命中」通道 → 退出码 1):
   gradient-text    渐变文字(bg-clip-text / background-clip:text)          → ai-tells §1
   glow-shadow      辉光阴影(0 偏移大模糊的 box/text-shadow、drop-shadow)   → ai-tells §1
   uniform-radius   全场同圆角(单文件 ≥4 处同一非平凡圆角)                 → ai-tells §1
   tracking-abuse   tracking 滥用(单文件 ≥3 行 tracking-tight*,或 ≥4 行负 letter-spacing) → ai-tells §2
   colored-border   彩边框卡片(饱和色边框;Tailwind 只判 300-700 档)         → ai-tells §1
+
+告警档(advisory,只报不拦,不影响退出码;同样支持 tell-exempt 豁免):
+  reflex-font      display 首位字族命中 ai-tells §11 反射字体清单。命中不自动
+                   违规(仍走 §0 豁免总则),故进告警档而非硬失败通道;命中后
+                   要么换字族,要么写出「没有其他字体能满足」的理由并标豁免。
+                   来源:hue scripts/validate.mjs checkFonts(BANNED_DISPLAY_FONTS),2026-10 吸收。
 
 豁免:复用 ai-tells.md 第 0 节机制——三豁免(DESIGN.md 批准 / 世界类型自洽 /
 内容真有动机)的语义判断由人完成,脚本只认**显式记录**的 tell-exempt 标注:
@@ -26,7 +32,8 @@ LLM 评审。
 (或标记内单独写 `file`)→ 该规则全文件豁免;`all` 代指全部规则。
 误报治理走最窄原则:具体行 > 单文件单规则 > 全项目,能不用 file 豁免就不用。
 
-退出码: 0 = 无非豁免命中; 1 = 有非豁免命中; 2 = 用法 / 输入错误。
+退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
+        告警档(reflex-font)命中不改变退出码。
 依赖: Python 3 标准库(无第三方依赖)。
 来源: impeccable hooks 两层规则与豁免窄化思想,2026-09 吸收(中文自研实现)。
 """
@@ -51,6 +58,7 @@ RULE_GLOW_SHADOW = "glow-shadow"
 RULE_UNIFORM_RADIUS = "uniform-radius"
 RULE_TRACKING_ABUSE = "tracking-abuse"
 RULE_COLORED_BORDER = "colored-border"
+RULE_REFLEX_FONT = "reflex-font"
 
 # 阈值(确定性口径,写死不猜)
 GLOW_BOX_BLUR_MIN = 16      # box-shadow / drop-shadow 0 偏移模糊 ≥16px 判辉光
@@ -308,6 +316,123 @@ _CHECKS = (
 )
 
 
+# ---------------------------------------------------------------------------
+# 告警档:reflex-font(display 首位字族命中 ai-tells §11 反射字体清单)
+#
+# 不进硬失败通道的理由:ai-tells.md §11 明说「命中不自动违规(仍走第 0 节豁免
+# 总则)」,而 preview.md「命中非豁免 tell = 硬性失败」只约束硬通道;两条并存时
+# 反射字体只能进告警档(来源:hue scripts/validate.mjs checkFonts 的 WARN 口径)。
+# ---------------------------------------------------------------------------
+
+_STYLE_BLOCK_RE = re.compile(r"<style[^>]*>(.*?)</style>", re.DOTALL | re.IGNORECASE)
+_CSS_COMMENT_STRIP_RE = re.compile(r"/\*.*?\*/", re.DOTALL)
+_CSS_RULE_RE = re.compile(r"([^{}]+)\{([^{}]*)\}", re.DOTALL)
+_CSS_PROP_DEF_RE = re.compile(r"(--[\w-]+)\s*:\s*([^;}]+)")
+_VAR_REF_START_RE = re.compile(r"var\(\s*(--[\w-]+)")
+_FONT_FAMILY_DECL_RE = re.compile(r"font-family\s*:\s*([^;}\n]+)", re.IGNORECASE)
+_DISPLAY_SELECTOR_RE = re.compile(
+    r"(?:\bh[1-3]\b|display|hero|heading|headline|\btitle\b)", re.IGNORECASE
+)
+_DISPLAY_VAR_NAME_RE = re.compile(
+    r"--[\w-]*(?:display|heading|hero|headline|title)[\w-]*", re.IGNORECASE
+)
+
+# ai-tells.md §11 反射字体清单(逐字;小写). 前缀匹配允许 "Crimson Pro" /
+# "IBM Plex Sans" / "DM Serif Display" / "Inter Tight" 这类变体
+REFLEX_FONTS = (
+    "fraunces", "playfair display", "cormorant", "lora", "crimson", "newsreader",
+    "syne", "space grotesk", "space mono", "ibm plex", "inter", "dm sans",
+    "dm serif", "outfit", "plus jakarta sans", "instrument sans",
+)
+
+
+def _first_font_family(value, defs):
+    """取 font-family 值的首位字族(解析一层 var(--x) 间接),小写、去引号。"""
+    v = value.strip()
+    m = _VAR_REF_START_RE.match(v)
+    if m and m.group(1) in defs:
+        v = defs[m.group(1)].strip()
+    v = v.split(",")[0].strip().strip("\"'").strip()
+    return v.lower()
+
+
+def _is_reflex_family(family):
+    """首位字族是否命中反射字体清单(整名或 `名字 + 变体后缀`)。"""
+    return any(family == name or family.startswith(name + " ") for name in REFLEX_FONTS)
+
+
+def scan_reflex_fonts(text, rel_path):
+    """扫描 reflex-font 告警档,返回 warning dict 列表(不影响退出码)。
+
+    判定面(display 上下文两条):
+      a) 选择器含 h1-h3 / display / hero / heading / headline / title 的规则里
+         声明 font-family;
+      b) 名字含 display/heading/hero/headline/title 的自定义属性定义值
+         (如 --font-display: "Fraunces", serif)。
+    非 display 上下文(正文/UI 字族)不在本扫描范围;命中不自动违规,豁免沿用
+    tell-exempt 标注(行级/file/all,与硬命中同一套解析)。
+    """
+    lines = text.splitlines()
+    file_scope, line_scope = parse_exemptions(lines)
+
+    defs = {}
+    for m in _CSS_PROP_DEF_RE.finditer(text):
+        defs.setdefault(m.group(1), m.group(2).strip())
+
+    targets = [
+        (m.start(1), m.group(1)) for m in _STYLE_BLOCK_RE.finditer(text)
+    ]
+    if not targets:
+        targets = [(0, text)]  # .css / .js 文件:无 <style> 时整文件即样式面
+
+    warnings = []
+    seen = set()
+
+    def _emit(line_no, family, where):
+        if (line_no, family) in seen:
+            return
+        if is_exempt(RULE_REFLEX_FONT, line_no, file_scope, line_scope):
+            return
+        seen.add((line_no, family))
+        warnings.append({
+            "file": rel_path, "line": line_no, "rule": RULE_REFLEX_FONT,
+            "message": "display 首位字族 %s 命中反射字体清单(%s),见 ai-tells.md §11"
+                       "——换字族,或写出「没有其他字体能满足」的理由并标 tell-exempt"
+                       % (family, where),
+        })
+
+    for offset, block in targets:
+        css = _CSS_COMMENT_STRIP_RE.sub("", block)
+
+        for m in _CSS_PROP_DEF_RE.finditer(css):
+            if not _DISPLAY_VAR_NAME_RE.match(m.group(1)):
+                continue
+            family = _first_font_family(m.group(2), defs)
+            if not family or not _is_reflex_family(family):
+                continue
+            line_no = text[:offset].count("\n") + css[:m.start()].count("\n") + 1
+            _emit(line_no, family, "自定义属性 " + m.group(1))
+
+        for m in _CSS_RULE_RE.finditer(css):
+            selector = m.group(1).strip()
+            if not selector or selector.startswith("@"):
+                continue
+            if not _DISPLAY_SELECTOR_RE.search(selector):
+                continue
+            body = m.group(2)
+            for fm in _FONT_FAMILY_DECL_RE.finditer(body):
+                family = _first_font_family(fm.group(1), defs)
+                if not family or not _is_reflex_family(family):
+                    continue
+                line_no = (text[:offset].count("\n")
+                           + css[:m.start(2)].count("\n")
+                           + body[:fm.start()].count("\n") + 1)
+                _emit(line_no, family, "选择器 " + selector[:36])
+
+    warnings.sort(key=lambda w: (w["file"], w["line"], w["rule"]))
+    return warnings
+
+
 def scan_text(text, rel_path):
     """扫描单文件文本,返回 (findings, exempted_count)。"""
     lines = text.splitlines()
@@ -364,6 +489,7 @@ def main(argv=None):
         return 2
 
     findings = []
+    warnings = []
     exempted = 0
     unreadable = 0
     for path in files:
@@ -376,6 +502,7 @@ def main(argv=None):
             continue
         file_findings, file_exempted = scan_text(text, path)
         findings.extend(file_findings)
+        warnings.extend(scan_reflex_fonts(text, path))
         exempted += file_exempted
 
     if args.format == "json":
@@ -384,14 +511,19 @@ def main(argv=None):
             "unreadable": unreadable,
             "exempted": exempted,
             "findings": findings,
+            "warnings": warnings,
         }, ensure_ascii=False, indent=2))
     else:
         for finding in findings:
             print("%s:%d: [%s] %s" % (
                 finding["file"], finding["line"], finding["rule"], finding["message"],
             ))
-        print("扫描 %d 个文件,命中 %d 处 tell(豁免 %d 处,读取失败 %d 个)"
-              % (len(files) - unreadable, len(findings), exempted, unreadable))
+        for warning in warnings:
+            print("%s:%d: [%s·告警档] %s" % (
+                warning["file"], warning["line"], warning["rule"], warning["message"],
+            ))
+        print("扫描 %d 个文件,命中 %d 处 tell(豁免 %d 处,读取失败 %d 个);告警档 %d 处(不拦截)"
+              % (len(files) - unreadable, len(findings), exempted, unreadable, len(warnings)))
 
     return 1 if findings else 0
 

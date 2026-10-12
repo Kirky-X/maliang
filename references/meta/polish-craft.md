@@ -149,6 +149,25 @@ CSS 自定义属性默认是「不透明字符串」，**无法插值**——直
 - 注意 `::first-line` 仅支持有限的字体内属性子集（颜色/字重/字距/变形等），不支持盒模型属性
 - `backdrop-filter` 的性能降级方案见 [`../dimensions/glass-effect.md`](../dimensions/glass-effect.md)
 
+## 八、静默失败清单(改完先查,别靠眼睛;仅 Web CSS)
+
+> 来源:hue(#30),2026-10 吸收。CSS 的多数失败**不报错**:选择器不匹配 = 元素静默退回默认样式,`var()` 打错 = 整条声明静默失效。改完一批样式后先过这几条机械检查,再看视觉。
+
+1. **类选择器必须命中**——样式表里每个 class 选择器,markup 里必须有对应 class(`classList.add` 与模板字符串里的类名也算使用)。CSS 写了 `.hero h1` 而 HTML 只有 `.lp-hero` 时,h1 静默退回浏览器默认样式;机械检查由 [`../../scripts/preview-check.py`](../../scripts/preview-check.py) 以 ERROR 报告(对应清单 5.6)。
+2. **`var()` 必须有同文件定义**——`var(--x)` 引用 N 次而从未定义(定义含 `setProperty(` 写入)即为 ERROR;拼错一个字符,整条声明静默失效(对应清单 5.6)。
+3. **flex 父级会压缩内部容器**——`display: flex; align-items: center` 的 hero 会把内部 `.container` 压到内在内容宽度:1320px max-width 容器会**静默变成 721px**。给内部容器 `width: 100%`,或让 hero 用 `display: block` + margin 居中。
+4. **打开页面看 computed style,不能只读源码**——h1 的 computed `font-family` / `font-size` 是 `Inter 32px` 而设计是 `Cormorant Garamond 96px` 时,是 display 字体规则没匹配:修选择器,不要带着 bug 交付;亮 / 暗两模式都要看。
+
+**静态清单**(反复出现的静默形态,写码时直接避免):
+
+| 形态 | 规则 | 静默后果 |
+| --- | --- | --- |
+| 按钮基础类 | `background: transparent; border: none` | 不写则浏览器默认按钮外观盖住自绘样式 |
+| `accent-subtle` 弱底色 token | 禁用作 hover 底,hover 底用独立 token | 会被误读为「已选中」 |
+| 绝对定位图标 | `top: 50%; transform: translateY(-50%)` 成对写 | 缺 `transform` 时图标下沉半个身位 |
+| 勾选标记 | 禁 Unicode 字符(✓ / ✔),用 SVG / 伪元素画 | 字形随字体漂移、大小不受控 |
+| SVG 描边端点 | `stroke-linecap: round`(进度环 / 条 / 虚线) | 默认 butt 端点在圆角容器里显脏 |
+
 ## 与其他文档的关系
 
 - [`../dimensions/elevation.md`](../dimensions/elevation.md)：海拔阶梯/表面规则/rgba 边框阶梯/弹层投影通用配方是「体系层」，本文六层按钮阴影是「单件微雕层」，两者叠加使用

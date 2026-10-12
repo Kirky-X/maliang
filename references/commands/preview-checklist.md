@@ -7,8 +7,10 @@
 >
 > **本清单不豁免编号门禁**:本清单是「全量机械检查」(该项过没过),[`../meta/numbered-gates.md`](../meta/numbered-gates.md) 是「否决门」(这种形态不许交)。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。门禁在本清单全过之后、第 6 节 Pre-Delivery Checklist 之前逐条过,执行纪律见 [`preview.md`](./preview.md) 第 5 节「编号门禁」。
 >
-> **脚本覆盖**:49/135 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
-> 其余 86 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
+> **脚本覆盖**:51/140 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
+> 其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
+> 可由页面内探针([`scripts/preview-lint.js`](../../scripts/preview-lint.js),注入预览临时副本、只读取证)
+> 实测取回的条目标 **[运行时·探针]**(按 [`preview.md`](./preview.md)「运行时实测探针」节三档处置判定);
 > 未标记项按分区语义与 5.13 的 MANUAL/脚本能力归属判断。
 > 静态扫描通过是底线而非达标证明 —— 运行时项必须在 preview 第 4 节浏览器验证中逐项确认,
 > 且每项结论按 preview.md「证据四分类」标注证据来源,禁止从单一分数声称合规。
@@ -60,8 +62,8 @@
 > 脚本化:`preview-check.py` 静态解析 `<style>` 内 color × background 组合(正文/大文本/placeholder/disabled/暗色 media 内规则);渐变、透明、CDN 框架默认色无法静态解析,不猜测。
 > 对比度计算规则:正文 ≥ 4.5:1;大文本(≥ 24px,或 ≥ 18.66px 且 weight ≥ 700)≥ 3:1;disabled ≥ 3:1。
 
-- [ ] 所有正文文字对比度 ≥ 4.5:1 <sub>[脚本 contrast.low]</sub>
-- [ ] 所有大文本对比度 ≥ 3:1 <sub>[脚本 contrast.low]</sub>
+- [ ] 所有正文文字对比度 ≥ 4.5:1 <sub>[脚本 contrast.low;渐变/透明等静态不可判组合由 [运行时·探针] 复核]</sub>
+- [ ] 所有大文本对比度 ≥ 3:1 <sub>[脚本 contrast.low;渐变/透明等静态不可判组合由 [运行时·探针] 复核]</sub>
 - [ ] UI 组件(border / 图标)对比度 ≥ 3:1 <sub>[运行时:渲染后测量]</sub>
 - [ ] `placeholder` 文字对比度 ≥ 4.5:1 <sub>[脚本 contrast.low]</sub>
 - [ ] 暗色模式下对比度仍达标 <sub>[脚本:仅覆盖 @media 内重声明规则;继承组合需运行时确认]</sub>
@@ -87,7 +89,10 @@
 - [ ] 页首含 "Skip to main content" 跳转链接
 - [ ] DOM 顺序 = 视觉顺序(无正整数 `tabindex`)
 
-## 5.6 · Token 完整性(10 项,见 [`token.md`](../meta/token.md))
+## 5.6 · Token 完整性(12 项,见 [`token.md`](../meta/token.md))
+
+> 末两条新检查的静默失败机理(规则不匹配 = 元素退回默认样式 / 拼错即整条失效)与静态清单见 [`../meta/polish-craft.md`](../meta/polish-craft.md) 第八节「静默失败清单」。
+
 - [ ] CSS 变量全部从 `:root` 读取,无 `{token-name}` 残留
 - [ ] 无硬编码颜色(`#RRGGBB` 字面量在样式内联中)
 - [ ] 无硬编码字号(`14px` / `16px` 等具体值,文档说明除外)
@@ -98,6 +103,8 @@
 - [ ] 组件引用 `{path.to.token}` 而非重复字面值
 - [ ] Typography 复合对象字段完整(fontFamily/size/weight/lineHeight)
 - [ ] 命名全部 kebab-case,无 camelCase / snake_case 混用
+- [ ] 无孤儿类选择器:样式表里的每个 class 选择器在 markup 有对应 class(含 `classList.add` / 模板字符串里的类名)——规则不匹配 = 元素静默退回默认样式 <sub>[脚本:孤儿类选择器]</sub>
+- [ ] 无未定义 var():`var(--x)` 引用的变量在同文件有定义(定义含 `setProperty(` 写入);拼错一个字符 = 整条声明静默失效 <sub>[脚本:未定义 var]</sub>
 
 ## 5.7 · 完整交互状态(11 项,见 [`principles.md`](../meta/principles.md) 第 14 定律)
 
@@ -127,7 +134,7 @@
 - [ ] 文案具体(无"现代设计"等空泛词)
 - [ ] 数字真实风(有尾数,非整数凑数)
 
-## 5.9 · 第 13 定律 · 动画动机(7 项,见 [`principles.md`](../meta/principles.md))
+## 5.9 · 第 13 定律 · 动画动机(8 项,见 [`principles.md`](../meta/principles.md))
 - [ ] 每段动画可回答"为什么动"(状态变化 / 空间引导 / 反馈)
 - [ ] 无装饰性循环动画(MOTION_INTENSITY ≤ 5 时)
 - [ ] 入场动画 duration ≤ 400ms(装饰/骨架类长动效按 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 分层第 3 层 ≤ 600ms 且必须可跳过,>400ms 须以 `{duration-*}` token 引用——字面量被脚本按 ≤400ms 硬查)
@@ -135,13 +142,15 @@
 - [ ] translateY 偏移 ≤ 30px(防眩晕)
 - [ ] 缓动函数非默认 `linear`(用 ease-out / cubic-bezier)
 - [ ] `ScrollTrigger.once: true` 或等价(避免反复触发)
+- [ ] **动效四相位实测(探针)**:首次进入 / 动作步骤 / 首屏滚动 / 从头滚到底四相位采样;结论三选一(没有检测到动画 / 只有持续循环的动画,没有一次性的出场或反馈 / 动画幅度太小);首屏景深只报层数与幅度、不记问题;页面不滚动时滚动相跳过;滚动叙事是可选手法、不作硬性要求 <sub>[运行时·探针]</sub>
 
-## 5.10 · 排版细节(6 项,见 [`hero.md`](../vocabulary/hero.md) + [`layout.md`](../vocabulary/layout.md))
+## 5.10 · 排版细节(7 项,见 [`hero.md`](../vocabulary/hero.md) + [`layout.md`](../vocabulary/layout.md))
 - [ ] **em-dash 中文场景放宽**:中文正文用 `——`(全角破折号),英文用 `—`(em-dash);**禁止**中文场景用 `--` 或 `-` 凑数;列表项符号用 `-` 不受此限
 - [ ] **eyebrow 计数 ≤ 1**:每页 eyebrow(标题上方小标签)≤ 1 个,Hero 用了则后续 section 禁用(见 [`hero.md`](../vocabulary/hero.md) H2)
 - [ ] Hero 标题字数 ≤ 12 中文 / ≤ 7 英文词
 - [ ] Hero 副标题字数 ≤ 30 中文 / ≤ 18 英文词
 - [ ] 中英文混排含空格(中英之间 1 空格,如"使用 React 框架")
+- [ ] **盘古之白**:中文与数字之间加空格(`共 500 条记录`),数字与单位之间加空格(`20 TB`);**例外**:`90°`、`15%` 不加;**全角标点前后不加空格**(软警告,与上一条同族)
 - [ ] 标点符号中英文一致(中文用全角,英文用半角,不混用)
 
 ## 5.11 · 视觉一致性锁(8 项)
@@ -174,7 +183,7 @@
 - [ ] **FCP ≤ 1.8s**:首次内容绘制;首屏 JS ≤ 100KB gzip,字体不阻塞 <sub>[运行时]</sub>
 - [ ] **TBT ≤ 200ms**:总阻塞时间;主线程长任务(> 50ms)总和 ≤ 200ms <sub>[运行时]</sub>
 
-## 5.14 · 交付完备性(6 项,见 [`default-pages/index.md`](../default-pages/index.md))
+## 5.14 · 交付完备性(7 项,见 [`default-pages/index.md`](../default-pages/index.md))
 
 > 来源:taste-skill redesign-skill"AI 通常忘记的东西"清单。多为运行时 / 站点级检查,产物对应 `default-pages` 中的 privacy/terms/not-found 等页面。
 
@@ -184,6 +193,7 @@
 - [ ] 表单有客户端校验(必填 / 格式错误内联提示,非仅提交后报错) <sub>[运行时]</sub>
 - [ ] skip-to-content 链接存在且为键盘 Tab 首个可达项 <sub>[脚本:静态可查存在性;位置需运行时]</sub>
 - [ ] favicon 存在(含移动端 bookmark 图标) <sub>[运行时;可静态抽检 head 引用]</sub>
+- [ ] **数据型页面诚实性**(有图表 / 数据展示时):柱 / 条从 0 起(折线截断轴须标注范围);缺失值 ≠ 0(断点 / 空白 / 明确标记);单位在轴标题 / 列头 / 数值中稳定出现;时间轴粒度 / 时区 / 采样周期可见;颜色只用于编码(告警色与普通类别色分离);交付前过 [`../vocabulary/charts.md`](../vocabulary/charts.md)「诚实性与极值」九问与极值谱系(负值 / 全 0 / 单点 / 缺失 / 超长类别 / 大量系列 / 窄屏 / 无数据) <sub>[运行时]</sub>
 
 ## 5.15 · 真机验证(8 项,全部需真机)
 
@@ -220,11 +230,11 @@
 
 ## 统计与执行规则
 
-**统计**:5.0 (7) + 5.1 (15) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (10) + 5.7 (11) + 5.8 (8) + 5.9 (7) + 5.10 (6) + 5.11 (8) + 5.12 (6) + 5.13 (5) + 5.14 (6) + 5.15 (8) + 5.16 (6) = **135 项**
+**统计**:5.0 (7) + 5.1 (15) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (12) + 5.7 (11) + 5.8 (8) + 5.9 (8) + 5.10 (7) + 5.11 (8) + 5.12 (6) + 5.13 (5) + 5.14 (7) + 5.15 (8) + 5.16 (6) = **140 项**
 
 ### 执行规则
-- 全部 135 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
+- 全部 140 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning;末尾列明的四项软警告除外);标记 `[运行时·探针]` 的项按 [`preview.md`](./preview.md)「运行时实测探针」节三档处置判定(「要改的」必须修复;「改掉或写出理由」与保留项写进交付说明),不单条硬性拦截——失败项必须列出具体位置(HTML 行号 / CSS 选择器)
 - 5.0 Process 区先于 5.1-5.16 执行(动态实测是过程性动作,不因静态扫描通过而豁免)
 - 5.15 真机验证在浏览器验证之后、交付声明之前执行(模拟环境通过的项不因此豁免真机复测)
-- 修复后重跑全部 135 项(不可只跑失败项),通过后先过编号门禁 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) G01–G28,再进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
-- em-dash / 中英文空格 / 标点一致性为**软警告**(warning,非硬性失败),其余 132 项为硬性失败
+- 修复后重跑全部 140 项(不可只跑失败项),通过后先过编号门禁 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) G01–G38,再进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
+- em-dash / 中英文空格 / 盘古之白 / 标点一致性为**软警告**(warning,非硬性失败),其余 136 项为硬性失败

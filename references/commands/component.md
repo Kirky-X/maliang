@@ -4,6 +4,8 @@
 >
 > 来源：Adapted from finesse-ui component-scope（github.com/mouse-lin/finesse-skill，MIT License），2026-09 吸收并本地化。
 
+> **CHECKPOINT 与无人值守**:无人值守时按 [`SKILL.md`](../../SKILL.md)「无人值守与 CHECKPOINT 降级」节的默认取值表执行,不逐点阻塞;自选决定与理由写入交付说明。
+
 ## §0 范围检测 —— 两个信号路由
 
 在进入任何模式判定之前运行。**≥2 条命中 → 走组件流程**：

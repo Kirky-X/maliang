@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+  verify-interactive fixture:信号 C(隐形状态)。
+  aria-checked 真的翻转了(屏幕阅读器听得见),但控件自身的计算样式、
+  文本、几何完全没变(肉眼看不见)。期望:FAIL(exit 1),报 [C invisible]。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>verify-interactive fixture: 隐形状态</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }
+  .theme-toggle { background: #FFFFFF; color: #1A1A1A; border: 1px solid #1A1A1A; padding: 8px 16px; }
+</style>
+</head>
+<body>
+  <main id="main">
+    <button class="theme-toggle" type="button" role="switch" aria-checked="false">深色模式</button>
+  </main>
+  <script>
+    const toggle = document.querySelector('.theme-toggle');
+    toggle.addEventListener('click', () => {
+      toggle.setAttribute('aria-checked',
+        toggle.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
+    });
+  </script>
+</body>
+</html>

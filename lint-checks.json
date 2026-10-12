@@ -8,5 +8,41 @@
     "examples/",
     "docs/",
     "reference/"
+  ],
+  "checks": [
+    {
+      "name": "设计语言计数对账",
+      "type": "count-matches",
+      "source": "references/templates/INDEX.md",
+      "section": "## 设计语言",
+      "row_pattern": "^\\|\\s*\\[",
+      "claim_files": ["SKILL.md", "README.md", "README_EN.md"],
+      "claim_patterns": ["(\\d+)\\s*种设计语言", "(\\d+)\\s+design languages"],
+      "min_claims": 1,
+      "severity": "FAIL"
+    },
+    {
+      "name": "禁用语表",
+      "type": "forbid-pattern",
+      "files": ["README.md", "README_EN.md", "SKILL.md"],
+      "pattern": "完美|革命性|颠覆性|行业第一|首屈一指|保证通过|绝对领先",
+      "severity": "FAIL"
+    },
+    {
+      "name": "模板墙唯一入口链接",
+      "type": "require-pattern",
+      "file": "SKILL.md",
+      "pattern": "references/templates/INDEX\\.md",
+      "min_count": 1,
+      "severity": "FAIL"
+    },
+    {
+      "name": "依赖声明",
+      "type": "require-pattern",
+      "file": "README.md",
+      "pattern": "纯 Python 标准库",
+      "min_count": 1,
+      "severity": "FAIL"
+    }
   ]
 }

@@ -77,6 +77,27 @@ typography:
 
 `no-decision` 是**待办标记**,不是免责金牌:一个 DESIGN.md 里 `no-decision` 占比过高(> 1/3 的 token 键)说明这次没做定义阶段,应回 Phase 0 重走,而不是把 `no-decision` 铺满当通过。
 
+**弃权出口(canonical 短语,与 `no-decision` 同族)**:提取型输入(1A 从既有代码 / 截图提取)可能整节没有本地决策可溯——此时**诚实的弃权与写满同等合格**:
+
+| canonical 短语(逐字) | 读法 | 用在哪 |
+| -------------------- | ---- | ------ |
+| `insufficient evidence` | 证据不足 → 该项按 **pass** 读 | 溯源与计数型硬门(如 Do's and Don'ts ≥ 4-6 条)对提取型输入允许弃权 |
+| `material sufficient` | 材料足够(无开放问题) | 开放问题节 |
+| `no open questions` | 同上的等价写法 | 开放问题节 |
+
+弃权必须写明**缺什么材料才能结束弃权**;弃权只对提取型输入成立,生成型任务(greenfield design-md)不得用它替代溯源——能溯源就必须溯源。机械检查把 canonical 短语读作 pass。来源:anydesign(#37),2026-10 吸收。
+
+**置信标记通道(提取型输入)**:溯源行尾注释同时承载**提取置信三档**——✅ 直接看到(代码 / computed style 原值)/ ⚠️ 有据推断(像素采样、视觉识别)/ ❓ 公开推测:
+
+```yaml
+tertiary: "#2563EB" # D-P1-1 ✅
+secondary: "#9D9D9D" # no-decision: 提取来源 ⚠️
+```
+
+- 标记写在 id 或 `no-decision` **之后**,不替代 id;标记语义与交付末尾 Confidence map 表(Layer | Confidence | Why)由 [`../commands/design-md.md`](../commands/design-md.md) 的 1A / 1C 提取路径定义;
+- 「只报观察到的数量」同理:看到 1 个按钮变体写「1 variant observed」,不写「primary, secondary, tertiary」;
+- 与证据四分类是**不同轴**:置信标记回答「凭什么相信这个值」,证据四分类回答「凭什么断言已解决」——两者互补,不互相替代。来源:anydesign(#36),2026-10 吸收。
+
 ---
 
 ## 4. 三类违规
@@ -99,13 +120,22 @@ V3 判定时**只数 token**,不看散文。理由写在正文但没落成值 = 
 
 溯源核对覆盖 front matter 五个块的**顶层键**:`colors` / `typography` / `rounded` / `spacing` / `components`。`typography` 内部字段(`fontSize` / `lineHeight` / …)与 `components` 内部属性属实现细节,不要求逐字段溯源,顶层键有 id 即可。
 
-### 机械能力边界(如实声明)
+### 机械判定(validate-design-md.py)
 
-溯源检查**当前不在** `scripts/preview-check.py` 与 `scripts/validate-draw-md.py` 的覆盖范围内——两者面向 ui-markdown 产物,不读 DESIGN.md front matter 的注释。因此 V1–V3 属**人工判定项**,与 [`../commands/preview-checklist.md`](../commands/preview-checklist.md) 的运行时项同级。
+**V1–V3 由 [`../../scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定,人工仅复核脚本标 `unconfirmed` 的项**。脚本做四处交叉,缺哪一环就落在哪一类违规:
+
+1. 每个顶层键有 id 或 `no-decision` —— 缺 = V2(孤儿 token);
+2. 注释里的 id 在 `decisions[]` 可查 —— 查不到 = V1(悬空溯源);
+3. `## Overview` 每条原则至少被一个 token 引用 —— 零引用 = V3(空原则,只数 token 不看散文);
+4. `no-decision` 占比(> 1/3 提示回 Phase 0 重走)。
+
+另加 **DESIGN.md → token.md 派生一致性**:token.md 里的 token 能追回 DESIGN.md(反向孤儿)。典型盲区——跨文件命名漂移(页面用了 `--border-vis` 类错名而检查仍全绿)——由此兜住。脚本退出码与 validate-draw-md.py 同三态语义(0 看了没问题 / 1 看了有问题 / 2 没能检查,canonical 见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md));未测量不得记为通过。
+
+脚本覆盖不到的残余形态才留给人工判断;人工复核结论逐项写出,与脚本输出摘要一并进判定记录。
 
 ### 判定记录(缺证据 = 未判定)
 
-每次 design-md 交付、以及改过 token 的 redesign 交付,产物报告须留下三行核对结果,格式固定:
+每次 design-md 交付、以及改过 token 的 redesign 交付,产物报告须留下三行核对结果(附 validate-design-md.py 输出摘要),格式固定:
 
 ```
 溯源核对(YYYY-MM-DD):
@@ -114,7 +144,7 @@ V3 判定时**只数 token**,不看散文。理由写在正文但没落成值 = 
   孤儿清单(应为空,非空则逐条列 key):—
 ```
 
-**没有这三行就不许写「溯源已覆盖」**。这是本条门禁唯一的执行纪律,替代脚本化的部分——判定靠人,靠留痕不靠自觉。
+**没有这三行就不许写「溯源已覆盖」**——机械判定也要留痕:三行记录(含脚本输出摘要与 unconfirmed 复核结论)是 [`numbered-gates.md`](numbered-gates.md) A 组 G01–G03 的判定记录,无记录视为未判定。
 
 ---
 

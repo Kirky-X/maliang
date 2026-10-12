@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--
+  verify-states fixture:三态全绿(对照)。
+  default #1A1A1A / hover #0F0F0F / focus 同色,均在 #FFFFFF 上 ≥ 4.5:1。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>verify-states fixture: 三态全绿</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }
+  .submit { background: #FFFFFF; color: #1A1A1A; border: 1px solid #1A1A1A; padding: 8px 16px; }
+  .submit:hover { color: #0F0F0F; }
+  .submit:focus { color: #0F0F0F; outline: 2px solid #1A1A1A; }
+</style>
+</head>
+<body>
+  <main id="main">
+    <button class="submit" type="button">提交订单</button>
+  </main>
+</body>
+</html>

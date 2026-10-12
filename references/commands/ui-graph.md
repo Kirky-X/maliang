@@ -2,14 +2,17 @@
 
 > 本文件是 `ui-graph` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
 > 输入 = [`draw-md`](./draw-md.md) 产出的 `examples/ui-markdown/` 目录(token.md + organisms/ + ui/*.md)。
-> 输出 = 三个 JSON 文件,落在 `examples/ui-markdown/` 下:
+> 输出 = 四个 JSON 文件,落在 `examples/ui-markdown/` 下:
 >   - `ui-relationships.json` — 页面层级 + 跳转关系图
->   - `ui-hash-state.json` — 每个 markdown 文件的 sha256 哈希快照
+>   - `ui-hash-state.json` — 每个 markdown 文件的 sha256 哈希快照（draw-md 指纹）
+>   - `preview-hash-state.json` — 预览 HTML/截图清单的 sha256 快照（`--kind preview`,落在预览目录）
 >   - `ui-implementation-map.json` — 逻辑 UI ↔ preview HTML ↔ 框架代码三向映射
 > 这是 [`draw-md`](./draw-md.md) 的**下游**:draw-md 产出页面 markdown,ui-graph 在其上做关系分析、变更检测与实现覆盖度审计,不修改 draw-md 产出本身。
 > 配套脚本 [`scripts/ui-graph.py`](../../scripts/ui-graph.py) 是纯 Python 标准库实现,无第三方依赖。
 
 ---
+
+> **CHECKPOINT 与无人值守**:无人值守时按 [`SKILL.md`](../../SKILL.md)「无人值守与 CHECKPOINT 降级」节的默认取值表执行,不逐点阻塞;自选决定与理由写入交付说明。
 
 ## 产物层目录结构
 
@@ -155,21 +158,28 @@ python3 scripts/ui-graph.py list-missing [--target PATH]
 python3 scripts/ui-graph.py check-nav [--target PATH]
 ```
 
-### 4. compute-hash — 计算 markdown 文件哈希
+### 4. compute-hash — 计算哈希基线（两种范围）
 
-用 `hashlib.sha256` 计算每个 markdown 文件哈希,写 `ui-hash-state.json`。
+用 `hashlib.sha256` 计算目标文件哈希,写对应基线文件。`--kind` 决定范围（两者基线文件分开,不得混用）:
+
+| --kind | 范围 | 基线文件 | 用途 |
+| --- | --- | --- | --- |
+| `draw-md`（默认） | draw-md 产物 `.md` 页面（排除 `token.md`） | `ui-hash-state.json` | critique backlog 指纹失效判定（只管 draw-md 产物） |
+| `preview` | 预览 HTML + 截图（png/jpg/jpeg/webp/svg）+ 取证清单（`report.json` 等 JSON；排除 `selection.json` 与基线自身） | `preview-hash-state.json` | 测量收据/证据链（`receipts.py`）记录「被实测的预览状态」；预览 HTML 恰是被实测对象,证据须带产物哈希、哈希变了证据作废 |
 
 ```bash
-python3 scripts/ui-graph.py compute-hash [--target PATH]
-# 产出 {target}/ui-hash-state.json
+python3 scripts/ui-graph.py compute-hash [--target PATH] [--kind draw-md|preview]
+# 产出 {target}/ui-hash-state.json（draw-md）或 {target}/preview-hash-state.json（preview）
+# preview 示例（目标为预览产物目录）:
+python3 scripts/ui-graph.py compute-hash --target examples/preview --kind preview
 ```
 
 ### 5. diff-hash — 对比哈希快照
 
-对比当前文件哈希与 `ui-hash-state.json`,输出 added/modified/deleted 三类变更。
+对比当前文件哈希与对应基线文件（`--kind` 同 compute-hash）,输出 added/modified/deleted 三类变更。
 
 ```bash
-python3 scripts/ui-graph.py diff-hash [--target PATH]
+python3 scripts/ui-graph.py diff-hash [--target PATH] [--kind draw-md|preview]
 # 输出示例:
 #   [added]    ui/setting/notifications.md
 #   [modified] ui/home.md
@@ -256,5 +266,5 @@ python3 scripts/ui-graph.py list-unimplemented [--target PATH]
 - **禁止在 `ui-relationships.json` 中内联 markdown 内容**:JSON 只存结构化字段(path/name/parent/depth/components/from/to/event),不存原文。内联会导致 JSON 膨胀且与源文件漂移。
 - **禁止 `extract_navigations` 把 `tap=无` / `tap=back` 当作跳转**:`无` 是无操作,`back` 是 history.back(非具体页面),均不产生页面级跳转关系。
 - **禁止 `check-nav` 把"未生成页面"当作"死链"**:未生成(detect by list-missing)与死链(to 不在 pages 中)语义不同——未生成是"还没写",死链是"目标路径不存在于当前 pages 集合"。check-nav 报死链,list-missing 报未生成,职责分离。
-- **禁止 `compute-hash` 把 JSON 产出文件计入哈希**:`ui-relationships.json` / `ui-hash-state.json` / `ui-implementation-map.json` 是本子命令产出,非 draw-md 产出,计入会导致 diff-hash 自我污染。
+- **禁止 `compute-hash` 把 JSON 产出文件计入哈希**:`ui-relationships.json` / `ui-hash-state.json` / `ui-implementation-map.json` / `preview-hash-state.json` 是本子命令产出,非被测产物,计入会导致 diff-hash 自我污染;`--kind preview` 另排除 `selection.json`（用户选择记录,不是产物）。
 - **禁止 `build-impl-map` 模糊匹配 slug**:harmony 用 TitleCase(`Home.ets`),flutter/element 用 lowercase(`home.dart` / `home.vue`),不可统一用一种 case 匹配,否则会漏匹配或误匹配。

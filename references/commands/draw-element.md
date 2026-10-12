@@ -7,6 +7,8 @@
 
 ---
 
+> **CHECKPOINT 与无人值守**:无人值守时按 [`SKILL.md`](../../SKILL.md)「无人值守与 CHECKPOINT 降级」节的默认取值表执行,不逐点阻塞;自选决定与理由写入交付说明。
+
 ## 流程概览(三段式)
 
 ```mermaid
@@ -121,12 +123,14 @@ flowchart LR
 生成 Element Plus Vue 3 SFC 代码后,执行自检:
 
 - [ ] 所有组件使用正确的 Element Plus 标签(`<el-button>` / `<el-text>` / `<el-table>` 等)
-- [ ] 颜色值已从 token 映射为 CSS 变量或硬值,无 `{token-name}` 占位符残留
+- [ ] 颜色值已从 token 映射为 CSS 变量,或为可回溯 token.md 的字面值;无不可回溯字面量,无 `{token-name}` 占位符残留
 - [ ] 布局结构符合 draw-md 章节顺序(顶部导航 → 主体 → 底部 dock)
 - [ ] 组件 props 与 `framework/element/` 文档一致(无杜撰 API)
 - [ ] 产出文件含注释标注来源(`<!-- 由 draw-element 从 <page>.md 生成 -->`)
 - [ ] SFC 三段式结构完整(`<template>` + `<script setup>` + `<style scoped>`)
 - [ ] `<script setup>` 中正确 import 使用的 Element Plus 组件(如需)
+
+**诚实范围**:本节静态检查证明**组件产出**(语法、token 解析、映射完整、SFC 合法);**不证明点击行为**——交互真实性与运行时状态由 preview 的运行时探针与评审覆盖(见 [`preview.md`](./preview.md)),不在本命令的证明范围。
 
 **🔴 CHECKPOINT · 校验通过**:校验全部通过后,Vue 3 SFC 代码方可交付使用。
 
@@ -144,7 +148,7 @@ flowchart LR
 
 - [ ] 输入必须是 draw-md 产出(含 frontmatter + 参数表 + token 引用),MUST NOT 直接从 DESIGN.md 跳过 draw-md
 - [ ] 组件映射 MUST 查 `framework/element/` 文档,MUST NOT 凭记忆杜撰 Element Plus 组件 API
-- [ ] Token 引用 MUST 解析为具体值(CSS 变量或硬值),MUST NOT 在产出代码中残留 `{token-name}` 占位符
+- [ ] Token 引用 MUST 解析为具体值(CSS 变量,或可回溯 token.md 的字面值),MUST NOT 在产出代码中残留 `{token-name}` 占位符
 - [ ] 产出代码 MUST 为合法 Vue 3 SFC(语法正确、标签闭合、script setup 有效)
 
 ---

@@ -7,6 +7,8 @@
 
 ---
 
+> **CHECKPOINT 与无人值守**:无人值守时按 [`SKILL.md`](../../SKILL.md)「无人值守与 CHECKPOINT 降级」节的默认取值表执行,不逐点阻塞;自选决定与理由写入交付说明。
+
 ## 流程概览(三段式)
 
 ```mermaid
@@ -125,6 +127,8 @@ flowchart LR
 - [ ] 布局结构符合 draw-md 章节顺序(顶部导航 → 主体 → 底部 dock)
 - [ ] 组件属性与 `framework/harmony/` 文档一致(无杜撰 API)
 - [ ] 产出文件含注释标注来源(`// 由 draw-harmony 从 <page>.md 生成`)
+
+**诚实范围**:本节静态检查与编译校验证明**组件产出**(语法、token 解析、映射完整、可编译);**不证明点击行为**——交互真实性与运行时状态由 preview 的运行时探针与评审覆盖(见 [`preview.md`](./preview.md)),不在本命令的证明范围。
 
 **🔴 CHECKPOINT · 校验通过确认**:确认无裸值、无悬空 token、组件映射完整,ArkTS 代码方可交付使用。
 

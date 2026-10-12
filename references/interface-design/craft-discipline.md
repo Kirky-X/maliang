@@ -155,6 +155,18 @@ Every product exists in a world, and that world has colors. Before reaching for 
 
 ---
 
+# Steal Values, Not Looks
+
+> Source: styleseed craft-loop "steal before you build" (absorbed 2026-10; the value library lives in [`../donors/`](../donors/README.md)). Run this before writing code; it sits alongside "Render It When You Can" — one governs what to look at before building, the other what to steal before building.
+
+Once the direction is set and before writing the first component, pick **1-2 donor sites** from [`../donors/`](../donors/README.md) whose character is closest, and extract **3-5 concrete values or moves** into the design plan:
+
+- **Steal values, not vibes**: "reference Linear's feel" is not stealing; "Linear's signature 510 weight + `-1.056px @ 48px` display tracking + a `rgba(255,255,255,0.08)` hairline border" is — values can be checked, vibes cannot.
+- **What is fair game**: shadow stacks / radius scale / type-scale ratios / weight and tracking strategy / hover offset and transition / border strategy / color allocation / spacing rhythm.
+- **State "stole X from {site}" line by line; cannot write it out = you did not steal, start over.** This is the only test for this rule; "internalized it" answers do not count.
+- **Steal values, never the look**: do not clone a whole site; brand-identifying elements (logo / mascot / proprietary letterforms / signature illustration) are identity, not values — do not steal them.
+- **Stolen values still go through the token pipeline**: back-fill a decision id or `no-decision` in design-md when they enter the project; never wire a donor value straight into the output. On conflict with existing DESIGN.md tokens, DESIGN.md wins (single source of truth); donors only fill decisions the system has not made yet.
+
 # Before Writing Each Component
 
 **Every time** you write UI code — even small additions — state:
