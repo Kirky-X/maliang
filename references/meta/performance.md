@@ -108,6 +108,8 @@ z-index:
 
 ## 6. Canvas/WebGL 预算
 
+> 特效运行档降级:`navigator.hardwareConcurrency <= 2` 视为低端档,与 prefers-reduced-motion 并列触发 fallback(降级三选:关闭特效/降为 CSS/静态快照)。
+
 
 **目的性门槛**:
 

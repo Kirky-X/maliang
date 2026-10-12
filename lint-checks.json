@@ -16,15 +16,26 @@
       "source": "references/templates/INDEX.md",
       "section": "## 设计语言",
       "row_pattern": "^\\|\\s*\\[",
-      "claim_files": ["SKILL.md", "README.md", "README_EN.md"],
-      "claim_patterns": ["(\\d+)\\s*种设计语言", "(\\d+)\\s+design languages"],
+      "claim_files": [
+        "SKILL.md",
+        "README.md",
+        "README_EN.md"
+      ],
+      "claim_patterns": [
+        "(\\d+)\\s*种设计语言",
+        "(\\d+)\\s+design languages"
+      ],
       "min_claims": 1,
       "severity": "FAIL"
     },
     {
       "name": "禁用语表",
       "type": "forbid-pattern",
-      "files": ["README.md", "README_EN.md", "SKILL.md"],
+      "files": [
+        "README.md",
+        "README_EN.md",
+        "SKILL.md"
+      ],
       "pattern": "完美|革命性|颠覆性|行业第一|首屈一指|保证通过|绝对领先",
       "severity": "FAIL"
     },
@@ -42,6 +53,19 @@
       "file": "README.md",
       "pattern": "纯 Python 标准库",
       "min_count": 1,
+      "severity": "FAIL"
+    },
+    {
+      "name": "兄弟 skill 引用存在性",
+      "type": "sibling-skills",
+      "siblings": [
+        "diting",
+        "tiangang",
+        "hap-dev",
+        "flutter-dev",
+        "element-dev",
+        "wudaozi"
+      ],
       "severity": "FAIL"
     }
   ]

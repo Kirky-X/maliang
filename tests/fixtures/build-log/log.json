@@ -1,0 +1,50 @@
+[
+  {
+    "date": "2026-10-02",
+    "page": "acme-launch-v1",
+    "mode": "Experience",
+    "axes": {
+      "theme": "Deep Dark Mode",
+      "background": "tactile textured surface feel",
+      "typography": "editorial serif + sans",
+      "hero": "massive image-first hero with restrained text",
+      "section": "gallery-led cadence",
+      "signature": "pristine gapless bento grid + marquee",
+      "motion": "pinned narrative section + parallax image drift"
+    },
+    "dials": { "variance": 6, "motion": 6, "density": 2 },
+    "brief": "acme 发布页首次构建"
+  },
+  {
+    "date": "2026-09-20",
+    "page": "acme-teaser",
+    "mode": "Craft",
+    "axes": {
+      "theme": "Bold Studio Solid",
+      "background": "subtle technical grid / dotted field",
+      "typography": "clean grotesk",
+      "hero": "inline typography behemoth",
+      "section": "alternating editorial blocks",
+      "signature": "off-grid editorial layout",
+      "motion": "staggered float-up"
+    },
+    "dials": { "variance": 5, "motion": 3, "density": 4 },
+    "brief": "acme 预告页"
+  },
+  {
+    "date": "2026-09-08",
+    "page": "acme-docs-shell",
+    "mode": "Craft",
+    "axes": {
+      "theme": "Quiet Premium Neutral",
+      "background": "pure solid field with soft ambient gradient depth",
+      "typography": "Swiss rational hierarchy",
+      "hero": "cinematic centered minimalist",
+      "section": "Swiss grid discipline",
+      "signature": "vertical rhythm lines",
+      "motion": "smooth accordion expansion"
+    },
+    "dials": { "variance": 4, "motion": 2, "density": 5 },
+    "brief": "acme 文档壳"
+  }
+]
