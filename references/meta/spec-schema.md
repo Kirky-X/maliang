@@ -25,7 +25,7 @@ components: map # see Components section
 DESIGN.md 头部(front matter 之前)须带 schema 版本戳注释:
 
 ```html
-<!-- maliang:design-schema 2 -->
+<!-- maliang:design-schema 3 -->
 ```
 
 - 戳标识的是 **schema 结构版本**(顶层键与章节约定),不是产物 release 版本
@@ -33,6 +33,7 @@ DESIGN.md 头部(front matter 之前)须带 schema 版本戳注释:
 - 戳供**人与 agent** 识别 schema 版本;下游工具(validate / ui-graph)读戳自动校验为**规划项**——当前仓内无脚本消费该戳,勿假设存在自动漂移检测
 - 来源:impeccable(`<!-- impeccable:product-schema 1 -->`)与 ui-ux-pro-max 数据治理
 - **2 号变更**:`decisions` 增 `id` 必选字段;token 顶层键可带行尾溯源注释(见下方「token 溯源」)
+- **3 号变更**:增三个可选扩展键 `measurement` / `measured_palette` / `effects`(均可选、均 lint 静默,不影响既有契约,见下方两节)
 
 ---
 
@@ -115,6 +116,56 @@ users:
 
 ---
 
+## 测量持久化块(measurement / measured_palette)
+
+顶层可选扩展键(lint 静默,同 `decisions` / `users`)。参考图经确定性测色(`{SKILL_DIR}/scripts/measure-colors.py`)后,把**测量配置**与**实测色板**随 DESIGN.md 持久化,供验证环节(preview / verify)读回**同 k 同参数**复测——复测参数不同(如 k 不同)结果不可比,等于没测。两键成对出现;**目测取色不写本块**。来源:design-dna(#25),2026-10 吸收。
+
+```yaml
+measurement:                  # 测量配置;存在即声明「下面的值是测出来的」
+  tool: measure-colors.py
+  k: 6                        # 聚类数;复测必须同 k 同参数,否则不可比
+  merge_threshold: 2.5        # ΔE 合并档(PNG 2.5 / JPEG 5,以脚本口径为准)
+  source: hero.png            # 测的是哪张参考图
+measured_palette:             # 逐色 hex / coverage / role;coverage 为 0..1 分数
+  - hex: "#F4F1EA"
+    coverage: 0.62
+    role: background
+  - hex: "#1C1B18"
+    coverage: 0.21
+    role: text
+  - hex: "#B8422E"
+    coverage: 0.05
+    role: accent
+```
+
+- 实测 hex **原样**进 `colors` 主表(角色映射启发:最大覆盖 = 背景,与背景明度差足够 = 文本,高饱和小覆盖 = accent),行尾按 ✅ 标注;主表值与实测块不一致时以实测块为准并核对映射
+- 目测值走 ⚠️,**混入本块 = 虚标实测**;图片格式不可测(如缺 Pillow 的 JPEG)时整块省略并显式声明「未测量」,不得伪造配置
+- 验证环节从本块读回同参数复测;缺本块时按「未测量」处理,不得伪称可比
+
+---
+
+## 特效段(effects)
+
+顶层可选扩展键(lint 静默同上)。记录参考提取(1C 第 6 步)或设计声明的特效立场,供动效实现与验证对账。**静帧提不出的动效不编造**:整段无证据时按 [`token-provenance.md`](token-provenance.md) §3 canonical 弃权短语收尾或整段省略,单个未知类目标 ❓。来源:design-dna(#26),2026-10 吸收。
+
+```yaml
+effects:
+  primary_technology: Canvas 2D # D-P2-2
+  performance_tier: medium      # lightweight(CSS+简单 JS)/ medium(Canvas 2D、SVG 动画)/ heavy(WebGL、Three.js、shader)
+  fallback_strategy: reduced-motion 与低端设备替换为静态 poster 帧 # D-P2-2
+```
+
+| 字段                 | 必选 | 说明                                                                        |
+| -------------------- | ---- | --------------------------------------------------------------------------- |
+| `primary_technology` | 否   | 主实现技术(CSS only / Canvas 2D / WebGL / GSAP / SVG 等)                    |
+| `performance_tier`   | 否   | `lightweight` / `medium` / `heavy` 三档,与实现路线成本对账                  |
+| `fallback_strategy`  | 否   | 降级去向(静态 poster 帧 / 降为 CSS / 关闭),与 reduced-motion 静止终态纪律一致 |
+
+- 键带 decision id 溯源注释(写法同「token 溯源」),但溯源核对(五块顶层键计数)**不因本段扩面**,不新增硬门
+- `performance_tier` 与实现路线对账:heavy 对应 [`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) 六路线表 R5(100-160KB),选型从 R1 停在第一条能干活的路线;Canvas / WebGL 落地过 [`performance.md`](performance.md) §6 目的性门槛与降级要求
+
+---
+
 ## 颜色 token
 
 **类型**: `map<string, Color>`
@@ -155,6 +206,8 @@ Material Design 3 (MD3) 配对 token(`on-primary`、`primary-container` 等)被�
 | `color-text-muted`     | 禁用       |
 
 只用两级说明层级太扁。来源:interface-design(Text hierarchy)。
+
+参考图反推色彩时优先确定性测色(`{SKILL_DIR}/scripts/measure-colors.py`,目测取色漂移可达 ΔE10+):实测配置与色板持久化见下方「测量持久化块」,实测值按 ✅ 置信标注、目测值按 ⚠️(判据见 [`../commands/design-md.md`](../commands/design-md.md) 提取路径置信标记)。
 
 ---
 

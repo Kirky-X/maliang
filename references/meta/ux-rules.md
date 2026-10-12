@@ -1,6 +1,6 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
-> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。来源:ui-ux-pro-max-skill(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条为 2026-09 吸收增补(impeccable 思想,Apache-2.0,中文自研);§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批),全库共 47 条。
+> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。来源:ui-ux-pro-max-skill(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条为 2026-09 吸收增补(impeccable 思想,Apache-2.0,中文自研);§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批);§13 层级与动作 4 条为 2026-10 吸收增补(refactoring-ui-skill #11,中文自研),全库共 51 条。
 > 与脚本的关系:`scripts/validate-draw-md.py` 现有 15 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 11 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
@@ -80,7 +80,7 @@
 
 | slug                | 一句话规则                    | Do(怎么做)                        | Don't(别怎么做)           | 端   | Severity |
 | ------------------- | ----------------------------- | ---------------------------------- | -------------------------- | ---- | -------- |
-| progressive-loading | > 1s 的等待用骨架屏/占位       | 骨架或 shimmer 保布局稳定          | 长时间裸 spinner 或冻结无反馈 | 全端 | WARN     |
+| progressive-loading | 等待反馈按 Doherty 分档给足 | <100ms 不给指示器;400ms-3s 给指示器;3s+ 给进度而非裸 spinner;布局已知时骨架优于 spinner(保空间语境);分档 canonical 见 [ux-laws.md](./ux-laws.md) Doherty 专节 | 长时间裸 spinner 或冻结无反馈;≤400ms 的快操作也闪指示器(指示器本身即干扰) | 全端 | WARN |
 | content-jumping     | 异步内容预留空间              | 声明宽高/aspect-ratio,占位高度稳定 | 内容插入把页面往下顶(CLS)   | Web  | WARN     |
 | tap-feedback-speed  | 点击 100ms 内给出视觉反馈      | 按压态即时高亮/涟漪                | 点击后无任何响应感         | 全端 | WARN     |
 
@@ -123,6 +123,17 @@
 | ------------------ | ----------------------------- | -------------------------------------------------- | ------------------------------- | ---- | -------- |
 | physical-property  | 布局方向用逻辑属性             | margin/padding/border 用 `-inline-start/end`,text-align 用 `start/end` | 物理属性硬编码 left/right(或 text-align: left/right)且无 ltr-only 标注 | Web  | WARN     |
 
+## 13. 层级与动作
+
+> 来源:refactoring-ui-skill(#11),2026-10 吸收,中文自研。四条回答同一件事:**动作按层级配样式,不按语义;视觉重量与对比度是可互相偿还的两种预算**。归因层见 [`ux-laws.md`](./ux-laws.md) Von Restorff 效应(每屏一个异质元素)。
+
+| slug                   | 一句话规则                              | Do(怎么做)                                                                 | Don't(别怎么做)                          | 端   | Severity |
+| ---------------------- | ---------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- | ---- | -------- |
+| primary-solid-unique   | 每页唯一实心主按钮;破坏性操作三级化     | Primary 实心高对比,通常每页恰一个;Secondary 用描边或低对比底;Tertiary 样式同链接;破坏性动作在页面层用次级/三级样式,红色实心主按钮只放进确认框(那里它才是真主操作) | 按语义而非层级配样式;「删除」直接大红按钮摆页面;一页多个实心主按钮互抢焦点 | 全端 | WARN     |
+| label-fold-into-value  | label 是最后手段,能折进 value 就折     | 值自明格式(`$19.99`、邮箱地址)不配 label;确需 label 时折进值(「仅剩 12 件」,不是「库存: 12」)或排为显著次级内容;规格表式页面(用户扫的就是 label)才反向强调 label | `label: value` 平铺,给所有数据同等权重(数据库导出感) | 全端 | WARN     |
+| weight-contrast-balance| 重量与对比互偿:加重量修低对比,降对比修超重 | 实心图标压过旁边文字 → 降图标对比(更柔的色);1px 边框柔色太隐、加深又太凶 → 保柔色加粗到 2px | 用同一种预算硬扛(只加深 / 只加粗)把另一维推过头 | 全端 | ADVISORY |
+| baseline-align-mixed   | 一行混排字号对齐用 baseline             | 一行内大小字号混排用 `align-items: baseline`(Web)/ `CrossAxisAlignment.baseline`(Flutter),大数字与单位/标签底对齐 | 垂直居中对齐混排行,字面看起来各飘各的      | 全端 | ADVISORY |
+
 ## 与其他文档的关系
 
 - WCAG 2.2 增量准则与韧性文本细则的展开版见 [`accessibility.md`](./accessibility.md) 第 7/8 节;触控目标分层口径(原生 44pt/48dp/44vp、Web 最低 24px/推荐 44px)与其 §5 强制项、§6 预检项、§7 target-size-minimum 一致
@@ -131,3 +142,4 @@
 - `scripts/validate-draw-md.py` 各检查项在脚本 R_* 常量行内注释标注本文 slug 回链:aria-label → aria-labels、touch-target → touch-target-44 / web-target-size-24,其余 11 项为结构/token 契约项注明"无 ux-rules 对应";新增脚本检查时先在本文登记规则条目
 - §11 浏览器原生面主题化的交付检查点在 [`preview-checklist.md`](../commands/preview-checklist.md) 5.11「原生面锁」三条(Web 项;Harmony/Flutter n/a)
 - overscroll 双层模型 / 键盘属性分派 / user-select 控件-内容二分的完整口径见 [`web-interface-guidelines.md`](./web-interface-guidelines.md)(input-type-keyboard 是其表单侧对齐条目)
+- §8 等待反馈三条的时长分档与降级阶梯 canonical 见 [`ux-laws.md`](./ux-laws.md) Doherty 专节(六级映射 + 五级阶梯);§13 层级与动作的用户感知症状对照表见 [`visual-symptoms.md`](./visual-symptoms.md)(按危害排序)

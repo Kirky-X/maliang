@@ -32,10 +32,30 @@ class TestGradientText(unittest.TestCase):
         findings, _ = dt.scan_text(text, "a.css")
         self.assertTrue(any(f["rule"] == "gradient-text" for f in findings))
 
-    def test_plain_gradient_without_clip_passes(self):
+    def test_plain_gradient_without_clip_now_reports(self):
+        # 翻转的固化漏报用例(#21 裁决):裸渐变(无 bg-clip-text)同样是 tell。
+        # 旧断言「裸渐变不应报」是漏报固化——紫粉渐变背景属 ai-tells §1,必须命中。
         text = '<div class="bg-gradient-to-r from-purple-600 to-pink-500"></div>'
         findings, _ = dt.scan_text(text, "a.html")
+        self.assertIn(("purple-cyan-gradient", 1), findings_rules(findings))
+
+    def test_raw_css_gradient_by_value_reports(self):
+        # 按值判定补齐逃逸通道:同一渐变内紫系与蓝青系色值同现即命中
+        text = ".hero { background: linear-gradient(135deg, #9333ea, #06b6d4); }"
+        findings, _ = dt.scan_text(text, "a.css")
+        self.assertTrue(any(f["rule"] == "purple-cyan-gradient" for f in findings))
+
+    def test_single_hue_family_gradient_passes(self):
+        # 不应报: 品牌色相内 2 阶梯度(ai-tells §1 替代方案)与中性渐变
+        text = (".a { background: linear-gradient(180deg, #4c1d95, #7c3aed); }\n"
+                ".b { background: linear-gradient(180deg, #f8fafc, #e2e8f0); }")
+        findings, _ = dt.scan_text(text, "a.css")
         self.assertEqual(findings, [])
+
+    def test_purple_to_cool_tw_reports(self):
+        text = '<div class="bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400"></div>'
+        findings, _ = dt.scan_text(text, "a.html")
+        self.assertTrue(any(f["rule"] == "purple-cyan-gradient" for f in findings))
 
 
 class TestGlowShadow(unittest.TestCase):

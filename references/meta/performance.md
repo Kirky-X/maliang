@@ -109,6 +109,8 @@ z-index:
 
 ## 6. Canvas/WebGL 预算
 
+> 特效运行档降级(来源:design-dna generation-guide,2026-10 吸收):`navigator.hardwareConcurrency <= 2` 视为低端档,与 prefers-reduced-motion 并列触发 fallback(降级三选:关闭特效/降为 CSS/静态快照)。
+
 > 规范层。canvas/WebGL(粒子、流体、着色器背景、3D 场景)的取舍与护栏。通用工程约束,不绑任何库版本;dispose 清单为 Web/Element 场景专属,Harmony/Flutter 无手动 WebGL context 管理问题。来源:build-awwwards-quality-sites,2026-09 吸收。
 
 **目的性门槛**:

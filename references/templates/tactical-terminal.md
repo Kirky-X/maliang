@@ -54,6 +54,50 @@ verified: 2026-10-11
 - 过程感：`REV 2.6`、`UNIT / D-01` 式短随机串模拟活动机械流程（数据必须是真占位结构，不冒充真状态，见 [`../meta/ai-tells.md`](../meta/ai-tells.md) 伪系统标记条目）
 - 语义标签用 `<data>` `<samp>` `<kbd>` `<output>` `<dl>` 承载遥测内容
 
+## 签名动作（带配额，canonical CSS 逐字复用）
+
+产出至少满足以下七项中的六项；产品主导页可豁免第 6 项「性格时刻」。
+
+1. **ASCII 括章节标**：`[ DELIVERY SYSTEMS ]` 式框选标签（与「ASCII 符号系统」节同源），每页 3-6 处，全大写 + mono。
+2. **蓝图网格 + 准星交点**：`grid; gap: 1px` 数学分割线，交点落 `+` 准星；全站一层，正本 CSS 见下。
+3. **航空红告警脉冲**：唯一 accent 只给告警/关键读数的慢闪（`opacity` 2.4s 往返），每页 1-2 处，永不通用强调。
+4. **mono 读数 tick**：一个焦点读数 mono 数字逐帧刷新（步进式，非缓动滚动），每页 1 处。
+5. **宏排版巨字压角**：重无衬线巨字压住版面一角（与微排版 mono 小字无过渡档对撞），每页 1 处。
+6. **性格时刻**：CRT 开机一闪或光标驻留闪烁（光标特权全站归此一处），每页唯一，可豁免。
+7. **退化层**：扫描线/噪点/抖动选**至多两件**、各 opacity 压低铺全站（三件全上 = 廉价滤镜合集，见「翻车点」）。
+
+canonical CSS（网格 + 退化层正本，逐字复用、逐构建不重写）：
+
+```css
+.grid { display: grid; gap: 1px; background: var(--line);
+  /* 父底色做线，子块回填底色——无 border 的数学分割线 */ }
+.grid > * { background: var(--bg); }
+.crt::after { content: ""; position: fixed; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 2px,
+    oklch(80% 0 0 / 0.03) 2px 3px); /* 扫描线一层即止，禁叠第二层 */ }
+```
+
+## 共享尾件轮换表 + 非色彩杠杆
+
+同一模板的两个构建，**后半页不得同构**；每构建逐槽位换值并在构建盖章声明「上一构建：X。本构建：Y，因为 Z」。
+
+| 尾件槽位 | 候选形状（逐构建换，不落默认） |
+| --- | --- |
+| 特性区 | [F3 规格表](../components/f3-tabular-spec-sheet.md)（terminal 默认）· [F4 步骤序列](../components/f4-step-sequence.md)（`REV 1.0→2.0` 制式）· [F2 粘性滚动栈](../components/f2-sticky-scroll-stack.md) |
+| 证明区 | 多行日志流引文 · 单条 mono 引文行 · [T4 编号数据条](../components/t4-numbered-stat-strip.md)；**禁三卡证言行** |
+| 结尾读数 | 单焦点读数 + 限定语 · 无数字纯结构收尾 · [T4 数据条](../components/t4-numbered-stat-strip.md) |
+| 页脚 | [Ft4 密集版权页](../components/ft4-dense-typographic.md)（terminal 默认，REV/构建哈希）· [Ft2 单行内联](../components/ft2-inline-rule-single-line.md) · [Ft8 跑马灯](../components/ft8-marquee-scroll.md)（仅运动/告警调性） |
+
+非色彩杠杆（与配色无关，逐构建换组合——换调子先换结构，色板只是最后一层）：
+
+1. hero 原型：[H7 演示视频裁边](../components/h7-demo-video-clipped-by-viewport-edge.md) / [H4 数字主导](../components/h4-stat-led.md) / [H1 跑马灯宣言](../components/h1-marquee.md) 逐构建轮换。
+2. 强调手法：航空红 / 字重 700 / 反白块（白底墨字），三选一轮换，不叠加。
+3. 密度节奏：mono 高密簇与巨字大留白必须交替；每构建至少一处「刻意密」对照「刻意疏」。
+4. 容器物理：1px 分格 / 无框网格反差 / 2px 板块硬边，逐构建取一。
+5. 接缝语言：`>>>` 流向符 / `<hr>` 通栏 / 双线，逐构建取一。
+6. 装饰剂量：扫描线/噪点/抖动/准星，每构建至多两件、opacity 压低。
+7. 动效 register：光标闪烁 + 读数 tick / 扫描刷新 / 全静态，逐构建取一；MOTION dial 1-3 内运作。
+
 ## 翻车点
 
 - 绿色失控：终端绿一旦扩散到第二个元素，军工感立刻塌成赛博朋克霓虹——只留一个。

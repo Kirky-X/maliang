@@ -1,6 +1,6 @@
 # 编号门禁 —— 交付前的二元否决清单
 
-> 规范层。清单式 reference 满仓都是(ai-tells 的 Tell、ux-rules 的 slug、preview-checklist 的 140 项),但它们多数回答「这样好不好」,不回答「不这样能不能交」。本文只收**二元门禁**:每条要么 PASS 要么 FAIL,无灰区,任一命中即不许交付,修复后重跑全部。
+> 规范层。清单式 reference 满仓都是(ai-tells 的 Tell、ux-rules 的 slug、preview-checklist 的 143 项),但它们多数回答「这样好不好」,不回答「不这样能不能交」。本文只收**二元门禁**:每条要么 PASS 要么 FAIL,无灰区,任一命中即不许交付,修复后重跑全部。
 >
 > 每条门禁三段写死:**违反什么**(可被指认的字面形态)/ **怎么判定**(证据从哪来)/ **怎么修**(指回可执行的文档)。软提示式表述(「注意质量」「保持一致」「尽量避免」)一律不构成门禁。机制来源:oh-my-design 的 numbered slop gates(编号 + 二元 + 机器可判项必须留 grep 证据,MIT,2026-09 吸收,条目与判据中文自研)。
 
@@ -13,11 +13,11 @@
 3. **不豁免、不降级**。唯一合法出路是修复。确有正当理由(如 DESIGN.md 显式批准某个 AI Tells 值)时,走 [`ai-tells.md`](ai-tells.md) §0 豁免总则的**显式记录**要求,静默豁免 = FAIL。
 4. **CRITICAL 一票否决**。任一 CRITICAL 门 FAIL,不得被任何评分补偿——沿用 [`rules-priority.md`](rules-priority.md) 冲突裁决规则 1 与「加权评分从属声明」。
 5. **修复后重跑全部**,不可只跑失败项(与 [`../commands/preview-checklist.md`](../commands/preview-checklist.md) 执行规则一致)。
-6. **未测量不得记为通过**。退出码 2 / UNMEASURED 表示「**没能检查**」(路径不存在 / 没装浏览器 / 无目标),不是「检查通过」——Nothing was measured. This is not a pass;调用方禁止把 2 当 0,报告禁止把未测量项写成 PASS。三态 canonical 声明见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md)(0 = 看了没问题 / 1 = 看了有问题 / 2 = 没能检查);凡「本轮未实测」的项,判定结论只能记 UNMEASURED。来源:ux-ui-agent-skills(#16),2026-10 吸收。
+6. **未测量不得记为通过**。退出码 2 / UNMEASURED 表示「**没能检查**」(路径不存在 / 没装浏览器 / 无目标),不是「检查通过」——Nothing was measured. This is not a pass;调用方禁止把 2 当 0,报告禁止把未测量项写成 PASS。三态 canonical 声明见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md)(0 = 看了没问题 / 1 = 看了有问题 / 2 = 没能检查);凡「本轮未实测」的项,判定结论只能记 UNMEASURED。**附注**:全局性异常(渲染空白/系统性怪象)先用已知正确文件做对照实验,判别环境问题 vs 产物问题,再决定记 UNMEASURED 还是 FAIL。来源:ux-ui-agent-skills(#16),2026-10 吸收;对照实验:huashu-design verification 第 0 条,2026-10 吸收。
 
 **严重级**:CRITICAL(可访问性 / 功能损坏,一票否决)· HIGH(AI 味 / 系统一致性,阻断交付)· MEDIUM(打磨项,不阻断但须在报告列为 known issue)。
 
-**与 140 项清单的关系**:本文**不替代** [`preview-checklist.md`](../commands/preview-checklist.md),也不重复其条目。140 项是「全量机械检查」,本文是「否决门」——门禁条目均可映射到 140 项的分区或 ai-tells / ux-rules 的既有条目,映射关系写在各条的「怎么判定」里。**两处都过才算过**:清单过了不豁免门禁,门禁过了不豁免清单。本节是这条规则的**唯一 canonical 表述**——其余文档(SKILL.md / lifecycle.md / preview.md / preview-checklist.md)提及此规则时只留一句提示并链接到本节,不各自复述全文;修订规则语义只改本节。
+**与 143 项清单的关系**:本文**不替代** [`preview-checklist.md`](../commands/preview-checklist.md),也不重复其条目。143 项是「全量机械检查」,本文是「否决门」——门禁条目均可映射到 143 项的分区或 ai-tells / ux-rules 的既有条目,映射关系写在各条的「怎么判定」里。**两处都过才算过**:清单过了不豁免门禁,门禁过了不豁免清单。本节是这条规则的**唯一 canonical 表述**——其余文档(SKILL.md / lifecycle.md / preview.md / preview-checklist.md)提及此规则时只留一句提示并链接到本节,不各自复述全文;修订规则语义只改本节。
 
 ---
 
@@ -174,7 +174,7 @@
 - **怎么修**:补齐记录后重跑 G01–G03;决策表未获用户确认的不静默写入账本。
 
 ### G24 · 静态声明代替实测
-- **违反什么**:「看起来没问题」「整体达标」作为验证结论,没有判定记录 / 实测截图 / grep 命中清单;或 140 项清单的运行时项用静态扫描结论顶替。
+- **违反什么**:「看起来没问题」「整体达标」作为验证结论,没有判定记录 / 实测截图 / grep 命中清单;或 143 项清单的运行时项用静态扫描结论顶替。
 - **怎么判定**:报告首行 disposition 与证据四分类(见 [`../commands/preview.md`](../commands/preview.md) 证据四分类)是否填全。
 - **怎么修**:按 preview.md 的证据四分类补齐;无法实测的项如实标 `unresolved`,不许默认通过。
 
@@ -228,6 +228,31 @@
 - **怎么判定**:渲染 token 全量展板 + 高密度产品屏,逐个 token 对账出现 ≥ 1 次;密度底线:Dashboard 4-8 指标块 + 1 图 + 1 表,List-detail 10+ 项。对应 [`../commands/design-md.md`](../commands/design-md.md) Phase 3 交付物。
 - **怎么修**:在视图里用上该 token,或回 design-md 删掉它——无人用的 token 就是装饰性 token,与 [`token-provenance.md`](token-provenance.md) §4 V2 联动。来源:hue(#34),2026-10 吸收。
 
+### G39 · 参考图保真 FAIL(ΔE)
+- **违反什么**:有参考图锚定的重建 / 复刻任务,重建截图对参考图的逐色保真任一阈值不过——mean ΔE > 5 / max ΔE > 20 / coverage drift > 0.35;或把「尺寸一致 / 像素接近」当还原度而没跑保真测量就把「还原了」写进结论(未测量当通过)。无参考图的任务本门不适用(n/a,不是 UNMEASURED);有参考图却没跑 = UNMEASURED。
+- **怎么判定**:`python3 scripts/verify-color-fidelity.py <重建截图> <参考图或测量 spec>` 输出逐色报告(每个参考色的最近实现色 / ΔE / 覆盖率),退出码按 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md) 三态(0 = PASS / 1 = FAIL / 2 = 没能检查——缺参考图、缺测量 spec 或格式不支持,**2 不得记通过**,§0 第 6 条)。脚本对实现侧显著簇逐簇计分:显著错误色块不得被覆盖率加权平均掩盖;显著参考色在实现侧缺失时走参考侧 max ΔE 反向暴露;残渣(覆盖 < 0.5%)不算保留该色。攻击盲区用例(错误色块 ΔE>90 不被平均掉 / 大错误区域配稀有参考色仍 FAIL / coverage 0.3502 > 0.35 边界)在 tests/ 固化。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么修**:按逐色报告定位偏差最大的色位,回 token / 样式修正后重截重测;**禁止调阈值凑 PASS**;阈值不可比时(测量参数变化)先回到同一组参数。与 G34 互补:G34 禁「尺寸一致冒充还原度」,本门给「还原度」以机械判据。来源:design-dna(#24),2026-10 吸收。
+
+### G40 · 资产位在场未验证
+- **违反什么**:设计里声明了真实资产位(图槽 / logo 位),交付时资产位**没被逐一验证在场**——渲染的是灰 div / emoji / 首字母 / 纯文字占位 / 自造 SVG 顶替,或「该有图的位置」根本没数过;或验证失败后不修复就宣称完成。
+- **怎么判定**:`python3 scripts/verify-assets.py <preview.html>`(或 preview 探针内等价检查):①逐资产位枚举(数出应有的图槽 / logo 位);②逐一验证渲染的是**声明的真实资产**(URL / logoAssetKey 匹配);③显式拒绝上述五类顶替物;④失败 → 同产物最小确定性修复 → 复查;⑤仍失败如实上报,禁止宣称完成。诚实范围:结构化 HTML 验证,**不冒充视觉 QA**——视觉还原仍按截图走查。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么修**:补真实资产(官方来源优先,取用协议见 [`visual-assets.md`](visual-assets.md));确以结构占位交付时,必须在交付说明显式声明为占位并列入未完成项,禁止静默顶替。来源:superdesign-skill(#29),2026-10 吸收。
+
+### G41 · stamp lies(盖章与实物不符)
+- **违反什么**:产物的设计归属声明与其描述系统、与实物对不上,按命中形态定级——①构图章写 Bento 实际居中单列等「章说谎」(**CRITICAL**,章必须反映已交付物);②DESIGN.md 在场时页面 token / 字体 / accent 漂移出声明系统(theme drift,**CRITICAL**——系统管理项目里逐页自选主题即 slop);③页面落在 DESIGN.md 声明的构图 family 之外(HIGH);④系统管理项目的页面完全缺归属声明缺 stamp(HIGH);⑤无 DESIGN.md 的项目与前次产出共享宏观结构 / 主题(MEDIUM,variety drift)。
+- **怎么判定**:人工对账 + `python3 scripts/check-structure-history.py`(章与构图家族核验,读 `.maliang/build-log.json`);DESIGN.md 在场时逐页对其 colors / typography / family 声明核;盖章核验 = 章名与页面实际结构逐项比对,不以章文为准。来源:hallmark(#19)+ tastemaker(#31 同门合并),2026-10 吸收。
+- **怎么修**:章与实物不符 → 改章或改页面,二者取实,禁止留说谎的章;theme drift → 拉回 DESIGN.md token;family 外 → 换 family 内构图或回 design-md 扩 family;缺 stamp → 补归属声明;variety drift → 换构图类并过 G42。
+
+### G42 · 轮换违例(连续重复 / 热轴)
+- **违反什么**:跨次构建的多样性机械指标失守——同一变化轴取相同值**连续两次**且未换 knob 未声明(immediate repeat);或变化轴取值聚合中任一轴占比 > 0.6(hot axis——「当下正在成为热默认」)而未处置。复用的唯一合法形态:换了至少一个 variation knob 并在盖章 / build-log 声明。
+- **怎么判定**:`python3 scripts/check-structure-history.py` 两查(立即重复 / 热轴),读 `.maliang/build-log.json`;轴集与 knob 词表以 [`../templates/variation-engine.md`](../templates/variation-engine.md) 为准;build-log 缺失 = UNMEASURED,不得记通过(§0 第 6 条)。
+- **怎么修**:换轴或换 knob 并声明后再交付;热轴时换冷轴取值或在交付说明写出「此时此地为何复用正确」的显式理由——variety 不能靠嘴上请求(抽签机制见 variation-engine)。来源:tastemaker(#31),2026-10 吸收。
+
+### G43 · 构图类声明未兑现
+- **违反什么**:build-log 声明了首屏构图类(fold class),实际构建未按声明类实现(declared class not honoured——比不声明更糟,声明即承诺);或绕过未花费集合抽签、人工挑选顺手的构图类(抽签是机制,不是建议);或 build-log 缺「Fold classes used」append-only 段,跨次构图无法对账。
+- **怎么判定**:对账 `.maliang/build-log.json`「Fold classes used」段与产物实际首屏构图;抽签由项目种子确定性派生(FNV-1a 播种、spent 类沉底),声明类可复算验证。判据与抽签机制见 [`../templates/variation-engine.md`](../templates/variation-engine.md)。
+- **怎么修**:按声明类重实现;确需改判时改声明并注明理由(改判同样入账),禁止静默换类;缺段则先补 build-log 再过本门。来源:ui-craft(#22),2026-10 吸收。
+
 ---
 
 ## G 组 · 定义层成立性(数据与存活)
@@ -261,4 +286,6 @@
 | 评审 / 证据 / disposition | [`../commands/preview.md`](../commands/preview.md)   | F 组引用其证据四分类、哈希条款与评审隔离   |
 | 反馈→规则账本            | [`feedback-ledger.md`](feedback-ledger.md)           | G37 判定其状态机与五字段                   |
 | 数据可视化诚实性         | [`../vocabulary/charts.md`](../vocabulary/charts.md) | 清单 5.14 数据型页面判据引用其「诚实性与极值」节 |
+| 多样性轴 / 构图类判据    | [`../templates/variation-engine.md`](../templates/variation-engine.md) | G42 / G43 引用其轴表、抽签与「Fold classes used」契约 |
+| 品牌资产取用协议         | [`visual-assets.md`](visual-assets.md)                | G40 修法引用其官方来源与真伪核对协议           |
 | 退出码三态 / 未测量      | [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md) | §0 第 6 条引用其 0/1/2 语义        |

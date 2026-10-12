@@ -65,6 +65,8 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 → 滚动驱动变体见 [`scroll-band-gallery.md`](../templates/page/scroll-band-gallery.md)。
 
 ### 3.2 Particle · 粒子场
+
+> 选型阈值(来源:design-dna generation-guide,2026-10 吸收):粒子数 < 100 且无复杂物理 → 原生 Canvas 2D;粒子数 ≥ 100 或复杂交互 → 考虑 Pixi.js / Three.js Points(rAF 循环 + destroy 清理)。
 变体：星云 / 网络图 / DNA 螺旋 / 流场 / 磁力线 / 噪声漂移 / 文字聚散 / 星轨。默认 **R5**（2D 场用 Canvas 2D，深度用 Three.js），SPECTACLE 6-9。
 **slop form**：邻居连线的星座图 + 鼠标排斥——**全网出镜率最高的 AI hero**，禁用。
 **死法**：DPR 没处理（retina 发糊）；粒子数在开发机上调的（笔记本 20fps）。

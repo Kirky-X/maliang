@@ -140,7 +140,11 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 
 **交互真实性门(G32/G33)**:执行 `python3 scripts/verify-interactive.py <preview.html>`,每次点击在**新加载页面**上进行。三信号——A:声明了状态契约(`aria-pressed` / `expanded` / `checked` / `selected` / `sort`,或 switch / tab / menuitemcheckbox / menuitemradio / option 角色)的已启用可见控件,真实点击后文档内无任何变化 → **失败**;B:无状态契约的普通按钮点击无效果 → **仅 advisory**(静态演示按钮是合法形态,不算失败);C:状态属性翻转了,但控件自身计算样式 / 文本 / 几何完全一致(invisible state,读屏听得见、眼睛看不见)→ **失败**。控件上的 `data-demo-state` 是作者手写的「这是状态渲染、不是活控件」声明,按豁免处理。
 
-**AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/detect-tells.py <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集,来源:impeccable hooks 思想,2026-09 吸收)。命中非豁免 tell = 硬性失败;豁免沿用 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的「三豁免 + tell-exempt 标注」机制。扫描结果与人工自查(第 6 节)互为通道,合并时按下方「双通道不变式」标注。
+**ΔE 保真门(G39,HIGH)**:有参考图锚定的重建 / 复刻任务,截图后执行 `python3 scripts/verify-color-fidelity.py <重建截图> <参考图或测量 spec>`——阈值 mean ΔE ≤ 5 / max ΔE ≤ 20 / coverage drift ≤ 0.35,输出**逐色报告**(每个参考色的最近实现色 / ΔE / 覆盖率;显著错误色块不得被均值掩盖,缺失的显著参考色反向暴露)。退出码按 [`EXIT-CODES.md`](../../scripts/EXIT-CODES.md) 三态:0 = PASS / 1 = FAIL(任一阈值不过)/ 2 = 没能检查(缺参考图、缺测量 spec、格式不支持)——**2 不得记通过**。无参考图的任务本门不适用;FAIL 修到过为止,禁止调阈值。判据 canonical 见 G39。来源:design-dna(#24),2026-10 吸收。
+
+**资产在场门(G40,HIGH)**:生成后执行 `python3 scripts/verify-assets.py <preview.html>`:逐资产位枚举(数出应有图槽 / logo 位)→ 逐一验证渲染的是**声明的真实资产**(URL / logoAssetKey 匹配)→ 显式拒绝灰 div / emoji / 首字母 / 纯文字 / 自造 SVG 五类顶替物 → 失败做同产物最小确定性修复 → 复查;仍失败**如实上报,不许宣称完成**。诚实范围:结构化 HTML 验证,不冒充视觉 QA。判据 canonical 见 G40。来源:superdesign-skill(#29),2026-10 吸收。
+
+**AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/detect-tells.py <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集,来源:impeccable hooks 思想,2026-09 吸收)。命中非豁免 tell = 硬性失败;豁免沿用 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的「三豁免 + tell-exempt 标注」机制。扫描结果与人工自查(第 6 节)互为通道,合并时按下方「双通道不变式」标注。文案**句型层**由 `python3 {SKILL_DIR}/scripts/check-copy.py <产物文件...>` 承接(10 式模板句正则;英文 em-dash 插入语滥用判 HIGH,中文全角破折号「——」豁免,与 ai-tells §6 口径一致;来源:tastemaker(#32),2026-10 吸收),清单挂 5.1 句型级反模板项。
 
 **aria-label 在 HTML 的映射规则:**
 - button → `<el-button aria-label="语义描述">`
@@ -178,7 +182,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 - 颜色统一画到 canvas 再读回,oklch / color-mix 这类写法也能比较;
 - **处置三档**:要改的可读性问题(对比度不达标 / 正文 < 13px / 行高过紧 / 首屏透明)必须修复;「改掉或写出理由」档(有色底灰字、行过长、眉标与编号标签、单侧边线、渐变文字、卡片套卡、emoji 图标、英文大写标签、标题间距)改掉或在交付说明写出它怎样服务方向;保留项写进交付说明;
 - 检查会误报(真实的步骤编号、确实需要的标签):误报在交付说明写一句,不为过检查改业务代码(接口 401/404 等记一行即可);
-- **探针只认得写法,判断不了好不好看**:提示清零之后,仍要自己看截图。
+- **探针只认得写法,判断不了好不好看**:提示清零之后,仍要自己看截图;有参考图锚定的任务,先过下方 **ΔE 保真门(G39)** 拿机械对照,再谈好看与否。
 
 **动效探针(同一资产、同一注入点,注入早于页面脚本)**:
 
@@ -210,12 +214,14 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 
 **验证两轮封顶**:发现 → 修复 → 复验的循环最多两轮;两轮后仍有发现,升级 disposition(`fix` → `rebuild`)而非开启第三轮——开放式自检烧钱且收敛差。
 
+**首稿视觉偏薄的定向打磨(参考锚定)**:修复循环里判定「整体成立但视觉偏薄」时,走固定模式——**重附同一参考** → 按 hierarchy / ornamentation / typographic rhythm / motion / materiality / overall UI 六维定向审计 → 把审计结论**合回当前实现**(增量改),不重开新稿、不换参考、不借机 restructure。六维与 redesign 9 维审计共用词汇,materiality(质感层:表面处理 / 光影 / 材质暗示)为补充维度;该模式同样适用于 redesign Refresh·Deslop 快速通道。来源:design-dna(#28),2026-10 吸收。
+
 **双通道不变式**:LLM 自查(第 6 节)与确定性检测(`preview-check.py`)是两条通道——**先完成自查、再读检测结果**(检测输出是确定性的,但仍会锚定判断);两边结果合并时,每条发现必须标注通道(`[自查]` / `[脚本]` / `[双方]`)。
 
 ### 证据四分类(产物报告必填字段)
 
 > 来源:frontend-design-practicalswan + mobile-native,2026-09 吸收。
-> 每项校验/验证结论必须标注以下四类证据之一;**禁止从单一分数声称合规**——"5 维 15 分"或"140 项全过"不构成证据,证据是"凭什么知道"。
+> 每项校验/验证结论必须标注以下四类证据之一;**禁止从单一分数声称合规**——"5 维 15 分"或"143 项全过"不构成证据,证据是"凭什么知道"。
 
 | 类别 | 含义 | 合格证据形态 |
 | ---- | ---- | ------------ |
@@ -248,16 +254,16 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 
 ---
 
-## 5. Pre-Flight Check(140 项机械检查)
+## 5. Pre-Flight Check(143 项机械检查)
 
 > 交付前**机械扫描**(可脚本化,非主观判断)。任一项失败即"硬性失败",不可交付,必须返工。来源:taste-skill + ui-ux-pro-max-skill。
 
-**完整 140 项检查清单见 [`preview-checklist.md`](./preview-checklist.md)**(从本文件拆出以控制行数),按 17 个分组:
+**完整 143 项检查清单见 [`preview-checklist.md`](./preview-checklist.md)**(从本文件拆出以控制行数),按 17 个分组:
 
 | 分组       | 项数 | 覆盖范围                                                  |
 | ---------- | ---- | --------------------------------------------------------- |
-| 5.0 Process 动态实测 | 7    | 375px/横屏旋转/reduced-motion/200% 字号/暗色对比/长内容与本地化膨胀/慢与失败依赖(先于全部分区) |
-| 5.1 AI Tells | 15   | 渐变/圆角/字族/容器宽度/定价/Lucide 等通用 AI 味         |
+| 5.0 Process 动态实测 | 8    | 375px/横屏旋转/reduced-motion/200% 字号/暗色对比/长内容与本地化膨胀/慢与失败依赖/参考图 ΔE 保真(先于全部分区) |
+| 5.1 AI Tells | 16   | 渐变/圆角/字族/容器宽度/定价/Lucide 等通用 AI 味/句型级反模板 |
 | 5.2 Performance | 10   | 图片尺寸/字体/动画属性/z-index/JS 体积/虚拟滚动           |
 | 5.3 WCAG 对比度 | 8    | 正文/大文本/UI 组件/placeholder/暗色模式/色盲             |
 | 5.4 用户偏好 | 6    | reduced-motion/reduced-transparency/双跑预览              |
@@ -270,21 +276,21 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 | 5.11 视觉一致性锁 | 8    | **主题锁/色彩锁/形状锁/原生面锁**/阴影档位/字号档位        |
 | 5.12 Hero 适配 | 6    | 移动端/桌面端 Hero/100svh/srcset/poster/CTA 数            |
 | 5.13 Core Web Vitals | 5    | **LCP/CLS/INP/FCP/TBT** 阈值                              |
-| 5.14 交付完备性 | 7    | 法务链接/返回导航/404/表单校验/skip-link/favicon/数据页诚实性 |
+| 5.14 交付完备性 | 8    | 法务链接/返回导航/404/表单校验/skip-link/favicon/数据页诚实性/资产位在场 |
 | 5.15 真机验证 | 8    | 粘滞 hover/tap 高亮/URL 栏视口/聚焦缩放/overscroll/safe-area/软键盘/PWA standalone(全部需真机) |
 | 5.16 生产化加固 | 6    | 极端输入/错误分状态/并发防重/i18n 三判据/中断手势恢复/verify 清单(见 hardening.md) |
 
 ### 执行规则
-- 140 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning;末尾列明的四项软警告除外;标记 `[运行时·探针]` 的项按探针三档处置,见第 4 节),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
-- 51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理、5.6 孤儿类选择器与未定义 var);其余 89 项为**运行时项**(标记 [运行时],见 checklist),在第 4 节浏览器验证中逐项确认;5.15 真机验证项在第 4 节之后、交付声明之前按 checklist 调试路径实测
-- 修复后重跑全部 140 项(不可只跑失败项),通过后先过**编号门禁**(见下),再进入第 6 节 Pre-Delivery Checklist(主观维度)
-- em-dash / 中英文空格 / 盘古之白 / 标点一致性为**软警告**(warning),其余 136 项为硬性失败
+- 143 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning;末尾列明的四项软警告除外;标记 `[运行时·探针]` 的项按探针三档处置,见第 4 节),失败项必须列出具体位置(HTML 行号 / CSS 选择器)
+- 143 项 = 51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理、5.6 孤儿类选择器与未定义 var) + **其余 92 项**为脚本外项(其中 3 项由本批门禁脚本覆盖:5.0 参考图 ΔE 保真 → `verify-color-fidelity.py`、5.14 资产位在场 → `verify-assets.py`、5.1 句型级反模板 → `check-copy.py`;89 项为运行时项,在第 4 节浏览器验证中逐项确认)
+- 修复后重跑全部 143 项(不可只跑失败项),通过后先过**编号门禁**(见下),再进入第 6 节 Pre-Delivery Checklist(主观维度)
+- em-dash / 中英文空格 / 盘古之白 / 标点一致性为**软警告**(warning),其余 139 项为硬性失败
 
-### 编号门禁(140 项之外的否决层)
+### 编号门禁(143 项之外的否决层)
 
-> 140 项回答「该项过没过」,编号门禁回答「**这种形态不许交**」。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。
+> 143 项回答「该项过没过」,编号门禁回答「**这种形态不许交**」。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。
 
-过 140 项之后、第 6 节之前,逐条过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) 的 **G01–G38**(A 溯源与 token / B 可访问性与触控 / C 视觉签名 / D 交互与状态 / E 布局与响应 / F 交付与可核验性 / G 定义层成立性)。执行纪律:
+过 143 项之后、第 6 节之前,逐条过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) 的 **G01–G43**(A 溯源与 token / B 可访问性与触控 / C 视觉签名 / D 交互与状态 / E 布局与响应 / F 交付与可核验性 / G 定义层成立性)。执行纪律:
 
 - **全量过,不摘要**——把门禁压缩成「主要几条」等于丢门,门禁的价值正在于覆盖了没被想到的形态
 - **有据才判**——「源码里没看到违反」必须附判定记录(命中行号清单 / 检查点结论),缺证据视为未判定;token 溯源三项由 [`scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定并留 [`../meta/token-provenance.md`](../meta/token-provenance.md) §5 的三行核对,人工仅复核脚本标 unconfirmed 的项
@@ -306,7 +312,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 
 ## 6. Pre-Delivery Checklist(5 维交付前检查)
 
-> Pre-Flight Check(140 项)与编号门禁(G01–G38)**双双通过后**的**主观维度评审**。5 个维度,每维度 1-5 分,任一维度 < 3 分不交付。来源:taste-skill。
+> Pre-Flight Check(143 项)与编号门禁(G01–G43)**双双通过后**的**主观维度评审**。5 个维度,每维度 1-5 分,任一维度 < 3 分不交付。来源:taste-skill。
 > 评审必须与生成**隔离执行**(见下方"评审隔离"),评审者输出以受限词表 disposition 开头。
 
 ### 评审隔离(审查与生成分离)
@@ -437,6 +443,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 - [ ] 禁止跳过 iOS/Android 双端验证(单端通过不代表另一端布局/字体一致)
 - [ ] 禁止预览问题只口头记录不写入修复清单(MUST 输出到下一轮 `draw-md` 的输入)
 - [ ] 禁止用模拟器截图代替真机预览(关键页面 MUST 真机验证,模拟器仅用于布局快速校验)
+- [ ] 有参考图锚定的交付 MUST 附 ΔE 保真逐色报告(G39);声明了资产位的产物 MUST 过资产在场验证(G40),未验证或验证失败 MUST NOT 宣称完成
 
 ---
 
@@ -450,4 +457,5 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 | UI markdown 缺少 token 引用(裸值) | 提示具体偏差(哪些值未引用 token) → 用 DESIGN.md token 替换,标注"自动补全,需确认" |
 | preview HTML 浏览器渲染异常 | 提示检查控制台错误 → 引导用户简化 UI markdown(移除复杂组件)后重试 |
 | 探针注入失败 / 宿主无浏览器工具 | 对应项记 **UNMEASURED**(不得记为通过) → 人工可判项按截图走查补,报告写明未测量项与原因 |
+| 全局性异常(渲染空白/文字消失等系统性怪象) | 先做**对照实验**判别环境 vs 产物:用已知正确文件(`scripts/devices/*.html`、tests/fixtures 已知正误样例)跑同一渲染器,对照物同样异常 = 环境问题(修环境,不判产物失败)(来源:huashu-design verification 第 0 条,2026-10 吸收) |
 | 回传桥端口被占 / 无法启动 | 提示换端口或换目录 → 降级 file:// + 剪贴板,并明说「当前不会自动回传,请在对话里回复选择」 |

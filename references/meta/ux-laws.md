@@ -9,9 +9,34 @@
 | **Fitts 定律** | 到达目标的时间由距离和目标大小决定 | 高频动作放大、放近；把相关操作聚到指针/拇指路径上 | 「边缘/角落有无限热区」仅桌面指针语境成立；移动端目标尺寸硬指标见 ux-rules `touch-target-44` / `web-target-size-24`，不能拿 Fitts 逻辑抵扣尺寸达标 |
 | **Hick 定律** | 决策时间随选项数量与复杂度上升 | 每一步少给选项；复杂任务拆成小决策；给推荐默认项而非空白候选 | 不是「菜单 ≤7 项」的教条出处（那是误读）；底部导航 ≤5 的工程口径见 ux-rules `bottom-nav-limit`，两者来源不同 |
 | **Jakob 定律** | 用户绝大部分时间在别的产品上，期待你的产品照同样的方式工作 | 交互模式遵平台惯例；要偏离惯例，先确认收益大于学习成本 | 惯例的具体化条目见 ux-rules `nav-state-active`、`back-behavior`；品牌创新放在视觉层，不放在交互层 |
-| **Doherty 阈值** | 系统响应低于 400ms，用户生产率与容忍度显著上升 | 三级配合：点击即刻反馈（`tap-feedback-speed`）→ 短等待乐观更新 → 长等待骨架屏（`progressive-loading`） | 400ms 是感知目标而非接口 SLA；maliang 交互动效时长口径（≤400ms，见 [`dials.md`](dials.md)）与其同源 |
+| **Doherty 阈值** | 系统响应低于 400ms，用户生产率与容忍度显著上升 | 感知等待按时长分档给反馈、按阶梯降级（六级映射与五级阶梯见下方专节）；点击即刻反馈（`tap-feedback-speed`）→ 短等待乐观更新 → 长等待骨架屏（`progressive-loading`） | 400ms 是感知目标而非接口 SLA；阈值管「感知等待时长」，不管刻意动效时长——动效预算见 [`dials.md`](dials.md)（≤400ms 口径与其同源但互不替代） |
 | **Tesler 定律**（复杂度守恒） | 每个系统都有删不掉的复杂度，问题只是谁承担 | 让系统吸收复杂度（默认值、自动填充、智能预设），界面保持简单 | 不是「能藏就藏」：被吸收的复杂度出错时必须可见可纠；表单自动复用见 ux-rules `redundant-entry` |
 | **Postel 定律**（宽容输入，严格输出） | 对接受的输入宽容，对产出的输出严格 | 输入层宽容解析（电话号带空格/横线、日期多格式），输出层归一化 | 宽容 ≠ 放弃校验：解析失败仍要走 `inline-validation` 给具体错误；安全校验（金额/权限）不在宽容范围 |
+
+### Doherty 阈值量化映射与降级阶梯
+
+> 来源：designer-skills doherty-threshold + loading-states(#7)，2026-10 吸收，中文自研。外部 stagger 30-50ms 口径**不吸收**（maliang stagger ≤80/120ms 更细，见 [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)）。规则侧回链：ux-rules `tap-feedback-speed` / `loading-buttons` / `progressive-loading`；交付检查在 [`../commands/preview-checklist.md`](../commands/preview-checklist.md) 5.7 Loading 项。
+
+**感知等待六级映射**（响应时长 → 用户感知 → 设计动作）：
+
+| 响应时长 | 用户感知 | 设计动作 |
+| --- | --- | --- |
+| 0-100ms | 即时——系统像动作的直接延伸 | 不给任何指示器；按钮按压态必须在此档内出现 |
+| 100-300ms | 快——可感知但不打断 | 仍无需指示器；自动补全首提示应在此档内出现 |
+| 300-400ms | 临界——部分用户开始注意 | 优化目标档；滑屏 / 视图切换 / tab 切换在此档内完成 |
+| 400ms-1s | 慢——用户明确意识到在等 | 必须给指示器；≤400ms 完成的操作**禁用**指示器（闪一下 spinner 本身即干扰） |
+| 1s-10s | 确定地慢——flow 断裂 | 必须进度反馈：可测进度用进度条，不可测用骨架 / 分步文案 |
+| 10s+ | 任务级中断——用户切走上下文 | 详细进度 + 时间预估 + 可取消 / 转后台 |
+
+**降级阶梯**（够不到 400ms 时从上往下逐级升级，能在低档解决就不上高档）：
+
+1. **100ms 内视觉状态变化**——触发元素按压态 / 局部高亮，无论后端是否完成（必做，对应 `tap-feedback-speed`）；
+2. **400ms-3s 给指示器**——小而不抢焦点的等待指示；
+3. **3s+ 给进度，不是裸 spinner**——可测给进度条，不可测给分步文案（裸转圈 = 降级失败）；
+4. **optimistic UI**——适用档：结果可预期且失败可回滚时，先呈现预期结果，服务器返回后对账，失败回滚并告知；
+5. **skeleton**——内容布局已知时优于 spinner：保空间语境、体感更快；骨架形状必须对齐真实内容，禁与占位比例失真。
+
+**边界**：六级映射是**感知设计目标**，不是接口 SLA，更不是「所有动效必须 <400ms」——刻意的 250ms 入场动画不算等待；阈值管**感知等待时长**，动效时长预算看 [`dials.md`](dials.md)，两者同源（400ms）但互不替代。实测以目标设备与网络条件为准，不以开发机为准。
 
 ## 二、记忆与注意
 
@@ -50,5 +75,6 @@
 
 - **本文是「为什么」层**：规则条目一律以 [`ux-rules.md`](ux-rules.md) 为准核对；本文只在需要归因/推理/说服时引用（如 critique 报告解释「为什么这样改」）
 - Doherty 阈值与动效时长预算的同源口径见 [`dials.md`](dials.md)、[`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)
+- Doherty 六级映射与降级阶梯的规则侧条目：ux-rules §3 `loading-buttons`、§8 `progressive-loading` / `tap-feedback-speed`；交付检查点在 [`../commands/preview-checklist.md`](../commands/preview-checklist.md) 5.7 Loading 项与 5.0 慢/失败依赖实测
 - 峰终定律对「错误结尾」的要求展开在 [`content-guide.md`](content-guide.md)（错误文案）与 ux-rules §7（错误处理）
 - 图底分离的视觉实现（海拔/投影/明度阶梯）见 [`../dimensions/elevation.md`](../dimensions/elevation.md)

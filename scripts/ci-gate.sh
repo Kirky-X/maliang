@@ -33,6 +33,9 @@
 #   8. validate-design-md.py / validate-generated.py — 交付后自动接入(存在即跑,strict)
 #   9. ledger.py verify     — 项目反馈账本存在时校验
 #  10. 浏览器依赖门清单      — 不运行,只打印手动入口与「未测量不得记为通过」口径
+#  11. 第二批吸收检测脚本    — check-structure-history(G41/G42)/check-copy/
+#                             verify-color-fidelity(G39)/verify-assets(G40),
+#                             对 tests/fixtures 已知 PASS 样例冒烟(strict)
 
 set -u
 cd "$(dirname "$0")/.." || exit 1
@@ -190,6 +193,23 @@ echo "==> 浏览器依赖门(不在 CI 内运行)"
 echo "    python3 scripts/verify-states.py examples/preview/        # 三态对比度实测"
 echo "    python3 scripts/verify-interactive.py examples/preview/   # 交互真实性实测"
 echo "    无浏览器时两脚本自报 UNMEASURED / 退出码 2 —— 未测量不得记为通过。"
+
+# 11. 第二批吸收检测脚本(已知正确样例冒烟;strict 三态,G39/G40/G41/G42 脚本层)
+#     对 tests/fixtures 的已知 PASS 样例跑一遍:退出码非 0 即脚本身上有回归。
+#     真实产物上的运行位置在 preview.md 第 4 节与 numbered-gates.md(门文档)。
+gate_if_script scripts/check-structure-history.py "check-structure-history(G41/G42 冒烟)" \
+  python3 scripts/check-structure-history.py \
+    --current tests/fixtures/build-log/current.json \
+    --log tests/fixtures/build-log/log.json \
+    --stamp tests/fixtures/build-log/stamp.css
+gate_if_script scripts/check-copy.py "check-copy(句型扫描冒烟)" \
+  python3 scripts/check-copy.py tests/fixtures/copy/clean.html
+gate_if_script scripts/verify-color-fidelity.py "verify-color-fidelity(G39 冒烟)" \
+  python3 scripts/verify-color-fidelity.py tests/fixtures/color/impl.png \
+    --reference tests/fixtures/color/ref.png
+gate_if_script scripts/verify-assets.py "verify-assets(G40 冒烟)" \
+  python3 scripts/verify-assets.py tests/fixtures/assets/pass.html \
+    --manifest tests/fixtures/assets/manifest.json
 
 echo ""
 echo "================="

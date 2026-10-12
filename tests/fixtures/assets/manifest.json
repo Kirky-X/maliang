@@ -1,0 +1,4 @@
+[
+  { "slot": "logo", "assetKey": "acme-logo", "url": "https://cdn.example.com/acme-logo.svg" },
+  { "slot": "hero-shot", "assetKey": "dashboard-shot", "url": "https://cdn.example.com/dashboard-shot.png" }
+]

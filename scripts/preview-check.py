@@ -9,7 +9,7 @@
         仅 warning 为提示,不拦截(退出码 0);无 HTML 文件属「没能检查」(退出码 2)。
 依赖: Python 3 标准库(无第三方依赖)。
 
-覆盖 preview-checklist.md 中可脚本化的检查项(实测 51/140 项),
+覆盖 preview-checklist.md 中可脚本化的检查项(实测 51/143 项),
 其余需浏览器/视觉验证的项标记为 MANUAL。
 
 检查分组(对应 preview-checklist.md §5.1-§5.13;§5.0 为运行时过程区,
@@ -1267,7 +1267,7 @@ def main(argv):
         print("")
         print("=" * 40)
         print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
-        print("覆盖: 51/140 项(实测可脚本化);其余 89 项需浏览器/视觉/运行时验证(MANUAL,见 checklist §5.0 与 §5.14-§5.16 及各分区运行时项)")
+        print("覆盖: 51/143 项(实测可脚本化);其余 92 项需浏览器/视觉/运行时验证(MANUAL,见 checklist §5.0 与 §5.14-§5.16 及各分区运行时项)")
         if warn_count and not error_count:
             print("仅 warning:按 scripts/EXIT-CODES.md 不拦截(#16)")
 

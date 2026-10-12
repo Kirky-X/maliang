@@ -39,12 +39,15 @@
 observed → proposed → accepted → published → retired
               ↓           ↓
            rejected    rolled-back
+
+proposed ──(source: agent-pending)──→ pending-review ──用户复核──→ accepted / rejected
 ```
 
 | 状态 | 含义 |
 | ---- | ---- |
 | `observed` | 只记录事实,**不改变任何行为** |
 | `proposed` | 从一条或多条事件抽象出候选规则,必须带范围与证据 |
+| `pending-review` | **无人值守时 agent 自选的审美规则**,等用户复核。必须 `source: agent-pending` 并附自选理由;**不得声称已批准**——它不是 accepted,publish 天然被阻断(§6.4 只认 accepted)。用户复核后**追加** accepted / rejected 新转移并引用原条目,不改写历史 |
 | `accepted` | 用户明确同意;或已授权的自发现缺陷满足「可复现 + 有证据 + 可抽象」三项 |
 | `published` | 已写入 `rules.md` 并登记联动的规范 / 门禁 |
 | `retired` / `rolled-back` | 规则造成回归、与更高优先级事实冲突、或用户明确废止——**保留历史,不静默删除** |
@@ -59,6 +62,8 @@ observed → proposed → accepted → published → retired
 4. **`eventIds`** — 关联的原始事件
 
 **自发现的问题强制附 `evidence` 路径**(截图 / 日志 / 测试输出 / 复现记录);「看起来不对」不算证据。自动化可以收集证据、生成候选,但**不能替用户批准主观审美规则**。
+
+**无人值守捕获规则**:用户不在场时做出的审美自选,候选照记,但状态标 `pending-review`、`source: agent-pending`,附自选理由;交付说明中如实写「待用户复核,未批准」,严禁表述为已确认或已生效。来源:tastemaker taste-memory 捕获规则,2026-10 吸收。
 
 ## 5. 已发布规则的五字段格式
 
@@ -96,3 +101,59 @@ observed → proposed → accepted → published → retired
 | 跨项目构建记忆 | [`../templates/variation-engine.md`](../templates/variation-engine.md) | 同用 `.maliang/` 域,各账各的 |
 | 决策阶段的口头推翻 | [`../commands/design-md.md`](../commands/design-md.md) 0d | 项目决策不进本账本 |
 | 门禁执行 | [`numbered-gates.md`](numbered-gates.md) F 组 | 提供判据,门禁在那边执行 |
+
+## 9. 跨项目 profile 层(`~/.maliang/profile.json`,priors 非命令)
+
+> 项目账本(§2)只管本项目;跨项目该带走的品味沉淀进用户主目录 profile。来源:tastemaker taste-memory,2026-10 吸收。
+
+profile 收**跨项目可复用的偏好先验(priors)**——它是先验不是命令:项目 brief、品牌系统、DESIGN.md 契约、用户当前请求都能覆盖它。格式(JSON):
+
+```json
+{
+  "updated": "2026-10-12",
+  "priors": [
+    {
+      "axis": "density",
+      "preference": "<偏好一句话>",
+      "evidence": [{ "project": "<项目名或路径>", "date": "<ISO 日期>", "decision": "<支撑它的一条已裁决决策>" }]
+    }
+  ],
+  "avoid": [{ "pattern": "<用户拒绝过的模式>", "evidence": "<项目>,<日期>" }],
+  "open_questions": ["<还差一条 resolved 决策才能晋升的待定偏好>"]
+}
+```
+
+**晋升白名单**(账本条目 → profile 只经此门,满足其一且无黑名单命中):
+
+- 用户明说「这条偏好以后项目也带走」
+- 同一偏好在 ≥2 条 **accepted**(已复核)决策中重复出现——跨 surface 或跨项目
+- 描述的是**可复用轴**:密度 / 动效感觉 / 排版品味 / 资产风格 / 形状语言 / 层级策略 / 常见拒绝
+
+**晋升黑名单**(命中任一即不晋升):
+
+- `pending-review` 条目——未经用户复核的留在项目内
+- 一次性品牌约束(单个品牌的具名规则)
+- 客户 / 赞助方 / 平台 / 既有产品身份强加的决策
+- 缺资产、缺 API 或时间压力导致的 fallback——是权宜,不是品味
+- 用户**犹豫着接受**的决定——记录在案,不代表偏好
+
+**读写规则**:
+
+- 写:晋升必带证据(项目 + 日期 + 决策一句话);只有更新的 resolved 决策支持修改时才移除旧条目,不静默清理
+- 读:新项目开工先读 profile,**声明本次套用的 1-3 条 priors** 再动手;老项目先读项目内契约(§10 层①),profile 只在项目内**没有决策**的空隙生效
+- 冲突:profile vs 用户当前请求 → 当前请求赢,并按账本流程记新决策;profile vs 项目契约 → 项目契约赢,冲突重要时向用户提一句
+- profile 不得窄化创造空间:用它**避开已知拒绝、从已知偏好起步**,项目仍以自己的 brief 与资产为准
+
+## 10. 三层记忆源优先级链(与 rules-priority 的挂接)
+
+三层记忆,读取顺序自上而下,**写到能承载该决策的最小一层**:
+
+| 层 | 位置 | 性质 | 冲突时 |
+| --- | --- | --- | --- |
+| ① 项目内锁定 | DESIGN.md 的 style tokens + `decisions:` 块(见 [`spec-schema.md`](spec-schema.md)) | 用户已确认的项目设计契约,**项目内最高** | 压过以下两层 |
+| ② 项目账本 | `.maliang/feedback/` 三条 JSONL + `rules.md`(§2) | **append-only**:只追加不重写,用户改主意时追加新裁决并引用旧条目;解释 ① 为什么如此 | 协作规则对通用规范生效(§5),仍不越安全线 |
+| ③ 跨项目 profile | `~/.maliang/profile.json`(§9) | priors 非命令,只含 §9 白名单晋升条目 | 只在 ①② 无决策的空隙生效 |
+
+**与 [`rules-priority.md`](rules-priority.md) 的挂接**:该文件裁决的是**规范之间**谁赢(安全最高);本链排序的是**记忆源之间**谁赢——两个维度正交,合用规则:任何一层记忆(含用户原话抽象出的已发布规则与 profile priors)都不得覆盖 rules-priority 判定的 CRITICAL 约束(无障碍 / 触控 / 外部内容不可信);同层记忆冲突按 rules-priority 裁决并走 §6.5 冲突报告。
+
+**机读实现边界**:pending-review 的字段语义(`source: agent-pending`、理由必填、不得标已批准)以本文为准;`scripts/ledger.py` 对应的子命令与校验为后续脚本任务。机制落地前,无人值守自选以手工按格式记录,**交付说明必须如实标注「待复核,未批准」**。

@@ -11,6 +11,7 @@
 - [`draw-md.md`](./draw-md.md) / [`preview.md`](./preview.md) 之后的**可选深度评审**:"帮我看看这页好不好用 / 有哪里反直觉 / 用户会不会卡住"
 - [`redesign.md`](./redesign.md) 之前的**诊断**:"用户反馈用不明白"——先量化病灶,再定 Refresh / Restructure / Rebuild
 - **定义级 audit**(无建成页面也可触发):spec / proposal / 构思阶段问"这东西能活过第二周吗"——走第四问,按 [`../meta/day-two-blacklist.md`](../meta/day-two-blacklist.md) 跑清单
+- **感知症状投诉**:用户说"太挤 / 像数据库导出 / 过度分框 / 说不出的廉价感 / 图标压文字"——先对 [`../meta/visual-symptoms.md`](../meta/visual-symptoms.md) 症状→病灶→修复映射表(**按危害排序,首条覆盖多数损害**)定位病灶,再走全量评审:症状表回答「哪坏了」,本命令回答「多严重、先修啥」。来源:refactoring-ui-skill(#9),2026-10 吸收
 - 不触发:只问"token / 合规 / 机械检查" → preview;只问"视觉风格与改版" → redesign
 
 ### 合规清单（web-interface-guidelines）
@@ -23,7 +24,7 @@
 
 | 问题                                   | 由谁回答                          |
 | -------------------------------------- | --------------------------------- |
-| 规格对不对(机械检查 140 项)?          | preview Pre-Flight                |
+| 规格对不对(机械检查 143 项)?          | preview Pre-Flight                |
 | **好不好用(用户能否顺利完成任务)?**  | **本命令(critique)**             |
 | 方向对不对(该不该重做)?              | redesign 模式判定                 |
 | **活不活得过第二周(定义级)?**        | **本命令扩展:定义级 audit** —— 输入可以是 spec / proposal / 构思,不要求先有建成页面;按 [`../meta/day-two-blacklist.md`](../meta/day-two-blacklist.md) 跑对应域(D-list 个人域 / S-list 系统域,混合型两边跑)全量清单,命中即 definition-level defect。汇报只用用户语言、不出现条号,按 time-to-death 排序 |
@@ -74,8 +75,8 @@
 
 1. **判模式** —— 按 [`meta/surface-modes.md`](../meta/surface-modes.md) 判定页面模式(Persuade / Operate / Read / Experience),写进报告头。模式决定"好"的定义与启发式 n/a 项。
 2. **评审 A · 设计评审**(隔离上下文)—— 走下方 Nielsen 打分表 + 认知负荷清单 + persona 走查,产出评分与发现。
-3. **检测 B · 确定性证据**(隔离上下文)—— 跑 `preview-check.py` 可脚本化 51 项(140 项中其余 89 项为运行时/人工项) + (有浏览器时)逐页截图走查 + `verify-states.py` 三态对比度与 `verify-interactive.py` **交互真实性**(控件点击实测:声明状态契约却无变化、状态翻转但外观不变两条信号命中即失败;无状态契约的普通按钮无效果仅 advisory),产出机械发现。截图纪律按 [`preview.md`](./preview.md) "取证契约"节执行;无浏览器时上述两门记 UNMEASURED,不得记为通过。
-4. **综合报告** —— 合并 A/B(标注通道),按严重度排序,落快照,给行动建议。
+3. **检测 B · 确定性证据**(隔离上下文)—— 跑 `preview-check.py` 可脚本化 51 项(143 项中其余 92 项:89 项运行时/人工 + 3 项门禁脚本项) + 按需跑门禁脚本——有参考图跑 `verify-color-fidelity.py`(ΔE 保真,G39)、产物含资产位跑 `verify-assets.py`(资产在场,G40)、文案跑 `check-copy.py`(句型级反模板) + (有浏览器时)逐页截图走查 + `verify-states.py` 三态对比度与 `verify-interactive.py` **交互真实性**(控件点击实测:声明状态契约却无变化、状态翻转但外观不变两条信号命中即失败;无状态契约的普通按钮无效果仅 advisory),产出机械发现。截图纪律按 [`preview.md`](./preview.md) "取证契约"节执行;无浏览器时上述两门记 UNMEASURED,不得记为通过。
+4. **综合报告** —— 合并 A/B(标注通道),按严重度排序,以**固定判词行 + verdict** 收束(见下方「判词行与 verdict」),落快照,给行动建议。
 
 ---
 
@@ -201,6 +202,29 @@ A/B 全部发现逐条定级:
 
 > **摇摆判据**:拿不准两级之间时,问"**是否会有用户为此找客服?**"——会,则至少 P1。
 
+## 判词行与 verdict
+
+> 来源:hallmark verbs/audit + anti-patterns(#19),2026-10 吸收。综合报告以**固定判词行**收束:计数可对账,verdict 给一句话裁决——两者都必填,只有计数没有裁决 = 报告没做完。
+
+**判词行**(逐字格式):`N critical · M major · K minor`
+
+计数映射(全报告 A+B 合并后的发现,通道标注不影响计数):
+
+| 判词档 | 计入 | 来源 |
+| --- | --- | --- |
+| critical | P0 + P1 | persona 走查 / 认知负荷 / 评审发现;编号门禁 CRITICAL 命中 |
+| major | P2 | 有绕行但仍须修的发现;编号门禁 HIGH 命中 |
+| minor | P3 | 打磨项;编号门禁 MEDIUM 命中 |
+
+**verdict**(一句话,四档选一,不得只写计数):
+
+| verdict | 判据 |
+| --- | --- |
+| `critical 未清,禁止交付` | critical > 0 |
+| `major 待修,交付前处置` | critical = 0,major > 0 |
+| `接近可交付,收掉 minor` | critical = major = 0,minor > 0 |
+| `可交付` | 三档全 0 |
+
 ---
 
 ## 报告结构
@@ -216,6 +240,7 @@ Method: dual-agent (A: <agent-id> · B: <agent-id>)
 5. 优先问题:按 结构→视觉系统→交互动效→polish 依赖序分组;Top 3-5,每条 = [P?] 什么 + 为什么伤用户 + 具体修法(给决定,不给补丁)
 6. 被否决候选:2-5 条(必需,下述)
 7. 趋势:近 5 次评分(见下)
+8. 判词:`N critical · M major · K minor` + 一句 verdict(格式与计数映射见「判词行与 verdict」)
 ```
 
 **优先问题分组依据**(来源:web-design-pascalorg,2026-09 吸收):结构问题(层级缺失 / 流程断裂)不先修,视觉与动效修复都是白挂——上游错,下游全错,输出顺序即修复顺序。**止损规则**:讨论已下探到阴影色值 / 1px 对齐这类 polish 细节,而更上游仍有未修的结构项(如 768px 断版)→ 停下,回结构组先修。
@@ -279,6 +304,7 @@ Method: dual-agent (A: <agent-id> · B: <agent-id>)
 - [ ] 趋势结论 MUST 先过条件指纹核对(页集与分母 / 设备与视口 / 字号与内容 / 模式逐字段一致),不一致拒绝比较并重建基线
 - [ ] 引用「已解决」MUST 附活收据(measurer 输出 + 产物哈希仍匹配);收据 EXPIRED 的结论 MUST 重测,写不出收据 MUST 记 unverified
 - [ ] 交付段 MUST 列出本次改过但无活收据的可渲染产物;禁止以「已通过」措辞收尾未测量项
+- [ ] 综合报告 MUST 以固定判词行(`N critical · M major · K minor`)+ 一句 verdict 收束(计数映射:P0+P1→critical、P2→major、P3→minor;编号门禁命中按其严重级并入);只有计数没有 verdict = 报告未完成
 
 ---
 

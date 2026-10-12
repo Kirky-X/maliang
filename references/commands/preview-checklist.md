@@ -7,15 +7,16 @@
 >
 > **本清单不豁免编号门禁**:本清单是「全量机械检查」(该项过没过),[`../meta/numbered-gates.md`](../meta/numbered-gates.md) 是「否决门」(这种形态不许交)。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。门禁在本清单全过之后、第 6 节 Pre-Delivery Checklist 之前逐条过,执行纪律见 [`preview.md`](./preview.md) 第 5 节「编号门禁」。
 >
-> **脚本覆盖**:51/140 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
-> 其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
+> **脚本覆盖**:51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
+> 3 项由本批门禁脚本覆盖(5.0 参考图 ΔE 保真 → `verify-color-fidelity.py`、5.14 资产位在场 → `verify-assets.py`、
+> 5.1 句型级反模板 → `check-copy.py`);其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
 > 可由页面内探针([`scripts/preview-lint.js`](../../scripts/preview-lint.js),注入预览临时副本、只读取证)
 > 实测取回的条目标 **[运行时·探针]**(按 [`preview.md`](./preview.md)「运行时实测探针」节三档处置判定);
 > 未标记项按分区语义与 5.13 的 MANUAL/脚本能力归属判断。
 > 静态扫描通过是底线而非达标证明 —— 运行时项必须在 preview 第 4 节浏览器验证中逐项确认,
 > 且每项结论按 preview.md「证据四分类」标注证据来源,禁止从单一分数声称合规。
 
-## 5.0 · Process 区(动态实测,7 项,先于全部分区执行)
+## 5.0 · Process 区(动态实测,8 项,先于全部分区执行)
 
 > 来源:ui-ux-pro-max pro-rules canonical 清单。以下是**过程性动作**——必须在真实渲染环境动手实测,静态扫描无法替代;先做本区,再进入 5.1-5.16 静态 / 运行时复选。
 > 2026-09 吸收(来源:frontend-design-practicalswan):补入两个压力实测项——设计只对理想数据成立=未完成,压力数据是实测动作,判定细则见 5.16 与 [`../meta/hardening.md`](../meta/hardening.md)。
@@ -27,8 +28,9 @@
 - [ ] **暗色模式独立测对比**:切到暗色后逐区域核对对比度(非简单反色) <sub>[运行时]</sub>
 - [ ] **长内容/本地化膨胀实测**:用最长真实内容与译语膨胀文本(德/俄等常见 +30-40%)填充后,布局不破、关键操作不截断 <sub>[运行时]</sub>
 - [ ] **慢/失败依赖实测**:接口超时、失败、离线时页面有分状态处置与恢复路径,无无限 spinner <sub>[运行时]</sub>
+- [ ] **参考图保真实测(ΔE)**:有参考图锚定的重建/复刻任务,重建截图对参考图跑 `python3 scripts/verify-color-fidelity.py <重建截图> <参考图或测量 spec>`——mean ΔE ≤ 5 / max ΔE ≤ 20 / coverage drift ≤ 0.35,附逐色报告;FAIL 修到过为止,未跑不得交付(门禁 G39;无参考图任务 n/a) <sub>[运行时;脚本 verify-color-fidelity;门禁 G39]</sub>
 
-## 5.1 · AI Tells(15 项,见 [`ai-tells.md`](../meta/ai-tells.md))
+## 5.1 · AI Tells(16 项,见 [`ai-tells.md`](../meta/ai-tells.md))
 - [ ] 无 Tailwind 渐变文字 + 中性灰背景组合
 - [ ] 非全场 `rounded-2xl`(至少 2 档圆角差异化)
 - [ ] 无紫蓝粉渐变大面积背景
@@ -44,6 +46,7 @@
 - [ ] 非默认 Lucide `Rocket/Zap/Shield` 三件套
 - [ ] 无 `source.unsplash.com/random` 占位
 - [ ] 字体非走 Google Fonts CDN 阻塞首屏
+- [ ] **句型级反模板**:跑 `python3 scripts/check-copy.py <产物文件>`,无 10 式模板句命中;英文 em-dash 插入语滥用判 HIGH(中文全角破折号「——」豁免,与 ai-tells §6 一致);headline 经 mechanism / outcome / tension 三角度候选淘汰产出,非首念模板句直出 <sub>[脚本 check-copy]</sub>
 
 ## 5.2 · Performance(10 项,见 [`performance.md`](../meta/performance.md))
 - [ ] 所有图片含 `width` + `height` 或 `aspect-ratio`
@@ -114,7 +117,7 @@
 
 - [ ] 所有按钮含 default / hover / pressed / focused / disabled 五态 <sub>[脚本 state.no-*(静态代理,warning)]</sub>
 - [ ] 所有可点击卡片含 hover / pressed 反馈 <sub>[脚本 state.no-hover/active]</sub>
-- [ ] Loading 状态有骨架 / spinner(> 200ms 操作) <sub>[运行时]</sub>
+- [ ] Loading 状态有骨架 / spinner(> 200ms 操作;分档与降级阶梯见 [`../meta/ux-laws.md`](../meta/ux-laws.md) Doherty 专节——400ms-3s 用指示器,3s+ 用进度而非裸 spinner,布局已知时骨架优于 spinner,<100ms 的操作不给任何指示器) <sub>[运行时]</sub>
 - [ ] Empty 状态有插画 + 文案 + CTA <sub>[运行时]</sub>
 - [ ] Error 状态有错误说明 + 重试 CTA <sub>[运行时]</sub>
 - [ ] Tactile Feedback(`micro-press-scale` 或 `micro-hover-lift`) <sub>[脚本 state.no-tactile(:active 内 transform)]</sub>
@@ -132,7 +135,7 @@
 - [ ] 章节内容是真正的 X,非"该章节应包含 X"
 - [ ] placeholder 占比 < 10%
 - [ ] 文案具体(无"现代设计"等空泛词)
-- [ ] 数字真实风(有尾数,非整数凑数)
+- [ ] 数字用真实精度;用户未供的按 [`copy-strategy.md`](../meta/copy-strategy.md) 数字阶梯(—+待确认灰块 / 问用户 / 重写该章节)
 
 ## 5.9 · 第 13 定律 · 动画动机(8 项,见 [`principles.md`](../meta/principles.md))
 - [ ] 每段动画可回答"为什么动"(状态变化 / 空间引导 / 反馈)
@@ -183,7 +186,7 @@
 - [ ] **FCP ≤ 1.8s**:首次内容绘制;首屏 JS ≤ 100KB gzip,字体不阻塞 <sub>[运行时]</sub>
 - [ ] **TBT ≤ 200ms**:总阻塞时间;主线程长任务(> 50ms)总和 ≤ 200ms <sub>[运行时]</sub>
 
-## 5.14 · 交付完备性(7 项,见 [`default-pages/index.md`](../default-pages/index.md))
+## 5.14 · 交付完备性(8 项,见 [`default-pages/index.md`](../default-pages/index.md))
 
 > 来源:taste-skill redesign-skill"AI 通常忘记的东西"清单。多为运行时 / 站点级检查,产物对应 `default-pages` 中的 privacy/terms/not-found 等页面。
 
@@ -194,6 +197,8 @@
 - [ ] skip-to-content 链接存在且为键盘 Tab 首个可达项 <sub>[脚本:静态可查存在性;位置需运行时]</sub>
 - [ ] favicon 存在(含移动端 bookmark 图标) <sub>[运行时;可静态抽检 head 引用]</sub>
 - [ ] **数据型页面诚实性**(有图表 / 数据展示时):柱 / 条从 0 起(折线截断轴须标注范围);缺失值 ≠ 0(断点 / 空白 / 明确标记);单位在轴标题 / 列头 / 数值中稳定出现;时间轴粒度 / 时区 / 采样周期可见;颜色只用于编码(告警色与普通类别色分离);交付前过 [`../vocabulary/charts.md`](../vocabulary/charts.md)「诚实性与极值」九问与极值谱系(负值 / 全 0 / 单点 / 缺失 / 超长类别 / 大量系列 / 窄屏 / 无数据) <sub>[运行时]</sub>
+
+- [ ] **资产位在场验收**:逐资产位枚举(数出应有图槽 / logo 位)→ 逐一验证渲染的是声明的真实资产 → 显式拒绝灰 div / emoji / 首字母 / 纯文字 / 自造 SVG 五类顶替物;跑 `python3 scripts/verify-assets.py <preview.html>`,失败先做最小确定性修复再复查,仍失败如实上报不许宣称完成(结构化 HTML 验证,不冒充视觉 QA;门禁 G40) <sub>[脚本 verify-assets;门禁 G40]</sub>
 
 ## 5.15 · 真机验证(8 项,全部需真机)
 
@@ -230,11 +235,11 @@
 
 ## 统计与执行规则
 
-**统计**:5.0 (7) + 5.1 (15) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (12) + 5.7 (11) + 5.8 (8) + 5.9 (8) + 5.10 (7) + 5.11 (8) + 5.12 (6) + 5.13 (5) + 5.14 (7) + 5.15 (8) + 5.16 (6) = **140 项**
+**统计**:5.0 (8) + 5.1 (16) + 5.2 (10) + 5.3 (8) + 5.4 (6) + 5.5 (8) + 5.6 (12) + 5.7 (11) + 5.8 (8) + 5.9 (8) + 5.10 (7) + 5.11 (8) + 5.12 (6) + 5.13 (5) + 5.14 (8) + 5.15 (8) + 5.16 (6) = **143 项**
 
 ### 执行规则
-- 全部 140 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning;末尾列明的四项软警告除外);标记 `[运行时·探针]` 的项按 [`preview.md`](./preview.md)「运行时实测探针」节三档处置判定(「要改的」必须修复;「改掉或写出理由」与保留项写进交付说明),不单条硬性拦截——失败项必须列出具体位置(HTML 行号 / CSS 选择器)
+- 全部 143 项均为**机械检查**(可脚本化或运行时实测,非主观判断),任一项失败 = 硬性失败(不可降级为 warning;末尾列明的四项软警告除外);标记 `[运行时·探针]` 的项按 [`preview.md`](./preview.md)「运行时实测探针」节三档处置判定(「要改的」必须修复;「改掉或写出理由」与保留项写进交付说明),不单条硬性拦截——失败项必须列出具体位置(HTML 行号 / CSS 选择器)
 - 5.0 Process 区先于 5.1-5.16 执行(动态实测是过程性动作,不因静态扫描通过而豁免)
 - 5.15 真机验证在浏览器验证之后、交付声明之前执行(模拟环境通过的项不因此豁免真机复测)
-- 修复后重跑全部 140 项(不可只跑失败项),通过后先过编号门禁 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) G01–G38,再进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
-- em-dash / 中英文空格 / 盘古之白 / 标点一致性为**软警告**(warning,非硬性失败),其余 136 项为硬性失败
+- 修复后重跑全部 143 项(不可只跑失败项),通过后先过编号门禁 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) G01–G43,再进入 preview.md 第 6 节 Pre-Delivery Checklist(主观维度)
+- em-dash / 中英文空格 / 盘古之白 / 标点一致性为**软警告**(warning,非硬性失败),其余 139 项为硬性失败

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-10",
+  "page": "acme-launch-v2",
+  "mode": "Experience",
+  "axes": {
+    "theme": "Pristine Light Mode",
+    "background": "pure solid field with soft ambient gradient depth",
+    "typography": "expressive display",
+    "hero": "asymmetric split hero",
+    "section": "poster-like stacked storytelling",
+    "signature": "layered-crop + quote-wall + bento",
+    "motion": "scrubbing text reveal + cinematic fade-through"
+  },
+  "dials": { "variance": 7, "motion": 5, "density": 3 },
+  "stamp": {
+    "mode": "experience",
+    "A": "pristine-light",
+    "B": "ambient-depth",
+    "C": "expressive-display",
+    "D": "asymmetric-split",
+    "E": "poster-stacked",
+    "F": "crop+quote+bento",
+    "G": "scrub+fade"
+  },
+  "brief": "acme 发布页第二次构建"
+}

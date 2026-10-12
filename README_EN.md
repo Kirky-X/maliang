@@ -26,7 +26,7 @@ English | [中文](README.md)
 - **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 24 component-naming vocabulary docs + eight dimension specs (color / type / icon / spacing / radius / border / layout / elevation)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Merged assets**: the former interface-design skill now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12) — critique reads it for UI-compliance/a11y checklists
-- **Script verification layer**: `validate-draw-md.py` (15 checks), `preview-check.py` (51/140 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
+- **Script verification layer**: `validate-draw-md.py` (15 checks), `preview-check.py` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
 - **Auxiliary scripts**: `install-skill.sh` (installer, see Installation below), `design_md_to_token_md.py` (auto-generates the product-layer token.md from a DESIGN.md), `skill_lint.py` (repo-level SKILL.md hygiene lint)
 
 ## 📦 Installation
@@ -89,7 +89,7 @@ $ python3 -m pytest tests -q
 
 Test files: see [`tests/`](tests) (single source; counts guarded by `test_doc_consistency`).
 
-CI gate measured: `bash scripts/ci-gate.sh` → `Result: PASS` (unit tests ✓, validate-draw-md ✓, validate-framework △ warnings only, ui-graph check-nav ✓, preview-check 0 errors / 3 warnings covering 51/140 items — the rest need browser-based manual verification). Push/PR runs the same gate automatically via `.github/workflows/validate.yml`.
+CI gate measured: `bash scripts/ci-gate.sh` → `Result: PASS` (unit tests ✓, validate-draw-md ✓, validate-framework △ warnings only, ui-graph check-nav ✓, preview-check 0 errors / 3 warnings covering 51/143 items — the rest need browser-based manual verification). Push/PR runs the same gate automatically via `.github/workflows/validate.yml`.
 
 ## 📁 Directory Structure
 

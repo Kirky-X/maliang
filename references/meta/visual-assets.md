@@ -16,6 +16,7 @@
 1. **禁止 div 拼假截图**——用嵌套 div/渐变/文字模拟"产品截图"是头号 AI 破绽。要么用真实截图素材，要么出占位槽 + 说明。
 2. **禁止 `?random` 随机图**——每次渲染都换图，preview 不可复现。
 3. **Logo 墙必须真 SVG**：优先 Simple Icons / devicon 官方源；虚构品牌则配自造 SVG 字标（几何标记即可，禁止文字假装 logo）。
+4. **具名品牌资产获取协议**（来源：huashu-design brand-asset-protocol，2026-10 吸收）：设计中要点名/并列展示的真实产品，必须取官方 logo——清单里有一个没取到 = STOP 补齐。四级兜底链（逐级降级，每级下载后用 `file` + `head -c 90` 核对真伪，防 CSS 剪影/空壳）：svgl API → Simple Icons（按品牌色上色）→ 官网 HTML grep inline SVG → Google favicon sz=256。配套「5-10-2-8」铁律（≤5 个 logo / 10 秒可辨 / 2 种来源交叉 / 8 分识别度）。反例存档：Kimi 用近色 #1783FF 冒充、DJI Pocket 用 CSS 剪影、五大 Coding Agent PPT 五个 logo 全未取。
 4. **LOGO-ONLY 规则**：Logo 墙下方禁止配"Trusted by 1000+ teams"式品类说明文字凑数。
 
 ## 素材边界与可判定口径

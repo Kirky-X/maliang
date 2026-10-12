@@ -57,7 +57,7 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
 ## 强制规则
 
 1. **整页 commit**：组合选定后全页贯彻，禁止中途换轴、禁止混搭成"四不像"。
-2. **组合去重**：与项目最近一次产出（或同品类参考项目）逐轴对比，≥5 轴相同即须重选。
+2. **组合去重**：与项目**最近 3 次**产出（build-log 头三条，不足 3 条有几条比几条；无日志时按盖章反推最近一条）逐轴对比，与**任一条** ≥5 轴相同即须重选。窗口从「最近一条」扩到「近 3 条」的理由：只比上一条时，A→B→A 的交替轮换永不违规，多个项目会走出同一个循环。来源：hallmark（对比窗口近 3 条），2026-10 吸收。
 3. **反品类默认**：列出该品类最惯用的 2-3 个组合并显式拒绝，除非 brief 明确要求；"能从品类猜出你的组合 = 自检失败"。
 4. **与模板墙联动**：选定组合后到 [`INDEX.md`](INDEX.md) 找 category/dials 匹配的模板做具象化参照；模板是配方可参考，轴组合是身份须保持。
 5. **挑战者捐赠**（可选强化）：让另一方向作为"挑战者"先行构思 5 分钟，verdict 三档（win/competitive/declined）；即使 declined，也必须从挑战者身上指认一项纪律反哺选定方向——"捐赠纪律，绝不搬运外衣"。
@@ -103,6 +103,24 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
 
 **风格协议挂载（方向命中时）**：方向若命中已有完整风格协议(模板墙条目 / design-systems 索引里的站点)，实体化时**直接加载对应协议**做深度约束，不凭印象模仿；命中后仍须过本节七轴与三问自检，协议不豁免差异要求。
 
+## 区段原型复用与每构建硬要求(原型词表: [`components/INDEX.md`](../components/INDEX.md),从索引挑名、只加载选中的那几个)
+
+> 两节分工：knob 节管**复用合法性**（同一个原型第二次出现必须不一样），硬要求节管**每页保底变化**（哪怕一个原型都不复用，页面也不许是等宽居中块的堆叠）。来源：hallmark component-cookbook「Within-archetype variation knobs」+ themes/hum「Two requirements every build must meet」，2026-10 吸收。
+
+### knob 声明（复用的唯一合法形态）
+
+- **旋钮是什么**：每个区段原型带 2-3 个变体旋钮——原型内部的二阶变化位（列数与跨度比例 / 密度档 / 描边与容器 / 强调部署 / 编号与连接件样式这类）。旋钮词表随原型定义走（区段原型库每个原型的「变体旋钮」行）；原型未带旋钮定义时，按上述五类结构杠杆自定 2-3 个，声明时写明。
+- **同原型复用必换至少一个 knob 并声明**：上一次 Bento 落了 `tiles=6 · spans=regular · border=hairline`，下一次至少一项不同，并把取值写进盖章与 build-log。两个产出落同一原型同一组旋钮值 = 与「项目间都选同一个原型」同级的模板化。
+- **盖章扩 knob 值**：复用了区段原型的构建，盖章行在 dial 段后追加两段——`FC=<构图类>` 与 `K=<原型id>:<knob>=<值>,<knob>=<值>`（见下方盖章示例；核验脚本只对账 A-G 与 mode，新增段按信息性读取，供 G41/G43 人工对账）。
+- **导航 / 页脚原型连续两次即违规**：导航与页脚是复用率最高、最容易被「顺手」照抄上一次的两个区段，不享受「换一个 knob 即合法」的宽限——系列产出（跨项目 / 跨品牌，与 [`../meta/ai-tells.md`](../meta/ai-tells.md) §13 同域）中相邻两次构建落同一导航或页脚原型即违规，必须换原型。**边界**：同一项目内的页面共享导航 / 页脚是 DESIGN.md 锁定的一致性（「第 7 页必须像第 1 页」），不属本条；本条只管跨项目的系列产出。
+
+### 每构建两个硬要求
+
+1. **一个 off-grid / 非对称时刻**：破栅格的卡、出血的大数字、2/3–1/3 分栏、一处倾斜——页面不得是一列等宽居中块的堆叠。off-grid 的**位置**跨构建轮换（这页在 hero、下页在证明区），不许每页同一位。
+2. **一个 designed exception**：一处有意的破例，说明这是人做的——干脆的自嘲旁注、一个可玩的小交互、干净截图上的手写批注、一处全出血色块。**破例类型跨构建轮换**，不每次同款；同款 exception 连续两次 = 新 uniform（处置见 [`../meta/ai-tells.md`](../meta/ai-tells.md) §14 判据）。
+
+两个都缺席 = 构建级不通过，进 design-md 收尾自检。**与 ai-tells 的分工**：§13 管 explore 方向层的意外 wildcard，§14 管单页内逐节重复；本节是两者的**跨构建等价物**——管这一页和上一页之间 off-grid 与 exception 的轮换。
+
 ## 跨次构建记忆（Build Log + Stamp）
 
 > 规则 2 的"与最近一次产出对比"以前无可执行的读取路径，只能靠叙述。本节让"Don't Repeat"真正可执行：**PROJECT 内一致性**由 DESIGN.md 锁定（第 7 页必须像第 1 页），**跨次差异**由构建日志驱动（第 7 次构建必须不同于第 6 次）——两个目标相反，禁止共用一份文件。来源：Adapted from finesse-ui divergence §4（MIT），2026-09 吸收，轴替换为本引擎七轴。
@@ -126,11 +144,15 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
       "signature": "layered-crop + quote-wall + bento + marquee",
       "motion": "pinned narrative + scrubbing reveal"
     },
+    "fold_class": "网格拼贴",
+    "knobs": { "bento": "tiles=7 · spans=mosaic · border=accent-corners" },
     "dials": { "variance": 7, "motion": 6, "density": 3 },
     "brief": "工业键盘发布页"
   }
 ]
 ```
+
+条目字段在七轴与 dials 之外增两个：`fold_class`（本次首屏构图类，词表见「首屏构图类抽签」节）与 `knobs`（本次复用的区段原型及旋钮取值，未复用原型时省略）。两字段**写后不改**（append-only）：改判、补记都新增条目并注明理由，禁止修改旧值——G43 对账与抽签的 spent 集合都依赖历史为真。「Fold classes used」段即全部条目 `fold_class` 字段按时间序读出的清单，不另立文件。
 
 首次写入时创建 `.maliang/` 目录，并把 `.maliang/` 加入项目 `.gitignore`。
 
@@ -140,8 +162,11 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
 
 ```css
 /* maliang · mode=Experience · A=deep-dark · B=tactile-texture · C=editorial-serif
- * D=image-first · E=gallery-led · F=crop+quote+bento+marquee · G=pinned+scrub · V7M6D3 */
+ * D=image-first · E=gallery-led · F=crop+quote+bento+marquee · G=pinned+scrub · V7M6D3
+ * FC=grid-collage · K=bento:tiles=7,spans=mosaic,border=accent-corners */
 ```
+
+`FC=` 段记首屏构图类、`K=` 段记复用原型的旋钮取值（未复用原型时省略 K=）；两段随章走，单独被拷走的 HTML 也能读出「复用换了什么」。核验脚本只机械对账 `mode` 与 A-G，FC/K 段按信息性读取，供 G41 / G43 人工对账。
 
 日志是主记忆（本机连续构建快），盖章是回退（随代码走：新 clone、协作者、被单独拷走的 HTML 都能读）。**两者分工成立的前提是盖章被提交而日志被 ignore**——丢掉任何一个，项目都会静默退回无记忆状态。无 `build-log.json` 时，grep 目标代码里的 `/* maliang ·` 反推一条记录。
 
@@ -150,9 +175,44 @@ scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ pa
 | 时机 | 动作 |
 | --- | --- |
 | design-md Phase 0（Design Read 之前） | 读 `.maliang/build-log.json`；无则 grep `/* maliang ·` 盖章反推；都无 = 首次构建，无约束 |
-| Phase 0 组合声明（旁边） | **把轮换说出来**——用一句话陈述新组合与最近一条在哪几根轴上不同，写进决策记录 |
-| design-md 收尾（自检通过后） | 数组头部 prepend 一条、裁到 20 条；把盖章写进 CSS 首行 |
+| 说服型页面发散前（explore §2.3 / draw-md 章节规划） | 跑「首屏构图类抽签」：从 spent 集合之外的类按项目种子取候选；声明本轮构图类 |
+| Phase 0 组合声明（旁边） | **把轮换说出来**——用一句话陈述新组合与最近 3 条各在哪几根轴上不同，写进决策记录 |
+| design-md 收尾（自检通过后） | 数组头部 prepend 一条（含 `fold_class` 与 `knobs`）、裁到 20 条；把盖章（含 `FC=` / `K=` 段）写进 CSS 首行；随后跑 [`../../scripts/check-structure-history.py`](../../scripts/check-structure-history.py) 做机械核验（立即重复 / 热轴 / 盖章对账，违例即 G41/G42） |
 
 ### 阈值
 
-沿用强制规则 2：新组合与日志最近一条**逐轴对比，≥5 轴相同即须重选**（等价于差异 ≥3 轴才放行）。补全历史页（dials 从未被记录）时只写七轴、省略 dials 数值——**编造的 dial 比缺席更糟**，下一次构建会把它当真值去轮换。
+沿用强制规则 2：新组合与 build-log **最近 3 条**逐条对比，与**任一条** ≥5 轴相同即须重选（等价于与该条差异 ≥3 轴才放行）。补全历史页（dials 从未被记录）时只写七轴、省略 dials 数值——**编造的 dial 比缺席更糟**，下一次构建会把它当真值去轮换。
+
+## 首屏构图类抽签（Fold Class）
+
+> 说服型页面（落地页 / 营销首页 / 活动页）的首屏**结构**按本节抽签轮换。为什么是抽不是选：**多样性无法靠文字请求**——十次盲构建产出同一个首屏，无论提示里是要求、允许还是明令禁止那个默认。所以构图类由机制给出，不由手感挑。来源：ui-craft fold/classes.mjs + recipe-landing（「variety cannot be requested in prose」/ FNV-1a 项目播种 / spent 沉底 / 声明类回验），2026-10 吸收；类目不用外部 6 类，词表换用 maliang 8 骨架（见下）。
+
+### 词表与分工
+
+**词表 = [`../vocabulary/hero.md`](../vocabulary/hero.md)「首屏骨架表」8 骨架**：满版图像压字 / 居中单一物件 / 画面即界面 / 满版文字 / 通栏上下堆叠 / 网格拼贴 / 纵排或斜向 / 左右分栏。explore 的首屏骨架与本节构图类是同一份词表，两处不另造名。
+
+与七轴 **Hero Architecture** 的分工：hero 轴管首屏**气质**（电影式居中极简 / 行内巨字……，是跨项目组合身份的一根轴），构图类管首屏**结构**（机械可判、可回验、跨次轮换）。同一次构建两者都落：build-log 条目 `axes.hero` 记气质取值，`fold_class` 记构图类；两套词表不互相替换、不互相推导，也**不互相豁免**——构图类换了不等于 hero 轴可以与上次重复，反之亦然。
+
+### 抽签机制
+
+1. **种子**：项目根目录名（无目录语境时用 DESIGN.md 项目名）。对每个类算 `FNV-1a(种子 + '\0' + 类名)` 得 32 位键，按键升序得该项目的候选序。同一种子次序稳定、可复算（同一项目跨会话抽签结果一致）；不同项目种子不同、起点不同。**必须播种**：外部实现曾以数组序做平局决断，结果所有未花费过任何类的项目都抽出同一前三位——跨项目方差恰好为零，藏在「抽」字后面。引以为鉴。
+2. **spent 沉底**：出现在 build-log「Fold classes used」清单里的类（见「跨次构建记忆」节），排名沉到最后——优先从本项目还没用过的类里抽。
+3. **左右分栏永远压底**：spent 之外它再垫一层——它是所有模型的默认（外部十次盲建构图十次 split；8 骨架表同样只给它单方向配额）。永远不当第一建议，brief 明确要求时才落。
+4. **领取**：从排序取前 3 为本轮候选；explore 一轮的方向按候选序领骨架，方向数超过未花费类数时才允许动用已花费类，并在决策记录写明动用了哪个 spent 类。
+5. **相抵顺延**：抽到的类与 brief 硬相抵（如「画面即界面」拿不出可拍的真实产品界面、「满版图像」没有可用图像资产），**写出相抵理由**后取排序下一位——不静默换成心里先想好的那个。构建中途改判换类同样写明理由并入账（改判是决定，静默换类是 G43 违例）。
+
+### 声明类回验
+
+构建完成后，按 8 骨架表「首屏长什么样」一列把成品首屏归类，与声明的 `fold_class` 对照：一致 → 写入 build-log；不一致 → **声明的类没有兑现，比不声明更糟**（它向任何审计读作合规）——按声明类重实现，或改声明并在决策记录注明理由（入账）。回验是目测可判的结构判据，preview 渲染后看三点即够：首屏谁占主导、文字与视觉是什么关系、阅读从哪里开始。判据细节同 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) G43。
+
+### 五套轮换口径，一张表分清
+
+| 口径 | 管什么 | 比较对象 | 通过线 | 门禁 |
+| --- | --- | --- | --- | --- |
+| 七轴组合 | 项目级视觉身份 | 新组合 vs build-log **最近 3 条** | 与任一条 ≥5 轴相同须重选（= 差异 ≥3 轴放行） | G42（脚本核验） |
+| 会话内五轴 | 单方向运行时自检 | 方向 vs 五轴落位 | 任一变体说不出在哪根轴发散即不配进列表 | explore 完成判据 |
+| 跨方向七轴 | 一轮内方向间差异计数 | 方向 vs 方向 | ≥4 轴不同，必含明度 / 时代气质之一 | explore 差异检验 |
+| 构图类抽签 | 首屏结构的跨次轮换 | 本轮候选 vs 「Fold classes used」 | 未花费集合优先；声明类必须兑现 | G43 |
+| knob 声明 | 区段原型复用合法性 | 本次复用 vs 上次同原型 | 至少换一个 knob 并声明；nav/footer 跨项目连续两次即违规 | G42 |
+
+与 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的分工：§13 管 explore 方向层的意外 wildcard（单轮发散），§14 管单页内逐节重复（单页 uniform）；本引擎五套口径全部管**跨构建**——这一页与上一页、这个项目与上个项目之间。

@@ -9,18 +9,34 @@
 扫描,留给 ai-tells.md 的人工对照流程——确定性判断用代码,品味判断留给人与
 LLM 评审。
 
-检测规则(与 ai-tells.md 对应,均进「硬命中」通道 → 退出码 1):
-  gradient-text    渐变文字(bg-clip-text / background-clip:text)          → ai-tells §1
-  glow-shadow      辉光阴影(0 偏移大模糊的 box/text-shadow、drop-shadow)   → ai-tells §1
-  uniform-radius   全场同圆角(单文件 ≥4 处同一非平凡圆角)                 → ai-tells §1
-  tracking-abuse   tracking 滥用(单文件 ≥3 行 tracking-tight*,或 ≥4 行负 letter-spacing) → ai-tells §2
-  colored-border   彩边框卡片(饱和色边框;Tailwind 只判 300-700 档)         → ai-tells §1
+检测规则按**四档严重级**对齐(critical / major / minor / warn;来源:ui-craft
+detect/rules.mjs 四档实测 critical 14/major 25/minor 2/warn 2,2026-10 吸收):
+critical 与 major 进「硬命中」通道 → 退出码 1;minor 与 warn 进告警档,只报不拦。
+
+硬命中通道(退出码 1):
+  gradient-text         渐变文字(bg-clip-text / background-clip:text)        → ai-tells §1 [critical]
+  glow-shadow           辉光阴影(0 偏移大模糊的 box/text-shadow、drop-shadow) → ai-tells §1 [major]
+  uniform-radius        全场同圆角(单文件 ≥4 处同一非平凡圆角)               → ai-tells §1 [major]
+  tracking-abuse        tracking 滥用(单文件 ≥3 行 tracking-tight*,或 ≥4 行负 letter-spacing) → ai-tells §2 [major]
+  colored-border        彩边框卡片(饱和色边框;Tailwind 只判 300-700 档)      → ai-tells §1 [major]
+  purple-cyan-gradient  紫蓝粉渐变背景:同一渐变内紫系(255°-350°)与蓝青系(170°-255°)
+                        同现,或 Tailwind class 紫系(purple/violet/fuchsia/indigo)
+                        搭配蓝青系(cyan/sky/blue/teal)或粉系(pink/rose)——按值判定
+                        补齐「只认 Tailwind class」的逃逸通道(裸 CSS 渐变同样命中)  → ai-tells §1 [critical]
+  transition-all        transition: all / transition-all(动画不列具体属性)    → numbered-gates G17 [critical]
+  uppercase-heading     ALL CAPS 标题(h1-h4 + uppercase;≤13px 且加字距的小标签例外) → ai-tells §10 [critical]
+  celebration-motion    庆祝性动效(class/animation 命中 animate-bounce/confetti/
+                        celebrat*/firework*)                                  → G18 + component.md [major]
+  emoji-icon            emoji 当功能图标(元素内容全 emoji,或 emoji 前缀标题)  → ai-tells 人工通道 [major]
+  placeholder-copy      Lorem ipsum 占位文案残留                              → ai-tells §4 [major]
+  lilac-purple          柔紫强调色(#a78bfa / #c4b5fd / #8b5cf6)               → ai-tells §7 [major]
 
 告警档(advisory,只报不拦,不影响退出码;同样支持 tell-exempt 豁免):
-  reflex-font      display 首位字族命中 ai-tells §11 反射字体清单。命中不自动
-                   违规(仍走 §0 豁免总则),故进告警档而非硬失败通道;命中后
-                   要么换字族,要么写出「没有其他字体能满足」的理由并标豁免。
-                   来源:hue scripts/validate.mjs checkFonts(BANNED_DISPLAY_FONTS),2026-10 吸收。
+  numbered-eyebrow [minor]  零填充编号 eyebrow(「01 · About」装饰性编号)      → ai-tells §10
+  reflex-font [warn]        display 首位字族命中 ai-tells §11 反射字体清单。命中不自动
+                            违规(仍走 §0 豁免总则),故进告警档而非硬失败通道;命中后
+                            要么换字族,要么写出「没有其他字体能满足」的理由并标豁免。
+                            来源:hue scripts/validate.mjs checkFonts(BANNED_DISPLAY_FONTS),2026-10 吸收。
 
 豁免:复用 ai-tells.md 第 0 节机制——三豁免(DESIGN.md 批准 / 世界类型自洽 /
 内容真有动机)的语义判断由人完成,脚本只认**显式记录**的 tell-exempt 标注:
@@ -33,9 +49,10 @@ LLM 评审。
 误报治理走最窄原则:具体行 > 单文件单规则 > 全项目,能不用 file 豁免就不用。
 
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
-        告警档(reflex-font)命中不改变退出码。
+        告警档(minor/warn)命中不改变退出码。
 依赖: Python 3 标准库(无第三方依赖)。
-来源: impeccable hooks 两层规则与豁免窄化思想,2026-09 吸收(中文自研实现)。
+来源: impeccable hooks 两层规则与豁免窄化思想,2026-09 吸收(中文自研实现);
+      四档对齐与机械规则扩充: ui-craft scripts/detect/rules.mjs(#21),2026-10 吸收。
 """
 
 import argparse
@@ -53,12 +70,27 @@ SCAN_EXTENSIONS = {
 # 目录递归扫描时跳过
 SKIP_DIRS = {"node_modules", ".git", "dist", "build", ".next", "__pycache__", ".venv"}
 
+# 四档严重级(与 maliang 审查三档 + 告警档对齐;来源:ui-craft #21 四档)
+SEV_CRITICAL = "critical"   # 硬失败
+SEV_MAJOR = "major"         # 硬失败
+SEV_MINOR = "minor"         # 告警档(不拦截)
+SEV_WARN = "warn"           # 告警档(不拦截)
+HARD_SEVERITIES = (SEV_CRITICAL, SEV_MAJOR)
+
 RULE_GRADIENT_TEXT = "gradient-text"
 RULE_GLOW_SHADOW = "glow-shadow"
 RULE_UNIFORM_RADIUS = "uniform-radius"
 RULE_TRACKING_ABUSE = "tracking-abuse"
 RULE_COLORED_BORDER = "colored-border"
 RULE_REFLEX_FONT = "reflex-font"
+RULE_PURPLE_GRADIENT = "purple-cyan-gradient"
+RULE_TRANSITION_ALL = "transition-all"
+RULE_UPPERCASE_HEADING = "uppercase-heading"
+RULE_CELEBRATION_MOTION = "celebration-motion"
+RULE_EMOJI_ICON = "emoji-icon"
+RULE_PLACEHOLDER_COPY = "placeholder-copy"
+RULE_LILAC_PURPLE = "lilac-purple"
+RULE_NUMBERED_EYEBROW = "numbered-eyebrow"
 
 # 阈值(确定性口径,写死不猜)
 GLOW_BOX_BLUR_MIN = 16      # box-shadow / drop-shadow 0 偏移模糊 ≥16px 判辉光
@@ -183,6 +215,7 @@ def check_gradient_text(rel_path, lines, file_scope, line_scope):
                 continue
             findings.append({
                 "file": rel_path, "line": i, "rule": RULE_GRADIENT_TEXT,
+                "severity": SEV_CRITICAL,
                 "message": "渐变文字签名(bg-clip-text / background-clip:text),见 ai-tells.md §1",
             })
     return findings
@@ -202,6 +235,7 @@ def check_glow_shadow(rel_path, lines, file_scope, line_scope):
                 continue
             findings.append({
                 "file": rel_path, "line": i, "rule": RULE_GLOW_SHADOW,
+                "severity": SEV_MAJOR,
                 "message": "辉光阴影(0 偏移 %dpx 模糊 ≥%dpx),见 ai-tells.md §1" % (blur, threshold),
             })
         for m in _DROP_SHADOW_GLOW_RE.finditer(line):
@@ -212,6 +246,7 @@ def check_glow_shadow(rel_path, lines, file_scope, line_scope):
                 continue
             findings.append({
                 "file": rel_path, "line": i, "rule": RULE_GLOW_SHADOW,
+                "severity": SEV_MAJOR,
                 "message": "辉光阴影(drop-shadow 0 偏移 %dpx 模糊 ≥%dpx),见 ai-tells.md §1" % (blur, GLOW_BOX_BLUR_MIN),
             })
     return findings
@@ -250,6 +285,7 @@ def check_uniform_radius(rel_path, lines, file_scope, line_scope):
         return []
     return [{
         "file": rel_path, "line": values[0][0], "rule": RULE_UNIFORM_RADIUS,
+                "severity": SEV_MAJOR,
         "message": "全场同圆角(%d 处均为 %s,无层级分档),见 ai-tells.md §1"
                    % (len(values), values[0][1]),
     }]
@@ -265,6 +301,7 @@ def check_tracking_abuse(rel_path, lines, file_scope, line_scope):
         if not is_exempt(RULE_TRACKING_ABUSE, first, file_scope, line_scope):
             return [{
                 "file": rel_path, "line": first, "rule": RULE_TRACKING_ABUSE,
+                "severity": SEV_MAJOR,
                 "message": "tracking 滥用(%d 行统一 tracking-tight*,display 与 UI 字体未分档),见 ai-tells.md §2"
                            % len(tw_lines),
             }]
@@ -273,6 +310,7 @@ def check_tracking_abuse(rel_path, lines, file_scope, line_scope):
         if not is_exempt(RULE_TRACKING_ABUSE, first, file_scope, line_scope):
             return [{
                 "file": rel_path, "line": first, "rule": RULE_TRACKING_ABUSE,
+                "severity": SEV_MAJOR,
                 "message": "tracking 滥用(%d 行负 letter-spacing,字距未随字号分档),见 ai-tells.md §2 与 font.md 字距节"
                            % len(css_lines),
             }]
@@ -302,8 +340,170 @@ def check_colored_border(rel_path, lines, file_scope, line_scope):
             continue
         findings.append({
             "file": rel_path, "line": i, "rule": RULE_COLORED_BORDER,
+                "severity": SEV_MAJOR,
             "message": "彩边框(饱和色 %s;确认语义色或按 ai-tells.md §0 豁免)" % hit,
         })
+    return findings
+
+
+# ---------------------------------------------------------------------------
+# 第二批扩充规则(#21):紫蓝粉渐变按值判定 + ALL CAPS 标题 + emoji 图标
+# ---------------------------------------------------------------------------
+
+# Tailwind 渐变方向 class 与 stop 色阶 from/via/to
+_TW_GRADIENT_DIR_RE = re.compile(r"\bbg-gradient-to-(?:r|l|t|b|tr|tl|br|bl)\b")
+_TW_STOP_RE = re.compile(r"\b(?:from|via|to)-([a-z]+)-\d{2,3}\b")
+_TW_PURPLE_SET = {"purple", "violet", "fuchsia", "indigo"}
+_TW_PINK_SET = {"pink", "rose"}
+_TW_COOL_SET = {"cyan", "sky", "blue", "teal"}
+
+# CSS 渐变函数与颜色字面量(按值判定,补齐「只认 Tailwind class」逃逸通道)
+_GRADIENT_FN_RE = re.compile(
+    r"(?:linear|radial|conic)-gradient\(([^()]*(?:\([^()]*\)[^()]*)*)\)", re.IGNORECASE
+)
+_GRADIENT_STOP_RE = re.compile(
+    r"#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)|oklch\([^)]*\)"
+)
+
+# 暖紫带/冷蓝青带(ui-craft 原口径 255-330;上限放宽到 350 覆盖 ai-tells §1
+# 「紫蓝粉」的 pink 系 330°-345°——自研口径,标注)
+_WARM_HUE_LO, _WARM_HUE_HI = 255.0, 350.0
+_COOL_HUE_LO, _COOL_HUE_HI = 170.0, 255.0
+
+
+def css_hue(token):
+    """CSS 颜色字面量的色相(度),读不出返回 None(近灰无有效色相亦 None)。
+
+    移植自 ui-craft scripts/detect/rules.mjs cssHue(#21),2026-10 吸收。
+    """
+    v = token.strip().lower()
+    m = re.match(r"^hsla?\(\s*([\d.]+)(?:deg)?", v)
+    if m:
+        return float(m.group(1)) % 360
+    m = re.match(r"^oklch\(\s*[\d.%]+\s+[\d.]+\s+([\d.]+)", v)
+    if m:
+        return float(m.group(1)) % 360
+    rgb = parse_color(v)
+    if rgb is None:
+        return None
+    r, g, b = (c / 255 for c in rgb)
+    mx, mn = max(r, g, b), min(r, g, b)
+    d = mx - mn
+    if d < 0.12:  # 近灰无有效色相,当一色会产出噪声
+        return None
+    if mx == r:
+        h = ((g - b) / d) % 6
+    elif mx == g:
+        h = (b - r) / d + 2
+    else:
+        h = (r - g) / d + 4
+    return (h * 60) % 360
+
+
+def check_purple_cyan_gradient(rel_path, lines, file_scope, line_scope):
+    """规则 6:紫蓝粉渐变背景(裸 CSS 渐变按值判定 + Tailwind class 词表)。
+
+    判定:同一渐变内 紫系(暖带 ≥1 stop)与 蓝青系(冷带 ≥1 stop)同现;
+    Tailwind 形式按色名词表(紫系 × [蓝青系 ∪ 粉系])。归属 ai-tells §1。
+    """
+    findings = []
+    for i, line in enumerate(lines, 1):
+        hit = None
+        m = _GRADIENT_FN_RE.search(line)
+        if m:
+            hues = [css_hue(s) for s in _GRADIENT_STOP_RE.findall(m.group(0))]
+            hues = [h for h in hues if h is not None]
+            warm = any(_WARM_HUE_LO <= h < _WARM_HUE_HI for h in hues)
+            cool = any(_COOL_HUE_LO <= h < _COOL_HUE_HI for h in hues)
+            if warm and cool:
+                hit = m.group(0)[:90]
+        if hit is None and _TW_GRADIENT_DIR_RE.search(line):
+            stops = {c.lower() for c in _TW_STOP_RE.findall(line)}
+            has_purple = bool(stops & _TW_PURPLE_SET)
+            has_cool = bool(stops & _TW_COOL_SET)
+            has_pink = bool(stops & _TW_PINK_SET)
+            if has_purple and (has_cool or has_pink):
+                hit = line.strip()[:90]
+        if hit is None:
+            continue
+        if is_exempt(RULE_PURPLE_GRADIENT, i, file_scope, line_scope):
+            continue
+        findings.append({
+            "file": rel_path, "line": i, "rule": RULE_PURPLE_GRADIENT,
+            "severity": SEV_CRITICAL,
+            "message": "紫蓝粉渐变背景(%s),见 ai-tells.md §1;背景改中性梯度,品牌色仅 10%% 强调" % hit,
+        })
+    return findings
+
+
+_UPPERCASE_TW_RE = re.compile(
+    r"<h[1-4]\b[^>]*\bclass\s*=\s*[\"'][^\"']*\buppercase\b[^\"']*[\"']", re.IGNORECASE
+)
+_UPPERCASE_TW_SMALL_RE = re.compile(
+    r"\btext-(?:xs|\[1?[0-3]px\])\b.*\btracking-(?:wide|wider|widest|\[)"
+    r"|\btracking-(?:wide|wider|widest|\[).*\btext-(?:xs|\[1?[0-3]px\])\b"
+)
+_UPPERCASE_CSS_RE = re.compile(r"h[1-4][^{;]*\{[^}]*text-transform\s*:\s*uppercase", re.IGNORECASE)
+_FONT_SIZE_PX_RE = re.compile(r"font-size\s*:\s*(\d+(?:\.\d+)?)px", re.IGNORECASE)
+_LETTER_SPACING_RE = re.compile(r"letter-spacing\s*:", re.IGNORECASE)
+
+
+def check_uppercase_heading(rel_path, lines, file_scope, line_scope):
+    """规则 7:ALL CAPS 标题(h1-h4 + uppercase)。
+
+    例外(ui-craft 同款):≤13px 且加宽字距的小标签是文档化例外,不算喊叫。
+    归属 ai-tells §10(生产测试 tells)。
+    """
+    findings = []
+    for i, line in enumerate(lines, 1):
+        hit = None
+        m = _UPPERCASE_TW_RE.search(line)
+        if m:
+            if not _UPPERCASE_TW_SMALL_RE.search(m.group(0)):
+                hit = m.group(0)[:80]
+        else:
+            m = _UPPERCASE_CSS_RE.search(line)
+            if m:
+                size = _FONT_SIZE_PX_RE.search(line)
+                if size and float(size.group(1)) <= 13 and _LETTER_SPACING_RE.search(line):
+                    continue
+                hit = "text-transform: uppercase"
+        if hit is None:
+            continue
+        if is_exempt(RULE_UPPERCASE_HEADING, i, file_scope, line_scope):
+            continue
+        findings.append({
+            "file": rel_path, "line": i, "rule": RULE_UPPERCASE_HEADING,
+            "severity": SEV_CRITICAL,
+            "message": "ALL CAPS 标题(%s),见 ai-tells.md §10;改 sentence case,大写只留给 ≤13px 加字距小标签" % hit,
+        })
+    return findings
+
+
+# emoji 当图标:默认 emoji 表现码点(对勾/箭头等排版字形不算,外部同款边界)
+_EMOJI_CP = "\U0001F300-\U0001FAFF\u2728\u26A1\u2705\u274C\u2B50\u2757\u2764"
+_EMOJI_ICON_ONLY_RE = re.compile(
+    r"<(\w+)[^>]*>\s*[%s]{1,3}\s*</\1>" % _EMOJI_CP
+)
+_EMOJI_ICON_EMBED_RE = re.compile(
+    r"[%s]\s*<(?:h[234]|p\b[^>]*font-semibold)" % _EMOJI_CP
+)
+
+
+def check_emoji_icon(rel_path, lines, file_scope, line_scope):
+    """规则 8:emoji 当功能图标(元素内容全 emoji,或 emoji 前缀标题)。
+
+    句中 emoji 不算;来源 ui-craft emoji-feature-icon(#21),2026-10 吸收。
+    """
+    findings = []
+    for i, line in enumerate(lines, 1):
+        m = _EMOJI_ICON_ONLY_RE.search(line) or _EMOJI_ICON_EMBED_RE.search(line)
+        if m and not is_exempt(RULE_EMOJI_ICON, i, file_scope, line_scope):
+            findings.append({
+                "file": rel_path, "line": i, "rule": RULE_EMOJI_ICON,
+                "severity": SEV_MAJOR,
+                "message": "emoji 当功能图标(%s);换真图标集(Lucide/Phosphor)——emoji 跨平台渲染不一" % m.group(0)[:60],
+            })
     return findings
 
 
@@ -313,6 +513,9 @@ _CHECKS = (
     check_uniform_radius,
     check_tracking_abuse,
     check_colored_border,
+    check_purple_cyan_gradient,
+    check_uppercase_heading,
+    check_emoji_icon,
 )
 
 
@@ -433,22 +636,73 @@ def scan_reflex_fonts(text, rel_path):
     return warnings
 
 
+# ---------------------------------------------------------------------------
+# 行级数据驱动规则表(#21):单正则即判定的规则,归属按 maliang 实际文件
+# ---------------------------------------------------------------------------
+
+_LINE_RULES = (
+    (RULE_TRANSITION_ALL, SEV_CRITICAL,
+     re.compile(r"(?<![\w-])transition\s*:\s*[\"']?all\b|(?<![\w-])transition-all\b"),
+     "transition: all(动画不列具体属性),见 numbered-gates.md G17;改列 transform/opacity/background-color"),
+    (RULE_CELEBRATION_MOTION, SEV_MAJOR,
+     re.compile(r"\bclass\s*=\s*[\"'][^\"']*\b(?:animate-bounce|confetti|celebrat\w+|fireworks?)\b"
+                r"|\banimation\s*:[^;}\n]*\b(?:bounce|confetti|fireworks?)\b", re.IGNORECASE),
+     "庆祝性动效(结果已在屏上就别庆祝),见 numbered-gates.md G18 与 commands/component.md success 状态"),
+    (RULE_PLACEHOLDER_COPY, SEV_MAJOR,
+     re.compile(r"\bLorem ipsum\b|\bLorem\b[^.\n]{0,60}\bdolor\b", re.IGNORECASE),
+     "Lorem ipsum 占位文案残留,见 ai-tells.md §4;换真实或「显然为假但合理」的域内容"),
+    (RULE_LILAC_PURPLE, SEV_MAJOR,
+     re.compile(r"#a78bfa|#c4b5fd|#8b5cf6", re.IGNORECASE),
+     "柔紫/莫兰迪紫强调色,见 ai-tells.md §7;换具体品牌色相,必须紫时用深紫 #4c1d95"),
+    (RULE_NUMBERED_EYEBROW, SEV_MINOR,
+     re.compile(r">\s*0\d{1,2}\s+[·/—–-]\s+[A-Za-z]"),
+     "零填充编号 eyebrow(「01 · About」装饰性编号),见 ai-tells.md §10;人工裁量"),
+)
+
+
+def _scan_line_rules(rel_path, lines, file_scope, line_scope, hard_only):
+    """跑行级规则表;hard_only=True 返回硬命中,否则返回告警档。"""
+    out = []
+    for i, line in enumerate(lines, 1):
+        for rule_id, severity, regex, message in _LINE_RULES:
+            if hard_only != (severity in HARD_SEVERITIES):
+                continue
+            if regex.search(line) and not is_exempt(rule_id, i, file_scope, line_scope):
+                out.append({
+                    "file": rel_path, "line": i, "rule": rule_id,
+                    "severity": severity, "message": message,
+                })
+    return out
+
+
 def scan_text(text, rel_path):
-    """扫描单文件文本,返回 (findings, exempted_count)。"""
+    """扫描单文件文本,返回 (findings, exempted_count)——仅硬命中通道。"""
     lines = text.splitlines()
     file_scope, line_scope = parse_exemptions(lines)
 
     findings = []
     for check in _CHECKS:
         findings.extend(check(rel_path, lines, file_scope, line_scope))
+    findings.extend(_scan_line_rules(rel_path, lines, file_scope, line_scope, hard_only=True))
 
     # 豁免计数:同一套匹配在不带豁免的口径下重跑一次,差值即被豁免掉的命中数
     total_hits = 0
     for check in _CHECKS:
         total_hits += len(check(rel_path, lines, set(), {}))
+    total_hits += len(_scan_line_rules(rel_path, lines, set(), {}, hard_only=True))
 
     findings.sort(key=lambda f: (f["file"], f["line"], f["rule"]))
     return findings, total_hits - len(findings)
+
+
+def scan_advisory_tells(text, rel_path):
+    """扫描告警档行级规则(minor/warn,不拦截),返回 warnings 列表。
+
+    与 reflex-font 同一出口语义:命中不改变退出码,豁免沿用同一套 tell-exempt。
+    """
+    lines = text.splitlines()
+    file_scope, line_scope = parse_exemptions(lines)
+    return _scan_line_rules(rel_path, lines, file_scope, line_scope, hard_only=False)
 
 
 # ---------------------------------------------------------------------------
@@ -502,8 +756,14 @@ def main(argv=None):
             continue
         file_findings, file_exempted = scan_text(text, path)
         findings.extend(file_findings)
-        warnings.extend(scan_reflex_fonts(text, path))
+        file_warnings = scan_reflex_fonts(text, path)
+        for w in file_warnings:
+            w["severity"] = SEV_WARN
+        warnings.extend(file_warnings)
+        warnings.extend(scan_advisory_tells(text, path))
         exempted += file_exempted
+
+    warnings.sort(key=lambda w: (w["file"], w["line"], w["rule"]))
 
     if args.format == "json":
         print(json.dumps({
