@@ -1,7 +1,7 @@
 """文档-脚本计数一致性断言:防 preview-checklist 扩分区后脚本头注/输出计数再漂移。
 
 清单(600ms)与脚本(400ms)双门槛漂移同源——纯文案改动,无逻辑,故用纯文本断言守护。
-49 为实测可脚本化覆盖数(脚本检查分组 §5.1-§5.13),由 preview-check.py 演进时同步维护。
+51 为实测可脚本化覆盖数(脚本检查分组 §5.1-§5.13),由 preview-check.py 演进时同步维护。
 """
 
 import os
@@ -13,7 +13,7 @@ CHECKLIST = os.path.join(BASE, "references", "commands", "preview-checklist.md")
 PREVIEW_MD = os.path.join(BASE, "references", "commands", "preview.md")
 PC_SCRIPT = os.path.join(BASE, "scripts", "preview-check.py")
 
-SCRIPTED = 49
+SCRIPTED = 51
 
 
 def _read(path):
@@ -30,15 +30,17 @@ class TestCoverageCounts(unittest.TestCase):
         runtime = total - SCRIPTED
 
         script = _read(PC_SCRIPT)
-        self.assertIn("49/%d 项" % total, script,
+        self.assertIn("51/%d 项" % total, script,
                       "preview-check.py 头注覆盖计数与清单总数漂移")
+        self.assertIn("覆盖: 51/%d 项" % total, script,
+                      "preview-check.py 输出行覆盖计数与清单总数漂移")
         self.assertIn("其余 %d 项" % runtime, script,
                       "preview-check.py 输出行运行时计数与清单总数漂移")
         self.assertNotIn("(MANUAL,见 5.13)", script,
                          "运行时项指针漂移:5.13 仅为 CWV 分区,运行时项分布见输出行新指针")
 
         preview = _read(PREVIEW_MD)
-        self.assertIn("49 项由", preview, "preview.md 脚本化计数表述漂移")
+        self.assertIn("51 项由", preview, "preview.md 脚本化计数表述漂移")
         self.assertIn("其余 %d 项" % runtime, preview,
                       "preview.md 运行时计数与清单总数漂移")
 

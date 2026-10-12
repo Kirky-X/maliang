@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--
+  verify-interactive fixture:信号 B(惰性控件,只 advisory)+ data-demo-state 豁免。
+  - `普通按钮` 无状态契约、点击无效果 → [B inert],不失败;
+  - `状态展示` 带 data-demo-state,作者显式声明是状态渲染展示 → 完全跳过。
+  期望:PASS(exit 0),输出含 [B inert],不含 [A dead]。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>verify-interactive fixture: 惰性与豁免</title>
+<style>body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }</style>
+</head>
+<body>
+  <main id="main">
+    <button class="plain" type="button">普通按钮</button>
+    <button class="demo" type="button" data-demo-state aria-pressed="true">状态展示</button>
+  </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+  preview-lint.js 动效探针 fixture:一次性出场(24px 位移)+ 循环 spinner +
+  1px 微幅动画,用于验证 load 相位的 elements/loops 判定。
+  `weak` 结论文案用 weak_only.html(只有 1px 微幅动画)。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>motion probe fixture</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes nudge { from { transform: translateY(1px); } to { transform: translateY(0); } }
+  .hero-title { animation: rise 400ms ease-out both; font-size: 32px; }
+  .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid #DDD; border-top-color: #1A1A1A; border-radius: 50%; animation: spin 1s linear infinite; }
+  .weak-move { animation: nudge 400ms ease-out both; }
+</style>
+</head>
+<body>
+  <main id="main">
+    <h1 class="hero-title">首屏标题入场</h1>
+    <span class="spinner" aria-hidden="true"></span>
+    <p class="weak-move">几乎不动的元素</p>
+    <div style="height: 1600px"></div>
+  </main>
+</body>
+</html>

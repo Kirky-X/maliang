@@ -4,84 +4,161 @@
     {
       "id": 1,
       "scenario": "典型场景：design-md 创建设计系统",
-      "prompt": "帮我基于现有 CSS 代码创建 DESIGN.md 设计系统文件",
-      "expected_output": "agent 应路由到 design-md 子命令 → 读取 references/design-md.md → 按 prose-first 方法论产出 DESIGN.md（YAML frontmatter token + Markdown 设计理由）→ 含 8 维度规范（色/字/图/距/角/线/布局/原则）"
+      "prompt": "帮我基于现有 CSS 代码创建 DESIGN.md 设计系统文件；这一步不调用浏览器、不生图、不实现业务代码。",
+      "expected_output": "agent 应路由到 design-md 子命令 → 读取 references/design-md.md → 按 prose-first 方法论产出 DESIGN.md（YAML frontmatter token + Markdown 设计理由）→ 含 8 维度规范（色/字/图/距/角/线/布局/原则）",
+      "expectations": [
+        "agent 明确按 design-md 1A 路径提取，读的是用户给定的 CSS / 变量文件，不凭空编造 token",
+        "产出 DESIGN.md 含 YAML frontmatter，颜色值用 hex 或 token 名、不残留 TODO / <placeholder> 占位",
+        "8 个维度节（色 / 字 / 图 / 距 / 角 / 线 / 布局 / 原则）齐备且各自非空",
+        "提取型输入时，设计原则不写多于证据支撑的条数，证据不足处标注待确认而非硬写"
+      ]
     },
     {
       "id": 2,
       "scenario": "复杂场景：完整流水线",
-      "prompt": "我有一个电商应用,需要从设计系统到 Element Plus 框架代码的完整流程",
+      "prompt": "我有一个电商应用,需要从设计系统到 Element Plus 框架代码的完整流程；本轮只产出各阶段文件，不跑浏览器预览、不生图。",
       "expected_output": "agent 应识别为多步任务 → 路由 design-md → draw-md → preview → draw-element → 各步骤间有检查点 → 产出 DESIGN.md + UI markdown + 预览 HTML + Vue 3 SFC 代码",
       "assertions": [
         "The run produces DESIGN.md, UI markdown, preview HTML, and Vue 3 SFC code"
+      ],
+      "expectations": [
+        "四个阶段各有产物文件落盘：DESIGN.md、ui-markdown 页面文件、preview HTML、Vue 3 SFC",
+        "页面 UI markdown 的颜色 / 字号 / 间距字段全部是 {token} 引用，无 #RRGGBB 字面量",
+        "阶段间有 CHECKPOINT 或显式检查点记录，未跳步",
+        "预览 HTML 的 :root 变量无 {token-name} 占位符残留"
       ]
     },
     {
       "id": 3,
       "scenario": "歧义/失败场景：无 DESIGN.md 直接要 UI markdown",
-      "prompt": "帮我产出首页的 UI markdown 规格",
-      "expected_output": "agent 应检查是否存在 DESIGN.md → 若无,先引导用户走 design-md 流程（'没有 DESIGN.md 就无法产出可靠的 draw-md 硬 token'）→ 若有,路由到 draw-md"
+      "prompt": "帮我产出首页的 UI markdown 规格；这一步不实现代码、不跑预览。",
+      "expected_output": "agent 应检查是否存在 DESIGN.md → 若无,先引导用户走 design-md 流程（'没有 DESIGN.md 就无法产出可靠的 draw-md 硬 token'）→ 若有,路由到 draw-md",
+      "expectations": [
+        "agent 先做存在性检查（读 examples/ui-markdown/token.md 或 DESIGN.md），不直接动手写页面",
+        "缺失时明确拒绝直接产出，并给出走 design-md 的下一步，不静默用默认值代替",
+        "缺失时的措辞包含「没有 DESIGN.md 就无法产出可靠的 draw-md 硬 token」的同等语义",
+        "存在时路由到 draw-md 而非其他子命令"
+      ]
     },
     {
       "id": 4,
       "scenario": "redesign：改版现有 UI,需先审计再动手",
-      "prompt": "这是我们现在首页的截图,帮我改得现代一点,但保留品牌感觉",
-      "expected_output": "agent 应路由到 redesign → 识别为 Refresh 模式并与用户确认 → 强制先完成 8 维度审计（输出汇总表,评分带锚点,禁止直接动手）→ 列出保留项清单（品牌色相/信息架构等）→ 选 2-3 个低风险现代化杠杆 → 决策树裁决每个改动点"
+      "prompt": "这是我们现在首页的截图,帮我改得现代一点,但保留品牌感觉；本轮只做审计与方案，不写实现代码、不跑浏览器。",
+      "expected_output": "agent 应路由到 redesign → 识别为 Refresh 模式并与用户确认 → 强制先完成 8 维度审计（输出汇总表,评分带锚点,禁止直接动手）→ 列出保留项清单（品牌色相/信息架构等）→ 选 2-3 个低风险现代化杠杆 → 决策树裁决每个改动点",
+      "expectations": [
+        "首步是 8 维度审计汇总表，每维评分带锚点说明，未先改代码",
+        "明确进入 Refresh 模式且经用户确认（或说明无人值守下的默认与理由）",
+        "保留项清单至少含品牌色相与信息架构两项",
+        "现代化杠杆数量在 2-3 个区间内，每个改动点有决策树裁决记录"
+      ]
     },
     {
       "id": 5,
       "scenario": "draw-md：页面规格产出,组件类型与 action 完整",
-      "prompt": "DESIGN.md 已经有了,帮我产出设置页的 UI markdown",
-      "expected_output": "agent 应路由到 draw-md → 从 DESIGN.md 提取 token 生成/更新 examples/ui-markdown/token.md → 二级页面放 ui/setting/ 子目录 → 每个组件参数表含组件类型（framework 45 类 slug）+ action 五元组 + token 引用 → 核心组件含 intent 字段 → 产出后自检无硬编码色值",
+      "prompt": "DESIGN.md 已经有了,帮我产出设置页的 UI markdown；这一步不实现代码、不跑预览、不生图。",
+      "expected_output": "agent 应路由到 draw-md → 从 DESIGN.md 提取 token 生成/更新 examples/ui-markdown/token.md → 二级页面放 ui/setting/ 子目录 → 每个组件参数表含组件类型（framework 56 类 slug）+ action 五元组 + token 引用 → 核心组件含 intent 字段 → 产出后自检无硬编码色值",
       "assertions": [
         "Component parameter tables include the component type, the action five-tuple, and token references",
         "The generated UI markdown contains no hardcoded color values"
+      ],
+      "expectations": [
+        "token.md 由 DESIGN.md 派生并落在 examples/ui-markdown/token.md",
+        "设置页文件落在 ui/setting/ 子目录",
+        "每个组件参数表含组件类型（framework 56 类 slug）、action 五元组、token 引用三项",
+        "核心组件含 intent 字段",
+        "页面 markdown 中 #RRGGBB 与 rgba() 字面量数量为 0"
       ]
     },
     {
       "id": 6,
       "scenario": "preview：交付前机械检查 + 隔离评审",
-      "prompt": "UI markdown 都产出了,帮我预览验证一下首页效果",
+      "prompt": "UI markdown 都产出了,帮我预览验证一下首页效果；允许生成预览 HTML 并运行本地检查脚本，不生图、不写业务代码。",
       "expected_output": "agent 应路由到 preview → 从 device_models.py 选设备（默认 iPhone 15）→ 生成自包含 HTML（token 解析进 :root,无占位符残留）→ 跑 preview-check.py 自动化检查（含 WCAG 对比度/交互状态）→ 运行时项浏览器验证 → 评审与生成分离（优先独立评审者,报告首行 disposition: deliver/fix/rebuild/blocked）→ 5 维评分含锚点与决定性自检",
       "assertions": [
         "The review report's first line states a disposition of deliver, fix, rebuild, or blocked"
+      ],
+      "expectations": [
+        "设备尺寸从 scripts/device_models.py 读取，不硬编码（默认 iPhone 15）",
+        "预览 HTML 为自包含文件，:root 中无 {token-name} 占位符残留",
+        "实际运行 preview-check.py 并贴出输出；未运行则显式标注未测量，不得以「已通过」收尾",
+        "评审报告首行是 deliver / fix / rebuild / blocked 之一；无法派生独立评审者时挂 ⚠️ DEGRADED 横幅",
+        "5 维评分各带锚点，且完成决定性自检"
       ]
     },
     {
       "id": 7,
       "scenario": "draw-element：下游框架转换",
-      "prompt": "把 examples/ui-markdown/ui/home.md 转成 Element Plus 代码",
-      "expected_output": "agent 应确认 draw-md 产出存在 → 读取 references/framework/ 的 element 组件文档 → 逻辑组件映射到 el-* 组件 → 颜色/字号/间距从 token.md 取值 → 保留 action 字段的交互行为 → N/A 组件不强行冒充（回退组合方案并标注）"
+      "prompt": "把 examples/ui-markdown/ui/home.md 转成 Element Plus 代码；只做转换与静态自检，不跑浏览器验证交互。",
+      "expected_output": "agent 应确认 draw-md 产出存在 → 读取 references/framework/ 的 element 组件文档 → 逻辑组件映射到 el-* 组件 → 颜色/字号/间距从 token.md 取值 → 保留 action 字段的交互行为 → N/A 组件不强行冒充（回退组合方案并标注）",
+      "expectations": [
+        "先确认 examples/ui-markdown/ui/home.md 存在，不存在时停并说明",
+        "读了 references/framework/element/ 下对应组件文档再映射，不凭记忆写 API",
+        "产物颜色 / 字号 / 间距取自 token.md，模板中无新增颜色字面量",
+        "action 字段的交互行为在代码中有对应实现或显式标注未覆盖",
+        "N/A 组件用组合方案回退并在产物中标注，不冒充原生组件"
+      ]
     },
     {
       "id": 8,
       "scenario": "ui-graph：关系查询与缺口发现",
       "prompt": "现在有哪些页面的跳转目标还没生成?有没有实现了但没对应 UI markdown 的页面?",
-      "expected_output": "agent 应路由到 ui-graph → 运行 scripts/ui-graph.py list-missing（查跳转目标缺失）→ list-unimplemented（查实现缺口）→ 输出结构化清单,不凭记忆猜测页面关系"
+      "expected_output": "agent 应路由到 ui-graph → 运行 scripts/ui-graph.py list-missing（查跳转目标缺失）→ list-unimplemented（查实现缺口）→ 输出结构化清单,不凭记忆猜测页面关系",
+      "expectations": [
+        "实际运行 scripts/ui-graph.py list-missing 与 list-unimplemented（或等价子命令）并贴出输出",
+        "输出为结构化清单（页面 / 跳转目标 / 缺口类型分列），不是散文回忆",
+        "两个问题分别回答：跳转目标缺失与实现缺口不混为一谈",
+        "无任何未运行脚本、仅凭记忆列出的页面关系"
+      ]
     },
     {
       "id": 9,
       "scenario": "ip：基于 DESIGN.md 生成 IP 形象",
-      "prompt": "根据我们的设计系统给产品做一个吉祥物形象",
-      "expected_output": "agent 应路由到 ip → 先读 DESIGN.md 提取调性（色彩/性格关键词）→ 优先调用 text_to_image API → API 不可用时 fallback 输出结构化 prompt 文档（正向/负向提示词 + CFG/步数/种子 + 3:4 比例）并标注待回填"
+      "prompt": "根据我们的设计系统给产品做一个吉祥物形象；允许调用生图能力，不写前端代码、不跑预览。",
+      "expected_output": "agent 应路由到 ip → 先读 DESIGN.md 提取调性（色彩/性格关键词）→ 优先调用 text_to_image API → API 不可用时 fallback 输出结构化 prompt 文档（正向/负向提示词 + CFG/步数/种子 + 3:4 比例）并标注待回填",
+      "expectations": [
+        "先读 DESIGN.md 并摘出色彩 / 性格关键词，提示词有 DESIGN.md 依据",
+        "优先走 text_to_image；不可用时输出结构化 prompt 文档而非口头描述",
+        "prompt 文档含正向提示词、负向提示词、CFG、步数、种子、3:4 比例六项，缺项显式标注待回填",
+        "生成图落盘到不与旧产物冲突的新路径，不静默覆盖上一版"
+      ]
     },
     {
       "id": 10,
       "scenario": "负向边界：非 UI 任务不触发本 skill",
       "prompt": "帮我写一个 Python 脚本批量重命名文件",
-      "expected_output": "agent 不应路由到任何 maliang 子命令 → 按通用编程任务处理（skill description 已声明不适用于无 UI 的后端/脚本任务）"
+      "expected_output": "agent 不应路由到任何 maliang 子命令 → 按通用编程任务处理（skill description 已声明不适用于无 UI 的后端/脚本任务）",
+      "expectations": [
+        "不路由到 design-md / draw-md / preview / redesign 等任何 maliang 子命令",
+        "不加载 maliang 的 DESIGN.md / token / 预览流程",
+        "按通用编程任务处理，直接产出脚本"
+      ]
     },
     {
       "id": 11,
       "scenario": "AI Tells 豁免判断：有动机的三列布局",
-      "prompt": "我们的仪表盘需要 日/周/月 三个并排的统计卡片",
-      "expected_output": "agent 应识别三列卡片命中 ai-tells.md 第 9 节 → 但内容是三个并列对等的时间维度（豁免总则第 3 条:内容真有动机）→ 显式记录豁免依据后放行,不强行改为 bento"
+      "prompt": "我们的仪表盘需要 日/周/月 三个并排的统计卡片；这一步不实现代码，只做判定与记录。",
+      "expected_output": "agent 应识别三列卡片命中 ai-tells.md 第 9 节 → 但内容是三个并列对等的时间维度（豁免总则第 3 条:内容真有动机）→ 显式记录豁免依据后放行,不强行改为 bento",
+      "expectations": [
+        "点名命中 ai-tells.md 第 9 节（三列卡片布局），不静默放过",
+        "引用第 0 节豁免总则第 3 条「内容真有动机」作为依据",
+        "显式记录豁免依据（如 tell-exempt 标注或等价产物内标注），静默豁免算违规",
+        "放行原方案，未强行改为 bento 或两列"
+      ]
     },
     {
       "id": 12,
       "scenario": "规则冲突裁决：美观 vs 可访问性",
-      "prompt": "设计师坚持用浅灰文字（对比度 2.3:1）说更轻盈好看",
-      "expected_output": "agent 应按 rules-priority.md 裁决:Accessibility(CRITICAL) 胜于 Style(HIGH) → 对比度必须达标 → 给出替代美学方案（字号/字重/深一档灰 + 层级重构）而非直接妥协,并向用户说明不可妥协的原因"
+      "prompt": "设计师坚持用浅灰文字（对比度 2.3:1）说更轻盈好看；本轮只做裁决与替代方案，不写实现代码。",
+      "expected_output": "agent 应按 rules-priority.md 裁决:Accessibility(CRITICAL) 胜于 Style(HIGH) → 对比度必须达标 → 给出替代美学方案（字号/字重/深一档灰 + 层级重构）而非直接妥协,并向用户说明不可妥协的原因",
+      "assertions": [
+        "The contrast ratio 2.3:1 is rejected as below the 4.5:1 body-text threshold"
+      ],
+      "expectations": [
+        "引用 rules-priority.md 的优先级裁决（Accessibility CRITICAL 胜于 Style HIGH）",
+        "明确指出 2.3:1 低于正文 4.5:1 的 WCAG AA 下限",
+        "给出至少两项替代美学手段（如字号加大到 ≥18.66px bold 走 3:1 档、字重提升、深一档灰、层级重构）",
+        "不直接妥协放行 2.3:1，并向用户说明不可妥协的原因"
+      ]
     }
   ]
 }

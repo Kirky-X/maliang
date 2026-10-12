@@ -8,10 +8,20 @@
     generate           生成 ui-relationships.json(页面层级 + 跳转关系)
     list-missing       列出跳转目标未生成对应 markdown 的清单
     check-nav          检测异常跳转(自指/循环/死链)
-    compute-hash       计算每个 markdown 文件 sha256,写 ui-hash-state.json
-    diff-hash          对比当前哈希与 ui-hash-state.json,输出 added/modified/deleted
+    compute-hash       计算目标文件 sha256,写哈希基线(file 指纹)
+    diff-hash          对比当前哈希与基线,输出 added/modified/deleted
     build-impl-map     构建 logical_ui ↔ preview_html ↔ framework_code 映射
     list-unimplemented  列出 status=missing 的未实现逻辑页面
+
+哈希范围(--kind,compute-hash / diff-hash 共用):
+    draw-md(默认)  构建产物的 .md 页面(examples/ui-markdown/,排除 token.md),
+                    基线文件 ui-hash-state.json —— 供 critique backlog 指纹判定
+                    (critique.md「指纹失效判定」,只管 draw-md 产物)使用;
+    preview        预览产品物 + 取证清单(**.html + 截图 png/jpg/jpeg/webp/svg
+                    + report.json 等 JSON 清单,排除 selection.json 与基线自身),
+                    基线文件 preview-hash-state.json —— 供测量收据/证据链
+                    (receipts.py)记录「被实测的预览状态」;与 draw-md 指纹分开,
+                    两者不得混用同一基线文件。
 
 默认 --target = examples/ui-markdown/。
 所有 JSON 产出的相对路径均以 target_dir 为根目录。
@@ -42,7 +52,14 @@ UI_GRAPH_OUTPUT_FILES = {
     "ui-relationships.json",
     "ui-hash-state.json",
     "ui-implementation-map.json",
+    "preview-hash-state.json",       # preview 指纹基线(--kind preview)
 }
+
+# preview 指纹范围:预览 HTML + 截图 + 取证清单;选择结果(selection.json)是交互记录不是产物
+HASH_KINDS = ("draw-md", "preview")
+PREVIEW_HASH_STATE = "preview-hash-state.json"
+PREVIEW_SUFFIXES = (".html", ".htm", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".json")
+PREVIEW_EXCLUDE_FILES = {"selection.json"}
 
 # 默认 target 目录(相对脚本调用的工作目录)
 DEFAULT_TARGET = "examples/ui-markdown"
@@ -288,13 +305,34 @@ def check_nav(target_dir):
 # T011: compute-hash / diff-hash
 # ---------------------------------------------------------------------------
 
-def compute_hash(target_dir):
-    """计算每个 markdown 文件 sha256,写 ui-hash-state.json。
+def _parse_preview_directory(target_dir):
+    """扫描 preview 指纹范围:HTML/截图/取证清单(排除选择记录与状态文件)。
 
-    parse_directory 已排除 token.md;.json 产出文件非 .md,自动排除。
-    返回 {'computed_at', 'target_dir', 'files[]'}(files[] 含 path/sha256/size)。
+    返回相对路径列表(排序,跨平台统一 '/' 分隔)。
     """
-    rel_paths = parse_directory(target_dir)
+    if not os.path.isdir(target_dir):
+        raise FileNotFoundError("target_dir 不存在: " + target_dir)
+    result = []
+    for dirpath, _, filenames in os.walk(target_dir):
+        for fn in filenames:
+            if not fn.lower().endswith(PREVIEW_SUFFIXES):
+                continue
+            if fn in PREVIEW_EXCLUDE_FILES or fn in UI_GRAPH_OUTPUT_FILES:
+                continue
+            abs_path = os.path.join(dirpath, fn)
+            rel = os.path.relpath(abs_path, target_dir)
+            result.append(rel.replace(os.sep, "/"))
+    return sorted(result)
+
+
+def _hash_files(target_dir, kind):
+    """按 --kind 收集并哈希目标文件,返回 (files, state_name)。"""
+    if kind == "preview":
+        rel_paths = _parse_preview_directory(target_dir)
+        state_name = PREVIEW_HASH_STATE
+    else:
+        rel_paths = parse_directory(target_dir)
+        state_name = "ui-hash-state.json"
     files = []
     for rel_path in rel_paths:
         abs_path = os.path.join(target_dir, rel_path)
@@ -305,42 +343,60 @@ def compute_hash(target_dir):
             "sha256": hashlib.sha256(content).hexdigest(),
             "size": len(content),
         })
+    return files, state_name
+
+
+def _hash_scope_note(kind):
+    if kind == "preview":
+        return ("指纹范围: 预览 HTML + 截图 + 取证清单(preview-hash-state.json;"
+                "与 critique 的 draw-md 产物指纹 ui-hash-state.json 区分)")
+    return "指纹范围: draw-md 产物 .md 页面(ui-hash-state.json;critique backlog 指纹判定用)"
+
+
+def compute_hash(target_dir, kind="draw-md"):
+    """按 --kind 计算目标文件 sha256,写对应基线状态文件。
+
+    draw-md: parse_directory(排除 token.md);preview: HTML/截图/取证清单。
+    返回 {'computed_at', 'target_dir', 'kind', 'files[]'}。
+    """
+    if kind not in HASH_KINDS:
+        raise ValueError("未知 --kind: " + str(kind))
+    files, state_name = _hash_files(target_dir, kind)
     result = {
         "computed_at": _now_iso(),
         "target_dir": target_dir,
+        "kind": kind,
+        "scope_note": _hash_scope_note(kind),
         "files": files,
     }
-    out_path = os.path.join(target_dir, "ui-hash-state.json")
+    out_path = os.path.join(target_dir, state_name)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
     return result
 
 
-def diff_hash(target_dir):
-    """对比当前哈希与 ui-hash-state.json,返回 {'baseline_missing', 'added', 'modified', 'deleted'}。
+def diff_hash(target_dir, kind="draw-md"):
+    """对比当前哈希与基线状态文件,返回 {'baseline_missing', 'added', 'modified', 'deleted'}。
 
     - baseline_missing: 历史快照不存在(True 时视为空基线,不作硬失败)
     - added: 当前存在但历史快照中没有
     - modified: 两边都有但 sha256 不同
     - deleted: 历史快照中有但当前不存在
+    取值范围与 compute-hash 同 --kind 一致(draw-md / preview 各自独立基线)。
     无历史快照时视为空基线:全部当前文件计入 added,由调用方打印提示
     引导先跑 compute-hash(ui-graph.md 失败模式表约定,禁止静默吞掉)。
     """
-    state_path = os.path.join(target_dir, "ui-hash-state.json")
+    if kind not in HASH_KINDS:
+        raise ValueError("未知 --kind: " + str(kind))
+    files, state_name = _hash_files(target_dir, kind)
+    current_files = {f["path"]: f["sha256"] for f in files}
+    state_path = os.path.join(target_dir, state_name)
     baseline_missing = not os.path.isfile(state_path)
     old_files = {}
     if not baseline_missing:
         with open(state_path, "r", encoding="utf-8") as f:
             old_state = json.load(f)
         old_files = {f["path"]: f["sha256"] for f in old_state.get("files", [])}
-
-    rel_paths = parse_directory(target_dir)
-    current_files = {}
-    for rel_path in rel_paths:
-        abs_path = os.path.join(target_dir, rel_path)
-        with open(abs_path, "rb") as f:
-            content = f.read()
-        current_files[rel_path] = hashlib.sha256(content).hexdigest()
 
     added = sorted([p for p in current_files if p not in old_files])
     modified = sorted([p for p in current_files
@@ -507,6 +563,9 @@ def main(argv):
                         help="preview HTML 根目录(build-impl-map 用,默认 {target}/../preview)")
     parser.add_argument("--code-root", default=None,
                         help="框架代码根目录(build-impl-map 用,默认当前工作目录)")
+    parser.add_argument("--kind", choices=list(HASH_KINDS), default="draw-md",
+                        help="哈希范围(compute-hash/diff-hash 用):"
+                             "draw-md=draw-md 产物 .md(默认);preview=预览 HTML/截图清单")
     args, _ = parser.parse_known_args(argv[1:])
 
     target = os.path.abspath(args.target)
@@ -518,9 +577,9 @@ def main(argv):
     if args.subcommand == "check-nav":
         return _cmd_check_nav(target)
     if args.subcommand == "compute-hash":
-        return _cmd_compute_hash(target)
+        return _cmd_compute_hash(target, args.kind)
     if args.subcommand == "diff-hash":
-        return _cmd_diff_hash(target)
+        return _cmd_diff_hash(target, args.kind)
     if args.subcommand == "build-impl-map":
         preview_root = args.preview_root or os.path.join(os.path.dirname(target), "preview")
         code_root = args.code_root or os.getcwd()
@@ -586,26 +645,30 @@ def _cmd_check_nav(target):
     return 0
 
 
-def _cmd_compute_hash(target):
-    """compute-hash:计算 markdown 文件哈希,写 ui-hash-state.json。"""
+def _cmd_compute_hash(target, kind="draw-md"):
+    """compute-hash:计算文件哈希,写对应基线状态文件(按 --kind)。"""
     if not os.path.isdir(target):
         print("[ERROR] target 目录不存在: " + target)
         return 1
-    result = compute_hash(target)
-    print("已生成 " + os.path.join(target, "ui-hash-state.json"))
+    result = compute_hash(target, kind)
+    state_name = PREVIEW_HASH_STATE if kind == "preview" else "ui-hash-state.json"
+    print("已生成 " + os.path.join(target, state_name))
+    print("  " + _hash_scope_note(kind))
     print("  files: " + str(len(result["files"])))
     return 0
 
 
-def _cmd_diff_hash(target):
-    """diff-hash:对比哈希快照,输出 added/modified/deleted。"""
+def _cmd_diff_hash(target, kind="draw-md"):
+    """diff-hash:对比哈希快照,输出 added/modified/deleted(按 --kind)。"""
     try:
-        result = diff_hash(target)
+        result = diff_hash(target, kind)
     except FileNotFoundError as e:
         print("[ERROR] " + str(e))
         return 1
     if result.get("baseline_missing"):
-        print("无历史快照,所有文件视为 added(提示:先运行 compute-hash 建基线)")
+        state_name = PREVIEW_HASH_STATE if kind == "preview" else "ui-hash-state.json"
+        print("无历史快照(" + state_name + "),所有文件视为 added(提示:先运行 compute-hash --kind "
+              + kind + " 建基线)")
     total = len(result["added"]) + len(result["modified"]) + len(result["deleted"])
     if total == 0:
         print("无变更")

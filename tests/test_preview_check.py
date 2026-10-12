@@ -6,6 +6,7 @@
 
 import os
 import sys
+import tempfile
 
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
@@ -311,6 +312,126 @@ class TestAnimation(unittest.TestCase):
         results = pc.check_5_9_animation(
             "<style>.x { transition: opacity 240ms ease-out; }</style>", "x.html")
         self.assertEqual(results, [])
+
+
+class TestCssSilentFailures(unittest.TestCase):
+    """#30 CSS 静默失败:孤儿类选择器 + 未定义 var()。
+
+    双列 fixture:每条检查至少 1 个「应报」+ 1 个「不应报」;
+    框架 CDN 生成的类/变量另列豁免用例。
+    """
+
+    def test_orphan_class_reports_error(self):
+        # 应报: .ghost 定义了但页面无元素使用
+        html = '<style>.ghost { color: red; }</style><p class="real">内容</p>'
+        results = pc.check_5_6_css_orphans(html, "x.html")
+        self.assertIn("css.orphan-class", _rules(results))
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+
+    def test_used_class_passes(self):
+        html = '<style>.card { color: red; }</style><div class="card">x</div>'
+        self.assertEqual(pc.check_5_6_css_orphans(html, "x.html"), [])
+
+    def test_pseudo_and_attribute_selector_classes_pass(self):
+        # 不应报: 伪类/属性选择器剥离后类名仍是 .btn,且 .btn 已被使用
+        html = ('<style>.btn:hover { color: red; } .btn[disabled] { opacity: .5; }'
+                '</style><button class="btn">按钮</button>')
+        self.assertEqual(pc.check_5_6_css_orphans(html, "x.html"), [])
+
+    def test_bound_class_and_script_literal_pass(self):
+        # 不应报: Vue :class 绑定字符串与 classList.add 里的类名都算被使用
+        html = ('<style>.is-selected { color: red; } .glyph-fill { fill: red; }</style>'
+                '<div :class="{ \'is-selected\': ok }"></div>'
+                "<script>document.body.classList.add('glyph-fill');</script>")
+        self.assertEqual(pc.check_5_6_css_orphans(html, "x.html"), [])
+
+    def test_keyframes_not_treated_as_selectors(self):
+        # 不应报: @keyframes 块内的名字不是选择器
+        html = ('<style>@keyframes fade { from { opacity: 1 } to { opacity: 0 } }'
+                '.x { animation: fade 1s }</style><div class="x"></div>')
+        self.assertEqual(pc.check_5_6_css_orphans(html, "x.html"), [])
+
+    def test_framework_generated_class_not_reported(self):
+        # 不应报: Element Plus CDN 运行时渲染的 el-* 类静态不可见
+        html = ('<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">'
+                '<style>.search-pill .el-input__wrapper { padding: 0; }</style>'
+                '<div class="search-pill"><el-input></el-input></div>')
+        self.assertEqual(pc.check_5_6_css_orphans(html, "x.html"), [])
+
+    def test_undefined_var_reports_error(self):
+        # 应报: var(--missing-token) 本文件从未定义
+        html = "<style>.x { color: var(--missing-token); }</style>"
+        results = pc.check_5_6_css_vars(html, "x.html")
+        self.assertIn("css.undefined-var", _rules(results))
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+
+    def test_defined_var_passes(self):
+        html = ("<style>:root { --color-text: #111111; }"
+                ".x { color: var(--color-text); }</style>")
+        self.assertEqual(pc.check_5_6_css_vars(html, "x.html"), [])
+
+    def test_setproperty_definition_passes(self):
+        # 不应报: JS 运行时 setProperty 的定义同样算定义
+        html = ("<style>.x { color: var(--dyn-tone); }</style>"
+                "<script>el.style.setProperty('--dyn-tone', 'red');</script>")
+        self.assertEqual(pc.check_5_6_css_vars(html, "x.html"), [])
+
+    def test_framework_var_with_cdn_warns_not_errors(self):
+        # 不应报 ERROR: el-* 主题变量由 CDN 样式表提供,降级 WARN 并注明
+        html = ('<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">'
+                "<style>.x { color: var(--el-color-primary); }</style>")
+        results = pc.check_5_6_css_vars(html, "x.html")
+        self.assertTrue(any(r[0] == "WARN" and r[2] == "css.undefined-var" for r in results))
+        self.assertFalse(any(r[0] == "ERROR" and r[2] == "css.undefined-var" for r in results))
+
+
+class TestCliExitCodes(unittest.TestCase):
+    """canonical 退出码(#16):0=看了没问题(允许 warning)/ 1=有 error / 2=没能检查。"""
+
+    def _run_main(self, argv):
+        import contextlib
+        import io
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            code = pc.main(argv)
+        return code, buf.getvalue()
+
+    def test_warning_only_exits_0(self):
+        # GOOD_HTML 上追加一处硬编码间距(仅 WARN),不应把 warning 读成失败
+        html = GOOD_HTML.replace(
+            ".btn { background: var(--surface-base); color: var(--color-text); }",
+            ".btn { background: var(--surface-base); color: var(--color-text); padding: 13px; }")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "warn-only.html")
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(html)
+            code, out = self._run_main(["preview-check.py", path])
+            self.assertEqual(code, 0, out)
+            self.assertIn("1 warnings", out)
+
+    def test_orphan_probe_exits_1(self):
+        # 孤儿选择器探针:新 ERROR 必须让退出码为 1
+        html = ("<style>:root { --color-text: #111111; }"
+                ".ghost { color: var(--nope); }"
+                "body { background: #ffffff; color: var(--color-text); }</style>"
+                '<main id="main"><p>文字</p><a class="skip" href="#main">Skip to main content</a></main>')
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "orphan.html")
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(html)
+            code, out = self._run_main(["preview-check.py", path])
+            self.assertEqual(code, 1, out)
+            self.assertIn("css.orphan-class", out)
+            self.assertIn("css.undefined-var", out)
+
+    def test_no_html_target_exits_2(self):
+        # 没能检查(没有 HTML 文件)必须显式非零,且不是 1(1 表示「看了有问题」)
+        with tempfile.TemporaryDirectory() as tmp:
+            with open(os.path.join(tmp, "notes.txt"), "w", encoding="utf-8") as fh:
+                fh.write("没有 HTML")
+            code, out = self._run_main(["preview-check.py", tmp])
+            self.assertEqual(code, 2, out)
+            self.assertIn("没能检查", out)
 
 
 class TestEndToEnd(unittest.TestCase):

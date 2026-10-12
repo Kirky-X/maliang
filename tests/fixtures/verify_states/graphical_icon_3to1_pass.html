@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+  verify-states fixture:图形控件 3:1 阈值(无直接文字节点的 icon 按钮)。
+  #8B8B8B on #FFFFFF ≈ 3.41:1 —— 图形控件(需 3:1)通过;
+  同色若作为正文文本(需 4.5:1)会失败,用来证明阈值按元素性质区分。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>verify-states fixture: 图形控件阈值</title>
+<style>
+  body { background: #FFFFFF; color: #1A1A1A; font-family: system-ui, sans-serif; }
+  .icon-btn { background: #FFFFFF; color: #8B8B8B; border: none; padding: 8px; }
+</style>
+</head>
+<body>
+  <main id="main">
+    <button class="icon-btn" type="button" aria-label="菜单">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="17" x2="14" y2="17"></line>
+      </svg>
+    </button>
+  </main>
+</body>
+</html>
