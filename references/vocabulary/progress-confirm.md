@@ -15,8 +15,9 @@
 | `undo-toast-countdown` | 撤销倒计时进度化:撤销剩余时间做成 toast 内嵌进度条,走完即消失 | 删除后撤销、发送后撤回 |
 | `progress-save-ring` | 保存按钮变进度环:点击后文字收缩成圆形,边缘一圈环形进度走满,再撑开变回按钮,文字切成「打开」(与 [`sheet-drawer.md`](sheet-drawer.md) `button-submit-morph` 互见:本条环形绑定真实进度,彼条定时长转场+对勾收尾) | 上传/保存类按钮的提交全程反馈 |
 | `confirm-copy-tick` | 复制成功翻转:复制图标原地翻成对勾,上方冒出「已复制」小提示,约 1s 后一起复原 | 复制链接/代码/口令按钮 |
+| `scrubber-waveform` | 波形进度条:整段内容压成一排竖条波形,已过部分高亮;按住拖动实时更新进度,松手从该位置继续播放 | 音频/视频/语音消息的进度控制(波形只动 transform) |
 
-> 来源注:`progress-save-ring` / `confirm-copy-tick` 2 行为**转录补全**(2026-10,UI 交互教学视频转录提取)。环形进度与「约 1s 后复原」为进度/驻留语义,非转场时长,draw-md 勿写 `duration: 1000ms` 类字面量(防检查 11 误报,先例同 [`micro-interactions.md`](micro-interactions.md) `micro-hold-confirm`)。
+> 来源注:`progress-save-ring` / `confirm-copy-tick` / `scrubber-waveform` 3 行为**转录补全**(2026-10,UI 交互教学视频转录提取)。环形进度与「约 1s 后复原」为进度/驻留语义,非转场时长,draw-md 勿写 `duration: 1000ms` 类字面量(防检查 11 误报,先例同 [`micro-interactions.md`](micro-interactions.md) `micro-hold-confirm`)。
 
 ## 使用规则
 
