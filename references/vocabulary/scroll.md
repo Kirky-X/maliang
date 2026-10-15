@@ -9,9 +9,10 @@
 | `scroll-native`         | 原生滚动,无干预                                | 默认,大多数页面                      |
 | `scroll-smooth`         | `scroll-behavior: smooth`                       | 锚点跳转、回到顶部                    |
 | `scroll-infinite`       | 滚动到底自动加载(增强:距底约一屏即提前加载,底部 3 圆点依次跳动,新卡逐张错峰接续) | Feed 流、列表、社交社区               |
+| `scroll-reveal-stagger-step` | 依次浮现参数档:露出视口约 15% 才触发,自下方约 40px 淡入上浮,同行错峰约 70ms 像发牌,落位轻回弹;卡内图片 1.08→1 缩回 | 卡片列表/网格(挂 [`motion-skeletons/scroll-reveal-stagger.md`](../motion-skeletons/scroll-reveal-stagger.md) 骨架,本行给触发与错峰量化值) |
 | `scroll-pull-refresh`   | 下拉刷新                                        | 移动 App、Feed                        |
 | `scroll-snap`           | 滚动吸附(横向 / 纵向)                         | 轮播、Tab 切换、全屏叙事              |
-| `scroll-parallax`       | 多层视差(背景 / 中景 / 前景速率不同)          | 品牌叙事、产品发布                    |
+| `scroll-parallax`       | 多层视差(背景 / 中景 / 前景速率不同;分层参考 0.2/0.4/0.7/1.2 倍,近景可快于页面;配每帧追剩余距离约 12% 的平滑跟随+停手惯性滑行) | 品牌叙事、产品发布                    |
 | `scroll-pinned`         | 元素 pin 在视口(配合 sticky-stack 骨架)        | 章节堆叠、产品功能展示                |
 | `scroll-horizontal`     | 垂直滚动驱动横向位移(配合 horizontal-pan 骨架) | 品牌站、作品集、时间线                |
 | `scroll-reveal`         | 进入视口揭示(配合 scroll-reveal-stagger 骨架) | 默认推荐,主流消费 App                |

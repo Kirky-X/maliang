@@ -11,10 +11,10 @@
 | `form-wizard`              | 多步分步,步骤指示器,每步只问一件事,步内校验后前进                           | 注册引导、复杂开户、结账流程                         |
 | `form-section`             | 长表单分组:组标题 + 描述,可配锚点导航                                       | 设置页、长问卷、详情编辑                             |
 | `field-group`              | 输入组:前缀/后缀图标、单位或内嵌按钮                                        | 金额带单位、网址带协议、搜索框内嵌按钮               |
-| `input-otp`                | 验证码分格,`type="text" + inputmode="numeric" + autocomplete="one-time-code"`,满位自动提交 | 短信/邮箱验证码(WorkOS:禁用 type=number 防丢前导零) |
+| `input-otp`                | 验证码分格,`type="text" + inputmode="numeric" + autocomplete="one-time-code"`,满位自动提交;数字自下方 8px 弹入(约 180ms),粘贴 6 位依次错开约 40ms 落下,当前格高亮+闪烁光标 | 短信/邮箱验证码(WorkOS:禁用 type=number 防丢前导零) |
 | `input-masked`             | 格式掩码自动分隔,宽容空格/连字符/标点等杂字符                               | 电话、卡号、邮编(GOV.UK validation:忽略杂字符)     |
 | `input-password-reveal`    | Show/Hide 明文切换,提交时还原为密文类型                                     | 注册/登录密码框(GOV.UK password-input)             |
-| `input-password-strength`  | 实时强度计 + 要求清单逐项勾选                                               | 注册设置密码(Authgear"strength meters")            |
+| `input-password-strength`  | 实时强度计 + 要求清单逐项勾选;分格条每格约 250ms 带回弹填满,颜色红→橙→黄→绿随强度平滑过渡,提示文字同步淡出上移/淡入 | 注册设置密码(Authgear"strength meters")            |
 | `select-searchable`        | combobox:输入框 + 折叠弹层列表,可输入过滤,键盘上下键 + Enter 选择            | 选项 > 10 的选择器:国家、城市、标签(W3C APG)       |
 | `input-character-count`    | 实时字数计数,接近/超限即提示                                                | 有上限的简介、留言(GOV.UK character count)         |
 | `validate-on-submit`       | 提交时统一校验,失败整页回显并保留已填值                                     | 默认校验时机(GOV.UK 明确"勿在移出字段时校验")      |
@@ -29,7 +29,7 @@
 | `input-tags-removable`     | 可删除标签组:点叉号标签缩成圆点淡出,后续标签依次平滑补位,输入框高度随之收缩 | 收件人/标签录入(来源见下方来源注)               |
 | `input-floating-label`     | 浮动标题输入框:聚焦时提示文字缩小上移成左上角标题,边框高亮;为空失焦复原 | 表单空间紧张的移动端                            |
 | `input-inline-mention`     | 正文联想浮层:输入时在光标旁弹出联想列表,实时筛选,选中以小标签嵌入正文,浮层收起 | 富文本 @提及/引用                               |
-| `validate-error-shake`     | 错误水平轻晃:校验失败该输入框水平轻晃一下+边框变红,提示文字从下方滑入,修正后自动收起 | 移动端行内错误反馈(与 `validate-inline` 组合,口径见 [`ux-rules.md`](../meta/ux-rules.md) inline-validation) |
+| `validate-error-shake`     | 错误水平轻晃:校验失败该输入框水平轻晃(3 下幅度递减约 10→6→3px,共约 400ms,手机配轻震)+边框变红,提示文字从下方滑入;摇完自动选中内容便于重输,重新输入红色淡出恢复 | 移动端行内错误反馈(与 `validate-inline` 组合,口径见 [`ux-rules.md`](../meta/ux-rules.md) inline-validation) |
 
 > 来源注:`field-checkbox-group`、`select-basic`、`upload-click`/`upload-drag`、`field-date` 4 行为**审计补全**(2026-09-08 组件覆盖审计):对照 Ant Design(Checkbox/Select/Upload/DatePicker)、IBM Carbon(Checkbox/Dropdown/FileUploader/DatePicker)、Material 3(Selection controls/Menu/Date picker)组件清单;非 GOV.UK/W3C 原始来源。`input-tags-removable` / `input-floating-label` / `input-inline-mention` / `validate-error-shake` 4 行为**转录补全**(2026-10,UI 交互教学视频转录提取)。
 

@@ -38,6 +38,8 @@
 | `chart-bubble-focus` | 气泡点击聚焦:点击放大居中,其余被推开 | 群体构成探索(扩充 `chart-scatter`) | 数据点 < 10 禁用(直接标注更好) |
 | `chart-pill-bar` | 胶囊柱状图:柱体圆头化 + 单一高亮色,当前项之外降饱和 | 周报/月对比的轻量柱图 | 精确读数场景禁用(圆头损失面积感知) |
 | `chart-focus-timeline` | 专注分段时间轴:一天按阶段分高度/颜色,横滑顶部跟随显示当前时刻与阶段 | 时间记录、日程回顾 | 段数 > 20 聚合;横滑须配 [`pickers.md`](pickers.md) 吸附规则 |
+| `chart-draw-onview` | 打开时从零绘制:柱体依次生长(错峰 80ms/根,顶部过冲回落约 6%)、折线一笔画出(渐变填充随笔尖铺开,终点圆点呼吸)、环形分块从 12 点顺时针依次转出留缝;数值同步从 0 滚到实际值(挂 [`number-motion.md`](number-motion.md) `num-ticker-onview`) | 首屏指标图入场(刻度先淡入,图形后长) | 装饰档 ≤600ms(视频折线 1.2s 按此收敛或分段绘制)且须可跳过/reduced-motion 直显终态;`chart-ring-draw` 为环形特例 |
+| `chart-data-morph` | 维度切换数据变形:同一根柱子从旧高度平滑到新高度(约 400ms,视频 500ms 按转场档收敛,带回弹),多出的从底部长出、少掉的缩底消失、留下的平移到位;刻度与数字平滑换算——变过去,不是清空换过去 | 后台看板周/月切换(时长口径见 [`micro-interactions.md`](micro-interactions.md) 分层口径) | 类目数剧变(>50%)改交叉淡入;禁清空重画 |
 
 - 交互图表的无障碍:拖动/横滑操作必须提供键盘等价物(方向键步进)与读屏值播报(见 [`accessibility.md`](../meta/accessibility.md))
 - 拖动类控件(`chart-drag-target-line`)拖动中实时更新读数,松手才提交;transition 只作用于高亮态
