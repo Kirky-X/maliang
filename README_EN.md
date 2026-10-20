@@ -24,9 +24,13 @@ English | [中文](README.md)
 | `ip` / `ip-handbook` | Deliver | IP character generation (API first, prompt fallback) / IP visual handbook (8 modules, 2K 3:4) |
 
 - **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 24 component-naming vocabulary docs + eight dimension specs (color / type / icon / spacing / radius / border / layout / elevation)
+- **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (50 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
+- **Research log**: [`research/`](research/README.md) (measure-it-yourself records that may overturn the repo's own rules: real problem · real method · data with context · landing trace)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
-- **Merged assets**: the former craft 方法集 now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12) — critique reads it for UI-compliance/a11y checklists
+- **Merged assets**: the former craft 方法集 now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12), critique reads it for UI-compliance/a11y checklists
 - **Script verification layer**: `validate-draw-md.py` (15 checks), `preview-check.py` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
+- **Second-batch verification scripts** (same standard library): `verify-color-fidelity.py` (rebuild-vs-reference ΔE fidelity gate), `measure-colors.py` (deterministic image color measurement), `palette-solver.py` (OKLCH brightness solver + pairing matrix), `verify-assets.py` (asset-slot presence check), `source-fingerprint.py` (source fingerprint for re-audits), `check-structure-history.py` (rotation repeats / hot axis / stamp truth), `check-copy.py` (template-phrase scanner)
+- **New reference layer**: [`references/meta/source-hygiene.md`](references/meta/source-hygiene.md) (source hygiene: blocklist / private-network rejection / junk signals / Provenance), [`references/meta/visual-symptoms.md`](references/meta/visual-symptoms.md) (perceived symptom → root cause → fix)
 - **Auxiliary scripts**: `install-skill.sh` (installer, see Installation below), `design_md_to_token_md.py` (auto-generates the product-layer token.md from a DESIGN.md), `skill_lint.py` (repo-level SKILL.md hygiene lint)
 
 ## 📦 Installation
@@ -77,14 +81,11 @@ flowchart LR
 
 ## ✅ Tests & Verification
 
-Measured pytest run (2026-10-04, Python 3.12):
+Measured pytest run (2026-10-20, Python 3.12):
 
 ```text
 $ python3 -m pytest tests -q
-........................................................................  [ 43%]
-........................................................................  [ 86%]
-......................                                                   [100%]
-327 passed in 0.11s
+445 passed, 1 skipped in 13.13s
 ```
 
 Test files: see [`tests/`](tests) (single source; counts guarded by `test_doc_consistency`).
@@ -101,15 +102,18 @@ maliang/
 │   ├── commands/            # 13 subcommand workflow docs + 2 auxiliary docs (design-md-advanced / preview-checklist)
 │   ├── meta/                # Spec layer: token / principles / ux-rules / lifecycle / accessibility …
 │   │                        #   incl. web-interface-guidelines.md snapshot (sha e3d624b)
+│   │                        #   + source-hygiene.md (source hygiene) / visual-symptoms.md (symptom diagnosis)
 │   ├── interface-design/    # merged from the former craft 方法集 (craft discipline / strict review)
 │   ├── dimensions/          # eight dimension specs + palette library + liquid-glass recipes
 │   ├── framework/           # 56 component classes × three frameworks (harmony / flutter / element)
+│   ├── components/          # section-archetype library: 50 prototypes + INDEX.md (pick from the index, load only what you pick)
 │   ├── templates/           # template wall: 14 design languages + full-page patterns + landing-page orchestration
 │   ├── vocabulary/          # 24 component-naming vocabulary docs (incl. pro-motion, chat)
 │   └── default-pages/       # default page lists (15 app + 15 web pages, P0–P2)
-├── scripts/                 # verification layer: preview-check / preview-lint.js / verify-states / verify-interactive / validate-design-md / validate-generated / extract-tokens / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate (exit-code canonical: scripts/EXIT-CODES.md); base layer: ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / design_md_to_token_md / dark-palette-derive / device_models / maliang_common / devices/
+├── research/                # measurement-driven rule-revision log (problem · method · data with context · landing trace)
+├── scripts/                 # verification layer: preview-check / preview-lint.js / verify-states / verify-interactive / validate-design-md / validate-generated / extract-tokens / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate (exit-code canonical: scripts/EXIT-CODES.md); second batch: verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy; base layer: ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / design_md_to_token_md / dark-palette-derive / device_models / maliang_common / devices/
 ├── examples/                # 12 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue)
-└── tests/                   # pytest suite (327 cases, 22 files)
+└── tests/                   # pytest suite (445 cases, 31 files)
 ```
 
 ## 🔮 Boundaries
