@@ -185,7 +185,11 @@ def decode_jpeg(data):
         img = img.convert("RGB")
     except Exception as exc:
         return None, "JPEG 解码失败: %s" % exc
-    return (img.width, img.height, list(img.getdata())), None
+    # tobytes() 取原始 RGB 字节(每像素 3 字节,行优先);不用 getdata()——
+    # 它在 Pillow 14 将被移除,老版本又没有替代 API,跨版本只此一路稳。
+    raw = img.tobytes()
+    pixels = [tuple(raw[i:i + 3]) for i in range(0, len(raw), 3)]
+    return (img.width, img.height, pixels), None
 
 
 def load_image(path):

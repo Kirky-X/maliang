@@ -120,7 +120,8 @@ class TestUnmeasured(unittest.TestCase):
     def test_unsupported_format_exits_2(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = os.path.join(tmp, "pic.webp")
-            open(path, "wb").write(b"RIFFxxxxWEBP")
+            with open(path, "wb") as fh:
+                fh.write(b"RIFFxxxxWEBP")
             buf, err = io.StringIO(), io.StringIO()
             with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(err):
                 code = mc.main([path])
@@ -139,7 +140,8 @@ class TestUnmeasured(unittest.TestCase):
     def test_jpeg_without_pillow_is_unmeasured(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = os.path.join(tmp, "pic.jpg")
-            open(path, "wb").write(b"\xff\xd8\xff\xe0fake")
+            with open(path, "wb") as fh:
+                fh.write(b"\xff\xd8\xff\xe0fake")
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
                 code = mc.main([path])

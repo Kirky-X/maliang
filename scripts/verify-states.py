@@ -223,6 +223,7 @@ def _launch_once(binary, headless_flag, timeout_s):
     while time.time() < deadline:
         if proc.poll() is not None:
             err = (proc.stderr.read() or b"").decode("utf-8", "replace")
+            _close_streams(proc)
             shutil.rmtree(profile_dir, ignore_errors=True)
             raise CDPError("浏览器提前退出: " + err.strip()[-300:])
         if os.path.exists(port_file):
@@ -232,8 +233,19 @@ def _launch_once(binary, headless_flag, timeout_s):
                 return proc, profile_dir, int(first[0])
         time.sleep(0.05)
     proc.terminate()
+    _close_streams(proc)
     shutil.rmtree(profile_dir, ignore_errors=True)
     raise CDPError("浏览器启动超时(DevToolsActivePort 未出现)")
+
+
+def _close_streams(proc):
+    """关掉 Popen 开的管道,否则未读的 stderr 管道在 GC 时抛 ResourceWarning。"""
+    for stream in (proc.stdin, proc.stdout, proc.stderr):
+        if stream is not None:
+            try:
+                stream.close()
+            except OSError:
+                pass
 
 
 def launch_browser(binary, timeout_s=25):
@@ -258,6 +270,8 @@ def stop_browser(proc, profile_dir):
                 proc.kill()
                 proc.wait(timeout=5)
     finally:
+        if proc is not None:
+            _close_streams(proc)
         if profile_dir:
             shutil.rmtree(profile_dir, ignore_errors=True)
 

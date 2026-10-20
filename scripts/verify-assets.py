@@ -178,7 +178,8 @@ def main(argv=None):
               "没有声明就没有对照物,UNMEASURED", file=sys.stderr)
         return 2
     try:
-        manifest = json.load(open(manifest_path, encoding="utf-8"))
+        with open(manifest_path, encoding="utf-8") as fh:
+            manifest = json.load(fh)
     except (OSError, json.JSONDecodeError) as exc:
         print("verify-assets: manifest 不可读: %s" % exc, file=sys.stderr)
         return 2
@@ -186,7 +187,8 @@ def main(argv=None):
         print("verify-assets: manifest 必须是 JSON 数组", file=sys.stderr)
         return 2
 
-    html = open(args.html, encoding="utf-8", errors="replace").read()
+    with open(args.html, encoding="utf-8", errors="replace") as fh:
+        html = fh.read()
     findings, warnings, summary = verify_assets(html, manifest, args.html)
 
     for f in findings:

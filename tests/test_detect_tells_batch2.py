@@ -138,7 +138,8 @@ class TestLineRules(unittest.TestCase):
     def test_minor_does_not_block_exit_code(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = os.path.join(tmp, "a.html")
-            open(path, "w", encoding="utf-8").write("<div><span>01 · About</span></div>")
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write("<div><span>01 · About</span></div>")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
                 code = dt.main([path])

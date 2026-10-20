@@ -68,7 +68,8 @@ class TestScanMarkup(unittest.TestCase):
 class TestCli(unittest.TestCase):
     def _write(self, directory, name, content):
         path = os.path.join(directory, name)
-        open(path, "w", encoding="utf-8").write(content)
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(content)
         return path
 
     def test_fixture_clean_passes(self):

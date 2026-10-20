@@ -127,7 +127,8 @@ class TestNormalPaths(unittest.TestCase):
             img = _build(tmp, "g.png", lambda x, y: (59, 130, 246), size=(40, 40))
             measured = mc.measure_image(img, 3)
             spec_path = os.path.join(tmp, "spec.json")
-            json.dump(measured, open(spec_path, "w", encoding="utf-8"))
+            with open(spec_path, "w", encoding="utf-8") as fh:
+                json.dump(measured, fh)
             palette, k = vcf.load_reference(spec_path, None)
             self.assertEqual(k, 3)
             impl_result = mc.measure_image(img, k)
@@ -139,7 +140,8 @@ class TestNormalPaths(unittest.TestCase):
             "measurement": {"k": 4}}}}
         with tempfile.TemporaryDirectory() as tmp:
             spec_path = os.path.join(tmp, "spec.json")
-            json.dump(measured, open(spec_path, "w", encoding="utf-8"))
+            with open(spec_path, "w", encoding="utf-8") as fh:
+                json.dump(measured, fh)
             palette, k = vcf.load_reference(spec_path, None)
         self.assertEqual(k, 4)
         self.assertEqual(palette[0]["hex"], "#3b82f6")

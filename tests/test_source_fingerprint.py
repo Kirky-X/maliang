@@ -37,7 +37,8 @@ class TestCreate(unittest.TestCase):
             with contextlib.redirect_stdout(buf):
                 code = sf.main(["create", root, "--output", out])
             self.assertEqual(code, 0)
-            data = json.load(open(out, encoding="utf-8"))
+            with open(out, encoding="utf-8") as fh:
+                data = json.load(fh)
             self.assertEqual(data["schemaVersion"], 1)
             self.assertEqual(sorted(data["files"]), ["src/a.ts", "src/b.css"])
             # 原子写:不留 .tmp 残片
@@ -47,11 +48,13 @@ class TestCreate(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = _repo(tmp)
             for name in (".env", ".env.local", "id_rsa", "server.pem"):
-                open(os.path.join(root, name), "w").write("secret")
+                with open(os.path.join(root, name), "w") as fh:
+                    fh.write("secret")
             out = os.path.join(tmp, "baseline.json")
             with contextlib.redirect_stdout(io.StringIO()):
                 sf.main(["create", root, "--output", out])
-            data = json.load(open(out, encoding="utf-8"))
+            with open(out, encoding="utf-8") as fh:
+                data = json.load(fh)
             self.assertNotIn(".env", data["files"])
             self.assertNotIn("id_rsa", data["files"])
             self.assertNotIn("server.pem", data["files"])
@@ -111,9 +114,11 @@ class TestCheck(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = _repo(tmp)
             baseline = self._baseline(tmp, root)
-            data = json.load(open(baseline, encoding="utf-8"))
+            with open(baseline, encoding="utf-8") as fh:
+                data = json.load(fh)
             data["files"]["../outside.ts"] = "0" * 64
-            json.dump(data, open(baseline, "w", encoding="utf-8"))
+            with open(baseline, "w", encoding="utf-8") as fh:
+                json.dump(data, fh)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
                 code = sf.main(["check", root, "--baseline", baseline])
@@ -124,9 +129,11 @@ class TestCheck(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = _repo(tmp)
             baseline = self._baseline(tmp, root)
-            data = json.load(open(baseline, encoding="utf-8"))
+            with open(baseline, encoding="utf-8") as fh:
+                data = json.load(fh)
             data["files"][".env"] = "0" * 64
-            json.dump(data, open(baseline, "w", encoding="utf-8"))
+            with open(baseline, "w", encoding="utf-8") as fh:
+                json.dump(data, fh)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
                 code = sf.main(["check", root, "--baseline", baseline])
@@ -137,9 +144,11 @@ class TestCheck(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = _repo(tmp)
             baseline = self._baseline(tmp, root)
-            data = json.load(open(baseline, encoding="utf-8"))
+            with open(baseline, encoding="utf-8") as fh:
+                data = json.load(fh)
             data["files"]["src/a.ts"] = "tooshort"
-            json.dump(data, open(baseline, "w", encoding="utf-8"))
+            with open(baseline, "w", encoding="utf-8") as fh:
+                json.dump(data, fh)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
                 code = sf.main(["check", root, "--baseline", baseline])

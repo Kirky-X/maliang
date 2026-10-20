@@ -95,7 +95,8 @@ class TestCli(unittest.TestCase):
     def test_missing_manifest_exit_2(self):
         with tempfile.TemporaryDirectory() as tmp:
             html = os.path.join(tmp, "page.html")
-            open(html, "w", encoding="utf-8").write("<p>x</p>")
+            with open(html, "w", encoding="utf-8") as fh:
+                fh.write("<p>x</p>")
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
                 code = va.main([html])
@@ -105,7 +106,8 @@ class TestCli(unittest.TestCase):
     def test_bad_manifest_exit_2(self):
         with tempfile.TemporaryDirectory() as tmp:
             html = os.path.join(tmp, "page.html")
-            open(html, "w", encoding="utf-8").write("<p>x</p>")
+            with open(html, "w", encoding="utf-8") as fh:
+                fh.write("<p>x</p>")
             bad = _manifest(tmp, {"not": "a list"})
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
@@ -121,7 +123,8 @@ class TestCli(unittest.TestCase):
     def test_failure_exits_1(self):
         with tempfile.TemporaryDirectory() as tmp:
             html = os.path.join(tmp, "page.html")
-            open(html, "w", encoding="utf-8").write('<img class="placeholder" src="tbd">')
+            with open(html, "w", encoding="utf-8") as fh:
+                fh.write('<img class="placeholder" src="tbd">')
             manifest = _manifest(tmp, MANIFEST)
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
