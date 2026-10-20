@@ -91,6 +91,8 @@ pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(�
 每个章节内,子组件**从左到右**描述;内部组件用嵌套子章节展开。
 
 > 布局类型选用与嵌套规则见 [`layout.md`](../dimensions/layout.md)。
+>
+> **区段形态选型(每个章节挑一个原型)**:先从 [`../components/INDEX.md`](../components/INDEX.md)(50 个区段原型)挑名——**从索引挑名、只加载选中的那几个**,典型一次构建 5-7 个文件(1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航),**不整库加载**;选中的原型按它自己的「变体旋钮」行逐旋钮取值,取值写进 build-log。**分工**:区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)仍在 [`../vocabulary/`](../vocabulary/),组件类型 slug 仍在 [`../framework/index.md`](../framework/index.md) 的 56 类里;同一原型第二次出现必须换至少一个旋钮(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
 
 ### 组件意图头(新增组件的参数表节前 MUST 附)
 

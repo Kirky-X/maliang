@@ -64,6 +64,15 @@
 - "大数字 + 小标签 + 支撑数据 + 渐变 accent"是默认套路,仅当它确实是该主题的最佳呈现时才用;命中品类惯性默认的,按 [`design-md.md`](../commands/design-md.md) Defaults 品类默认机制逐条声明拒绝
 - `hero-canvas` 落地前必须先过 [`performance.md`](../meta/performance.md) Canvas/WebGL 预算节(目的性门槛/降级/资源生命周期);装饰性粒子背景直接拒绝
 
+## 旋钮:同一 Hero 原型第二次出现须换旋钮
+
+> 本文件的模式名管**Hero 的形态与硬约束**;Hero **区段原型**在 [`../components/INDEX.md`](../components/INDEX.md) 的「Hero(9 个)」组挑名——**从索引挑名、只加载选中的那几个**。
+
+- **编号消歧**:本文件「生产级硬规则」里的 H1–H4 是 **Hero 硬约束条目**;`components/INDEX.md` 的 H1–H9 是 **hero 区段原型**——两套编号语境不同,引用时以文件为准。
+- **旋钮词表随原型定义走**(每个原型的「变体旋钮」行:2-3 个二阶变化位,如列数与跨度比例 / 密度档 / 描边与容器 / 强调部署 / 编号与连接件样式这类);原型未带旋钮定义时,自定 2-3 个并在盖章里写明。
+- **同一 Hero 原型第二次出现必须换至少一个旋钮并声明取值**,取值写进 build-log;跨项目的系列产出里,相邻两次构建落同一 Hero 原型即违规,须换原型(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
+- **分工**:本文件管「Hero 元素禁什么 + 骨架怎么排 + 硬约束」,`components/INDEX.md` 管「这个 Hero 原型长成什么样」,旋钮管「同一原型内的二阶变化」——三者互补,不互相替代。
+
 ## 在 draw-md 中的写法
 
 ```markdown

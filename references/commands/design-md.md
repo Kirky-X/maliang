@@ -166,6 +166,8 @@
 
 **取值方法:消除法**:决策表每落一个值,先猜一个自认为对的档,再与阶梯上**左右相邻两档各比一次**——必有两档明显不对;若**外侧**档胜出,以它为新中点,重跑两侧比较,直到胜出者两侧皆负。消除法与 token 封闭纪律**不冲突**:候选取自既有阶梯(spacing 落 base 倍数、rounded 落既有档、色板内取色),消除法只在候选集合**内部**选档,不发明集合外的新值;想要阶梯外的值,先回决策表补一条「为什么扩阶梯」的决策再取——封闭纪律圈定候选集,消除法在集合内定值。
 
+**颜色契约(色值决策的硬约束,配 `scripts/palette-solver.py`)**:色板定下之后,模型**只能组合求解器矩阵内的配对**——每个前景/背景配对先过 [`../../scripts/palette-solver.py`](../../scripts/palette-solver.py) 的全配对矩阵(输出三档:text ≥4.5 / ui ≥3.0 / decorative <3.0,外加 Legal pairings 清单),**矩阵外的配对一律不写进 token**;**色板扩充必须重跑矩阵**(色一变,全部档位与配对重算,旧矩阵作废)。用法:`python3 scripts/palette-solver.py --bg <底色 6 位 hex> --hue <色相 0-360> --chroma <彩度,默认 0.12>`(退出码 0=求解成功 / 1=有档位无解 / 2=没能检查,语义见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md));矩阵里给出的比值同时是 token 行尾与产物层 token 表的**实测比值来源**(标注格式见 [`../meta/token-provenance.md`](../meta/token-provenance.md)「比值注释通道」与 [`../dimensions/color.md`](../dimensions/color.md) §8)。
+
 ### Brief 不充分时 / 与 Phase 1 衔接
 
 若 brief 缺关键词(如只说"做个 App"),不要硬推理:进入 Phase 1B 访谈模式补全,必须人工确认。推理结果写入 DESIGN.md frontmatter 的 `product:` 块(见 [`product-reasoning.md`](../meta/product-reasoning.md) 第 3 节),Phase 1 写 prose 时引用作为"为什么"的依据。
@@ -374,7 +376,7 @@ effects:                            # 可选特效段(maliang 扩展键,lint 静
 ## Shapes
 <Corner radius philosophy. Sharp = engineered, round = approachable.>
 ## Components
-<Key patterns and interaction states not captured by tokens.>
+<Key patterns and interaction states not captured by tokens. 区段形态先从 [`../components/INDEX.md`](../components/INDEX.md) 挑名——从索引挑名、只加载选中的那几个(典型 5-7 个),不整库加载;区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)仍在 [`../vocabulary/`](../vocabulary/)。>
 ## Do's and Don'ts
 - Do ...
 - Don't ...

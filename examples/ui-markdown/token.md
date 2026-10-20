@@ -1,55 +1,71 @@
 ---
 name: token
 description: 产物层全局硬 token 表 —— 颜色/字体/图标/间距/圆角/分割线的具体值,所有 UI 页面 markdown 引用此处
-updated: 2026-06-30
-version: 1.1.0
+updated: 2026-10-20
+version: 1.2.0
 ---
 
 # token.md —— 全局硬 token 表(产物层)
 
 > 所有页面 markdown 的 frontmatter 与组件参数表 **MUST 引用本文件的 token**,禁止硬编码色值字面量。
-> token 命名遵循规范层 [`token.md`](../../../references/meta/token.md) 的规则(kebab-case、层级、语义)。
+> token 命名遵循规范层 [`token.md`(../../references/meta/token.md) 的规则(kebab-case、层级、语义)。
 > **格式约定**:颜色 token 给 HEX + RGBA 双格式;尺寸类 token(字号/图标/间距/圆角/分割线粗细)给具体像素值(无 RGBA 语义)。
 > 默认浅色模式;暗色模式见文末。
 
 ## 1. 颜色(colors)
 
 > HEX 列含色块预览(`<span style="background:...">`),支持 markdown 内联 HTML 渲染器(GitHub / VSCode 预览)。
+> **对比度列为实测值**,口径与复现命令见下方「对比度实测口径」;未达标者标 `⚠` 并给出所依据的阈值——**不假装通过,也不改写色值凑数**。
 
-| token                | HEX                                                                    | RGBA                | 用途                 | 对比度(vs #FFF) |
-| --------------------- | ---------------------------------------------------------------------- | ------------------- | -------------------- | --- |
-| color-brand-primary | #5B7CFA <span style="background:#5B7CFA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(91,124,250,1) | 品牌主色 / 主 CTA | — |
-| color-brand-secondary | #8B5CF6 <span style="background:#8B5CF6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(139,92,246,1) | 品牌次色 / 辅助强调 | — |
-| color-accent | #FF6B6B <span style="background:#FF6B6B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,107,107,1) | 强调色(每屏至多一处) | — |
-| color-surface-base | #F7F8FA <span style="background:#F7F8FA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(247,248,250,1) | 页面背景 | — |
-| color-surface-card | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,1) | 卡片背景 | — |
-| color-surface-elevated | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,1) | 悬浮卡片 / 弹层背景 | — |
-| color-text-primary | #1A1D21 <span style="background:#1A1D21;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(26,29,33,1) | 主要文字(标题/正文) | — |
-| color-text-secondary | #6B7280 <span style="background:#6B7280;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(107,114,128,1) | 次要文字(说明/时间) | — |
-| color-text-placeholder | #9CA3AF <span style="background:#9CA3AF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(156,163,175,1) | 占位符 / 辅助提示 | — |
-| color-text-disabled | #C0C4CC <span style="background:#C0C4CC;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(192,196,204,1) | 禁用文字 | — |
-| color-text-on-brand | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,1) | 品牌色背景上的文字 | — |
-| color-border-base | #E5E7EB <span style="background:#E5E7EB;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(229,231,235,1) | 标准边框 | — |
-| color-divider | #F0F1F3 <span style="background:#F0F1F3;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(240,241,243,1) | 分割线 | — |
-| color-danger | #EF4444 <span style="background:#EF4444;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(239,68,68,1) | 危险 / 错误 / 删除 | — |
-| color-success | #10B981 <span style="background:#10B981;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(16,185,129,1) | 成功 / 已完成 | — |
-| color-warning | #F59E0B <span style="background:#F59E0B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(245,158,11,1) | 警告 / 提示 | — |
-| color-link | #3B82F6 <span style="background:#3B82F6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(59,130,246,1) | 链接文字 | — |
-| color-overlay | #00000080 <span style="background:#00000080;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(0,0,0,0.5) | 遮罩层(弹窗背景) | — |
+| token                | HEX                                                                    | RGBA                | 用途                 | 对比度(vs 页面底 #F7F8FA) | 对比度(vs 卡片面 #FFF) |
+| --------------------- | ---------------------------------------------------------------------- | ------------------- | -------------------- | --- | --- |
+| color-brand-primary | #5B7CFA <span style="background:#5B7CFA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(91,124,250,1) | 品牌主色 / 主 CTA | 3.46 ⚠<4.5 | 3.68 ⚠<4.5 |
+| color-brand-secondary | #8B5CF6 <span style="background:#8B5CF6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(139,92,246,1) | 品牌次色 / 辅助强调 | 3.98 ⚠<4.5 | 4.23 ⚠<4.5 |
+| color-accent | #FF6B6B <span style="background:#FF6B6B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,107,107,1) | 强调色(每屏至多一处) | 2.61 ⚠<4.5 | 2.78 ⚠<4.5 |
+| color-surface-base | #F7F8FA <span style="background:#F7F8FA;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(247,248,250,1) | 页面背景 | 1.00 | 1.06 |
+| color-surface-card | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,1) | 卡片背景 | 1.06 | 1.00 |
+| color-surface-elevated | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,1) | 悬浮卡片 / 弹层背景 | 1.06 | 1.00 |
+| color-text-primary | #1A1D21 <span style="background:#1A1D21;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(26,29,33,1) | 主要文字(标题/正文) | 15.92 | 16.91 |
+| color-text-secondary | #6B7280 <span style="background:#6B7280;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(107,114,128,1) | 次要文字(说明/时间) | 4.55 | 4.83 |
+| color-text-placeholder | #9CA3AF <span style="background:#9CA3AF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(156,163,175,1) | 占位符 / 辅助提示 | **2.39 ⚠<4.5** | 2.54 ⚠<4.5 |
+| color-text-disabled | #C0C4CC <span style="background:#C0C4CC;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(192,196,204,1) | 禁用文字 | **1.65 ⚠<3** | 1.75 ⚠<3 |
+| color-text-on-brand | #FFFFFF <span style="background:#FFFFFF;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(255,255,255,1) | 品牌色背景上的文字 | —(底色是品牌色,见下注) | —(底色是品牌色,见下注) |
+| color-border-base | #E5E7EB <span style="background:#E5E7EB;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(229,231,235,1) | 标准边框 | 1.17 ⚠<3 | 1.24 ⚠<3 |
+| color-divider | #F0F1F3 <span style="background:#F0F1F3;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(240,241,243,1) | 分割线 | 1.06 | 1.13 |
+| color-danger | #EF4444 <span style="background:#EF4444;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(239,68,68,1) | 危险 / 错误 / 删除 | 3.54 ⚠<4.5 | 3.76 ⚠<4.5 |
+| color-success | #10B981 <span style="background:#10B981;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(16,185,129,1) | 成功 / 已完成 | 2.39 ⚠<4.5 | 2.54 ⚠<4.5 |
+| color-warning | #F59E0B <span style="background:#F59E0B;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(245,158,11,1) | 警告 / 提示 | 2.02 ⚠<4.5 | 2.15 ⚠<4.5 |
+| color-link | #3B82F6 <span style="background:#3B82F6;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(59,130,246,1) | 链接文字 | 3.46 ⚠<4.5 | 3.68 ⚠<4.5 |
+| color-overlay | #00000080 <span style="background:#00000080;display:inline-block;width:1.5em;height:1em;vertical-align:middle;border:1px solid #ccc">　</span> | rgba(0,0,0,0.5) | 遮罩层(弹窗背景) | 3.92 | 3.95 |
 
 **扩展色**（示例页卡片封面渐变与悬停叠色，供 `examples/element-plus` 使用）：
 
-| token | 值 | 用途 |
-| --- | --- | --- | --- |
-| color-state-hover | rgba(26, 29, 33, 0.05) | 悬停态叠色(文字色 5% 透明度) | — |
-| color-cover-a1 | #5B7CFA | 封面 A 渐变起 | — |
-| color-cover-a2 | #8AA2FC | 封面 A 渐变止 | — |
-| color-cover-b1 | #3D5EDB | 封面 B 渐变起 | — |
-| color-cover-b2 | #6F8CF8 | 封面 B 渐变止 | — |
-| color-cover-c1 | #7C93FA | 封面 C 渐变起 | — |
-| color-cover-c2 | #A9BAFD | 封面 C 渐变止 | — |
-| color-cover-d1 | #4C6BE8 | 封面 D 渐变起 | — |
-| color-cover-d2 | #93A9FA | 封面 D 渐变止 | — |
+| token | 值 | 用途 | 对比度(vs 页面底 #F7F8FA) | 对比度(vs 卡片面 #FFF) |
+| --- | --- | --- | --- | --- |
+| color-state-hover | rgba(26, 29, 33, 0.05) | 悬停态叠色(文字色 5% 透明度) | 1.10(叠色,无文本阈值) | 1.10(叠色,无文本阈值) |
+| color-cover-a1 | #5B7CFA | 封面 A 渐变起 | 3.46 ⚠<4.5 | 3.68 ⚠<4.5 |
+| color-cover-a2 | #8AA2FC | 封面 A 渐变止 | 2.28 ⚠<4.5 | 2.43 ⚠<4.5 |
+| color-cover-b1 | #3D5EDB | 封面 B 渐变起 | 5.17 | 5.49 |
+| color-cover-b2 | #6F8CF8 | 封面 B 渐变止 | 2.91 ⚠<4.5 | 3.10 ⚠<4.5 |
+| color-cover-c1 | #7C93FA | 封面 C 渐变起 | 2.67 ⚠<4.5 | 2.83 ⚠<4.5 |
+| color-cover-c2 | #A9BAFD | 封面 C 渐变止 | 1.78 ⚠<4.5 | 1.89 ⚠<4.5 |
+| color-cover-d1 | #4C6BE8 | 封面 D 渐变起 | 4.32 ⚠<4.5 | 4.59 |
+| color-cover-d2 | #93A9FA | 封面 D 渐变止 | 2.13 ⚠<4.5 | 2.26 ⚠<4.5 |
+
+### 对比度实测口径
+
+- **公式**:WCAG 2.x 相对亮度比值,取自本仓 [`scripts/palette-solver.py`](../../scripts/palette-solver.py) 的 `contrast_ratio()`(与 `verify-states.py` / `preview-check.py` 同公式)。复现命令(仓库根执行):
+  `python3 -c "import importlib.util;s=importlib.util.spec_from_file_location('ps','scripts/palette-solver.py');ps=importlib.util.module_from_spec(s);s.loader.exec_module(ps);print('%.2f'%ps.contrast_ratio('#9CA3AF','#F7F8FA'))"` → `2.39`
+- **分母**:页面底色 `color-surface-base` #F7F8FA 与卡片面 `color-surface-card` #FFFFFF 两列并给——**卡片面永远更高**(底色更暗),真实使用取更严的那一列。
+- **半透明先合成再测**([`color.md`](../../references/dimensions/color.md) §8 范式):`color-overlay` 合成到 #F7F8FA 为 #7C7C7D、到 #FFFFFF 为 #808080;`color-state-hover` 合成后为 #ECEDEF / #F4F4F4。**遮罩的真实约束是它背后的内容**,该列只作参考。
+- **阈值出处**([`color.md`](../../references/dimensions/color.md) §8):正文 4.5:1 · 大文本/非文本 3:1 · `color-text-disabled` 不豁免、仍需 ≥3:1 · placeholder 文字 ≥4.5:1(禁用 `text-gray-300` 凑数) · 品牌/功能色承载信息时 ≥4.5:1 · 边框 ≥3:1。
+- **⚠ 行如实标注(反例警示,不改值凑数)**:
+  - `color-text-placeholder` **2.39:1**(页面底色)低于 4.5:1 —— 禁用豁免,实测不达标即标注,不改色。
+  - `color-text-disabled` **1.65:1** 低于 3:1 —— 禁用态文字仍需可识别(color.md §8),同样如实标注。
+  - `color-text-secondary` 4.55:1 贴 4.5 线,换底色或深一档即失守,复验后再用。
+  - 色底型 token(brand/accent/功能色/渐变端点)作**色底**时,达标线是白字压底的比值:`color-text-on-brand` #FFFFFF 压 `color-brand-primary` #5B7CFA = **3.68:1**、压 success #10B981 = 2.54:1、压 warning #F59E0B = 2.15:1 —— **主按钮文案不可用小号正文**,须 ≥18.66px 粗体或把品牌色加深(color.md §9 逃生舱)。
+  - `color-border-base` 1.17:1 低于表单边框要求的 3:1,输入框边框须另取一档深色。
+- **本表是示例产物**:`⚠` 是已知的未达标项,按「如实标注为反例」处理(**不假装通过**),不代表放行;改色值属设计决策,须连带复验 `examples/element-plus` 的映射与 `validate-draw-md.py` 的检查。
 
 ## 2. 字体(typography)
 
