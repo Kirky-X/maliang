@@ -223,43 +223,54 @@
         });
         byTag.forEach(function (same) {
           if (same.length < 2) return;
-          // 同一视觉行:顶缘一致(容差 TOL);顶缘不齐的另一行另成组,首元素代表
-          var row = [same[0]];
-          for (var i = 1; i < same.length; i++) {
-            if (Math.abs(rectOf(same[i]).top - rectOf(same[0]).top) <= TOL) row.push(same[i]);
+          // 按顶缘聚类成视觉行(容差 TOL),多行网格逐行各比,不止首行
+          var tagged = same.map(function (el) { return { el: el, top: rectOf(el).top }; });
+          tagged.sort(function (a, b) { return a.top - b.top; });
+          var rows = [], current = [tagged[0]];
+          for (var i = 1; i < tagged.length; i++) {
+            if (tagged[i].top - current[0].top <= TOL) current.push(tagged[i]);
+            else { rows.push(current); current = [tagged[i]]; }
           }
-          if (row.length < 2) return;
-          var pStyle = css(p);
-          // 高不等:仅 flex 行(stretch/normal 交叉轴应等高)。grid 不查——
-          // bento 瓦片行跨度不同,同排高差是设计而非缺陷
-          if (pStyle.display.indexOf("flex") !== -1 && pStyle.flexDirection.indexOf("column") !== 0
-              && (pStyle.alignItems === "stretch" || pStyle.alignItems === "normal")) {
-            var hs = row.map(function (el) { return rectOf(el).height; });
-            var hdiff = Math.max.apply(null, hs) - Math.min.apply(null, hs);
-            if (hdiff > TOL) add("siblingUnequalSize", row[0], "同排高差 " + Math.round(hdiff) + "px");
-          }
-          // 宽不等:同排都声明了 flexGrow(等分意图)时,渲染宽应相等
-          var grows = row.map(function (el) { return parseFloat(css(el).flexGrow) || 0; });
-          if (grows.every(function (g) { return g > 0; })) {
-            var ws = row.map(function (el) { return rectOf(el).width; });
-            var wdiff = Math.max.apply(null, ws) - Math.min.apply(null, ws);
-            if (wdiff > TOL) add("siblingUnequalSize", row[0], "同排宽差 " + Math.round(wdiff) + "px");
-          }
-          // 行位错位:结构相同(子元素数 2-6 且逐位同标签)的兄弟,逐行比子元素顶缘;
-          // 图标不定框 / 内容天然高度决定行位即命中
-          var count = row[0].children.length;
-          if (count < 2 || count > 6) return;
-          if (!row.every(function (el) { return el.children.length === count; })) return;
-          for (var k = 0; k < count; k++) {
-            if (row.some(function (el) { return !shown(el.children[k]); })) continue;
-            if (row.some(function (el) { return el.children[k].tagName !== row[0].children[k].tagName; })) continue;
-            var tops = row.map(function (el) { return rectOf(el.children[k]).top; });
-            var tdiff = Math.max.apply(null, tops) - Math.min.apply(null, tops);
-            if (tdiff > TOL + 1) {
-              add("siblingRowMisalign", row[0], "第 " + (k + 1) + " 行顶差 " + Math.round(tdiff) + "px");
-              break;
+          rows.push(current);
+          rows.forEach(function (taggedRow) {
+            var row = taggedRow.map(function (t) { return t.el; });
+            if (row.length < 2 || row.length > 8) return;
+            var pStyle = css(p);
+            // 高不等:仅 flex 行(stretch/normal 交叉轴应等高)。grid 不查——
+            // bento 瓦片行跨度不同,同排高差是设计而非缺陷
+            if (pStyle.display.indexOf("flex") !== -1
+                && pStyle.flexDirection.indexOf("column") !== 0
+                && (pStyle.alignItems === "stretch" || pStyle.alignItems === "normal")) {
+              var hs = row.map(function (el) { return rectOf(el).height; });
+              var hdiff = Math.max.apply(null, hs) - Math.min.apply(null, hs);
+              if (hdiff > TOL) add("siblingUnequalSize", row[0], "同排高差 " + Math.round(hdiff) + "px");
             }
-          }
+            // 宽不等:同排都声明了 flexGrow(等分意图)时,渲染宽应相等;
+            // flexGrow 只在 flex 布局生效,grid 子元素的 flexGrow 是无效样式,不查
+            if (pStyle.display.indexOf("flex") !== -1) {
+              var grows = row.map(function (el) { return parseFloat(css(el).flexGrow) || 0; });
+              if (grows.every(function (g) { return g > 0; })) {
+                var ws = row.map(function (el) { return rectOf(el).width; });
+                var wdiff = Math.max.apply(null, ws) - Math.min.apply(null, ws);
+                if (wdiff > TOL) add("siblingUnequalSize", row[0], "同排宽差 " + Math.round(wdiff) + "px");
+              }
+            }
+            // 行位错位:结构相同(子元素数 2-6 且逐位同标签)的兄弟,逐行比子元素顶缘;
+            // 图标不定框 / 内容天然高度决定行位即命中
+            var count = row[0].children.length;
+            if (count < 2 || count > 6) return;
+            if (!row.every(function (el) { return el.children.length === count; })) return;
+            for (var k = 0; k < count; k++) {
+              if (row.some(function (el) { return !shown(el.children[k]); })) continue;
+              if (row.some(function (el) { return el.children[k].tagName !== row[0].children[k].tagName; })) continue;
+              var tops = row.map(function (el) { return rectOf(el.children[k]).top; });
+              var tdiff = Math.max.apply(null, tops) - Math.min.apply(null, tops);
+              if (tdiff > TOL) {
+                add("siblingRowMisalign", row[0], "第 " + (k + 1) + " 行顶差 " + Math.round(tdiff) + "px");
+                break;
+              }
+            }
+          });
         });
       });
     })();
