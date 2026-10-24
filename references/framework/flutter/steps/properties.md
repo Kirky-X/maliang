@@ -190,10 +190,3 @@ class _StepsFullSampleState extends State<StepsFullSample> {
 | 步骤副标题 | `{font-size-sm}` / `{color-text-secondary}` |
 | 步骤内容 | `{font-size-md}` / `{color-text-secondary}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - Stepper: https://api.flutter.dev/flutter/material/Stepper-class.html
-- API 参考 - Step: https://api.flutter.dev/flutter/material/Step-class.html
-- API 参考 - StepState: https://api.flutter.dev/flutter/material/StepState.html
-- API 参考 - StepperType: https://api.flutter.dev/flutter/material/StepperType.html

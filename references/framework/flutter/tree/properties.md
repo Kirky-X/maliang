@@ -79,10 +79,3 @@ Flutter 不存在 `Tree` 类。本文档汇总替代实现(`ExpansionTile` / `Ex
 | 层级缩进 | `{spacing-sm}`(每级) |
 | 分隔线 | `{color-outline-variant}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - ExpansionTile: https://api.flutter.dev/flutter/material/ExpansionTile-class.html
-- API 参考 - ExpansionPanelList: https://api.flutter.dev/flutter/material/ExpansionPanelList-class.html
-- API 参考 - ExpansionPanel: https://api.flutter.dev/flutter/material/ExpansionPanel-class.html
-- pub.dev - flutter_simple_treeview: https://pub.flutter-io.cn/packages/flutter_simple_treeview

@@ -26,6 +26,7 @@
 | `filterQuality` | `FilterQuality` | `FilterQuality.low` | 滤镜质量 |
 | `width` / `height` | `double?` | `null` | 显示尺寸 |
 | `cacheWidth` / `cacheHeight` | `int?` | `null` | 解码目标尺寸(物理像素) |
+| `image` | `ImageProvider` | 必填 | 图片数据源 |
 
 ## BoxFit 取值
 

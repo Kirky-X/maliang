@@ -16,33 +16,7 @@
 | `routeSettings` | `RouteSettings?` | `null` | 路由设置 |
 | `anchorPoint` | `Offset?` | `null` | 锚点(显示位置) |
 
-## AlertDialog 属性
-
-| 属性名 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `icon` | `Widget?` | `null` | 顶部图标(M3) |
-| `iconPadding` | `EdgeInsetsGeometry?` | `null` | 图标内边距 |
-| `iconColor` | `Color?` | `null` | 图标颜色 |
-| `title` | `Widget?` | `null` | 标题 |
-| `titlePadding` | `EdgeInsetsGeometry?` | `null` | 标题内边距 |
-| `titleTextStyle` | `TextStyle?` | `null` | 标题样式 |
-| `content` | `Widget?` | `null` | 内容 |
-| `contentPadding` | `EdgeInsetsGeometry` | `EdgeInsets.fromLTRB(24, 20, 24, 24)` | 内容内边距 |
-| `contentTextStyle` | `TextStyle?` | `null` | 内容样式 |
-| `actions` | `List<Widget>?` | `null` | 底部按钮 |
-| `actionsPadding` | `EdgeInsetsGeometry?` | `null` | 按钮区内边距 |
-| `actionsAlignment` | `MainAxisAlignment?` | `null` | 按钮对齐 |
-| `actionsOverflowDirection` | `VerticalDirection?` | `null` | 按钮溢出方向 |
-| `actionsOverflowButtonSpacing` | `double?` | `null` | 溢出按钮间距 |
-| `buttonPadding` | `EdgeInsetsGeometry?` | `null` | 单按钮内边距 |
-| `backgroundColor` | `Color?` | `null`(主题 surface) | 背景色 |
-| `elevation` | `double?` | `null` | 高度 |
-| `shadowColor` | `Color?` | `null` | 阴影色 |
-| `surfaceTintColor` | `Color?` | `null` | 表面染色 |
-| `shape` | `ShapeBorder?` | `null`(默认圆角 28) | 形状 |
-| `clipBehavior` | `Clip` | `Clip.none` | 裁剪 |
-| `alignment` | `AlignmentGeometry?` | `null`(居中) | 对齐 |
-| `semanticLabel` | `String?` | `null` | 无障碍标签 |
+> 「AlertDialog 属性」参数唯一真源见 [../alert/properties.md](../alert/properties.md);本文件不复述(防双份漂移)。
 
 ## SimpleDialog 属性
 

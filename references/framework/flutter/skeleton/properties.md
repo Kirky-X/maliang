@@ -65,9 +65,3 @@ Flutter 不存在 `Skeleton` 类。本文档汇总替代实现(`shimmer` 包 / �
 | 骨架圆角 | `{radius-sm}` / `{radius-full}`(圆形) |
 | 骨架间距 | `{spacing-sm}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- pub.dev - shimmer: https://pub.flutter-io.cn/packages/shimmer
-- API 参考 - AnimatedBuilder: https://api.flutter.dev/flutter/widgets/AnimatedBuilder-class.html
-- API 参考 - FadeInImage: https://api.flutter.dev/flutter/widgets/FadeInImage-class.html

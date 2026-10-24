@@ -75,26 +75,7 @@ const ExpansionPanelList.radio({
 })
 ```
 
-## 核心属性(ExpansionTile)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `title` | `Widget` | 标题 |
-| `subtitle` | `Widget?` | 副标题 |
-| `leading` | `Widget?` | 头部 Widget |
-| `children` | `List<Widget>` | 子节点 |
-| `initiallyExpanded` | `bool` | 初始是否展开 |
-| `onExpansionChanged` | `ValueChanged<bool>?` | 展开/折叠回调 |
-| `backgroundColor` | `Color?` | 展开时背景 |
-| `collapsedBackgroundColor` | `Color?` | 折叠时背景 |
-| `textColor` | `Color?` | 展开时文字色 |
-| `collapsedTextColor` | `Color?` | 折叠时文字色 |
-| `iconColor` | `Color?` | 展开时图标色 |
-| `collapsedIconColor` | `Color?` | 折叠时图标色 |
-| `shape` | `ShapeBorder?` | 展开时形状 |
-| `collapsedShape` | `ShapeBorder?` | 折叠时形状 |
-| `controlAffinity` | `ListTileControlAffinity` | 展开图标位置 |
-| `maintainState` | `bool` | 折叠时是否保持子项状态 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

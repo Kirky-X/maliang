@@ -84,34 +84,7 @@ const MaterialBanner({
 })
 ```
 
-## 核心属性
-
-### SnackBar
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `content` | `Widget` | 消息内容(通常为 `Text`) |
-| `action` | `SnackBarAction?` | 操作按钮(如"撤销") |
-| `duration` | `Duration` | 显示时长(默认 4 秒) |
-| `behavior` | `SnackBarBehavior?` | 显示方式(fixed/floating) |
-| `backgroundColor` | `Color?` | 背景色 |
-| `elevation` | `double?` | 阴影高度(floating 时生效) |
-| `margin` | `EdgeInsetsGeometry?` | 外边距(floating 时生效) |
-| `padding` | `EdgeInsetsGeometry?` | 内边距 |
-| `shape` | `ShapeBorder?` | 形状 |
-| `width` | `double?` | 宽度(固定后 behavior 自动 floating) |
-| `showCloseIcon` | `bool?` | 是否显示关闭图标 |
-| `closeIconColor` | `Color?` | 关闭图标颜色 |
-| `dismissDirection` | `DismissDirection?` | 滑动关闭方向 |
-| `onVisible` | `VoidCallback?` | 显示时回调 |
-| `animation` | `Animation<double>?` | 自定义动画 |
-
-### SnackBarBehavior 取值
-
-| 取值 | 说明 |
-| --- | --- |
-| `SnackBarBehavior.fixed` | 固定在底部(默认 M2 风格) |
-| `SnackBarBehavior.floating` | 浮动(M3 推荐,带阴影) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

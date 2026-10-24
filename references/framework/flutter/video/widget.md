@@ -52,14 +52,7 @@ VideoPlayerController.asset(
 VideoPlayerController.file(File file, {Future<ClosedCaptionFile>? closedCaptionFile})
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `controller` | `VideoPlayerController` | 控制器,管理播放状态 |
-| `aspectRatio` | `double?` | 宽高比(如 16/9);`null` 时按视频原生比例 |
-| `closedCaptionFile` | `Future<ClosedCaptionFile>?` | 字幕文件 |
-| `formatHint` | `VideoFormat?` | 格式提示(优化探测) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

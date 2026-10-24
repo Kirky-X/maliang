@@ -215,12 +215,3 @@ ThemeData(
 )
 ```
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - Chip: https://api.flutter.dev/flutter/material/Chip-class.html
-- API 参考 - ChoiceChip: https://api.flutter.dev/flutter/material/ChoiceChip-class.html
-- API 参考 - FilterChip: https://api.flutter.dev/flutter/material/FilterChip-class.html
-- API 参考 - InputChip: https://api.flutter.dev/flutter/material/InputChip-class.html
-- API 参考 - ActionChip: https://api.flutter.dev/flutter/material/ActionChip-class.html
-- API 参考 - ChipThemeData: https://api.flutter.dev/flutter/material/ChipThemeData-class.html

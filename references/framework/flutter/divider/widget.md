@@ -39,27 +39,7 @@ const VerticalDivider({
 })
 ```
 
-## 核心属性
-
-### Divider 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `height` | `double?` | 占位总高度(含上下空白) |
-| `thickness` | `double?` | 线厚度 |
-| `indent` | `double?` | 左侧缩进 |
-| `endIndent` | `double?` | 右侧缩进 |
-| `color` | `Color?` | 颜色 |
-
-### VerticalDivider 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `width` | `double?` | 占位总宽度(含左右空白) |
-| `thickness` | `double?` | 线厚度 |
-| `indent` | `double?` | 顶部缩进 |
-| `endIndent` | `double?` | 底部缩进 |
-| `color` | `Color?` | 颜色 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

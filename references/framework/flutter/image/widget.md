@@ -47,21 +47,7 @@ Image.network(
 
 构造参数与 `Image.network` 基本一致,首个参数为资源路径 `String name`,额外支持 `AssetBundle? bundle`。
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `image` | `ImageProvider` | 图片数据源 |
-| `fit` | `BoxFit?` | 缩放模式(fill/contain/cover/fitWidth/fitHeight/none/scaleDown) |
-| `alignment` | `AlignmentGeometry` | 对齐,默认 `Alignment.center` |
-| `repeat` | `ImageRepeat` | 平铺,默认 `noRepeat` |
-| `width` / `height` | `double?` | 显示尺寸 |
-| `color` / `colorBlendMode` | `Color?` / `BlendMode?` | 着色与混合 |
-| `loadingBuilder` | `Widget Function(BuildContext, Widget, ImageChunkEvent?)` | 加载进度 |
-| `errorBuilder` | `Widget Function(BuildContext, Object, StackTrace?)` | 加载失败 |
-| `cacheWidth` / `cacheHeight` | `int?` | 解码目标尺寸(降低内存) |
-| `filterQuality` | `FilterQuality` | 滤镜质量,默认 `low` |
-| `semanticLabel` | `String?` | 无障碍描述 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

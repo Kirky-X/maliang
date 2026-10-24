@@ -87,30 +87,7 @@ const DragTarget<T>({
 })
 ```
 
-## 核心属性
-
-### GestureDetector 常用回调
-
-| 回调 | 说明 |
-| --- | --- |
-| `onTap` | 点击 |
-| `onDoubleTap` | 双击 |
-| `onLongPress` | 长按(500ms) |
-| `onVerticalDragUpdate` | 垂直拖动更新 |
-| `onHorizontalDragUpdate` | 水平拖动更新 |
-| `onPanUpdate` | 平移(任意方向) |
-| `onScaleUpdate` | 缩放(双指) |
-
-### Dismissible 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `key` | `Key` | 必填(项标识) |
-| `child` | `Widget` | 必填 |
-| `onDismissed` | `ValueChanged<DismissDirection>` | 删除回调 |
-| `direction` | `DismissDirection` | 滑动方向(horizontal/vertical/up/down/endToStart/startToEnd) |
-| `background` | `Widget?` | 滑动露出的背景 |
-| `confirmDismiss` | `ConfirmDismissCallback?` | 确认删除(可异步) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

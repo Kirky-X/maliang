@@ -91,37 +91,7 @@ const Theme({
 })
 ```
 
-## 核心属性
-
-### ThemeData 常用属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `brightness` | `Brightness` | light/dark |
-| `colorScheme` | `ColorScheme` | M3 配色 |
-| `useMaterial3` | `bool` | 是否 M3 |
-| `textTheme` | `TextTheme` | 文本样式 |
-| `primaryColor` | `Color` | 主色 |
-| `scaffoldBackgroundColor` | `Color` | Scaffold 背景 |
-| `cardColor` | `Color` | Card 背景 |
-| `dividerColor` | `Color` | 分割线色 |
-| `iconTheme` | `IconThemeData` | 图标主题 |
-| `extensions` | `Map<Type, ThemeExtension>` | 自定义扩展 |
-
-### ColorScheme 常用属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `primary` | `Color` | 主色 |
-| `onPrimary` | `Color` | 主色上的文本/图标色 |
-| `primaryContainer` | `Color` | 主色容器(浅色变体) |
-| `secondary` | `Color` | 次要色 |
-| `tertiary` | `Color` | 第三色 |
-| `error` | `Color` | 错误色 |
-| `surface` | `Color` | 表面色 |
-| `onSurface` | `Color` | 表面文本色 |
-| `outline` | `Color` | 描边色 |
-| `brightness` | `Brightness` | light/dark |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

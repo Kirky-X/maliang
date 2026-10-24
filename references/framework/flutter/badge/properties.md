@@ -177,8 +177,3 @@ ThemeData(
 )
 ```
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - Badge: https://api.flutter.dev/flutter/material/Badge-class.html
-- API 参考 - BadgeThemeData: https://api.flutter.dev/flutter/material/BadgeThemeData-class.html

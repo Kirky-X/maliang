@@ -45,6 +45,8 @@
 | `keyboardDismissBehavior` | `ScrollViewKeyboardDismissBehavior` | `manual` | 键盘收起策略 |
 | `clipBehavior` | `Clip` | `Clip.hardEdge` | 裁剪行为 |
 | `restorationId` | `String?` | `null` | 状态恢复 ID |
+| `addAutomaticKeepAlives` | `bool` | `true` | 是否自动保活(防止滚动销毁) |
+| `addRepaintBoundaries` | `bool` | `true` | 是否添加 RepaintBoundary |
 
 ## ScrollPhysics 子类
 

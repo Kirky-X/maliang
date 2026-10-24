@@ -1,31 +1,8 @@
 # Flutter Notification 属性列表与默认值
 
+> MaterialBanner 与 ScaffoldMessenger 方法的参数唯一真源见 [message](../message/properties.md);本文件保留 notification 场景的选型对照与完整示例,不复述参数表(防双份漂移)。
+
 本文档汇总 `MaterialBanner` 的完整属性与常驻横幅/消息中心的组合规格。所有颜色默认值以 design token 形式给出。
-
-## MaterialBanner 构造参数
-
-| 属性名 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `content` | `Widget` | 必填 | 正文(支持多行富文本) |
-| `actions` | `List<Widget>` | 必填 | 操作按钮组(至少含"关闭") |
-| `leading` | `Widget?` | `null` | 前置图标(状态图标) |
-| `backgroundColor` | `Color?` | 取主题 surface | 背景色,建议 `{color-bg-secondary}` |
-| `surfaceTintColor` | `Color?` | 取主题 | M3 表面着色 |
-| `shadowColor` | `Color?` | 取主题 | 阴影色 |
-| `dividerColor` | `Color?` | 取主题 | 与内容分隔线颜色 |
-| `elevation` | `double?` | `null` | 海拔(横幅建议 0-1) |
-| `forceActionsBelow` | `bool` | `false` | 操作按钮强制换行到下方 |
-| `margin` / `padding` | `EdgeInsetsGeometry?` | 取主题 | 外/内边距 |
-| `onVisible` | `VoidCallback?` | `null` | 横幅首次可见回调 |
-
-## ScaffoldMessenger 方法
-
-| 方法 | 说明 |
-| --- | --- |
-| `showMaterialBanner(banner)` | 显示常驻横幅(不自动消失) |
-| `hideCurrentMaterialBanner()` | 关闭当前横幅 |
-| `clearMaterialBanners()` | 清空队列 |
-| `showSnackBar(snackBar)` | toast 语义(短暂,归 message 类) |
 
 ## notification 与 message(toast)选型对照
 

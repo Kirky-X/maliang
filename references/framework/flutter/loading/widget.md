@@ -28,8 +28,7 @@ const CircularProgressIndicator({
   super.semanticsValue,         // 无障碍进度值
   this.strokeAlign,             // 描边对齐(M3 新增,默认 center)
   this.strokeCap,               // 描边端点形状(默认 round)
-  this.trackColor,              // 轨道色(M3 替代 backgroundColor)
-  this.strokeGap,               // 描边间隙(M3 新增,显示进度时使用)
+  this.trackGap,                // 轨道与进度弧之间的间隙(M3)
   this.borderRadius,            // 圆角(M3 新增)
   this.constraints,             // 尺寸约束(默认 36x36)
 })
@@ -47,25 +46,11 @@ const LinearProgressIndicator({
   super.semanticsLabel,
   super.semanticsValue,
   this.borderRadius,            // 圆角(M3 新增)
-  this.trackColor,
-  this.strokeAlign,
-  this.strokeCap,
+  this.trackGap,
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `value` | `double?` | 进度值(0.0~1.0);`null` 表示 indeterminate |
-| `valueColor` | `Animation<Color?>?` | 前景指示色,通过 `AlwaysStoppedAnimation<Color>(token)` 提供 |
-| `backgroundColor` / `trackColor` | `Color?` | 背景轨道色(M3 推荐 `trackColor`) |
-| `strokeWidth` | `double` | 圆形指示器线宽 |
-| `minHeight` | `double` | 线性指示器高度 |
-| `strokeAlign` | `double` | 描边对齐(`-1` 内、`0` 中、`1` 外) |
-| `strokeCap` | `StrokeCap?` | 描边端点形状(`round` / `square` / `butt`) |
-| `borderRadius` | `BorderRadius?` | 圆角(M3 新增) |
-| `constraints` | `BoxConstraints` | 尺寸约束(圆形指示器) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

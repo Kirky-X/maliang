@@ -44,20 +44,7 @@ const Step({
 })
 ```
 
-## 核心属性(Stepper)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `steps` | `List<Step>` | 步骤列表 |
-| `currentStep` | `int` | 当前步骤索引(默认 0) |
-| `type` | `StepperType` | 类型(`vertical` / `horizontal`) |
-| `onStepTapped` | `ValueChanged<int>?` | 点击步骤回调 |
-| `onStepContinue` | `VoidCallback?` | 继续按钮回调 |
-| `onStepCancel` | `VoidCallback?` | 取消按钮回调 |
-| `controlsBuilder` | `ControlsWidgetBuilder?` | 自定义按钮构建器 |
-| `physics` | `ScrollPhysics?` | 滚动物理 |
-| `connectorColor` | `Color?` | 连接线颜色(M3) |
-| `numberColor` | `Color?` | 圆圈数字颜色(M3) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## StepState 取值
 

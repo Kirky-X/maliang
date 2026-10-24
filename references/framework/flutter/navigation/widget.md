@@ -72,32 +72,7 @@ GoRoute({
 })
 ```
 
-## 核心属性
-
-### Navigator 常用方法
-
-| 方法 | 签名 | 说明 |
-| --- | --- | --- |
-| `push` | `Future<T?> push<T>(Route<T>)` | 压栈,返回携带数据的 Future |
-| `pop` | `void pop<T>([T? result])` | 出栈,可携带结果返回 |
-| `pushNamed` | `Future<T?> pushNamed<T>(String, {Object? args})` | 命名路由压栈 |
-| `pushReplacement` | `void pushReplacement<T, TO>(Route<T>, {TO? result})` | 替换栈顶 |
-| `pushReplacementNamed` | 同上,命名版本 | 替换栈顶 |
-| `popUntil` | `void popUntil(RoutePredicate)` | 持续出栈直到条件满足 |
-| `pushAndRemoveUntil` | `Future<T?> pushAndRemoveUntil<T>(Route, RoutePredicate)` | 压栈并清栈 |
-| `canPop` | `bool canPop()` | 是否可返回 |
-| `maybePop` | `Future<bool> maybePop<T>([T? result])` | 可返回时返回 |
-| `restorablePush` | `String restorablePush(...)` | 可恢复 push(状态恢复) |
-
-### Route 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `settings` | `RouteSettings` | 名称 + 参数 |
-| `isFirst` | `bool` | 是否栈底 |
-| `isCurrent` | `bool` | 是否栈顶 |
-| `willHandlePopInternally` | `bool` | 是否自行处理返回 |
-| `canPop` | `bool` | 是否可 pop |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

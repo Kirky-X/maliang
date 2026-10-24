@@ -41,16 +41,7 @@ const ButtonSegment<T>({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `segments` | `Set<ButtonSegment<T>>` | 分段定义(value + label + icon) |
-| `selected` | `Set<T>` | 当前选中值集合(互斥时长度 1) |
-| `onSelectionChanged` | `ValueChanged<Set<T>>?` | 选中变化回调 |
-| `multiSelectionEnabled` | `bool` | 多选模式(默认互斥) |
-| `selectedIcon` | `Widget?` | 选中段前缀图标(默认 check) |
-| `style` | `ButtonStyle?` | 覆盖主题样式 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -65,20 +65,7 @@ const Card.outlined({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `child` | `Widget?` | 卡片内容 |
-| `color` | `Color?` | 背景色 |
-| `shadowColor` | `Color?` | 阴影色 |
-| `surfaceTintColor` | `Color?` | 表面染色(M3 elevation tint) |
-| `elevation` | `double?` | 阴影高度(M3 默认 1.0) |
-| `shape` | `ShapeBorder?` | 形状(M3 默认 12dp 圆角矩形) |
-| `borderOnForeground` | `bool` | 边框是否在前台(默认 `true`) |
-| `margin` | `EdgeInsetsGeometry?` | 外边距 |
-| `clipBehavior` | `Clip?` | 裁剪行为(默认 `Clip.none`) |
-| `semanticContainer` | `bool` | 是否为语义容器(默认 `true`) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

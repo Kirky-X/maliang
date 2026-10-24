@@ -36,6 +36,8 @@
 | `cursorWidth` | `double` | `2.0` | 光标宽度 |
 | `cursorColor` | `Color?` | `null`(取主题) | 光标颜色 |
 | `scrollPadding` | `EdgeInsets` | `EdgeInsets.all(20)` | 键盘弹出时滚动留白 |
+| `validator` | `FormFieldValidator<String>?` | `null` | 校验函数(仅 TextFormField) |
+| `autovalidateMode` | `AutovalidateMode` | `AutovalidateMode.disabled` | 自动校验时机 |
 
 ## InputDecoration 属性
 

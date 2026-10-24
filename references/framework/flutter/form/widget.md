@@ -56,34 +56,7 @@ class FormState extends State<Form> {
 }
 ```
 
-## 核心属性
-
-### Form 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `child` | `Widget` | 表单内容(含 FormField 子节点) |
-| `onChanged` | `VoidCallback?` | 任一字段变化时触发 |
-| `autovalidateMode` | `AutovalidateMode` | 自动校验时机(disabled/onUserInteraction/always) |
-
-### FormField 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `builder` | `FormFieldBuilder<T>` | 字段构建函数 |
-| `validator` | `FormFieldValidator<T>?` | 校验函数(返回错误文本或 null) |
-| `initialValue` | `T?` | 初始值 |
-| `onSaved` | `FormFieldSetter<T>?` | 保存回调 |
-| `onChanged` | `ValueChanged<T?>?` | 值变化回调 |
-| `autovalidateMode` | `AutovalidateMode` | 自动校验时机 |
-
-### AutovalidateMode 取值
-
-| 取值 | 行为 |
-| --- | --- |
-| `disabled` | 不自动校验(需手动调 validate) |
-| `onUserInteraction` | 用户交互后开始自动校验 |
-| `always` | 总是自动校验 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -33,6 +33,14 @@
 | `AppLocalizations.of(context)` | `AppLocalizations?` | 在子树获取实例 |
 | `AppLocalizations.supportedLocales` | `List<Locale>` | 支持的 Locale 列表 |
 
+## Locale 属性
+
+| 属性名 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `languageCode` | `String` | 必填 | 语言代码(zh/en) |
+| `countryCode` | `String?` | `null` | 国家代码(CN/US) |
+| `scriptCode` | `String?` | `null` | 脚本代码(Hans/Hant) |
+
 ## MaterialApp 国际化相关参数
 
 | 属性名 | 类型 | 默认值 | 说明 |

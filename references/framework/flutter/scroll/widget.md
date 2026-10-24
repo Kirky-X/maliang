@@ -94,22 +94,7 @@ PageView({
 PageView.builder({ ... required IndexedWidgetBuilder itemBuilder, required int itemCount, ... })
 ```
 
-## 核心属性(通用)
-
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `scrollDirection` | `Axis` | `Axis.vertical` | 滑动方向(vertical/horizontal) |
-| `reverse` | `bool` | `false` | 是否反向(如聊天列表) |
-| `controller` | `ScrollController?` | `null` | 控制器(跳转、监听偏移) |
-| `primary` | `bool?` | `null` | 是否使用 PrimaryScrollController |
-| `physics` | `ScrollPhysics?` | `null`(取 ScrollBehavior) | 滑动物理效果 |
-| `shrinkWrap` | `bool` | `false` | 是否按内容大小收缩(禁用视口优化) |
-| `padding` | `EdgeInsetsGeometry?` | `null` | 内边距 |
-| `itemExtent` | `double?` | `null` | 固定项高度(性能优化) |
-| `cacheExtent` | `double?` | `null`(默认 250px) | 视口外预渲染范围 |
-| `addAutomaticKeepAlives` | `bool` | `true` | 是否自动保活(防止滚动销毁) |
-| `addRepaintBoundaries` | `bool` | `true` | 是否添加 RepaintBoundary |
-| `clipBehavior` | `Clip` | `Clip.hardEdge` | 裁剪行为 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

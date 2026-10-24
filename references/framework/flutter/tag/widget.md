@@ -85,20 +85,7 @@ ActionChip({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `label` | `Widget` | 标签文字 |
-| `avatar` | `Widget?` | 头像(左侧,通常为 `CircleAvatar` 或 `Icon`) |
-| `onPressed` | `VoidCallback?` | 点击回调(`ActionChip` 必填) |
-| `onSelected` | `ValueChanged<bool>??` | 选择回调(`ChoiceChip` / `FilterChip`) |
-| `selected` | `bool` | 是否选中(`ChoiceChip` / `FilterChip`) |
-| `onDeleted` | `VoidCallback?` | 删除回调(`InputChip`) |
-| `deleteIcon` | `Widget?` | 删除图标 |
-| `color` | `MaterialStateProperty<Color?>?` | 背景色(状态驱动) |
-| `shape` | `OutlinedBorder?` | 形状 |
-| `side` | `BorderSide?` | 边框 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -54,17 +54,7 @@ const RangeSlider({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `value` / `values` | `double` / `RangeValues` | 当前值/区间(start-end) |
-| `onChanged` | `ValueChanged<...>?` | 拖动实时回调;`null` 时禁用 |
-| `onChangeEnd` | `ValueChanged<...>?` | 松手回调(业务触发点) |
-| `min` / `max` | `double` | 范围(默认 0.0-1.0) |
-| `divisions` | `int?` | 离散档数(连续滑块不设) |
-| `label` / `labels` | `String?` / `RangeLabels?` | 拖动气泡文本 |
-| `activeColor` / `inactiveColor` | `Color?` | 已选轨/底轨颜色 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

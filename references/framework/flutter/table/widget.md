@@ -96,36 +96,7 @@ const PaginatedDataTable({
 })
 ```
 
-## 核心属性
-
-### Table
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `children` | `List<TableRow>` | 行列表 |
-| `columnWidths` | `Map<int, TableColumnWidth>` | 各列宽度 |
-| `defaultColumnWidth` | `TableColumnWidth` | 默认列宽 |
-| `border` | `TableBorder?` | 边框 |
-| `defaultVerticalAlignment` | `TableCellVerticalAlignment` | 默认垂直对齐 |
-| `textDirection` | `TextDirection?` | 文本方向 |
-| `textBaseline` | `TextBaseline?` | 文本基线 |
-
-### DataTable
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `columns` | `List<DataColumn>` | 列定义 |
-| `rows` | `List<DataRow>` | 行数据 |
-| `dividerThickness` | `double?` | 分隔线厚度 |
-| `columnSpacing` | `double?` | 列间距 |
-| `headingRowHeight` | `double?` | 表头行高 |
-| `dataRowHeight` | `double?` | 数据行高 |
-| `horizontalMargin` | `double?` | 水平外边距 |
-| `showCheckboxColumn` | `bool` | 是否显示复选列(默认 `true`) |
-| `showBottomBorder` | `bool?` | 是否显示底部边框 |
-| `columnWidths` | `Map<int, TableColumnWidth>?` | 各列宽度 |
-| `headingRowColor` | `MaterialStateProperty<Color?>?` | 表头背景色 |
-| `dataRowColor` | `MaterialStateProperty<Color?>?` | 数据行背景色 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -162,9 +162,3 @@ class AvatarFullSample extends StatelessWidget {
 | 未读数文字 | `{color-on-error}` |
 | 加载失败图标 | `{color-on-surface-variant}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - CircleAvatar: https://api.flutter.dev/flutter/material/CircleAvatar-class.html
-- API 参考 - Badge: https://api.flutter.dev/flutter/material/Badge-class.html
-- API 参考 - ImageIcon: https://api.flutter.dev/flutter/widgets/ImageIcon-class.html

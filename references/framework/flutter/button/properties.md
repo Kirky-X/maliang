@@ -206,7 +206,7 @@ class _ButtonFullSampleState extends State<ButtonFullSample> {
 
 ## 主题层配置(Design Token 解析点)
 
-在 `ThemeData` 中通过 `elevatedButtonTheme` / `filledButtonTheme` / `outlinedButtonTheme` / `textButtonTheme` 注入主题级样式,所有 token 在此集中解析:
+在 `ThemeData` 中通过 `elevatedButtonTheme` / `filledButtonTheme` / `outlinedButtonTheme` / `textButtonTheme` 注入主题级样式,所有 token 在此集中解析。分工:**全站主题级注入看本节,单 widget 临时覆盖(`styleFrom`)看 [widget.md](widget.md)「Widget 级样式覆盖」**——同一套 token 映射,两个注入层级:
 
 ```dart
 ThemeData(

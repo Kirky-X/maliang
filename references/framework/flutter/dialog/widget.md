@@ -10,7 +10,6 @@ Flutter 对话框通过 `showDialog` 函数(返回 `Future<T?>`)在 `Overlay` �
 | `AlertDialog` | `AlertDialog` | `Dialog` | Material 警告框(标题/内容/按钮) |
 | `SimpleDialog` | `SimpleDialog` | `Dialog` | 简单选项列表对话框 |
 | `Dialog` | `Dialog` | `StatelessWidget` | 通用对话框容器 |
-| `DialogAction` | - | - | 按钮(通常用 TextButton) |
 | `showModalBottomSheet` | 函数 | - | 底部模态弹窗 |
 
 ## 构造函数
@@ -90,31 +89,7 @@ const SimpleDialogOption({
 })
 ```
 
-## 核心属性
-
-### AlertDialog 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `icon` | `Widget?` | 顶部图标(M3 新增) |
-| `title` | `Widget?` | 标题 |
-| `content` | `Widget?` | 内容(可滚动) |
-| `actions` | `List<Widget>?` | 底部按钮(通常为 TextButton) |
-| `actionsAlignment` | `MainAxisAlignment?` | 按钮对齐 |
-| `backgroundColor` | `Color?` | 背景色 |
-| `elevation` | `double?` | 高度 |
-| `shape` | `ShapeBorder?` | 形状(圆角) |
-| `alignment` | `AlignmentGeometry?` | 对齐(居中/底部) |
-
-### showDialog 核心
-
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| `context` | `BuildContext` | 必填 |
-| `builder` | `WidgetBuilder` | 对话框构建 |
-| `barrierDismissible` | `bool` | 点击遮罩关闭(默认 true) |
-| `barrierColor` | `Color?` | 遮罩色(默认黑色 0.8 透明) |
-| `useRootNavigator` | `bool` | 用根 Navigator(嵌套导航时关键) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

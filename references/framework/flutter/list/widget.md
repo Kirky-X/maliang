@@ -141,24 +141,7 @@ const ListTile({
 })
 ```
 
-## 核心属性(ListView)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `scrollDirection` | `Axis` | 滚动方向,默认 `Axis.vertical` |
-| `reverse` | `bool` | 是否反向排列,默认 `false` |
-| `controller` | `ScrollController?` | 滚动控制器,监听/跳转位置 |
-| `primary` | `bool?` | 是否关联 `PrimaryScrollController` |
-| `physics` | `ScrollPhysics?` | 滚动行为(`Bouncing`/`Clamping`/`AlwaysScrollable`) |
-| `shrinkWrap` | `bool` | 是否按内容收缩,默认 `false` |
-| `padding` | `EdgeInsetsGeometry?` | 内边距 |
-| `itemExtent` | `double?` | 固定项高度(性能优化) |
-| `cacheExtent` | `double?` | 视口外预渲染高度 |
-| `itemBuilder` | `IndexedWidgetBuilder` | 按索引构建项(`.builder`/`.separated`) |
-| `itemCount` | `int?` | 项总数 |
-| `children` | `List<Widget>` | 静态子节点(默认构造) |
-| `addAutomaticKeepAlives` | `bool` | 自动保持状态,默认 `true` |
-| `addRepaintBoundaries` | `bool` | 自动隔离重绘,默认 `true` |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

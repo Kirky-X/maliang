@@ -51,18 +51,7 @@ const DropdownMenu<T>({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `items` / `entries` | `List<DropdownMenuItem<T>>` / `List<DropdownMenuEntry<T>>` | 选项列表 |
-| `value` / `initialSelection` | `T?` / `int?` | 当前选中值 / 初始选中索引 |
-| `onChanged` / `onSelected` | `ValueChanged<T?>?` | 选中回调 |
-| `hint` | `Widget?` | 未选择时占位提示 |
-| `isExpanded` | `bool` | 触发器是否撑满可用宽度 |
-| `icon` | `Widget?` | 触发器箭头图标(默认 `arrow_drop_down`) |
-| `validator` | `FormFieldValidator<T>?` | 表单校验(FormField 系列) |
-| `enableSearch` | `bool` | DropdownMenu 内置搜索(对齐 `select-searchable`) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

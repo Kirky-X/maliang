@@ -70,21 +70,7 @@ DropdownMenu<T>({
 })
 ```
 
-## 核心属性(DropdownMenu M3)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `dropdownMenuEntries` | `List<DropdownMenuEntry<T>>` | 选项列表 |
-| `initialSelection` | `T?` | 初始选中值 |
-| `onSelected` | `ValueChanged<T?>?` | 选择回调 |
-| `controller` | `TextEditingController?` | 文本控制器(配合搜索) |
-| `label` | `Widget?` | 标签 |
-| `width` | `double?` | 宽度 |
-| `leadingIcon` | `Widget?` | 前置图标 |
-| `trailingIcon` | `Widget?` | 后置图标 |
-| `enableSearch` | `bool` | 是否启用搜索 |
-| `enableFilter` | `bool` | 是否启用过滤 |
-| `menuStyle` | `MenuStyle?` | 菜单样式 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

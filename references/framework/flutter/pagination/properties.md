@@ -109,11 +109,3 @@ _controller.addListener(() {
 | 页码间距 | `{spacing-xs}` |
 | 上/下一页图标 | `{color-text-secondary}` / `{icon-size-sm}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- Flutter 官方文档 - 列表 & 网格: https://docs.flutter.cn/ui/layout/lists
-- API 参考 - ScrollController: https://api.flutter.dev/flutter/widgets/ScrollController-class.html
-- API 参考 - ListView: https://api.flutter.dev/flutter/widgets/ListView-class.html
-- API 参考 - IconButton: https://api.flutter.dev/flutter/material/IconButton-class.html
-- pub.dev - infinite_scroll_pagination: https://pub.flutter-io.cn/packages/infinite_scroll_pagination

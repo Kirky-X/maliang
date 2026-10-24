@@ -49,21 +49,7 @@ Badge.count({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `label` | `Widget?` | 徽标内容(`null` 时仅显示小圆点) |
-| `child` | `Widget?` | 被标记的子节点 |
-| `backgroundColor` | `Color?` | 背景色 |
-| `textColor` | `Color?` | 文字色 |
-| `isLabelVisible` | `bool` | 是否显示 label |
-| `smallSize` | `double?` | 小圆点尺寸(无 label,默认 6) |
-| `largeSize` | `double?` | 含 label 时尺寸(默认 16) |
-| `alignment` | `AlignmentGeometry` | 徽标对齐(默认 `topEnd`) |
-| `offset` | `Offset?` | 位置偏移 |
-| `elevation` | `double?` | 高度 |
-| `shape` | `ShapeBorder?` | 形状 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

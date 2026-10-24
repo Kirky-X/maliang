@@ -33,7 +33,7 @@ const AlertDialog({
   this.actionsPadding,             // 操作区内边距
   this.actionsAlignment,           // 操作区对齐
   this.actionsOverflowDirection,   // 操作区溢出方向
-  this.actionsOverflowSpacing,     // 操作区溢出间距
+  this.actionsOverflowButtonSpacing,  // 操作溢出按钮间距(官方参数名核对)
   this.buttonPadding,              // 按钮内边距
   this.backgroundColor,            // 背景色
   this.elevation,                  // z 轴高度
@@ -68,20 +68,7 @@ const SimpleDialog({
 })
 ```
 
-## 核心属性(AlertDialog)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `icon` | `Widget?` | 顶部图标(M3 推荐使用,如 `Icon(Icons.warning)`) |
-| `title` | `Widget?` | 警示标题 |
-| `content` | `Widget?` | 警示内容 |
-| `actions` | `List<Widget>?` | 操作按钮,通常为 `TextButton` 或 `FilledButton` |
-| `backgroundColor` | `Color?` | 背景色 |
-| `elevation` | `double?` | 高度(M3 默认 6) |
-| `shape` | `ShapeBorder?` | 形状(M3 默认圆角 28) |
-| `alignment` | `AlignmentGeometry?` | 屏幕对齐(默认居中) |
-| `scrollable` | `bool` | 内容超出时是否滚动 |
-| `actionsAlignment` | `MainAxisAlignment?` | 操作按钮对齐(M3 默认 `end`) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -73,10 +73,3 @@ Flutter 不存在 `Breadcrumb` 类。本文档汇总替代实现(`Wrap` + `TextB
 | 节点文字大小 | `{font-size-md}` |
 | 下拉触发图标 | `{color-primary}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - Wrap: https://api.flutter.dev/flutter/widgets/Wrap-class.html
-- API 参考 - TextButton: https://api.flutter.dev/flutter/material/TextButton-class.html
-- API 参考 - MenuAnchor: https://api.flutter.dev/flutter/material/MenuAnchor-class.html
-- API 参考 - Icon: https://api.flutter.dev/flutter/widgets/Icon-class.html

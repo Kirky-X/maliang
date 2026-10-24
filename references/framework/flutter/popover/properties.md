@@ -107,10 +107,3 @@ Overlay.of(context, {bool rootOverlay = false, Widget? debugRequiredFor})
 | 浮层文字 | `{font-size-md}` / `{color-text-primary}` |
 | 遮罩色 | `{color-mask}`(通常为黑色 50% 透明度) |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - Tooltip: https://api.flutter.dev/flutter/material/Tooltip-class.html
-- API 参考 - OverlayEntry: https://api.flutter.dev/flutter/widgets/OverlayEntry-class.html
-- API 参考 - showDialog: https://api.flutter.dev/flutter/material/showDialog.html
-- pub.dev - popover: https://pub.flutter-io.cn/packages/popover

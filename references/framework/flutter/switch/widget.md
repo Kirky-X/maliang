@@ -85,26 +85,7 @@ const SwitchListTile({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `value` | `bool` | 当前开关状态 |
-| `onChanged` | `ValueChanged<bool>?` | 状态变化回调;为 `null` 时禁用 |
-| `activeColor` | `Color?` | 开启态拇指颜色(已废弃,用 thumbColor) |
-| `activeTrackColor` | `Color?` | 开启态轨道颜色 |
-| `inactiveThumbColor` | `Color?` | 关闭态拇指颜色 |
-| `inactiveTrackColor` | `Color?` | 关闭态轨道颜色 |
-| `thumbColor` | `MaterialStateProperty<Color?>?` | 拇指颜色(支持状态) |
-| `trackColor` | `MaterialStateProperty<Color?>?` | 轨道颜色(支持状态) |
-| `thumbIcon` | `MaterialStateProperty<Icon?>?` | 拇指图标(M3 新增) |
-| `overlayColor` | `MaterialStateProperty<Color?>?` | 按压/悬停叠加色 |
-| `splashRadius` | `double?` | 水波纹半径 |
-| `materialTapTargetSize` | `MaterialTapTargetSize?` | 点击目标尺寸 |
-| `mouseCursor` | `MouseCursor?` | 鼠标光标 |
-| `focusNode` | `FocusNode?` | 焦点节点 |
-| `autofocus` | `bool` | 自动获取焦点 |
-| `dragStartBehavior` | `DragStartBehavior` | 拖拽开始时机 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

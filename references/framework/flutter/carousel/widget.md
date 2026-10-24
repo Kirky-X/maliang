@@ -57,45 +57,7 @@ CarouselSlider({
 })
 ```
 
-## 核心属性
-
-### PageView 轮播相关属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `controller` | `PageController?` | 控制器,设置 `viewportFraction` 实现多页同屏 |
-| `onPageChanged` | `ValueChanged<int>?` | 页面切换回调 |
-| `pageSnapping` | `bool` | 是否吸附整页(默认 `true`,关闭则可滑动到中间位置) |
-| `physics` | `ScrollPhysics?` | 滑动物理(常设 `PageScrollPhysics` 或 `BouncingScrollPhysics`) |
-| `allowImplicitScrolling` | `bool` | 是否允许 TalkBack 隐式滚动(默认 `false`) |
-
-### PageController 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `initialPage` | `int` | 初始页索引(默认 `0`) |
-| `keepPage` | `bool` | 是否记忆当前位置(默认 `true`) |
-| `viewportFraction` | `double` | 视口比例(`< 1.0` 时同屏显示多页,默认 `1.0`) |
-| `page` | `double?` | 当前页(带小数,滑动中变化) |
-| `hasClients` | `bool` | 是否有附加客户端 |
-
-### CarouselOptions(第三方包)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `height` | `double?` | 轮播高度 |
-| `aspectRatio` | `double?` | 宽高比(与 `height` 二选一) |
-| `viewportFraction` | `double` | 视口比例(默认 `0.8`) |
-| `initialPage` | `int` | 初始页 |
-| `enableInfiniteScroll` | `bool` | 无限循环(默认 `true`) |
-| `reverse` | `bool` | 反向 |
-| `autoPlay` | `bool` | 自动播放(默认 `false`) |
-| `autoPlayInterval` | `Duration` | 自动播放间隔(默认 4s) |
-| `autoPlayAnimationDuration` | `Duration` | 切换动画时长(默认 800ms) |
-| `autoPlayCurve` | `Curve` | 切换曲线(默认 `Curves.fastOutSlowIn`) |
-| ` enlargeCenterPage` | `bool` | 中间页放大(默认 `false`) |
-| `onPageChanged` | `CarouselPageChangedCallback` | 页面变化回调 |
-| `scrollDirection` | `Axis` | 滑动方向(默认 `Axis.horizontal`) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

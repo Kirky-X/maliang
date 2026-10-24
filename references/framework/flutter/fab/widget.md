@@ -37,17 +37,7 @@ const FloatingActionButton({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `onPressed` | `VoidCallback?` | 点击回调;`null` 时禁用 |
-| `child` | `Widget` | 内容(图标) |
-| `tooltip` | `String?` | 长按提示 + 读屏语义 |
-| `backgroundColor` / `foregroundColor` | `Color?` | 底色 / 图标色 |
-| `elevation` | `double?` | 海拔(M3 默认 3) |
-| `mini` | `bool` | 小尺寸(40dp) |
-| `shape` | `ShapeBorder?` | 形状 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

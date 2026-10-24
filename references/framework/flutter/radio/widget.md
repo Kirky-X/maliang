@@ -69,24 +69,7 @@ const RadioListTile<T>({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `value` | `T` | 当前项的值 |
-| `groupValue` | `T?` | 单选组当前选中值 |
-| `onChanged` | `ValueChanged<T?>?` | 选择变化回调;为 `null` 时禁用 |
-| `toggleable` | `bool` | 是否允许二次点击取消选择(默认 `false`) |
-| `activeColor` | `Color?` | 选中态颜色(已废弃,优先用 `fillColor`) |
-| `fillColor` | `MaterialStateProperty<Color?>?` | 填充色(支持状态) |
-| `hoverColor` | `Color?` | 悬停色 |
-| `overlayColor` | `MaterialStateProperty<Color?>?` | 按压叠加色 |
-| `splashRadius` | `double?` | 水波纹半径 |
-| `mouseCursor` | `MouseCursor?` | 鼠标光标 |
-| `focusNode` | `FocusNode?` | 焦点节点 |
-| `autofocus` | `bool` | 自动获取焦点 |
-| `visualDensity` | `VisualDensity?` | 视觉密度 |
-| `materialTapTargetSize` | `MaterialTapTargetSize?` | 点击目标尺寸 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

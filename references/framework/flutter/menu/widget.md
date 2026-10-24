@@ -81,31 +81,7 @@ const SubmenuButton({
 })
 ```
 
-## 核心属性
-
-### MenuAnchor
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `child` / `builder` | `Widget?` / `WidgetBuilder?` | 锚点 Widget(触发器) |
-| `menuChildren` | `List<MenuChildren>` | 菜单项列表 |
-| `controller` | `MenuController?` | 控制器,程序化打开/关闭 |
-| `alignmentOffset` | `Offset?` | 弹出位置偏移 |
-| `consumeOutsideTaps` | `bool` | 外部点击是否关闭菜单(默认 `true`) |
-| `clipBehavior` | `Clip` | 裁剪行为 |
-| `enableSafeArea` | `bool?` | 是否避免被系统 UI 遮挡 |
-
-### MenuItemButton
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `onPressed` | `VoidCallback?` | 点击回调;为 `null` 时禁用 |
-| `onHover` | `VoidCallback?` | 鼠标悬停回调 |
-| `leadingIcon` | `Widget?` | 前置图标 |
-| `trailingIcon` | `Widget?` | 后置图标(常用于快捷键提示) |
-| `label` | `Widget?` | 菜单文本 |
-| `enabled` | `bool` | 是否可用(默认 `true`) |
-| `style` | `MenuItemStyle?` | 菜单项样式 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

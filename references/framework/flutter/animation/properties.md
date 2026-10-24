@@ -14,6 +14,9 @@
 | `vsync` | `TickerProvider` | 必填 | Ticker 提供者 |
 | `debugLabel` | `String?` | `null` | 调试标签 |
 | `animationBehavior` | `AnimationBehavior` | `normal` | disable 时是否播放 |
+| `view` | `Animation<double>` | —(getter) | 自身视图 |
+| `status` | `AnimationStatus` | —(getter) | 当前状态(dismissed/forward/reverse/completed) |
+| `isAnimating` | `bool` | —(getter) | 是否播放中 |
 
 ## AnimationController 方法
 

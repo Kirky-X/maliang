@@ -74,23 +74,7 @@ const ExcludeSemantics({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `container` | `bool` | 是否强制创建独立语义节点(默认 `false`,与子节点合并) |
-| `explicitChildNodes` | `bool` | 是否保留子节点语义(覆盖合并) |
-| `excludeSemantics` | `bool` | 是否排除子树语义 |
-| `label` | `String?` | 节点可访问名称(屏幕阅读器播报主文) |
-| `value` | `String?` | 节点当前值(如开关的"开"/"关") |
-| `hint` | `String?` | 操作提示(如"双击切换") |
-| `enabled` | `bool?` | 是否可用 |
-| `checked` | `bool?` | 复选框选中态 |
-| `selected` | `bool?` | 选中态(单选 / Tab) |
-| `button` / `link` / `header` | `bool?` | 角色(语义角色) |
-| `onTap` / `onLongPress` | `VoidCallback?` | 语义事件回调(辅助技术触发) |
-| `sortKey` | `SemanticsSortKey?` | 节点排序键 |
-| `textDirection` | `TextDirection?` | 文本方向(LTR/RTL) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

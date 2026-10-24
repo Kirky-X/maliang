@@ -78,30 +78,7 @@ const Tab({
 })
 ```
 
-## 核心属性
-
-### TabBar 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `tabs` | `List<Widget>` | 标签列表(通常为 `Tab`) |
-| `controller` | `TabController?` | 状态控制器(省略时取 `DefaultTabController`) |
-| `isScrollable` | `bool` | 标签多时可滚动 |
-| `indicatorColor` | `Color?` | 指示器颜色 |
-| `indicatorWeight` | `double` | 指示器厚度,默认 2.0 |
-| `indicatorSize` | `TabBarIndicatorSize?` | 指示器宽度(tab/label) |
-| `labelColor` | `Color?` | 选中标签颜色 |
-| `labelStyle` | `TextStyle?` | 选中标签样式 |
-| `unselectedLabelColor` | `Color?` | 未选中标签颜色 |
-| `onTap` | `ValueChanged<int>?` | 点击回调 |
-
-### TabBarView 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `children` | `List<Widget>` | 各选项卡页面 |
-| `controller` | `TabController?` | 状态控制器 |
-| `physics` | `ScrollPhysics?` | 滑动物理 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

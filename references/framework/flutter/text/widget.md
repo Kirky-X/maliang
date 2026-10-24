@@ -63,24 +63,7 @@ const Text.rich(
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `data` | `String` | 文本内容(默认构造) |
-| `style` | `TextStyle?` | 字号、颜色、字重、行高、装饰线等 |
-| `strutStyle` | `StrutStyle?` | 强制基线/行高约束 |
-| `textAlign` | `TextAlign?` | 对齐方式(left/right/center/justify/start/end) |
-| `textDirection` | `TextDirection?` | 文字方向(ltr/rtl) |
-| `locale` | `Locale?` | 区域,影响字形选择 |
-| `softWrap` | `bool?` | 是否允许换行 |
-| `overflow` | `TextOverflow?` | 溢出处理(clip/ellipsis/fade/visible) |
-| `textScaler` | `TextScaler?` | 文本缩放(无障碍) |
-| `maxLines` | `int?` | 最大行数 |
-| `textWidthBasis` | `TextWidthBasis?` | 宽度计算基准(parent/longestLine) |
-| `textHeightBehavior` | `TextHeightBehavior?` | 行高应用策略 |
-| `selectionColor` | `Color?` | 选中态背景色 |
-| `semanticsLabel` | `String?` | 语义标签(无障碍朗读) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

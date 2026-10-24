@@ -22,11 +22,11 @@ const LinearProgressIndicator({
   double? value,                  // null=不确定型;0.0~1.0=确定型
   Color? backgroundColor,
   Color? color,
-  Animation<double>? valueColor,  // 颜色动画(可随主题变化)
+  Animation<Color?>? valueColor,  // 颜色动画(可随主题变化)
   double? minHeight,
   String? semanticsLabel,
   String? semanticsValue,
-  int? year2023 = true,           // M3 样式开关
+  bool? year2023 = true,           // M3 样式开关(3.26 起废弃)
   BorderRadius? borderRadius,     // M3 圆角
 })
 ```
@@ -39,12 +39,12 @@ const CircularProgressIndicator({
   double? value,
   Color? backgroundColor,
   Color? color,
-  Animation<double>? valueColor,
+  Animation<Color?>? valueColor,
   double strokeWidth = 4.0,        // 线条厚度
   String? semanticsLabel,
   String? semanticsValue,
-  int? year2023 = true,
-  double? trackColor,
+  bool? year2023 = true,
+  double? trackGap,
 })
 ```
 
@@ -55,38 +55,14 @@ const RefreshProgressIndicator({
   super.key,
   Color? backgroundColor,
   Color? color,
-  Animation<double>? valueColor,
+  Animation<Color?>? valueColor,
   double strokeWidth = 2.5,
   String? semanticsLabel,
   String? semanticsValue,
 })
 ```
 
-## 核心属性
-
-### 通用属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `value` | `double?` | 进度(0.0~1.0);null 为不确定型 |
-| `color` | `Color?` | 进度颜色 |
-| `backgroundColor` | `Color?` | 轨道背景色 |
-| `valueColor` | `Animation<double>?` | 颜色动画(配合 `AlwaysStoppedAnimation` 或 `Tween`) |
-| `semanticsLabel` | `String?` | 无障碍标签 |
-| `semanticsValue` | `String?` | 无障碍进度值 |
-
-### LinearProgressIndicator 专属
-
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `minHeight` | `double?` | `4.0` | 最小高度(条厚度) |
-| `borderRadius` | `BorderRadius?` | `null` | 圆角(M3) |
-
-### CircularProgressIndicator 专属
-
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `strokeWidth` | `double` | `4.0` | 线条厚度 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

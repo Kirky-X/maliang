@@ -58,7 +58,6 @@
 | --- | --- |
 | `MaterialTapTargetSize.padded` | 48 × 48(MD3 默认,符合无障碍最小尺寸) |
 | `MaterialTapTargetSize.shrinkWrap` | 紧贴视觉边界(忽略无障碍尺寸) |
-| `MaterialTapTargetSize.unshrinkable` | 不收缩(≥ 48) |
 
 ## ListTileControlAffinity 取值
 

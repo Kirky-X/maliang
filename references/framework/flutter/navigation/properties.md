@@ -51,6 +51,14 @@
 | `name` | `String?` | `null` | 路由名 |
 | `arguments` | `Object?` | `null` | 传递参数 |
 
+## Route 属性
+
+| 属性名 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `isFirst` | `bool` | —(getter) | 是否栈底 |
+| `isCurrent` | `bool` | —(getter) | 是否栈顶 |
+| `willHandlePopInternally` | `bool` | —(getter) | 是否自行处理返回 |
+
 ## GoRouter 配置属性
 
 | 属性名 | 类型 | 默认值 | 说明 |

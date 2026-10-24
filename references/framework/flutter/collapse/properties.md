@@ -189,11 +189,3 @@ ThemeData(
 )
 ```
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - ExpansionTile: https://api.flutter.dev/flutter/material/ExpansionTile-class.html
-- API 参考 - ExpansionPanelList: https://api.flutter.dev/flutter/material/ExpansionPanelList-class.html
-- API 参考 - ExpansionPanel: https://api.flutter.dev/flutter/material/ExpansionPanel-class.html
-- API 参考 - ExpansionPanelRadio: https://api.flutter.dev/flutter/material/ExpansionPanelRadio-class.html
-- API 参考 - ExpansionTileThemeData: https://api.flutter.dev/flutter/material/ExpansionTileThemeData-class.html

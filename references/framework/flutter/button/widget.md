@@ -106,20 +106,7 @@ ElevatedButton.icon({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `onPressed` | `VoidCallback?` | 点击事件回调;为 `null` 时按钮禁用 |
-| `onLongPress` | `VoidCallback?` | 长按事件回调 |
-| `onHover` | `ValueChanged<bool>?` | 鼠标悬停状态变化(MD3 hover 态) |
-| `onFocusChange` | `ValueChanged<bool>?` | 焦点变化 |
-| `style` | `ButtonStyle?` | 覆盖主题样式,通过 `ButtonStyle` 或 `styleFrom` 工厂构造 |
-| `focusNode` | `FocusNode?` | 控制焦点 |
-| `autofocus` | `bool` | 是否自动获取焦点,默认 `false` |
-| `clipBehavior` | `Clip` | 裁剪行为,默认 `Clip.none` |
-| `statesController` | `MaterialStatesController?` | 控制并监听交互状态 |
-| `child` | `Widget` | 按钮内容,通常为 `Text` |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 
@@ -187,9 +174,9 @@ class ButtonSample extends StatelessWidget {
 }
 ```
 
-## 自定义样式(MD3 主题映射)
+## Widget 级样式覆盖(MD3 主题映射)
 
-通过 `ElevatedButton.styleFrom`(或对应类的 `styleFrom`)快速覆盖样式,颜色值统一使用 design token 引用,不在代码中硬编码:
+通过 `ElevatedButton.styleFrom`(或对应类的 `styleFrom`)快速覆盖**单个 widget** 的样式,颜色值统一使用 design token 引用,不在代码中硬编码。分工:**widget 级覆盖看本节,全站主题级注入(`ThemeData`)看 [properties.md](properties.md)「主题层配置(Design Token 解析点)」**——同一套 token 映射,两个注入层级,互为对照不重复登记:
 
 ```dart
 ElevatedButton(

@@ -77,36 +77,7 @@ const ImageIcon(
 )
 ```
 
-## 核心属性
-
-### Icon 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `icon` | `IconData?` | 图标数据 |
-| `size` | `double?` | 尺寸(默认 24) |
-| `color` | `Color?` | 颜色 |
-| `fill` | `double?` | 填充(0.0~1.0) |
-| `weight` | `double?` | 字重 |
-| `grade` | `double?` | 等级 |
-| `opticalSize` | `double?` | 光学尺寸 |
-| `shadows` | `List<Shadow>?` | 阴影 |
-| `semanticLabel` | `String?` | 无障碍标签 |
-| `textDirection` | `TextDirection?` | 方向(部分图标如 arrow_back) |
-
-### IconButton 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `icon` | `Widget?` | 图标(通常 Icon) |
-| `iconSize` | `double?` | 图标尺寸(默认 24) |
-| `onPressed` | `VoidCallback?` | 点击回调(null 禁用) |
-| `color` | `Color?` | 图标颜色 |
-| `tooltip` | `String?` | 悬停提示 |
-| `padding` | `EdgeInsetsGeometry` | 内边距(默认 8) |
-| `splashRadius` | `double?` | 水波纹半径 |
-| `focusNode` | `FocusNode?` | 焦点节点 |
-| `autofocus` | `bool` | 自动获取焦点 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

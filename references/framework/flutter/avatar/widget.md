@@ -34,21 +34,7 @@ const CircleAvatar({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `child` | `Widget?` | 子节点(无图片时显示文字/图标) |
-| `backgroundColor` | `Color?` | 背景色(无图片时生效) |
-| `backgroundImage` | `ImageProvider?` | 背景图片 |
-| `foregroundImage` | `ImageProvider?` | 前景图片(叠加在背景上) |
-| `foregroundColor` | `Color?` | 前景色(影响 child) |
-| `radius` | `double?` | 半径(默认 20) |
-| `minRadius` | `double?` | 最小半径 |
-| `maxRadius` | `double?` | 最大半径 |
-| `onBackgroundImageError` | `ImageErrorListener?` | 背景图片错误回调 |
-| `onForegroundImageError` | `ImageErrorListener?` | 前景图片错误回调 |
-| `clipBehavior` | `Clip` | 裁剪行为(默认 `Clip.antiAlias`) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

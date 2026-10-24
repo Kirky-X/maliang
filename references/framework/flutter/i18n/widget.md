@@ -74,25 +74,7 @@ class AppLocalizations {
 }
 ```
 
-## 核心属性
-
-### MaterialApp i18n 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `localizationsDelegates` | `List<LocalizationsDelegate>` | 资源加载委托列表 |
-| `supportedLocales` | `List<Locale>` | 支持的 locale |
-| `locale` | `Locale?` | 当前 locale(为 null 时跟随系统) |
-| `localeResolutionCallback` | `LocaleResolutionCallback?` | locale 解析回调 |
-| `localeListResolutionCallback` | `LocaleListResolutionCallback?` | 多 locale 解析(Android 7+) |
-
-### Locale 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `languageCode` | `String` | 语言代码(zh/en) |
-| `countryCode` | `String?` | 国家代码(CN/US) |
-| `scriptCode` | `String?` | 脚本代码(Hans/Hant) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

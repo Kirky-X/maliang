@@ -113,11 +113,3 @@ Flutter 不存在 `Timeline` 类。本文档汇总替代实现(`Column` + `Row` 
 | 节点间距 | `{spacing-md}` |
 | 圆点尺寸 | `{size-xs}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - Column: https://api.flutter.dev/flutter/widgets/Column-class.html
-- API 参考 - Row: https://api.flutter.dev/flutter/widgets/Row-class.html
-- API 参考 - CustomPaint: https://api.flutter.dev/flutter/widgets/CustomPaint-class.html
-- API 参考 - Stepper: https://api.flutter.dev/flutter/material/Stepper-class.html
-- pub.dev - timeline_tile: https://pub.flutter-io.cn/packages/timeline_tile

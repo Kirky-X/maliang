@@ -62,18 +62,7 @@ const CheckboxListTile({
 })
 ```
 
-## 核心属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `value` | `bool?` | 选中态;`tristate` 时 `null` 表示半选 |
-| `onChanged` | `ValueChanged<bool?>?` | 变化回调;为 `null` 时禁用 |
-| `tristate` | `bool` | 是否启用三态(默认 `false`) |
-| `activeColor` | `Color?` | 选中态填充色 |
-| `fillColor` | `MaterialStateProperty<Color?>?` | 填充色(支持状态) |
-| `checkColor` | `Color?` | 对勾颜色 |
-| `shape` | `OutlinedBorder?` | 框形状(M3 默认圆角方形) |
-| `side` | `BorderSide?` | 未选中态边框样式 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

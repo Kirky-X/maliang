@@ -82,25 +82,7 @@ ContinuousRectangleBorder({BorderRadius, BorderSide}) // M3 连续圆角
 BeveledRectangleBorder({BorderRadius, BorderSide})    // 斜角
 ```
 
-## 核心属性
-
-### CustomPaint 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `painter` | `CustomPainter?` | 前景 painter(子节点下方) |
-| `foregroundPainter` | `CustomPainter?` | 背景 painter(子节点上方) |
-| `size` | `Size` | 无 child 时的尺寸 |
-| `isComplex` | `bool` | 提示复杂(启用层缓存) |
-| `willChange` | `bool` | 提示会变化 |
-| `child` | `Widget?` | 子节点 |
-
-### ClipRRect 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `borderRadius` | `BorderRadius` | 圆角半径 |
-| `clipBehavior` | `Clip` | 裁剪方式(none/hardEdge/antiAlias/antiAliasWithSaveLayer) |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

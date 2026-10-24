@@ -18,20 +18,9 @@
 | `isDense` | `bool` | `false` | 紧凑高度 |
 | `autofocus` | `bool` | `false` | 自动获取焦点 |
 | `autovalidateMode` | `AutovalidateMode?` | `null` | 校验触发时机 |
+| `hint` | `Widget?` | `null` | 未选择时占位提示 |
 
-## DropdownMenu(M3)构造参数
-
-| 属性名 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `entries` | `List<DropdownMenuEntry<T>>` | 必填 | 选项列表(label + leadingIcon + trailingIcon) |
-| `initialSelection` | `int?` | `null` | 初始选中索引 |
-| `controller` | `TextEditingController?` | `null` | 触发器文本控制器 |
-| `enableSearch` | `bool` | `true` | 键入过滤选项(`select-searchable` 语义) |
-| `enableFilter` | `bool` | `false` | 过滤模式 |
-| `onSelected` | `ValueChanged<T?>?` | `null` | 选中回调 |
-| `inputDecorationTheme` | `InputDecorationTheme?` | `null` | 触发器装饰主题 |
-| `menuHeight` | `double?` | `null`(默认 ≤ 40% 视口) | 下拉面板最大高度 |
-| `expandedInsets` | `EdgeInsets?` | `null` | 设置后触发器撑满宽度 |
+> 「DropdownMenu(M3) 构造参数」参数唯一真源见 [../dropdown/properties.md](../dropdown/properties.md);本文件不复述(防双份漂移)。
 
 ## DropdownMenuItem 关键参数
 

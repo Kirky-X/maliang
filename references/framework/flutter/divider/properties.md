@@ -164,9 +164,3 @@ ThemeData(
 | 列表项分隔线缩进 | `{spacing-md}`(16) |
 | 带文字分隔线文字 | `{font-size-sm}` / `{color-text-tertiary}` |
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - Divider: https://api.flutter.dev/flutter/material/Divider-class.html
-- API 参考 - VerticalDivider: https://api.flutter.dev/flutter/material/VerticalDivider-class.html
-- API 参考 - DividerThemeData: https://api.flutter.dev/flutter/material/DividerThemeData-class.html

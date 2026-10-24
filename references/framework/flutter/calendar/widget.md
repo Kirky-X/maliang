@@ -27,8 +27,7 @@ CalendarDatePicker({
   this.onDisplayedMonthChanged,        // 显示月份变化回调
   this.initialCalendarMode = DatePickerMode.day,  // 初始模式(day/year)
   this.selectableDayPredicate,         // 可选日期判断函数
-  this.keyboardSwitchButtonFocusNode,
-  this.calendarStyle,                  // 日历样式(M3 新增)
+  this.calendarDelegate = const GregorianCalendarDelegate(),  // 历法(3.47.5)
 })
 ```
 
@@ -51,7 +50,6 @@ DatePickerDialog({
   this.errorInvalidText,               // 无效错误文字
   this.fieldHintText,                  // 输入框提示
   this.fieldLabelText,                 // 输入框标签
-  this.keyboardSwitchButtonFocusNode,
   this.restorationId,
 })
 ```
@@ -80,19 +78,7 @@ Future<DateTime?> showDatePicker({
 })
 ```
 
-## 核心属性(CalendarDatePicker)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `initialDate` | `DateTime` | 初始选中日期 |
-| `firstDate` | `DateTime` | 可选最早日期 |
-| `lastDate` | `DateTime` | 可选最晚日期 |
-| `currentDate` | `DateTime?` | 当前日期(高亮"今天") |
-| `onDateChanged` | `ValueChanged<DateTime>?` | 选择回调 |
-| `onDisplayedMonthChanged` | `ValueChanged<DateTime>?` | 显示月份变化 |
-| `initialCalendarMode` | `DatePickerMode` | 初始模式(`day` / `year`) |
-| `selectableDayPredicate` | `SelectableDayPredicate?` | 自定义可选日期判断 |
-| `calendarStyle` | `CalendarDatePickerStyles?` | 日历样式 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -24,6 +24,7 @@
 | `iconTheme` | `IconThemeData` | 黑色 0.87 | 图标主题 |
 | `platform` | `TargetPlatform?` | `null`(自动) | 目标平台 |
 | `materialTapTargetSize` | `MaterialTapTargetSize` | `padded` | 点击目标尺寸 |
+| `extensions` | `Map<Object, ThemeExtension>?` | `const {}` | 自定义扩展(配合 ThemeExtension,见 ThemeExtension 节) |
 
 ## ColorScheme 属性
 

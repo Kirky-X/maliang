@@ -63,6 +63,12 @@
 | `Clip.antiAlias` | 抗锯齿裁剪(默认,推荐) |
 | `Clip.antiAliasWithSaveLayer` | 抗锯齿 + 独立层(最慢,精确保真) |
 
+## ClipRRect 属性
+
+| 属性名 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `clipBehavior` | `Clip` | `Clip.antiAlias` | 裁剪方式(none/hardEdge/antiAlias/antiAliasWithSaveLayer) |
+
 ## ShapeBorder 子类属性
 
 ### RoundedRectangleBorder

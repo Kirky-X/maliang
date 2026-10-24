@@ -9,12 +9,12 @@
 | `value` | `double?` | `null`(不确定型) | 进度 0.0~1.0 |
 | `color` | `Color?` | `null`(主题 primary) | 进度色 |
 | `backgroundColor` | `Color?` | `null` | 轨道背景色 |
-| `valueColor` | `Animation<double>?` | `null` | 颜色动画 |
+| `valueColor` | `Animation<Color?>?` | `null` | 颜色动画(3.47.5 源码核对) |
 | `minHeight` | `double?` | `4.0` | 最小高度(条厚度) |
 | `borderRadius` | `BorderRadius?` | `null`(M3 默认圆角) | 圆角 |
 | `semanticsLabel` | `String?` | `null` | 无障碍标签 |
 | `semanticsValue` | `String?` | `null` | 无障碍值 |
-| `year2023` | `int?` | `true` | M3 样式开关 |
+| `year2023` | `bool?` | `true` | M3 样式开关(3.26 起废弃,未来默认 false;用 ProgressIndicatorThemeData 定制) |
 
 ## CircularProgressIndicator 属性
 
@@ -23,12 +23,12 @@
 | `value` | `double?` | `null`(不确定型) | 进度 0.0~1.0 |
 | `color` | `Color?` | `null`(主题 primary) | 进度色 |
 | `backgroundColor` | `Color?` | `null` | 轨道背景色 |
-| `valueColor` | `Animation<double>?` | `null` | 颜色动画 |
+| `valueColor` | `Animation<Color?>?` | `null` | 颜色动画(3.47.5 源码核对) |
 | `strokeWidth` | `double` | `4.0` | 线条厚度 |
-| `strokeAlign` | `double` | `1.0` | 线条对齐(0=center,-1=内,1=外) |
+| `strokeAlign` | `double` | year2023=true(默认)时 `0.0`(center),否则 `-1.0`(内) | 线条对齐(-1 内 / 0 中 / 1 外) |
 | `strokeCap` | `StrokeCap?` | `null` | 线条端点(round/butt/square) |
-| `trackColor` | `Color?` | `null` | 轨道色(M3 别名) |
-| `year2023` | `int?` | `true` | M3 样式开关 |
+| `trackGap` | `double?` | `null` | 轨道与进度弧之间的间隙(M3;3.47.5 构造核对,无 trackColor 参数) |
+| `year2023` | `bool?` | `true` | M3 样式开关(3.26 起废弃,未来默认 false;用 ProgressIndicatorThemeData 定制) |
 | `semanticsLabel` | `String?` | `null` | 无障碍标签 |
 | `semanticsValue` | `String?` | `null` | 无障碍值 |
 
@@ -38,7 +38,7 @@
 | --- | --- | --- | --- |
 | `color` | `Color?` | `null` | 颜色 |
 | `backgroundColor` | `Color?` | `null` | 背景 |
-| `valueColor` | `Animation<double>?` | `null` | 颜色动画 |
+| `valueColor` | `Animation<Color?>?` | `null` | 颜色动画(3.47.5 源码核对) |
 | `strokeWidth` | `double` | `2.5` | 线条厚度 |
 | `semanticsLabel` | `String?` | `null` | 无障碍标签 |
 | `semanticsValue` | `String?` | `null` | 无障碍值 |
@@ -52,7 +52,7 @@
 
 ## valueColor 用法
 
-`valueColor` 接受 `Animation<double>`,常配合 `AlwaysStoppedAnimation<Color>` 固定颜色,或用 `ColorTween` 实现渐变:
+`valueColor` 接受 `Animation<Color?>?`,常配合 `AlwaysStoppedAnimation<Color>` 固定颜色,或用 `ColorTween` 实现渐变:
 
 ```dart
 // 固定颜色(等价于 color)

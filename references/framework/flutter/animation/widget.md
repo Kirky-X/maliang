@@ -80,39 +80,7 @@ const Hero({
 })
 ```
 
-## 核心属性
-
-### AnimationController 方法
-
-| 方法 | 说明 |
-| --- | --- |
-| `forward({from})` | 正向播放(0→1),返回 TickerFuture |
-| `reverse({from})` | 反向播放(1→0) |
-| `stop({cancelCanceled})` | 停止 |
-| `reset()` | 重置到 lowerBound |
-| `repeat({reverse, min, max, period})` | 重复播放 |
-| `fling({...})` | 弹性动画 |
-| `animateTo(target, {duration, curve})` | 动画到指定值 |
-| `animateBack(target, {...})` | 反向动画到指定值 |
-| `dispose()` | 释放(必调) |
-
-### AnimationController 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `value` | `double` | 当前值(可读写) |
-| `duration` | `Duration?` | 正向时长 |
-| `view` | `Animation<double>` | 自身视图 |
-| `status` | `AnimationStatus` | 当前状态(dismissed/forward/reverse/completed) |
-| `isAnimating` | `bool` | 是否播放中 |
-
-### ImplicitlyAnimatedWidget 共有属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `duration` | `Duration` | 动画时长 |
-| `curve` | `Curve` | 动画曲线 |
-| `onEnd` | `VoidCallback?` | 动画结束回调 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -64,45 +64,7 @@ const UserAccountsDrawerHeader({
 })
 ```
 
-## 核心属性
-
-### Drawer
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `child` | `Widget?` | 抽屉内容(通常为 `ListView` 含多个 `ListTile`) |
-| `width` | `double?` | 宽度(M3 默认 304.0) |
-| `semanticLabel` | `String?` | 无障碍标签 |
-| `onDrawerChanged` | `DrawerCallback?` | 打开/关闭状态变化回调 |
-| `shape` | `ShapeBorder?` | 形状(M3 默认右侧圆角) |
-| `elevation` | `double?` | 阴影高度 |
-| `backgroundColor` | `Color?` | 背景色 |
-| `shadowColor` | `Color?` | 阴影色 |
-| `surfaceTintColor` | `Color?` | 表面染色(M3) |
-| `clipBehavior` | `Clip?` | 裁剪行为 |
-
-### DrawerHeader
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `child` | `Widget?` | 头部内容 |
-| `margin` | `EdgeInsetsGeometry?` | 外边距(默认底部 8) |
-| `padding` | `EdgeInsetsGeometry?` | 内边距(默认 16/16/16/8) |
-| `decoration` | `Decoration?` | 装饰(默认主题色背景) |
-| `duration` | `Duration` | 动画时长 |
-| `curve` | `Curve` | 动画曲线 |
-
-### UserAccountsDrawerHeader
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `currentAccountPicture` | `Widget` | 当前账号头像 |
-| `otherAccountsPictures` | `Widget?` | 其他账号头像列表 |
-| `accountName` | `Widget` | 账号名 |
-| `accountEmail` | `Widget` | 账号邮箱 |
-| `onDetailsPressed` | `VoidCallback?` | 详情切换回调 |
-| `decoration` | `Color?` | 装饰色 |
-| `arrowColor` | `Color?` | 箭头颜色 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

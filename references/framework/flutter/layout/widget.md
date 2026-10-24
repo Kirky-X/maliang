@@ -81,26 +81,7 @@ const Expanded({super.key, required int flex, Widget? child})
 const Flexible({super.key, required int flex, FlexFit fit = FlexFit.loose, Widget? child})
 ```
 
-## 核心属性
-
-### Flex(Row/Column)属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `mainAxisAlignment` | `MainAxisAlignment` | 主轴对齐(start/center/end/spaceBetween/spaceAround/spaceEvenly) |
-| `crossAxisAlignment` | `CrossAxisAlignment` | 交叉轴对齐 |
-| `mainAxisSize` | `MainAxisSize` | 主轴尺寸(max/min) |
-| `textDirection` | `TextDirection?` | 文本方向(LTR/RTL) |
-| `verticalDirection` | `VerticalDirection` | 垂直方向(up/down) |
-| `children` | `List<Widget>` | 子节点列表 |
-
-### Stack 属性
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `alignment` | `AlignmentGeometry` | 默认对齐(子节点未用 Positioned 时) |
-| `fit` | `StackFit` | 子节点约束(loose/expand/passthrough) |
-| `clipBehavior` | `Clip` | 超出边界裁剪,默认 `Clip.hardEdge` |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 

@@ -75,19 +75,7 @@
 | `alignment` | `AlignmentGeometry` | `AlignmentDirectional.centerStart` | 对齐 |
 | `onTap` | `VoidCallback?` | `null` | 点击回调 |
 
-## DropdownButtonFormField<T> 属性
-
-继承自 `FormField<T>`,增加 Form 集成能力。
-
-| 属性名 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `value` | `T?` | 必填 | 当前值 |
-| `items` | `List<DropdownMenuItem<T>>?` | 必填 | 选项 |
-| `onChanged` | `ValueChanged<T?>?` | 必填 | 选择回调 |
-| `decoration` | `InputDecoration` | 必填 | 装饰(含 label/border 等) |
-| `validator` | `FormFieldValidator<T>?` | `null` | 校验器 |
-| `onSaved` | `FormFieldSetter<T>?` | `null` | 保存回调 |
-| `restorationId` | `String?` | `null` | 状态恢复 ID |
+> 「DropdownButtonFormField<T> 属性」参数唯一真源见 [../select/properties.md](../select/properties.md);本文件不复述(防双份漂移)。
 
 ## 完整示例
 
@@ -195,11 +183,3 @@ ThemeData(
 )
 ```
 
-## 参考链接
-
-- Flutter 官方文档 - Widget 目录 - Material components: https://docs.flutter.cn/ui/widgets/material
-- API 参考 - DropdownMenu: https://api.flutter.dev/flutter/material/DropdownMenu-class.html
-- API 参考 - DropdownMenuEntry: https://api.flutter.dev/flutter/material/DropdownMenuEntry-class.html
-- API 参考 - DropdownButton: https://api.flutter.dev/flutter/material/DropdownButton-class.html
-- API 参考 - DropdownMenuItem: https://api.flutter.dev/flutter/material/DropdownMenuItem-class.html
-- API 参考 - DropdownButtonFormField: https://api.flutter.dev/flutter/material/DropdownButtonFormField-class.html

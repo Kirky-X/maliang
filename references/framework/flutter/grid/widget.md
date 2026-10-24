@@ -80,38 +80,7 @@ SliverGrid({
 })
 ```
 
-## 核心属性
-
-### GridView 属性(继承自 ScrollView)
-
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `gridDelegate` | `SliverGridDelegate` | 网格布局委托 |
-| `scrollDirection` | `Axis` | 滚动方向(默认垂直) |
-| `reverse` | `bool` | 是否反向 |
-| `shrinkWrap` | `bool` | 是否收缩(不用占满父级) |
-| `physics` | `ScrollPhysics?` | 滚动物理 |
-| `padding` | `EdgeInsetsGeometry?` | 内边距 |
-| `itemCount` | `int?` | 子项数量(builder 模式) |
-| `itemBuilder` | `IndexedWidgetBuilder` | 子项构建函数 |
-
-### SliverGridDelegateWithFixedCrossAxisCount
-
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `crossAxisCount` | `int` | 必填 | 列数 |
-| `mainAxisSpacing` | `double` | `0.0` | 行间距 |
-| `crossAxisSpacing` | `double` | `0.0` | 列间距 |
-| `childAspectRatio` | `double` | `1.0` | 子节点宽高比(宽/高) |
-
-### SliverGridDelegateWithMaxCrossAxisExtent
-
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `maxCrossAxisExtent` | `double` | 必填 | 单元最大宽度(自动算列数) |
-| `mainAxisSpacing` | `double` | `0.0` | 行间距 |
-| `crossAxisSpacing` | `double` | `0.0` | 列间距 |
-| `childAspectRatio` | `double` | `1.0` | 子节点宽高比 |
+> 属性与方法明细以 [properties.md](properties.md) 为唯一维护处；本文件只讲定义、构造与示例。
 
 ## 最小示例
 
