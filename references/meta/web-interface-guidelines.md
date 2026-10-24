@@ -5,6 +5,7 @@ argument-hint: <file-or-pattern>
 
 # Web Interface Guidelines
 
+
 Review these files for compliance: $ARGUMENTS
 
 Read files, check against rules below. Output concise but comprehensive—sacrifice grammar for brevity. High signal-to-noise.

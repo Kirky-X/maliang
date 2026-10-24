@@ -27,7 +27,7 @@ English | [中文](README.md)
 - **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (51 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
 - **Research log**: [`research/`](research/README.md) (measure-it-yourself records that may overturn the repo's own rules: real problem · real method · data with context · landing trace)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
-- **Merged assets**: the former craft 方法集 now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12), critique reads it for UI-compliance/a11y checklists
+- **Merged assets**: the former craft 方法集 now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (pin info lives solely in that file's header), critique reads it for UI-compliance/a11y checklists
 - **Script verification layer**: `validate-draw-md.py` (15 checks), `preview-check.py` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (7 subcommands), `ci-gate.sh` unified entry — pure Python standard library
 - **Second-batch verification scripts** (same standard library): `verify-color-fidelity.py` (rebuild-vs-reference ΔE fidelity gate), `measure-colors.py` (deterministic image color measurement), `palette-solver.py` (OKLCH brightness solver + pairing matrix), `verify-assets.py` (asset-slot presence check), `source-fingerprint.py` (source fingerprint for re-audits), `check-structure-history.py` (rotation repeats / hot axis / stamp truth), `check-copy.py` (template-phrase scanner)
 - **New reference layer**: [`references/meta/source-hygiene.md`](references/meta/source-hygiene.md) (source hygiene: blocklist / private-network rejection / junk signals / Provenance), [`references/meta/visual-symptoms.md`](references/meta/visual-symptoms.md) (perceived symptom → root cause → fix)
@@ -101,7 +101,7 @@ maliang/
 ├── references/
 │   ├── commands/            # 13 subcommand workflow docs + 2 auxiliary docs (design-md-advanced / preview-checklist)
 │   ├── meta/                # Spec layer: token / principles / ux-rules / lifecycle / accessibility …
-│   │                        #   incl. web-interface-guidelines.md snapshot (sha e3d624b)
+│   │                        #   incl. web-interface-guidelines.md snapshot (pin info in the file header)
 │   │                        #   + source-hygiene.md (source hygiene) / visual-symptoms.md (symptom diagnosis)
 │   ├── interface-design/    # merged from the former craft 方法集 (craft discipline / strict review)
 │   ├── dimensions/          # nine dimension specs + palette library + liquid-glass recipes
@@ -119,10 +119,10 @@ maliang/
 ## 🔮 Boundaries
 
 - **Not applicable**: backend/script/data tasks without UI, pure copywriting, non-visual code generation
-- **One-shot revamps**: whole-site refreshes that should not accumulate design tokens belong to the `redesign-existing-projects` skill; maliang's redesign targets continuous iteration that flows back into the decisions ledger
+- **One-shot revamps**: maliang's redesign command covers both continuous iteration (flowing back into the decisions ledger) and one-shot refreshes without token persistence (Refresh / Deslop modes)
 - **Code quality/architecture review** belongs to [diting](../diting/); **security scanning** to [tiangang](../tiangang/)
 - **Hard workflow constraints**: never enter draw-md / draw-* downstream without a DESIGN.md (dangling token references); hard-coded colors/fonts/spacing are forbidden — always `{token-name}` placeholders
 
 ## 📄 License & Attribution
 
-MIT License (© 2026 Kirky-X). `references/interface-design/` comes from the merged former craft 方法集; `references/meta/web-interface-guidelines.md` is a local snapshot of the [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) (sha e3d624b, pinned 2026-09-12).
+MIT License (© 2026 Kirky-X). `references/interface-design/` comes from the merged former craft 方法集; `references/meta/web-interface-guidelines.md` is a local snapshot of the [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) (pin info in the file header).

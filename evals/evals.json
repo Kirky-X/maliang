@@ -5,7 +5,7 @@
       "id": 1,
       "scenario": "典型场景：design-md 创建设计系统",
       "prompt": "帮我基于现有 CSS 代码创建 DESIGN.md 设计系统文件；这一步不调用浏览器、不生图、不实现业务代码。",
-      "expected_output": "agent 应路由到 design-md 子命令 → 读取 references/design-md.md → 按 prose-first 方法论产出 DESIGN.md（YAML frontmatter token + Markdown 设计理由）→ 含 8 维度规范（色/字/图/距/角/线/布局/原则）",
+      "expected_output": "agent 应路由到 design-md 子命令 → 读取 references/commands/design-md.md → 按 prose-first 方法论产出 DESIGN.md（YAML frontmatter token + Markdown 设计理由）→ 含 8 维度规范（色/字/图/距/角/线/布局/原则）",
       "expectations": [
         "agent 明确按 design-md 1A 路径提取，读的是用户给定的 CSS / 变量文件，不凭空编造 token",
         "产出 DESIGN.md 含 YAML frontmatter，颜色值用 hex 或 token 名、不残留 TODO / <placeholder> 占位",

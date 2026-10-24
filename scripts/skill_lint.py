@@ -8,7 +8,7 @@
 检查项（FAIL 阻断 / WARN 提示）:
   FAIL  SKILL.md 存在；frontmatter 闭合且含 name/description；name 与目录名一致；
         description ≤1024 字符；.gitignore 含 specmark/（全局规则 24）；
-        JSON 资产（skill.json/test-prompts.json/evals/*.json/根级 *.json）可解析；
+        JSON 资产（skill.json/evals/*.json/根级 *.json）可解析；
         frontmatter metadata 与 skill.json version 一致；
         SKILL.md 与 references/**/*.md 中引用的 .md 路径存在；
         可选 lint-checks.json 声明的仓内自检规则未满足（require-pattern /
@@ -652,6 +652,17 @@ def lint_repo(repo: Path) -> tuple[list[str], list[str]]:
                 if meta.get("version") != sj.get("version"):
                     fails.append(
                         f"{name}: metadata.version={meta.get('version')!r} 与 skill.json version={sj.get('version')!r} 不一致"
+                    )
+                sj_desc = str(sj.get("description", ""))
+                if desc and sj_desc and sj_desc != desc:
+                    fails.append(
+                        f"{name}: description 与 skill.json 不一致（双写必须逐字节相同）"
+                    )
+                fm_tags = [t.strip() for t in str(meta.get("tags", "")).split(",") if t.strip()]
+                sj_tags = sj.get("tag") if isinstance(sj.get("tag"), list) else []
+                if fm_tags and sj_tags and fm_tags != [str(t) for t in sj_tags]:
+                    fails.append(
+                        f"{name}: metadata.tags 与 skill.json tag 列表不一致"
                     )
             else:
                 fails.append(f"{name}: frontmatter metadata 必须是 string→string 映射")
