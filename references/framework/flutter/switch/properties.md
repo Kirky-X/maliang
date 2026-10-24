@@ -82,10 +82,7 @@
 
 ## MaterialTapTargetSize 取值
 
-| 取值 | 说明 |
-| --- | --- |
-| `MaterialTapTargetSize.padded` | 48 × 48(MD3 默认,符合无障碍) |
-| `MaterialTapTargetSize.shrinkWrap` | 紧贴视觉边界 |
+取值表唯一真源见 [radio](../radio/properties.md)「MaterialTapTargetSize 取值」(padded = 48×48 / shrinkWrap = 紧贴边界);本文件不复述(防双份漂移)。
 
 ## 事件回调
 
