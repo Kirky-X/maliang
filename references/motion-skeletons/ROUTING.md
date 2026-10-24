@@ -38,6 +38,14 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 > **兜底是地板，不是降级方案。** 它让动画停止，但不构成静止终态。一个内容 `opacity: 0` 等动画才能出现的 hero，在兜底之下将**永久不可见**。每个动效元素必须以**终态**为默认写法、从别处动画过来，或显式给出 reduced-motion 终态规则。
 
+### §1.1 骨架公共兜底（十族通用，口径源）
+
+各骨架文件「强制规则」节中重复出现的公共段，**口径源在本节**——改口径先改这里，各骨架随之同步；骨架按 ROUTING 单篇加载，故各篇仍内联保留公共行的自包含副本，漂移由本节仲裁：
+
+- **reduced-motion 强制**：每篇第一条**必须**实现 `prefers-reduced-motion` 降级，判定与无障碍细则 canonical 见 [`../meta/accessibility.md`](../meta/accessibility.md) 第 2 节；静止终态要求见上 §1 第 3 查。
+- **will-change 生命周期**：`will-change` 不在 CSS 中常驻，由 JS 在动画前动态设置、动画后移除（`ScrollTrigger` 场景在 `onLeave`/`onLeaveBack` 清除）；canonical 见 [`../meta/performance.md`](../meta/performance.md) §2 Hardware Accel。
+- **只动 transform + opacity**：禁 `top` / `margin` / `width` 布局属性动画（§1 第 4 查的展开）；GSAP 通用失败行（探针四相位取不到 / 时间轴被杀 / 兜底未交付）按各篇失败表处置，共性症状右列为「检查 JS 是否在动画前动态设置 `will-change`」。
+
 ## §2 六条路线
 
 | 路线 | 重量 | 负责 | reduced-motion 静止形态 | 死法 |
@@ -79,7 +87,7 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 变体：章节 pin 换幕 / 横向轨 / 缩放推进 / 图层剥离 / 序列帧 / 进度轨 / 文字接力。默认 **R2/R4**，SPECTACLE 6-9。
 **slop form**：唯一一拍 hero 引擎 + 下方千篇一律的 fade-up。
 **死法**：整页只有这一族——四拍节奏（见 §4）要求跨族取材。
-→ pin/横向/scrub 骨架：[`sticky-stack.md`](sticky-stack.md) / [`horizontal-pan.md`](horizontal-pan.md) / [`scroll-scrub-bind`](../vocabulary/scroll.md)。
+→ pin/横向/scrub 骨架：[`sticky-stack.md`](sticky-stack.md) / [`horizontal-pan.md`](horizontal-pan.md) / [`scroll-scrub-bind`](../vocabulary/scroll.md)；滚动揭示与整站惯性滚动：[`scroll-reveal-stagger.md`](scroll-reveal-stagger.md)（最常用滚动动画，design-md 默认推荐动效）/ [`smooth-scroll.md`](smooth-scroll.md)（Web 营销站整站滚动编排，与 scroll-reveal-stagger 共用 ScrollTrigger 体系）。
 
 ### 3.5 Typographic · 文字即主角
 变体：逐字揭开 / 可变字重波 / 大字遮罩 / 字距呼吸 / 跑马灯 / 数字滚动 / 换词 / 描边转填充。默认 **R1**（滚动联动加 R2，错峰 scrub 才用 R4），SPECTACLE 4-7——**清单上最便宜的真爱**。
@@ -100,7 +108,7 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 变体：磁吸 / 弹簧回弹 / 拖拽甩动 / 平滑惯性 / 卡片堆叠 / 摆动 / 橡皮筋。默认 **R1 弹簧曲线**；必须逐帧跟指针才 R4（`quickTo`），SPECTACLE 3-6。
 **slop form**：自定义光标——一个点拖着迟滞的圆环。
 **死法**：触屏上交付（必须 `&& FINE`）；或用到每个链接上直到读起来像抽搐。
-→ 骨架：[`spring-reorder.md`](spring-reorder.md) / [`metaball-tether.md`](metaball-tether.md) / [`interruptible-motion.md`](interruptible-motion.md)。
+→ 骨架：[`spring-reorder.md`](spring-reorder.md) / [`metaball-tether.md`](metaball-tether.md) / [`interruptible-motion.md`](interruptible-motion.md) / [`gesture-arbitration.md`](gesture-arbitration.md)（指针驱动手势轴向仲裁）。
 → 组件命名：`card-tilt-glare` / `sheet-velocity-anchor` / `press-scale-overshoot` / `stagger-spring-cascade` 见 [`../vocabulary/pro-motion.md`](../vocabulary/pro-motion.md)。
 
 ### 3.9 State transition · 状态转场

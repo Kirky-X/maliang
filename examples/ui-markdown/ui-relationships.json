@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-04T05:42:43+08:00",
-  "target_dir": "/home/kirky/projects/skills/maliang/examples/ui-markdown",
+  "generated_at": "2026-10-24T22:09:14+08:00",
+  "target_dir": "D:\\projects\\maliang\\examples\\ui-markdown",
   "pages": [
     {
       "path": "organisms/dock.md",
@@ -72,8 +72,92 @@
   ],
   "navigations": [
     {
+      "from": "organisms/dock.md",
+      "to": "ui/home.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "organisms/dock.md",
+      "to": "ui/discover.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "organisms/dock.md",
+      "to": "ui/messages.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "organisms/dock.md",
+      "to": "ui/mine.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/message.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/feed.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/rank.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/category.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/activity.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/wallet.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/home.md",
+      "to": "ui/service.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
       "from": "ui/mine.md",
       "to": "ui/setting/about.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/setting/about.md",
+      "to": "ui/setting/agreement.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/setting/about.md",
+      "to": "ui/setting/privacy.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/setting/about.md",
+      "to": "ui/setting/about-us.md",
       "event": "tap",
       "source_component": null
     }

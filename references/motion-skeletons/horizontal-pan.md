@@ -126,7 +126,7 @@ panels.forEach((panel, index) => {
 
 ## 强制规则
 
-- **必须**实现 `prefers-reduced-motion` 降级到水平 scroll-snap
+- **必须**实现 `prefers-reduced-motion` 降级到水平 scroll-snap(无障碍细则见 [`accessibility.md`](../meta/accessibility.md) 第 2 节,公共口径见 [ROUTING.md](ROUTING.md) §1.1)
 - **必须**用 `transform: translateX` 而非 `left` / `margin-left`
 - **必须**用 `invalidateOnRefresh: true` 处理 resize
 - panel 数量 ≤ 8 个(超过性能下降)

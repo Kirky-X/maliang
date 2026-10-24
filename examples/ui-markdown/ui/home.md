@@ -14,7 +14,7 @@ version: 1.2.0
 <!-- 布局组织见 ../../references/dimensions/layout.md -->
 
 引用 [`organisms/nav-bar.md`](../organisms/nav-bar.md)(组件类型:`navigation`):左侧菜单 / 中间标题"首页" / 右侧消息。
-- nav-bar action:左=tap→抽屉菜单; 中=无; 右=tap→ui/message.md
+- nav-bar action:左=tap=无(打开抽屉菜单,组件交互非页面跳转); 中=无; 右=tap→ui/message.md
 
 ## 2. 搜索栏
 

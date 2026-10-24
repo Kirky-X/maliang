@@ -104,6 +104,44 @@ class TestUiGraph(unittest.TestCase):
         navs = ug.extract_navigations("tap=无; long-press=back; api=无")
         self.assertEqual(navs, [])
 
+    def test_tap_arrow_without_equals_is_matched(self):
+        # 2026-10 补:home.md:17 的 `左=tap→抽屉菜单` 变体(无等号)此前零命中,
+        # 14 处导航声明对 check-nav 结构性不可见——现在必须能取到
+        navs = ug.extract_navigations("nav-bar action:左=tap→ui/drawer.md; 中=无; 右=tap→ui/message.md")
+        tos = sorted(n["to"] for n in navs)
+        self.assertEqual(tos, ["ui/drawer.md", "ui/message.md"])
+
+    def test_table_target_column_is_extracted(self):
+        # 2026-10 补:金刚区/dock/about 的表格 target 列(`tap=跳转至 item.target 声明页面`)
+        # 是第三种导航声明形态,此前 check-nav 看不见
+        table = (
+            "### 3.2 金刚区\n\n"
+            "| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n"
+            "| `label` | string | 名称 |\n"
+            "| `target` | string | tap 跳转目标 |\n\n"
+            "| id | label | target |\n| --- | --- | --- |\n"
+            "| feed | 信息流 | ui/feed.md |\n"
+            "| rank | 排行榜 | ui/rank.md |\n"
+        )
+        navs = ug.extract_navigations(table)
+        tos = sorted(n["to"] for n in navs)
+        self.assertEqual(tos, ["ui/feed.md", "ui/rank.md"])
+
+    def test_table_rows_without_target_column_ignored(self):
+        # 不应报: 无 target 列的普通参数表
+        table = "| 参数 | 值 |\n| --- | --- |\n| 组件类型 | `navigation` |\n"
+        self.assertEqual(ug.extract_navigations(table), [])
+
+    def test_table_non_page_targets_ignored(self):
+        # 不应报: history.back 尾注、action: 动作标识、外链 URL——都不是页面目标
+        table = (
+            "| 项目 | target |\n| --- | --- |\n"
+            "| 返回 | history.back(返回上一级) |\n"
+            "| 检查更新 | action:check-update(检查新版本) |\n"
+            "| 官网 | https://maliang.example.com |\n"
+        )
+        self.assertEqual(ug.extract_navigations(table), [])
+
     def test_parent_depth_derivation(self):
         self.assertEqual(ug._derive_parent_and_depth("ui/home.md"), (None, 1))
         self.assertEqual(ug._derive_parent_and_depth("ui/setting/about.md"), ("setting", 2))

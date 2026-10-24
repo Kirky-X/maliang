@@ -190,6 +190,8 @@ function onMenu() {
   --radius-rounded: 8px;
   --radius-full: 9999px;
   --border-thin: 1px;
+  --border-hairline: 0.5px;
+  --shadow-card: rgba(26, 29, 33, 0.06);
   --motion-duration-instant: 100ms;
   --motion-duration-fast: 200ms;
   --motion-ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -378,12 +380,14 @@ input::placeholder {
   right: 0;
   bottom: 0;
   display: flex;
+  /* 无设备壳版:12px 常规间距;preview 设备壳版为 20px(home-indicator 安全区,有意差异非漂移) */
   padding-bottom: 12px;
   background: var(--color-surface-card);
-  border-top: 0.5px solid var(--color-divider);
+  border-top: var(--border-hairline) solid var(--color-divider);
 }
 
 .tab {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -394,6 +398,18 @@ input::placeholder {
   border: none;
 }
 
+.tab::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: var(--icon-size-lg);
+  height: 2px;
+  border-radius: var(--radius-full);
+  background: transparent;
+}
+
+.tab.is-selected::before { background: var(--color-brand-primary); }
+
 .tab .glyph { width: var(--icon-size-lg); height: var(--icon-size-lg); }
 
 .dock-label {
@@ -402,11 +418,12 @@ input::placeholder {
 }
 
 .dock-label.is-selected {
-  color: var(--color-text-primary);
+  color: var(--color-brand-primary);
   font-weight: var(--font-weight-medium);
 }
 
 .entry:hover, .icon-btn:hover { background: var(--state-hover); }
+.card:hover { transform: translateY(-2px); box-shadow: 0 2px 8px var(--shadow-card); }
 .entry:active, .tab:active, .icon-btn:active { transform: scale(0.97); }
 .card:active { transform: scale(0.98); }
 

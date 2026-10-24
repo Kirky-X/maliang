@@ -101,16 +101,68 @@ def parse_frontmatter(text):
     return _shared_parse_frontmatter(text)
 
 
-# 提取 tap 跳转目标:tap=→<target>
+# 提取 tap 跳转目标:tap=→<target> 或 tap→<target>(2026-10 补无等号变体,home.md 导航行实写)
 # 支持:小写英文/驼峰/中文/连字符/斜杠/点号(遇空格/分号/竖线停止)
-TAP_NAV_RE = re.compile(r"tap=→([^\s|;]+)")
+TAP_NAV_RE = re.compile(r"\btap=?→([^\s|;]+)")
+
+
+def _normalize_target(raw):
+    """归一化跳转目标为 ui/<to>.md;非页面目标(无/back/动作标识/URL)返回 None。"""
+    raw = raw.strip().strip("`")
+    raw = raw.rstrip("。；;，,")
+    # 去掉尾注(如 "history.back(返回上一级)" 的括号说明)
+    raw = re.sub(r"[（(][^）)]*[）)]$", "", raw).strip()
+    if raw in ("", "无", "back", "history.back", "-"):
+        return None
+    if raw.startswith("history.back("):
+        return None
+    if raw.startswith(("action:", "http://", "https://")):
+        return None
+    if raw.startswith("ui/"):
+        return raw if raw.endswith(".md") else raw + ".md"
+    return "ui/" + raw + ".md"
+
+
+def _extract_table_targets(text):
+    """提取 markdown 表格中 target 列的跳转目标(金刚区/dock/about 的第三种声明形态)。
+
+    仅当表头存在名为 target 的列时,逐数据行取该列归一化;
+    字段定义表(表头为 字段/类型/…)无 target 列,天然不命中。
+    """
+    targets = []
+    lines = text.splitlines()
+    i = 0
+    sep_re = re.compile(r"^\|[\s:\-|]+\|$")
+    while i < len(lines):
+        line = lines[i].strip()
+        if line.startswith("|") and i + 1 < len(lines) and sep_re.match(lines[i + 1].strip()):
+            header = [c.strip().strip("`").lower() for c in line.strip("|").split("|")]
+            if "target" in header:
+                col = header.index("target")
+                j = i + 2
+                while j < len(lines) and lines[j].strip().startswith("|"):
+                    cells = lines[j].strip().strip("|").split("|")
+                    if col < len(cells):
+                        t = _normalize_target(cells[col])
+                        if t:
+                            targets.append(t)
+                    j += 1
+                i = j
+                continue
+            i += 2
+            continue
+        i += 1
+    return targets
 
 
 def extract_navigations(text, from_path=None):
     """提取文本中所有 tap 跳转关系,返回 [{'to':..., 'event':'tap'}]。
 
-    用正则 tap=→([^\\s|;]+) 提取跳转目标:
-    - 跳过 `无`/ `back`(history.back,非具体页面)
+    两种声明形态:
+    - 行内 action:`tap=→<target>` / `tap→<target>`
+    - 表格 target 列(`tap=跳转至 item.target 声明页面` 的数据表)
+
+    - 跳过 `无`/`back`(history.back,非具体页面)
     - 归一化为 ui/<to>.md 路径:
       * 原始值以 ui/ 开头且以 .md 结尾 → 保持原样
       * 原始值以 ui/ 开头但不以 .md 结尾 → 补 .md
@@ -120,21 +172,18 @@ def extract_navigations(text, from_path=None):
     T007 签名 extract_navigations(text, from_path)。
     """
     results = []
+    seen = set()
+
+    def _add(raw):
+        to_path = _normalize_target(raw)
+        if to_path and to_path not in seen:
+            seen.add(to_path)
+            results.append({"to": to_path, "event": "tap"})
+
     for m in TAP_NAV_RE.finditer(text):
-        raw = m.group(1).strip()
-        # 跳过非跳转目标
-        if raw in ("无", "back", "history.back"):
-            continue
-        # 去除末尾标点(如中文句号、分号)
-        raw = raw.rstrip("。；;，,")
-        if not raw:
-            continue
-        # 归一化路径
-        if raw.startswith("ui/"):
-            to_path = raw if raw.endswith(".md") else raw + ".md"
-        else:
-            to_path = "ui/" + raw + ".md"
-        results.append({"to": to_path, "event": "tap"})
+        _add(m.group(1))
+    for raw in _extract_table_targets(text):
+        _add(raw)
     return results
 
 

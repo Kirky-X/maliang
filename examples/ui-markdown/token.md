@@ -182,7 +182,9 @@ Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景
 | motion-duration-instant | 100ms | 微交互(按钮状态切换)          |
 | motion-duration-fast   | 200ms | 状态过渡(hover/pressed)       |
 | motion-duration-normal | 300ms | 入场动画                      |
-| motion-duration-slower | 400ms | 滚动揭示/复杂动画(硬上限)     |
+| motion-duration-slower | 400ms | 复杂交互动画(硬上限,脚本按此硬查) |
+
+> 分层从属注记:滚动揭示等**装饰类长动效不受本表 400ms 硬上限约束**——按规范层 [`micro-interactions.md`](../../references/vocabulary/micro-interactions.md) 第 3 层装饰档 ≤600ms 执行,且须以本表 `{duration-*}` token 引用、必须可跳过(见 scroll-reveal-stagger.md 的 stagger 分层口径注记)。
 | motion-ease-default    | cubic-bezier(0.25, 0.1, 0.25, 1) | 通用缓动         |
 | motion-ease-out        | cubic-bezier(0, 0, 0.2, 1)      | 入场/揭示          |
 | motion-ease-in         | cubic-bezier(0.4, 0, 1, 1)      | 离场/消失          |

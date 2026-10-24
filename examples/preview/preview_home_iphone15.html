@@ -49,7 +49,6 @@
       --motion-duration-fast: 200ms;
       --motion-ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
       /* 非文本派生色(状态/外壳/封面占位,非 token.md 表内值,集中在此管理) */
-      --focus-ring: rgba(91, 124, 250, 0.55);
       --state-hover: rgba(26, 29, 33, 0.05);
       --shadow-card: rgba(26, 29, 33, 0.06);
       --shell-shadow: rgba(26, 29, 33, 0.18);
@@ -184,7 +183,7 @@
 
     .dot {
       position: absolute;
-      top: -2px;
+      top: 2px;
       right: -3px;
       width: 8px;
       height: 8px;
@@ -222,7 +221,7 @@
     .search-pill .glyph { width: var(--icon-size-lg); height: var(--icon-size-lg); }
 
     input::placeholder {
-      /* 占位文字改用 text-secondary:placeholder token(#9CA3AF)在本底上仅 2.55:1,不达 WCAG 4.5:1 */
+      /* 占位文字改用 text-secondary:placeholder token(#9CA3AF)在本底上对比度 2.39:1(palette-solver 实测),不达 WCAG 4.5:1 */
       color: var(--color-text-secondary);
     }
 
@@ -308,7 +307,7 @@
     .tab:focus-visible,
     .card:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 2px var(--focus-ring);
+      box-shadow: 0 0 0 2px var(--color-brand-primary);
     }
 
     /* 底部 dock */
@@ -318,6 +317,7 @@
       right: 0;
       bottom: 0;
       display: flex;
+      /* 设备壳版含 home-indicator 安全区,较 Home.vue 的 12px 多 8px——有意差异非漂移 */
       padding-bottom: 20px;
       background: var(--color-surface-card);
       border-top: var(--border-hairline) solid var(--color-divider);
@@ -354,7 +354,7 @@
     }
 
     .dock-label.is-selected {
-      color: var(--color-text-primary);
+      color: var(--color-brand-primary);
       font-weight: var(--font-weight-medium);
     }
 
@@ -405,7 +405,7 @@
               </svg>
             </button>
             <span class="nav-title">首页</span>
-            <button class="icon-btn" aria-label="消息" @click="onTab(tapMessage)">
+            <button class="icon-btn" aria-label="消息" @click="onTab(tabs[2])">
               <svg class="glyph glyph-ink" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M4 7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H10l-4 4v-4H7a3 3 0 0 1-3-3z"></path>
               </svg>
@@ -481,7 +481,6 @@
       data() {
         return {
           keyword: "",
-          tapMessage: null,
           entries: [
             { id: "feed", label: "信息流", target: "ui/feed.md", icon: ICONS.feed },
             { id: "rank", label: "排行榜", target: "ui/rank.md", icon: ICONS.rank },
