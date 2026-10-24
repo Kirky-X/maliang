@@ -10,7 +10,7 @@
 
 `<el-date-picker>` 通过 `type` 覆盖 date/dates/datetime/week/month/year/daterange/datetimerange/monthrange 档位;`<el-time-picker>` 任意时间;`<el-time-select>` 档位时间点。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

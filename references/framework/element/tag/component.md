@@ -10,7 +10,7 @@
 
 通过 `type` 区分语义,`effect` 取值 dark/light/plain,`closable` 可关闭,`size` 控制尺寸,`round` 圆角。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

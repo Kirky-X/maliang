@@ -10,7 +10,7 @@
 
 `<el-timeline>` 为容器;`<el-timeline-item>` 为节点,`timestamp` 设置时间,`placement` 控制时间位置,`type` 设置节点颜色,`hollow` 空心节点。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -12,7 +12,7 @@
 - `<el-option>`:单个选项,`value` 为提交值、`label` 为显示文本。
 - `<el-select-v2>`:大选项集(>100 项)虚拟滚动版本。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>
@@ -86,7 +86,7 @@ const tags = ref(['新品'])
 
 ### 场景 3:可搜索(选项 >10 项)
 
-`filterable` 开启键入搜索,对齐 vocabulary `select-searchable`;超大选项集换 `<el-select-v2>`。
+`filterable` 开启键入搜索(该限定的唯一完整陈述在本行,api.md 只留索引);超大选项集换 `<el-select-v2>`。
 
 ```vue
 <template>

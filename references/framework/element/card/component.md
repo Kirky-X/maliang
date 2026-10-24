@@ -10,7 +10,7 @@
 
 通过 `header` 设置标题,`shadow` 控制阴影(always/hover/never),`body-style` 自定义内容样式。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

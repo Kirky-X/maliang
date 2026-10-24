@@ -10,7 +10,7 @@
 
 通过 `v-model` 控制显示,`title` 设置标题,`draggable` 开启拖拽,`modal` 控制遮罩,`before-close` 拦截关闭。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

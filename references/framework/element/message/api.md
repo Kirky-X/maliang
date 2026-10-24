@@ -39,7 +39,7 @@
 
 ## 插槽(Slots)
 
-`<el-message>` 标签形式下支持 `default` 插槽(message 内容)与 `default`(通过 VNode 传入)。
+`<el-message>` 标签形式的内容经 `default` 插槽传入;VNode 形式的内容经 `message` 属性传入(两种载体,一个插槽名,不重复设槽)。
 
 ```js
 import { ElMessage, h } from 'element-plus'

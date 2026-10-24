@@ -10,7 +10,7 @@
 
 通过 `v-model` 绑定值,`type` 切换 text/textarea/password 等,`maxlength` 限制字数,`show-word-limit` 显示计数,`prefix`/`suffix` 插槽自定义前后缀。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 `<el-table>` 为容器,`data` 绑定数组;`<el-table-column>` 定义列,`prop` 对应字段,`label` 为表头。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

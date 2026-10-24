@@ -10,7 +10,7 @@
 
 `<el-icon>` 是图标容器,内部放置来自 `@element-plus/icons-vue` 的具体图标组件;`size`/`color` 控制大小与颜色。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

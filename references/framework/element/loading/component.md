@@ -10,7 +10,7 @@ v-loading    ElLoadingService
 
 `v-loading="boolean"` 指令在元素上显示遮罩加载;`v-loading.fullscreen` 全屏;`ElLoadingService` 命令式全屏加载并返回可关闭实例。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

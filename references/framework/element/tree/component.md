@@ -10,7 +10,7 @@
 
 通过 `data` 绑定树数据(含 `label`/`children`),`props` 自定义字段,`lazy` + `load` 懒加载,`show-checkbox` 显示复选框,`node-key` 标识节点。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

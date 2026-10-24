@@ -10,7 +10,7 @@
 
 `<el-dropdown>` 为容器,`trigger` 设置触发方式;`<el-dropdown-menu>` 为菜单容器,`<el-dropdown-item>` 为菜单项,`command` 为命令标识。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

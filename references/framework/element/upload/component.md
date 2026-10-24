@@ -10,7 +10,7 @@
 
 `<el-upload>` 为容器,`action` 指定上传地址;`#trigger` / `#tip` 插槽定义触发器与提示;`<el-upload-dragger>` 提供拖拽区域。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 `<el-checkbox-group>` 为容器,`v-model` 绑定值数组;`<el-checkbox>` 为单选项,`value`/`label` 为值;`indeterminate` 属性控制半选态。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

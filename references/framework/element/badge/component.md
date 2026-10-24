@@ -10,7 +10,7 @@
 
 通过 `value` 设置内容(数字或文字),`max` 设置上限(超出显示 `max+`),`is-dot` 显示红点,`hidden` 隐藏,`type` 设置颜色。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 通过 `type` 区分 success/warning/info/error,`title` 设置标题,`closable` 控制可关闭,`show-icon` 显示图标,`description` 设置辅助文字。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

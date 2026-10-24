@@ -10,7 +10,7 @@
 
 通过 `v-model` 绑定布尔值,`active-text`/`inactive-text` 设置两态文字,`active-color`/`inactive-color` 设置颜色,`loading` 显示加载态。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

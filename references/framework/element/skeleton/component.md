@@ -10,7 +10,7 @@
 
 `<el-skeleton>` 为容器,`loading` 控制显隐,`rows` 设置占位行数,`animated` 开启动画;`<el-skeleton-item>` 为单个占位块,`variant` 控制形状。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

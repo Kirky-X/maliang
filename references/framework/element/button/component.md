@@ -10,7 +10,7 @@
 
 按钮通过 `type` 区分语义(primary / success / warning / danger / info),通过 `size` 控制尺寸,`plain` / `round` / `circle` 控制外观变体。所有视觉值引用 design token,不在组件内硬编码颜色。
 
-## 基本用法
+## 最小示例
 
 默认按钮(不设 `type`)为次级按钮;设置 `type` 切换语义色。
 

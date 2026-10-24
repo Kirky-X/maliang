@@ -10,7 +10,7 @@
 
 通过 `percentage` 设置百分比(0-100),`status` 切换 success/exception/warning 状态,`type` 切换 line/circle/dashboard,`stripe` 显示条纹。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 `<el-steps>` 为容器,`active` 设置当前步骤(从 0 开始),`direction` 控制方向,`process-status`/`finish-status` 控制状态;`<el-step>` 为单步,`title`/`description`/`icon`。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

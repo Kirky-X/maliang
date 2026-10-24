@@ -10,7 +10,7 @@
 
 通过 `direction` 设置方向(horizontal/vertical),`content-position` 设置文字位置,`border-style` 设置样式,`dashed`(2.7+)虚线。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

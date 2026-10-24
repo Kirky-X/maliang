@@ -10,7 +10,7 @@
 
 通过 `v-model` 控制显示,`direction` 设置滑出方向(left/right/top/bottom),`size` 设置尺寸,`before-close` 拦截关闭。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

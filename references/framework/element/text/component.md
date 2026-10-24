@@ -12,7 +12,7 @@
 
 > **关于 `<el-heading>` 的说明**:Element Plus **不提供** 独立的 `<el-heading>` 组件。标题语义通过 `<el-text>` 的 `tag` 属性渲染为 `<h1>`~`<h6>` 实现(见场景 3)。这是 Element Plus 的既定设计,本文档不臆造不存在的组件 API。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 `<el-menu>` 为容器,`default-active` 设置激活项;`<el-sub-menu>` 为可展开子菜单,`<el-menu-item>` 为末级菜单项;`index` 为唯一标识。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

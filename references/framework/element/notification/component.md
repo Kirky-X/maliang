@@ -10,7 +10,7 @@ ElNotification(options) // 函数式调用,无模板标签
 
 通过 `type` 表达 info/success/warning/error 四类;`duration: 0` 表示不自动关闭。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -217,6 +217,7 @@
 
 ### 文档内容要求
 
+- **节名跨框架统一**(2026-10 起书面标准):三框架的主文档统一节名——component.md / widget.md 的示例节叫「最小示例」,api.md / properties.md 按各框架既有节名;「注意事项」节**有值得注意的运行时陷阱或平台差异时必写**,确无内容的不设该节(不做空节凑数)。「关联组件」节有真实关联时写,无则不设。示例节改名已落地:element 46 份 component.md「基本用法」→「最小示例」,与 flutter/harmony 对齐。
 - **component.md / widget.md**:组件定义、构造函数/标签、核心 API、最小示例代码、`## 参考链接` 章节
 - **usage.md / properties.md / api.md**:使用场景、属性列表、事件/方法、完整示例、注意事项
 - 所有示例代码 MUST 标注语言标签(```arkts / ```dart / ```vue)

@@ -10,7 +10,7 @@
 
 `v-model` 绑定数值;`range` 属性启用双滑块区间;`show-input` 附加精确数值输入框。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

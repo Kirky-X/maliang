@@ -10,7 +10,7 @@
 
 `<el-radio-group>` 为容器,`v-model` 绑定值;`<el-radio>` 为单选项,`label` 为值;`<el-radio-button>` 为按钮样式单选。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

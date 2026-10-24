@@ -10,7 +10,7 @@
 
 列表由 `<el-table>`(容器,接收 `data`)与若干 `<el-table-column>`(列定义,接收 `prop`/`label`/`width`)组合实现。`border` 加边框、`stripe` 加斑马纹。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

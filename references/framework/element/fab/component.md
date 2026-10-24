@@ -57,7 +57,7 @@ const visible = ref(true)
 let lastY = 0
 const onScroll = () => {
   const y = window.scrollY
-  visible.value = y < lastY || y < 80 // 上滑收起、下滑显示
+  visible.value = y < lastY || y < 80 // 上滑显示、下滑收起(近顶部常显)
   lastY = y
 }
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))

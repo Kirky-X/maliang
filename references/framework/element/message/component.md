@@ -10,7 +10,7 @@
 
 通常使用命令式 `ElMessage` 函数调用,而非直接写 `<el-message>` 标签。`type` 区分 success/warning/info/error,`duration` 控制停留时长,`showClose` 显示关闭按钮。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

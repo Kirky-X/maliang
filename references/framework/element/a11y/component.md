@@ -16,6 +16,17 @@ Element Plus 没有独立的"无障碍"指南章节。其无障碍能力分散�
 | 禁用语义     | `disabled` 组件设置 `aria-disabled`                                  |
 | 文字提示     | Tooltip/Popover 通过 `aria-describedby` 关联                         |
 
+### 已内建角色的组件清单(部分,canonical)
+
+| 组件          | 内建 role / aria                                         |
+| ------------- | -------------------------------------------------------- |
+| `el-dialog`   | `role="dialog"`, `aria-modal="true"`                     |
+| `el-tabs`     | `role="tablist"` / `role="tab"` / `role="tabpanel"`      |
+| `el-menu`     | `role="menubar"` / `role="menu"` / `role="menuitem"`     |
+| `el-dropdown` | `role="menu"` / `role="menuitem"`                        |
+| `el-alert`    | `role="alert"`                                           |
+| `el-switch`   | `role="switch"`, `aria-checked`                          |
+
 ## 替代方案
 
 - 方案 1:直接使用 Element Plus 组件自带的 a11y 能力,无需额外组件。

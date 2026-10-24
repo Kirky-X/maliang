@@ -10,7 +10,7 @@
 
 `<el-breadcrumb>` 为容器,`separator` 设置分隔符;`<el-breadcrumb-item>` 为每级,`to` 设置路由跳转。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

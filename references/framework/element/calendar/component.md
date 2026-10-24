@@ -10,7 +10,7 @@
 
 通过 `v-model` 绑定当前日期,`range` 设置日期范围,`#date-cell` 插槽自定义单元格。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

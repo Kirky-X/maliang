@@ -10,7 +10,7 @@
 
 `title` 为确认问题;`confirm-button-text` / `cancel-button-text` 自定义按钮文案;`confirm-button-type` 表达危险色;`#reference` 插槽放触发元素。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 `<el-scrollbar>` 替换原生滚动条,支持自定义样式与高度;`v-infinite-scroll` 指令在滚动到底部时触发加载。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

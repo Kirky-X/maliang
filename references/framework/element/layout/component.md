@@ -10,7 +10,7 @@
 
 通过 `<el-row>` 定义行容器,`<el-col>` 定义列,基于 24 栅格系统。`gutter` 控制列间距,`span` 控制列宽,`offset`/`push`/`pull` 控制定位。所有间距值引用 design token。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

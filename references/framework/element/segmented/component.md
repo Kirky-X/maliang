@@ -10,7 +10,7 @@
 
 `v-model` 绑定选中值;`options` 支持原始值数组或 `{ label, value, disabled }` 对象数组。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

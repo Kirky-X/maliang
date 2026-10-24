@@ -10,7 +10,7 @@
 
 通过 `src` 加载图片,`size` 控制尺寸(number/large/default/small),`shape` 控制形状(circle/square),`icon` 设置图标,加载失败回退到插槽或 icon。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 `<el-statistic>` 承载数值强调(KPI);`<el-descriptions>` 以 `title` + `<el-descriptions-item label>` 列表承载详情;`<el-countdown>` 为倒计时变体。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

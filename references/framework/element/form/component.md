@@ -10,7 +10,7 @@
 
 `<el-form>` 为容器,`model` 绑定数据对象,`rules` 定义校验规则;`<el-form-item>` 为表单项,`prop` 对应 model 字段以触发校验。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

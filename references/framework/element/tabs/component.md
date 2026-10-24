@@ -10,7 +10,7 @@
 
 `<el-tabs>` 为容器,`v-model` 绑定当前激活的 `name`;`<el-tab-pane>` 为每个标签页内容,通过 `label` 设置标题、`name` 设置标识。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

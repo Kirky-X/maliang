@@ -10,7 +10,7 @@
 
 `<el-carousel>` 为容器,`height` 设置高度,`autoplay` 自动播放,`interval` 切换间隔;`<el-carousel-item>` 为每一页内容。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

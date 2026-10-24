@@ -10,7 +10,7 @@
 
 `v-model` 绑定分数;`allow-half` 半星;`disabled` 只读展示;配合 `show-score` / `show-text` 展示文案。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

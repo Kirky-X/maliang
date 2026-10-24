@@ -10,7 +10,7 @@
 
 `<el-collapse>` 为容器,`v-model` 绑定展开项数组;`<el-collapse-item>` 为面板项,`name` 为标识,`title` 为标题。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

@@ -10,7 +10,7 @@
 
 通过 `total` 设置总数,`v-model:current-page` 绑定当前页,`v-model:page-size` 绑定每页条数,`layout` 控制布局,`page-sizes` 设置可选条数。
 
-## 基本用法
+## 最小示例
 
 ```vue
 <template>

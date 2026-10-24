@@ -18,14 +18,7 @@
 
 ## Element Plus 组件已内建的角色(部分)
 
-| 组件          | 内建 role / aria                                         |
-| ------------- | -------------------------------------------------------- |
-| `el-dialog`   | `role="dialog"`, `aria-modal="true"`                     |
-| `el-tabs`     | `role="tablist"` / `role="tab"` / `role="tabpanel"`      |
-| `el-menu`     | `role="menubar"` / `role="menu"` / `role="menuitem"`     |
-| `el-dropdown` | `role="menu"` / `role="menuitem"`                        |
-| `el-alert`    | `role="alert"`                                           |
-| `el-switch`   | `role="switch"`, `aria-checked`                          |
+内建 role 与无障碍能力的**唯一清单见 [component.md](./component.md)「内建的无障碍能力」两表**,本文件不复述。
 
 ## 业务层建议
 
@@ -34,10 +27,4 @@
 - 可关闭的浮层(Dialog/Drawer)关闭后将焦点归还触发元素。
 - 表单 `el-form-item` 校验失败时,通过 `aria-invalid` 与 `aria-describedby` 关联错误信息。
 
-## 跨框架对照
-
-| 框架        | 实现方式                              |
-| ----------- | ------------------------------------- |
-| ArkTS       | `accessibility` 属性组                |
-| Flutter     | `Semantics` widget                    |
-| Element Plus| 内建 role + 业务层 aria 属性补充      |
+跨框架对照表唯一收录在 [component.md](./component.md),此处不重复。

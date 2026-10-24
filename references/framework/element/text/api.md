@@ -2,7 +2,7 @@
 
 > `<el-text>` 组件的属性 / 事件 / 方法 / 插槽定义。用法与示例见 [component.md](./component.md)。
 
-> **`<el-heading>` 不存在**:Element Plus 未提供独立的标题组件。标题通过 `<el-text>` 的 `tag` 属性(渲染为 `<h1>`~`<h6>`)结合 design token 实现视觉层级,详见 component.md 场景 3。下表仅列 `<el-text>` 的真实 API。
+> **`<el-heading>` 不存在**:Element Plus 未提供独立的标题组件——完整说明与替代写法见 [component.md](component.md) 场景 3(唯一完整陈述,本文件不重复)。下表仅列 `<el-text>` 的真实 API。
 
 ## 属性(Props)
 
