@@ -815,6 +815,7 @@ def check_card_radius(rel_path, lines):
                             "{radius-xl},%s 不是卡片档" % banned,
                         )
                     )
+                    break
     return results
 
 

@@ -30,6 +30,7 @@
   .glyph.tall { height: 32px; }
   .glyph.short { height: 20px; }
   .stat-card.esc { align-self: flex-start; }
+  .stat-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); max-width: 400px; }
 </style>
 </head>
 <body>
@@ -66,6 +67,13 @@
     <div class="stat-card"><span class="glyph tall"></span><b>128</b><span>今日订单</span></div>
     <div class="stat-card esc"><span class="glyph short"></span><b>64</b><span>待处理</span></div>
     <div class="stat-card"><span class="glyph tall"></span><b>12</b><span>异常</span></div>
+  </div>
+
+  <div class="stat-grid2">
+    <div class="stat-card"><span class="glyph tall"></span><b>8</b><span>第一行</span></div>
+    <div class="stat-card"><span class="glyph tall"></span><b>9</b><span>第一行</span></div>
+    <div class="stat-card"><span class="glyph tall"></span><b>6</b><span>第二行</span></div>
+    <div class="stat-card"><span class="glyph short"></span><b>7</b><span>第二行</span></div>
   </div>
 </body>
 </html>
