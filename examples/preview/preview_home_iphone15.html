@@ -354,7 +354,9 @@
     }
 
     .dock-label.is-selected {
-      color: var(--color-brand-primary);
+      /* 文字保持 text-primary:10px 小字用 brand-primary 在 surface-card 上仅 3.46:1 < 4.5:1(对比度门);
+         选中语义由 icon-filled 填充 + brand-primary 顶条承载。裁决见 dock.md §3.2 */
+      color: var(--color-text-primary);
       font-weight: var(--font-weight-medium);
     }
 

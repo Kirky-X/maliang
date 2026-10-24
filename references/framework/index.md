@@ -3,6 +3,7 @@
 > 本文件是 `references/framework/` 分层框架文档数据库的入口,为 `draw-harmony` / `draw-flutter` / `draw-element` 三个子命令提供组件映射参考。
 > 每个框架下按组件类型组织(共 56 类,3 现有 + 53 新增),每类组件含两份文档(文件名遵循各框架生态术语惯例)。
 > 部分组件在某框架无原生对应时,以 N/A 占位文件说明缺失原因与替代方案,保持目录结构对称。
+> **Element Plus 组件事实双源协调(2026-10)**:若运行环境已安装 element-dev skill,其 qdrant 知识库为 EP 组件 API **查询**场景的优先事实源(时效更新);本仓 `framework/element/` 快照仅服务 draw-element 的**生成**映射。快照刷新触发条件:EP 基线版本变更时同步重建两源(以本节基线为准)。
 
 ---
 

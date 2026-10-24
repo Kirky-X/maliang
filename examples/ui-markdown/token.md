@@ -161,6 +161,12 @@ Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景
 
 分割线颜色用 `{color-divider}`;标准边框用 `{color-border-base}`(见颜色表)。**慎用分割线**,分组优先用间距 > 底色 > 分割线。
 
+## 6a. 阴影(shadow)
+
+| token       | 值                     | 用途                                              |
+| ----------- | ---------------------- | ------------------------------------------------- |
+| shadow-card | rgba(26, 29, 33, 0.06) | 卡片 hover 浮起阴影 # no-decision: 示例样张(瑞士极简 heritage 范例,未做决策溯源) |
+
 ## 7. 层级(z-index)
 
 > 每层间隔 100,留扩展空间。同层子元素用局部 stacking context(`isolation: isolate`),不污染全局。代码中禁止 z-index 字面量,必须引用本表 token(performance.md §4)。

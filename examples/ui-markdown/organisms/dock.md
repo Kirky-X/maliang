@@ -33,7 +33,7 @@ version: 1.2.0
 | -------- | --------------------- | --------------------- |
 | 图标风格 | 填充(filled)          | 线性(stroke)          |
 | 图标尺寸 | `{icon-size-lg}`      | `{icon-size-lg}`      |
-| 字体颜色 | `{color-brand-primary}`     | `{color-text-secondary}`    |
+| 字体颜色 | `{color-text-primary}`      | `{color-text-secondary}`    |
 | 字体大小 | `{font-size-mini}`    | `{font-size-mini}`    |
 | 热区     | `{icon-touch-target}` | `{icon-touch-target}` |
 | aria-label | 每个 tab 用对应 label 字段值(如"首页"/"发现"),容器 aria-label="底部导航" | 同左 |
@@ -70,7 +70,7 @@ tab 数 ≤ 5(米勒定律)。
 
 ### 3.2 item 展示规则
 
-- 选中态:图标用 `icon-filled`,文字色 `{color-brand-primary}`,图标上方可加 2px 高 `{color-brand-primary}` 顶条指示
+- 选中态:图标用 `icon-filled`(brand-primary),文字色 `{color-text-primary}`,图标上方可加 2px 高 `{color-brand-primary}` 顶条指示。**设计决策(2026-10)**:选中文字色不用 brand-primary——label 为 10px 小字,brand-primary 在 `{color-surface-card}` 上对比度仅 3.46:1 < 4.5:1,过不了自家对比度门(preview-check 5.3);选中语义由 icon-filled + brand-primary 顶条承载(图形元素 ≥3:1 达标)
 - 未选中态:图标用 `icon-stroke`,文字色 `{color-text-secondary}`
 - 切换动画:图标 200ms 渐变,文字色 150ms 渐变
 - badge 角标:右上角 8px 圆点 `{color-danger}`,数字>99 显示"99+"
