@@ -92,4 +92,4 @@ struct IndeterminatePage {
 2. **select 与 onChange** — `select` 单向控制选中态;`onChange` 回调手动更新 `@State`,避免状态漂移。
 3. **半选态依赖组管理** — 单个 Checkbox 不支持半选,部分选中语义由 CheckboxGroup 的 `SelectStatus.Some` 表达(与 Carbon 三态规范对齐:checked/unchecked/indeterminate)。
 4. **无障碍** — 复选框建议设 `accessibilityRole(Checkbox)` 并用 `accessibilityChecked` 同步状态;标签文字紧邻复选框,整体可点。
-5. **触控目标** — 视觉尺寸可小,但点击热区 SHOULD ≥44vp,不足时外层 Row 补 padding。
+5. **触控目标** — 视觉尺寸可小,但点击热区 ≥44vp,不足时外层 Row 补 padding(库内标准句式,SHOULD 口径见 ux-rules touch-target-44)。

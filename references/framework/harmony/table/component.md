@@ -50,5 +50,4 @@ struct TableDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(本组件为 maliang 组合方案)
-- 相关组件:[`grid`](../grid/component.md) / [`list`](../list/component.md)
 - 创建网格 (Grid): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-layout-development-create-grid

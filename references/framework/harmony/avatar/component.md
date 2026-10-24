@@ -49,5 +49,4 @@ struct AvatarDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(本组件为 maliang 组合方案)
-- 相关组件:[`image`](../image/component.md)
 - 显示图片 (Image): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-graphics-display

@@ -24,7 +24,7 @@ struct FabPage {
 
       Button() {
         SymbolGlyph($r('sys.symbol.plus')).fontSize(24)
-          .fontColor([({color-text-inverse})])
+          .fontColor([{color-text-inverse}])
       }
       .type(ButtonType.Circle)
       .width(56).height(56)
@@ -92,7 +92,7 @@ struct ExtendedFabPage {
       Button() {
         Row({ space: {spacing-sm} }) {
           SymbolGlyph($r('sys.symbol.pencil')).fontSize(18)
-            .fontColor([({color-text-inverse})])
+            .fontColor([{color-text-inverse}])
           Text('写邮件').fontSize({font-size-md})
             .fontColor({color-text-inverse})
         }

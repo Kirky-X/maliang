@@ -61,5 +61,4 @@ struct BadgeDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(Badge 属通用组件,散见于各组件文档)
-- 相关组件:[`avatar`](../avatar/component.md) / [`icon`](../icon/component.md)
 - 按钮与选择组件概述: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-forms-overview

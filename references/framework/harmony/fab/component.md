@@ -42,7 +42,7 @@ struct FabDemo {
       Button() {
         SymbolGlyph($r('sys.symbol.plus'))
           .fontSize(24)
-          .fontColor([({color-text-inverse})])
+          .fontColor([{color-text-inverse}])
       }
       .type(ButtonType.Circle)
       .width(56)

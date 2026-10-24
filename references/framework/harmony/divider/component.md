@@ -47,5 +47,4 @@ struct DividerDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(Divider 属通用组件,散见布局文档)
-- 相关组件:[`list`](../list/component.md)
 - 组件布局: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-layout-development

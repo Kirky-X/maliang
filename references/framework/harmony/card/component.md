@@ -58,5 +58,4 @@ struct CardDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(本组件为 maliang 组合方案)
-- 相关组件:[`layout`](../layout/component.md)(阴影效果见动画章节)
 - 阴影效果: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-shadow-effect

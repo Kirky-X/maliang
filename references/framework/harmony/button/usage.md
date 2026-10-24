@@ -1,10 +1,10 @@
 # Button 使用场景与示例
 
-> 列举 HarmonyOS 应用中 Button 组件的典型使用场景、完整代码示例与注意事项。所有颜色值通过 design token 引用,不硬编码。
+> 列举 HarmonyOS 应用中 Button 组件的典型使用场景、增量代码示例与注意事项——按钮的基础形态以 [component.md](component.md) 最小示例为唯一维护处,本文件只写与它的差异。所有颜色值通过 design token 引用,不硬编码。
 
 ## 场景 1:主操作按钮(Primary Action)
 
-主操作按钮用于触发页面核心动作,如"登录"、"提交"、"确认"。视觉权重最高,采用胶囊形 + 主色背景。
+主操作按钮用于触发页面核心动作,如"登录"、"提交"、"确认"。视觉权重最高,采用胶囊形 + 主色背景。基础形态(胶囊 + 主色 + token)见 [component.md](component.md) 最小示例,本场景只列增量差异:**全宽 + 固定高 48vp + 落地业务回调**。
 
 ```arkts
 @Entry
@@ -12,6 +12,7 @@
 struct PrimaryButtonPage {
   build() {
     Column() {
+      // 与 component.md 最小示例的差异:type 显式 Capsule、width 拉满、height 定 48vp、onClick 换业务逻辑
       Button('登录')
         .type(ButtonType.Capsule)
         .fontSize({font-size-md})
@@ -149,7 +150,7 @@ struct ButtonGroupPage {
 ## 注意事项
 
 1. **避免硬编码颜色** — 所有颜色值必须通过 design token 引用(如 `{color-button-primary-bg}`),便于主题切换与暗色模式适配。
-2. **触控区域** — 按钮高度建议 ≥ 44vp,保证触控体验;圆形按钮尺寸建议 ≥ 48vp。
+2. **触控区域** — 按钮热区 ≥44vp(不足时外层补 padding);圆形按钮热区 ≥48vp。
 3. **禁用态语义** — 不要用改变颜色模拟禁用,必须使用 `enabled(false)` 属性,框架会自动应用 `{opacity-disabled}` 与无障碍语义。
 4. **type 与 borderRadius 冲突** — `ButtonType.Capsule` 与 `ButtonType.Circle` 会忽略 `borderRadius` 设置;只有 `Normal` 类型支持自定义圆角。
 5. **stateEffect** — 默认开启按压态视觉反馈;若自定义按压态样式,可设为 `false` 后用 `stateStyles` 控制。

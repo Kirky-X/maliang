@@ -59,5 +59,4 @@ struct TagDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(本组件为组合方案)
-- 相关组件:[`badge`](../badge/component.md)
 - Badge 组件见通用属性文档

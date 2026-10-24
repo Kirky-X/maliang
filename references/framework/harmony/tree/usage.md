@@ -1,8 +1,8 @@
-# Tree Usage Scenarios and Examples
+# Tree 使用场景与示例
 
-> ArkTS does not have a native Tree component. This file provides a combined implementation solution based on List recursion. All colors, spacing, and border-radius are referenced via design tokens.
+> ArkTS 无原生 Tree 组件。本文件提供基于 List 递归的组合实现方案。所有颜色、间距、圆角通过 design token 引用。
 
-## Scenario 1: File Directory Tree
+## 场景 1:文件目录树
 
 ```arkts
 interface TreeNode { name: string; children?: TreeNode[]; isLeaf?: boolean }
@@ -63,7 +63,7 @@ struct FileTreePage {
 }
 ```
 
-## Scenario 2: Organization Chart Tree (with Selection)
+## 场景 2:组织架构树(带选择)
 
 ```arkts
 @Component
@@ -96,11 +96,11 @@ struct OrgTreeItem {
 }
 ```
 
-## Notes
+## 注意事项
 
-1. **@Prop is one-way** — tree nodes use `@Prop` to pass data, avoid child components modifying parent data; expand state uses child component `@State`.
-2. **Recursive @Component** — tree node component self-references to render children; ArkTS supports component recursion.
-3. **Large data uses flattening** — deep hierarchy/multi-node recursion may cause stack overflow; flattened array (with parentId/level) rendering is more stable.
-4. **Lazy load child nodes** — when node children are loaded asynchronously, trigger request on expand, update `@State` after loading.
-5. **Indentation uses margin left** — `padding({ left: level * 20 })` expresses hierarchy; avoid using nested Column to increase depth.
-6. **Parent-child linkage** — parent check linking to children requires manual traversal logic; complex scenarios recommend flattening + Map management.
+1. **@Prop 单向** — 树节点用 `@Prop` 传递数据,避免子组件修改父组件数据;展开状态用子组件 `@State`。
+2. **递归 @Component** — 树节点组件自引用渲染子节点;ArkTS 支持组件递归。
+3. **大数据量用扁平化** — 层级深/节点多时递归可能栈溢出;用扁平数组(含 parentId/level)渲染更稳定。
+4. **懒加载子节点** — 节点 children 异步加载时,展开时触发请求,加载完成后再更新 `@State`。
+5. **缩进用 margin left** — 用 `padding({ left: level * 20 })` 表达层级;避免用嵌套 Column 增加深度。
+6. **父子联动** — 父选中联动子节点需手动遍历逻辑;复杂场景建议扁平化 + Map 管理。

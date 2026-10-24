@@ -57,5 +57,4 @@ struct CollapseDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(本组件为 maliang 组合方案)
-- 相关组件:[`list`](../list/component.md) / [`animation`](../animation/component.md)
 - 创建列表 (List): https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-layout-development-create-list

@@ -86,4 +86,4 @@ struct PickerPage {
 2. **选项量级** — 3-10 项用 Select;>10 项或需搜索改用组合方案(`TextInput` + `Menu` 列表,对齐 vocabulary `select-searchable`)。
 3. **占位文案** — 未选择时 `value` 用占位文案并配 `color-text-secondary`,选中后切主文本色。
 4. **无障碍** — `Select` 自带展开/收起语义;`accessibilityText` 描述当前选中值。
-5. **触控目标** — 触发器高度 SHOULD ≥44vp(默认约 40vp 时外层补 padding)。
+5. **触控目标** — 触发器热区 ≥44vp(默认约 40vp,外层补 padding)。

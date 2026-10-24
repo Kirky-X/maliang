@@ -55,5 +55,5 @@ struct SkeletonDemo {
 ## 参考链接
 
 - ArkTS 官方文档:无独立章节(本组件为 maliang 组合方案)
-- 相关组件:[`loading`](../loading/component.md) / [`animation`](../animation/component.md)
+- 相关组件:[`animation`](../animation/component.md)
 - 动画概述: https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-animation
