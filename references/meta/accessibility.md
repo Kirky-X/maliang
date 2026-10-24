@@ -138,13 +138,13 @@ Pre-Flight Check 中以下为硬性失败项(见 [`preview.md`](../commands/prev
 ## 8. 韧性文本与紧凑组件
 
 
-| 规则 ID                      | 规则                   | Do                                                                                          | Don't                                              |
-| ---------------------------- | ---------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| heading-line-balance         | 标题换行平衡是渐进增强  | `text-wrap: balance` 仅作增强,失效时自然换行仍可读;跨宽度/字体/语言实测                        | 承诺精确末行;全局不间断空格或硬 `<br>` 强拗断行        |
-| long-token-wrapping          | 长 token 必须可断行     | URL/ID/用户内容用 `overflow-wrap: anywhere`,flex/grid 文本子项允许收缩(`min-width: 0`)         | 对正文 prose 用 `word-break: break-all`              |
-| chip-collection-reflow       | 紧凑标签集合先换行再缩短 | 空间不足先允许换行;`+n` 溢出摘要必须是可操作的披露(可展开看到被藏值)                           | 把所有 chip 硬塞一行裁切;`+n` 只是隐藏值              |
-| cancellable-state-transitions| 动画可被打断且终态正确  | 快速状态切换取消/替换前序微交互,直接设置终态语义并清理副作用                                   | 依赖 animationend/transitionend 保证状态正确(被打断即坏) |
-| number-tabular               | 数据数字用等宽数字      | 表格数字列/价格/计时用 tabular-nums 防列宽抖动                                                | 常规比例数字导致整列微跳                              |
+| 规则 ID                       | 一句话规则                                |
+| ----------------------------- | ----------------------------------------- |
+| heading-line-balance          | 标题换行平衡是渐进增强                     |
+| long-token-wrapping           | 长 token 必须可断行                        |
+| chip-collection-reflow        | 紧凑标签集合先换行再缩短                   |
+| cancellable-state-transitions | 动画可被打断且终态正确(已收录 ux-rules §6) |
+| number-tabular                | 数据数字用等宽数字                         |
 
 ## 9. prefers-contrast: more(增强对比偏好)
 

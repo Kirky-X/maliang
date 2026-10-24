@@ -89,7 +89,7 @@
 
 ### G11 · 模板化版式三件套
 - **违反什么**:三列等高卡片(icon + 标题 + 描述)凑数;卡片套卡片;某侧一条粗彩色边条(含左侧 border 强调)当装饰。
-- **怎么判定**:人工判定 + Squint test(见 [`../commands/preview.md`](../commands/preview.md) 决定性自检)。对应 ai-tells §1 / §3。
+- **怎么判定**:人工判定 + Squint test(见 [`../commands/preview.md`](../commands/preview.md) 决定性自检)。对应 ai-tells §1(彩边条) / §3(盒中盒嵌套) / §9(三列卡片,canonical)。
 - **怎么修**:换成不对称 bento / 纵向叙事 + 单个对比块;层级用留白与排版建立,不靠嵌套盒与色条。
 
 ### G12 · 渐变文字 / 紫蓝粉大面积渐变

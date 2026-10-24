@@ -104,7 +104,7 @@
 - Hero 内主 CTA + 次 CTA 合计 ≤ 2 个
 - 单 CTA:聚焦转化(登录页 / 注册页)
 - 双 CTA:主 + 次(如"免费试用" + "查看演示"),次 CTA 必须视觉降级(ghost / text 风)
-- **禁止** Hero 内出现 3+ CTA(决策瘫痪,见 [`principles.md`](../meta/principles.md) 希克定律应用)
+- **禁止** Hero 内出现 3+ CTA(决策瘫痪,见 [`ux-laws.md`](../meta/ux-laws.md) Hick 定律「每一步少给选项」)
 
 ### H4 · 其他 Hero 硬约束
 

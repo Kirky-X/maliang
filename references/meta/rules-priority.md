@@ -7,7 +7,7 @@
 | 优先级    | 规则类别       | 关键内容(摘要)                                                |
 | --------- | -------------- | --------------------------------------------------------------- |
 | CRITICAL  | Accessibility  | WCAG AA/AAA 对比度、键盘可达、屏幕阅读器、`prefers-*` 偏好       |
-| CRITICAL  | Touch          | 44pt 热区、防误触、手势不与系统冲突                              |
+| CRITICAL  | Touch          | 触控热区(→ ux-rules `touch-target-44` / `web-target-size-24`)、防误触、手势不与系统冲突 |
 | HIGH      | Performance    | LCP<2.5s / INP<200ms / CLS<0.1,只动 transform/opacity           |
 | HIGH      | Style          | 60-30-10、AI Tells 黑名单、单一强调色                            |
 | HIGH      | Layout         | 网格一致性、间距档位、容器宽度差异化                              |
@@ -85,6 +85,6 @@ Need / 正解 / 反解 三列速查小表(定位:生成时速查,非交付门禁
 
 ## 与其他文档的关系
 
-- 各类别规则的**具体内容**分散在专门文档:Accessibility → [`accessibility.md`](./accessibility.md)、Performance → [`performance.md`](./performance.md)、Style → [`ai-tells.md`](./ai-tells.md) + [`color.md`](../dimensions/color.md)、Typography → [`font.md`](../dimensions/font.md)、Animation → [`principles.md`](./principles.md) 第 13 定律
+- 各类别规则的**具体内容**分散在专门文档:Accessibility → [`accessibility.md`](./accessibility.md)、Performance → [`performance.md`](./performance.md)、Style → [`ai-tells.md`](./ai-tells.md) + [`color.md`](../dimensions/color.md)、Typography → [`font.md`](../dimensions/font.md)、Touch → [`ux-rules.md`](./ux-rules.md) `touch-target-44` / `web-target-size-24`、Animation → [`principles.md`](./principles.md) 第 13 定律
 - 本文只管**优先级裁决**,不重复规则内容
 - 优先级表是 closed set,不随意新增类别;新增需同步更新本表与相关 reference 文档

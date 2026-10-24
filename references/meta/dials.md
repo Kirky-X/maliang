@@ -89,7 +89,7 @@
 - Dashboard 风,行高 1.2-1.3
 - 表格 / 列表密度优先,卡片 padding = spacing-sm
 - 多列布局(3-4 列)可接受
-- **适用**:数据后台、监控大屏、交易终端、B 端表单密集页
+- **适用**:数据后台、监控大屏、交易终端、B 端表单密集页(极端数据密集档;一般 SaaS 后台页取 6-8,见下方项目类型表——先按 surface-modes 模式轴判 Operate 还是 Data,再取对应区间)
 
 ## 在 DESIGN.md 中的写法
 
@@ -113,6 +113,8 @@ dials:
 ## 信号 → dial 值推断表
 
 > Phase 0 Brief Inference 阶段,从 6 类信号推断三档推荐值。本表为**起点值**,需结合 [`product-reasoning.md`](./product-reasoning.md) 与 [`design-systems.md`](../dimensions/design-systems.md) 锚点微调,最终由人工 CHECKPOINT 确认。
+>
+> 两轴分工:先按 [`surface-modes.md`](./surface-modes.md) 模式轴取起点(该校准表的「信息密度 dial 建议」行是模式轴的 canonical,如 Persuade 3-5 / Operate 6-9 / Data 7-10),再用本表 6 类信号在区间内微调;两表对同一场景给出不同数值时,以模式轴为档位骨架、信号微调不超过 1 档。
 
 ### 6 类信号识别
 

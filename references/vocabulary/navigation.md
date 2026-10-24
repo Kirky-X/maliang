@@ -66,7 +66,7 @@
 
 - 同一站点导航模式 ≤ 2 种组合(如 `nav-top-bar` + `nav-bottom-tab` 跨端)
 - 主要功能 1 tap 可达(Navigation HIGH 优先级,见 [`rules-priority.md`](../meta/rules-priority.md))
-- 移动端导航项 ≤ 5 个(米勒定律,见 [`principles.md`](../meta/principles.md))
+- 移动端导航项 ≤ 5 个(工程口径见 [`ux-rules.md`](../meta/ux-rules.md) `bottom-nav-limit`,与米勒定律的归因口径无关)
 - 触发 hamburger 时,主功能不可埋深处(≤ 2 级)
 - 命令面板 ⌘K 与 `nav-top-bar` 共存,不替代主导航
 

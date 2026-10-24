@@ -65,6 +65,7 @@
 | number-tabular              | 数据数字用等宽数字             | 表格数字/价格/计时用 tabular-nums 防列宽抖动        | 比例数字导致整列微跳            | 全端 | ADVISORY |
 | truncation-strategy         | 截断必须留全文路径             | ellipsis + tooltip/展开,键盘可达                   | 只在 hover 出 tooltip           | 全端 | WARN     |
 | fixed-width-text            | 文本容器禁固定宽度             | min-width / max-width / match-parent / flex 弹性,留换行与缩放余量 | 给 text 组件写死 `width: Npx`(超长词/emoji/RTL 溢出截断);登记:2026-09 整合审查(validate-draw-md 检查 14 回链) | 全端 | WARN     |
+| cancellable-state-transitions | 动画可被打断且终态正确        | 快速状态切换取消/替换前序微交互,直接设置终态语义并清理副作用   | 依赖 animationend/transitionend 保证状态正确(被打断即坏);登记:2026-10 自 accessibility.md §8 收敛 | 全端 | WARN     |
 
 ## 7. 错误处理
 
@@ -96,7 +97,7 @@
 
 | slug                 | 一句话规则                 | Do(怎么做)                      | Don't(别怎么做)                  | 端            | Severity |
 | -------------------- | -------------------------- | -------------------------------- | --------------------------------- | -------------- | -------- |
-| readable-font-size   | 移动端正文 ≥ 16px          | 16px 起步,支持系统字号缩放       | 12-14px 小字(触发 iOS 聚焦缩放)   | 全端           | ERROR    |
+| readable-font-size   | 移动端正文 ≥ 16px          | 16px 起步,支持系统字号缩放       | 12-14px 小字(触发 iOS 聚焦缩放;输入控件聚焦放大的平台根因与修法见 mobile-floor M7)   | 全端           | ERROR    |
 | horizontal-scroll    | 移动端禁止页面级横向滚动    | 内容自适应视口,宽表局部横滚      | 全页被撑出横向滚动条              | Web            | ERROR    |
 | safe-area-awareness  | 主要操作避开刘海/手势条/边缘 | 用安全区 padding 包住导航与主按钮 | 底部按钮被手势条遮挡              | ArkTS/Flutter  | WARN     |
 | viewport-units       | 移动端全屏高度用 dvh        | min-h-dvh 或兼容浏览器 chrome    | `100vh` 被地址栏裁切              | Web            | WARN     |

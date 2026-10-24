@@ -60,7 +60,7 @@ Grid 轨道默认 `minmax(auto, 1fr)`，`auto` 最小值取内容固有宽度—
 
 ## M7 · 输入控件字号地板 `16px`
 
-`< 16px` 的输入框在真机聚焦时 iOS Safari 会整页强制放大（桌面复现不了，见真机验证表「聚焦缩放」行）。修因不禁果：**不许**用 viewport `maximum-scale=1 / user-scalable=no` 来「修」（永不禁缩放，2026-09 裁决，见 [`../dimensions/h5-frame.md`](../dimensions/h5-frame.md) 视口契约），把字号提到 16px 即根除。
+`< 16px` 的输入框在真机聚焦时 iOS Safari 会整页强制放大（桌面复现不了，见真机验证表「聚焦缩放」行）。修因不禁果：**不许**用 viewport `maximum-scale=1 / user-scalable=no` 来「修」（永不禁缩放，2026-09 裁决，见 [`../dimensions/h5-frame.md`](../dimensions/h5-frame.md) 视口契约），把字号提到 16px 即根除。与 [`ux-rules.md`](./ux-rules.md) `readable-font-size` 分工：彼条管正文可读字号下限，本条管输入控件聚焦放大的平台根因。
 
 ```css
 input, textarea, select { font-size: 16px; }
