@@ -2,6 +2,8 @@
 version: alpha
 name: Illustrative
 description: A warm, story-driven system pairing hand-drawn illustration with vibrant, rounded geometry.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#5C5CE7"
   secondary: "#FF8A56"

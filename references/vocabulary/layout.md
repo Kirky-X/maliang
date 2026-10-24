@@ -69,7 +69,7 @@
 
 ### L3 · Bento 单元数(≤ 6)
 
-- `layout-bento-grid` 单个 bento 区域内单元数 ≤ 6 个
+- `layout-bento-grid` 单个 bento 区域内单元数 ≤ 6 个(canonical;数量口径分工:区段原型 5-8 见 [f1-bento-grid](../components/f1-bento-grid.md),整页墙 ≤10 见 [`../templates/bento-grid.md`](../templates/bento-grid.md))
 - 超过 6 个 = 视觉拥挤,拆为多个 bento 区域(中间用留白或分隔标题断开)
 - 单元大小差异:必须有 1 个"主单元"(≥ 2×2)+ 多个"次单元"(1×1 或 1×2),禁止全等大(否则退化为 `layout-grid-uniform`)
 - 格子数 = 内容条数:3 项内容 → 3 格(1+2 或 2+1 非对称),5 项 → 5 格(hero+4 等);网格中部或尾部出现空格子 = 规划错误,**重塑网格形状,禁止贴空白块凑对称**

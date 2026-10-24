@@ -1,3 +1,17 @@
+---
+name: ai-console
+title: AI 工作台 / Agent 控制台
+category: page-pattern
+status: production
+era: 2026-09
+verified: 2026-09-07
+license: MIT
+variance: "2-4"
+motion: "2-4"
+density: "6-9"
+platforms: Web
+---
+
 # AI 工作台 / Agent 控制台（AI Console）
 
 > 整页模式（page-pattern），叠加在 Operate 模式（[`../../meta/surface-modes.md`](../../meta/surface-modes.md)）之上使用。适用判定：**页面上有"不是用户、而是别的东西在持续干活"**——agent/智能体多步执行、队列、流式输出、中途可失败。纯聊天机器人（无工具/队列/产物）不适用，走普通组件流程；"关于 AI 用量的仪表盘"是 Read 页，也不适用。

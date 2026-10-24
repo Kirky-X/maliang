@@ -17,7 +17,7 @@
 ## 何时用与勿混淆
 
 - **何时用**：受众是技术用户、默认预期这个交互（开发者工具、内部工具）。
-- **勿混淆**：[N13 行内搜索药丸](n13-inline-cmdk-pill.md)（可见的对面形态——新手看得见入口，⌘K 是进阶级）；[N2 浮动角标](n2-floating-chip.md)（永远可见的小块）。
+- **勿混淆**：[N13 行内搜索药丸](n13-inline-cmdk-pill.md)（可见的对面形态——新手看得见入口，⌘K 是进阶级）；[N2 浮动角标](n2-floating-chip.md)（永远可见的小块）。同模式词汇条目：[`nav-command-palette`](../vocabulary/navigation.md)。
 
 ## DOM+CSS 骨架
 

@@ -37,9 +37,9 @@ platforms: <适用平台>
 
 - 不是"参考 Linear 的感觉",而是"偷 Linear 的 510 签名字重与 -1.056px@48px 显示字距","偷 Stripe 的蓝调多层阴影栈 `rgba(50,50,93,0.25) 0px 30px 45px -30px, rgba(0,0,0,0.1) 0px 18px 36px -18px`"
 - 可偷的东西:阴影体系 / 圆角刻度 / 字阶比例 / 字重与字距策略 / hover 位移与过渡方式 / 边框策略 / 用色分配 / 留白节奏
-- **写不出「从谁偷了什么」= 没偷,重来**——这条与 [`../interface-design/craft-discipline.md`](../interface-design/craft-discipline.md)「借鉴数值,不借鉴外观」节互为执行与判据
+- **写不出「从谁偷了什么」= 没偷,重来**——本节是借鉴纪律的**唯一 canonical**;[`../interface-design/craft-discipline.md`](../interface-design/craft-discipline.md) 的「借鉴数值,不借鉴外观」节只留指针与语境,两处冲突以本节为准
 - **只借鉴,不复制品牌外观**:不得整站照搬(与 design-systems.md 的「禁止照搬」同源);品牌识别元素(logo / 吉祥物 / 专属字形 / 标志性插画)不偷——它们不是值,是身份
-- 偷来的值进入本项目时仍须回 design-md 走 token 与溯源通道(补决策 id 或 `no-decision`),不绕过设计系统
+- 偷来的值进入本项目时仍须回 design-md 走 token 与溯源通道(补决策 id 或 `no-decision`),不绕过设计系统;与既有 DESIGN.md token 冲突时 **DESIGN.md wins**(单一真源)——donors 只补系统尚未做出的决定
 
 ## 4. 首批供体索引
 

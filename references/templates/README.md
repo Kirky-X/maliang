@@ -15,6 +15,7 @@ status: production             # production(生产级) | style(风格级) | expe
 source: <官方来源/出处项目>      # 必须可溯源；禁止"网上看到的"
 era: <年份/版本>
 verified: <YYYY-MM-DD>         # 最后人工核验日期；超 365 天须复核或降级
+license: <MIT | CC-BY | 自著 | 未考(上游待核)>  # 许可;外部扩充项必填,未考的不得默示为可自由分发
 variance: "3-8"                # dials VARIANCE 适配区间
 motion: "2-7"                  # dials MOTION 适配区间
 density: "2-8"                 # dials DENSITY 适配区间
@@ -22,7 +23,7 @@ platforms: <适用平台>
 ---
 ```
 
-正文 9 节（顺序固定）：**一句话定位 → 视觉特征（token 级参数）→ 结构骨架 → 签名动作（带配额）→ 适用场景/慎用场景 → AI 常见翻车点（反模式）→ 共享尾件轮换表 + 非色彩杠杆 → CSS 关键实现（≤15 行）→ 出处链接**。风格级模板须在"AI 常见翻车点"节显式列出绝对负面约束（禁用元素/配色/组合）。category 级合集文件（landing-patterns / character-directions 等）不受单模板正文契约约束，遵循其自身章节结构。出处链接中的 `temp/...` 路径（视频研究/参考项目）以**仓库根**为基准指路，不作 markdown 相对链接解析。
+正文 9 节（顺序固定）：**一句话定位 → 视觉特征（token 级参数）→ 结构骨架 → 签名动作（带配额）→ 适用场景/慎用场景 → AI 常见翻车点（反模式）→ 共享尾件轮换表 + 非色彩杠杆 → CSS 关键实现（≤15 行）→ 出处链接**。风格级模板须在"AI 常见翻车点"节显式列出绝对负面约束（禁用元素/配色/组合）。category 级合集文件（landing-patterns / character-directions）与流程文档 variation-engine 不受单模板正文契约约束，遵循其自身章节结构。出处链接中的 `temp/...` 路径（视频研究/参考项目）以**仓库根**为基准指路，不作 markdown 相对链接解析。
 
 两处主题级深化节（#16，源自 设计基准库 hum.md 机制，2026-10 扩充）：
 

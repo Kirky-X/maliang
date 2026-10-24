@@ -2,6 +2,8 @@
 version: alpha
 name: Swiss Style
 description: A grid-driven, typographically rational system with a single signal red for interaction.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#E30613"
   ink: "#000000"

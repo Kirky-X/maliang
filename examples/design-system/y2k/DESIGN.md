@@ -2,6 +2,8 @@
 version: alpha
 name: Y2K
 description: Millennial futurism with neon gradients, metallic glassmorphism, and high-saturation chrome.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#7A00FF"
   secondary: "#00F0FF"

@@ -9,6 +9,7 @@ motion: 1-3          # dials MOTION 适配区间
 density: 2-4          # dials DENSITY 适配区间
 platforms: 概念 / 小部件
 verified: 2026-09-07
+license: 未考(上游待核)
 ---
 # 新拟物（Neumorphism / Soft UI）
 

@@ -2,6 +2,8 @@
 version: alpha
 name: Skeuomorphism
 description: A tactile interface that borrows real-world materials — leather, paper, wood, glass — to make digital affordances feel familiar and trustworthy.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#2E1E15"
   secondary: "#8B6B4D"

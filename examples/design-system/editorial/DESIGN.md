@@ -2,6 +2,8 @@
 version: alpha
 name: Editorial
 description: Magazine-grade typographic storytelling with generous white space and a single warm gold accent.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#000000"
   secondary: "#333333"

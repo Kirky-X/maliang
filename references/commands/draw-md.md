@@ -92,7 +92,7 @@ pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(�
 
 > 布局类型选用与嵌套规则见 [`layout.md`](../dimensions/layout.md)。
 >
-> **区段形态选型(每个章节挑一个原型)**:先从 [`../components/INDEX.md`](../components/INDEX.md)(51 个区段原型)挑名——**从索引挑名、只加载选中的那几个**,典型一次构建 5-7 个文件(1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航),**不整库加载**;选中的原型按它自己的「变体旋钮」行逐旋钮取值,取值写进 build-log。**分工**:区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)仍在 [`../vocabulary/`](../vocabulary/),组件类型 slug 仍在 [`../framework/index.md`](../framework/index.md) 的 56 类里;同一原型第二次出现必须换至少一个旋钮(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
+> **区段形态选型(每个章节挑一个原型)**:先从 [`../components/INDEX.md`](../components/INDEX.md)(51 个区段原型)挑名——**从索引挑名、只加载选中的那几个**,典型一次构建 5-7 个文件(1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航),**不整库加载**;选中的原型按它自己的「变体旋钮」行逐旋钮取值,取值写进 build-log。**分工**:区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)与模式级命名词汇(含 nav-* 导航、layout-* 布局等结构条目)都在 [`../vocabulary/`](../vocabulary/),组件类型 slug 仍在 [`../framework/index.md`](../framework/index.md) 的 56 类里;同一原型第二次出现必须换至少一个旋钮(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
 
 ### 组件意图头(新增组件的参数表节前 MUST 附)
 
@@ -191,9 +191,9 @@ pattern: [chart-line, table-sortable]
 2. 用户明确要求"全量产出"/"补齐默认页面"。
 
 **步骤行为**:
-1. 读取 [`../default-pages/index.md`](../default-pages/index.md),根据端型展示默认页面清单:
-   - App 端项目 → 引用 [`app.md`](../default-pages/app.md)(15 页:home/discover/messages/mine/login/signup/forgot-password/settings/about/privacy/terms/feedback/empty-state/network-error/not-found)
-   - Web 端项目 → 引用 [`web.md`](../default-pages/web.md)(15 页:home/about/contact/login/signup/forgot-password/verify-email/dashboard/settings/profile/not-found/server-error/forbidden/privacy/terms)
+1. 读取 [`../default-pages/index.md`](../default-pages/index.md),根据端型展示默认页面清单(slug 花名册以平台文件为唯一源,本步骤不内联清单,防三处同步漂移):
+   - App 端项目 → 引用 [`app.md`](../default-pages/app.md)(15 页花名册见该文件主表)
+   - Web 端项目 → 引用 [`web.md`](../default-pages/web.md)(15 页花名册见该文件主表)
    - 跨端项目 → 两端清单各自适用,共享 design token 保证视觉一致
 2. 标注优先级:
    - **P0(必备,不可删)**:App 4 页(home/mine/login/settings);Web 4 页(home/login/dashboard/settings)

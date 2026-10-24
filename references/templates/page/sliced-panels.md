@@ -5,6 +5,7 @@ category: page-pattern
 status: style
 era: 2026
 verified: 2026-09-07
+license: 自著
 variance: "4-7"
 motion: "3-6"
 density: "2-5"

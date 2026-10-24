@@ -2,6 +2,8 @@
 version: alpha
 name: Brutalism
 description: High-contrast, raw-material functionalism with forceful typography for data-dense and industrial interfaces.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#00F5C3"
   secondary: "#007BFF"

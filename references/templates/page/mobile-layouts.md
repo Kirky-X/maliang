@@ -5,6 +5,7 @@ category: page-pattern
 status: production
 era: 2026
 verified: 2026-09-07
+license: 自著
 variance: "3-7"
 motion: "1-3"
 density: "2-6"

@@ -9,6 +9,7 @@ motion: 5-9          # dials MOTION 适配区间
 density: 3-7          # dials DENSITY 适配区间
 platforms: Android / 跨端 Web
 verified: 2026-09-07
+license: 未考(上游待核)
 ---
 # M3 富表现力（Material 3 Expressive）
 

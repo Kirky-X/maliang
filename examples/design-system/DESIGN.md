@@ -2,6 +2,8 @@
 version: alpha
 name: Minimalism
 description: 瑞士国际主义平面设计的数字延续——网格先行、留白即层级、单一蓝色强调色驱动所有交互。
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#212121"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
   secondary: "#9D9D9D"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
@@ -112,7 +114,7 @@ Maliang Minimalism 是瑞士国际主义平面设计（International Typographic
 
 ## Layout
 
-布局基于 **12 列网格**，8px 基准单位。间距阶梯 4/8/12/16/24/32/48/64 全部是 4 的倍数，保证任何组合都能对齐到同一套节拍。
+布局基于 **12 列网格**，8px 基准单位。间距阶梯 4/8/16/32/64（见 frontmatter `spacing`：xs/sm/md/lg/xl）全部对齐 8px 节拍，保证任何组合都能对齐到同一套网格。
 
 容器最大宽度 1200px 居中，避免宽屏下阅读行宽失控。卡片内边距统一 24px（`gutter`）。章节之间用 `xl`（64px）留白建立呼吸感——留白在这里就是层级，不是"空"；信息密度的高低不靠卡片堆叠传达，靠间距节奏传达。
 

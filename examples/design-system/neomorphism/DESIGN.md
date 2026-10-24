@@ -2,6 +2,8 @@
 version: alpha
 name: Neomorphism
 description: A soft, extruded UI style using dual-direction light and shadow on a monochromatic canvas for a tactile, futuristic feel.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#6B7280"
   accent: "#7A87BA"
@@ -151,9 +153,9 @@ Depth is the defining feature of Neomorphism. Instead of drop shadows, elements 
 **dual shadows** — a light shadow top-left and a dark shadow bottom-right — to appear
 extruded from (or pressed into) the shared `surface`/`background` canvas.
 
-- **Raised (default):** `box-shadow: 6px 6px 12px #BEBEC1, -6px -6px 12px #FFFFFF;` — the
-  element appears to rise from the surface.
-- **Pressed/inset:** `box-shadow: inset 6px 6px 12px #BEBEC1, inset -6px -6px 12px #FFFFFF;`
+- **Raised (default):** `box-shadow: -9px -9px 16px #FFFFFF, 9px 9px 16px rgba(163,177,198,.6);` — the
+  element appears to rise from the surface. (Canonical recipe: [`references/templates/neumorphism.md`](../../../references/templates/neumorphism.md) — offset 8-10px, blur ≈ 2×offset, light top-left / dark bottom-right at 135°.)
+- **Pressed/inset:** `box-shadow: inset -9px -9px 16px #FFFFFF, inset 9px 9px 16px rgba(163,177,198,.6);`
   — the element appears pressed in. Used for active toggles, pressed buttons, and selected
   inputs.
 - **Flat:** No shadow — for disabled or informational surfaces.

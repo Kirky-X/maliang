@@ -2,6 +2,8 @@
 version: alpha
 name: Heritage
 description: An editorial product with architectural minimalism and journalistic gravitas.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#1A1C1E"
   secondary: "#6C7278"

@@ -9,6 +9,7 @@ motion: 2-6          # dials MOTION 适配区间
 density: 3-8          # dials DENSITY 适配区间
 platforms: 全平台（可与任意模板叠加）
 verified: 2026-09-07
+license: 未考(上游待核)
 ---
 # OLED 暗色模式（Dark OLED）
 

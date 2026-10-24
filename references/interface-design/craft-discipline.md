@@ -9,6 +9,7 @@ description: Craft-first interface design for dashboards, admin panels, SaaS app
 
 Build product interfaces with the craft of a top design team — Linear, Vercel, Stripe, Apple. The difference between those and generic output is not talent. It is that every decision was *decided*, the hierarchy is unmistakable, and a hundred small details are correct at once. This skill is how you get there.
 
+
 ## Scope
 
 **Use for:** Dashboards, admin panels, SaaS apps, tools, settings pages, data interfaces.
@@ -156,15 +157,9 @@ Every product exists in a world, and that world has colors. Before reaching for 
 ---
 
 
-> Source: 规则库 craft-loop "steal before you build" (absorbed 2026-10; the value library lives in [`../donors/`](../donors/README.md)). Run this before writing code; it sits alongside "Render It When You Can" — one governs what to look at before building, the other what to steal before building.
+> Source: 规则库 craft-loop "steal before you build" (absorbed 2026-10; the value library lives in [`../donors/`](../donors/README.md)). **The canonical steal-discipline text is [`../donors/README.md`](../donors/README.md) §3** — the two texts had drifted, so this section now carries only the pointer; on any conflict donors/README.md §3 wins. Run it before writing code; it sits alongside "Render It When You Can" — one governs what to look at before building, the other what to steal before building.
 
-Once the direction is set and before writing the first component, pick **1-2 donor sites** from [`../donors/`](../donors/README.md) whose character is closest, and extract **3-5 concrete values or moves** into the design plan:
-
-- **借鉴数值,不借鉴外观**: "reference Linear's feel" is not stealing; "Linear's signature 510 weight + `-1.056px @ 48px` display tracking + a `rgba(255,255,255,0.08)` hairline border" is — values can be checked, vibes cannot.
-- **What is fair game**: shadow stacks / radius scale / type-scale ratios / weight and tracking strategy / hover offset and transition / border strategy / color allocation / spacing rhythm.
-- **State "stole X from {site}" line by line; cannot write it out = you did not steal, start over.** This is the only test for this rule; "internalized it" answers do not count.
-- **借鉴数值,不借鉴外观**: do not clone a whole site; brand-identifying elements (logo / mascot / proprietary letterforms / signature illustration) are identity, not values — do not steal them.
-- **Stolen values still go through the token pipeline**: back-fill a decision id or `no-decision` in design-md when they enter the project; never wire a donor value straight into the output. On conflict with existing DESIGN.md tokens, DESIGN.md wins (single source of truth); donors only fill decisions the system has not made yet.
+Once the direction is set and before writing the first component, pick **1-2 donor sites** from [`../donors/`](../donors/README.md) whose character is closest, and extract **3-5 concrete values or moves** into the design plan — then state "stole X from {site}" line by line. The full rule (steal values not vibes, the fair-game list, brand-identity exclusions, and the DESIGN.md-wins conflict clause) lives in donors/README.md §3.
 
 # Before Writing Each Component
 
@@ -228,8 +223,8 @@ A hundred small details compound into "feels great." These are the highest-lever
 - **Tabular numbers.** Any dynamic number (counters, prices, timers, table columns) gets `font-variant-numeric: tabular-nums` to prevent layout shift.
 - **Optical alignment.** When geometric centering looks off, fix it optically — icon-side padding ≈ text-side − 2px; nudge play triangles ~2px right.
 - **States are not optional.** Every interactive element needs default, hover, active, focus, disabled. Data needs loading, empty, error. Missing states feel broken — they're the fastest tell of an unfinished interface.
-- **Hit areas — 44×44px (WCAG), 40 at minimum.** If the visible control is smaller (a 20px checkbox), extend with a pseudo-element. Never let two hit areas overlap.
-- **Shadows over borders for elevation.** For cards/buttons/containers that lift, prefer a layered transparent `box-shadow` (it adapts to any background); keep real borders for dividers and input outlines. Light-mode lift stacks three layers — a 1px ring + two soft depths, e.g. `0 0 0 1px rgba(0,0,0,.06), 0 1px 2px -1px rgba(0,0,0,.06), 0 2px 4px rgba(0,0,0,.04)`; dark mode collapses to a single ring `0 0 0 1px rgba(255,255,255,.08)` (depth shadows don't read on dark).
+- **Hit areas — 44×44px recommended; Web hard floor is 24×24 CSS px** (values canonical in [`../meta/accessibility.md`](../meta/accessibility.md)). If the visible control is smaller (a 20px checkbox), extend with a pseudo-element. Never let two hit areas overlap.
+- **Shadows over borders for elevation.** For cards/buttons/containers that lift, prefer a layered transparent `box-shadow` (it adapts to any background); keep real borders for dividers and input outlines. Light-mode lift stacks three layers — a 1px ring + two soft depths; exact ring/blur/opacity values are canonical in [`../dimensions/elevation.md`](../dimensions/elevation.md) (do not copy numbers from here). Dark mode collapses to a single ring (value likewise per elevation.md — depth shadows don't read on dark).
 - **Text wrapping.** `text-wrap: balance` on headings; `text-wrap: pretty` on body/captions to kill orphans.
 - **Font smoothing.** `-webkit-font-smoothing: antialiased` on the root (macOS renders heavy otherwise).
 - **Image outlines.** 1px inset outline, pure `rgba(0,0,0,0.1)` light / `rgba(255,255,255,0.1)` dark — never a tinted near-black/white (reads as dirt on the edge).
@@ -239,7 +234,7 @@ A hundred small details compound into "feels great." These are the highest-lever
 Motion should be felt, not watched. Fast, purposeful, and *never* in the way.
 
 - **Should it animate at all?** Actions repeated 100+×/day (keyboard shortcuts, command palette) get **no** animation — it makes them feel slow. Occasional surfaces (modals, drawers, toasts) get standard animation. Rare/first-run moments can add delight.
-- **Duration < 300ms** for UI. Button press 100–160ms; tooltips/popovers 125–200ms; dropdowns 150–250ms; modals/drawers 200–500ms. A 180ms dropdown feels more responsive than a 400ms one.
+- **Duration < 300ms** for UI. Button press 100–160ms; tooltips/popovers 125–200ms; dropdowns 150–250ms; modals/drawers 200–400ms (duration budget canonical in [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)). A 180ms dropdown feels more responsive than a 400ms one.
 - **Custom ease-out, never ease-in.** Built-in curves are too weak. Use `cubic-bezier(0.23, 1, 0.32, 1)` for entering/interactive; ease-in-out (`cubic-bezier(0.77, 0, 0.175, 1)`) for on-screen movement. `ease-in` delays the first frame — the moment the user is watching — and feels sluggish.
 - **Press feedback.** `transform: scale(0.97)` on `:active` (never below 0.95). Tactile confirmation the UI heard the click.
 - **Never animate from `scale(0)`.** Nothing appears from nothing — start at `scale(0.95)` + `opacity: 0`.

@@ -7,7 +7,7 @@
 >
 > **本清单不豁免编号门禁**:本清单是「全量机械检查」(该项过没过),[`../meta/numbered-gates.md`](../meta/numbered-gates.md) 是「否决门」(这种形态不许交)。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。门禁在本清单全过之后、第 6 节 Pre-Delivery Checklist 之前逐条过,执行纪律见 [`preview.md`](./preview.md) 第 5 节「编号门禁」。
 >
-> **脚本覆盖**:51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行;
+> **脚本覆盖**:51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理、5.6 孤儿类选择器与未定义 var);
 > 3 项由本批门禁脚本覆盖(5.0 参考图 ΔE 保真 → `verify-color-fidelity.py`、5.14 资产位在场 → `verify-assets.py`、
 > 5.1 句型级反模板 → `check-copy.py`);其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
 > 可由页面内探针([`scripts/preview-lint.js`](../../scripts/preview-lint.js),注入预览临时副本、只读取证)
@@ -147,7 +147,7 @@
 
 ## 5.10 · 排版细节(7 项,见 [`hero.md`](../vocabulary/hero.md) + [`layout.md`](../vocabulary/layout.md))
 - [ ] **em-dash 中文场景放宽**:中文正文用 `——`(全角破折号),英文用 `—`(em-dash);**禁止**中文场景用 `--` 或 `-` 凑数;列表项符号用 `-` 不受此限
-- [ ] **eyebrow 计数 ≤ 1**:每页 eyebrow(标题上方小标签)≤ 1 个,Hero 用了则后续 section 禁用(见 [`hero.md`](../vocabulary/hero.md) H2)
+- [ ] **eyebrow 计数 ≤ 1**:每页 eyebrow(标题上方小标签)≤ 1 个,Hero 用了则后续 section 禁用(见 [`hero.md`](../vocabulary/hero.md) HR2)
 - [ ] Hero 标题字数 ≤ 12 中文 / ≤ 7 英文词
 - [ ] Hero 副标题字数 ≤ 30 中文 / ≤ 18 英文词
 - [ ] 中英文混排含空格(中英之间 1 空格,如"使用 React 框架")
@@ -170,7 +170,7 @@
 - [ ] `hero-fullscreen` 用 `min-height: 100svh`(非 `100vh`,移动端地址栏抖动)
 - [ ] Hero 背景图移动端有 `<picture>` + `srcset` 断点(非仅 desktop 图缩放)
 - [ ] Hero 视频含 `poster` fallback + `autoplay muted loop playsinline`
-- [ ] Hero CTA ≤ 2 个(见 [`hero.md`](../vocabulary/hero.md) H3)
+- [ ] Hero CTA ≤ 2 个(见 [`hero.md`](../vocabulary/hero.md) HR3)
 
 ## 5.13 · Core Web Vitals(5 项)
 

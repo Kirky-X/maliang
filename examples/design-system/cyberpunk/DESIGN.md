@@ -2,6 +2,8 @@
 version: alpha
 name: Cyberpunk
 description: A dark, neon-lit interface where data takes visual form through glowing cyan, purple, and magenta on deep blue-black surfaces.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#00F0FF"
   secondary: "#1D7AFE"

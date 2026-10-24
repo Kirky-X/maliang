@@ -9,6 +9,7 @@ motion: 2-6          # dials MOTION 适配区间
 density: 3-7          # dials DENSITY 适配区间
 platforms: 全平台（Web 官网为主）
 verified: 2026-09-07
+license: 未考(上游待核)
 ---
 # 便当盒网格（Bento Grid）
 
@@ -33,7 +34,7 @@ verified: 2026-09-07
 
 ## 适用场景 / 慎用场景
 - 适用：产品官网 hero、作品集首页、发布页 changelog、功能矩阵总览
-- 慎用：长文阅读页；层级复杂的后台表单流；单墙超过 10 格（信息过载）
+- 慎用：长文阅读页；层级复杂的后台表单流；单墙超过 10 格（信息过载）。数量口径分工：单个 bento 区域 ≤ 6 见 [`../vocabulary/layout.md`](../vocabulary/layout.md) L3（canonical），区段原型 5-8 见 [`../components/f1-bento-grid.md`](../components/f1-bento-grid.md)，本条管整页墙。
 
 ## AI 常见翻车点（反模式）
 1. 每格面积与信息重量相同——Bento 的灵魂是大小对比（至少 2:1 面积差）

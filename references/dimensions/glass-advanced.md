@@ -216,13 +216,13 @@ Vue 版基于 React 版改编,额外提供 **effect 枚举**(shader 模式下的
 
 | 浏览器               | SVG 引擎(`feDisplacementMap`) | WebGL 引擎(Three.js shader) | 基础配方(`backdrop-filter`) |
 | -------------------- | ------------------------------ | ---------------------------- | ---------------------------- |
-| Chrome / Edge 76+    | ✅ 完全支持                    | ✅ 完全支持                  | ✅ 完全支持                  |
-| Firefox 103+         | ❌ `feImage` dataURL 受限      | ✅ 支持                      | ✅ 支持(需 flag 历史)       |
-| Safari 9+            | ❌ `feDisplacementMap` 失效    | ✅ 支持                      | ⚠️ 需 `-webkit-` 前缀         |
-| Samsung Internet     | ⚠️ 部分支持                    | ✅ 支持                      | ✅ 支持                      |
-| 老 IE / 老 Android   | ❌                             | ❌                           | ❌ 降级为静态 `rgba()`        |
+| Chrome / Edge 76+    | ✅ 完全支持                    | ✅ 完全支持                  | 同 [`glass-effect.md`](./glass-effect.md) §9 |
+| Firefox 103+         | ❌ `feImage` dataURL 受限      | ✅ 支持                      | 同 [`glass-effect.md`](./glass-effect.md) §9 |
+| Safari 9+            | ❌ `feDisplacementMap` 失效    | ✅ 支持                      | 同 [`glass-effect.md`](./glass-effect.md) §9 |
+| Samsung Internet     | ⚠️ 部分支持                    | ✅ 支持                      | 同 [`glass-effect.md`](./glass-effect.md) §9 |
+| 老 IE / 老 Android   | ❌                             | ❌                           | 同 [`glass-effect.md`](./glass-effect.md) §9 |
 
-**降级链**:SVG 引擎 → WebGL 引擎 → 基础配方(`backdrop-filter: blur + saturate`)→ 静态 `rgba()` 背景。
+**降级链**:SVG 引擎 → WebGL 引擎 → 基础配方(`backdrop-filter: blur + saturate`)→ 静态 `rgba()` 背景。基础配方在各浏览器的支持细节与 Firefox/Safari 差异,**唯一 canonical 见 [`glass-effect.md`](./glass-effect.md) §9 浏览器兼容**,本表不复述(防止两侧表述漂移)。
 
 ---
 
@@ -241,7 +241,7 @@ Vue 版基于 React 版改编,额外提供 **effect 枚举**(shader 模式下的
 
 ### 共享规则(基础与进阶一致)
 
-- **性能预算**:单页玻璃元素 ≤ 3 个(基础配方同),blur ≤ 30px,面积 ≤ 50% 视口
+- **性能预算**:以 [`glass-effect.md`](./glass-effect.md) §8 为唯一 canonical(单页玻璃元素 ≤ 3、blur 上限、面积上限等全量条目见彼处),本节不逐条复述,防预算漂移
 - **无障碍降级**:`prefers-reduced-transparency: reduce` → 退回静态不透明;`prefers-reduced-motion: reduce` → 关闭 shader 动画
 - **禁止场景**:大面积全屏玻璃、信息密集表格背景、> 3 层嵌套(均同基础配方)
 - **暗色模式**:tint 切深色,specular 降低,见 [`color.md`](./color.md) 第 5 节

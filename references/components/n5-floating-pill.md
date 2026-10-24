@@ -17,7 +17,7 @@
 ## 何时用与勿混淆
 
 - **何时用**：modern-minimal / 氛围型页面，且药丸下方有可透过模糊看见的 distinct 表面或图像——blur 没东西可糊就失去意义。
-- **勿混淆**：[N1 字标双链](n1-wordmark-2-links.md)（通栏）；[N2 浮动角标](n2-floating-chip.md)（角落锚定、单动作）；[N10 滚动形变浮窗](n10-floating-on-scroll-morph.md)（N5 + 落地栏态，含滚动行为）。
+- **勿混淆**：[N1 字标双链](n1-wordmark-2-links.md)（通栏）；[N2 浮动角标](n2-floating-chip.md)（角落锚定、单动作）；[N10 滚动形变浮窗](n10-floating-on-scroll-morph.md)（N5 + 落地栏态，含滚动行为）。同模式词汇条目：[`nav-floating-pill`](../vocabulary/navigation.md)。
 
 ## DOM+CSS 骨架
 

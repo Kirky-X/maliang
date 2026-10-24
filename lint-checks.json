@@ -56,6 +56,23 @@
       "severity": "FAIL"
     },
     {
+      "name": "neumorphism 阴影配方正本",
+      "type": "require-pattern",
+      "file": "references/templates/neumorphism.md",
+      "pattern": "9px 9px 16px rgba\\(163,177,198,\\.6\\)",
+      "min_count": 1,
+      "severity": "FAIL"
+    },
+    {
+      "name": "范例不得自带与模板冲突的阴影值",
+      "type": "forbid-pattern",
+      "files": [
+        "examples/design-system/neomorphism/DESIGN.md"
+      ],
+      "pattern": "BEBEC1",
+      "severity": "FAIL"
+    },
+    {
       "name": "
       "type": "forbid-pattern",
       "files": [

@@ -123,6 +123,7 @@ maliang/
 | 规则 / 机制 | canonical 文档 |
 | --- | --- |
 | 设计语言计数（模板墙） | `references/templates/INDEX.md` |
+| 设计语言 token 配方（阴影/圆角等值级参数） | `references/templates/`（各语言模板文件；`examples/design-system/` 范例引用模板配方，不自持一套值） |
 | 编号门禁 G01–G45 | `references/meta/numbered-gates.md` |
 | 143 项 Pre-Flight 清单与计数 | `references/commands/preview-checklist.md`（脚本侧计数由 `tests/test_doc_consistency.py` 断言守护） |
 | 退出码三态语义 | `scripts/EXIT-CODES.md` |

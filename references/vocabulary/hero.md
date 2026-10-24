@@ -68,7 +68,7 @@
 
 > 本文件的模式名管**Hero 的形态与硬约束**;Hero **区段原型**在 [`../components/INDEX.md`](../components/INDEX.md) 的「Hero(9 个)」组挑名——**从索引挑名、只加载选中的那几个**。
 
-- **编号消歧**:本文件「生产级硬规则」里的 H1–H4 是 **Hero 硬约束条目**;`components/INDEX.md` 的 H1–H9 是 **hero 区段原型**——两套编号语境不同,引用时以文件为准。
+- **编号消歧**:本文件「生产级硬规则」里的 HR1–HR4 是 **Hero 硬约束条目**;`components/INDEX.md` 的 H1–H9 是 **hero 区段原型**——两套编号语境不同,引用时以文件为准。
 - **旋钮词表随原型定义走**(每个原型的「变体旋钮」行:2-3 个二阶变化位,如列数与跨度比例 / 密度档 / 描边与容器 / 强调部署 / 编号与连接件样式这类);原型未带旋钮定义时,自定 2-3 个并在盖章里写明。
 - **同一 Hero 原型第二次出现必须换至少一个旋钮并声明取值**,取值写进 build-log;跨项目的系列产出里,相邻两次构建落同一 Hero 原型即违规,须换原型(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
 - **分工**:本文件管「Hero 元素禁什么 + 骨架怎么排 + 硬约束」,`components/INDEX.md` 管「这个 Hero 原型长成什么样」,旋钮管「同一原型内的二阶变化」——三者互补,不互相替代。
@@ -87,26 +87,26 @@
 
 > 交付前机械检查,任一违反 = 硬性失败,不可降级为 warning。补充 [`ai-tells.md`](../meta/ai-tells.md) 与 [`principles.md`](../meta/principles.md) 未覆盖的 Hero 专属约束。
 
-### H1 · Hero 栈 ≤ 4
+### HR1 · Hero 栈 ≤ 4
 
 - Hero 区域纵向元素栈 ≤ 4 层(典型:eyebrow → headline → subhead → CTA)
 - 超过 4 层视为信息过载,必须拆分到下方 section
 - 允许的 4 层组合:eyebrow + headline + subhead + CTA / headline + subhead + CTA + 次要链接 / logo + headline + CTA + 信任标识
 
-### H2 · Eyebrow 节制(每页 ≤ 1)
+### HR2 · Eyebrow 节制(每页 ≤ 1)
 
 - Eyebrow(标题上方的小标签文字,如 "NEW" / "FEATURE")每页 ≤ 1 个
 - Hero 内用了 eyebrow,后续 section 标题**禁止**再用 eyebrow(改用纯标题或 section number)
 - 违反 = 多 eyebrow 稀释焦点,触发 [`ai-tells.md`](../meta/ai-tells.md) "通用感"
 
-### H3 · Hero CTA ≤ 2
+### HR3 · Hero CTA ≤ 2
 
 - Hero 内主 CTA + 次 CTA 合计 ≤ 2 个
 - 单 CTA:聚焦转化(登录页 / 注册页)
 - 双 CTA:主 + 次(如"免费试用" + "查看演示"),次 CTA 必须视觉降级(ghost / text 风)
 - **禁止** Hero 内出现 3+ CTA(决策瘫痪,见 [`ux-laws.md`](../meta/ux-laws.md) Hick 定律「每一步少给选项」)
 
-### H4 · 其他 Hero 硬约束
+### HR4 · 其他 Hero 硬约束
 
 - Hero 标题字数 ≤ 12 个中文 / ≤ 7 个英文词(超长拆副标题)
 - Hero 副标题字数 ≤ 30 个中文 / ≤ 18 个英文词

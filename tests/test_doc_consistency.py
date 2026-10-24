@@ -40,9 +40,17 @@ class TestCoverageCounts(unittest.TestCase):
                          "运行时项指针漂移:5.13 仅为 CWV 分区,运行时项分布见输出行新指针")
 
         preview = _read(PREVIEW_MD)
-        self.assertIn("51 项由", preview, "preview.md 脚本化计数表述漂移")
-        self.assertIn("其余 %d 项" % runtime, preview,
-                      "preview.md 运行时计数与清单总数漂移")
+        # 2026-10 起 preview.md 只保留分组速览表与路由,执行规则与 51/3/89 账本
+        # 以 preview-checklist.md 为唯一 canonical——preview.md 不再复述账本,
+        # 但必须显式指向该 canonical(防读者在 preview.md 侧找不到口径)。
+        self.assertIn("唯一 canonical 在 [`preview-checklist.md`](./preview-checklist.md)", preview,
+                      "preview.md 缺少指向 checklist 账本 canonical 的路由")
+        self.assertNotIn("51 项由", preview,
+                         "preview.md 复述了脚本覆盖账本(canonical 已收敛到 checklist)")
+        gate_covered = 3  # verify-color-fidelity / verify-assets / check-copy
+        runtime_after_gate = total - SCRIPTED - gate_covered
+        self.assertIn("其余 %d 项" % runtime_after_gate, checklist,
+                      "checklist 运行时计数与清单总数漂移")
 
     def test_checklist_uses_script_threshold_400ms(self):
         checklist = _read(CHECKLIST)

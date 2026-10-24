@@ -9,6 +9,7 @@ motion: 3-7          # dials MOTION 适配区间
 density: 3-6          # dials DENSITY 适配区间
 platforms: Web（官网/活动页）
 verified: 2026-09-07
+license: 未考(上游待核)
 ---
 # 新粗野主义（Neo-Brutalism）
 

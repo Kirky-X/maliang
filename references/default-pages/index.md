@@ -6,45 +6,12 @@
 
 ## 总索引
 
-### App 端(15 页,详见 [app.md](./app.md))
+App/Web 各 15 页的页面 slug、描述、优先级与示例链接**以平台文件为唯一源**,本文件不复述(防三处同步漂移;平台文件同时承载「列结构说明」五列定义):
 
-| 页面 slug | 描述 | 优先级 |
-| --------- | ---- | ------ |
-| home | 首页 | P0 |
-| discover | 发现页 | P1 |
-| messages | 消息中心 | P1 |
-| mine | 我的 | P0 |
-| login | 登录 | P0 |
-| signup | 注册 | P1 |
-| forgot-password | 找回密码 | P1 |
-| settings | 设置 | P0 |
-| about | 关于 | P1 |
-| privacy | 隐私政策 | P2 |
-| terms | 用户协议 | P2 |
-| feedback | 意见反馈 | P1 |
-| empty-state | 空状态 | P2 |
-| network-error | 网络错误 | P2 |
-| not-found | 404 页 | P2 |
+- App 端(15 页):[app.md](./app.md)
+- Web 端(15 页):[web.md](./web.md)
 
-### Web 端(15 页,详见 [web.md](./web.md))
-
-| 页面 slug | 描述 | 优先级 |
-| --------- | ---- | ------ |
-| home | 首页 | P0 |
-| about | 关于 | P1 |
-| contact | 联系我们 | P1 |
-| login | 登录 | P0 |
-| signup | 注册 | P1 |
-| forgot-password | 找回密码 | P1 |
-| verify-email | 邮箱验证 | P1 |
-| dashboard | 仪表盘 | P0 |
-| settings | 设置 | P0 |
-| profile | 个人资料 | P1 |
-| not-found | 404 页 | P2 |
-| server-error | 500 页 | P2 |
-| forbidden | 403 页 | P2 |
-| privacy | 隐私政策 | P2 |
-| terms | 服务条款 | P2 |
+下方「页面 × 支撑资产映射」是本文件独有的资产路由视角,予以保留。
 
 ---
 

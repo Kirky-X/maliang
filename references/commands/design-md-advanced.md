@@ -228,7 +228,7 @@ Visual Thesis: "深色优先的键盘驱动效率感"
 ```
 Content Plan:
   1. Hero (density=2, 单 CTA)
-  2. Features (density=5, bento 4 单元)
+  2. Features (density=5, bento 5-6 单元)
   3. Testimonial (density=3, 单列)
   4. Pricing (density=6, 三档)
   5. FAQ (density=7, 折叠列表)

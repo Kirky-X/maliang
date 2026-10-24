@@ -383,7 +383,7 @@ effects:                            # 可选特效段(maliang 扩展键,lint 静
 ## Shapes
 <Corner radius philosophy. Sharp = engineered, round = approachable.>
 ## Components
-<Key patterns and interaction states not captured by tokens. 区段形态先从 [`../components/INDEX.md`](../components/INDEX.md) 挑名——从索引挑名、只加载选中的那几个(典型 5-7 个),不整库加载;区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)仍在 [`../vocabulary/`](../vocabulary/)。>
+<Key patterns and interaction states not captured by tokens. 区段形态先从 [`../components/INDEX.md`](../components/INDEX.md) 挑名——从索引挑名、只加载选中的那几个(典型 5-7 个),不整库加载;区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)与模式级命名词汇(含 nav-* 导航等结构条目)都在 [`../vocabulary/`](../vocabulary/)。>
 ## Do's and Don'ts
 - Do ...
 - Don't ...

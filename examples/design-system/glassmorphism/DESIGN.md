@@ -2,6 +2,8 @@
 version: alpha
 name: Glassmorphism
 description: A frosted-glass UI style using translucency, backdrop blur, and subtle highlights to float content above vibrant backgrounds.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#7EA8FF"
   secondary: "#A78BFA"

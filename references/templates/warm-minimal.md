@@ -9,6 +9,7 @@ motion: 1-4          # dials MOTION 适配区间
 density: 2-5          # dials DENSITY 适配区间
 platforms: Web（文档型产品 / 工作台 / 内容站）
 verified: 2026-10-11
+license: 未考(上游待核)
 ---
 # 暖极简编辑风（Warm Utilitarian Minimalism）
 

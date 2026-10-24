@@ -18,7 +18,7 @@
 ## 何时用与勿混淆
 
 - **何时用**：目的地多到需要分组 + 解释——6+ 产品线的平台、文档/资源枢纽。
-- **勿混淆**：[N1b](n1b-saas-three-section.md)（小单列下拉，非全宽面板）；[N1](n1-wordmark-2-links.md)（无任何下拉）。
+- **勿混淆**：[N1b](n1b-saas-three-section.md)（小单列下拉，非全宽面板）；[N1](n1-wordmark-2-links.md)（无任何下拉）。同模式词汇条目：[`nav-mega-menu`](../vocabulary/navigation.md)（元素级命名对照）。
 
 ## DOM+CSS 骨架
 

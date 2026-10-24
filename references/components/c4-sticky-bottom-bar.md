@@ -17,7 +17,7 @@
 ## 何时用与勿混淆
 
 - **何时用**：页面长、CTA 需要随时可达；移动端长落地页。
-- **勿混淆**：[C1 描边 chip](c1-outlined-chip.md)（文档流内的次级按钮）；[N2 浮动角标](n2-floating-chip.md)（角落小块，非全宽通栏）。
+- **勿混淆**：[C1 描边 chip](c1-outlined-chip.md)（文档流内的次级按钮）；[N2 浮动角标](n2-floating-chip.md)（角落小块，非全宽通栏）。同模式词汇条目：[`nav-bottom-action-bar`](../vocabulary/navigation.md)。
 
 ## DOM+CSS 骨架
 

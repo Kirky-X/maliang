@@ -2,6 +2,8 @@
 version: alpha
 name: Material Design
 description: A cross-platform design language by Google built on material metaphors, meaningful motion, and shadow-based elevation.
+verified: 2026-10-24
+license: 自著
 colors:
   primary: "#6200EE"
   primary-light: "#7C4DFF"

@@ -1,6 +1,6 @@
 # 按钮卡片交互反馈命名词汇
 
-> 术语库。反馈跟着手指不跟控件,多条动画必须同频,本表标准化按钮与卡片的动效反馈模式,是 [`micro-interactions.md`](micro-interactions.md) 的参数级补充。
+> 术语库。反馈跟着手指不跟控件,多条动画必须同频,本表标准化按钮与卡片的动效反馈模式,是 [`micro-interactions.md`](micro-interactions.md) 的参数级补充;边界:数字类条目(`num-*`)与 [`number-motion.md`](number-motion.md) 互补、骨架与抽屉暂停(`drawer-pause-keyframe`)分别挂接 [`micro-interactions.md`](micro-interactions.md) 与 [`sheet-drawer.md`](sheet-drawer.md)——本表只收按钮/卡片本体的反馈参数。
 
 ## 命名表
 
@@ -12,8 +12,8 @@
 | `btn-burst`               | 点击爆散,粒子庆祝                       | 主体 .7→1.28→1;6 颗粒子晚 0.1s 起步                            | 点赞/收藏等关键动作 |
 | `btn-draw-check`          | 成功勾选,描边接力                       | 圆先画完,勾才切入(成功要有过程)                              | 完成状态展示        |
 | `slider-liquid`           | 液态滑块,整体像同一个东西               | 轨道/滑钮/数值三动画同时长同缓动                                | 滑杆/调节数值       |
-| `num-count-up`            | 数字滚动,末位稳住不急刹                 | rAF + easeOutCubic                                              | 数据展示            |
-| `skeleton-shimmer`        | 骨架落位,扫光只做位移                   | 骨架高度=真实内容高度,否则内容到达会跳                          | 加载占位            |
+| `num-count-up`            | 数字滚动,末位稳住不急刹                 | rAF + easeOutCubic                                              | 数据展示;数字动效全族见 [`number-motion.md`](number-motion.md)(`num-ticker-*` 等) |
+| `skeleton-shimmer`        | 骨架落位,扫光只做位移                   | 骨架高度=真实内容高度,否则内容到达会跳                          | 加载占位;骨架模式全族见 [`micro-interactions.md`](micro-interactions.md) `micro-skeleton`/`micro-shimmer` |
 | `card-flip-3d`            | 卡片翻面,正反面各自藏好背面             | perspective + preserve-3d + backface-visibility: hidden         | 卡片翻转            |
 | `icon-morph-burger`       | 汉堡变叉,一个元素从头走到尾             | 两线各平移 8px 再旋 ±45°,中线同时塌缩                          | 菜单开合            |
 | `card-stack-pull`         | 卡组抽卡,后卡露出投影                   | 后卡位移 7/14px,拖拽时投影加深                                  | 卡片堆叠/划卡       |
