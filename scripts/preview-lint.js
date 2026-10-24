@@ -93,8 +93,7 @@
     };
     var luminance = function (c) {
       // 浏览器内嵌无法 import;linearize/对比度 canonical 实现锚定 scripts/maliang_common.py
-      // (WCAG_LINEAR_THRESHOLD=0.04045),改口径只改彼处并同步本文件。8-bit 量化值上
-      // 旧值 0.03928 与 0.04045 结果全等,此处保留 0.03928 不构成行为分叉。
+      // (WCAG_LINEAR_THRESHOLD=0.04045),改口径只改彼处并同步本文件。
       var f = function (v) { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
       return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
     };

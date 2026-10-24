@@ -192,3 +192,49 @@ class TestEngineParityMoreTypes(unittest.TestCase):
         eng2, sl2 = self._both(rule)
         self.assertTrue(any("未命中一致性 pattern" in f["message"] for f in eng2))
         self.assertTrue(any("未命中一致性 pattern" in m for m in sl2))
+
+
+class TestParityEdgeCases(unittest.TestCase):
+    """M1/L6 回归锁:重复标题节与 YAML 孪生解析的两侧同判。"""
+
+    def setUp(self):
+        import tempfile
+        from pathlib import Path
+        self._tmp = tempfile.TemporaryDirectory()
+        self.repo = Path(self._tmp.name)
+        # 重复标题:两个「## 设计语言」节——两侧都必须取第一次出现
+        (self.repo / "INDEX.md").write_text(
+            "# INDEX\n\n## 设计语言\n\n| id |\n| --- |\n| [a](a.md) |\n\n"
+            "## 其他\n\n## 设计语言\n\n| id |\n| --- |\n| [b](b.md) |\n| [c](c.md) |\n",
+            encoding="utf-8")
+        (self.repo / "SKILL.md").write_text("共 1 种设计语言\n", encoding="utf-8")
+        import sys
+        sys.path.insert(0, os.path.dirname(__file__))
+        self.sl = load("skill_lint.py")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_duplicate_heading_same_verdict(self):
+        rule = {"name": "计数", "type": "count-matches", "source": "INDEX.md",
+                "section": "## 设计语言", "claim_files": ["SKILL.md"],
+                "claim_patterns": ["(\d+)\s*种设计语言"]}
+        eng = mc.engine_run_rule(str(self.repo), rule)
+        import json
+        (self.repo / "lint-checks.json").write_text(json.dumps(
+            {"checks": [rule]}, ensure_ascii=False), encoding="utf-8")
+        fails, _ = self.sl.check_repo_rules(self.repo)
+        # 第一次出现的节只有 1 行 → 声称 1 一致,两侧都应通过
+        self.assertEqual(eng, [])
+        self.assertEqual([f for f in fails if "计数漂移" in f], [])
+
+    def test_yaml_twin_parity(self):
+        text = ('---\nname: my-skill\ndescription: "d"\nmetadata:\n  version: "1.0.0"\n'
+                '  tags: "a, b"\n---\n\n# t\n')
+        import re
+        sl_parsed, err = self.sl.parse_frontmatter(text)
+        m = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n", text, re.DOTALL)
+        mc_parsed, mc_err = mc.load_yaml_block(m.group(1))
+        self.assertIsNone(err)
+        self.assertIsNone(mc_err)
+        self.assertEqual(sl_parsed, mc_parsed)

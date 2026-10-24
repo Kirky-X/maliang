@@ -289,7 +289,7 @@ def parse_frontmatter(text):
 
 def _strip_quotes(v):
     """去掉值两端的引号(单引号或双引号)。委托共用模块。"""
-    from maliang_common import _strip_quotes as _sq
+    from maliang_common import strip_quotes as _sq
     return _sq(v)
 
 

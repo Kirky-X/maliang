@@ -132,10 +132,10 @@ def _extract_table_targets(text):
     targets = []
     lines = text.splitlines()
     i = 0
-    sep_re = re.compile(r"^\|[\s:\-|]+\|$")
+    from maliang_common import TABLE_SEP_RE as _SEP
     while i < len(lines):
         line = lines[i].strip()
-        if line.startswith("|") and i + 1 < len(lines) and sep_re.match(lines[i + 1].strip()):
+        if line.startswith("|") and i + 1 < len(lines) and _SEP.match(lines[i + 1].strip()):
             header = [c.strip().strip("`").lower() for c in line.strip("|").split("|")]
             if "target" in header:
                 col = header.index("target")

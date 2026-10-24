@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""maliang 脚本共用工具模块。
+"""maliang 脚本共享层(validate-draw-md / ui-graph / check-claims / 各验证脚本共用)。
 
-提供 parse_frontmatter() 等共享函数,供 validate-draw-md.py 和 ui-graph.py 共用。
+职责面:①frontmatter 解析(含一层嵌套);②markdown 表格解析;③WCAG 对比度数学
+(全库唯一实现);④lint-checks.json 规则引擎(check-claims canonical;skill_lint 为
+vendored 自包含孪生副本,parity 测试守护);⑤「PyYAML 优先+降级」骨架。
 依赖: Python 3 标准库(无第三方依赖)。
 """
 
@@ -104,6 +106,11 @@ def _parse_inline_list(value):
             return []
         return [item.strip().strip("\"'") for item in inner.split(",") if item.strip()]
     return [v] if v else []
+
+
+def strip_quotes(v):
+    """去掉值两端的引号(单引号或双引号)。公开名;_strip_quotes 为兼容别名。"""
+    return _strip_quotes(v)
 
 
 def _strip_quotes(v):
@@ -275,7 +282,7 @@ def section_slice(text, section):
     lines = text.splitlines(keepends=True)
     start = None
     for i, line in enumerate(lines):
-        if line.startswith(section):
+        if start is None and line.startswith(section):
             start = i
             continue
         if start is not None and stop_re.match(line):
@@ -385,8 +392,10 @@ def engine_require_pattern(repo, rule):
     pattern = rule.get("pattern")
     if not rel or not pattern:
         raise ValueError("require-pattern 需要 file 与 pattern")
-    found = len(re.findall(pattern, _engine_read(repo, rel)))
     min_count = rule.get("min_count", 1)
+    if not isinstance(min_count, int) or min_count < 1:
+        raise ValueError("require-pattern 的 min_count 必须为 ≥1 整数(0/负数 = 形同虚设配置)")
+    found = len(re.findall(pattern, _engine_read(repo, rel)))
     if found < min_count:
         findings.append({
             "rule": name, "severity": severity, "file": rel, "line": 0,
@@ -446,7 +455,8 @@ def engine_run_rule(repo, rule):
 
 
 # ---------------------------------------------------------------------------
-# YAML frontmatter:「PyYAML 优先 + 降级」骨架的唯一实现
+# YAML frontmatter:「PyYAML 优先 + 降级」骨架(仓内 canonical;
+# skill_lint 按 vendored 自包含契约保留同源副本)
 # ---------------------------------------------------------------------------
 
 def _parse_frontmatter_lines(block):

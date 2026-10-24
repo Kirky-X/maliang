@@ -53,8 +53,8 @@ def parse_frontmatter(yaml_str):
     data, err = maliang_common.load_yaml_block(
         yaml_str, fallback=parse_frontmatter_indent, on_not_map="empty")
     if err is not None:
-        warn("frontmatter 解析降级(原 YAML 非法:" + err + ")。")
-        return parse_frontmatter_indent(yaml_str)
+        # 非法 YAML 响亮失败(与 c9397cf 前语义一致):PyYAML 缺失才降级,YAML 坏了不带病产出
+        raise ValueError(f"frontmatter YAML 非法: {err}")
     return data
 
 
