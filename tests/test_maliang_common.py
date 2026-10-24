@@ -42,3 +42,95 @@ class TestParseFrontmatter(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestWcagMath(unittest.TestCase):
+    """WCAG 对比度数学(全库唯一实现)的单测:阈值行为、alpha 合成、恒等性质。"""
+
+    def test_srgb_to_linear_boundaries(self):
+        self.assertAlmostEqual(mc.srgb_to_linear(0.0), 0.0)
+        self.assertAlmostEqual(mc.srgb_to_linear(1.0), 1.0)
+        # 阈值 0.04045(WCAG 2.1/sRGB):分界点走线性段
+        self.assertAlmostEqual(mc.srgb_to_linear(0.04045), 0.04045 / 12.92)
+
+    def test_eight_bit_threshold_equivalence(self):
+        # 旧值 0.03928 与 0.04045 对全部 8-bit 量化值结果全等(历史阈值混用无害的根据)
+        old = lambda c: c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+        for v in range(256):
+            self.assertAlmostEqual(
+                mc.srgb_to_linear(v / 255.0), old(v / 255.0), places=12)
+
+    def test_hex_to_rgb255(self):
+        self.assertEqual(mc.hex_to_rgb255("#212121"), (33, 33, 33))
+        self.assertEqual(mc.hex_to_rgb255("5B7CFA"), (91, 124, 250))
+        with self.assertRaises(ValueError):
+            mc.hex_to_rgb255("#FFF")
+
+    def test_blend_alpha(self):
+        # 不透明:原样返回(0-1 浮点)
+        self.assertEqual(mc.blend_alpha((255, 0, 0, 1.0), (0, 0, 255)), (1.0, 0.0, 0.0))
+        # 0.5 alpha 合成:红 50% 上蓝底 → (0.5, 0, 0.5)
+        r, g, b = mc.blend_alpha((255, 0, 0, 0.5), (0, 0, 255))
+        self.assertAlmostEqual(r, 0.5)
+        self.assertAlmostEqual(b, 0.5)
+
+    def test_luminance_and_contrast(self):
+        self.assertAlmostEqual(mc.relative_luminance((1.0, 1.0, 1.0)), 1.0)
+        self.assertAlmostEqual(mc.relative_luminance((0.0, 0.0, 0.0)), 0.0)
+        self.assertAlmostEqual(mc.contrast_ratio(1.0, 0.0), 21.0)
+        self.assertAlmostEqual(mc.contrast_ratio(0.5, 0.5), 1.0)
+
+    def test_contrast_ratio_hex(self):
+        self.assertAlmostEqual(mc.contrast_ratio_hex("#FFFFFF", "#000000"), 21.0)
+        # 已知实测:placeholder #9CA3AF on #F7F8FA ≈ 2.39(token.md 记录值)
+        self.assertAlmostEqual(mc.contrast_ratio_hex("#9CA3AF", "#F7F8FA"), 2.39, places=2)
+
+
+class TestEngineParityWithSkillLint(unittest.TestCase):
+    """skill_lint(可 vendored 自包含副本)与 maliang_common 共享引擎的孪生一致性:
+    同一 fixture 上两套实现必须同判,防止双副本语义漂移(F20)。"""
+
+    def setUp(self):
+        import tempfile
+        from pathlib import Path
+        self._tmp = tempfile.TemporaryDirectory()
+        self.repo = Path(self._tmp.name)
+        (self.repo / "INDEX.md").write_text(
+            "# INDEX\n\n## 设计语言\n\n| id |\n| --- |\n| [a](a.md) |\n| [b](b.md) |\n\n## 其他\n",
+            encoding="utf-8")
+        (self.repo / "SKILL.md").write_text("共 3 种设计语言\n", encoding="utf-8")
+        import json
+        (self.repo / "lint-checks.json").write_text(json.dumps(
+            {"checks": [{"name": "计数对账", "type": "count-matches", "source": "INDEX.md",
+                         "section": "## 设计语言", "claim_files": ["SKILL.md"],
+                         "claim_patterns": ["(\d+)\s*种设计语言"]}]},
+            ensure_ascii=False), encoding="utf-8")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_both_engines_flag_same_drift(self):
+        rule = {"name": "计数对账", "type": "count-matches", "source": "INDEX.md",
+                "section": "## 设计语言", "claim_files": ["SKILL.md"],
+                "claim_patterns": ["(\d+)\s*种设计语言"]}
+        # 共享引擎:报漂移
+        findings = mc.engine_run_rule(str(self.repo), rule)
+        self.assertTrue(any("计数漂移" in f["message"] for f in findings))
+        # skill_lint vendored 副本:同判
+        import sys
+        sys.path.insert(0, os.path.dirname(__file__))
+        sl = load("skill_lint.py")
+        fails, _ = sl.check_repo_rules(self.repo)
+        self.assertTrue(any("计数漂移" in f for f in fails))
+
+    def test_both_engines_pass_when_consistent(self):
+        (self.repo / "SKILL.md").write_text("共 2 种设计语言\n", encoding="utf-8")
+        rule = {"name": "计数对账", "type": "count-matches", "source": "INDEX.md",
+                "section": "## 设计语言", "claim_files": ["SKILL.md"],
+                "claim_patterns": ["(\d+)\s*种设计语言"]}
+        self.assertEqual(mc.engine_run_rule(str(self.repo), rule), [])
+        import sys
+        sys.path.insert(0, os.path.dirname(__file__))
+        sl = load("skill_lint.py")
+        fails, _ = sl.check_repo_rules(self.repo)
+        self.assertEqual([f for f in fails if "计数" in f], [])

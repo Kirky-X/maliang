@@ -296,9 +296,10 @@ def kmeans(pixels, k, iters=KMEANS_ITERS):
 
 
 def srgb_to_lab(rgb):
+    import maliang_common
+
     def f(v):
-        v /= 255
-        return v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4
+        return maliang_common.srgb_to_linear(v / 255)
     r, g, b = f(rgb[0]), f(rgb[1]), f(rgb[2])
     x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047
     y = r * 0.2126 + g * 0.7152 + b * 0.0722

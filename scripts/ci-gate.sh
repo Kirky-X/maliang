@@ -164,6 +164,11 @@ fi
 gate "check-claims(公开声明对账)" \
   python3 scripts/check-claims.py .
 
+# 6b. skill_lint 工程基线体检(SKILL.md/frontmatter/资产 JSON/引用路径/lint-checks 规则;
+#     兄弟仓根不可定位时其 sibling 检查显性 WARN 跳过,退出码不受 WARN 影响)
+gate "skill-lint(工程基线体检)" \
+  python3 scripts/skill_lint.py .
+
 # 7. 取证齐套(本轮真的取过证时才跑;无 report.json = 本轮无取证,不是通过也不是失败)
 if find examples -name report.json -print -quit 2>/dev/null | grep -q .; then
   gate "evidence-check(取证齐套)" \

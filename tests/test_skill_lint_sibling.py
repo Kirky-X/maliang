@@ -8,14 +8,11 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _load import load  # noqa: E402
+from _load import load, write  # noqa: E402
 
 sl = load("skill_lint.py")
 
 
-def _write(path: Path, text: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
 
 
 SKILLMD = "---\nname: my-skill\ndescription: \"边界：代码审查用 diting；安全扫描用 tiangang\"\n---\n\n# t\n"
@@ -27,13 +24,13 @@ class TestSiblingSkills(unittest.TestCase):
         self.workspace = Path(self._tmp.name)
         self.repo = self.workspace / "my-skill"
         self.repo.mkdir()
-        _write(self.repo / "SKILL.md", SKILLMD)
+        write(self.repo / "SKILL.md", SKILLMD)
 
     def tearDown(self):
         self._tmp.cleanup()
 
     def _rule(self, siblings, severity="FAIL"):
-        _write(self.repo / "lint-checks.json", json.dumps(
+        write(self.repo / "lint-checks.json", json.dumps(
             {"checks": [{"name": "兄弟引用", "type": "sibling-skills",
                          "siblings": siblings, "severity": severity}]},
             ensure_ascii=False))
@@ -41,7 +38,7 @@ class TestSiblingSkills(unittest.TestCase):
 
     def _sibling(self, name, present=True):
         if present:
-            _write(self.workspace / name / "SKILL.md", "---\nname: %s\n---\n" % name)
+            write(self.workspace / name / "SKILL.md", "---\nname: %s\n---\n" % name)
 
     def test_referenced_sibling_present_passes(self):
         self._sibling("diting")
@@ -62,14 +59,14 @@ class TestSiblingSkills(unittest.TestCase):
 
     def test_word_boundary_no_partial_match(self):
         # 词边界:ditingx 不算引用 diting
-        _write(self.repo / "SKILL.md",
+        write(self.repo / "SKILL.md",
                '---\nname: my-skill\ndescription: "用 ditingx 做事"\n---\n')
         fails, _ = self._rule(["diting"])
         self.assertEqual(fails, [])
 
     def test_severity_warn_goes_to_warns(self):
         self._sibling("diting")  # 让兄弟根可定位
-        _write(self.repo / "SKILL.md",
+        write(self.repo / "SKILL.md",
                '---\nname: my-skill\ndescription: "用 tiangang 扫描"\n---\n')
         fails, warns = self._rule(["diting", "tiangang"], severity="WARN")
         self.assertEqual(fails, [])
@@ -77,21 +74,21 @@ class TestSiblingSkills(unittest.TestCase):
 
     def test_missing_siblings_key_is_config_fail(self):
         # 配置错误显性化:缺 siblings 必须 FAIL
-        _write(self.repo / "lint-checks.json", json.dumps(
+        write(self.repo / "lint-checks.json", json.dumps(
             {"checks": [{"name": "兄弟引用", "type": "sibling-skills"}]}))
         fails, _ = sl.check_repo_rules(self.repo)
         self.assertTrue(any("siblings" in f for f in fails))
 
     def test_description_without_frontmatter_field_is_noop(self):
-        _write(self.repo / "SKILL.md", "# 无 frontmatter\n用 diting\n")
+        write(self.repo / "SKILL.md", "# 无 frontmatter\n用 diting\n")
         fails, _ = self._rule(["diting"])
         self.assertEqual(fails, [])
 
     def test_env_var_sibling_root_redirects(self):
         # 兄弟根可用 SKILL_SIBLINGS_ROOT 显式指定(部署布局与检出布局解耦)
         env_root = self.workspace / "skills-root"
-        _write(env_root / "diting" / "SKILL.md", "---\nname: diting\n---\n")
-        _write(self.repo / "SKILL.md",
+        write(env_root / "diting" / "SKILL.md", "---\nname: diting\n---\n")
+        write(self.repo / "SKILL.md",
                '---\nname: my-skill\ndescription: "代码审查用 diting"\n---\n')
         saved = os.environ.get("SKILL_SIBLINGS_ROOT")
         os.environ["SKILL_SIBLINGS_ROOT"] = str(env_root)
@@ -106,7 +103,7 @@ class TestSiblingSkills(unittest.TestCase):
 
     def test_unlocatable_sibling_root_warns_instead_of_fails(self):
         # 单仓检出/CI:配置兄弟一个都不在可选根下 → 显式 WARN 跳过,不冒充悬空 FAIL
-        _write(self.repo / "SKILL.md",
+        write(self.repo / "SKILL.md",
                '---\nname: my-skill\ndescription: "代码审查用 diting"\n---\n')
         fails, warns = self._rule(["diting"])
         self.assertEqual(fails, [])

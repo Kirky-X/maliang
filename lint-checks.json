@@ -73,6 +73,18 @@
       "severity": "FAIL"
     },
     {
+      "name": "draw fallback 规范句跨文件一致",
+      "type": "consistency",
+      "files": [
+        "references/commands/draw-md.md",
+        "references/commands/draw-element.md",
+        "references/commands/draw-flutter.md",
+        "references/commands/draw-harmony.md"
+      ],
+      "pattern": "^\\| DESIGN\\.md 缺失关键 token.*\\|$",
+      "severity": "FAIL"
+    },
+    {
       "name": "
       "type": "forbid-pattern",
       "files": [

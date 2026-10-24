@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _load import load  # noqa: E402
+from _load import load, write  # noqa: E402
 
 cc = load("check-copy.py")
 
@@ -67,10 +67,7 @@ class TestScanMarkup(unittest.TestCase):
 
 class TestCli(unittest.TestCase):
     def _write(self, directory, name, content):
-        path = os.path.join(directory, name)
-        with open(path, "w", encoding="utf-8") as fh:
-            fh.write(content)
-        return path
+        return write(os.path.join(directory, name), content)
 
     def test_fixture_clean_passes(self):
         buf = io.StringIO()

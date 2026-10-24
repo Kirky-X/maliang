@@ -60,20 +60,16 @@ def hex_to_rgb(color):
 
 
 def relative_luminance(color):
-    """WCAG 相对亮度: L = 0.2126R + 0.7152G + 0.0722B(gamma 校正后)。"""
-    ratios = []
-    for value in hex_to_rgb(color):
-        c = value / 255.0
-        c = c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
-        ratios.append(c)
-    return 0.2126 * ratios[0] + 0.7152 * ratios[1] + 0.0722 * ratios[2]
+    """WCAG 相对亮度(共享实现见 maliang_common,阈值 0.04045)。"""
+    import maliang_common
+    return maliang_common.relative_luminance(
+        tuple(v / 255.0 for v in hex_to_rgb(color)))
 
 
 def contrast_ratio(color_a, color_b):
-    """两色的 WCAG 对比度,恒 >= 1。"""
-    la, lb = relative_luminance(color_a), relative_luminance(color_b)
-    lighter, darker = max(la, lb), min(la, lb)
-    return (lighter + 0.05) / (darker + 0.05)
+    """两色的 WCAG 对比度,恒 >= 1(共享实现见 maliang_common)。"""
+    import maliang_common
+    return maliang_common.contrast_ratio_hex(color_a, color_b)
 
 
 def is_dark(color):

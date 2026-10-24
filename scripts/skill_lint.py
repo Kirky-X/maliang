@@ -285,6 +285,7 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
             "forbid-pattern",
             "count-matches",
             "sibling-skills",
+            "consistency",
         ):
             fails.append(f"{name}: {where} 未知 type: {rtype!r}")
             continue
@@ -530,6 +531,42 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
             if hits:
                 bucket = fails if sev == "FAIL" else warns
                 bucket.append(f"{name}: {rname} 命中禁用表述: {'；'.join(hits[:5])}")
+        elif rtype == "consistency":
+            # 同一规范句跨文件逐字节一致(与 maliang_common.engine_consistency 同语义;
+            # 本文件按 vendored 自包含契约内联实现)
+            cfiles = rule.get("files")
+            cpattern = rule.get("pattern")
+            if (
+                not isinstance(cfiles, list)
+                or len(cfiles) < 2
+                or not all(isinstance(x, str) and x for x in cfiles)
+                or not cpattern
+            ):
+                fails.append(f"{name}: {where} consistency 需要 files(≥2)与 pattern")
+                continue
+            try:
+                cregex = re.compile(cpattern, re.MULTILINE)
+            except re.error as exc:
+                fails.append(f"{name}: {where} 非法正则: {exc}")
+                continue
+            chits: dict[str, str] = {}
+            for rel in cfiles:
+                target = repo / rel
+                if not target.is_file():
+                    fails.append(f"{name}: {where} 目标文件不存在: {rel}")
+                    break
+                found = cregex.findall(target.read_text(encoding="utf-8", errors="replace"))
+                if not found:
+                    bucket = fails if sev == "FAIL" else warns
+                    bucket.append(
+                        f"{name}: {rname} {rel} 未命中一致性 pattern(该文件缺规范句或 pattern 漂移)"
+                    )
+                else:
+                    chits[rel] = found[0]
+            if len({*chits.values()}) > 1:
+                detail = "; ".join(f"{rel}={v!r}" for rel, v in sorted(chits.items()))
+                bucket = fails if sev == "FAIL" else warns
+                bucket.append(f"{name}: {rname} 跨文件一致性漂移: {detail}")
         else:  # file-header
             dirs, fields = (
                 rule.get("dirs"),
@@ -558,11 +595,22 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
 
 
 def parse_frontmatter(text: str):
-    """返回 (dict, error)。优先用 PyYAML，缺失时退回逐行解析。"""
+    """返回 (dict, error)。优先用 PyYAML，缺失时退回逐行解析。
+
+    「PyYAML 优先 + 降级」骨架唯一实现在 maliang_common.load_yaml_block;
+    本文件按 vendored 自包含契约保留 FRONTMATTER_RE 与错误文案的本地语义,
+    降级解析器随 vendored 场景内联(与 maliang_common 的内置降级同源)。
+    """
     m = FRONTMATTER_RE.match(text)
     if not m:
         return None, "缺少或未闭合的 YAML frontmatter"
-    block = m.group(1)
+    return _load_yaml_block_self_contained(m.group(1))
+
+
+def _load_yaml_block_self_contained(block: str):
+    """vendored 自包含的「PyYAML 优先+降级」副本(不依赖 maliang_common)。"""
+    if not block.strip():
+        return {}, None
     try:
         import yaml  # type: ignore
 

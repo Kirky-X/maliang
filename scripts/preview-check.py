@@ -482,22 +482,17 @@ def _color_to_rgba(value):
 
 
 def _rel_luminance(rgb):
-    """WCAG 相对亮度。rgb = (r, g, b)。"""
-    def chan(c):
-        c = c / 255.0
-        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
-    return (0.2126 * chan(rgb[0]) + 0.7152 * chan(rgb[1]) + 0.0722 * chan(rgb[2]))
+    """WCAG 相对亮度(共享实现见 maliang_common)。rgb = (r, g, b)。"""
+    import maliang_common
+    return maliang_common.relative_luminance(tuple(v / 255.0 for v in rgb[:3]))
 
 
 def _contrast_ratio(fg, bg):
-    """对比度;fg 含 alpha 时先合成到 bg 上。"""
-    if fg[3] < 1.0:
-        fg = tuple(
-            round(fg[i] * fg[3] + bg[i] * (1 - fg[3])) for i in range(3)
-        ) + (1.0,)
-    l1, l2 = _rel_luminance(fg[:3]), _rel_luminance(bg[:3])
-    lighter, darker = max(l1, l2), min(l1, l2)
-    return (lighter + 0.05) / (darker + 0.05)
+    """对比度;fg 含 alpha 时先合成到 bg 上(浮点合成不取整,全库统一口径)。"""
+    import maliang_common
+    l1 = maliang_common.relative_luminance(maliang_common.blend_alpha(fg, bg))
+    l2 = maliang_common.relative_luminance(tuple(v / 255.0 for v in bg[:3]))
+    return maliang_common.contrast_ratio(l1, l2)
 
 
 def check_5_3_contrast(text, parser, fname):

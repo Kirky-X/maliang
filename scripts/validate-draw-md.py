@@ -87,8 +87,8 @@ TOKEN_REF_RE = re.compile(r"\{([a-z][a-z0-9-]*)\}")
 HEX_COLOR_RE = re.compile(r"#[0-9A-Fa-f]{8}\b|#[0-9A-Fa-f]{6}\b|#[0-9A-Fa-f]{3}\b")
 RGBA_COLOR_RE = re.compile(r"rgba?\([^)]*\)", re.IGNORECASE)
 
-# markdown 表格分隔行(如 | --- | --- |)
-TABLE_SEP_RE = re.compile(r"^\|[\s\-:|]+\|?\s*$")
+# markdown 表格分隔行(如 | --- | --- |)——共享单源在 maliang_common,本文件只 re-export 供行级扫描使用
+from maliang_common import TABLE_SEP_RE  # noqa: E402
 
 # kebab-case 标识符
 KEBAB_RE = re.compile(r"[a-z][a-z0-9-]*")
@@ -297,34 +297,11 @@ def _extract_param_tables(lines):
     """提取所有"参数表"(header 含"参数"的 markdown 表)。
 
     返回 list of (header_line_no, rows),rows = list of (line_no, cells)。
-    表的识别:某行以 | 开头,且下一行是分隔行;其 header 单元格含"参数"。
+    共享实现见 maliang_common.parse_table_rows,本函数只固化"参数"这一 header 约定。
     """
-    tables = []
-    i = 0
-    n = len(lines)
-    while i < n:
-        line = lines[i]
-        if (
-            line.strip().startswith("|")
-            and i + 1 < n
-            and TABLE_SEP_RE.match(lines[i + 1])
-        ):
-            header_cells = [c.strip() for c in line.strip().strip("|").split("|")]
-            if "参数" in header_cells:
-                rows = []
-                j = i + 2
-                while j < n and lines[j].strip().startswith("|"):
-                    if TABLE_SEP_RE.match(lines[j]):
-                        j += 1
-                        continue
-                    cells = [c.strip() for c in lines[j].strip().strip("|").split("|")]
-                    rows.append((j + 1, cells))
-                    j += 1
-                tables.append((i + 1, rows))
-                i = j
-                continue
-        i += 1
-    return tables
+    import maliang_common
+
+    return maliang_common.parse_table_rows(lines, lambda cells: "参数" in cells)
 
 
 def _extract_slugs_from_value(value):

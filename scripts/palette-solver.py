@@ -37,8 +37,7 @@ GAMUT_MAX_TRIES = 40
 
 # ---------- sRGB <-> OKLab <-> OKLCH(改写自外部 generate_palette.py) ----------
 
-def _srgb_to_linear(c):
-    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+from maliang_common import srgb_to_linear as _srgb_to_linear  # 全库唯一 WCAG/线性化实现
 
 
 def _linear_to_srgb(c):
@@ -90,22 +89,18 @@ def oklch_to_hex(L, C, H):
 # ---------- WCAG 对比度(改写自外部 check_contrast.py) ----------
 
 def _linearize(c):
-    c = c / 255
-    return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+    return _srgb_to_linear(c / 255)
 
 
 def luminance(hex_color):
-    h = hex_color.lstrip("#")
-    if len(h) != 6:
-        raise ValueError("expected 6-digit hex, got %r" % hex_color)
-    r, g, b = (int(h[i:i + 2], 16) for i in (0, 2, 4))
-    return 0.2126 * _linearize(r) + 0.7152 * _linearize(g) + 0.0722 * _linearize(b)
+    import maliang_common
+    return maliang_common.relative_luminance(
+        tuple(v / 255.0 for v in maliang_common.hex_to_rgb255(hex_color)))
 
 
 def contrast_ratio(hex1, hex2):
-    l1, l2 = luminance(hex1), luminance(hex2)
-    hi, lo = max(l1, l2), min(l1, l2)
-    return (hi + 0.05) / (lo + 0.05)
+    import maliang_common
+    return maliang_common.contrast_ratio_hex(hex1, hex2)
 
 
 def classify(ratio):

@@ -11,7 +11,7 @@ import tempfile
 import unittest
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _load import load  # noqa: E402
+from _load import load, write  # noqa: E402
 
 dt = load("detect-tells.py")
 
@@ -203,10 +203,7 @@ class TestExemptions(unittest.TestCase):
 
 class TestCli(unittest.TestCase):
     def _write(self, directory, name, content):
-        path = os.path.join(directory, name)
-        with open(path, "w", encoding="utf-8") as fh:
-            fh.write(content)
-        return path
+        return write(os.path.join(directory, name), content)
 
     def test_hit_file_exits_1(self):
         with tempfile.TemporaryDirectory() as tmp:

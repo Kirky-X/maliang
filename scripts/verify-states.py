@@ -150,18 +150,10 @@ FREEZE_CSS = "*,*::before,*::after{transition:none!important;animation:none!impo
 
 def contrast_ratio(fg, bg):
     """WCAG 对比度;fg 含 alpha 时先合成到 bg 上。fg/bg = [r,g,b,a]。"""
-    a = fg[3] if len(fg) > 3 else 1.0
-    if a < 1.0:
-        fg = [fg[i] * a + bg[i] * (1 - a) for i in range(3)] + [1.0]
-
-    def lin(c):
-        c = c / 255.0
-        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
-
-    l1 = 0.2126 * lin(fg[0]) + 0.7152 * lin(fg[1]) + 0.0722 * lin(fg[2])
-    l2 = 0.2126 * lin(bg[0]) + 0.7152 * lin(bg[1]) + 0.0722 * lin(bg[2])
-    hi, lo = max(l1, l2), min(l1, l2)
-    return (hi + 0.05) / (lo + 0.05)
+    import maliang_common
+    l1 = maliang_common.relative_luminance(maliang_common.blend_alpha(fg, bg))
+    l2 = maliang_common.relative_luminance(tuple(v / 255.0 for v in bg[:3]))
+    return maliang_common.contrast_ratio(l1, l2)
 
 
 def needed_ratio(px, bold, graphical):

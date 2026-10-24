@@ -14,14 +14,11 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _load import load  # noqa: E402
+from _load import load, write  # noqa: E402
 
 ec = load("evidence-check.py")
 
 
-def _write(path: Path, content: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8")
 
 
 class TestEvidenceCheck(unittest.TestCase):
@@ -42,7 +39,7 @@ class TestEvidenceCheck(unittest.TestCase):
             "shots/sheet-home.png", "probe/home-motion.json", "record/home.mp4",
         ]
         for rel in files:
-            _write(self.root / rel, "data:" + rel)
+            write(self.root / rel, "data:" + rel)
         report = {
             "schema": "maliang-evidence/1",
             "capturedAt": "2026-10-12T10:00:00+08:00",
@@ -61,7 +58,7 @@ class TestEvidenceCheck(unittest.TestCase):
             }],
         }
         path = self.root / name
-        _write(path, json.dumps(report, ensure_ascii=False))
+        write(path, json.dumps(report, ensure_ascii=False))
         return path
 
     def test_complete_report_passes(self):
@@ -78,7 +75,7 @@ class TestEvidenceCheck(unittest.TestCase):
         (self.shots / "home-idle-masked.png").unlink()
         report = json.loads(path.read_text(encoding="utf-8"))
         del report["pages"][0]["recording"]
-        _write(path, json.dumps(report, ensure_ascii=False))
+        write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = ec.main([str(path)])
         self.assertEqual(code, 1)
@@ -101,7 +98,7 @@ class TestEvidenceCheck(unittest.TestCase):
         path = self._complete_report()
         report = json.loads(path.read_text(encoding="utf-8"))
         report["pages"][0]["states"][0]["shot2x"] = "shots/home-idle.png"
-        _write(path, json.dumps(report, ensure_ascii=False))
+        write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = ec.main([str(path)])
         self.assertEqual(code, 1)
@@ -117,7 +114,7 @@ class TestEvidenceCheck(unittest.TestCase):
     def test_broken_report_is_problem(self):
         # 应报: 报告不是合法 JSON → 问题(exit 1),不是静默跳过
         path = self.root / "report.json"
-        _write(path, "{not json")
+        write(path, "{not json")
         with contextlib.redirect_stderr(io.StringIO()), contextlib.redirect_stdout(io.StringIO()):
             code = ec.main([str(path)])
         self.assertEqual(code, 1)
@@ -126,7 +123,7 @@ class TestEvidenceCheck(unittest.TestCase):
         # 不应报: 单状态页无并排图可查(记为 n/a,不是缺项)
         for rel in ["shots/one.png", "shots/one@2x.png", "shots/one-masked.png",
                     "probe/one-motion.json", "record/one.mp4"]:
-            _write(self.root / rel, "data")
+            write(self.root / rel, "data")
         report = {
             "schema": "maliang-evidence/1",
             "pages": [{
@@ -138,7 +135,7 @@ class TestEvidenceCheck(unittest.TestCase):
             }],
         }
         path = self.root / "report.json"
-        _write(path, json.dumps(report, ensure_ascii=False))
+        write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = ec.main([str(path)])
         self.assertEqual(code, 0)
@@ -150,7 +147,7 @@ class TestEvidenceCheck(unittest.TestCase):
         report = json.loads(path.read_text(encoding="utf-8"))
         report["pages"][0]["states"][1]["failed"] = True
         report["pages"][0]["states"][1]["error"] = "SCREENSHOT_TIMEOUT"
-        _write(path, json.dumps(report, ensure_ascii=False))
+        write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = ec.main([str(path)])
         self.assertEqual(code, 1)

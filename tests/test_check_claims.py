@@ -14,14 +14,11 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _load import load  # noqa: E402
+from _load import load, write  # noqa: E402
 
 cc = load("check-claims.py")
 
 
-def _write(path: Path, text: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
 
 
 INDEX = """# INDEX
@@ -41,7 +38,7 @@ class TestCheckClaims(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
-        _write(self.root / "references" / "templates" / "INDEX.md", INDEX)
+        write(self.root / "references" / "templates" / "INDEX.md", INDEX)
         self.config = {
             "checks": [{
                 "name": "设计语言计数对账",
@@ -54,14 +51,14 @@ class TestCheckClaims(unittest.TestCase):
                 "severity": "WARN",
             }],
         }
-        _write(self.root / "SKILL.md", "共 2 种设计语言。\n")
+        write(self.root / "SKILL.md", "共 2 种设计语言。\n")
 
     def tearDown(self):
         self._tmp.cleanup()
 
     def _write_config(self, extra_checks=None):
         cfg = {"checks": list(self.config["checks"]) + list(extra_checks or [])}
-        _write(self.root / "lint-checks.json", json.dumps(cfg, ensure_ascii=False))
+        write(self.root / "lint-checks.json", json.dumps(cfg, ensure_ascii=False))
 
     def test_matching_count_passes(self):
         # 不应报: 声明数与 INDEX 表行数一致
@@ -73,7 +70,7 @@ class TestCheckClaims(unittest.TestCase):
 
     def test_drift_reported_with_line(self):
         # 应报: 声称 12 vs 唯源 14;WARN 级不改变退出码
-        _write(self.root / "SKILL.md", "共 12 种设计语言。\n")
+        write(self.root / "SKILL.md", "共 12 种设计语言。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = cc.main([str(self.root)])
@@ -85,7 +82,7 @@ class TestCheckClaims(unittest.TestCase):
 
     def test_drift_strict_upgrades_to_error(self):
         # --strict: 全部发现升级 error → exit 1
-        _write(self.root / "SKILL.md", "共 12 种设计语言。\n")
+        write(self.root / "SKILL.md", "共 12 种设计语言。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()):
             code = cc.main([str(self.root), "--strict"])
@@ -93,7 +90,7 @@ class TestCheckClaims(unittest.TestCase):
 
     def test_min_claims_vacuity_reported(self):
         # 应报: 声明全被删掉后规则形同虚设(防"改掉措辞就静默失效")
-        _write(self.root / "SKILL.md", "模板墙见 INDEX。\n")
+        write(self.root / "SKILL.md", "模板墙见 INDEX。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = cc.main([str(self.root)])
@@ -106,7 +103,7 @@ class TestCheckClaims(unittest.TestCase):
             "name": "禁用语表", "type": "forbid-pattern",
             "files": ["SKILL.md"], "pattern": "完美|革命性",
         }])
-        _write(self.root / "SKILL.md", "这是一个完美的方案。\n")
+        write(self.root / "SKILL.md", "这是一个完美的方案。\n")
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = cc.main([str(self.root)])
         self.assertEqual(code, 1)
@@ -114,11 +111,11 @@ class TestCheckClaims(unittest.TestCase):
 
     def test_forbid_pattern_ignore_line(self):
         # 不应报: ignore 正则豁免的行(counted-claim 表里列举禁用词本身)
-        _write(self.root / "lint-checks.json", json.dumps({"checks": [{
+        write(self.root / "lint-checks.json", json.dumps({"checks": [{
             "name": "禁用语表", "type": "forbid-pattern",
             "files": ["SKILL.md"], "pattern": "完美", "ignore": "禁止清单",
         }]}, ensure_ascii=False))
-        _write(self.root / "SKILL.md", "禁止清单: 完美/革命性\n")
+        write(self.root / "SKILL.md", "禁止清单: 完美/革命性\n")
         with contextlib.redirect_stdout(io.StringIO()):
             code = cc.main([str(self.root), "--strict"])
         self.assertEqual(code, 0)
@@ -150,14 +147,14 @@ class TestCheckClaims(unittest.TestCase):
 
     def test_no_handled_rules_exit_2(self):
         # 没能检查: 配置里没有可执行的声明规则
-        _write(self.root / "lint-checks.json", json.dumps({"checks": [
+        write(self.root / "lint-checks.json", json.dumps({"checks": [
             {"name": "x", "type": "file-header", "dirs": ["references"], "fields": ["来源"]}]}))
         with contextlib.redirect_stderr(io.StringIO()):
             code = cc.main([str(self.root)])
         self.assertEqual(code, 2)
 
     def test_json_output_shape(self):
-        _write(self.root / "SKILL.md", "共 12 种设计语言。\n")
+        write(self.root / "SKILL.md", "共 12 种设计语言。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()) as out:
             code = cc.main([str(self.root), "--format", "json"])

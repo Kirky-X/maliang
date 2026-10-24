@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _load import load  # noqa: E402
+from _load import load, write  # noqa: E402
 
 be = load("build-explorer.py")
 
@@ -25,20 +25,17 @@ CANDIDATE = """<!DOCTYPE html>
 """
 
 
-def _write(path: Path, text: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
 
 
 class TestBuildExplorer(unittest.TestCase):
     def setUp(self):
         self._tmp = tempfile.TemporaryDirectory()
         self.root = Path(self._tmp.name)
-        _write(self.root / "style.css", "h1 { color: #123456; } .bg { background: url(pic.png); }\n")
-        _write(self.root / "pic.png", "\x89PNG\r\n\x1a\nfake")
-        _write(self.root / "app.js", "console.log('hi');\n")
-        _write(self.root / "a.html", CANDIDATE.format(title="甲"))
-        _write(self.root / "b.html", CANDIDATE.format(title="乙"))
+        write(self.root / "style.css", "h1 { color: #123456; } .bg { background: url(pic.png); }\n")
+        write(self.root / "pic.png", "\x89PNG\r\n\x1a\nfake")
+        write(self.root / "app.js", "console.log('hi');\n")
+        write(self.root / "a.html", CANDIDATE.format(title="甲"))
+        write(self.root / "b.html", CANDIDATE.format(title="乙"))
 
     def tearDown(self):
         self._tmp.cleanup()
@@ -56,7 +53,7 @@ class TestBuildExplorer(unittest.TestCase):
         }
         data.update(overrides)
         path = self.root / "manifest.json"
-        _write(path, json.dumps(data, ensure_ascii=False))
+        write(path, json.dumps(data, ensure_ascii=False))
         return path
 
     def test_minimal_build_one_line_json(self):
@@ -90,7 +87,7 @@ class TestBuildExplorer(unittest.TestCase):
         data["candidates"][0]["palette"] = ["not-hex"]
         data["candidates"][0]["source"] = "missing.html"
         data["candidates"][1]["id"] = "BAD ID"
-        _write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
+        write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
         buf = io.StringIO()
         with contextlib.redirect_stderr(buf):
             code = be.main([str(self.root / "manifest.json")])
@@ -116,13 +113,13 @@ class TestBuildExplorer(unittest.TestCase):
         data["candidates"] = [{"id": "a", "name": "甲", "concept": "c", "typography": "t",
                                "palette": ["#112233"], "traits": ["x"],
                                "kind": "url", "url": "http://example.com/x"}]
-        _write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
+        write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
         with contextlib.redirect_stderr(io.StringIO()) as err:
             self.assertEqual(be.main([str(self.root / "manifest.json")]), 1)
         self.assertIn("本机开发服务器", err.getvalue())
 
         data["candidates"][0]["url"] = "http://localhost:5173/orders"
-        _write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
+        write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(be.main([str(self.root / "manifest.json")]), 0)
         page = (self.root / "style-explorer.html").read_text(encoding="utf-8")
@@ -131,7 +128,7 @@ class TestBuildExplorer(unittest.TestCase):
 
     def test_foreign_resource_rejected(self):
         # 应报: 候选含未内嵌的外部资源
-        _write(self.root / "a.html",
+        write(self.root / "a.html",
                '<!DOCTYPE html><html><head><title>a</title></head>'
                '<body><script src="https://cdn.example.com/x.js"></script></body></html>')
         with contextlib.redirect_stderr(io.StringIO()) as err:
@@ -144,7 +141,7 @@ class TestBuildExplorer(unittest.TestCase):
         data["candidates"] = [{"id": "a", "name": "甲", "concept": "c", "typography": "t",
                                "palette": ["#112233"], "traits": ["x"],
                                "source": "a.html", "interactive": True}]
-        _write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
+        write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(be.main([str(self.root / "manifest.json")]), 0)
         page = (self.root / "style-explorer.html").read_text(encoding="utf-8")
@@ -156,7 +153,7 @@ class TestBuildExplorer(unittest.TestCase):
         # 应报: nativeViewport 非法值
         data = json.loads(self._manifest().read_text(encoding="utf-8"))
         data["candidates"][0]["nativeViewport"] = "abc"
-        _write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
+        write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
         with contextlib.redirect_stderr(io.StringIO()) as err:
             self.assertEqual(be.main([str(self.root / "manifest.json")]), 1)
         self.assertIn("nativeViewport", err.getvalue())
@@ -168,7 +165,7 @@ class TestBuildExplorer(unittest.TestCase):
         second, _ = be.load_manifest(str(self.root / "manifest.json"))
         self.assertEqual(first["fingerprint"], second["fingerprint"])
         data["candidates"][0]["typography"] = "改了"
-        _write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
+        write(self.root / "manifest.json", json.dumps(data, ensure_ascii=False))
         third, _ = be.load_manifest(str(self.root / "manifest.json"))
         self.assertNotEqual(first["fingerprint"], third["fingerprint"])
 

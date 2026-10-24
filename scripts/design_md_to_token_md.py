@@ -37,16 +37,21 @@ def extract_frontmatter(text):
 
 
 def parse_frontmatter(yaml_str):
-    """解析 frontmatter。优先 PyYAML,降级正则。返回 dict。"""
-    if not yaml_str.strip():
-        return {}
-    try:
-        import yaml
-        data = yaml.safe_load(yaml_str)
-        return data if isinstance(data, dict) else {}
-    except ImportError:
-        warn("PyYAML 不可用,降级使用正则解析 frontmatter(仅支持简单 map 结构)。")
+    """解析 frontmatter。优先 PyYAML,降级正则。返回 dict。
+
+    「PyYAML 优先+降级」骨架共享实现见 maliang_common.load_yaml_block;
+    本包装保留 dmt 专属语义:非映射按空 dict(on_not_map=empty)与
+    PyYAML 不可用时降级到本文件的缩进解析器(含注释剥离/转义还原,
+    DESIGN.md 的 heritage 结构依赖,语义由 test_design_md_frontmatter 锁定)。
+    """
+    import maliang_common
+
+    data, err = maliang_common.load_yaml_block(
+        yaml_str, fallback=parse_frontmatter_indent, on_not_map="empty")
+    if err is not None:
+        warn("frontmatter 解析降级(原 YAML 非法:" + err + ")。")
         return parse_frontmatter_indent(yaml_str)
+    return data
 
 
 def _parse_scalar(val):
