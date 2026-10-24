@@ -44,8 +44,12 @@ def parse_frontmatter(yaml_str):
     PyYAML 不可用时降级到本文件的缩进解析器(含注释剥离/转义还原,
     DESIGN.md 的 heritage 结构依赖,语义由 test_design_md_frontmatter 锁定)。
     """
+    import importlib.util
+
     import maliang_common
 
+    if importlib.util.find_spec("yaml") is None:
+        warn("PyYAML 不可用,降级使用正则解析 frontmatter(仅支持简单 map 结构)。")
     data, err = maliang_common.load_yaml_block(
         yaml_str, fallback=parse_frontmatter_indent, on_not_map="empty")
     if err is not None:

@@ -481,11 +481,6 @@ def _color_to_rgba(value):
     return NAMED_COLORS.get(v)
 
 
-def _rel_luminance(rgb):
-    """WCAG 相对亮度(共享实现见 maliang_common)。rgb = (r, g, b)。"""
-    import maliang_common
-    return maliang_common.relative_luminance(tuple(v / 255.0 for v in rgb[:3]))
-
 
 def _contrast_ratio(fg, bg):
     """对比度;fg 含 alpha 时先合成到 bg 上(浮点合成不取整,全库统一口径)。"""

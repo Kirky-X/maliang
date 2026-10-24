@@ -87,6 +87,34 @@ SKIP_DIR_NAMES = {
     "logs",
     "open-code-review",
 }
+# lint-checks.json 的 pattern 在 pull_request CI 中视为不受信输入:
+# 拒绝超长正则、嵌套量词启发式命中(灾难回溯)与非法正则(归一为 ValueError)。
+_MAX_PATTERN_LEN = 500
+_NESTED_QUANT_RE = re.compile(r"\([^()]*[+*{][^()]*\)[+*{]")
+
+
+def _safe_compile(pattern, flags=0):
+    if not isinstance(pattern, str) or len(pattern) > _MAX_PATTERN_LEN:
+        raise ValueError(f"pattern 非法或超长(>{_MAX_PATTERN_LEN}): {pattern!r}")
+    if _NESTED_QUANT_RE.search(pattern):
+        raise ValueError(f"pattern 含嵌套量词(灾难回溯风险),拒绝编译: {pattern!r}")
+    try:
+        return re.compile(pattern, flags)
+    except re.error as exc:
+        raise ValueError(f"非法正则 {pattern!r}: {exc}") from None
+
+
+def _repo_path(repo: Path, rel):
+    """解析规则目标路径;拒绝绝对路径与 .. 穿越(防配置指路读仓外文件)。"""
+    if not isinstance(rel, str) or os.path.isabs(rel):
+        raise ValueError(f"目标路径必须是仓库相对路径: {rel!r}")
+    repo_real = os.path.realpath(repo)
+    path = os.path.realpath(os.path.join(repo_real, rel))
+    if path != repo_real and not path.startswith(repo_real + os.sep):
+        raise ValueError(f"目标文件越出仓库: {rel!r}")
+    return Path(path)
+
+
 MD_LINK_RE = re.compile(r"\]\(([\w][\w./-]*\.md)(?:#[^)]*)?\)")
 INTERNAL_PATH_RE = re.compile(
     r"`?(?<![-\w/])((?:references|scripts|tests)/[\w./-]*\.md)\b`?"
@@ -351,7 +379,11 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
             if not rel or not pattern:
                 fails.append(f"{name}: {where} require-pattern 需要 file 与 pattern")
                 continue
-            target = repo / rel
+            try:
+                target = _repo_path(repo, rel)
+            except ValueError as exc:
+                fails.append(f"{name}: {where} {exc}")
+                continue
             if not target.is_file():
                 fails.append(f"{name}: {where} 目标文件不存在: {rel}")
                 continue
@@ -361,8 +393,8 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
                 continue
             try:
                 found = len(
-                    re.findall(
-                        pattern, target.read_text(encoding="utf-8", errors="replace")
+                    _safe_compile(pattern).findall(
+                        target.read_text(encoding="utf-8", errors="replace")
                     )
                 )
             except re.error as exc:
@@ -371,7 +403,7 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
             if found < min_count:
                 bucket = fails if sev == "FAIL" else warns
                 bucket.append(
-                    f"{name}: {rname} 未满足（{rel} 命中 {found}/{min_count}）"
+                    f"{name}: {rname} {rel} 必现短语未满足(命中 {found}/{min_count})"
                 )
         elif rtype == "cli-subcommands":
             cli_rel, doc_rel = rule.get("cli"), rule.get("doc")
@@ -448,11 +480,16 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
                     f"{name}: {where} count-matches 需要 source / claim_files / claim_pattern(s)"
                 )
                 continue
-            source_path = repo / source_rel
+            try:
+                source_path = _repo_path(repo, source_rel)
+                guarded_claims = [_repo_path(repo, rel) for rel in claim_files]
+            except ValueError as exc:
+                fails.append(f"{name}: {where} {exc}")
+                continue
             if not source_path.is_file():
                 fails.append(f"{name}: {where} 目标文件不存在: {source_rel}")
                 continue
-            absent = [rel for rel in claim_files if not (repo / rel).is_file()]
+            absent = [rel for rel, gp in zip(claim_files, guarded_claims) if not gp.is_file()]
             if absent:
                 fails.append(f"{name}: {where} claim_files 不存在: {absent}")
                 continue
@@ -462,7 +499,7 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
                 continue
             try:
                 expected = len(
-                    re.compile(
+                    _safe_compile(
                         rule.get("row_pattern", r"^\|\s*\["), re.MULTILINE
                     ).findall(
                         section_slice(
@@ -473,7 +510,7 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
                 )
                 regexes = []
                 for pat in patterns:
-                    rep = re.compile(pat)
+                    rep = _safe_compile(pat)
                     if rep.groups != 1:
                         raise ValueError(f"claim_pattern 必须恰好一个捕获组: {pat!r}")
                     regexes.append(rep)
@@ -482,8 +519,8 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
                 continue
             seen = 0
             mismatches: list[str] = []
-            for rel in claim_files:
-                claim_text = (repo / rel).read_text(encoding="utf-8", errors="replace")
+            for rel, gp in zip(claim_files, guarded_claims):
+                claim_text = gp.read_text(encoding="utf-8", errors="replace")
                 for rep in regexes:
                     for m in rep.finditer(claim_text):
                         seen += 1
@@ -509,19 +546,26 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
             if not isinstance(files, list) or not files or not pattern:
                 fails.append(f"{name}: {where} forbid-pattern 需要 files 与 pattern")
                 continue
-            absent = [rel for rel in files if not (repo / rel).is_file()]
+            try:
+                guarded = [_repo_path(repo, rel) for rel in files]
+            except ValueError as exc:
+                fails.append(f"{name}: {where} {exc}")
+                continue
+            absent = [str(p) for p in guarded if not p.is_file()]
             if absent:
                 fails.append(f"{name}: {where} 目标文件不存在: {absent}")
                 continue
             try:
-                regex = re.compile(pattern)
-                ignore = re.compile(rule["ignore"]) if rule.get("ignore") else None
+                regex = _safe_compile(pattern)
+                ignore = (
+                    _safe_compile(rule["ignore"]) if rule.get("ignore") else None
+                )
             except re.error as exc:
                 fails.append(f"{name}: {where} 非法正则: {exc}")
                 continue
             hits: list[str] = []
-            for rel in files:
-                text = (repo / rel).read_text(encoding="utf-8", errors="replace")
+            for rel, gp in zip(files, guarded):
+                text = gp.read_text(encoding="utf-8", errors="replace")
                 for line_no, line in enumerate(text.splitlines(), 1):
                     if ignore and ignore.search(line):
                         continue
@@ -545,13 +589,17 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
                 fails.append(f"{name}: {where} consistency 需要 files(≥2)与 pattern")
                 continue
             try:
-                cregex = re.compile(cpattern, re.MULTILINE)
+                cregex = _safe_compile(cpattern, re.MULTILINE)
             except re.error as exc:
                 fails.append(f"{name}: {where} 非法正则: {exc}")
                 continue
             chits: dict[str, str] = {}
             for rel in cfiles:
-                target = repo / rel
+                try:
+                    target = _repo_path(repo, rel)
+                except ValueError as exc:
+                    fails.append(f"{name}: {where} {exc}")
+                    break
                 if not target.is_file():
                     fails.append(f"{name}: {where} 目标文件不存在: {rel}")
                     break

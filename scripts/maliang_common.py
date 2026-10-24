@@ -220,8 +220,46 @@ def contrast_ratio_hex(hex1, hex2):
 # 引擎返回 findings 为 dict:{rule, severity, file, line, message};
 # 配置/目标错误抛 ValueError(调用方各自决定 FAIL 还是退出码 2)。
 # 消息词表同时覆盖两端的既有断言(计数漂移/声称/形同虚设/命中禁用表述/必现短语未满足)。
+#
+# 威胁模型:lint-checks.json 在 pull_request CI 中可被 PR 作者改写,因此
+# pattern 视为不受信输入——_safe_compile 拒绝灾难回溯形状与超长正则(防 ReDoS),
+# _engine_read 拒绝越出仓库的路径(防配置指路读仓外文件回显进日志)。
 
 ENGINE_RULE_TYPES = ("count-matches", "forbid-pattern", "require-pattern", "consistency")
+
+_MAX_PATTERN_LEN = 500
+# 嵌套量词启发式:量词化的组内再含量词化组(如 (a+)+ / (\d+*) )*——灾难回溯的典型形状。
+_NESTED_QUANT_RE = re.compile(r"\([^()]*[+*{][^()]*\)[+*{]")
+
+
+def _safe_compile(pattern, flags=0):
+    """受信边界内的 re.compile:配置正则视为不受信输入。
+
+    拒绝:超长 pattern、嵌套量词启发式命中、非法正则(re.error 归一为
+    ValueError,兑现引擎"配置错误抛 ValueError"的契约)。
+    """
+    if not isinstance(pattern, str) or len(pattern) > _MAX_PATTERN_LEN:
+        raise ValueError(f"pattern 非法或超长(>{_MAX_PATTERN_LEN}): {pattern!r:.80}")
+    if _NESTED_QUANT_RE.search(pattern):
+        raise ValueError(f"pattern 含嵌套量词(灾难回溯风险),拒绝编译: {pattern!r}")
+    try:
+        return re.compile(pattern, flags)
+    except re.error as exc:
+        raise ValueError(f"非法正则 {pattern!r}: {exc}") from None
+
+
+def _engine_read(repo, rel):
+    """读仓库内目标文件;拒绝绝对路径与 .. 穿越(防配置指路读仓外文件)。"""
+    if os.path.isabs(rel):
+        raise ValueError(f"目标路径必须是仓库相对路径: {rel!r}")
+    repo_real = os.path.realpath(repo)
+    path = os.path.realpath(os.path.join(repo_real, rel))
+    if path != repo_real and not path.startswith(repo_real + os.sep):
+        raise ValueError(f"目标文件越出仓库: {rel!r}")
+    if not os.path.isfile(path):
+        raise ValueError(f"目标文件不存在: {rel}")
+    with open(path, "r", encoding="utf-8", errors="replace") as f:
+        return f.read()
 
 
 def section_slice(text, section):
@@ -274,7 +312,7 @@ def engine_count_matches(repo, rule):
     if not source:
         raise ValueError("count-matches 需要 source(唯一来源文件)")
     text = section_slice(_engine_read(repo, source), rule.get("section"))
-    row_re = re.compile(rule.get("row_pattern", r"^\|\s*\["), re.MULTILINE)
+    row_re = _safe_compile(rule.get("row_pattern", r"^\|\s*\["), re.MULTILINE)
     expected = len(row_re.findall(text))
     detail = source + (f" [{rule['section']}]" if rule.get("section") else "")
     patterns = _engine_as_list(rule.get("claim_pattern")) + _engine_as_list(rule.get("claim_patterns"))
@@ -287,10 +325,7 @@ def engine_count_matches(repo, rule):
     for rel in _engine_as_list(rule.get("claim_files")):
         body = _engine_read(repo, rel)
         for pattern in patterns:
-            try:
-                regex = re.compile(pattern)
-            except re.error as exc:
-                raise ValueError(f"claim_pattern 非法正则 {pattern!r}: {exc}") from None
+            regex = _safe_compile(pattern)
             if regex.groups != 1:
                 raise ValueError(f"claim_pattern 必须恰好一个捕获组: {pattern!r}")
             for m in regex.finditer(body):
@@ -325,8 +360,8 @@ def engine_forbid_pattern(repo, rule):
     pattern = rule.get("pattern")
     if not pattern:
         raise ValueError("forbid-pattern 需要 pattern")
-    regex = re.compile(pattern)
-    ignore = re.compile(rule["ignore"]) if rule.get("ignore") else None
+    regex = _safe_compile(pattern)
+    ignore = _safe_compile(rule["ignore"]) if rule.get("ignore") else None
     for rel in _engine_as_list(rule.get("files")) or _engine_as_list(rule.get("file")):
         body = _engine_read(repo, rel)
         for line_no, line in enumerate(body.splitlines(), 1):
@@ -375,7 +410,7 @@ def engine_consistency(repo, rule):
     pattern = rule.get("pattern")
     if len(files) < 2 or not pattern:
         raise ValueError("consistency 需要 files(≥2)与 pattern")
-    regex = re.compile(pattern, re.MULTILINE)
+    regex = _safe_compile(pattern, re.MULTILINE)
     hits = {}
     for rel in files:
         body = _engine_read(repo, rel)

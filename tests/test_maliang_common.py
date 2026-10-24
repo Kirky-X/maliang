@@ -134,3 +134,61 @@ class TestEngineParityWithSkillLint(unittest.TestCase):
         sl = load("skill_lint.py")
         fails, _ = sl.check_repo_rules(self.repo)
         self.assertEqual([f for f in fails if "计数" in f], [])
+
+
+class TestEngineParityMoreTypes(unittest.TestCase):
+    """parity 扩展:forbid / require / consistency 三类双副本同判(L5)。"""
+
+    def setUp(self):
+        import tempfile
+        from pathlib import Path
+        self._tmp = tempfile.TemporaryDirectory()
+        self.repo = Path(self._tmp.name)
+        (self.repo / "a.md").write_text("禁止词: 完美\n干净行\n", encoding="utf-8")
+        (self.repo / "b.md").write_text("干净行\n", encoding="utf-8")
+        (self.repo / "c.md").write_text("正文 纯 Python 标准库\n", encoding="utf-8")
+        import sys
+        sys.path.insert(0, os.path.dirname(__file__))
+        self.sl = load("skill_lint.py")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def _both(self, rule):
+        eng = mc.engine_run_rule(str(self.repo), rule)
+        import json
+        (self.repo / "lint-checks.json").write_text(
+            json.dumps({"checks": [rule]}, ensure_ascii=False), encoding="utf-8")
+        fails, warns = self.sl.check_repo_rules(self.repo)
+        sl_msgs = fails + warns
+        return eng, sl_msgs
+
+    def test_forbid_parity(self):
+        rule = {"name": "禁用", "type": "forbid-pattern", "files": ["a.md"], "pattern": "完美"}
+        eng, sl_msgs = self._both(rule)
+        self.assertEqual(len(eng), 1)
+        self.assertTrue(any("a.md:1" in m for m in sl_msgs))
+
+    def test_require_parity(self):
+        rule = {"name": "必现", "type": "require-pattern", "file": "c.md",
+                "pattern": "纯 Python 标准库", "min_count": 1}
+        eng, sl_msgs = self._both(rule)
+        self.assertEqual(eng, [])
+        self.assertEqual([m for m in sl_msgs if "必现短语未满足" in m], [])
+        # 未满足时两侧同报
+        rule2 = dict(rule, file="b.md", pattern="不存在的短语")
+        eng2, sl2 = self._both(rule2)
+        self.assertEqual(len(eng2), 1)
+        self.assertTrue(any("必现短语未满足" in m for m in sl2))
+
+    def test_consistency_parity(self):
+        rule = {"name": "一致", "type": "consistency", "files": ["a.md", "b.md"],
+                "pattern": "^干净行$"}
+        eng, sl_msgs = self._both(rule)
+        self.assertEqual(eng, [])
+        self.assertEqual([m for m in sl_msgs if "一致性漂移" in m], [])
+        # 漂移时两侧同报:b.md 改成不同内容
+        (self.repo / "b.md").write_text("另一行\n", encoding="utf-8")
+        eng2, sl2 = self._both(rule)
+        self.assertTrue(any("未命中一致性 pattern" in f["message"] for f in eng2))
+        self.assertTrue(any("未命中一致性 pattern" in m for m in sl2))
