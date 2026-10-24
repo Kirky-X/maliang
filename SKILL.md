@@ -103,7 +103,7 @@ metadata:
 | draw-harmony/flutter/element | [`performance.md`](references/meta/performance.md)、[`accessibility.md`](references/meta/accessibility.md)、[`polish-craft.md`](references/meta/polish-craft.md)(微雕手艺,多数条目 web-only) | [`token.md`](references/meta/token.md)(命名回填)、[`ux-rules.md`](references/meta/ux-rules.md) |
 | ip / ip-handbook | [`product-reasoning.md`](references/meta/product-reasoning.md) | [`content-guide.md`](references/meta/content-guide.md) |
 
-> 元规则:[`rules-priority.md`](references/meta/rules-priority.md) 与 [`philosophy.md`](references/meta/philosophy.md) 是全阶段裁决层,冲突时优先于各阶段文档;[`lifecycle.md`](references/meta/lifecycle.md) 是全生命周期总图(七段×载体×检查点);[`llm-behavior.md`](references/meta/llm-behavior.md) 在产出 > 2 屏的长文档时必读。
+> 元规则:[`rules-priority.md`](references/meta/rules-priority.md) 与 [`philosophy.md`](references/meta/philosophy.md) 是全阶段裁决层,冲突时优先于各阶段文档;[`lifecycle.md`](references/meta/lifecycle.md) 是全生命周期总图(七段×载体×检查点);[`theory-router.md`](references/meta/theory-router.md) 是理论判断辅助层(自动判阶 + 段×理论模型包 + 触发条件 + 复合规则),任何段需要用理论模型推理/归因/说服时按需加载,其详尽层 [`design-theory-models.md`](references/meta/design-theory-models.md) 只按锚点查、不全读;[`llm-behavior.md`](references/meta/llm-behavior.md) 在产出 > 2 屏的长文档时必读。
 
 ## 通用
 
@@ -113,6 +113,7 @@ metadata:
 - **模板墙**在 [`references/templates/`](references/templates/INDEX.md):14 种设计语言(液态玻璃/M3 Expressive/Fluent 2/Bento/瑞士编辑/OLED 暗色/数据仪表盘等) + 整页模式(编辑分栏/纵深长廊/Dashboard 风格集/移动端五式/滚动图带/AI 工作台) + 落地页编排 + 性格方向卡;选型走 README 四步路由 + [variation-engine](references/templates/variation-engine.md) 七轴组合 + [跨次构建记忆](references/templates/variation-engine.md)(build-log + CSS 盖章,≥5 轴相同即重选)。
 - **术语库**在 [`references/vocabulary/`](references/vocabulary/INDEX.md):24 篇模式命名词汇,draw-md 组件命名对齐——篇目/来源/核验日期的唯一清单见 [vocabulary/INDEX.md](references/vocabulary/INDEX.md),条目明细在各篇「命名表」。动效骨架([`references/motion-skeletons/`](references/motion-skeletons/))共 10 篇。**动效选型先读 [`motion-skeletons/ROUTING.md`](references/motion-skeletons/ROUTING.md)**:效果×路线双轴、GATE 四查、六路线成本表、十族效果目录(含各族 slop form 反模式)、四拍节奏表。
 - **结构化 UX 规则**在 [`references/meta/ux-rules.md`](references/meta/ux-rules.md)(slug + Do/Don't + 严重级,脚本检查是它的机械化子集);页面模式判定见 [`surface-modes.md`](references/meta/surface-modes.md),图片策略见 [`visual-assets.md`](references/meta/visual-assets.md)。
+- **理论模型路由**在 [`references/meta/theory-router.md`](references/meta/theory-router.md):判阶表(产物证据>意图措辞,8 条规则)自动识别所处段,每段给出理论模型包(模型×判断什么×触发条件),复合规则(诊断链/决策链/降载链/转化链/旅程链/伦理闸,单次 ≤3 模型);定律机制以 [`ux-laws.md`](references/meta/ux-laws.md) 为 canonical,全量 174 模型明细在 [`design-theory-models.md`](references/meta/design-theory-models.md)。理论是推理/归因/说服层,不能抵扣 ux-rules 与编号门禁。
 - 数据埋点规范(事件命名 / 漏斗三件套 / 改版基线比对)见 [`references/meta/analytics-events.md`](references/meta/analytics-events.md);用户研究三产出(persona / journey / JTBD)见 design-md Phase 0a([`references/commands/design-md.md`](references/commands/design-md.md))。
 - 默认页面清单(App 15 页 + Web 15 页,含 P0/P1/P2 选用规则)在 [`references/default-pages/index.md`](references/default-pages/index.md) 下,供 `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用。
 - 框架组件文档(按钮/文本/列表 × 三框架)在 [`references/framework/`](references/framework/index.md) 下,三个 draw-* 子命令共享。
