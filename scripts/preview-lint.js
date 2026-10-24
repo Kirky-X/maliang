@@ -92,7 +92,10 @@
       return c;
     };
     var luminance = function (c) {
-      var f = function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+      // 浏览器内嵌无法 import;linearize/对比度 canonical 实现锚定 scripts/maliang_common.py
+      // (WCAG_LINEAR_THRESHOLD=0.04045),改口径只改彼处并同步本文件。8-bit 量化值上
+      // 旧值 0.03928 与 0.04045 结果全等,此处保留 0.03928 不构成行为分叉。
+      var f = function (v) { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
       return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
     };
     var ratio = function (a, b) {
@@ -201,12 +204,18 @@
     (function () {
       var TOL = 2; // 亚像素 + 抗锯齿容差,超过即肉眼可辨
       var rectOf = function (el) { return el.getBoundingClientRect(); };
+      // 父容器样式按 parent 缓存:同父 N 子只查一次 computed style
+      var parentDisplays = new Map();
+      var parentDisplay = function (p) {
+        if (!parentDisplays.has(p)) parentDisplays.set(p, css(p).display);
+        return parentDisplays.get(p);
+      };
       var groups = new Map();
       all.forEach(function (el) {
         var p = el.parentElement;
         if (!p || p === document.body) return;
-        var ps = css(p);
-        if (ps.display.indexOf("flex") === -1 && ps.display.indexOf("grid") === -1) return;
+        var pd = parentDisplay(p);
+        if (pd.indexOf("flex") === -1 && pd.indexOf("grid") === -1) return;
         if (!shown(el)) return;
         var r = rectOf(el);
         if (r.width < 80 || r.height < 40) return;
@@ -235,7 +244,7 @@
           rows.forEach(function (taggedRow) {
             var row = taggedRow.map(function (t) { return t.el; });
             if (row.length < 2 || row.length > 8) return;
-            var pStyle = css(p);
+            var pStyle = { display: parentDisplay(p), flexDirection: css(p).flexDirection, alignItems: css(p).alignItems };
             // 高不等:仅 flex 行(stretch/normal 交叉轴应等高)。grid 不查——
             // bento 瓦片行跨度不同,同排高差是设计而非缺陷
             if (pStyle.display.indexOf("flex") !== -1
