@@ -686,7 +686,12 @@ def build(manifest_path: str, output_path: str | None, force: bool) -> dict:
         os.path.dirname(manifest_path), "style-explorer.html")
     if output in inputs:
         raise ValueError("输出不能覆盖 manifest 或候选文件")
-    if os.path.commonpath([output, os.path.realpath(SKILL_ROOT)]) == os.path.realpath(SKILL_ROOT):
+    try:
+        inside_skill_root = os.path.commonpath(
+            [output, os.path.realpath(SKILL_ROOT)]) == os.path.realpath(SKILL_ROOT)
+    except ValueError:
+        inside_skill_root = False
+    if inside_skill_root:
         raise ValueError("输出不能写进 Skill 安装目录；把对比页生成在任务目录里")
     if os.path.exists(output) and not force:
         raise FileExistsError(f"输出已存在：{output}。要更新它就加 --force，要保留它就用 --output 换一个路径")
@@ -732,7 +737,11 @@ def build(manifest_path: str, output_path: str | None, force: bool) -> dict:
             handle.write(page)
     if origins and "serve" not in data:
         print("提醒：本轮包含 url 候选，建议在 manifest 顶层补上 serve 启动方式，方便重新打开对比页。", file=sys.stderr)
-    return {"output": os.path.relpath(output, os.getcwd()), "candidates": len(data["candidates"]),
+    try:
+        output_display = os.path.relpath(output, os.getcwd())
+    except ValueError:
+        output_display = output
+    return {"output": output_display, "candidates": len(data["candidates"]),
             "fingerprint": data["fingerprint"], "bytes": os.path.getsize(output)}
 
 

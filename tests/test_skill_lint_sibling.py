@@ -68,9 +68,10 @@ class TestSiblingSkills(unittest.TestCase):
         self.assertEqual(fails, [])
 
     def test_severity_warn_goes_to_warns(self):
+        self._sibling("diting")  # 让兄弟根可定位
         _write(self.repo / "SKILL.md",
                '---\nname: my-skill\ndescription: "用 tiangang 扫描"\n---\n')
-        fails, warns = self._rule(["tiangang"], severity="WARN")
+        fails, warns = self._rule(["diting", "tiangang"], severity="WARN")
         self.assertEqual(fails, [])
         self.assertTrue(any("悬空" in w for w in warns))
 
@@ -86,17 +87,37 @@ class TestSiblingSkills(unittest.TestCase):
         fails, _ = self._rule(["diting"])
         self.assertEqual(fails, [])
 
+    def test_env_var_sibling_root_redirects(self):
+        # 兄弟根可用 SKILL_SIBLINGS_ROOT 显式指定(部署布局与检出布局解耦)
+        env_root = self.workspace / "skills-root"
+        _write(env_root / "diting" / "SKILL.md", "---\nname: diting\n---\n")
+        _write(self.repo / "SKILL.md",
+               '---\nname: my-skill\ndescription: "代码审查用 diting"\n---\n')
+        saved = os.environ.get("SKILL_SIBLINGS_ROOT")
+        os.environ["SKILL_SIBLINGS_ROOT"] = str(env_root)
+        try:
+            fails, warns = self._rule(["diting"])
+        finally:
+            if saved is None:
+                os.environ.pop("SKILL_SIBLINGS_ROOT", None)
+            else:
+                os.environ["SKILL_SIBLINGS_ROOT"] = saved
+        self.assertEqual((fails, warns), ([], []))
+
+    def test_unlocatable_sibling_root_warns_instead_of_fails(self):
+        # 单仓检出/CI:配置兄弟一个都不在可选根下 → 显式 WARN 跳过,不冒充悬空 FAIL
+        _write(self.repo / "SKILL.md",
+               '---\nname: my-skill\ndescription: "代码审查用 diting"\n---\n')
+        fails, warns = self._rule(["diting"])
+        self.assertEqual(fails, [])
+        self.assertTrue(any("兄弟根不可定位" in w for w in warns))
+
     def test_maliang_real_config_accepts_workspace_siblings(self):
-        # maliang 仓真实配置在真实工作区应当通过(兄弟仓都在)
+        # maliang 仓真实配置:兄弟齐时通过;兄弟根不可定位时 WARN 跳过——两者都不得悬空 FAIL
         repo = Path(__file__).resolve().parent.parent
         cfg_path = repo / "lint-checks.json"
         if not cfg_path.is_file():
             self.skipTest("lint-checks.json 不存在")
-        if not any(
-            p.is_dir() and p != repo and (p / "SKILL.md").is_file()
-            for p in repo.parent.iterdir()
-        ):
-            self.skipTest("工作区无兄弟仓(CI 单仓检出)，真实配置检查无对象")
         cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
         rules = [c for c in cfg.get("checks", []) if c.get("type") == "sibling-skills"]
         if not rules:

@@ -320,11 +320,28 @@ def check_repo_rules(repo: Path) -> tuple[list[str], list[str]]:
                     )
                     if dm:
                         desc = dm.group(1)
+            env_root = os.environ.get("SKILL_SIBLINGS_ROOT")
+            root_candidates = [Path(env_root)] if env_root else []
+            root_candidates.append(repo.parent)
+            sib_root = next(
+                (
+                    root
+                    for root in root_candidates
+                    if any((root / s / "SKILL.md").is_file() for s in siblings)
+                ),
+                None,
+            )
+            if sib_root is None:
+                warns.append(
+                    f"{name}: 兄弟根不可定位(SKILL_SIBLINGS_ROOT 未设置且 {repo.parent} 下无任一配置兄弟),"
+                    "sibling 存在性检查跳过(单仓检出/CI 常见;部署到 skills 根后自动生效)"
+                )
+                continue
             for sib in siblings:
                 if not re.search(r"(?<![\w-])" + re.escape(sib) + r"(?![\w-])", desc):
                     continue  # 未引用的兄弟不检查
-                if not (repo.parent / sib / "SKILL.md").is_file():
-                    msg = f"{name}: 悬空兄弟引用: description 提到 {sib},但 {sib}/SKILL.md 不存在"
+                if not (sib_root / sib / "SKILL.md").is_file():
+                    msg = f"{name}: 悬空兄弟引用: description 提到 {sib},但 {sib_root / sib}/SKILL.md 不存在"
                     (warns if sev == "WARN" else fails).append(msg)
             continue
         rname = str(rule.get("name") or where)

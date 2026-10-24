@@ -443,7 +443,11 @@ def _scan_preview_html(preview_root):
             if fn.endswith(".html"):
                 slug = _extract_slug(fn)
                 abs_path = os.path.join(dirpath, fn)
-                result[slug] = os.path.relpath(abs_path, os.getcwd())
+                try:
+                    result[slug] = os.path.relpath(abs_path, os.getcwd())
+                except ValueError:
+                    result[slug] = abs_path
+                result[slug] = result[slug].replace(os.sep, "/")
     return result
 
 
@@ -462,7 +466,11 @@ def _scan_framework_code(code_root):
         dir_posix = (dirpath + "/").replace(os.sep, "/")
         for fn in filenames:
             abs_path = os.path.join(dirpath, fn)
-            rel_path = os.path.relpath(abs_path, os.getcwd())
+            try:
+                rel_path = os.path.relpath(abs_path, os.getcwd())
+            except ValueError:
+                rel_path = abs_path
+            rel_path = rel_path.replace(os.sep, "/")
             slug = _extract_slug(fn)
             if fn.endswith(".ets") and "/pages/" in dir_posix:
                 result["harmony"][slug] = rel_path
