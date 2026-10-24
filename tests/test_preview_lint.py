@@ -1,4 +1,4 @@
-"""preview-lint.js:静态片段契约 + 真浏览器探针(14 类可量测问题与动效四相位)。
+"""preview-lint.js:静态片段契约 + 真浏览器探针(16 类可量测问题与动效四相位)。
 
 无浏览器时浏览器用例跳过;有浏览器时:
   - probe_all_rules.html 上至少命中 13 类规则;
@@ -26,7 +26,8 @@ NO_BROWSER_REASON = "本机没有 Chrome/Chromium,浏览器探针用例跳过"
 ALL_RULES = [
     "eyebrow", "numbered", "sideStripe", "gradientText", "nestedCards", "emojiIcon",
     "englishLabel", "contrastLow", "grayOnColor", "smallText", "tightLeading",
-    "longMeasure", "stuck", "headingSpacing",
+    "longMeasure", "stuck", "headingSpacing", "siblingRowMisalign",
+    "siblingUnequalSize",
 ]
 
 
@@ -38,7 +39,7 @@ class TestStaticFragment(unittest.TestCase):
                      "__maliangMotionIssues", "__maliangMotionBrief", "setPhase"):
             self.assertIn(hook, src)
         for rule in ALL_RULES:
-            self.assertIn(rule + ":", src)  # LABELS 表里 14 类齐全
+            self.assertIn(rule + ":", src)  # LABELS 表里 16 类齐全
         # 只读取证:不得出现会写回页面的 style 注入
         self.assertNotIn("appendChild(s)", src)
         self.assertNotIn("document.head.append", src)
@@ -84,7 +85,8 @@ class TestBrowserProbe(unittest.TestCase):
         for rule in ("contrastLow", "grayOnColor", "smallText", "tightLeading",
                      "longMeasure", "stuck", "nestedCards", "emojiIcon",
                      "englishLabel", "eyebrow", "numbered", "sideStripe",
-                     "gradientText", "headingSpacing"):
+                     "gradientText", "headingSpacing", "siblingRowMisalign",
+                     "siblingUnequalSize"):
             self.assertIn(rule, rules)
 
     def test_contrast_below_1_5_not_reported(self):

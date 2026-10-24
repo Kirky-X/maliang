@@ -117,6 +117,7 @@ Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景
 | icon-messages-stroke       | 消息 tab(线性,未选中态)       | stroke |
 | icon-mine-filled           | 我的 tab(填充,选中态)         | filled |
 | icon-mine-stroke           | 我的 tab(线性,未选中态)       | stroke |
+| icon-compose-stroke        | 创作图标(线性,dock 中心凸起位) | stroke |
 | icon-back                  | 返回箭头(线性,导航栏左上)     | stroke |
 | icon-feed                  | 内容流图标(首页内容流)         | stroke |
 | icon-rank                  | 排行榜图标(金刚区入口)         | stroke |

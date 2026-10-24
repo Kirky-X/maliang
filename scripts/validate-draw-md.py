@@ -768,12 +768,20 @@ def check_motion_duration(rel_path, lines):
     return results
 
 
+CARD_RADIUS_BANNED = (
+    "{radius-md}",      # 已废弃旧词(token 词表已无此档)
+    "{radius-sharp}",   # 直角档:图片 / 严谨数据表
+    "{radius-subtle}",  # 控件档:标签 / chip / 输入
+    "{radius-full}",    # 胶囊档:按钮 / 头像 / 开关
+)
+
+
 def check_card_radius(rel_path, lines):
     """检查 12:卡片组件 radius 违规(error)。
 
-    扫描组件类型含 card 的参数表,检查 radius 字段,
-    为 {radius-md} 返回 error,应用 {radius-lg}(AUDIT-REPORT G07)。
-    {radius-full}/{radius-sm} 不报错。
+    扫描组件类型含 card 的参数表,检查 radius 字段:卡片必须用卡片档
+    {radius-rounded}/{radius-lg}/{radius-xl};控件档/直角档/胶囊档与旧词
+    radius-md 报 error(AUDIT-REPORT G07;档位语义见 token.md §5 圆角)。
     """
     results = []
     for header_line, rows in _extract_param_tables(lines):
@@ -796,15 +804,17 @@ def check_card_radius(rel_path, lines):
             if "radius" not in field and "圆角" not in field:
                 continue
             row_value = row_cells[1] if len(row_cells) > 1 else ""
-            if "{radius-md}" in row_value:
-                results.append(
-                    (
-                        "ERROR",
-                        rel_path,
-                        row_line_no,
-                        "卡片组件使用 radius-md 违规,应用 radius-lg",
+            for banned in CARD_RADIUS_BANNED:
+                if banned in row_value:
+                    results.append(
+                        (
+                            "ERROR",
+                            rel_path,
+                            row_line_no,
+                            "卡片圆角必须用卡片档 {radius-rounded}/{radius-lg}/"
+                            "{radius-xl},%s 不是卡片档" % banned,
+                        )
                     )
-                )
     return results
 
 

@@ -26,6 +26,8 @@
 
 标题行高紧凑以突出,正文行高宽松以可读。同一字号的标题与正文用不同行高策略。
 
+> 与产物层的换算:公式用于**推演**新档位;产物层一律落 token 三档(`line-height-tight` 1.2 / `line-height-base` 1.5 / `line-height-relaxed` 1.6,见 [`token.md`](../../examples/ui-markdown/token.md) 行高三档),参数表写 token 引用、不写公式结果——两套记法不并存,防止规范层公式与产物层档位各自演化漂移。
+
 ## 字重策略
 
 | 字重         | 用途            |

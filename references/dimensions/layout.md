@@ -1,6 +1,6 @@
 # 布局规范
 
-> 规范层。布局类型的**通用概念、选用规则、嵌套约定**。页面 markdown 的正文格式按本文件组织(章节=布局区域,可嵌套可含组件)。具体硬值(间距/圆角)在产物层 [`examples/ui-markdown/token.md`](../../examples/ui-markdown/token.md),维度规范见 [`spacing.md`](./spacing.md) / [`radius.md`](./radius.md)。
+> 规范层。布局类型的**通用概念、选用规则、嵌套约定**。页面 markdown 的正文格式按本文件组织(章节=布局区域,可嵌套可含组件)。具体硬值(间距/圆角)在产物层 [`examples/ui-markdown/token.md`](../../examples/ui-markdown/token.md),维度规范见 [`spacing.md`](./spacing.md) / [`radius.md`](./radius.md);元素间的对齐/同排等高/基线/凸起关系见 [`alignment.md`](./alignment.md)——本文件管「用什么容器装」,对齐关系在对齐规范。
 >
 > 内容参考华为 HarmonyOS 布局开发文档,仅提取通用布局概念,不涉及平台代码实现。
 

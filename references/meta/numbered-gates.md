@@ -159,6 +159,16 @@
 - **怎么判定**:1280×800 实测首屏可见内容。对应 ai-tells §1。
 - **怎么修**:hero 高度按内容定,或首屏至少给一个真实动作;移动端改 `100dvh` 并让出安全区。
 
+### G44 · 同排元素行位错位 / 等高破坏
+- **违反什么**:同排同构元素(统计指标卡/表单项/同组卡片/dock tab)的对应内容行(图标/数值/副文案)顶基线偏差肉眼可辨(> 2px),或 flex 行 stretch 语义下同构卡片渲染高不等、等分(`flex-grow`)元素渲染宽不等——「值全对但排歪」。
+- **怎么判定**:探针 [`../../scripts/preview-lint.js`](../../scripts/preview-lint.js) `siblingRowMisalign` / `siblingUnequalSize`(注入临时副本取回报告,容差 2px)+ 截图核对;规范判据见 [`../dimensions/alignment.md`](../dimensions/alignment.md)(对齐轴/同排等高与行槽)。
+- **怎么修**:图标定框(固定宽高容器)、行槽化(第 k 行跨卡对齐),禁「内容天然高度」决定行位;混排行 `align-items: baseline`(ux-rules `baseline-align-mixed`);修复后重跑探针。出处：2026-10 用户实测反馈(四宫格统计卡错位)驱动补建。
+
+### G45 · 凸起元素无规格依据
+- **违反什么**:越出容器的凸起元素(dock 中心主操作按钮/FAB/骑缝头像)未同时声明三要素——凸起量(落 spacing token 档且 ≤ 按钮高 50%)、锚定轴(偏差 ≤ 2px)、与相邻元素的基线关系;或实测凸起超过声明值,造成与相邻项基线断裂。
+- **怎么判定**:人工对账 organisms 规格声明(canonical 示例:dock 中心凸起位,见 [`../../examples/ui-markdown/organisms/dock.md`](../../examples/ui-markdown/organisms/dock.md))+ 渲染实测凸起量;判据见 [`../dimensions/alignment.md`](../dimensions/alignment.md) 凸起与越界关系。
+- **怎么修**:回规格补齐三要素或收敛凸起;禁止「大概齐」偏移——偏移量没有依据,就没有上限。出处：同 G44(dock 中心按钮上移过大)驱动补建。
+
 ---
 
 ## F 组 · 交付与可核验性

@@ -426,19 +426,33 @@ class TestPhysicalProperty(unittest.TestCase):
 
 
 class TestCardRadius(unittest.TestCase):
-    def test_card_with_md_radius_reports_error(self):
-        lines = _rows_to_lines([
-            "| 组件类型 | `card` | |",
-            "| 圆角 radius | {radius-md} | |",
-        ])
-        results = vdm.check_card_radius("ui/home.md", lines)
-        self.assertTrue(any(r[0] == "ERROR" for r in results))
+    def test_card_with_control_tier_radius_reports_error(self):
+        # 卡片必须用卡片档 rounded/lg/xl;控件档 subtle、直角档 sharp、
+        # 胶囊档 full 与已废弃旧词 radius-md 都不是卡片圆角
+        for token in ("{radius-md}", "{radius-subtle}", "{radius-sharp}",
+                      "{radius-full}"):
+            lines = _rows_to_lines([
+                "| 组件类型 | `card` | |",
+                "| 圆角 radius | %s | |" % token,
+            ])
+            results = vdm.check_card_radius("ui/home.md", lines)
+            self.assertTrue(any(r[0] == "ERROR" for r in results), token)
 
-    def test_card_with_lg_radius_passes(self):
-        # 不应报: 卡片用 radius-lg
+    def test_card_with_card_tier_radius_passes(self):
+        # 不应报: 卡片档 rounded(主流)/lg(大卡)/xl(模态)
+        for token in ("{radius-rounded}", "{radius-lg}", "{radius-xl}"):
+            lines = _rows_to_lines([
+                "| 组件类型 | `card` | |",
+                "| 圆角 radius | %s | |" % token,
+            ])
+            results = vdm.check_card_radius("ui/home.md", lines)
+            self.assertEqual(results, [], token)
+
+    def test_non_card_component_radius_not_checked(self):
+        # 非卡片组件(如 input)不受卡片档约束
         lines = _rows_to_lines([
-            "| 组件类型 | `card` | |",
-            "| 圆角 radius | {radius-lg} | |",
+            "| 组件类型 | `input` | |",
+            "| 圆角 radius | {radius-subtle} | |",
         ])
         results = vdm.check_card_radius("ui/home.md", lines)
         self.assertEqual(results, [])

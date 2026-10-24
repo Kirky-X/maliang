@@ -23,8 +23,8 @@
 | `ui-graph` | 交付 | UI 关系图（层级 + 跳转 + 哈希基线 + 实现映射），变更追踪与实现缺口查询 |
 | `ip` / `ip-handbook` | 交付 | IP 形象生成（API 优先，fallback prompt）/ IP 视觉手册（8 模块，2K 3:4） |
 
-- **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 24 篇组件命名词汇 + 八维规范（色/字/图/距/角/线/布局/海拔）
-- **区段原型库**：[`references/components/`](references/components/INDEX.md)（50 个区段原型 + 索引——**从索引挑名、只加载选中的那几个**，典型一次构建 5-7 个文件：1 hero + 1 区段头 + 1-2 主体区段 + 1 CTA + 1 页脚 + 1 导航；区段原型管「这段长成什么」，元素级外观仍在 `references/vocabulary/`）
+- **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 24 篇组件命名词汇 + 九维规范（色/字/图/距/角/线/布局/对齐/海拔）
+- **区段原型库**：[`references/components/`](references/components/INDEX.md)（51 个区段原型 + 索引——**从索引挑名、只加载选中的那几个**，典型一次构建 5-7 个文件：1 hero + 1 区段头 + 1-2 主体区段 + 1 CTA + 1 页脚 + 1 导航；区段原型管「这段长成什么」，元素级外观仍在 `references/vocabulary/`）
 - **研究记录**：[`research/`](research/README.md)（自己测量、可以推翻自己规则的过程记录：真实问题 · 真实方法 · 带语境的数据 · 落地留痕）
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **已并入资产**：原 craft 方法集 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（sha e3d624b，2026-09-12），critique 的 UI 合规/a11y 清单读取该快照
@@ -85,12 +85,12 @@ pytest 实测（2026-10-20，Python 3.12）：
 
 ```text
 $ python3 -m pytest tests -q
-445 passed, 1 skipped in 13.13s
+446 passed, 1 skipped in 13.13s
 ```
 
 测试文件清单以 [`tests/`](tests) 单一来源为准（计数一致性由 `test_doc_consistency` 断言守护）；本批新增验证层脚本各有对应测试与 fixtures。
 
-CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework △ 仅 warning、ui-graph check-nav ✓、preview-check 0 error / 3 warning，覆盖 51/143 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
+CI 门实测：`bash scripts/ci-gate.sh` → `结果: PASS`（单元测试 ✓、validate-draw-md ✓、validate-framework △ 仅 warning、ui-graph check-nav ✓、preview-check 0 error / 3 warning、detect-tells 冒烟 ✓，覆盖 51/143 项，其余需浏览器人工验证）。push/PR 由 `.github/workflows/validate.yml` 自动执行同一门禁。
 
 ## 📁 目录结构
 
@@ -104,9 +104,9 @@ maliang/
 │   │                        #   含 web-interface-guidelines.md 快照（sha e3d624b）
 │   │                        #   + source-hygiene.md（来源卫生）/ visual-symptoms.md（症状诊断）
 │   ├── interface-design/    # 原 craft 方法集 并入（craft 纪律 / 严格评审）
-│   ├── dimensions/          # 八维规范 + 调色板库 + 液态玻璃配方
+│   ├── dimensions/          # 九维规范 + 调色板库 + 液态玻璃配方
 │   ├── framework/           # 56 类组件 × 三框架文档（harmony / flutter / element）
-│   ├── components/          # 区段原型库：50 个原型 + INDEX.md（从索引挑名、只加载选中的那几个）
+│   ├── components/          # 区段原型库：51 个原型 + INDEX.md（从索引挑名、只加载选中的那几个）
 │   ├── templates/           # 模板墙：14 种设计语言 + 整页模式 + 落地页编排
 │   ├── vocabulary/          # 24 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息）
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
@@ -123,7 +123,7 @@ maliang/
 | 规则 / 机制 | canonical 文档 |
 | --- | --- |
 | 设计语言计数（模板墙） | `references/templates/INDEX.md` |
-| 编号门禁 G01–G43 | `references/meta/numbered-gates.md` |
+| 编号门禁 G01–G45 | `references/meta/numbered-gates.md` |
 | 143 项 Pre-Flight 清单与计数 | `references/commands/preview-checklist.md`（脚本侧计数由 `tests/test_doc_consistency.py` 断言守护） |
 | 退出码三态语义 | `scripts/EXIT-CODES.md` |
 | token 溯源与决策 id | `references/meta/token-provenance.md` |

@@ -23,8 +23,8 @@ English | [中文](README.md)
 | `ui-graph` | Deliver | UI relationship graph (hierarchy + navigation + hash baseline + implementation map), change tracking and implementation-gap queries |
 | `ip` / `ip-handbook` | Deliver | IP character generation (API first, prompt fallback) / IP visual handbook (8 modules, 2K 3:4) |
 
-- **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 24 component-naming vocabulary docs + eight dimension specs (color / type / icon / spacing / radius / border / layout / elevation)
-- **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (50 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
+- **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 24 component-naming vocabulary docs + nine dimension specs (color / type / icon / spacing / radius / border / layout / alignment / elevation)
+- **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (51 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
 - **Research log**: [`research/`](research/README.md) (measure-it-yourself records that may overturn the repo's own rules: real problem · real method · data with context · landing trace)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Merged assets**: the former craft 方法集 now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (sha e3d624b, 2026-09-12), critique reads it for UI-compliance/a11y checklists
@@ -104,9 +104,9 @@ maliang/
 │   │                        #   incl. web-interface-guidelines.md snapshot (sha e3d624b)
 │   │                        #   + source-hygiene.md (source hygiene) / visual-symptoms.md (symptom diagnosis)
 │   ├── interface-design/    # merged from the former craft 方法集 (craft discipline / strict review)
-│   ├── dimensions/          # eight dimension specs + palette library + liquid-glass recipes
+│   ├── dimensions/          # nine dimension specs + palette library + liquid-glass recipes
 │   ├── framework/           # 56 component classes × three frameworks (harmony / flutter / element)
-│   ├── components/          # section-archetype library: 50 prototypes + INDEX.md (pick from the index, load only what you pick)
+│   ├── components/          # section-archetype library: 51 prototypes + INDEX.md (pick from the index, load only what you pick)
 │   ├── templates/           # template wall: 14 design languages + full-page patterns + landing-page orchestration
 │   ├── vocabulary/          # 24 component-naming vocabulary docs (incl. pro-motion, chat)
 │   └── default-pages/       # default page lists (15 app + 15 web pages, P0–P2)

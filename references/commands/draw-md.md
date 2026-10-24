@@ -92,7 +92,7 @@ pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(�
 
 > 布局类型选用与嵌套规则见 [`layout.md`](../dimensions/layout.md)。
 >
-> **区段形态选型(每个章节挑一个原型)**:先从 [`../components/INDEX.md`](../components/INDEX.md)(50 个区段原型)挑名——**从索引挑名、只加载选中的那几个**,典型一次构建 5-7 个文件(1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航),**不整库加载**;选中的原型按它自己的「变体旋钮」行逐旋钮取值,取值写进 build-log。**分工**:区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)仍在 [`../vocabulary/`](../vocabulary/),组件类型 slug 仍在 [`../framework/index.md`](../framework/index.md) 的 56 类里;同一原型第二次出现必须换至少一个旋钮(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
+> **区段形态选型(每个章节挑一个原型)**:先从 [`../components/INDEX.md`](../components/INDEX.md)(51 个区段原型)挑名——**从索引挑名、只加载选中的那几个**,典型一次构建 5-7 个文件(1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航),**不整库加载**;选中的原型按它自己的「变体旋钮」行逐旋钮取值,取值写进 build-log。**分工**:区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)仍在 [`../vocabulary/`](../vocabulary/),组件类型 slug 仍在 [`../framework/index.md`](../framework/index.md) 的 56 类里;同一原型第二次出现必须换至少一个旋钮(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
 
 ### 组件意图头(新增组件的参数表节前 MUST 附)
 
@@ -117,7 +117,7 @@ pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(�
 | 宽度 width  | 375px(或 `match-parent`)    | 组件宽度   |
 | 高度 height | 64px                        | 组件高度   |
 | 字体大小    | `{font-size-md}`            | 引用 token |
-| 圆角 radius | `{radius-md}`               | 引用 token |
+| 圆角 radius | `{radius-subtle}`           | 引用 token |
 | 背景颜色    | `{surface-card}`            | 引用 token |
 | 字体颜色    | `{text-primary}`            | 引用 token |
 | padding     | `{spacing-md} {spacing-lg}` | 引用 token |
@@ -261,7 +261,7 @@ pattern: [chart-line, table-sortable]
 - [ ] 交互组件(组件类型含 button/icon/input/link)参数表 MUST 含 aria-label 字段(对应检查 9, AUDIT G02)
 - [ ] 可点击组件(组件类型含 button/icon/link)width/height MUST ≥44px(对应检查 10, AUDIT G03)
 - [ ] 动效 duration MUST ≤400ms(引用 token 如 `{duration-slower}` 除外)(对应检查 11, AUDIT G06)
-- [ ] 卡片类组件(组件类型含 card)radius MUST 用 `{radius-lg}`,禁用 `{radius-md}`(对应检查 12, AUDIT G07)
+- [ ] 卡片类组件(组件类型含 card)radius MUST 用卡片档 `{radius-rounded}`/`{radius-lg}`/`{radius-xl}`,禁用控件档 `{radius-subtle}`、直角档 `{radius-sharp}`、胶囊档 `{radius-full}` 与旧词 `{radius-md}`(对应检查 12, AUDIT G07)
 - [ ] z-index MUST 用 `{z-index-*}` token 引用,禁止字面量(对应检查 13)
 
 ---
@@ -278,7 +278,7 @@ pattern: [chart-line, table-sortable]
 | aria-label 缺失 | 在交互组件参数表新增 aria-label 字段 | 用语义化描述(如 "返回首页") |
 | 触控区 <44px | 扩大组件 padding 或调整 width/height | 用 touch-target 包装器扩展 hit area |
 | 动效 >400ms | 改用 `{duration-slower}` 400ms token | 拆分长动效为多段短动效 |
-| 卡片 radius-md | 改用 `{radius-lg}` 16px | 仅 input 等非卡片组件可用 radius-md |
+| 卡片用了非卡片档圆角(radius-md/sharp/subtle/full) | 改用卡片档 `{radius-rounded}`(8px)/`{radius-lg}`(12px)/`{radius-xl}`(16px) | 仅 input/chip 等非卡片组件可用控件档 `{radius-subtle}` |
 
 ---
 

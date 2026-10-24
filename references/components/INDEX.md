@@ -1,6 +1,6 @@
 # 区段原型库（Components Index）
 
-> 区段级编码原型：50 个原型，覆盖一页的全部区段类型。**从索引挑名、只加载选中的那几个。**编号消歧**:本库 H1–H9 指代 hero 区段原型;`vocabulary/hero.md` 与 `dimensions/hero-stage.md` 中的 H1–H4 指 Hero 硬约束条目——两套编号语境不同,引用时以文件为准**——典型一次构建需要 5-7 个文件：1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航；不整库加载。
+> 区段级编码原型：51 个原型，覆盖一页的全部区段类型。**从索引挑名、只加载选中的那几个。**编号消歧**:本库 H1–H9 指代 hero 区段原型;`vocabulary/hero.md` 与 `dimensions/hero-stage.md` 中的 H1–H4 指 Hero 硬约束条目——两套编号语境不同,引用时以文件为准**——典型一次构建需要 5-7 个文件：1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航；不整库加载。
 >
 > 分工：[templates/](../templates/README.md) 选整页语言，本库选「每个区段长成什么」；元素级外观（按钮/卡片/表单的样式细节）仍在 [vocabulary/](../vocabulary/)。每个原型的「变体旋钮」供 [variation-engine.md](../templates/variation-engine.md) 盖章扩 knob 引用——选原型时逐旋钮取值并写进盖章。
 
@@ -28,7 +28,7 @@
 | S4 | [行内不断章](s4-inline-no-break.md) | 小型大写短语嵌在正文流里，不断章 |
 | S5 | [底部锚定](s5-bottom-anchored.md) | 标签放在区段内容下方，反转层级 |
 
-## 主体区段（6 个）
+## 主体区段（7 个）
 
 | id | 原型 | 一句话形状 |
 | --- | --- | --- |
@@ -38,6 +38,7 @@
 | F4 | [步骤序列](f4-step-sequence.md) | 编号阶段（1.0→2.0→3.0）纵向流动 |
 | F5 | [标注截图](f5-annotated-screenshot.md) | 产品截图居中，箭头/短标签指向细节 |
 | F6 | [商品卡网格](f6-product-card-grid.md) | 每卡一商品：图·名·价·一个微动作 |
+| F7 | [KPI 指标卡阵列](f7-kpi-stat-grid.md) | 2-6 张同构统计卡共基线等高：图标·数值·限定语·delta |
 
 ## CTA / 行动（4 个）
 

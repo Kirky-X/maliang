@@ -232,3 +232,16 @@ brief → 产品类型推理(见 product-reasoning.md)→ 匹配下表"适用场
 - **单项目 ≤ 1 个包**:禁止混用(如 Bootstrap + shadcn/ui),token 命名冲突 + 维护成本爆炸
 - **token 命名对齐**:选定包后,DESIGN.md 导出必须用该包的命名风格(不可用 maliang 默认 kebab-case 导出给 Fluent UI,需转 camelCase)
 - **ai-tells 关联**:Bootstrap / Material 默认风格易触发"通用感",选这些包必须深度定制 token(改色相 + 改圆角 + 改字族)
+
+## 生成向 UI Kit 场景速查(React / Tailwind 生态)
+
+
+| 场景 | 候选 Kit | 特点 |
+| ---- | -------- | ---- |
+| SaaS / 产品后台 | shadcn/ui(即 12 包表 #10)、[HeroUI](https://heroui.com)、[Mantine](https://mantine.dev) | 表单 / 表格 / 弹层全家桶,token 可深度定制 |
+| 落地页 / 营销页 | [Magic UI](https://magicui.design)、[Aceternity UI](https://aceternity.com)、[Origin UI](https://originui.com) | 动效组件与营销区块为主 |
+| Dashboard / 数据面板 | [Tremor](https://tremor.design)、[Refine](https://refine.dev) | 图表与 CRUD 骨架优先 |
+
+- **Kit 组件优先**:选定 kit 后,kit 内已有等价组件不重复自造(与「官方包安装与文档入口速查」的"先装官方包再动手"同向);kit 未覆盖的组件才按 DESIGN.md token 定制。
+- **token 纪律不因 kit 松绑**:颜色 / 间距仍从 DESIGN.md 派生导出——禁随机色、渐变须 DESIGN.md 明示(与 [`ai-tells.md`](../meta/ai-tells.md) 同向);kit 默认主题等于"通用感"风险源,深度定制逻辑与上方 Bootstrap / Material 警告一致。
+- 单项目 ≤ 1 个 kit,沿用上方「选包约束(硬性)」。

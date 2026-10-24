@@ -47,3 +47,4 @@
 
 - [variation-engine.md](variation-engine.md) — 七轴组合选型（防跨项目雷同，design-md Phase 0 必过）
 - 选型提示：按平台定大方向（Apple 生态→liquid-glass；Android→m3-expressive；企业 B 端→fluent-2 / data-dense-dashboard）；风格级需先匹配品牌气质；experimental 上生产前过 WCAG AA。
+- 外部风格模板源（候选输入，不在库内）：[/设计技能合集](https://github.com//设计技能合集)——按 SKILL.md（代理指令）+ DESIGN.md（人读理由）成对组织的风格卡，2026-10 查证为 67 种；vibe-ui.youji.pro 摘引的「15 模板」清单是其旧快照（elegant / luxury / dashboard / simple 四个 slug 现已不在库中）。仅作模板墙候选输入：入库须过 [README.md](README.md) 治理（source / 反模式节 / 查重），与既有条目语义重叠的只对照不重复入库（bento ↔ bento-grid、dashboard ↔ data-dense-dashboard；glassmorphism / neumorphism / neobrutalism / material 等同名项已有自研版，以自研版为准）。

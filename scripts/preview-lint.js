@@ -19,7 +19,7 @@
  * 性质与纪律:
  *   * 只读:不修改被检查页面的样式或 DOM(不违反 preview.md「禁止手动改样式代替
  *     预览验证」——它在临时副本里取证,不写回交付物);
- *   * 只报不拦:14 类可量测问题都是默认做法提示,命中的改掉、或写出理由保留;
+ *   * 只报不拦:16 类可量测问题都是默认做法提示,命中的改掉、或写出理由保留;
  *     误报在交付说明写一句;提示清零后仍要自己看截图——"只认得写法,
  *     判断不了好不好看";
  *   * 颜色统一画到 canvas 再读回(oklch / color-mix 也能比较);对比度低于
@@ -35,7 +35,7 @@
 (function () {
   if (window.__maliangLint) return;
 
-  // ---------- 14 类可量测问题的中文标签 ----------
+  // ---------- 16 类可量测问题的中文标签 ----------
   var LABELS = {
     eyebrow: "标题上方的眉标",
     numbered: "标题上方的编号标签",
@@ -50,7 +50,9 @@
     tightLeading: "多行正文行高过紧",
     longMeasure: "正文行太长",
     stuck: "首屏有内容停在透明状态（出场动画没触发？）",
-    headingSpacing: "标题离上文比离下文还近"
+    headingSpacing: "标题离上文比离下文还近",
+    siblingRowMisalign: "同排同构内容的对应行错位（图标/数值/文案行顶不齐）",
+    siblingUnequalSize: "同排同构元素高/宽不等（等分或 stretch 行内）"
   };
 
   function lint() {
@@ -193,6 +195,74 @@
         add("headingSpacing", h, "上 " + Math.round(above) + "px，下 " + Math.round(below) + "px");
       }
     });
+
+    // 同排同构元素的对齐与等高:兄弟几何比较,只比结构相同的兄弟,避免误报
+    // (规范判据见 references/dimensions/alignment.md;门禁 G44)
+    (function () {
+      var TOL = 2; // 亚像素 + 抗锯齿容差,超过即肉眼可辨
+      var rectOf = function (el) { return el.getBoundingClientRect(); };
+      var groups = new Map();
+      all.forEach(function (el) {
+        var p = el.parentElement;
+        if (!p || p === document.body) return;
+        var ps = css(p);
+        if (ps.display.indexOf("flex") === -1 && ps.display.indexOf("grid") === -1) return;
+        if (!shown(el)) return;
+        var r = rectOf(el);
+        if (r.width < 80 || r.height < 40) return;
+        if (!groups.has(p)) groups.set(p, []);
+        groups.get(p).push(el);
+      });
+      groups.forEach(function (els, p) {
+        if (els.length < 2 || els.length > 8) return;
+        var byTag = new Map();
+        els.forEach(function (el) {
+          var t = el.tagName;
+          if (!byTag.has(t)) byTag.set(t, []);
+          byTag.get(t).push(el);
+        });
+        byTag.forEach(function (same) {
+          if (same.length < 2) return;
+          // 同一视觉行:顶缘一致(容差 TOL);顶缘不齐的另一行另成组,首元素代表
+          var row = [same[0]];
+          for (var i = 1; i < same.length; i++) {
+            if (Math.abs(rectOf(same[i]).top - rectOf(same[0]).top) <= TOL) row.push(same[i]);
+          }
+          if (row.length < 2) return;
+          var pStyle = css(p);
+          // 高不等:仅 flex 行(stretch/normal 交叉轴应等高)。grid 不查——
+          // bento 瓦片行跨度不同,同排高差是设计而非缺陷
+          if (pStyle.display.indexOf("flex") !== -1 && pStyle.flexDirection.indexOf("column") !== 0
+              && (pStyle.alignItems === "stretch" || pStyle.alignItems === "normal")) {
+            var hs = row.map(function (el) { return rectOf(el).height; });
+            var hdiff = Math.max.apply(null, hs) - Math.min.apply(null, hs);
+            if (hdiff > TOL) add("siblingUnequalSize", row[0], "同排高差 " + Math.round(hdiff) + "px");
+          }
+          // 宽不等:同排都声明了 flexGrow(等分意图)时,渲染宽应相等
+          var grows = row.map(function (el) { return parseFloat(css(el).flexGrow) || 0; });
+          if (grows.every(function (g) { return g > 0; })) {
+            var ws = row.map(function (el) { return rectOf(el).width; });
+            var wdiff = Math.max.apply(null, ws) - Math.min.apply(null, ws);
+            if (wdiff > TOL) add("siblingUnequalSize", row[0], "同排宽差 " + Math.round(wdiff) + "px");
+          }
+          // 行位错位:结构相同(子元素数 2-6 且逐位同标签)的兄弟,逐行比子元素顶缘;
+          // 图标不定框 / 内容天然高度决定行位即命中
+          var count = row[0].children.length;
+          if (count < 2 || count > 6) return;
+          if (!row.every(function (el) { return el.children.length === count; })) return;
+          for (var k = 0; k < count; k++) {
+            if (row.some(function (el) { return !shown(el.children[k]); })) continue;
+            if (row.some(function (el) { return el.children[k].tagName !== row[0].children[k].tagName; })) continue;
+            var tops = row.map(function (el) { return rectOf(el.children[k]).top; });
+            var tdiff = Math.max.apply(null, tops) - Math.min.apply(null, tops);
+            if (tdiff > TOL + 1) {
+              add("siblingRowMisalign", row[0], "第 " + (k + 1) + " 行顶差 " + Math.round(tdiff) + "px");
+              break;
+            }
+          }
+        });
+      });
+    })();
 
     all.forEach(function (el) {
       var s = css(el);

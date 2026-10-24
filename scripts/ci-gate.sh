@@ -202,6 +202,8 @@ gate_if_script scripts/check-structure-history.py "check-structure-history(G41/G
     --stamp tests/fixtures/build-log/stamp.css
 gate_if_script scripts/check-copy.py "check-copy(句型扫描冒烟)" \
   python3 scripts/check-copy.py tests/fixtures/copy/clean.html
+gate_if_script scripts/detect-tells.py "detect-tells(AI 味扫描冒烟)" \
+  python3 scripts/detect-tells.py tests/fixtures/detect_tells/clean.html
 gate_if_script scripts/verify-color-fidelity.py "verify-color-fidelity(G39 冒烟)" \
   python3 scripts/verify-color-fidelity.py tests/fixtures/color/impl.png \
     --reference tests/fixtures/color/ref.png

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  preview-lint.js 探针 fixture:14 类可量测问题各摆一个最小样例。
+  preview-lint.js 探针 fixture:16 类可量测问题各摆一个最小样例。
   用法:注入 preview-lint.js(先于页面脚本)后调用 __maliangLint(),
   期望至少命中 12 类(emojiIcon 需要 ≥2 处;englishLabel 需要中文页面)。
 -->
@@ -23,6 +23,13 @@
   .tinted p { color: #BEBEBE; margin: 0; }
   .gapped { margin: 2px 0; }
   .far-below { margin-top: 48px; }
+  .stat-row { display: flex; }
+  .stat-card { flex: 1; width: 120px; border: 1px solid #DDDDDD; border-radius: 10px; padding: 12px; }
+  .stat-card b { display: block; font-size: 20px; }
+  .stat-card .glyph { display: block; width: 24px; background: #1A1A1A; }
+  .glyph.tall { height: 32px; }
+  .glyph.short { height: 20px; }
+  .stat-card.esc { align-self: flex-start; }
 </style>
 </head>
 <body>
@@ -54,5 +61,11 @@
   <p class="far-below">下文内容。</p>
 
   <p class="long">这是一段超长行宽的正文,用于触发正文行太长的检查;继续填充更多的中文文字让宽度被明显超出常规阅读栏宽,从而可被 longMeasure 命中,这里再补充足够多的字保证它是多行文本而不是一行,继续写下去直到三行以上。</p>
+
+  <div class="stat-row">
+    <div class="stat-card"><span class="glyph tall"></span><b>128</b><span>今日订单</span></div>
+    <div class="stat-card esc"><span class="glyph short"></span><b>64</b><span>待处理</span></div>
+    <div class="stat-card"><span class="glyph tall"></span><b>12</b><span>异常</span></div>
+  </div>
 </body>
 </html>
