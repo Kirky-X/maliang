@@ -8,11 +8,9 @@
 #   退出码 1                  → 拦截(看过了,有 error 级发现)
 #   退出码 2(三态)           → 拦截(没能检查:路径不存在/无目标/没装浏览器)
 #                               —— Nothing was measured. This is not a pass。
-#   退出码 2(迁移中脚本)     → warning 放行,且输出须自证 0 errors;
-#                               仅限 EXIT-CODES.md「与旧口径的对照」表登记的
-#                               未迁移脚本(validate-draw-md.py / validate-framework.py),
-#                               迁移切换后本门必须改回 strict。
 #   其他退出码                → 拦截(异常退出)
+#   (历史)迁移中脚本 warn-pass 通道已退役:validate-draw-md.py / validate-framework.py
+#   完成三态迁移后均按 strict 接线;--warn-pass 机制保留但无使用方,新脚本不得登记。
 #
 # 历史债备忘:接线时曾登记的两处 advisory(examples/design-system 29 处孤儿 token、
 # examples/element-plus 8 处颜色字面量)已于同日清账——DESIGN.md 补 no-decision 注释、
@@ -24,7 +22,7 @@
 #
 # 覆盖:
 #   1. tests/ fixture 单元测试
-#   2. validate-draw-md.py  — draw-md 产物 15 项检查(目标: examples/ui-markdown/)
+#   2. validate-draw-md.py  — draw-md 产物 21 项检查(目标: examples/ui-markdown/)
 #   3. validate-framework.py — framework 组件文档检查(目标: references/framework/)
 #   4. ui-graph.py check-nav — 导航关系图冒烟(缺页为 informational,不拦截)
 #   5. preview-check.py     — 若 examples/preview/ 存在则跑 Pre-Flight 自动化检查
@@ -133,16 +131,16 @@ else
   echo "[GATE] ✓ 单元测试"
 fi
 
-# 2-3. 文档与产物验证(迁移中脚本:EXIT-CODES.md 对照表登记的 2=仅 warning)
+# 2-3. 文档与产物验证(两脚本已迁移三态,strict 接线;口径见 EXIT-CODES.md)
 # 前置:目标 0 文件时不得记为通过(未测量不通过;占位在墙角,不是绿)
 if find examples/ui-markdown -name '*.md' -print -quit 2>/dev/null | grep -q .; then
-  gate --warn-pass "validate-draw-md(draw-md 产物检查;迁移中)" \
+  gate "validate-draw-md(draw-md 产物检查)" \
     python3 scripts/validate-draw-md.py examples/ui-markdown/
 else
   echo "[GATE] ✗ validate-draw-md — 目标目录 0 个 .md 文件(未测量不得记为通过)"; FAIL=1
 fi
 if find references/framework -name '*.md' -print -quit 2>/dev/null | grep -q .; then
-  gate --warn-pass "validate-framework(framework 组件文档检查;迁移中)" \
+  gate "validate-framework(framework 组件文档检查)" \
     python3 scripts/validate-framework.py
 else
   echo "[GATE] ✗ validate-framework — references/framework 下 0 个 .md(未测量不得记为通过)"; FAIL=1
@@ -168,6 +166,10 @@ gate "check-claims(公开声明对账)" \
 #     兄弟仓根不可定位时其 sibling 检查显性 WARN 跳过,退出码不受 WARN 影响)
 gate "skill-lint(工程基线体检)" \
   python3 scripts/skill_lint.py .
+
+# 6c. 段级审计表冒烟(stage-audit 入口可用性;真实项目审计按 --root 显式运行)
+gate "stage-audit --list(段审计表冒烟)" \
+  python3 scripts/stage-audit.py --list
 
 # 7. 取证齐套(本轮真的取过证时才跑;无 report.json = 本轮无取证,不是通过也不是失败)
 if find examples -name report.json -print -quit 2>/dev/null | grep -q .; then

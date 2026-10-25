@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """draw-md 产物文档规范性检查脚本。
 
+退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)
+        —— 0: 检查跑完且无 error(warning 不拦截) / 1: 有 error,含 token.md 产物缺失 /
+           2: 目标目录不存在、检查器配置(framework/vocabulary)缺失或目录内 0 个待检 md
+           (未测量不得记为通过)。
+
 用法:
     python3 scripts/validate-draw-md.py [target_dir] [--token-file PATH] [--framework-file PATH] [--format {text,json}]
 
@@ -8,7 +13,7 @@
 默认 token-file  = {target_dir}/token.md
 默认 framework-file = references/framework/index.md
 默认 format      = text
-退出码: 0 = 全部通过; 1 = 有 error; 2 = 仅有 warning。
+退出码: 见 scripts/EXIT-CODES.md 三态(0=通过,warning 不拦截 / 1=有 error / 2=没能检查)。
 依赖: Python 3 标准库(无第三方依赖)。
 
 输出格式:
@@ -37,7 +42,22 @@
   13. z-index 字面量违规(error)                  rule=z-index
   14. 文本容器固定宽度(warn,组件类型含 text)    rule=fixed-width-text
   15. CSS 物理方向属性(warn,行内 ltr-only        rule=physical-property
-      标注豁免)
+      标注豁免;frontmatter dir=rtl 时升 ERROR)
+  16. px 数值合理性:负值/超 3840px(error)        rule=numeric-sanity
+  17. organisms/ 引用存在性(error)               rule=organism-ref
+  18. frontmatter components slug 对齐            rule=fm-components
+      (自创 error;术语库模式名 warn,应移 pattern 字段)
+  19. frontmatter pattern slug 合法性(error,      rule=pattern-slug
+      须为 vocabulary 登记模式)
+  20. 方向契约块四字段缺失(error,仅 ui/ 页面,     rule=direction-contract
+      须在首个 ## 章节前,写法 **thesis**: 等)
+  21. 表格值列裸 token 名(warn,icon-/motion- 族    rule=bare-token
+      未加 {} 引用形式)
+
+frontmatter 可选契约字段:
+  - platform: mobile|web|ios|android|harmony|flutter(端型,触控阈值分端判定)
+  - dir: ltr|rtl(书写方向;rtl 时检查 15 升 ERROR)
+  - spec_version: 契约版本(当前 1;非 1 时 WARN 提示按 v1 规则可能有漏检)
 """
 
 import argparse
@@ -49,6 +69,12 @@ import sys
 # 共用模块(同目录下的 maliang_common.py)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from maliang_common import parse_frontmatter as _shared_parse_frontmatter
+from maliang_common import (  # noqa: F401 —— TOKEN_REF_RE re-export 供本文件多处使用
+    TOKEN_REF_RE,
+    is_action_row,
+    iter_token_refs,
+    parse_token_names,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -80,8 +106,9 @@ SECONDARY_PAGE_SLUGS = {
     "reset-password",
 }
 
-# token 引用形式 {token-name}(kebab-case)
-TOKEN_REF_RE = re.compile(r"\{([a-z][a-z0-9-]*)\}")
+# token 引用形式 {token-name}(kebab-case)—— 单一实现在 maliang_common,
+# 与 ui-graph token-usage 共享,防「什么算 token 引用」两处判定漂移
+# (re-export 见文件头 import)
 
 # 颜色字面量:#RRGGBBAA / #RRGGBB / #RGB / rgba(...) / rgb(...)
 HEX_COLOR_RE = re.compile(r"#[0-9A-Fa-f]{8}\b|#[0-9A-Fa-f]{6}\b|#[0-9A-Fa-f]{3}\b")
@@ -136,6 +163,41 @@ RULE_CARD_RADIUS = "card-radius"          # 无 ux-rules 对应(radius.md 阶梯
 RULE_Z_INDEX = "z-index"                  # 无 ux-rules 对应(token.md z-index 档)
 RULE_FIXED_WIDTH_TEXT = "fixed-width-text"        # ux-rules slug: fixed-width-text(§6, WARN)
 RULE_PHYSICAL_PROPERTY = "physical-property"      # ux-rules slug: physical-property(§12, WARN)
+RULE_NUMERIC_SANITY = "numeric-sanity"            # 无 ux-rules 对应(参数表数值契约项)
+RULE_ORGANISM_REF = "organism-ref"                # 无 ux-rules 对应(organisms 复用契约项)
+RULE_FM_COMPONENTS = "fm-components"              # 无 ux-rules 对应(framework 契约项)
+RULE_PATTERN_SLUG = "pattern-slug"                # 无 ux-rules 对应(vocabulary 契约项)
+RULE_DIRECTION_CONTRACT = "direction-contract"    # 无 ux-rules 对应(draw-md 方向契约 MUST)
+RULE_BARE_TOKEN = "bare-token"                    # 无 ux-rules 对应(token 引用形式契约)
+
+# 当前 ui-markdown 契约版本(与 draw-md.md「页面 markdown 契约」同步演进;
+# frontmatter spec_version 声明未来版本时校验器按本版本规则检查并 WARN)
+SPEC_VERSION_CURRENT = "1"
+
+# 方向契约块四字段(加粗标注形式 **thesis**: …,位于 frontmatter 后、
+# 首个 ## 章节之前;draw-md.md「方向契约块」MUST 项)
+DIRECTION_CONTRACT_FIELDS = (
+    "thesis",
+    "own-world",
+    "first-viewport",
+    "signature-interaction",
+)
+
+# px 数值(带符号、可选小数与科学计数法):负值/超上限即非物理合理值
+# (1e3px 类写法同样要进数值比较,防绕过上限检查)
+PX_SIGNED_RE = re.compile(r"(-?\d+(?:\.\d+)?(?:e-?\d+)?)px", re.IGNORECASE)
+PX_VALUE_MAX = 3840  # 常见设计画布上限(4K 宽),超出疑为笔误
+
+# organisms 引用(organisms/<name>.md 子串,兼容 ../organisms/ 相对链接;
+# 大小写不敏感——Windows/macOS 文件系统不区分大小写,Linux CI 区分,
+# 非规范大小写引用在 CI 上必断链,按 error 报出而不是静默放过)
+ORGANISM_REF_RE = re.compile(
+    r"organisms/([a-z0-9][a-z0-9-/]*\.md)", re.IGNORECASE)
+
+# 表格值列裸 token 名:icon-/motion- 族未加 {} 引用形式(lookbehind 排除
+# {icon-x} 引用;反引号不豁免——`icon-x` 同样是逃逸校验的裸名;只扫值列,
+# 字段名列如 icon-right 不误报)
+BARE_TOKEN_NAME_RE = re.compile(r"(?<!\{)\b(?:icon|motion)-[a-z][a-z0-9-]*(?![\w}])")
 
 # z-index 字面量(匹配 z-index: <数字> 形式,排除 token 引用 {z-index-*})
 Z_INDEX_LITERAL_RE = re.compile(
@@ -180,47 +242,20 @@ TEXT_ALIGN_PHYSICAL_RE = re.compile(
 def parse_token_file(path):
     """解析 token.md,提取所有 token 名。
 
-    遍历所有 header 首列为 "token"(大小写不敏感)的表格,收集 body 行首列
-    的 kebab-case 名。兼容 {token-name} 与 token-name 两种写法(剥离 {}
-    后存储,与 TOKEN_REF_RE 捕获组对齐)。覆盖:颜色(color-*)/字号
+    实现委托 maliang_common.parse_token_names(单一实现,与 ui-graph
+    token-usage 共用,防两处解析漂移)。覆盖:颜色(color-*)/字号
     (font-*)/图标(icon-*)/间距(spacing-*)/圆角(radius-*)/边框
     (border-*)以及暗色模式表(同名去重)。
     返回 set of str;文件不存在返回空 set。
     """
-    tokens = set()
-    if not os.path.isfile(path):
-        return tokens
-    with open(path, "r", encoding="utf-8") as f:
-        lines = f.read().splitlines()
-
-    in_token_table = False
-    for line in lines:
-        stripped = line.strip()
-        if not stripped.startswith("|"):
-            in_token_table = False
-            continue
-        cells = [c.strip() for c in stripped.strip("|").split("|")]
-        first = cells[0] if cells else ""
-        # 大小写不敏感匹配表头(兼容 "Token" / "token" / "TOKEN")
-        if first.lower() == "token":
-            in_token_table = True
-            continue
-        if TABLE_SEP_RE.match(line):
-            continue
-        if in_token_table and first:
-            # 剥离 `{token-name}` 的反引号和花括号,与 TOKEN_REF_RE 捕获组对齐
-            token_name = first.strip().strip("`").strip("{}").strip()
-            if token_name and KEBAB_RE.fullmatch(token_name):
-                tokens.add(token_name)
-    return tokens
+    return parse_token_names(path)
 
 
 def parse_framework_file(path):
-    """解析 framework/index.md,提取所有组件 slug(共 45 类)。
+    """解析 framework/index.md,提取所有组件 slug(现 56 类,以文件实测为准)。
 
-    遍历所有 header 首列为 "组件类型" 的表格(现有 3 + P0 4 + P1 21 + P2 17),
-    收集 body 行首列的 kebab-case slug。
-    返回 set of str;文件不存在返回空 set。
+    遍历所有 header 首列为 "组件类型" 的表格,收集 body 行首列的
+    kebab-case slug。返回 set of str;文件不存在返回空 set。
     """
     slugs = set()
     if not os.path.isfile(path):
@@ -342,16 +377,12 @@ def check_token_references(rel_path, lines, valid_tokens):
 
     扫描所有 {token-name} 形式引用,若 token 未在 token.md 定义则报 error。
     跳过 action 字段行(| action |...),因为其中的 {xxx} 通常是 URL 查询参数
-    或 JS 模板占位符(如 {input-value}),不是设计 token。
+    或 JS 模板占位符(如 {input-value}),不是设计 token——跳过谓词
+    is_action_row 与引用正则均在 maliang_common 单一实现(ui-graph 共用)。
     """
     results = []
-    for i, line in enumerate(lines, start=1):
-        # 跳过 action 字段行(action 描述交互行为,{xxx} 是 URL/JS 占位符)
-        stripped = line.lstrip()
-        if stripped.startswith("| action") or stripped.startswith("|action"):
-            continue
-        for m in TOKEN_REF_RE.finditer(line):
-            name = m.group(1)
+    for i, names in iter_token_refs(enumerate(lines, 1)):
+        for name in names:
             if name not in valid_tokens:
                 results.append(
                     ("ERROR", rel_path, i, "悬空 token 引用: {" + name + "}")
@@ -394,10 +425,13 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
     """检查 3:组件类型字段缺失或自创 slug(error/warning)。
 
     参数表(header 含"参数")无"组件类型"行 -> warning;
-    组件类型值含不在 45 类且不在术语库的 slug -> error。
+    组件类型值含不在 framework 组件类且不在术语库的 slug -> error。
     references/vocabulary/*.md 登记的模式 slug(如 chart-line / filter-chip)
-    放行:framework 45 类是组件抽象,charts/search 等术语库模式是区块抽象,
+    放行:framework 组件类是组件抽象,charts/search 等术语库模式是区块抽象,
     需在组件类型字段合法表达(审计 P0-3);由 main() 解析 vocabulary 目录传入。
+    注意:draw-md.md「模式引用」节另规定 vocabulary 模式名应走 pattern 字段、
+    不得混入组件类型——两条裁决并存,最终归一待契约侧决策(见
+    tests/test_validate_draw_md.py TestComponentSlugs 用例注释)。
     双列对比表允许用表前 `> **组件类型**:` 引用块标注(draw-md.md 规范),
     引用块与表格行二选一即可,两者皆无才报 warning。
     """
@@ -425,7 +459,7 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
                                 bq_line_no,
                                 "自创组件 slug: "
                                 + slug
-                                + ",应引用 framework/index.md 45 类"
+                                + ",应引用 framework/index.md 组件类"
                                 + "或 references/vocabulary/ 已登记 slug",
                             )
                         )
@@ -445,7 +479,7 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
                         line_no,
                         "自创组件 slug: "
                         + slug
-                        + ",应引用 framework/index.md 45 类"
+                        + ",应引用 framework/index.md 组件类"
                         + "或 references/vocabulary/ 已登记 slug",
                     )
                 )
@@ -453,7 +487,8 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
 
 
 def check_frontmatter(rel_path, text):
-    """检查 4:frontmatter 必填字段缺失(error);background 必须引用 token。"""
+    """检查 4:frontmatter 必填字段缺失(error);background 必须引用 token;
+    可选契约字段取值校验(dir 须 ltr|rtl;spec_version 非 1 时 WARN)。"""
     results = []
     fm = parse_frontmatter(text)
     for field in REQUIRED_FRONTMATTER_FIELDS:
@@ -463,6 +498,19 @@ def check_frontmatter(rel_path, text):
     if bg and not TOKEN_REF_RE.search(bg):
         results.append(
             ("ERROR", rel_path, 0, "frontmatter background 未引用 token: " + bg)
+        )
+    dir_v = _strip_quotes(fm.get("dir", ""))
+    if dir_v and dir_v not in ("ltr", "rtl"):
+        results.append(
+            ("ERROR", rel_path, 0,
+             "frontmatter dir 取值非法: " + dir_v + "(须 ltr|rtl)")
+        )
+    sv = _strip_quotes(fm.get("spec_version", ""))
+    if sv and sv != SPEC_VERSION_CURRENT:
+        results.append(
+            ("WARN", rel_path, 0,
+             "spec_version=" + sv + " 非当前契约版本(" + SPEC_VERSION_CURRENT
+             + "),按 v" + SPEC_VERSION_CURRENT + " 规则检查可能有漏检")
         )
     return results
 
@@ -868,15 +916,18 @@ def check_fixed_width_text(rel_path, lines):
     return results
 
 
-def check_physical_property(rel_path, lines):
-    """检查 15:CSS 物理方向属性(warn),行内 ltr-only 标注豁免。
+def check_physical_property(rel_path, lines, rtl=False):
+    """检查 15:CSS 物理方向属性(warn;dir=rtl 时升 error),行内 ltr-only 豁免。
 
-    ux-rules slug: physical-property(§12 国际化与方向,WARN 级)。
+    ux-rules slug: physical-property(§12 国际化与方向)。
     harden 可正则子集:margin/padding/border-left|right 与
     text-align: left|right 在 RTL 语境需镜像,应改逻辑属性
     -inline-start/-inline-end 与 text-align: start|end。
     确与方向无关的写法可在行内标注 ltr-only 豁免(显式声明优于静默)。
+    页面 frontmatter 声明 dir: rtl 时,本检查从 WARN 升为 ERROR——
+    声明了 RTL 即承担逻辑属性硬门(隐性 RTL 页保持 WARN 提示)。
     """
+    severity = "ERROR" if rtl else "WARN"
     results = []
     for i, line in enumerate(lines, start=1):
         if TABLE_SEP_RE.match(line):
@@ -886,27 +937,216 @@ def check_physical_property(rel_path, lines):
         for m in PHYSICAL_MARGIN_PADDING_RE.finditer(line):
             results.append(
                 (
-                    "WARN",
+                    severity,
                     rel_path,
                     i,
                     "物理方向属性 "
                     + m.group(0).rstrip(":=").strip()
                     + ",RTL 语境应改逻辑属性 -inline-start/-inline-end"
-                    "(确与方向无关可加 ltr-only 标注;ux-rules: physical-property)",
+                    "(确与方向无关可加 ltr-only 标注;ux-rules: physical-property"
+                    + (";dir=rtl 已声明,升 ERROR" if rtl else "") + ")",
                 )
             )
         for m in TEXT_ALIGN_PHYSICAL_RE.finditer(line):
             results.append(
                 (
-                    "WARN",
+                    severity,
                     rel_path,
                     i,
                     "text-align: "
                     + m.group(1)
                     + ",应改 start/end 逻辑值(RTL 自动镜像;"
-                    "确与方向无关可加 ltr-only 标注;ux-rules: physical-property)",
+                    "确与方向无关可加 ltr-only 标注;ux-rules: physical-property"
+                    + (";dir=rtl 已声明,升 ERROR" if rtl else "") + ")",
                 )
             )
+    return results
+
+
+# ---------------------------------------------------------------------------
+# 检查 16-21(2026-10 契约完备性补批)
+# ---------------------------------------------------------------------------
+
+
+def check_numeric_sanity(rel_path, lines):
+    """检查 16:px 数值合理性(error)。
+
+    负值尺寸/间距不是物理合理值;>3840px(4K 画布上限)超出任何常见设计
+    画布,疑为笔误(如把间距写成字号数量级)。两类都逃过旧检查:PX_VALUE_RE
+    只匹配无符号正整数,触控检查只看下限不看上限。
+    """
+    results = []
+    for i, line in enumerate(lines, start=1):
+        if TABLE_SEP_RE.match(line):
+            continue
+        for m in PX_SIGNED_RE.finditer(line):
+            value = float(m.group(1))
+            if value < 0:
+                results.append(
+                    ("ERROR", rel_path, i,
+                     "px 数值为负: " + m.group(0) + ",尺寸/间距不可为负")
+                )
+            elif value > PX_VALUE_MAX:
+                results.append(
+                    ("ERROR", rel_path, i,
+                     "px 数值超上限: " + m.group(0)
+                     + "(>" + str(PX_VALUE_MAX) + "px 超出常见设计画布,疑为笔误)")
+                )
+    return results
+
+
+def check_organism_refs(rel_path, lines, existing_organisms):
+    """检查 17:organisms/ 引用存在性(error)。
+
+    页面以 markdown 链接引用 organisms/*.md(如 ../organisms/nav-bar.md);
+    引用不存在的组件文件报 error。此前引用目标完全逃逸校验——写错文件名
+    全绿通过,下游 draw-* 找不到复用组件。existing_organisms 为
+    target_dir 下 organisms/ 的相对路径集合(None 时跳过,目录不存在)。
+    """
+    results = []
+    if existing_organisms is None:
+        return results
+    existing_lower = {p.lower() for p in existing_organisms}
+    for i, line in enumerate(lines, start=1):
+        for m in ORGANISM_REF_RE.finditer(line):
+            ref = "organisms/" + m.group(1)
+            if ref.lower() not in existing_lower:
+                results.append(
+                    ("ERROR", rel_path, i,
+                     "引用的 organisms 组件不存在: " + ref
+                     + "(检查文件名,或先在 organisms/ 下产出该组件)")
+                )
+    return results
+
+
+def _as_slug_list(value):
+    """frontmatter 字段值归一为 slug 列表。
+
+    共享 parse_frontmatter 只把 components 解析为 list,其余字段(pattern 等)
+    保留字符串——inline 数组字符串 "[a, b]" 在此拆为列表,防整串被当
+    单个 slug 误报。
+    """
+    if isinstance(value, list):
+        return [str(v).strip() for v in value if str(v).strip()]
+    v = str(value or "").strip()
+    if v.startswith("[") and v.endswith("]"):
+        inner = v[1:-1].strip()
+        if not inner:
+            return []
+        return [item.strip().strip("\"'") for item in inner.split(",")
+                if item.strip()]
+    return [v] if v else []
+
+
+def check_fm_components(rel_path, text, valid_slugs, vocab_slugs=None):
+    """检查 18:frontmatter components 数组 slug 对齐(error/warn)。
+
+    components 应为 framework/index.md 组件类 slug 清单(draw-md.md
+    「组件类型标注规范」);此前 frontmatter 只查字段存在,自创 slug 不报。
+    术语库模式 slug(如 chart-line)出现在 components → WARN,提示移至
+    pattern 字段(契约:两套命名各司其职,不得混写)。
+    """
+    results = []
+    fm = parse_frontmatter(text)
+    for slug in _as_slug_list(fm.get("components", [])):
+        if not slug or slug in valid_slugs:
+            continue
+        if vocab_slugs and slug in vocab_slugs:
+            results.append(
+                ("WARN", rel_path, 0,
+                 "frontmatter components 含术语库模式 slug: " + slug
+                 + ",区块模式应移至 pattern 字段(组件类与模式名各司其职)")
+            )
+        else:
+            results.append(
+                ("ERROR", rel_path, 0,
+                 "frontmatter components 自创 slug: " + slug
+                 + ",应引用 framework/index.md 组件类")
+            )
+    return results
+
+
+def check_fm_pattern(rel_path, text, vocab_slugs):
+    """检查 19:frontmatter pattern 数组 slug 合法性(error)。
+
+    pattern 字段只能引用 references/vocabulary/ 各篇命名表登记的模式 slug;
+    自创模式名报 error(此前 pattern 字段零校验)。
+    """
+    results = []
+    if not vocab_slugs:
+        return results
+    fm = parse_frontmatter(text)
+    for slug in _as_slug_list(fm.get("pattern", [])):
+        if slug and slug not in vocab_slugs:
+            results.append(
+                ("ERROR", rel_path, 0,
+                 "pattern 自创 slug: " + slug
+                 + ",须引用 references/vocabulary/ 已登记模式(draw-md.md 禁令)")
+            )
+    return results
+
+
+def check_direction_contract(rel_path, lines):
+    """检查 20:方向契约块四字段缺失(error,仅 ui/ 页面)。
+
+    draw-md.md「方向契约块」为每页 MUST(thesis / own-world / first-viewport /
+    signature-interaction),此前零校验且示例页自身缺失。机器可查的字面
+    形态:四字段在 frontmatter 之后、首个 ## 章节之前,以加粗字段名行书写
+    (**thesis**: …);语义兑现仍由 preview 的 Brand Fit 人工复核。
+    organisms/ 是组件文档非页面,不检查。
+    """
+    results = []
+    region_end = len(lines)
+    for i, line in enumerate(lines):
+        if line.startswith("## "):
+            region_end = i
+            break
+    region = "\n".join(lines[:region_end])
+    missing = [f for f in DIRECTION_CONTRACT_FIELDS
+               if not re.search(r"\*\*" + re.escape(f) + r"\*\*", region)]
+    if missing:
+        results.append(
+            ("ERROR", rel_path, 0,
+             "方向契约块缺字段: " + ", ".join(missing)
+             + "(frontmatter 后、首个 ## 章节前,写法 **字段**: …;draw-md MUST)")
+        )
+    return results
+
+
+def check_bare_token_names(rel_path, lines):
+    """检查 21:表格值列裸 token 名(warn)。
+
+    icon-/motion- 族取值必须以 {icon-x} 引用;裸写(icon-feed)既脱离
+    token 解析,也无法被悬空检查看见——示例页曾因此出现 3 个未定义图标
+    全绿通过。只扫表格行的值列(cells[1:]),字段名列(如 icon-right)
+    不误报;反引号不豁免(`icon-x` 同样是裸名)。
+    """
+    results = []
+    for i, line in enumerate(lines, start=1):
+        if TABLE_SEP_RE.match(line):
+            continue
+        stripped = line.lstrip()
+        if not stripped.startswith("|"):
+            continue
+        if is_action_row(stripped):
+            continue
+        # 表头行跳过(其后紧跟分隔行):列名如 icon-filled/icon-left 是
+        # 字段命名,不是取值,不该按裸 token 名报
+        if i < len(lines) and TABLE_SEP_RE.match(lines[i]):
+            continue
+        cells = stripped.rstrip().strip("|").split("|")
+        seen = set()
+        for cell in cells[1:]:
+            for m in BARE_TOKEN_NAME_RE.finditer(cell):
+                name = m.group(0)
+                if name in seen:
+                    continue
+                seen.add(name)
+                results.append(
+                    ("WARN", rel_path, i,
+                     "裸 token 名: " + name + ",应写 {" + name
+                     + "} 引用形式(裸名逃逸悬空检查)")
+                )
     return results
 
 
@@ -935,15 +1175,22 @@ def _tag(rule, check_results):
 
 
 def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level,
-               vocab_slugs=None):
-    """对单个文件运行检查 1-4、7-15,返回 5-tuple 列表 (severity, file, line, rule, message)。
+               vocab_slugs=None, existing_organisms=None):
+    """对单个文件运行检查 1-21,返回 5-tuple 列表 (severity, file, line, rule, message)。
 
     检查 5 (section-order) / 检查 6 (page-location) 仅对 ui/ 直接子文件运行
-    (is_ui_top_level=True),其余项对所有 ui/organisms 文件运行。
-    触控分端判定(检查 10)读取 frontmatter 可选 platform 字段。
+    (is_ui_top_level=True);检查 20 (direction-contract) 仅对 ui/ 页面运行
+    (由 rel_path.startswith("ui/") 推导,organisms 是组件文档非页面);
+    检查 17 需要 existing_organisms(organisms/ 相对路径集合,目录不存在时
+    None 跳过)。
+    触控分端判定(检查 10)读取 frontmatter 可选 platform 字段;检查 15 的
+    RTL 升级读取 frontmatter 可选 dir 字段。
     """
     results = []
-    platform = _strip_quotes(parse_frontmatter(text).get("platform", "")).lower()
+    fm = parse_frontmatter(text)
+    platform = _strip_quotes(fm.get("platform", "")).lower()
+    rtl = _strip_quotes(fm.get("dir", "")).lower() == "rtl"
+    is_page = rel_path.startswith("ui/")
     results.extend(
         _tag(RULE_TOKEN_REF, check_token_references(rel_path, lines, valid_tokens))
     )
@@ -955,7 +1202,9 @@ def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level
         )
     )
     results.extend(_tag(RULE_FRONTMATTER, check_frontmatter(rel_path, text)))
-    results.extend(_tag(RULE_ACTION_FIELD, check_action_field(rel_path, lines)))
+    results.extend(
+        _tag(RULE_ACTION_FIELD, check_action_field(rel_path, lines))
+    )
     results.extend(
         _tag(RULE_DARK_MODE, check_dark_mode_coverage(rel_path, lines, valid_tokens))
     )
@@ -970,7 +1219,30 @@ def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level
         _tag(RULE_FIXED_WIDTH_TEXT, check_fixed_width_text(rel_path, lines))
     )
     results.extend(
-        _tag(RULE_PHYSICAL_PROPERTY, check_physical_property(rel_path, lines))
+        _tag(RULE_PHYSICAL_PROPERTY,
+             check_physical_property(rel_path, lines, rtl=rtl))
+    )
+    results.extend(
+        _tag(RULE_NUMERIC_SANITY, check_numeric_sanity(rel_path, lines))
+    )
+    results.extend(
+        _tag(RULE_ORGANISM_REF,
+             check_organism_refs(rel_path, lines, existing_organisms))
+    )
+    results.extend(
+        _tag(RULE_FM_COMPONENTS,
+             check_fm_components(rel_path, text, valid_slugs, vocab_slugs))
+    )
+    results.extend(
+        _tag(RULE_PATTERN_SLUG, check_fm_pattern(rel_path, text, vocab_slugs))
+    )
+    if is_page:
+        results.extend(
+            _tag(RULE_DIRECTION_CONTRACT,
+                 check_direction_contract(rel_path, lines))
+        )
+    results.extend(
+        _tag(RULE_BARE_TOKEN, check_bare_token_names(rel_path, lines))
     )
     if is_ui_top_level:
         results.extend(_tag(RULE_SECTION_ORDER, check_section_order(rel_path, lines)))
@@ -1033,7 +1305,9 @@ def main(argv):
         print("")
 
     # 目录/文件存在性(缺失即终止,显性失败)
-    # json 模式:stdout 输出空数组 [],错误信息写 stderr,退出码 1
+    # 三态:#16 —— target 缺失 = 无目标(2);token.md 是 draw-md 产物,缺失 = 有问题(1);
+    # framework/vocabulary 是检查器配置,缺失 = 没能检查(2)。json 模式:stdout 输出空数组 [],
+    # 错误信息写 stderr
     if not os.path.isdir(target_dir):
         msg = "目标目录不存在: " + target_dir
         if fmt == "json":
@@ -1041,7 +1315,7 @@ def main(argv):
             print("[ERROR] " + msg, file=sys.stderr)
         else:
             print("[ERROR] " + msg)
-        return 1
+        return 2
     if not os.path.isfile(token_file):
         msg = "token 文件不存在: " + token_file
         if fmt == "json":
@@ -1057,7 +1331,7 @@ def main(argv):
             print("[ERROR] " + msg, file=sys.stderr)
         else:
             print("[ERROR] " + msg)
-        return 1
+        return 2
     if not os.path.isdir(vocabulary_dir):
         msg = "vocabulary 目录不存在: " + vocabulary_dir
         if fmt == "json":
@@ -1065,7 +1339,7 @@ def main(argv):
             print("[ERROR] " + msg, file=sys.stderr)
         else:
             print("[ERROR] " + msg)
-        return 1
+        return 2
 
     valid_tokens = parse_token_file(token_file)
     valid_slugs = parse_framework_file(framework_file)
@@ -1077,12 +1351,34 @@ def main(argv):
     ui_files = collect_md_files(ui_dir) if os.path.isdir(ui_dir) else []
     org_files = collect_md_files(organisms_dir) if os.path.isdir(organisms_dir) else []
 
+    # organisms/ 相对路径集合(检查 17 引用存在性);目录不存在为 None(跳过)
+    existing_organisms = None
+    if os.path.isdir(organisms_dir):
+        existing_organisms = set()
+        for dirpath, _, filenames in os.walk(organisms_dir):
+            for fn in filenames:
+                if fn.endswith(".md"):
+                    rel_org = os.path.relpath(
+                        os.path.join(dirpath, fn), target_dir)
+                    existing_organisms.add(rel_org.replace(os.sep, "/"))
+
+    # 无目标不得记为通过(#16):目录存在但 0 个待检 md = 没能检查
+    if not ui_files and not org_files:
+        msg = ("无待检文件: {} 下 ui/ 与 organisms/ 均无 md"
+               "(未测量不得记为通过)").format(target_dir)
+        if fmt == "json":
+            print("[]")
+            print("[ERROR] " + msg, file=sys.stderr)
+        else:
+            print("[ERROR] " + msg)
+        return 2
+
     all_results = []
 
     def rel(path):
         return os.path.relpath(path, target_dir)
 
-    # ui 文件:检查 1-4 + 7-12 全做;检查 5/6 仅直接子文件
+    # ui 文件:检查 1-21 全做(检查 5/6 仅直接子文件;检查 20 由路径推导)
     for abs_path in ui_files:
         rp = rel(abs_path)
         with open(abs_path, "r", encoding="utf-8") as f:
@@ -1092,10 +1388,12 @@ def main(argv):
             run_checks(
                 rp, text, lines, valid_tokens, valid_slugs,
                 os.path.dirname(rp) == "ui", vocab_slugs=vocab_slugs,
+                existing_organisms=existing_organisms,
             )
         )
 
-    # organisms 文件:检查 1-4 + 7-12(无 5/6)
+    # organisms 文件:检查 1-19 + 21(无 5/6/20——组件文档非页面,
+    # 无章节顺序约束、无方向契约块要求;检查 20 按路径前缀自动跳过)
     for abs_path in org_files:
         rp = rel(abs_path)
         with open(abs_path, "r", encoding="utf-8") as f:
@@ -1105,6 +1403,7 @@ def main(argv):
             run_checks(
                 rp, text, lines, valid_tokens, valid_slugs, False,
                 vocab_slugs=vocab_slugs,
+                existing_organisms=existing_organisms,
             )
         )
 
@@ -1141,17 +1440,16 @@ def main(argv):
         print("=" * 32)
         print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
 
-    # 退出码:0=通过,1=有 error,2=仅有 warning(json 模式不打印退出码行,保持 stdout 纯净)
+    # 退出码三态(#16):0=通过(warning 不拦截),1=有 error;2 只在上方"没能检查"路径返回
     if error_count > 0:
         if fmt == "text":
             print("退出码: 1")
         return 1
-    if warn_count > 0:
-        if fmt == "text":
-            print("退出码: 2")
-        return 2
     if fmt == "text":
-        print("退出码: 0")
+        if warn_count > 0:
+            print("退出码: 0({} warnings 不拦截,见 EXIT-CODES.md 三态)".format(warn_count))
+        else:
+            print("退出码: 0")
     return 0
 
 

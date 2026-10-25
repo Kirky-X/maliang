@@ -5,7 +5,8 @@
     python3 scripts/validate-framework.py [--framework-dir PATH] [--format {text,json}]
 
 默认 framework-dir = references/framework/。
-退出码: 0 = 全部通过; 1 = 有 error; 2 = 仅有 warning。
+退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)
+        —— 0: 检查跑完且无 error(warning 不拦截) / 1: 有 error / 2: 目录不存在或 0 个待检 md。
 依赖: Python 3 标准库(无第三方依赖)。
 
 检查项:
@@ -235,7 +236,25 @@ def main(argv):
             print("[ERROR] " + msg, file=sys.stderr)
         else:
             print("[ERROR] " + msg)
-        return 1
+        return 2
+
+    # 无目标不得记为通过(#16):三个组件子目录合计 0 个待检 md = 没能检查
+    # (范围限定 FRAMEWORKS 子目录——根目录散落的 md 不属于检查面,不得洗白空跑)
+    md_count = 0
+    for fw in FRAMEWORKS:
+        fw_dir = os.path.join(framework_dir, fw)
+        if not os.path.isdir(fw_dir):
+            continue
+        for _root, _dirs, files in os.walk(fw_dir):
+            md_count += sum(1 for n in files if n.endswith(".md"))
+    if md_count == 0:
+        msg = ("无待检文件: {} 下 0 个 md(未测量不得记为通过)").format(framework_dir)
+        if fmt == "json":
+            print("[]")
+            print("[ERROR] " + msg, file=sys.stderr)
+        else:
+            print("[ERROR] " + msg)
+        return 2
 
     all_results = []
     all_results.extend(check_framework_dirs(framework_dir))
@@ -270,16 +289,16 @@ def main(argv):
         print("=" * 40)
         print("检查结果: {} errors, {} warnings".format(error_count, warn_count))
 
+    # 退出码三态(#16):0=通过(warning 不拦截),1=有 error;2 只在上方"没能检查"路径返回
     if error_count > 0:
         if fmt == "text":
             print("退出码: 1")
         return 1
-    if warn_count > 0:
-        if fmt == "text":
-            print("退出码: 2")
-        return 2
     if fmt == "text":
-        print("退出码: 0")
+        if warn_count > 0:
+            print("退出码: 0({} warnings 不拦截,见 EXIT-CODES.md 三态)".format(warn_count))
+        else:
+            print("退出码: 0")
     return 0
 
 

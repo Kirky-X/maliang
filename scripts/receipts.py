@@ -46,6 +46,8 @@ STATE_UNMEASURED = "UNMEASURED"
 
 SESSION_ENV = "MALIANG_SESSION_ID"
 DEFAULT_ROOT = ".maliang/receipts"
+# 不可信项目防护:收据文件超此体积按不可信显性上报,不再整读入内存
+MAX_RECEIPTS_BYTES = 10 * 1024 * 1024
 # 会话 id 只保留可作文件名的字符（与 gate.mjs 同款净化）
 SESSION_SANITIZE_RE = re.compile(r"[^\w-]")
 
@@ -90,6 +92,10 @@ def read_receipts(root: str, session: str) -> list[dict]:
     path = receipts_file(root, session)
     if not os.path.isfile(path):
         return []
+    if os.path.islink(path):
+        raise ValueError("收据文件是符号链接,拒绝跟随(不可信项目防护): %s" % path)
+    if os.path.getsize(path) > MAX_RECEIPTS_BYTES:
+        raise ValueError("收据文件超过 %d MB,不可信,显性上报: %s" % (MAX_RECEIPTS_BYTES // (1024 * 1024), path))
     records = []
     with open(path, "r", encoding="utf-8") as f:
         for lineno, line in enumerate(f, 1):
@@ -104,9 +110,11 @@ def read_receipts(root: str, session: str) -> list[dict]:
 
 
 def append_receipt(root: str, session: str, record: dict) -> bool:
-    """追加一条收据；写不出返回 False（调用方按未记录处理）。"""
+    """追加一条收据;写不出返回 False(调用方按未记录处理)。"""
     path = receipts_file(root, session)
     try:
+        if os.path.islink(path):
+            raise OSError("收据文件是符号链接,拒绝跟随(不可信项目防护): %s" % path)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")

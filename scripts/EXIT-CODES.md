@@ -28,17 +28,16 @@
 | ----------------------------- | ---------------------- | ------------------------------------------------------------------------ |
 | `detect-tells.py`             | 2 = 用法/输入错误       | 语义即「没能检查」,**保留 2**;0/1 不变                                     |
 | `preview-check.py`            | 2 = 仅 warning          | **已改为三态**:仅 warning → 0;无目标 → 2(#30/#16,本批上线)               |
-| `validate-draw-md.py`         | 2 = 仅 warning          | 待集成切换(登记的迁移项):warning → 0、缺目标 → 2;**切换前其 2 不代表通过** |
-| `validate-framework.py`       | 2 = 仅 warning          | 同上,待集成切换                                                            |
-| `ui-graph.py`                 | 缺目标 → 1;发现死链 → 0  | 缺目标可保留 1;「发现死链返回 0」与三态「看了有问题=1」不符,登记为 informational 待迁移(ci-gate 当前按 informational 处理,不据此拦截) |
+| `validate-draw-md.py`         | 2 = 仅 warning          | **已改为三态**:warning → 0;token.md 产物缺失 → 1(产物缺失即问题,与 error 同档);缺目标目录/检查器配置缺失/0 个待检 md → 2(本批上线) |
+| `validate-framework.py`       | 2 = 仅 warning          | **已改为三态**(同上口径;目录不存在或 0 个待检 md → 2,本批上线)               |
+| `ui-graph.py`                 | 缺目标 → 1;发现死链 → 0  | 缺目标可保留 1;「发现死链返回 0」与三态「看了有问题=1」不符,迁移方案为 **`--strict` 旗标**(2026-10 落地):`check-nav --strict` 有异常退 1、无异常退 0,缺省保持 informational 退 0(ci-gate 与样例仓已知未生成页不受影响;严打前须先补齐或显式豁免)。新子命令自出生即三态:`check-sync` 全同步 0 / 失同步 1 / 基线缺失 2;`token-usage` 为报告型(成功 0,缺目录 1,无拦截语义) |
 
 > 迁移期纪律:调用方看到退出码 2 时,**不得**推定含义,须以被测脚本头注的引用行与
 > 本文件为准;未完成迁移的脚本,其 2 一律按「没能检查」从严处理(即:不作为通过)。
 >
-> **已登记 warn-pass 例外(仅 ci-gate)**:`validate-draw-md.py` 与 `validate-framework.py`
-> 在迁移窗口内以 `--warn-pass` 接入:退出码 2 且输出自证 `0 errors`(仅 warning)时放行,
-> 但报告必须标注「不代表通过」;一旦出现 error 级发现(退出码 1)或自证不成立,一律拦截。
-> 该例外仅覆盖这两个脚本,其余任何脚本的 2 都按上一段从严处理。
+> **warn-pass 例外已退役**:`validate-draw-md.py` 与 `validate-framework.py` 完成三态迁移后,
+> ci-gate 的 `--warn-pass` 通道不再有使用方(两门已按 strict 接线);该 gate 机制保留仅作历史,
+> 任何新脚本不得再登记 warn-pass——warning 不拦截的语义已由三态的 0 承载。
 
 ## 引用方式(脚本头注固定一行)
 

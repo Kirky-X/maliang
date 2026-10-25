@@ -110,7 +110,7 @@ users:
 | `users.journey`   | list | 否   | 主任务旅程:`task` + `steps[]`(step / touchpoint / emotion-break) |
 | `users.jtbd`      | string | 否 | 1-2 句"当…时,我要…,以便…"                                |
 
-- 无真实用户研究时整块省略,或写一行 `research: none` 声明"未做用户研究,按 surface-modes 模式假设"(低置信)
+- 无真实用户研究时整块省略,或写一行 `research: none` 声明"未做用户研究,按 surface-modes 模式假设"(低置信)。消歧:整块省略仅 schema 合法,流程契约仍须在文中带降级声明(design-md 0a)——段级审计(stage-audit 段1)按「users: 块或降级声明」判定
 - **分工**:本块是**设计态研究产物**,回答"这个产品的用户是谁";[`../commands/critique.md`](../commands/critique.md) 评审 A-3 的 persona 表是**评审态固定走查人格**(急性老手等 5 类),回答"任何界面都会栽在哪"——后者可从前者的 journey 取任务素材,但两者不互相替代
 
 ---
