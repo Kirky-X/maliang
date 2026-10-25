@@ -1,7 +1,7 @@
 # draw-element 子命令 —— 将逻辑 UI 转换为 Element Plus(Vue 3)实现
 
 > 本文件是 `draw-element` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 输入 = `draw-md` 产出的页面级 UI markdown(`examples/ui-markdown/` 下),输出 = Element Plus + Vue 3 SFC 实现代码。
+> 输入 = `draw-md` 产出的页面级 UI markdown(`design/ui-markdown/` 下),输出 = Element Plus + Vue 3 SFC 实现代码。
 > 组件映射参考 [`framework/element/`](../framework/element/) 下的组件文档。
 
 ---
@@ -20,10 +20,10 @@ flowchart LR
 
 ## 1. 输入解析
 
-读取 `draw-md` 产出的页面 markdown(位于 `examples/ui-markdown/ui/` 下):
+读取 `draw-md` 产出的页面 markdown(位于 `design/ui-markdown/ui/` 下):
 
 1. **解析 frontmatter** — 提取 `name`、`description`、`background`、`updated`、`version`
-2. **解析 token.md** — 读取 `examples/ui-markdown/token.md`,建立 token 名→硬值映射表(颜色/字体/间距/圆角)
+2. **解析 token.md** — 读取 `design/ui-markdown/token.md`,建立 token 名→硬值映射表(颜色/字体/间距/圆角)
 3. **解析布局章节** — 按"顶部导航 → 主体区块 → 底部 dock"顺序,逐章提取组件类型(按钮/文本/列表/...)与参数表
 
 **🔴 CHECKPOINT · 输入解析确认**:确认 UI markdown + token.md 已读取,展示组件映射表(逻辑组件 → Element Plus 组件)供用户确认,再进入代码生成。

@@ -54,3 +54,6 @@ darwin-result-card.png
 .pytest_cache/
 .ruff_cache/
 # Specmark/openspec 临时产物
+
+# maliang 运行时状态(收据/账本/构建日志,见 references/meta/workspace-layout.md)
+.maliang/

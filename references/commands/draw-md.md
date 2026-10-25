@@ -1,7 +1,7 @@
 # draw-md 子命令 —— 产出页面级硬 token UI markdown
 
 > 本文件是 `draw-md` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 产出物 = **页面级 UI markdown**,落在 `examples/ui-markdown/` 下:每页一份 markdown,用 YAML frontmatter + 表格描述布局与组件参数,**颜色/字体/间距等全部引用硬 token**(RGBA + HEX 双格式)。
+> 产出物 = **页面级 UI markdown**,落在 `design/ui-markdown/` 下:每页一份 markdown,用 YAML frontmatter + 表格描述布局与组件参数,**颜色/字体/间距等全部引用硬 token**(RGBA + HEX 双格式)。
 > 这是 [`design-md`](./design-md.md) 的**下游**:design-md 产出 prose-first 的 DESIGN.md(规范理由),draw-md 产出硬值 token + 页面规格(可实现)。
 > draw-md 产出的逻辑 UI markdown 是下游 `draw-harmony` / `draw-flutter` / `draw-element` 三个框架适配子命令的输入。
 
@@ -16,18 +16,18 @@
 | 文件                                | 层级   | 职责                                                                                  | 是否含色值 |
 | ----------------------------------- | ------ | ------------------------------------------------------------------------------------- | ---------- |
 | [`token.md`](../meta/token.md)(本目录)    | 规范层 | token **命名规则**(kebab-case、层级、语义),受 [`philosophy.md`](../meta/philosophy.md) 约束 | **否**     |
-| `examples/ui-markdown/token.md`(产物层) | 产物层 | token **硬值**(RGBA + HEX)                                                            | **是**     |
+| `design/ui-markdown/token.md`(产物层) | 产物层 | token **硬值**(RGBA + HEX)                                                            | **是**     |
 
-**draw-md 产出物的 frontmatter 与参数表 MUST 引用产物层 `examples/ui-markdown/token.md`,禁止引用规范层 `../meta/token.md`**(后者不含色值,引用它会导致下游无法解析)。规范层 token.md 仅在"如何命名一个新 token"时参考。
+**draw-md 产出物的 frontmatter 与参数表 MUST 引用产物层 `design/ui-markdown/token.md`,禁止引用规范层 `../meta/token.md`**(后者不含色值,引用它会导致下游无法解析)。规范层 token.md 仅在"如何命名一个新 token"时参考。
 
 ---
 
 ## 产物层目录结构
 
-所有 draw-md 产出落在 `examples/ui-markdown/`:
+所有 draw-md 产出落在 `design/ui-markdown/`:
 
 ```
-examples/ui-markdown/
+design/ui-markdown/
 ├── token.md          # 全局硬 token 表(颜色/字体/图标/间距/圆角/分割线,RGBA+HEX)
 ├── organisms/        # 跨页面复用组件(导航栏、dock 栏……)
 │   └── *.md
@@ -58,6 +58,9 @@ updated: 2026-06-30 # 更新时间(ISO 日期)
 version: 1.0.0 # 页面版本号
 mode: persuade # 可选:页面模式(persuade|operate|read|experience),判法见 meta/surface-modes.md
 pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(命名对齐 references/vocabulary/ 18 篇;框架代码由 draw-* 阶段映射)
+platform: mobile # 可选:端型(mobile|web|ios|android|harmony|flutter)——触控阈值分端判定的依据,移动端产物 SHOULD 声明
+dir: ltr # 可选:书写方向(ltr|rtl)——声明 rtl 即承担逻辑属性硬门(检查 15 升 ERROR)
+spec_version: 1 # 可选:契约版本(当前 1;非 1 时校验器按 v1 规则检查并 WARN 提示可能漏检)
 ---
 ```
 
@@ -65,7 +68,10 @@ pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(�
 - `updated` 用 ISO 日期(`YYYY-MM-DD`)。
 - `version` 语义化版本。
 - `mode` 为可选字段:标注页面模式(`persuade|operate|read|experience`),判法见 [`surface-modes.md`](../meta/surface-modes.md);省略时按页面性质自行判定,不阻断验证。
-- `pattern` 为可选字段(数组):引用 [`references/vocabulary/`](../vocabulary/) 各篇命名表中登记的模式 slug(如 charts.md 的 `chart-line`、tables.md 的 `table-sortable`、forms.md 的 `form-wizard`),**命名对齐 vocabulary 18 篇,框架代码由 draw-* 阶段映射**,详见下方「模式引用(`pattern:` 字段)」。
+- `pattern` 为可选字段(数组):引用 [`references/vocabulary/`](../vocabulary/) 各篇命名表中登记的模式 slug(如 charts.md 的 `chart-line`、tables.md 的 `table-sortable`、forms.md 的 `form-wizard`),**命名对齐 vocabulary 18 篇,框架代码由 draw-* 阶段映射**,详见下方「模式引用(`pattern:` 字段)」。pattern 值域受检查 19 机械校验:自创模式 slug 报 error。
+- `platform` 为可选字段:端型,检查 10(触控目标)按此分端——原生移动端(mobile/ios/android/harmony/flutter)按 44px 硬门,Web 或未声明按 24px 下限 + 44px 推荐;**移动端叙事的页面 SHOULD 显式声明**,否则按 Web 下限误判(检查 20 的 24-43px WARN 会提示补声明)。
+- `dir` 为可选字段:书写方向;声明 `rtl` 后物理方向属性(margin-left 等)从 WARN 升为 ERROR——声明即承担逻辑属性硬门。取值非法(非 ltr|rtl)报 error。
+- `spec_version` 为可选字段:页面所遵循的 ui-markdown 契约版本(区别于 `version` 的产物版本);校验器(检查 4)对非当前版本 WARN,防止契约演进后旧校验器静默漏检。
 
 ### 方向契约块(frontmatter 之后、首个布局章节之前,每页 MUST 含)
 
@@ -79,6 +85,17 @@ pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(�
 | `signature-interaction`  | 招牌交互                              | 指不出具体组件与触发方式 = 还没有            |
 
 > **检查点:读起来像情绪 = 方向还没定**。"温暖而有质感"是情绪,不是方向;四个字段都落到具体决定(哪个组件 / 哪种材质 / 哪个动作),契约才算成立。契约兑现核对与 preview 现有能力对齐:signature-interaction 由 preview 既有 Swap / Signature 自检覆盖,thesis / first-viewport 归入 Brand Fit 人工复核(见 [`preview.md`](./preview.md) 决定性自检与 Brand Fit 维度)。
+
+**字面形态(机器可查,检查 20)**:四字段以**加粗字段名行**书写,置于 frontmatter 之后、首个 `##` 章节之前(organisms 是组件文档非页面,不要求):
+
+```markdown
+**thesis**: <一句话>
+**own-world**: <一句话>
+**first-viewport**: <一句话>
+**signature-interaction**: <一句话>
+```
+
+`validate-draw-md.py` 检查 20 按**字段在场**判定(四字段缺失即 error,写在首个 `##` 之后不算);字段内容的兑现度仍由 preview 的 Brand Fit 人工复核——机器管在场,人管成立。
 
 ### 正文:按视觉顺序的布局章节
 
@@ -173,21 +190,21 @@ pattern: [chart-line, table-sortable]
 
 ## 流程
 
-0. **读取 DESIGN.md 提取 token** —— 读取项目根目录的 DESIGN.md,提取 YAML frontmatter 中的所有 token(colors/typography/spacing/radius 等),写入 `examples/ui-markdown/token.md` 作为本子命令的 token 锚点。这是从 [`design-md`](./design-md.md) 衔接进入 draw-md 的状态过渡步骤:DESIGN.md 是 design-md 的产出物,draw-md 必须基于它产出硬值 token,不可凭空生成。
+0. **读取 DESIGN.md 提取 token** —— 读取项目根目录的 DESIGN.md,提取 YAML frontmatter 中的所有 token(colors/typography/spacing/radius 等),写入 `design/ui-markdown/token.md` 作为本子命令的 token 锚点。这是从 [`design-md`](./design-md.md) 衔接进入 draw-md 的状态过渡步骤:DESIGN.md 是 design-md 的产出物,draw-md 必须基于它产出硬值 token,不可凭空生成。
 
    **🔴 CHECKPOINT · token 提取**:确认 token.md 已生成且包含 DESIGN.md 中的全部 token,再进入下一步。若 DESIGN.md 缺失关键 token,走「失败模式与 fallback」表中的对应策略。
 
-1. **先定 token.md** —— 若 `examples/ui-markdown/token.md` 不存在或需补充,先产出/更新它(6 章节:颜色/字体/图标/间距/圆角/分割线,RGBA + HEX 双格式)。token 命名遵循规范层 [`token.md`](../meta/token.md) 的规则。
+1. **先定 token.md** —— 若 `design/ui-markdown/token.md` 不存在或需补充,先产出/更新它(6 章节:颜色/字体/图标/间距/圆角/分割线,RGBA + HEX 双格式)。token 命名遵循规范层 [`token.md`](../meta/token.md) 的规则。
 2. **抽取 organisms** —— 识别跨页面复用组件(导航栏、dock 栏),写入 `organisms/`,每份含 frontmatter + 参数表。
 
    **🔴 CHECKPOINT · 逐页产出前**:确认 token.md + organisms 已定义,展示待产出页面清单供用户确认,再进入逐页产出。
 
 ### 步骤 2.5(可选):页面清单确认
 
-> **仅新项目触发**。存量项目(`examples/ui-markdown/ui/` 已有页面)跳过此步骤,直接进入步骤 3。
+> **仅新项目触发**。存量项目(`design/ui-markdown/ui/` 已有页面)跳过此步骤,直接进入步骤 3。
 
 **触发条件**(二选一即触发):
-1. `examples/ui-markdown/ui/` 目录为空或不存在(判定为新项目首次产出)。
+1. `design/ui-markdown/ui/` 目录为空或不存在(判定为新项目首次产出)。
 2. 用户明确要求"全量产出"/"补齐默认页面"。
 
 **步骤行为**:
@@ -226,7 +243,7 @@ pattern: [chart-line, table-sortable]
 
 **② 布局构思**:页面布局未定时,先并排画 2-3 个**结构不同**的 ASCII 线框对比(区块顺序 / 分栏方式 / 首屏构图各自不同),每框附一句话理由,对比定稿后再写布局章节;布局已定的页面跳过本步。
 
-> 🔴 **线框边界**:线框是**内部思考工具,不进交付文档**——`examples/ui-markdown/` 产物只含 frontmatter + 布局章节 + 参数表,禁止出现 ASCII 图;定稿即弃,定稿理由落进方向契约块的 `first-viewport`。需要把多套方向渲染成真预览对比时,升级走 [`explore`](./explore.md) 子命令,不走线框。
+> 🔴 **线框边界**:线框是**内部思考工具,不进交付文档**——`design/ui-markdown/` 产物只含 frontmatter + 布局章节 + 参数表,禁止出现 ASCII 图;定稿即弃,定稿理由落进方向契约块的 `first-viewport`。需要把多套方向渲染成真预览对比时,升级走 [`explore`](./explore.md) 子命令,不走线框。
 
 ### 步骤 2.7(数据型产品):结构判定 + 数据底座
 
@@ -254,7 +271,7 @@ pattern: [chart-line, table-sortable]
 - [ ] 每个组件参数表首行声明"组件类型"字段,引用 framework/index.md 的 56 类组件 slug,组合组件用 ` + ` 连接
 - [ ] 每个组件参数表 MUST 含 action 字段,格式 `event=behavior; ...`(五元组 tap/state/db/api/long-press;输入类可扩展 submit/focus/blur/input;容器可全为"无")
 - [ ] 每页 ≤ 3 个核心组件(hero/主操作/关键转化点)参数表 SHOULD 含 intent 字段(一句话决定理由;非硬性,_validator_ 不检查)
-- [ ] 所有颜色值引用产物层 `examples/ui-markdown/token.md`,**无硬编码色值字面量**
+- [ ] 所有颜色值引用产物层 `design/ui-markdown/token.md`,**无硬编码色值字面量**
 - [ ] 二级页面用子目录嵌套(如 `setting/about.md`)
 - [ ] 跨页面复用组件放 `organisms/`,页面引用而非重复定义
 - [ ] 每个页面 MUST 引用至少 1 个 dark token 或含"## 暗色模式"章节(对应检查 8, AUDIT G01)
@@ -263,6 +280,12 @@ pattern: [chart-line, table-sortable]
 - [ ] 动效 duration MUST ≤400ms(引用 token 如 `{duration-slower}` 除外)(对应检查 11, AUDIT G06)
 - [ ] 卡片类组件(组件类型含 card)radius MUST 用卡片档 `{radius-rounded}`/`{radius-lg}`/`{radius-xl}`,禁用控件档 `{radius-subtle}`、直角档 `{radius-sharp}`、胶囊档 `{radius-full}` 与旧词 `{radius-md}`(对应检查 12, AUDIT G07)
 - [ ] z-index MUST 用 `{z-index-*}` token 引用,禁止字面量(对应检查 13)
+- [ ] px 数值 MUST ≥0 且 ≤3840(负值/超画布即数值合理性 error,对应检查 16)
+- [ ] 页面引用的 `organisms/*.md` MUST 存在(对应检查 17)
+- [ ] frontmatter `components` 数组 slug MUST 属 framework 组件类;vocabulary 模式名应走 `pattern` 字段(对应检查 18)
+- [ ] frontmatter `pattern` 数组 slug MUST 为 vocabulary 登记模式,自创即 error(对应检查 19)
+- [ ] 方向契约块四字段 MUST 在 frontmatter 后、首个 `##` 前以加粗字段名行在场(对应检查 20)
+- [ ] 表格值列的 icon-/motion- 族取值 MUST 用 `{token}` 引用形式,裸名 WARN(对应检查 21)
 
 ---
 
@@ -284,8 +307,8 @@ pattern: [chart-line, table-sortable]
 
 ## 禁止事项(反例)
 
-- **禁止在组件参数表写裸色值**(如 `#FFFFFF`、`rgba(0,0,0,0.8)`):色值脱离 token 体系会导致多端不一致与主题切换失效。MUST 引用 `examples/ui-markdown/token.md` 的 token(如 `{surface-card}`)。
-- **禁止引用规范层 `../meta/token.md`**:它只定义命名规则、不含色值,引用它会让下游 draw-* 无法解析出具体值。MUST 引用产物层 `examples/ui-markdown/token.md`(RGBA + HEX 硬值)。
+- **禁止在组件参数表写裸色值**(如 `#FFFFFF`、`rgba(0,0,0,0.8)`):色值脱离 token 体系会导致多端不一致与主题切换失效。MUST 引用 `design/ui-markdown/token.md` 的 token(如 `{surface-card}`)。
+- **禁止引用规范层 `../meta/token.md`**:它只定义命名规则、不含色值,引用它会让下游 draw-* 无法解析出具体值。MUST 引用产物层 `design/ui-markdown/token.md`(RGBA + HEX 硬值)。
 - **禁止组件类型字段自创 slug**(如 `search-bar`、`tab-item`):脱离 framework 索引会导致下游 draw-* 映射失败。MUST 引用 [`framework/index.md`](../framework/index.md) 的 56 类组件 slug,组合组件用 ` + ` 连接(如 `input + icon`)。
 - **禁止跨页面复用组件在多页重复定义**:重复定义会造成维护漂移与 token 不一致。MUST 放入 `organisms/` 单独成文,各页面通过名称引用。
 - **禁止二级页面文件直接放 `ui/` 根目录**(如 `ui/about.md`):扁平放置会让页面层级丢失、无法表达导航嵌套。MUST 用子目录(如 `ui/setting/about.md`)。

@@ -1,12 +1,14 @@
 # ui-graph 子命令 —— UI 关系管理与变更追踪
 
 > 本文件是 `ui-graph` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 输入 = [`draw-md`](./draw-md.md) 产出的 `examples/ui-markdown/` 目录(token.md + organisms/ + ui/*.md)。
-> 输出 = 四个 JSON 文件,落在 `examples/ui-markdown/` 下:
+> 输入 = [`draw-md`](./draw-md.md) 产出的 `design/ui-markdown/` 目录(token.md + organisms/ + ui/*.md)。
+> 输出 = 六个 JSON 文件,落在 `design/ui-markdown/` 下:
 >   - `ui-relationships.json` — 页面层级 + 跳转关系图
 >   - `ui-hash-state.json` — 每个 markdown 文件的 sha256 哈希快照（draw-md 指纹）
 >   - `preview-hash-state.json` — 预览 HTML/截图清单的 sha256 快照（`--kind preview`,落在预览目录）
 >   - `ui-implementation-map.json` — 逻辑 UI ↔ preview HTML ↔ 框架代码三向映射
+>   - `code-hash-state.json` — 实现文件(preview HTML + 三框架代码)指纹基线（`--kind code`）
+>   - `token-usage.json` — token → 引用页面反向索引 + 孤儿 token 清单
 > 这是 [`draw-md`](./draw-md.md) 的**下游**:draw-md 产出页面 markdown,ui-graph 在其上做关系分析、变更检测与实现覆盖度审计,不修改 draw-md 产出本身。
 > 配套脚本 [`scripts/ui-graph.py`](../../scripts/ui-graph.py) 是纯 Python 标准库实现,无第三方依赖。
 
@@ -16,21 +18,25 @@
 
 ## 产物层目录结构
 
-所有 ui-graph 产出落在 `examples/ui-markdown/`(与 draw-md 产物同目录):
+所有 ui-graph 产出落在 `design/ui-markdown/`(与 draw-md 产物同目录):
 
 ```
-examples/ui-markdown/
+design/ui-markdown/
 ├── token.md                    # draw-md 产物(本子命令只读,不修改)
 ├── organisms/                  # draw-md 产物(只读)
 ├── ui/                         # draw-md 产物(只读)
 ├── ui-relationships.json       # ui-graph generate 产出
-├── ui-hash-state.json          # ui-graph compute-hash 产出
-└── ui-implementation-map.json  # ui-graph build-impl-map 产出
+├── ui-hash-state.json          # ui-graph compute-hash 产出(draw-md 基线)
+├── ui-implementation-map.json  # ui-graph build-impl-map 产出
+├── code-hash-state.json        # ui-graph compute-hash --kind code 产出(实现基线)
+└── token-usage.json            # ui-graph token-usage 产出
 ```
 
 - `ui-relationships.json` — 描述 pages[](路径/名称/父级/层级/组件)与 navigations[](from/to/event/source_component),是 list-missing / check-nav / list-unimplemented 的输入。
 - `ui-hash-state.json` — 记录每个 markdown 文件的 sha256 + size,供 diff-hash 检测增量变更。
 - `ui-implementation-map.json` — 记录每个逻辑 UI 是否有 preview HTML 与框架代码实现,供 list-unimplemented 审计覆盖度。
+- `code-hash-state.json` — impl-map 映射到的实现文件指纹,供 check-sync 判同步方向。
+- `token-usage.json` — token → 页面反向索引 + 孤儿 token,供 DESIGN.md token 变更波及分析。
 
 ---
 
@@ -41,7 +47,7 @@ examples/ui-markdown/
 ```json
 {
   "generated_at": "2026-07-05T10:00:00+08:00",
-  "target_dir": "examples/ui-markdown",
+  "target_dir": "design/ui-markdown",
   "pages": [
     {
       "path": "ui/home.md",
@@ -69,11 +75,11 @@ examples/ui-markdown/
 }
 ```
 
-- `pages[].path` — 相对 `examples/ui-markdown/` 的路径(如 `ui/setting/about.md`)。
+- `pages[].path` — 相对 `design/ui-markdown/` 的路径(如 `ui/setting/about.md`)。
 - `pages[].parent` — 父级目录名(`ui/` 直接子文件为 null;`ui/setting/about.md` 为 `"setting"`)。
 - `pages[].depth` — 层级深度(`ui/home.md` = 1;`ui/setting/about.md` = 2)。
 - `pages[].components` — 从 frontmatter `components` 字段解析的组件 slug 列表。
-- `navigations[].from` / `to` — 均为相对 `examples/ui-markdown/` 的路径。
+- `navigations[].from` / `to` — 均为相对 `design/ui-markdown/` 的路径。
 - `navigations[].event` — 触发事件(当前仅 `tap`;`submit`/`focus` 等不产生跳转,不在此列)。
 - `navigations[].source_component` — 触发跳转的组件类型(v1 暂为 null,后续可增强为参数表的"组件类型"字段值)。
 
@@ -82,7 +88,7 @@ examples/ui-markdown/
 ```json
 {
   "computed_at": "2026-07-05T10:00:00+08:00",
-  "target_dir": "examples/ui-markdown",
+  "target_dir": "design/ui-markdown",
   "files": [
     { "path": "ui/home.md", "sha256": "abc123...", "size": 2048 },
     { "path": "organisms/nav-bar.md", "sha256": "def456...", "size": 1024 }
@@ -122,11 +128,11 @@ examples/ui-markdown/
 
 ### 1. generate — 生成 ui-relationships.json
 
-解析 `examples/ui-markdown/` 目录,聚合页面层级与跳转关系。
+解析 `design/ui-markdown/` 目录,聚合页面层级与跳转关系。
 
 ```bash
 python3 scripts/ui-graph.py generate [--target PATH]
-# 默认 --target examples/ui-markdown/
+# 默认 --target design/ui-markdown/
 # 产出 {target}/ui-relationships.json
 ```
 
@@ -158,28 +164,29 @@ python3 scripts/ui-graph.py list-missing [--target PATH]
 python3 scripts/ui-graph.py check-nav [--target PATH]
 ```
 
-### 4. compute-hash — 计算哈希基线（两种范围）
+### 4. compute-hash — 计算哈希基线（三种范围）
 
-用 `hashlib.sha256` 计算目标文件哈希,写对应基线文件。`--kind` 决定范围（两者基线文件分开,不得混用）:
+用 `hashlib.sha256` 计算目标文件哈希,写对应基线文件。`--kind` 决定范围（基线文件分开,不得混用）:
 
 | --kind | 范围 | 基线文件 | 用途 |
 | --- | --- | --- | --- |
 | `draw-md`（默认） | draw-md 产物 `.md` 页面（排除 `token.md`） | `ui-hash-state.json` | critique backlog 指纹失效判定（只管 draw-md 产物） |
 | `preview` | 预览 HTML + 截图（png/jpg/jpeg/webp/svg）+ 取证清单（`report.json` 等 JSON；排除 `selection.json` 与基线自身） | `preview-hash-state.json` | 测量收据/证据链（`receipts.py`）记录「被实测的预览状态」；预览 HTML 恰是被实测对象,证据须带产物哈希、哈希变了证据作废 |
+| `code` | `ui-implementation-map.json` 映射到的实现文件（preview HTML + 三框架代码;路径相对 impl-map 的 `anchors` 锚根记录,消费侧按锚根解析,**不受运行时 cwd 影响**） | `code-hash-state.json` | `check-sync` 的实现侧基线——判「规格改了代码没跟 / 代码手改了规格没动」;实现文件缺失时**拒绝建基线**(防空测量伪造全同步) |
 
 ```bash
-python3 scripts/ui-graph.py compute-hash [--target PATH] [--kind draw-md|preview]
-# 产出 {target}/ui-hash-state.json（draw-md）或 {target}/preview-hash-state.json（preview）
+python3 scripts/ui-graph.py compute-hash [--target PATH] [--kind draw-md|preview|code]
+# 产出 {target}/ui-hash-state.json（draw-md）、preview-hash-state.json（preview）或 code-hash-state.json（code）
 # preview 示例（目标为预览产物目录）:
-python3 scripts/ui-graph.py compute-hash --target examples/preview --kind preview
+python3 scripts/ui-graph.py compute-hash --target design/preview --kind preview
 ```
 
 ### 5. diff-hash — 对比哈希快照
 
-对比当前文件哈希与对应基线文件（`--kind` 同 compute-hash）,输出 added/modified/deleted 三类变更。
+对比当前文件哈希与对应基线文件（`--kind` 同 compute-hash,含 code）,输出 added/modified/deleted 三类变更。
 
 ```bash
-python3 scripts/ui-graph.py diff-hash [--target PATH] [--kind draw-md|preview]
+python3 scripts/ui-graph.py diff-hash [--target PATH] [--kind draw-md|preview|code]
 # 输出示例:
 #   [added]    ui/setting/notifications.md
 #   [modified] ui/home.md
@@ -192,7 +199,7 @@ python3 scripts/ui-graph.py diff-hash [--target PATH] [--kind draw-md|preview]
 
 ```bash
 python3 scripts/ui-graph.py build-impl-map [--target PATH] [--preview-root PATH] [--code-root PATH]
-# 默认 --preview-root = {target}/../preview  (即 examples/preview/)
+# 默认 --preview-root = {target}/../preview  (即 design/preview/)
 # 默认 --code-root = 当前工作目录
 # 产出 {target}/ui-implementation-map.json
 ```
@@ -207,13 +214,43 @@ python3 scripts/ui-graph.py list-unimplemented [--target PATH]
 #   ui/setting/notifications.md (缺失原因: 无 preview_html 且无 framework_code)
 ```
 
+### 8. token-usage — token 引用反向索引 + 孤儿 token
+
+解析全部页面/organisms 的 `{token}` 引用(action 行除外——其 `{xxx}` 是 URL/JS 模板参数),产出 `token-usage.json`;token.md 里从未被引用的 token 列为孤儿(给 G02 孤儿 token 提供产物层信号)。**用途:DESIGN.md 改一个 token 后,机械回答「哪些页要重生成」。**
+
+```bash
+python3 scripts/ui-graph.py token-usage [--target PATH] [--token NAME]
+# --token 只看单个 token 的波及页面:
+#   token {color-brand-primary} 波及页面:
+#     ui/home.md
+#     ui/mine.md
+```
+
+### 9. check-sync — 规格 ↔ 实现同步状态
+
+对比 draw-md 基线(`ui-hash-state.json`)与实现基线(`code-hash-state.json`),逐页分类(仅 status != missing 的页面):
+
+| 状态 | 含义 | 修复 |
+| --- | --- | --- |
+| `in-sync` | 规格与实现均与基线一致 | — |
+| `spec-ahead` | 规格已改、实现未跟 | 重跑 preview / draw-* 后重建两份基线 |
+| `code-drifted` | 实现已改(手改/外部变更/删除)、规格未动 | 手改回写 ui-markdown,或在 decisions 账本登记「为什么代码是对的」 |
+| `diverged` | 两侧都变 | 先人工对齐再交付 |
+
+```bash
+python3 scripts/ui-graph.py check-sync [--target PATH]
+# 退出码:全部 in-sync 0 / 任一失同步 1 / 基线或 impl-map 缺失 2(没能检查,先建基线)
+```
+
+**基线节奏**(基线语义 = 「上次全部对齐时的快照」):每次全量产出/重生成后,`build-impl-map` → `compute-hash` → `compute-hash --kind code` 连跑建双基线;此后任何时点 `check-sync` 都能机械判定漂移方向。路径锚定:impl-map 记录 `anchors.preview_root` / `anchors.code_root`(以及 legacy 的 `base_dir`),实现路径相对各自锚根解析——**任何 cwd 运行 check-sync 均可**;impl-map 出现绝对路径或 `..` 穿越路径时拒绝消费(退出码 2,防越界读取)。增量重生成纪律见 [`llm-behavior.md`](../meta/llm-behavior.md) §6.2。
+
 ---
 
 ## 流程
 
-0. **前置检查** —— 确认 `examples/ui-markdown/` 存在且含 `ui/` 子目录;若不存在,提示用户先跑 [`draw-md`](./draw-md.md) 产出页面 markdown。
+0. **前置检查** —— 确认 `design/ui-markdown/` 存在且含 `ui/` 子目录;若不存在,提示用户先跑 [`draw-md`](./draw-md.md) 产出页面 markdown。
 
-   **🔴 CHECKPOINT · 输入就绪**:确认 `examples/ui-markdown/ui/` 至少有 1 个 .md 文件,再进入下一步。
+   **🔴 CHECKPOINT · 输入就绪**:确认 `design/ui-markdown/ui/` 至少有 1 个 .md 文件,再进入下一步。
 
 1. **生成关系图** —— 运行 `generate` 产出 `ui-relationships.json`。
 
@@ -226,6 +263,8 @@ python3 scripts/ui-graph.py list-unimplemented [--target PATH]
 3. **构建实现映射** —— 运行 `build-impl-map` 产出 `ui-implementation-map.json`,运行 `list-unimplemented` 输出未实现清单。
 
 4. **变更检测(按需)** —— 当 draw-md 产出更新后,运行 `compute-hash` 刷新快照,再运行 `diff-hash` 输出变更页面清单,供前端/预览更新决策。
+
+5. **同步判定(按需)** —— 重生成/手改后运行 `check-sync` 判定规格与实现的漂移方向;基线缺失时先按「基线节奏」补建。token 变更后运行 `token-usage --token <name>` 列波及页面。
 
 ---
 
@@ -240,6 +279,9 @@ python3 scripts/ui-graph.py list-unimplemented [--target PATH]
 - [ ] `pages[].depth` 从路径推导:`ui/` 直接子文件 depth=1;`ui/<dir>/` 子文件 depth=2
 - [ ] `check-nav` 的三类异常(自指/循环/死链)MUST 分类输出,不可合并
 - [ ] `compute-hash` MUST 计算每个 .md 文件(含 organisms/,排除 token.md 与本子命令产出的 .json)
+- [ ] `--kind code` MUST 依赖 ui-implementation-map.json(缺失时显性失败,提示先跑 build-impl-map);哈希目标为 impl-map 映射到的实现文件
+- [ ] `check-sync` 的状态 MUST 四值枚举:`in-sync` / `spec-ahead` / `code-drifted` / `diverged`;基线缺失 MUST 退出码 2(没能检查),不得按 in-sync 处理
+- [ ] `token-usage` MUST 排除 action 行的 `{xxx}`(URL/JS 模板参数,非 token 引用,与 validate-draw-md 检查 1 同规则)
 - [ ] `build-impl-map` 的 status MUST 三值枚举:`implemented` / `partial` / `missing`
 - [ ] 所有 JSON 产出 MUST 含 ISO8601 时间戳字段(`generated_at` / `computed_at` / `built_at`)
 - [ ] 失败 MUST 显性化:目录不存在/JSON 缺失/解析失败时返回非零退出码并打印 ERROR,禁止吞错
@@ -250,7 +292,7 @@ python3 scripts/ui-graph.py list-unimplemented [--target PATH]
 
 | 触发条件 | 一线修复 | 仍失败兜底 |
 | -------- | -------- | ---------- |
-| `examples/ui-markdown/` 不存在 | 提示用户先跑 draw-md 产出页面 markdown | 退出码 1,不产出空 JSON |
+| `design/ui-markdown/` 不存在 | 提示用户先跑 draw-md 产出页面 markdown | 退出码 1,不产出空 JSON |
 | 页面 markdown 缺 frontmatter | `parse_frontmatter` 返回空 dict,`name` 用文件名(去 .md)兜底 | 在 `pages[]` 标注 `name=null`,继续处理其他页面 |
 | frontmatter `components` 字段格式异常(非 `[a,b,c]`) | 当作字符串处理,split(',') 兜底 | 设为空 list,不阻塞 generate |
 | action 字段含 `tap=→` 但目标为中文/含空格(如 `tap=→对应目标页`) | 正则 `[a-z][a-z0-9/-]*` 不匹配,自动跳过 | 记入 `navigations[]` 的 `to=null`(可选增强) |
@@ -266,5 +308,5 @@ python3 scripts/ui-graph.py list-unimplemented [--target PATH]
 - **禁止在 `ui-relationships.json` 中内联 markdown 内容**:JSON 只存结构化字段(path/name/parent/depth/components/from/to/event),不存原文。内联会导致 JSON 膨胀且与源文件漂移。
 - **禁止 `extract_navigations` 把 `tap=无` / `tap=back` 当作跳转**:`无` 是无操作,`back` 是 history.back(非具体页面),均不产生页面级跳转关系。
 - **禁止 `check-nav` 把"未生成页面"当作"死链"**:未生成(detect by list-missing)与死链(to 不在 pages 中)语义不同——未生成是"还没写",死链是"目标路径不存在于当前 pages 集合"。check-nav 报死链,list-missing 报未生成,职责分离。
-- **禁止 `compute-hash` 把 JSON 产出文件计入哈希**:`ui-relationships.json` / `ui-hash-state.json` / `ui-implementation-map.json` / `preview-hash-state.json` 是本子命令产出,非被测产物,计入会导致 diff-hash 自我污染;`--kind preview` 另排除 `selection.json`（用户选择记录,不是产物）。
+- **禁止 `compute-hash` 把 JSON 产出文件计入哈希**:`ui-relationships.json` / `ui-hash-state.json` / `ui-implementation-map.json` / `preview-hash-state.json` / `code-hash-state.json` / `token-usage.json` 是本子命令产出,非被测产物,计入会导致 diff-hash 自我污染;`--kind preview` 另排除 `selection.json`（用户选择记录,不是产物）。
 - **禁止 `build-impl-map` 模糊匹配 slug**:harmony 用 TitleCase(`Home.ets`),flutter/element 用 lowercase(`home.dart` / `home.vue`),不可统一用一种 case 匹配,否则会漏匹配或误匹配。

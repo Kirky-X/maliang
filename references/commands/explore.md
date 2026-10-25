@@ -193,7 +193,7 @@
 - 成本列诚实填写,不许全写「无」;不预设偏好,表里不暗夹推荐。
 - 用户问「你选哪个」:基于产品人格与使用频率回答,不只答好看。
 - 用户选定 → **keep 晋级**;用户要再来一轮 → **riff**(见下节)。
-- **选择物化**：keep 落定后把选择写成机读 gate 文件 `examples/ui-markdown/.maliang/direction-approved.md`(方向名/时间/轮次/选择证据)——文件不在 = 确认环节没做,draw-md 起点校验之;不设「已有 design context」豁免通道(外部该通道因滥用被废止,引以为鉴);「用户说继续」授权进入下一步,不跳过本步内部 gate。
+- **选择物化**：keep 落定后把选择写成机读 gate 文件 `design/ui-markdown/.maliang/direction-approved.md`(方向名/时间/轮次/选择证据)——文件不在 = 确认环节没做,draw-md 起点校验之;不设「已有 design context」豁免通道(外部该通道因滥用被废止,引以为鉴);「用户说继续」授权进入下一步,不跳过本步内部 gate。
 
 
 **选择回传**(无双向通信):对比页**不写回任何文件**、也不会自动给 Agent 发消息。用户点「选择」复制的是**一句话**,格式固定——`<轮次>：选 03 <方向名>`。用户粘贴这句话或直接说出选择后,按轮次和编号对照当前 manifest,确认是本轮的,把选择与备注更新进设计说明,再回到「实体化」之后的链路接着做。**禁止把页面上的推荐态当作用户选择**;只有用户明确说「你定 / 按推荐继续」才可按推荐方向推进,并在设计说明写明这是按授权推进而非用户亲自选择。
@@ -210,7 +210,7 @@
 
 **认可选择的三选一证据**(进入下游 / 认定「用户已选」前必须有其一):① 用户在对话中粘贴或直接说出选择(格式见「选择回传」);② 用户在设计说明 / 备注中明确回复;③ 用户明确授权「你定 / 按推荐继续」。三条都不满足时停在比较器——**推荐态不是选择**,超时不自动推进、不倒计时。
 
-**探索期间不运行 ui-graph**——`ui-graph generate` 默认递归扫描整个 `examples/ui-markdown/`,会把探索面卷进关系图;keep 晋级后再按常规对生产面跑 generate / diff-hash。
+**探索期间不运行 ui-graph**——`ui-graph generate` 默认递归扫描整个 `design/ui-markdown/`,会把探索面卷进关系图;keep 晋级后再按常规对生产面跑 generate / diff-hash。
 
 ---
 
@@ -232,8 +232,8 @@
 
 | 面 | 位置 | 规则 |
 | --- | --- | --- |
-| 探索面 | `examples/ui-markdown/prototypes/<slug>/`(规格 + 原型 organisms + 各方向预览 HTML + 比较器页,比较器命名 `preview_explore_<slug>.html`) | 只服务本次比较;可引用产物层 `token.md` |
-| 生产面 | `examples/ui-markdown/ui/` + `examples/ui-markdown/organisms/` | 正式产物,唯一被下游 draw-* 与 ui-graph 消费的面 |
+| 探索面 | `design/ui-markdown/prototypes/<slug>/`(规格 + 原型 organisms + 各方向预览 HTML + 比较器页,比较器命名 `preview_explore_<slug>.html`) | 只服务本次比较;可引用产物层 `token.md` |
+| 生产面 | `design/ui-markdown/ui/` + `design/ui-markdown/organisms/` | 正式产物,唯一被下游 draw-* 与 ui-graph 消费的面 |
 
 - **单向依赖**:探索面可引用生产面 token,生产面**禁止**引用探索面任何文件(不反向 import)——探索面组件未晋级前对下游不存在。
 - **晋级即清理**:keep 后探索面默认删除;保留必须来自用户显式要求,且在 decisions 账本记录。

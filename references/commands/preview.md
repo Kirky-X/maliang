@@ -1,7 +1,7 @@
 # preview 子命令 —— 使用 Element Plus 实时预览验证
 
 > 本文件是 `preview` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 输入 = `draw-md` 产出的页面级 UI markdown(`examples/ui-markdown/` 下),输出 = 自包含 HTML 预览文件。
+> 输入 = `draw-md` 产出的页面级 UI markdown(`design/ui-markdown/` 下),输出 = 自包含 HTML 预览文件。
 > 预览使用 Element Plus 框架(CDN 引入),支持设备外壳展示(从 `scripts/device_models.py` 读取尺寸)。
 
 ---
@@ -32,7 +32,7 @@ flowchart LR
 读取 `draw-md` 产出的页面 markdown:
 
 1. **解析 frontmatter** — 提取 `name`、`description`、`background`、`updated`、`version`
-2. **解析 token.md** — 读取 `examples/ui-markdown/token.md`,建立 token 名→硬值映射表
+2. **解析 token.md** — 读取 `design/ui-markdown/token.md`,建立 token 名→硬值映射表
 3. **解析布局章节** — 按"顶部导航 → 主体区块 → 底部 dock"顺序,逐章提取组件类型与参数表
 4. **解析 organisms** — 若页面引用了 `organisms/` 下的组件,读取对应 markdown
 
@@ -134,7 +134,7 @@ flowchart LR
 
 ### 校验强化
 
-preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(含 8 项新检查:暗色/aria/触控区/动效/radius/z-index/固定宽度文本容器/非逻辑属性),不通过则回退 draw-md 修补。
+preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 21 项检查(验证批 8 项:暗色/aria/触控区/动效/radius/z-index/固定宽度文本容器/非逻辑属性;契约完备性批 6 项:数值合理性/organisms 引用/frontmatter components·pattern 校验/方向契约块/裸 token 名),不通过则回退 draw-md 修补。
 
 **状态态对比度门(G31,CRITICAL)**:对每个交互元素取 default / hover / focus **三态的真实计算样式**——沿祖先链回溯有效背景(透明则取父背景),阈值按元素性质:无直接文字节点的图形控件 3:1;文本按字号 / 字重取 4.5:1 或 3:1(≥ 24px,或 ≥ 18.66px 且 bold);native checkbox/radio/switch 与 disabled / opacity:0 按 WCAG 1.4.3 / 1.4.11 豁免。执行:`python3 scripts/verify-states.py <preview.html>`;**无浏览器时显式降级 UNMEASURED(退出码 2),不得记为通过**(三态语义见 [`EXIT-CODES.md`](../../scripts/EXIT-CODES.md))。
 
@@ -282,7 +282,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 
 > 143 项回答「该项过没过」,编号门禁回答「**这种形态不许交**」。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。
 
-过 143 项之后、第 6 节之前,逐条过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) 的 **G01–G45**(A 溯源与 token / B 可访问性与触控 / C 视觉签名 / D 交互与状态 / E 布局与响应 / F 交付与可核验性 / G 定义层成立性)。执行纪律:
+过 143 项之后、第 6 节之前,逐条过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) 的 **G01–G46**(A 溯源与 token / B 可访问性与触控 / C 视觉签名 / D 交互与状态 / E 布局与响应 / F 交付与可核验性·含安全注入面 / G 定义层成立性)。执行纪律:
 
 - **全量过,不摘要**——把门禁压缩成「主要几条」等于丢门,门禁的价值正在于覆盖了没被想到的形态
 - **有据才判**——「源码里没看到违反」必须附判定记录(命中行号清单 / 检查点结论),缺证据视为未判定;token 溯源三项由 [`scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定并留 [`../meta/token-provenance.md`](../meta/token-provenance.md) §5 的三行核对,人工仅复核脚本标 unconfirmed 的项
@@ -304,7 +304,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 
 ## 6. Pre-Delivery Checklist(5 维交付前检查)
 
-> Pre-Flight Check(143 项)与编号门禁(G01–G45)**双双通过后**的**主观维度评审**。5 个维度,每维度 1-5 分,任一维度 < 3 分不交付。
+> Pre-Flight Check(143 项)与编号门禁(G01–G46)**双双通过后**的**主观维度评审**。5 个维度,每维度 1-5 分,任一维度 < 3 分不交付。
 > 评审必须与生成**隔离执行**(见下方"评审隔离"),评审者输出以受限词表 disposition 开头。
 
 ### 评审隔离(审查与生成分离)
@@ -417,7 +417,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 15 项检查(�
 ## 产出物
 - 一个页面 → 一个 HTML 预览文件
 - 文件命名:`preview_<page-name>_<device>.html`(如 `preview_home_iphone15.html`)
-- 产出位置:用户指定目录(默认 `examples/preview/`)
+- 产出位置:用户指定目录(默认 `design/preview/`)
 
 ---
 
