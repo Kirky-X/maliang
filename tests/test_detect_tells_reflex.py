@@ -17,7 +17,10 @@ from _load import load  # noqa: E402
 
 dt = load("detect-tells.py")
 
-DISPLAY_FRAUNCES = '<style>h1 { font-family: "Fraunces", serif; }</style>'
+# 字体已声明加载(@font-face),只留「display 用了反射字体」这一个信号——
+# 无 @font-face 时 undeclared-font 告警(2026-10-25 批三)会叠加命中
+DISPLAY_FRAUNCES = ('<style>@font-face { font-family: "Fraunces"; src: local("Fraunces"); }\n'
+                    'h1 { font-family: "Fraunces", serif; }</style>')
 DISPLAY_VAR = ('<style>:root { --font-display: "Space Grotesk", sans-serif; }'
                'h2 { font-family: var(--font-display); }</style>')
 BODY_INTER = '<style>body { font-family: "Inter", system-ui, sans-serif; }</style>'

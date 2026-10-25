@@ -29,9 +29,18 @@ critical 与 major 进「硬命中」通道 → 退出码 1;minor 与 warn 进�
   emoji-icon            emoji 当功能图标(元素内容全 emoji,或 emoji 前缀标题)  → ai-tells 人工通道 [major]
   placeholder-copy      Lorem ipsum 占位文案残留                              → ai-tells §4 [major]
   lilac-purple          柔紫强调色(#a78bfa / #c4b5fd / #8b5cf6)               → ai-tells §7 [major]
+  gradient-button       渐变 CTA/按钮(同行 btn/button/cta × 渐变标记)        → ai-tells §1 [major]
+  aurora-blob           aurora 光斑背景(blur ≥40px / blur-2xl·3xl 色斑;
+                        <img> 打码行与 backdrop-filter 行除外)               → ai-tells §1 [major]
+  library-primary       库默认主色(#6366f1 / #4f46e5 / #409eff / #5e6ad2)    → ai-tells §7 [major]
+  uniform-shadow        全场同款阴影(≥4 处同一 shadow,无海拔分档)           → ai-tells §1 [major]
 
 告警档(advisory,只报不拦,不影响退出码;同样支持 tell-exempt 豁免):
   numbered-eyebrow [minor]  零填充编号 eyebrow(「01 · About」装饰性编号)      → ai-tells §10
+  glass-backdrop-blur [minor] 玻璃拟态默认(backdrop-blur;命中不自动违规,
+                            液态玻璃模板墙与 §0 豁免放行)                     → ai-tells §1
+  undeclared-font [minor]   字体声明未加载(font-family 引用的字族在本文件内
+                            无 @font-face/字体链接;外部加载须人工核)          → ai-tells §2
   reflex-font [warn]        display 首位字族命中 ai-tells §11 反射字体清单。命中不自动
                             违规(仍走 §0 豁免总则),故进告警档而非硬失败通道;命中后
                             要么换字族,要么写出「没有其他字体能满足」的理由并标豁免。
@@ -49,6 +58,8 @@ critical 与 major 进「硬命中」通道 → 退出码 1;minor 与 warn 进�
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
         告警档(minor/warn)命中不改变退出码。
 依赖: Python 3 标准库(无第三方依赖)。
+      第三批(gradient-button/aurora-blob/library-primary/uniform-shadow/
+      (developersdigest.dev 16 patterns / funboy322 avoid-ai-design),2026-10-25。
 """
 
 import argparse
@@ -56,6 +67,7 @@ import json
 import os
 import re
 import sys
+from urllib.parse import unquote
 
 # 扫描的代码文件扩展名(设计相关文件;参考 设计工艺库 hooks 内建清单)
 SCAN_EXTENSIONS = {
@@ -87,11 +99,18 @@ RULE_EMOJI_ICON = "emoji-icon"
 RULE_PLACEHOLDER_COPY = "placeholder-copy"
 RULE_LILAC_PURPLE = "lilac-purple"
 RULE_NUMBERED_EYEBROW = "numbered-eyebrow"
+RULE_GRADIENT_BUTTON = "gradient-button"
+RULE_AURORA_BLOB = "aurora-blob"
+RULE_LIBRARY_PRIMARY = "library-primary"
+RULE_UNIFORM_SHADOW = "uniform-shadow"
+RULE_GLASS_BACKDROP = "glass-backdrop-blur"
+RULE_UNDECLARED_FONT = "undeclared-font"
 
 # 阈值(确定性口径,写死不猜)
 GLOW_BOX_BLUR_MIN = 16      # box-shadow / drop-shadow 0 偏移模糊 ≥16px 判辉光
 GLOW_TEXT_BLUR_MIN = 8      # text-shadow 0 偏移模糊 ≥8px 判辉光
 UNIFORM_RADIUS_MIN = 4      # 单文件 ≥4 处同一圆角判"全场同圆角"
+UNIFORM_SHADOW_MIN = 4      # 单文件 ≥4 处同一阴影判"全场同款重阴影"
 TRACKING_TW_MIN = 3         # ≥3 行 tracking-tight/tighter 判滥用
 TRACKING_CSS_MIN = 4        # ≥4 行负 letter-spacing 判滥用
 SATURATION_MIN = 60         # RGB 通道 max-min ≥60 判饱和色(彩边框)
@@ -501,6 +520,89 @@ def check_emoji_icon(rel_path, lines, file_scope, line_scope):
     return findings
 
 
+# ---------------------------------------------------------------------------
+# patterns / funboy322 avoid-ai-design)——CTA 渐变 / aurora 色斑 / 全场同款
+# 重阴影进硬通道;玻璃拟态与未加载字体的告警档在文件尾部
+# ---------------------------------------------------------------------------
+
+_GRADIENT_MARKER_RE = re.compile(r"\bbg-gradient-to-[a-z]+\b|(?:linear|radial)-gradient\(", re.IGNORECASE)
+_CTA_TOKEN_RE = re.compile(r"\b(?:btn|button|cta)\b", re.IGNORECASE)
+_BLUR_BLOB_CSS_RE = re.compile(r"blur\(\s*(?:[4-9]\d|\d{3,})px", re.IGNORECASE)
+_BLUR_BLOB_TW_RE = re.compile(r"\bblur-(?:2xl|3xl)\b")
+_SHADOW_TW_RE = re.compile(r"\bshadow-(?:sm|md|lg|xl|2xl)\b")
+_SHADOW_CSS_RE = re.compile(r"box-shadow\s*:\s*([^;}\n]+)", re.IGNORECASE)
+
+
+def check_gradient_button(rel_path, lines, file_scope, line_scope):
+    """规则:渐变 CTA/按钮(同一行内 btn/button/cta 词元与渐变标记同现)。"""
+    findings = []
+    for i, line in enumerate(lines, 1):
+        if not (_CTA_TOKEN_RE.search(line) and _GRADIENT_MARKER_RE.search(line)):
+            continue
+        if is_exempt(RULE_GRADIENT_BUTTON, i, file_scope, line_scope):
+            continue
+        findings.append({
+            "file": rel_path, "line": i, "rule": RULE_GRADIENT_BUTTON,
+            "severity": SEV_MAJOR,
+            "message": "渐变 CTA/按钮(主操作用实色高对比),见 ai-tells.md §1;渐变只在品牌色相内有理由时用于背景层",
+        })
+    return findings
+
+
+def check_aurora_blob(rel_path, lines, file_scope, line_scope):
+    """规则:aurora 光斑背景(blur ≥40px / blur-2xl·3xl 的装饰色斑)。
+
+    例外:<img> 行(图片打码)与 backdrop-filter 行(玻璃拟态归告警档)不判 aurora。
+    """
+    findings = []
+    for i, line in enumerate(lines, 1):
+        m = _BLUR_BLOB_CSS_RE.search(line)
+        tw = None if m else _BLUR_BLOB_TW_RE.search(line)
+        if not m and not tw:
+            continue
+        low = line.lower()
+        if "<img" in low or "backdrop" in low:
+            continue
+        hit = m.group(0) if m else tw.group(0)
+        if is_exempt(RULE_AURORA_BLOB, i, file_scope, line_scope):
+            continue
+        findings.append({
+            "file": rel_path, "line": i, "rule": RULE_AURORA_BLOB,
+            "severity": SEV_MAJOR,
+            "message": "aurora 光斑背景(%s;大面积彩色渲染默认形态),见 ai-tells.md §1;背景走中性梯度,品牌色 10%% 强调" % hit,
+        })
+    return findings
+
+
+def check_uniform_shadow(rel_path, lines, file_scope, line_scope):
+    """规则:全场同款阴影(≥UNIFORM_SHADOW_MIN 处同一 shadow,无海拔分档)。
+
+    聚合型:整文件至多报 1 处,定位于首个 shadow 声明行。var() 引用与 none 不算平凡值。
+    """
+    values = []
+    for i, line in enumerate(lines, 1):
+        for m in _SHADOW_TW_RE.finditer(line):
+            values.append((i, m.group(0).lower()))
+        for m in _SHADOW_CSS_RE.finditer(line):
+            v = m.group(1).strip().rstrip(",;")
+            if not v or v.startswith(("var(", "{", "none")):
+                continue
+            values.append((i, v))
+    if len(values) < UNIFORM_SHADOW_MIN:
+        return []
+    unique = {v for _, v in values}
+    if len(unique) != 1:
+        return []
+    if is_exempt(RULE_UNIFORM_SHADOW, values[0][0], file_scope, line_scope):
+        return []
+    return [{
+        "file": rel_path, "line": values[0][0], "rule": RULE_UNIFORM_SHADOW,
+        "severity": SEV_MAJOR,
+        "message": "全场同款阴影(%d 处均为 %s,无海拔分档),见 ai-tells.md §1;阴影按 elevation 分档,浮层才拿重阴影"
+                   % (len(values), values[0][1]),
+    }]
+
+
 _CHECKS = (
     check_gradient_text,
     check_glow_shadow,
@@ -510,6 +612,9 @@ _CHECKS = (
     check_purple_cyan_gradient,
     check_uppercase_heading,
     check_emoji_icon,
+    check_gradient_button,
+    check_aurora_blob,
+    check_uniform_shadow,
 )
 
 
@@ -540,6 +645,7 @@ REFLEX_FONTS = (
     "fraunces", "playfair display", "cormorant", "lora", "crimson", "newsreader",
     "syne", "space grotesk", "space mono", "ibm plex", "inter", "dm sans",
     "dm serif", "outfit", "plus jakarta sans", "instrument sans",
+    "instrument serif", "geist",
 )
 
 
@@ -600,6 +706,9 @@ def scan_reflex_fonts(text, rel_path):
 
     for offset, block in targets:
         css = _CSS_COMMENT_STRIP_RE.sub("", block)
+        # 无花括号的内容(如纯类名 HTML)对 CSS 规则正则是 O(n²) 回退面,直接跳过
+        if "{" not in css:
+            continue
 
         for m in _CSS_PROP_DEF_RE.finditer(css):
             if not _DISPLAY_VAR_NAME_RE.match(m.group(1)):
@@ -631,6 +740,80 @@ def scan_reflex_fonts(text, rel_path):
 
 
 # ---------------------------------------------------------------------------
+# 告警档:undeclared-font(font-family 引用的字族在本文件内无加载声明)
+#
+# 「写了字体名单但没人负责加载」是社区清单点名的确定性签名(渲染静默回落);
+# 告警档而非硬失败:多文件项目里字体可在别的文件加载,命中后人工核外部加载,
+# preview 自包含 HTML 内命中即应修(自包含产物没有"别的文件")。
+# ---------------------------------------------------------------------------
+
+_FONTFACE_FAMILY_RE = re.compile(
+    r"@font-face[^{}]{0,2000}\{[^{}]{0,2000}?font-family\s*:\s*[\"']?([^;\"'}\n]{0,200})",
+    re.IGNORECASE | re.DOTALL,
+)
+_WEBFONT_LINK_RE = re.compile(
+    r"fonts\.(?:googleapis|gstatic)\.com[^\"'\n]{0,2000}?family=([^&\"'\n]{0,200})", re.IGNORECASE
+)
+_FONT_FAMILY_USE_RE = re.compile(r"font-family\s*:\s*([^;}\n]+)", re.IGNORECASE)
+
+# 泛型/系统栈字族不算"声明未加载"(本机必有或由栈回落兜底)
+_GENERIC_OR_SYSTEM_FONTS = {
+    "serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui",
+    "ui-serif", "ui-sans-serif", "ui-monospace", "ui-rounded",
+    "inherit", "initial", "unset",
+    "arial", "helvetica", "helvetica neue", "georgia", "times", "times new roman",
+    "courier new", "verdana", "tahoma", "trebuchet ms", "impact",
+    "-apple-system", "blinkmacsystemfont", "segoe ui", "roboto",
+    "sf pro display", "sf pro text", "noto sans", "noto serif",
+    "microsoft yahei", "pingfang sc", "hiragino sans gb", "source han sans",
+}
+
+
+def scan_undeclared_fonts(text, rel_path):
+    """扫描 undeclared-font 告警档:font-family 引用 vs @font-face/字体链接。
+
+    判定:逐处 font-family 声明取首位字族(解析一层 var() 间接),不在泛型/系统
+    栈白名单、也不在本文件 @font-face 或 Google Fonts 链接的已声明集合内 → 告警。
+    同一字族至多报一次(定位于首个引用行);豁免沿用 tell-exempt。
+    """
+    lines = text.splitlines()
+    file_scope, line_scope = parse_exemptions(lines)
+
+    defs = {}
+    for m in _CSS_PROP_DEF_RE.finditer(text):
+        defs.setdefault(m.group(1), m.group(2).strip())
+
+    declared = set()
+    for m in _FONTFACE_FAMILY_RE.finditer(text):
+        for part in m.group(1).split(","):
+            declared.add(part.strip().strip("\"'").lower())
+    for m in _WEBFONT_LINK_RE.finditer(text):
+        for fam in m.group(1).split("|"):
+            name = unquote(fam.replace("+", " ")).split(":")[0].strip().strip("\"'").lower()
+            if name:
+                declared.add(name)
+
+    warnings = []
+    seen = set()
+    for i, line in enumerate(lines, 1):
+        for m in _FONT_FAMILY_USE_RE.finditer(line):
+            family = _first_font_family(m.group(1), defs)
+            if not family or family in _GENERIC_OR_SYSTEM_FONTS or family in declared:
+                continue
+            if family in seen:
+                continue
+            if is_exempt(RULE_UNDECLARED_FONT, i, file_scope, line_scope):
+                continue
+            seen.add(family)
+            warnings.append({
+                "file": rel_path, "line": i, "rule": RULE_UNDECLARED_FONT,
+                "severity": SEV_MINOR,
+                "message": "字体声明未加载(%s 本文件内无 @font-face/字体链接;多文件项目核外部加载,"
+                           "preview 自包含产物内即应修),见 ai-tells.md §2" % family,
+            })
+    return warnings
+
+# ---------------------------------------------------------------------------
 # 行级数据驱动规则表(#21):单正则即判定的规则,归属按 maliang 实际文件
 # ---------------------------------------------------------------------------
 
@@ -648,9 +831,16 @@ _LINE_RULES = (
     (RULE_LILAC_PURPLE, SEV_MAJOR,
      re.compile(r"#a78bfa|#c4b5fd|#8b5cf6", re.IGNORECASE),
      "柔紫/莫兰迪紫强调色,见 ai-tells.md §7;换具体品牌色相,必须紫时用深紫 #4c1d95"),
+    (RULE_LIBRARY_PRIMARY, SEV_MAJOR,
+     re.compile(r"#6366f1|#4f46e5|#409eff|#5e6ad2", re.IGNORECASE),
+     "库默认主色未调(shadcn indigo / Element Plus 蓝 / Linear 紫),见 ai-tells.md §7;主色从 DESIGN.md 品牌色相派生。"
+     "通用 Tailwind blue 不在本表(clean 夹具 #2563eb 为合法 accent 先例),留给人工对照"),
     (RULE_NUMBERED_EYEBROW, SEV_MINOR,
      re.compile(r">\s*0\d{1,2}\s+[·/—–-]\s+[A-Za-z]"),
      "零填充编号 eyebrow(「01 · About」装饰性编号),见 ai-tells.md §10;人工裁量"),
+    (RULE_GLASS_BACKDROP, SEV_MINOR,
+     re.compile(r"\bbackdrop-blur\b|backdrop-filter\s*:\s*[^;}\n]*blur", re.IGNORECASE),
+     "玻璃拟态默认(backdrop-blur;命中不自动违规),见 ai-tells.md §1;液态玻璃走模板墙选型并标 tell-exempt"),
 )
 
 
@@ -679,11 +869,13 @@ def scan_text(text, rel_path):
         findings.extend(check(rel_path, lines, file_scope, line_scope))
     findings.extend(_scan_line_rules(rel_path, lines, file_scope, line_scope, hard_only=True))
 
-    # 豁免计数:同一套匹配在不带豁免的口径下重跑一次,差值即被豁免掉的命中数
+    # 豁免计数:仅当文件含 tell-exempt 标注时,把同一套匹配在不带豁免的口径下重跑一遍
+    # (差值即被豁免掉的命中数;无标注文件的豁免数恒为 0,免除整遍全量重扫)
     total_hits = 0
-    for check in _CHECKS:
-        total_hits += len(check(rel_path, lines, set(), {}))
-    total_hits += len(_scan_line_rules(rel_path, lines, set(), {}, hard_only=True))
+    if any("tell-exempt" in line for line in lines):
+        for check in _CHECKS:
+            total_hits += len(check(rel_path, lines, set(), {}))
+        total_hits += len(_scan_line_rules(rel_path, lines, set(), {}, hard_only=True))
 
     findings.sort(key=lambda f: (f["file"], f["line"], f["rule"]))
     return findings, total_hits - len(findings)
@@ -721,6 +913,10 @@ def collect_files(paths):
     return files
 
 
+# 输出卫生:产物派生字符串(文件名/命中片段)进终端前剥离控制字符,防 ANSI 转义注入
+_CTL_CLEAN_RE = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(
         description="确定性 AI-tell 代码检测器(纯正则,无 LLM;豁免口径见 references/meta/ai-tells.md 第 0 节)"
@@ -755,6 +951,7 @@ def main(argv=None):
             w["severity"] = SEV_WARN
         warnings.extend(file_warnings)
         warnings.extend(scan_advisory_tells(text, path))
+        warnings.extend(scan_undeclared_fonts(text, path))
         exempted += file_exempted
 
     warnings.sort(key=lambda w: (w["file"], w["line"], w["rule"]))
@@ -769,13 +966,13 @@ def main(argv=None):
         }, ensure_ascii=False, indent=2))
     else:
         for finding in findings:
-            print("%s:%d: [%s] %s" % (
+            print(_CTL_CLEAN_RE.sub("", "%s:%d: [%s] %s" % (
                 finding["file"], finding["line"], finding["rule"], finding["message"],
-            ))
+            )))
         for warning in warnings:
-            print("%s:%d: [%s·告警档] %s" % (
+            print(_CTL_CLEAN_RE.sub("", "%s:%d: [%s·告警档] %s" % (
                 warning["file"], warning["line"], warning["rule"], warning["message"],
-            ))
+            )))
         print("扫描 %d 个文件,命中 %d 处 tell(豁免 %d 处,读取失败 %d 个);告警档 %d 处(不拦截)"
               % (len(files) - unreadable, len(findings), exempted, unreadable, len(warnings)))
 

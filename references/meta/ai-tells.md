@@ -14,7 +14,7 @@
 
 豁免须**显式记录**(在产物中标注豁免依据,如 `<!-- tell-exempt: 3-col, DESIGN.md 批准 -->`),静默豁免 = 违规。执行侧的误报过滤见 [`../commands/preview.md`](../commands/preview.md) 第 5 节。
 
-机械可判子集可先跑 `python3 scripts/detect-tells.py <文件...>` 做确定性扫描(纯正则、无 LLM;只收渐变文字 / 辉光阴影 / 全场同圆角 / tracking 滥用 / 彩边框卡片等可正则表达的规则,豁免同样只认 `tell-exempt` 显式标注)——脚本命中项仍须人工复核豁免语义,品味类 Tell 留给本清单人工对照。
+机械可判子集可先跑 `python3 scripts/detect-tells.py <文件...>` 做确定性扫描(纯正则、无 LLM;只收渐变文字 / 辉光阴影 / 全场同圆角 / tracking 滥用 / 彩边框卡片 / 紫蓝粉渐变 / CTA 渐变 / aurora 色斑 / 库默认主色 / 全场同款阴影等可正则表达的规则,玻璃拟态与字体未加载走告警档只报不拦,豁免同样只认 `tell-exempt` 显式标注)——脚本命中项仍须人工复核豁免语义,品味类 Tell 留给本清单人工对照。
 
 ## 0.1 规避链(二阶陷阱)
 
@@ -28,6 +28,8 @@
 | 三列等宽卡片凑数(§9) | 假不对称两栏(左窄右宽,内容仍均质) | 换了骨架没换内容关系,层级没有真正建立 |
 | 奶油纸张 / 近黑霓虹等饱和外观(§11) | 刻意绕开后仍可被品类+回避猜中 | 美学可从品类加刻意回避反推出来,本身即可预测(§13 校准自检同源) |
 | 全员同款入场动效(§12) | 全员同款弹跳缓动 / 逐个错峰仍同向量 | 错峰只修了时间齐,没修动作齐;每个元素的入场答不出「为什么这样动」 |
+| 紫蓝渐变(§1)被拒 | emerald/teal 兜底强调色 | 避开紫后的"安全色"反射,与品牌色相无关,可从「刻意避紫」反推出;emerald 同时是语义 success 色,混用还吞掉语义 |
+| 渐变文字改单字重音(对照 1 After) | 页页标题单字重音 | 一次是有意,页页用是 uniform;下划线/换色重音本身成了新的默认装饰 |
 
 
 ## 1. Visual & CSS(视觉与 CSS)
@@ -50,6 +52,28 @@
 - **为什么是 Tell**:LLM 默认审美,与具体品牌色无关
 - **替代**:背景用中性梯度,品牌色仅做 10% 强调(见 [`color.md`](../dimensions/color.md) 60-30-10)
 
+### Tell · 渐变 CTA 按钮
+
+- **症状**:主按钮/CTA 用 `bg-gradient-to-r …` 或 `linear-gradient()` 填充(常配紫蓝或 emerald-teal 色对)
+- **为什么是 Tell**:主操作要的是高对比实色,渐变稀释点击意图;社区 AI-slop 清单高频签名
+
+### Tell · aurora 光斑背景(blur 色斑)
+
+- **症状**:绝对定位的大圆角色块 + `blur(40px+)`/`blur-2xl`·`3xl` 铺在 hero 背后,彩色光斑弥漫全屏
+- **为什么是 Tell**:大面积彩色渲染的默认形态——紫渐变被禁后的第一替代落点,与品牌色无关,且拖累可读性
+- **替代**:背景走中性梯度 + 品牌色 10% 强调;确要氛围光,一个色斑走 §0 豁免并给理由(图片打码用途的 blur 不在此列)
+
+### Tell · 全场同款重阴影
+
+- **症状**:卡片/按钮/输入框全部 `shadow-lg`/`shadow-xl`,无层级差异
+- **为什么是 Tell**:与全场同圆角同构——阴影是海拔语言,全场同款等于没有海拔
+- **替代**:按 [`elevation.md`](../dimensions/elevation.md) 分档,浮层才拿重阴影,静态容器用边框/底色分组
+
+### Tell · 玻璃拟态默认(backdrop-blur)
+
+- **症状**:卡片/导航一律 `backdrop-blur` + 半透明底,无 DESIGN.md 依据
+- **为什么是 Tell**:LLM 默认"现代感"零件;玻璃是模板墙的合法设计语言(液态玻璃),故本条命中不自动违规——正用走模板墙选型,误用才清理
+
 ## 2. Typography(排版)
 
 ### Tell · Inter / Geist 单字族全场
@@ -69,6 +93,11 @@
 - **症状**:短标题也加 `text-balance`
 - **为什么是 Tell**:对短文本无效,显示 LLM 不懂语义
 - **替代**:仅长段落(≥ 3 行)用 `text-pretty`,标题不用
+
+### Tell · 字体声明了却从未加载
+
+- **症状**:`font-family: "Instrument Serif", serif` 出现在样式里,全文无对应 `@font-face`/字体链接——字体从未加载,渲染静默回落
+- **为什么是 Tell**:写了字体名单但没人负责加载,渲染结果与设计意图脱节;确定性签名,脚本可查
 
 ## 3. Layout & Spacing(布局与间距)
 
@@ -94,6 +123,11 @@
 - **症状**:巨型圆角 section 容器包住一切,卡片套卡片再套外框,无理由的 dashboard 式分格堆叠;section 沦为「边框套边框的监狱」
 - **为什么是 Tell**:默认用容器制造「设计感」,层级靠嵌套而不是排版与留白,版面显得局促
 - **替代**:盒子只在有明确用途时用;开放布局 + 留白承担分组;扁平层级 + 直接对齐;一个 section 只做一个主框式动作(one primary framing move)。
+
+### Tell · 落地页固定解剖顺序
+
+- **症状**:hero → logo 墙 → 三卡 feature → 数据带 → 三档定价 → 大 CTA,段落顺序与官网模板逐段对齐
+- **为什么是 Tell**:统计意义上的"AI 落地页解剖"——顺序本身无信息量,读者可预测整页
 
 ## 4. Content & Data(内容与数据)
 
@@ -157,6 +191,11 @@
 - **为什么是 Tell**:LLM 默认"高级感"配色,实际让所有产出雷同
 - **替代**:选具体品牌色相(参考 [`color-palettes.md`](../dimensions/color-palettes.md) 192 套),避开 indigo-violet-purple 区间;若必须紫,用深紫(`#4c1d95`)或品红紫(`#7c3aed` 偏暖)
 
+### Tell · 库默认主色未调
+
+- **症状**:primary 直接落在 shadcn indigo(`#6366f1`/`#4f46e5`)、Element Plus 默认蓝(`#409EFF`)、Linear 紫(`#5E6AD2`)上,DESIGN.md 无派生记录
+- **为什么是 Tell**:未调主题的组件库默认——"AI 蓝"即统计中位数,与 §7 柔紫同构,只是色相不同;通用 Tailwind blue 同属此族(脚本不拦,人工对照)
+
 ## 8. Premium-Consumer Palette Ban(高端消费调色板禁令)
 
 ### Tell · 高端品牌默认色 = 黑金 / 米白 / 香槟金
@@ -193,6 +232,7 @@
 | Hero 底部装饰文字条(`BRAND. MOTION. SPATIAL.` 式 mono 大写小字条) | 机构作品集陈词滥调                                  | 删掉;仅当条内是真实可点导航或真实状态信息时保留              |
 | 节标题右上角悬浮小段落                                     | 与任何元素无对齐关系,是"漂浮的说明"                | 放到标题正下方,或做成对齐的双栏节头                          |
 | 垂直旋转文字(90° 竖排的 `INDEX OF WORK`)                  | 作品集网站俗套                                      | 仅当 brief 明确是机构 / 实验向且服务真实构图时使用            |
+| hero 标题上方胶囊徽章(pill badge:「New · v2」「✨ AI Powered」) | 居中 hero + 徽章是社区清单点名的 AI 落地页解剖第一步 | 徽章仅承载真实状态(公测/内测邀请码),否则删 |
 | 装饰性十字 / 发丝网格线(只为"显得被设计过"画的线)        | 组织不了任何内容                                    | 仅当线在组织真实内容时使用                                    |
 
 ### 编号与元标签
@@ -239,7 +279,7 @@
 
 ### 反射字体清单(训练数据默认)
 
-Fraunces / Playfair Display / Cormorant / Lora / Crimson / Newsreader / Syne / Space Grotesk / Space Mono / IBM Plex / Inter 当 display 用 / DM Sans / DM Serif / Outfit / Plus Jakarta Sans / Instrument Sans
+Fraunces / Playfair Display / Cormorant / Lora / Crimson / Newsreader / Syne / Space Grotesk / Space Mono / IBM Plex / Inter 当 display 用 / DM Sans / DM Serif / Outfit / Plus Jakarta Sans / Instrument Sans / Instrument Serif / Geist
 
 - **判定**:默认使用其中任一 = 停止寻找的信号。仍要选用时,必须给出"没有其他字体能满足"的理由,题材关联不算理由
 - **替代**:按 [`font.md`](../dimensions/font.md) 从受众世界选字;Operate / Read 型页面用系统字体栈 + 工作马 UI 字体即可
@@ -286,6 +326,11 @@ Fraunces / Playfair Display / Cormorant / Lora / Crimson / Newsreader / Syne / S
 - **症状**:每个 section 一律 fade + 上移入场,每张卡片一律 hover 上浮 / 阴影过渡,非用户触发动效均匀铺满全页
 - **为什么是 Tell**:这是签名级默认编排——一次编排时刻(单次页载序列或单处揭示)比满页分散效果更有力;后者只会读作"AI 生成"
 - **替代**:把动效预算集中在**一个编排时刻**;非用户触发动效只在吸引注意时克制使用;hover / 点击等**回答用户动作**的动效(打开 / 展开 / 确认,让人看见什么变了)保留,但逐拍过 GATE"有动机";MOTION_INTENSITY 1-3 档直接禁入场动画,4 档以上入场时长 ≤400ms;去掉全部动画后页面必须完整可活(GATE"剥掉能活")
+
+### Tell · 现成动效组件库默认件
+
+- **症状**:Aceternity / Magic UI 式现成效果(光标跟随光斑、滚动视差卡、beam 流光边框)原样贴入
+- **为什么是 Tell**:效果出自他人签名而非本产品动效语言——与"未调主题的组件库默认"同构,只是发生在动效层
 
 ## 13. 跨项目收敛(系列产出防同款)
 
