@@ -1,0 +1,250 @@
+{
+  "computed_at": "2026-10-26T03:01:09+08:00",
+  "target_dir": "D:\\projects\\maliang\\examples\\ui-markdown",
+  "tokens": {
+    "border-hairline": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "color-brand-primary": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md",
+      "ui/home.md"
+    ],
+    "color-danger": [
+      "organisms/dock.md"
+    ],
+    "color-divider": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "color-surface-base": [
+      "ui/home.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "color-surface-card": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md",
+      "ui/home.md",
+      "ui/mine.md"
+    ],
+    "color-text-placeholder": [
+      "ui/home.md"
+    ],
+    "color-text-primary": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md",
+      "ui/home.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "color-text-secondary": [
+      "organisms/dock.md",
+      "ui/home.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "font-size-body": [
+      "organisms/nav-bar.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "font-size-caption": [
+      "ui/home.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "font-size-h3": [
+      "organisms/nav-bar.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "font-size-mini": [
+      "organisms/dock.md"
+    ],
+    "font-weight-semibold": [
+      "organisms/nav-bar.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "icon-activity": [
+      "ui/home.md"
+    ],
+    "icon-back": [
+      "organisms/nav-bar.md"
+    ],
+    "icon-category": [
+      "ui/home.md"
+    ],
+    "icon-compose-stroke": [
+      "organisms/dock.md"
+    ],
+    "icon-discover-filled": [
+      "organisms/dock.md"
+    ],
+    "icon-discover-stroke": [
+      "organisms/dock.md"
+    ],
+    "icon-doc": [
+      "ui/setting/about.md"
+    ],
+    "icon-feed": [
+      "ui/home.md"
+    ],
+    "icon-feedback": [
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "icon-home-filled": [
+      "organisms/dock.md"
+    ],
+    "icon-home-stroke": [
+      "organisms/dock.md"
+    ],
+    "icon-info": [
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "icon-link": [
+      "ui/setting/about.md"
+    ],
+    "icon-messages-filled": [
+      "organisms/dock.md"
+    ],
+    "icon-messages-stroke": [
+      "organisms/dock.md"
+    ],
+    "icon-mine-filled": [
+      "organisms/dock.md"
+    ],
+    "icon-mine-stroke": [
+      "organisms/dock.md"
+    ],
+    "icon-rank": [
+      "ui/home.md"
+    ],
+    "icon-search-filled": [
+      "ui/home.md"
+    ],
+    "icon-service": [
+      "ui/home.md"
+    ],
+    "icon-settings": [
+      "ui/mine.md"
+    ],
+    "icon-share": [
+      "ui/setting/about.md"
+    ],
+    "icon-shield": [
+      "ui/setting/about.md"
+    ],
+    "icon-size-lg": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md"
+    ],
+    "icon-size-md": [
+      "ui/home.md"
+    ],
+    "icon-size-xl": [
+      "organisms/dock.md",
+      "ui/home.md"
+    ],
+    "icon-touch-target": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md"
+    ],
+    "icon-version": [
+      "ui/setting/about.md"
+    ],
+    "icon-wallet": [
+      "ui/home.md",
+      "ui/mine.md"
+    ],
+    "radius-full": [
+      "organisms/dock.md",
+      "ui/home.md",
+      "ui/mine.md"
+    ],
+    "radius-rounded": [
+      "ui/home.md"
+    ],
+    "spacing-lg": [
+      "organisms/dock.md",
+      "organisms/nav-bar.md",
+      "ui/home.md",
+      "ui/mine.md",
+      "ui/setting/about.md"
+    ],
+    "spacing-md": [
+      "ui/home.md"
+    ],
+    "spacing-sm": [
+      "organisms/dock.md"
+    ]
+  },
+  "unreferenced": [
+    "border-medium",
+    "border-thick",
+    "border-thin",
+    "color-accent",
+    "color-border-base",
+    "color-brand-secondary",
+    "color-cover-a1",
+    "color-cover-a2",
+    "color-cover-b1",
+    "color-cover-b2",
+    "color-cover-c1",
+    "color-cover-c2",
+    "color-cover-d1",
+    "color-cover-d2",
+    "color-link",
+    "color-overlay",
+    "color-state-hover",
+    "color-success",
+    "color-surface-elevated",
+    "color-text-disabled",
+    "color-text-on-brand",
+    "color-warning",
+    "font-family-display",
+    "font-family-ui",
+    "font-size-h1",
+    "font-size-h2",
+    "font-weight-bold",
+    "font-weight-medium",
+    "font-weight-regular",
+    "icon-search-stroke",
+    "icon-size-sm",
+    "icon-stroke",
+    "line-height-base",
+    "line-height-relaxed",
+    "line-height-tight",
+    "motion-duration-fast",
+    "motion-duration-instant",
+    "motion-duration-normal",
+    "motion-duration-slower",
+    "motion-ease-default",
+    "motion-ease-in",
+    "motion-ease-out",
+    "radius-lg",
+    "radius-sharp",
+    "radius-subtle",
+    "radius-xl",
+    "shadow-card",
+    "spacing-2xl",
+    "spacing-3xl",
+    "spacing-xl",
+    "spacing-xs",
+    "z-index-base",
+    "z-index-drawer",
+    "z-index-dropdown",
+    "z-index-modal",
+    "z-index-sticky",
+    "z-index-toast",
+    "z-index-tooltip"
+  ]
+}

@@ -21,6 +21,12 @@ framework/element/ 的文档里抽取 el-* 标签与 El* 服务名)。
                                <style>)与文件头注释完整(error)
   5. gen.class-undefined     — 模板里每个 class 必须在同文件 <style> 里有定义,
                                或属于框架基础类(el-*,运行时渲染)(error)
+  6. gen.dangerous-api       — 注入面 API(G46):eval/new Function/
+                               javascript: URL 无条件 error(与数据来源无关的
+                               执行面);v-html/innerHTML/outerHTML/
+                               dangerouslySetInnerHTML 绑定 warn——静态扫描
+                               无法证明绑定数据来源,须为仓库内本地常量或经
+                               消毒,编号门禁 G46 按来源判 CRITICAL
 
 诚实范围:本脚本只做静态/机械校验,证明的是「组件产出」,不证明点击行为 ——
 交互真实性由 scripts/verify-interactive.py 在真浏览器里验证。
@@ -55,6 +61,30 @@ CLASS_SELECTOR_RE = re.compile(r"\.([A-Za-z][\w-]*)")
 EL_TAG_RE = re.compile(r"<(el-[a-z0-9-]+)\b")
 EL_IMPORT_RE = re.compile(r"""import\s*\{([^}]*)\}\s*from\s*["']element-plus["']""")
 EL_NAME_RE = re.compile(r"^El[A-Z][A-Za-z0-9]*$")
+
+# 注入面 API(G46)。两档:无条件执行面 error(数据来源无关);HTML 绑定面
+# warn——静态扫描证不了绑定来源,本地常量绑定可过但须留痕,外部内容未消毒
+# 在 G46 判 CRITICAL(门禁层完成来源判定,脚本层只负责暴露面)。
+# 执行面覆盖(安全审查 M-2 补口):new 与非 new 的 Function(、字符串参数的
+# setTimeout/setInterval(字符串会被求值)、document.write/insertAdjacentHTML、
+# 方括号取值的 eval。实体编码混淆(java&#115;cript:)属渲染层语义,静态扫描
+# 不覆盖,由 G46 门禁层判定。
+DANGEROUS_EXEC_RES = (
+    (re.compile(r"\beval\s*\("), "eval() 动态执行"),
+    (re.compile(r"\[\s*[\"']eval[\"']\s*\]\s*\("), "方括号取值的 eval(混淆形态)"),
+    (re.compile(r"\bFunction\s*\("), "Function()/new Function() 动态执行"),
+    (re.compile(r"\bset(?:Timeout|Interval)\s*\(\s*[\"']"), "setTimeout/setInterval 字符串参数(会被求值)"),
+    (re.compile(r"\bdocument\.write"), "document.write(文档流写入)"),
+    (re.compile(r"\.insertAdjacentHTML\s*\("), "insertAdjacentHTML 原始 HTML 写入"),
+    (re.compile(r"javascript:\s*", re.IGNORECASE), "javascript: 协议 URL"),
+)
+DANGEROUS_HTML_BIND_RES = (
+    (re.compile(r"\bv-html\s*="), "v-html 原始 HTML 绑定"),
+    (re.compile(r"\.innerHTML\s*="), "innerHTML 直接赋值"),
+    (re.compile(r"\.outerHTML\s*="), "outerHTML 直接赋值"),
+    (re.compile(r"dangerouslySetInnerHTML"), "React 原始 HTML 注入"),
+    (re.compile(r"domProps\s*:\s*\{[^}]*innerHTML"), "render 函数 domProps innerHTML"),
+)
 
 
 def _line_of(text, index):
@@ -246,6 +276,32 @@ def check_class_resolution(text, rel_path, class_prefix_ok=("el-",)):
     return findings
 
 
+def check_dangerous_api(text, rel_path):
+    """检查 6:注入面 API(G46)。注释行跳过(说明文字不算实现)。"""
+    findings = []
+    for i, line in enumerate(text.splitlines(), 1):
+        stripped = line.strip()
+        if stripped.startswith(("//", "/*", "*", "<!--", "* ")):
+            continue
+        for rx, label in DANGEROUS_EXEC_RES:
+            if rx.search(line):
+                findings.append({
+                    "file": rel_path, "line": i, "severity": "ERROR",
+                    "rule": "gen.dangerous-api",
+                    "message": "禁止的执行面 API: " + label
+                               + "(G46;与数据来源无关,一律不得出现在生成码)",
+                })
+        for rx, label in DANGEROUS_HTML_BIND_RES:
+            if rx.search(line):
+                findings.append({
+                    "file": rel_path, "line": i, "severity": "WARN",
+                    "rule": "gen.dangerous-api",
+                    "message": "HTML 绑定面: " + label
+                               + "(G46;仅限仓库内本地常量绑定,外部内容须消毒)",
+                })
+    return findings
+
+
 def collect_files(target_dir):
     found = []
     for root, dirs, files in os.walk(target_dir):
@@ -328,6 +384,7 @@ def main(argv=None):
         all_results.extend(check_component_whitelist(text, rel, tag_whitelist, name_whitelist))
         all_results.extend(check_sfc_structure(text, rel))
         all_results.extend(check_class_resolution(text, rel))
+        all_results.extend(check_dangerous_api(text, rel))
 
     severity_rank = {"ERROR": 0, "WARN": 1}
     all_results.sort(key=lambda r: (severity_rank.get(r["severity"], 9), r["file"], r["line"]))
@@ -344,11 +401,13 @@ def main(argv=None):
             print("{} {}:{} [{}] {}".format(label, r["file"], r["line"], r["rule"], r["message"]))
         print("")
         print("=" * 32)
-        print("检查结果: %d errors" % len(all_results))
+        error_count = sum(1 for r in all_results if r["severity"] == "ERROR")
+        warn_count = len(all_results) - error_count
+        print("检查结果: %d errors, %d warnings" % (error_count, warn_count))
         print("诚实范围:静态校验只证明组件产出,不证明点击行为(交给 verify-interactive.py)。")
-        print("退出码: " + ("1" if all_results else "0"))
+        print("退出码: " + ("1" if error_count else "0"))
 
-    return 1 if all_results else 0
+    return 1 if any(r["severity"] == "ERROR" for r in all_results) else 0
 
 
 if __name__ == "__main__":

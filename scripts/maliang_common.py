@@ -165,6 +165,77 @@ def parse_table_rows(lines, header_predicate):
 
 
 # ---------------------------------------------------------------------------
+# token.md 解析(产物层 token 名收集)
+# ---------------------------------------------------------------------------
+
+def parse_token_names(path):
+    """从产物层 token.md 收集全部 token 名。
+
+    遍历首列为 "token"(大小写不敏感)的表格 body 行,取首列 kebab-case 名
+    (兼容 `{token-name}` 与 token-name 两种写法,剥反引号与花括号)。覆盖
+    颜色/字号/图标/间距/圆角/边框及暗色模式表(同名去重)。单一实现:
+    validate-draw-md(token 悬空检查)与 ui-graph(token-usage 反向索引)
+    共用,防两处解析漂移。文件不存在返回空 set。
+    """
+    tokens = set()
+    if not os.path.isfile(path):
+        return tokens
+    with open(path, "r", encoding="utf-8") as f:
+        lines = f.read().splitlines()
+
+    in_token_table = False
+    for line in lines:
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            in_token_table = False
+            continue
+        cells = [c.strip() for c in stripped.strip("|").split("|")]
+        first = cells[0] if cells else ""
+        if first.lower() == "token":
+            in_token_table = True
+            continue
+        if TABLE_SEP_RE.match(line):
+            continue
+        if in_token_table and first:
+            name = first.strip("`").strip("{}").strip()
+            if name and re.fullmatch(r"[a-z][a-z0-9-]*", name):
+                tokens.add(name)
+    return tokens
+
+
+# ---------------------------------------------------------------------------
+# {token} 引用提取(单一实现:validate-draw-md 检查 1/21 与 ui-graph
+# token-usage 共用,防「什么算 token 引用」三处判定漂移)
+# ---------------------------------------------------------------------------
+
+# {token-name} 引用形式(kebab-case)
+TOKEN_REF_RE = re.compile(r"\{([a-z][a-z0-9-]*)\}")
+
+
+def is_action_row(stripped_line):
+    """判定(已 lstrip 的)行是否为参数表 action 行。
+
+    action 行内的 {xxx} 是 URL/JS 模板参数(如 {input-value}),不是设计
+    token——检查 1(悬空引用)、检查 21(裸名)与 ui-graph token-usage
+    统一按本谓词跳过。
+    """
+    return stripped_line.startswith("| action") or stripped_line.startswith("|action")
+
+
+def iter_token_refs(lines):
+    """逐行产出 (line_no, [token 名]);action 行跳过(is_action_row)。
+
+    lines 为 1-based 行号对应的可枚举文本(enumerate(lines, 1) 形态由调用方
+    自选;本函数接受 (line_no, line) 对的迭代器,调用方保留行号控制权)。
+    """
+    for line_no, line in lines:
+        stripped = line.lstrip()
+        if is_action_row(stripped):
+            continue
+        yield line_no, TOKEN_REF_RE.findall(line)
+
+
+# ---------------------------------------------------------------------------
 # WCAG 对比度数学(全库唯一实现)
 # ---------------------------------------------------------------------------
 

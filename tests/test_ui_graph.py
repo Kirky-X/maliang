@@ -298,5 +298,278 @@ class TestPreviewHash(unittest.TestCase):
             ug.compute_hash(self.root, kind="no-such-kind")
 
 
+class TestTokenUsage(unittest.TestCase):
+    """token-usage 反向索引:token → 波及页面 + 孤儿 token(DESIGN.md 变更波及分析)。"""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = _make_tree(
+            self._tmp.name, "tap=→ui/setting/about.md; state=无; db=无; api=无")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_usage_index_and_orphan(self):
+        # 应报: surface-base 被两页引用;token.md 新增未被引用的 spacing-xl 是孤儿
+        token_path = Path(self.root) / "token.md"
+        token_path.write_text(
+            token_path.read_text(encoding="utf-8") + "| spacing-xl | 32px |\n",
+            encoding="utf-8")
+        result = ug.token_usage(self.root)
+        self.assertEqual(result["tokens"].get("surface-base"),
+                         ["ui/home.md", "ui/setting/about.md"])
+        self.assertEqual(result["unreferenced"], ["spacing-xl"])
+        self.assertTrue((Path(self.root) / "token-usage.json").is_file())
+
+    def test_action_line_placeholder_not_token(self):
+        # 不应报: action 行的 {input-value} 是 URL 模板参数,不算 token 引用
+        home = Path(self.root) / "ui" / "home.md"
+        patched = home.read_text(encoding="utf-8").replace(
+            "tap=→ui/setting/about.md", "tap=→ui/search.md?q={input-value}")
+        home.write_text(patched, encoding="utf-8")
+        result = ug.token_usage(self.root)
+        self.assertNotIn("input-value", result["tokens"])
+
+
+class TestCodeHashAndCheckSync(unittest.TestCase):
+    """--kind code 实现指纹 + check-sync 四态分类(规格先行/代码漂移/双侧分叉/同步)。
+
+    基线语义 = 「上次全部对齐时的快照」:build-impl-map 后连跑两个
+    compute-hash 建基线;之后任一侧单独变即对应失同步态。
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = _make_tree(
+            self._tmp.name, "tap=→ui/setting/about.md; state=无; db=无; api=无")
+        ug.generate(self.root)
+        self.preview_root = Path(self.root) / "preview"
+        self.preview_root.mkdir()
+        (self.preview_root / "preview_home_iphone15.html").write_text(
+            "<html><body>home v1</body></html>", encoding="utf-8")
+        self.code_root = Path(self.root) / "element"
+        (self.code_root / "views").mkdir(parents=True)
+        self.vue = self.code_root / "views" / "Home.vue"
+        self.vue.write_text("<template><div>home v1</div></template>\n",
+                            encoding="utf-8")
+        ug.build_impl_map(self.root, str(self.preview_root), str(self.code_root))
+        ug.compute_hash(self.root)
+        ug.compute_hash(self.root, kind="code")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_compute_hash_code_covers_impl_files(self):
+        # 不应报: code 基线收 impl-map 映射的实现文件(preview HTML + vue)
+        state = json.loads(
+            (Path(self.root) / "code-hash-state.json").read_text(encoding="utf-8"))
+        paths = [f["path"] for f in state["files"]]
+        self.assertTrue(any(p.endswith("Home.vue") for p in paths), paths)
+        self.assertTrue(any(p.endswith("preview_home_iphone15.html") for p in paths))
+        self.assertTrue(all(len(f["sha256"]) == 64
+                            for f in state["files"] if not f.get("missing")))
+
+    def test_diff_hash_code_detects_code_change(self):
+        self.vue.write_text("<template><div>home v2</div></template>\n",
+                            encoding="utf-8")
+        result = ug.diff_hash(self.root, kind="code")
+        self.assertTrue(any("Home.vue" in p for p in result["modified"]))
+
+    def test_in_sync_when_nothing_changed(self):
+        result = ug.check_sync(self.root)
+        by_page = {s["logical_ui"]: s["status"] for s in result["statuses"]}
+        self.assertEqual(by_page.get("ui/home.md"), "in-sync")
+        self.assertNotIn("ui/setting/about.md", by_page)  # missing 页不参与判定
+
+    def test_spec_ahead_when_md_changed_only(self):
+        home = Path(self.root) / "ui" / "home.md"
+        home.write_text(
+            home.read_text(encoding="utf-8") + "\n<!-- spec touch -->\n",
+            encoding="utf-8")
+        result = ug.check_sync(self.root)
+        by_page = {s["logical_ui"]: s["status"] for s in result["statuses"]}
+        self.assertEqual(by_page.get("ui/home.md"), "spec-ahead")
+
+    def test_code_drifted_when_code_changed_only(self):
+        self.vue.write_text("<template><div>hand edited</div></template>\n",
+                            encoding="utf-8")
+        result = ug.check_sync(self.root)
+        by_page = {s["logical_ui"]: s["status"] for s in result["statuses"]}
+        self.assertEqual(by_page.get("ui/home.md"), "code-drifted")
+
+    def test_diverged_when_both_changed(self):
+        home = Path(self.root) / "ui" / "home.md"
+        home.write_text(
+            home.read_text(encoding="utf-8") + "\n<!-- spec touch -->\n",
+            encoding="utf-8")
+        self.vue.write_text("<template><div>hand edited</div></template>\n",
+                            encoding="utf-8")
+        result = ug.check_sync(self.root)
+        by_page = {s["logical_ui"]: s["status"] for s in result["statuses"]}
+        self.assertEqual(by_page.get("ui/home.md"), "diverged")
+
+    def test_deleted_code_counts_as_drift(self):
+        self.vue.unlink()
+        result = ug.check_sync(self.root)
+        entry = [s for s in result["statuses"] if s["logical_ui"] == "ui/home.md"][0]
+        self.assertEqual(entry["status"], "code-drifted")
+        self.assertTrue(any("Home.vue" in p for p in entry["missing_files"]))
+
+    def test_missing_baseline_raises(self):
+        (Path(self.root) / "ui-hash-state.json").unlink()
+        with self.assertRaises(FileNotFoundError):
+            ug.check_sync(self.root)
+
+    def test_compute_hash_code_requires_impl_map(self):
+        (Path(self.root) / "ui-implementation-map.json").unlink()
+        with self.assertRaises(FileNotFoundError):
+            ug.compute_hash(self.root, kind="code")
+
+    def test_anchor_decouples_consumer_cwd(self):
+        # 审查 H1:基线锚定在 impl-map 的 base_dir,消费方换 cwd 不产生假漂移/假同步
+        impl_path = Path(self.root) / "ui-implementation-map.json"
+        impl = json.loads(impl_path.read_text(encoding="utf-8"))
+        self.assertIn("base_dir", impl)
+        old_cwd = os.getcwd()
+        try:
+            os.chdir(tempfile.gettempdir())
+            result = ug.check_sync(self.root)
+            by_page = {s["logical_ui"]: s["status"] for s in result["statuses"]}
+            self.assertEqual(by_page.get("ui/home.md"), "in-sync")
+        finally:
+            os.chdir(old_cwd)
+
+    def test_compute_hash_code_refuses_missing_impl_file(self):
+        # 审查 H1/M1:实现文件缺失时拒绝建立基线(防 None==None 伪造全同步)
+        self.vue.unlink()
+        with self.assertRaises(FileNotFoundError):
+            ug.compute_hash(self.root, kind="code")
+        # setUp 建立的合法基线仍在,且未被含缺失的空测量覆盖
+        self.assertFalse(self._code_state_has_missing())
+        state = json.loads(
+            (Path(self.root) / "code-hash-state.json").read_text(encoding="utf-8"))
+        self.assertTrue(all(f["sha256"] for f in state["files"]))
+
+    def _code_state_has_missing(self):
+        p = Path(self.root) / "code-hash-state.json"
+        if not p.is_file():
+            return False
+        state = json.loads(p.read_text(encoding="utf-8"))
+        return any(f.get("missing") for f in state["files"])
+
+    def test_impl_map_absolute_path_rejected(self):
+        # 审查 M-1:impl-map 记录绝对路径/.. 穿越时拒绝消费(防越界读取)
+        impl_path = Path(self.root) / "ui-implementation-map.json"
+        impl = json.loads(impl_path.read_text(encoding="utf-8"))
+        for m in impl["mappings"]:
+            if m.get("preview_html"):
+                m["preview_html"] = "C:/Windows/win.ini"
+                break
+        impl_path.write_text(json.dumps(impl, ensure_ascii=False), encoding="utf-8")
+        with self.assertRaises(ValueError):
+            ug.compute_hash(self.root, kind="code")
+        impl["mappings"][0]["preview_html"] = "../../etc/passwd"
+        impl_path.write_text(json.dumps(impl, ensure_ascii=False), encoding="utf-8")
+        with self.assertRaises(ValueError):
+            ug.check_sync(self.root)
+
+    def test_cli_check_sync_corrupt_baseline_exits_2(self):
+        # 审查 L-1:基线 JSON 损坏 → 退出码 2(没能检查),不是崩溃退出码 1
+        import contextlib
+        import io
+        (Path(self.root) / "code-hash-state.json").write_text(
+            "{broken json", encoding="utf-8")
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            code = ug.main(["ui-graph.py", "check-sync", "--target", self.root])
+        self.assertEqual(code, 2)
+
+
+class TestCheckNavStrict(unittest.TestCase):
+    """check-nav 退出码:--strict 按三态拦(异常=1),缺省 informational 退 0。"""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = _make_tree(
+            self._tmp.name, "tap=→ui/ghost-page.md; state=无; db=无; api=无")
+        ug.generate(self.root)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def _run(self, *extra):
+        import contextlib
+        import io
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            return ug.main(["ui-graph.py", "check-nav", "--target", self.root]
+                           + list(extra))
+
+    def test_default_informational_exit_zero(self):
+        # 缺省:发现死链仍退 0(EXIT-CODES.md 迁移登记的 informational 语义)
+        self.assertEqual(self._run(), 0)
+
+    def test_strict_exit_one_on_anomaly(self):
+        # --strict:同树同发现,退出码 1(无人值守按三态判定)
+        self.assertEqual(self._run("--strict"), 1)
+
+    def test_strict_exit_zero_when_clean(self):
+        home = Path(self.root) / "ui" / "home.md"
+        patched = home.read_text(encoding="utf-8").replace(
+            "tap=→ui/ghost-page.md", "tap=→ui/setting/about.md")
+        home.write_text(patched, encoding="utf-8")
+        ug.generate(self.root)
+        self.assertEqual(self._run("--strict"), 0)
+
+
+class TestCyclesAndUnimplemented(unittest.TestCase):
+    """既有盲区补测:长度 2 的循环检出、list-unimplemented 的 missing 报告。"""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = _make_tree(
+            self._tmp.name, "tap=→ui/setting/about.md; state=无; db=无; api=无")
+        ug.generate(self.root)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_cycle_pair_detected(self):
+        # 应报: home→about 已有,补 about→home 构成 A↔B 长度 2 的环
+        about = Path(self.root) / "ui" / "setting" / "about.md"
+        about.write_text(
+            about.read_text(encoding="utf-8") + "\n返回=tap→ui/home.md\n",
+            encoding="utf-8")
+        ug.generate(self.root)
+        result = ug.check_nav(self.root)
+        self.assertTrue(any(
+            {c["a"], c["b"]} == {"ui/home.md", "ui/setting/about.md"}
+            for c in result["cycles"]))
+
+    def test_list_unimplemented_reports_missing_pages(self):
+        # 应报: 只有 home 有实现(仅 preview),about 无 preview 无代码 → missing
+        preview_root = Path(self.root) / "preview"
+        preview_root.mkdir()
+        (preview_root / "preview_home_iphone15.html").write_text(
+            "<html><body>home</body></html>", encoding="utf-8")
+        empty_code = Path(self.root) / "element"
+        empty_code.mkdir()
+        ug.build_impl_map(self.root, str(preview_root), str(empty_code))
+        missing = ug.list_unimplemented(self.root)
+        self.assertEqual([m["logical_ui"] for m in missing],
+                         ["ui/setting/about.md"])
+
+    def test_list_unimplemented_empty_when_all_implemented(self):
+        # 不应报: 每页至少 preview 或代码一项 → status 非 missing,清单为空
+        preview_root = Path(self.root) / "preview"
+        preview_root.mkdir()
+        (preview_root / "preview_home_iphone15.html").write_text("h", encoding="utf-8")
+        (preview_root / "preview_about_iphone15.html").write_text("a", encoding="utf-8")
+        empty_code = Path(self.root) / "element"
+        empty_code.mkdir()
+        ug.build_impl_map(self.root, str(preview_root), str(empty_code))
+        self.assertEqual(ug.list_unimplemented(self.root), [])
+
+
 if __name__ == "__main__":
     unittest.main()

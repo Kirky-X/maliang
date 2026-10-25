@@ -3,8 +3,11 @@ name: dock
 description: 底部 dock 栏(标签栏)—— 跨页面复用,页面末章引用
 background: "{color-surface-card}"
 components: [navigation, button, icon, text]
-updated: 2026-07-02
-version: 1.2.0
+platform: mobile
+dir: ltr
+spec_version: 1
+updated: 2026-10-26
+version: 1.3.0
 ---
 
 # 底部 dock 栏(dock)
@@ -61,10 +64,10 @@ tab 数 ≤ 5(米勒定律)。
 
 | 顺序 | id     | label | icon-filled         | icon-stroke         | target            | default-selected |
 | ---- | ------ | ----- | ------------------- | ------------------- | ----------------- | ---------------- |
-| 1    | home   | 首页  | icon-home-filled    | icon-home-stroke    | ui/home.md        | true             |
-| 2    | discover | 发现 | icon-discover-filled| icon-discover-stroke| ui/discover.md    | false            |
-| 3    | messages | 消息  | icon-messages-filled | icon-messages-stroke | ui/messages.md     | false            |
-| 4    | mine     | 我的  | icon-mine-filled     | icon-mine-stroke     | ui/mine.md         | false            |
+| 1    | home   | 首页  | {icon-home-filled}    | {icon-home-stroke}    | ui/home.md        | true             |
+| 2    | discover | 发现 | {icon-discover-filled}| {icon-discover-stroke}| ui/discover.md    | false            |
+| 3    | messages | 消息  | {icon-messages-filled} | {icon-messages-stroke} | ui/messages.md     | false          |
+| 4    | mine     | 我的  | {icon-mine-filled}     | {icon-mine-stroke}     | ui/mine.md         | false          |
 
 各页面引用本组件时,**末章必须明确列出本页 dock 的 tab 文字与选中项**(如"首页(选中) / 发现 / 消息 / 我的"),禁止只写"引用 dock"而无文字内容。
 

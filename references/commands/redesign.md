@@ -75,7 +75,7 @@ flowchart LR
   A0["0. 轻档判定"] -->|"命中轻档"| Z["轻档执行"]
   A0 -->|"不够轻档"| A["1. Mode Detection<br/>四模式"]
   A --> P["Pre-Flight 扫描<br/>六信号源 + 指纹路由"]
-  P --> B["2. Audit<br/>9 维度"]
+  P --> B["2. Audit<br/>10 维度"]
   B --> C["3. Preserve Rules"]
   C --> D["4. Modernize Levers"]
   D --> E["5. Decision Tree"]
@@ -107,7 +107,7 @@ Refresh / Restructure 是**替换**,不是给旧样式抛光。旧貌是"主体�
 
 ### Refresh·Deslop 快速通道(跳过维度审计)
 
-识别为 Refresh·Deslop 时,不走第 2 节 9 维审计,改走**两遍式**:
+识别为 Refresh·Deslop 时,不走第 2 节 10 维审计,改走**两遍式**:
 
 1. **第一遍 · 眯眼看渲染**(构图级 slop):无焦点 / 扁层级 / 单调布局 / 怯色 / 边框代空间——只记构图问题,先不动手;
 2. **第二遍 · 扫 diff**(行级签名):对照 [`ai-tells.md`](../meta/ai-tells.md) 只扫本次改动行内的 AI 签名(默认字族 / 紫蓝渐变 / 整数假数据等)。机械可判子集先跑 `python3 {SKILL_DIR}/scripts/detect-tells.py <改动文件...>`(确定性正则扫描,豁免口径按 ai-tells.md 第 0 节三豁免 + tell-exempt 标注
@@ -158,7 +158,7 @@ findings 按**两段拆分**,不混写:
 | --- | --- | --- |
 | 全部匹配 | 热续 | 不重扫不重读,在既有 Pre-Flight findings 与审计结论上继续本轮改动 |
 | 部分不匹配 | 增量刷新 | 见下三条 |
-| 结构性变化 | 全量重审计 | 页面根被替换 / 框架或共享壳被换 / 路由身份变了 / 用户明说「以现在的代码为新底线」→ 回第 2 节全量 9 维审计 |
+| 结构性变化 | 全量重审计 | 页面根被替换 / 框架或共享壳被换 / 路由身份变了 / 用户明说「以现在的代码为新底线」→ 回第 2 节全量 10 维审计 |
 
 增量刷新三步:
 
@@ -170,9 +170,9 @@ findings 按**两段拆分**,不混写:
 
 ---
 
-## 2. Audit Before Touching(9 维度审计)
+## 2. Audit Before Touching(10 维度审计)
 
-**强制**。改版前必须完成 9 维度审计,**禁止"直接动手改"**。审计结果以表格形式呈现给用户。
+**强制**。改版前必须完成 10 维度审计,**禁止"直接动手改"**。审计结果以表格形式呈现给用户。
 
 
 ### 维度 1 · Typography(排版)
@@ -273,6 +273,17 @@ findings 按**两段拆分**,不混写:
 
 > **SEO 迁移是改版第一风险**:URL、锚点、heading 结构、内链都是排名资产,动前必须盘点,动时走第 6 节保留规则。数据侧同理:埋点基线先导出、后改版、再比对。
 
+### 维度 10 · Artifacts Sync(产物一致性)
+
+- [ ] 同步状态:是否跑过 `ui-graph.py check-sync`——spec-ahead(规格改了代码没跟)/ code-drifted(代码手改规格没动)/ diverged(双侧都变)各几页?
+- [ ] 基线有效性:两份基线(ui-hash-state.json / code-hash-state.json)是否为上次全量对齐后的快照,还是从未建过(从未建 = UNMEASURED)?
+- [ ] 实现覆盖:`list-unimplemented` 报告的 missing 页是否在本次改版范围内?
+- [ ] token 波及:本轮改 token 了吗?`token-usage --token <name>` 列出的波及页是否都已重生成?
+- [ ] 手改去向:code-drifted 页的手改要么回写 ui-markdown,要么在 decisions 账本登记「为什么代码是对的」。
+- **审计输出**:Sync 状态表(in-sync/spec-ahead/code-drifted/diverged 计数)+ 待同步页面清单
+
+> 改版最容易引入的隐性缺陷不是视觉的,是**产物间的漂移**:ui-markdown 与已生成代码各自被改,谁也不反映谁。本维度把「规格↔实现是否还互为真源」纳入审计;判定与修复命令见 [`ui-graph.md`](./ui-graph.md) check-sync 节。
+
 ### 审计汇总表
 
 | 维度            | Score | 主要问题           | 改动优先级        |
@@ -286,6 +297,7 @@ findings 按**两段拆分**,不混写:
 | Iconography     | x/5   | ...                 | High/Medium/Low   |
 | Code Quality    | x/5   | ...                 | High/Medium/Low   |
 | SEO 与追踪      | x/5   | ...                 | High/Medium/Low   |
+| Artifacts Sync  | 状态  | ...                 | High/Medium/Low   |
 
 ### 评分锚点(通用 1-5 + 各维 ≤2 分判据)
 
@@ -312,6 +324,7 @@ findings 按**两段拆分**,不混写:
 | Iconography | 混用 ≥ 2 个图标集;线宽不统一;命中 Lucide 三件套默认 |
 | Code Quality | 大量硬编码色值/魔法 z-index;动画非 transform/opacity;无任何 prefers-* 降级 |
 | SEO 与追踪 | 无排名页清单;meta title 全站重复或缺失;无任何结构化数据;OG 卡缺失 |
+| Artifacts Sync | 状态型维度(非 1-5 打分):存在未处置的 spec-ahead / code-drifted / diverged 页;或两份基线从未建立即宣称「规格与实现同步」(UNMEASURED) |
 
 **🔴 CHECKPOINT · 审计确认**:展示汇总表,让用户确认 Top 3 改动优先级,再进入第 3 步。
 
@@ -404,7 +417,7 @@ flowchart TD
 
 redesign 子命令产出:
 
-1. **审计报告**(9 维度 Score + 问题清单;Refresh·Deslop 模式免)
+1. **审计报告**(10 维度 Score + 问题清单;Refresh·Deslop 模式免)
 2. **保留项清单**(7 类)
 3. **改动清单**(分主要改动 + 细节优化两段,每条附根因四分类)
 4. **改版后 UI markdown**(走 [`draw-md.md`](./draw-md.md) 格式)
@@ -433,7 +446,7 @@ redesign 子命令产出:
 
 ## 约束汇总(硬性)
 
-- [ ] MUST 先完成 9 维度审计再动手,禁止"直接改"(Refresh·Deslop 模式按两遍式通道豁免)
+- [ ] MUST 先完成 10 维度审计再动手,禁止"直接改"(Refresh·Deslop 模式按两遍式通道豁免)
 - [ ] MUST 输出保留项清单,改版不是推倒重来
 - [ ] MUST 用决策树决定每个改动点,不靠"感觉"
 - [ ] 永不静默改动清单 MUST 在交付时高亮,主要改动段需用户独立确认

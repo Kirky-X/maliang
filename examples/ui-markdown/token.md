@@ -1,8 +1,8 @@
 ---
 name: token
 description: 产物层全局硬 token 表 —— 颜色/字体/图标/间距/圆角/分割线的具体值,所有 UI 页面 markdown 引用此处
-updated: 2026-10-20
-version: 1.2.0
+updated: 2026-10-26
+version: 1.3.0
 ---
 
 # token.md —— 全局硬 token 表(产物层)
@@ -103,7 +103,7 @@ Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景
 
 ### 3.1 图标内容 token
 
-> 命名约定:`{icon-<name>-<style>}`,其中 `<name>` 是图标语义名(kebab-case),`<style>` 是 `filled`(填充)或 `stroke`(线性)。本表只列默认 App 端 dock + 首页用到的图标,业务图标按需扩展并补充到此表。
+> 命名约定:`{icon-<name>-<style>}`,其中 `<name>` 是图标语义名(kebab-case),`<style>` 是 `filled`(填充)或 `stroke`(线性)。本表列默认 App 端 dock / 首页金刚区 / 我的与设置类页面示例用到的图标,业务图标按需扩展并补充到此表。
 
 | token                       | 用途                             | 风格   |
 | -------------------------- | -------------------------------- | ------ |
@@ -119,9 +119,20 @@ Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景
 | icon-mine-stroke           | 我的 tab(线性,未选中态)       | stroke |
 | icon-compose-stroke        | 创作图标(线性,dock 中心凸起位) | stroke |
 | icon-back                  | 返回箭头(线性,导航栏左上)     | stroke |
-| icon-feed                  | 内容流图标(首页内容流)         | stroke |
-| icon-rank                  | 排行榜图标(金刚区入口)         | stroke |
-| icon-category              | 分类图标(金刚区入口)           | stroke |
+| icon-feed                  | 内容流图标(首页金刚区)         | stroke |
+| icon-rank                  | 排行榜图标(首页金刚区)         | stroke |
+| icon-category              | 分类图标(首页金刚区)           | stroke |
+| icon-activity              | 活动图标(首页金刚区)           | stroke |
+| icon-wallet                | 钱包图标(首页金刚区 / 设置行)  | stroke |
+| icon-service               | 客服图标(首页金刚区)           | stroke |
+| icon-settings              | 设置行图标(我的页设置列表)     | stroke |
+| icon-info                  | 关于 / 信息行图标               | stroke |
+| icon-feedback              | 意见反馈行图标                  | stroke |
+| icon-version               | 版本更新行图标(关于页)         | stroke |
+| icon-doc                   | 用户协议行图标(关于页)         | stroke |
+| icon-shield                | 隐私政策行图标(关于页)         | stroke |
+| icon-share                 | 分享应用行图标(关于页)         | stroke |
+| icon-link                  | 官方网站行图标(关于页)         | stroke |
 
 **约束**:页面 markdown 引用图标 token 时 MUST 使用本表的命名,不得自创。新增图标 token 需在「新增组件流程」对应的 token 维护流程中补充到此表。
 
@@ -189,11 +200,11 @@ Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景
 | motion-duration-fast   | 200ms | 状态过渡(hover/pressed)       |
 | motion-duration-normal | 300ms | 入场动画                      |
 | motion-duration-slower | 400ms | 复杂交互动画(硬上限,脚本按此硬查) |
-
-> 分层从属注记:滚动揭示等**装饰类长动效不受本表 400ms 硬上限约束**——按规范层 [`micro-interactions.md`](../../references/vocabulary/micro-interactions.md) 第 3 层装饰档 ≤600ms 执行,且须以本表 `{duration-*}` token 引用、必须可跳过(见 scroll-reveal-stagger.md 的 stagger 分层口径注记)。
 | motion-ease-default    | cubic-bezier(0.25, 0.1, 0.25, 1) | 通用缓动         |
 | motion-ease-out        | cubic-bezier(0, 0, 0.2, 1)      | 入场/揭示          |
 | motion-ease-in         | cubic-bezier(0.4, 0, 1, 1)      | 离场/消失          |
+
+> 分层从属注记:滚动揭示等**装饰类长动效不受本表 400ms 硬上限约束**——按规范层 [`micro-interactions.md`](../../references/vocabulary/micro-interactions.md) 第 3 层装饰档 ≤600ms 执行,且须以本表 `{duration-*}` token 引用、必须可跳过(见 scroll-reveal-stagger.md 的 stagger 分层口径注记)。注记置于表外:插在表格中间会切断 token 表,使 motion-ease-* 三行对 token 解析器不可见。
 
 ---
 

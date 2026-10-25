@@ -3,11 +3,19 @@ name: about
 description: 关于页(二级)—— 应用信息 + 功能列表
 background: "{color-surface-base}"
 components: [navigation, image, text, list, button, icon]
-updated: 2026-07-02
-version: 1.2.0
+platform: mobile
+dir: ltr
+spec_version: 1
+updated: 2026-10-26
+version: 1.3.0
 ---
 
 # 关于(about)
+
+**thesis**: 说清这个应用是什么、版本几何、规则在哪
+**own-world**: 安静的信息页——72px logo 居中,列表只分功能与合规两组
+**first-viewport**: logo + 应用名版本号 + 功能列表首屏可见
+**signature-interaction**: 官网行 external=true 走系统浏览器打开(本页唯一出站动作)
 
 二级页面,位于 `setting/` 子目录(嵌套示例)。二级页面**不含 dock**(仅一级页面有 dock)。
 
@@ -71,13 +79,13 @@ version: 1.2.0
 
 | 顺序 | id              | label        | icon-left         | value-right | target                              | external |
 | ---- | --------------- | ------------ | ----------------- | ----------- | ----------------------------------- | -------- |
-| 1    | version-check   | 版本更新     | icon-version      | v1.0.0      | action:check-update                 | false    |
-| 2    | user-agreement  | 用户协议     | icon-doc          |             | ui/setting/agreement.md             | false    |
-| 3    | privacy-policy  | 隐私政策     | icon-shield       |             | ui/setting/privacy.md               | false    |
-| 4    | about-us        | 关于我们     | icon-info         |             | ui/setting/about-us.md              | false    |
-| 5    | feedback        | 意见反馈     | icon-feedback     |             | action:open-feedback                | false    |
-| 6    | share-app       | 分享应用     | icon-share        |             | action:share-sheet                  | false    |
-| 7    | official-site   | 官方网站     | icon-link         |             | https://maliang.example.com         | true     |
+| 1    | version-check   | 版本更新     | {icon-version}      | v1.0.0      | action:check-update                 | false    |
+| 2    | user-agreement  | 用户协议     | {icon-doc}          |             | ui/setting/agreement.md             | false    |
+| 3    | privacy-policy  | 隐私政策     | {icon-shield}       |             | ui/setting/privacy.md               | false    |
+| 4    | about-us        | 关于我们     | {icon-info}         |             | ui/setting/about-us.md              | false    |
+| 5    | feedback        | 意见反馈     | {icon-feedback}     |             | action:open-feedback                | false    |
+| 6    | share-app       | 分享应用     | {icon-share}        |             | action:share-sheet                  | false    |
+| 7    | official-site   | 官方网站     | {icon-link}         |             | https://maliang.example.com         | true     |
 
 ### 3.3 各项详细说明
 

@@ -247,6 +247,11 @@
 - **违反什么**:build-log 声明了首屏构图类(fold class),实际构建未按声明类实现(declared class not honoured——比不声明更糟,声明即承诺);或绕过未花费集合抽签、人工挑选顺手的构图类(抽签是机制,不是建议);或 build-log 缺「Fold classes used」append-only 段,跨次构图无法对账。
 - **怎么判定**:对账 `.maliang/build-log.json`「Fold classes used」段与产物实际首屏构图;抽签由项目种子确定性派生(FNV-1a 播种、spent 类沉底),声明类可复算验证。判据与抽签机制见 [`../templates/variation-engine.md`](../templates/variation-engine.md)。
 
+### G46 · 生成码注入面(安全)
+- **违反什么**:交付的生成码(preview HTML / 三框架代码)出现**执行面 API**(eval / new Function / javascript: URL);或 v-html / innerHTML / outerHTML / dangerouslySetInnerHTML 绑定的内容**不是仓库内本地常量且未经消毒**——产物是可交互 HTML/代码,交付前却从无安全视角。
+- **怎么判定**:[`../../scripts/validate-generated.py`](../../scripts/validate-generated.py) 检查 6(gen.dangerous-api):执行面命中即 ERROR(与数据来源无关,一律拦截);HTML 绑定面命中出 WARN,再人工判定绑定来源——仓库内本地常量(如 ICONS 数据块)可过,外部/用户来源未消毒判 CRITICAL。手写业务代码不在此门(与 G35 同边界),但 preview 产物同样适用。
+- **怎么修**:执行面 API 一律移除(没有合法场景);绑定面改框架文本插值 / 组件化渲染,确需原始 HTML 时先消毒(DOMPurify 类)再绑定,并在交付说明写明消毒依据。出处：2026-10 架构审查(验证侧安全门禁整体缺失驱动补建)。
+
 ---
 
 ## G 组 · 定义层成立性(数据与存活)

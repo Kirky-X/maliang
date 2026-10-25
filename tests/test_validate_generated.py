@@ -167,5 +167,71 @@ class TestValidateGenerated(unittest.TestCase):
         self.assertIn("token.md 不存在", out)
 
 
+class TestDangerousApi(unittest.TestCase):
+    """检查 6 注入面(G46):执行面 API 无条件 error;HTML 绑定面 warn。"""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="maliang-vg6-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        fw = os.path.join(self.tmp, "framework")
+        os.makedirs(os.path.join(fw, "element", "button"))
+        os.makedirs(os.path.join(fw, "element", "message"))
+        with open(os.path.join(fw, "index.md"), "w", encoding="utf-8") as fh:
+            fh.write("# 框架资源总览\n")
+        with open(os.path.join(fw, "element", "button", "component.md"), "w", encoding="utf-8") as fh:
+            fh.write("# Button\n\n```html\n<el-button type=\"primary\">\n```\n")
+        with open(os.path.join(fw, "element", "message", "component.md"), "w", encoding="utf-8") as fh:
+            fh.write("# Message\n\n`ElMessage('ok')`\n")
+        self.fw_index = os.path.join(fw, "index.md")
+        self.token_file = os.path.join(self.tmp, "token.md")
+        with open(self.token_file, "w", encoding="utf-8") as fh:
+            fh.write(TOKEN_MD)
+        self.target = os.path.join(self.tmp, "views")
+        os.makedirs(self.target)
+
+    def _write_and_run(self, content):
+        with open(os.path.join(self.target, "Home.vue"), "w", encoding="utf-8") as fh:
+            fh.write(content)
+        return run_main([self.target, "--token-file", self.token_file,
+                         "--framework-index", self.fw_index, "--format", "json"])
+
+    def test_eval_reports_error(self):
+        # 应报: eval() 是执行面,与数据来源无关,一律 error
+        code, out = self._write_and_run(
+            GOOD_VUE.replace("const notify = () => ElMessage(\"ok\");",
+                             "const notify = () => eval(\"ElMessage('ok')\");"))
+        self.assertEqual(code, 1)
+        findings = json.loads(out)
+        self.assertTrue(any(f["rule"] == "gen.dangerous-api" and f["severity"] == "ERROR"
+                            for f in findings))
+
+    def test_javascript_url_reports_error(self):
+        code, out = self._write_and_run(
+            GOOD_VUE.replace("<el-button", "<el-button data-x=\"javascript:alert(1)\""))
+        self.assertEqual(code, 1)
+        self.assertTrue(any(f["rule"] == "gen.dangerous-api"
+                            for f in json.loads(out)))
+
+    def test_v_html_binding_warns_not_errors(self):
+        # 应报(warn): v-html 绑定是 HTML 注入面;本地常量绑定可过但须留痕,
+        # 来源判定在 G46 门禁层——脚本层不无条件拦截(示例产物合法使用此形态)
+        code, out = self._write_and_run(
+            GOOD_VUE.replace('<el-button class="cta" type="primary">提交</el-button>',
+                             '<el-button class="cta" type="primary" v-html="iconSvg">提交</el-button>'))
+        self.assertEqual(code, 0)
+        findings = json.loads(out)
+        self.assertTrue(any(f["rule"] == "gen.dangerous-api" and f["severity"] == "WARN"
+                            for f in findings))
+
+    def test_commented_api_not_flagged(self):
+        # 不应报: 注释里的说明文字不是实现
+        code, out = self._write_and_run(
+            GOOD_VUE.replace("</script>",
+                             "// 禁止 eval( 与 v-html= 的说明注释\n</script>"))
+        self.assertEqual(code, 0)
+        self.assertFalse(any(f["rule"] == "gen.dangerous-api"
+                             for f in json.loads(out)))
+
+
 if __name__ == "__main__":
     unittest.main()

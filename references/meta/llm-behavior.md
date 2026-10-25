@@ -109,7 +109,7 @@ design-md / draw-md / preview 拆分,每个子命令产出聚焦单一职责,降
 | draw-md    | 分页面产出(单文件 ≤ 1 页)+ 组件参数表 schema 强制字段                |
 | preview    | Pre-Flight Check 80+ 项机械检查(见 [`preview.md`](../commands/preview.md)) |
 | draw-*     | 单组件单文件,避免单次输出跨多组件                                      |
-| redesign   | 9 维度审计清单(见 [`redesign.md`](../commands/redesign.md))逐项扫描   |
+| redesign   | 10 维度审计清单(见 [`redesign.md`](../commands/redesign.md))逐项扫描   |
 
 ## 4. 识别截断的信号
 
@@ -162,6 +162,27 @@ design-md / draw-md / preview 拆分,每个子命令产出聚焦单一职责,降
 - 参考层检索无命中时,禁止把一般知识**伪造成 maliang 库内规则**
 - 此时仍可基于通用默认继续工作,但任何引用须显式标注:**"非库内来源,通用默认"**
 - 禁止把"无命中"表述为"已按库内规范执行"——宁可声明默认值来源,不可虚构出处
+
+## 6. 跨会话断点续跑与幂等纪律
+
+> §4.3 的 PAUSED 续传只在**同一会话内**有效;会话中断 / 上下文耗尽后,断点信息不落盘即丢失。本节把「已完成哪些、还剩哪些」变成**产物层可查**的状态,恢复不再靠记忆。
+
+### 6.1 断点续跑(进度落盘)
+
+长流程(design-md → draw-md 多页产出 → preview → draw-*)开工时即落进度清单,每完成一页更新:
+
+- **进度文件**:`.maliang/progress.md`(运行时状态,gitignore,同 workspace-layout 的 `.maliang/` 约定)——逐页记 `页面路径 | 状态(todo/drawn/previewed/implemented) | 完成时间`;
+- **恢复动作**:新会话接手时先读进度文件,再与产物层交叉核对,不信任单一出处：
+  1. `ui-graph.py generate` + `list-missing` → 哪些跳转目标还没产出;
+  2. `ui-graph.py list-unimplemented` → 哪些页还没有 preview/代码;
+  3. 进度文件说「已完成」但产物层查无此页的,以产物层为准并修正进度文件;
+- **测量收据不续用**:上一会话的收据仍按 preview.md 取证契约**永不复用**——恢复后 measured 证据全部重测(诚实优先于省事);续跑省的是**生成**,不是**验证**。
+
+### 6.2 重跑幂等与增量纪律
+
+- **幂等**:同一输入重跑 draw-md / draw-* 不得引入新值——token 值以 token.md 为唯一来源,不自创新值、不改写未涉页;重跑前后 `ui-graph.py diff-hash` 的 modified 集合应只含本次有意改动的页(意外改动即幂等性破口,当场修);
+- **增量**:重生成前先 `diff-hash --kind draw-md`(哪些页变了)与 `token-usage --token <name>`(token 波及哪些页),只重生成波及集,**禁止全量重跑一把梭**——全量重跑会把未涉页也掷一次骰子;
+- **对齐**:全量产出/重生成后,`build-impl-map` → `compute-hash` → `compute-hash --kind code` 重建两份基线;此后 `check-sync` 即可机械回答「规格与实现是否还互为真源」(语义见 [`ui-graph.md`](../commands/ui-graph.md) check-sync 节)。
 
 ## 与其他文档的关系
 

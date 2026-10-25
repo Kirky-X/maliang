@@ -1,7 +1,10 @@
-"""validate-draw-md.py 全部 15 项检查的 fixture 单元测试。
+"""validate-draw-md.py 全部 21 项检查的 fixture 单元测试。
 
 双列 fixture 约定(对齐 设计工艺库 TDD 流程):每项检查至少 1 个"应报"用例
 + 1 个"不应报"用例;规则实现为纯函数,直接以合成行列表调用。
+16-21 为 2026-10 契约完备性补批(数值合理性/organisms 引用/frontmatter
+components 与 pattern 校验/方向契约块/裸 token 名)+ dir=rtl 升级与
+spec_version 取值。
 """
 
 import os
@@ -467,6 +470,282 @@ class TestZIndex(unittest.TestCase):
         # 不应报: z-index token 引用
         results = vdm.check_z_index_literals("ui/home.md", ["z-index: {z-index-overlay}"])
         self.assertEqual(results, [])
+
+
+class TestNumericSanity(unittest.TestCase):
+    def test_negative_px_reports_error(self):
+        # 应报: 负宽高/负间距不是物理合理值,此前逃过所有检查
+        results = vdm.check_numeric_sanity("ui/home.md", ["| 宽度 | -100px |"])
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+
+    def test_oversize_px_reports_error(self):
+        # 应报: 超出 4K 画布上限,疑为数量级笔误
+        results = vdm.check_numeric_sanity("ui/home.md", ["| 间距 | 30000px |"])
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+
+    def test_normal_px_passes(self):
+        # 不应报: 375px 常规 / 3840px 恰在上限 / 0.5px 细分割线
+        for good in ["| 宽度 | 375px |", "| 画布 | 3840px |", "| 分割 | 0.5px |"]:
+            self.assertEqual(
+                vdm.check_numeric_sanity("ui/home.md", [good]), [], good)
+
+
+class TestOrganismRefs(unittest.TestCase):
+    def test_missing_organism_reports_error(self):
+        # 应报: 引用的 organisms 组件文件不存在(此前写错文件名全绿通过)
+        lines = ["引用 [`../organisms/nav-bar.md`](../organisms/nav-bar.md)"]
+        results = vdm.check_organism_refs(
+            "ui/home.md", lines, {"organisms/dock.md"})
+        self.assertTrue(any(
+            r[0] == "ERROR" and "nav-bar" in r[3] for r in results))
+
+    def test_existing_organism_passes(self):
+        # 不应报: 引用目标在 organisms/ 集合内
+        lines = ["引用 [`../organisms/nav-bar.md`](../organisms/nav-bar.md)"]
+        self.assertEqual(
+            vdm.check_organism_refs(
+                "ui/home.md", lines, {"organisms/nav-bar.md"}),
+            [])
+
+    def test_none_set_skips(self):
+        # 不应报: organisms/ 目录不存在时跳过(main 传 None)
+        self.assertEqual(
+            vdm.check_organism_refs(
+                "ui/home.md", ["引用 organisms/x.md"], None),
+            [])
+
+
+class TestFmComponentsAndPattern(unittest.TestCase):
+    def _fm(self, **repl):
+        text = TestFrontmatter.GOOD_FM
+        for old, new in repl.items():
+            text = text.replace(old, new)
+        return text
+
+    def test_invented_fm_slug_reports_error(self):
+        # 应报: frontmatter components 自创 slug(此前只查字段存在)
+        text = self._fm(**{"components: [button]": "components: [button, mega-chip]"})
+        results = vdm.check_fm_components(
+            "ui/home.md", text, VALID_SLUGS)
+        self.assertTrue(any(r[0] == "ERROR" and "mega-chip" in r[3]
+                            for r in results))
+
+    def test_vocab_slug_in_components_warns(self):
+        # 应报(warn): 术语库模式名应走 pattern 字段,不进 components
+        text = self._fm(**{"components: [button]": "components: [button, chart-line]"})
+        results = vdm.check_fm_components(
+            "ui/home.md", text, VALID_SLUGS, {"chart-line"})
+        self.assertTrue(any(r[0] == "WARN" and "chart-line" in r[3]
+                            for r in results))
+        self.assertFalse(any(r[0] == "ERROR" for r in results))
+
+    def test_valid_fm_components_pass(self):
+        results = vdm.check_fm_components(
+            "ui/home.md", self._fm(), VALID_SLUGS)
+        self.assertEqual(results, [])
+
+    def test_pattern_invented_reports_error(self):
+        # 应报: pattern 自创模式名(此前 pattern 字段零校验)
+        text = self._fm(**{"components: [button]\n---": "components: [button]\npattern: [chart-line, mega-chart]\n---"})
+        results = vdm.check_fm_pattern(
+            "ui/home.md", text, {"chart-line"})
+        self.assertTrue(any(r[0] == "ERROR" and "mega-chart" in r[3]
+                            for r in results))
+
+    def test_pattern_registered_passes(self):
+        text = self._fm(**{"components: [button]\n---": "components: [button]\npattern: [chart-line]\n---"})
+        self.assertEqual(
+            vdm.check_fm_pattern("ui/home.md", text, {"chart-line"}), [])
+
+
+class TestDirectionContract(unittest.TestCase):
+    CONTRACT = [
+        "**thesis**: 三秒内能出发",
+        "**own-world**: 灰白底上的一张张白卡",
+        "**first-viewport**: 搜索框 + 金刚区入口",
+        "**signature-interaction**: 长按卡片弹分享菜单",
+    ]
+
+    def test_missing_fields_report_error(self):
+        # 应报: 页面无方向契约块(draw-md MUST 项,示例页曾自身缺失)
+        results = vdm.check_direction_contract(
+            "ui/home.md", ["# 首页", "", "## 1. 顶部导航"])
+        self.assertTrue(any(r[0] == "ERROR" and "thesis" in r[3]
+                            for r in results))
+
+    def test_full_contract_before_first_section_passes(self):
+        # 不应报: 四字段在首个 ## 章节前以加粗字段名行呈现
+        lines = ["# 首页(home)", ""] + self.CONTRACT + ["", "## 1. 顶部导航"]
+        self.assertEqual(
+            vdm.check_direction_contract("ui/home.md", lines), [])
+
+    def test_contract_after_first_section_not_counted(self):
+        # 应报: 契约写在首个 ## 之后不算——区域界定是检查的一部分
+        lines = ["## 1. 顶部导航"] + self.CONTRACT
+        results = vdm.check_direction_contract("ui/home.md", lines)
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+
+
+class TestBareTokenNames(unittest.TestCase):
+    def test_bare_icon_in_value_cell_warns(self):
+        # 应报(warn): 值列裸 icon 名逃逸悬空检查(示例金刚区曾现 3 个未定义图标)
+        results = vdm.check_bare_token_names(
+            "ui/home.md", ["| 图标 | icon-feed | 说明 |"])
+        self.assertTrue(any(r[0] == "WARN" and "icon-feed" in r[3]
+                            for r in results))
+
+    def test_braced_reference_passes(self):
+        self.assertEqual(
+            vdm.check_bare_token_names(
+                "ui/home.md", ["| 图标 | {icon-feed} | x |"]),
+            [])
+
+    def test_field_name_column_not_flagged(self):
+        # 不应报: 只扫值列,字段名列 icon-right 不误报
+        self.assertEqual(
+            vdm.check_bare_token_names(
+                "ui/home.md", ["| icon-right | {icon-search-filled} | |"]),
+            [])
+
+    def test_action_line_skipped(self):
+        self.assertEqual(
+            vdm.check_bare_token_names(
+                "ui/home.md", ["| action | tap=icon-feed-page; db=无 | |"]),
+            [])
+
+    def test_backticked_bare_name_still_warns(self):
+        # 应报: 反引号不豁免——`icon-feed` 同样是逃逸校验的裸名
+        results = vdm.check_bare_token_names(
+            "ui/home.md", ["| 图标 | `icon-feed` | 说明 |"])
+        self.assertTrue(any(r[0] == "WARN" for r in results))
+
+    def test_header_column_name_not_flagged(self):
+        # 不应报: 表头列名(如 icon-left/icon-filled)是字段命名不是取值
+        lines = [
+            "| 顺序 | id | icon-left | target |",
+            "| --- | --- | --- | --- |",
+            "| 1 | settings | icon-settings | ui/x.md |",
+        ]
+        results = vdm.check_bare_token_names("ui/mine.md", lines)
+        # 数据行的裸值应报,表头行不报——同名只报一次会失真,故按行独立
+        self.assertTrue(any(r[0] == "WARN" and "icon-settings" in r[3]
+                            for r in results))
+        header_only = [
+            "| 顺序 | id | icon-left | target |",
+            "| --- | --- | --- | --- |",
+            "| 1 | settings | {icon-settings} | ui/x.md |",
+        ]
+        self.assertEqual(
+            vdm.check_bare_token_names("ui/mine.md", header_only), [])
+
+
+class TestDirAndSpecVersion(unittest.TestCase):
+    def test_rtl_escalates_physical_property_to_error(self):
+        # 应报: 声明 dir=rtl 后物理属性从 WARN 升 ERROR(声明即承担硬门)
+        results = vdm.check_physical_property(
+            "ui/home.md", ["| 外边距 | margin-left: 8px | |"], rtl=True)
+        self.assertTrue(any(r[0] == "ERROR" for r in results))
+        self.assertFalse(any(r[0] == "WARN" for r in results))
+
+    def test_invalid_dir_value_reports_error(self):
+        text = TestFrontmatter.GOOD_FM.replace(
+            "components: [button]\n", "components: [button]\ndir: vertical\n")
+        results = vdm.check_frontmatter("ui/home.md", text)
+        self.assertTrue(any(r[0] == "ERROR" and "dir" in r[3] for r in results))
+
+    def test_valid_dir_passes(self):
+        text = TestFrontmatter.GOOD_FM.replace(
+            "components: [button]\n", "components: [button]\ndir: rtl\n")
+        self.assertEqual(vdm.check_frontmatter("ui/home.md", text), [])
+
+    def test_future_spec_version_warns(self):
+        text = TestFrontmatter.GOOD_FM.replace(
+            "components: [button]\n",
+            "components: [button]\nspec_version: 2\n")
+        results = vdm.check_frontmatter("ui/home.md", text)
+        self.assertTrue(any(r[0] == "WARN" and "spec_version" in r[3]
+                            for r in results))
+
+    def test_current_spec_version_passes(self):
+        text = TestFrontmatter.GOOD_FM.replace(
+            "components: [button]\n",
+            "components: [button]\nspec_version: 1\n")
+        self.assertEqual(vdm.check_frontmatter("ui/home.md", text), [])
+
+
+class TestMainExitCodes(unittest.TestCase):
+    """main() 退出码三态断言(补批:此前仅一处 WARN 计数断言,退出码无守护)。"""
+
+    def setUp(self):
+        import shutil
+        import tempfile
+        self.tmp = tempfile.mkdtemp(prefix="maliang-vdm-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+
+        token_file = os.path.join(self.tmp, "token.md")
+        with open(token_file, "w", encoding="utf-8") as fh:
+            fh.write("| token | 值 |\n| --- | --- |\n| surface-base | #FFFFFF |\n")
+        self.token_file = token_file
+
+        fw = os.path.join(self.tmp, "framework.md")
+        with open(fw, "w", encoding="utf-8") as fh:
+            fh.write("# index\n\n| 组件类型 | 说明 |\n| --- | --- |\n| button | 按钮 |\n")
+        self.framework_file = fw
+
+        vocab = os.path.join(self.tmp, "vocabulary")
+        os.makedirs(vocab)
+        with open(os.path.join(vocab, "charts.md"), "w", encoding="utf-8") as fh:
+            fh.write("# charts\n\n| 模式 | 说明 |\n| --- | --- |\n| `chart-line` | 折线 |\n")
+        self.vocab_dir = vocab
+
+        self.target = os.path.join(self.tmp, "ui-markdown")
+        os.makedirs(os.path.join(self.target, "ui"))
+
+    def _write_page(self, body_color):
+        page = (
+            "---\nname: home\ndescription: 首页\nbackground: \"{surface-base}\"\n"
+            "updated: 2026-10-26\nversion: 1.0.0\ncomponents: [button]\n"
+            "spec_version: 1\n---\n"
+            "**thesis**: t\n**own-world**: w\n**first-viewport**: f\n"
+            "**signature-interaction**: s\n\n"
+            "## 1. 顶部导航\n\n"
+            "| 参数 | 值 |\n| --- | --- |\n"
+            "| 组件类型 | `button` |\n"
+            "| 背景颜色 | " + body_color + " |\n"
+            "| aria-label | 提交 |\n"
+            "| action | tap=无; state=无; db=无; api=无; long-press=无 |\n"
+        )
+        with open(os.path.join(self.target, "ui", "home.md"),
+                  "w", encoding="utf-8") as fh:
+            fh.write(page)
+
+    def _run(self, target=None):
+        import contextlib
+        import io
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            # main(argv) 按 argv[1:] 解析,首位是程序名——target 不可放 [0]
+            return vdm.main([
+                "validate-draw-md.py",
+                target or self.target,
+                "--token-file", self.token_file,
+                "--framework-file", self.framework_file,
+                "--vocabulary-dir", self.vocab_dir,
+            ])
+
+    def test_error_fixture_exits_1(self):
+        # 应报: 悬空 token 引用 → 退出码 1(看了,有问题)
+        self._write_page("{surface-ghost}")
+        self.assertEqual(self._run(), 1)
+
+    def test_clean_fixture_exits_0(self):
+        self._write_page("{surface-base}")
+        self.assertEqual(self._run(), 0)
+
+    def test_missing_target_exits_2(self):
+        # 应报: 目标目录不存在 → 退出码 2(没能检查,不得记为通过)
+        self._write_page("{surface-base}")
+        self.assertEqual(self._run(os.path.join(self.tmp, "nowhere")), 2)
 
 
 if __name__ == "__main__":

@@ -146,6 +146,22 @@ dials:
 2. 明确询问:**"是覆盖旧版本 / 合并新旧 token / 另存为新文件?"**
 3. 合并模式:旧 token 保留,新 token 追加;有冲突的 key 以新值为准,旧值写入行注释
 
+### token 注入既有工程与主题体系冲突(写侧)
+
+用户工程已有自己的主题体系(Element Plus `--el-color-primary`、Tailwind config、既有 `--color-primary` 自定义变量)时,DESIGN.md token 注入(Phase 2 Step 2)**不得静默覆盖**:
+
+1. 注入前先扫描既有 CSS 变量/主题文件,列出**同名冲突清单**(token 名 → 既有定义处 → 新值);
+2. 三选一,交用户裁决:**接管**(既有变量改由 token.md 派生,旧值记入 decisions 账本)/ **让位**(token 换命名空间,如 `--ml-color-primary`,避免撞名)/ **对齐**(以工程既有值为准回改 DESIGN.md token——工程已经在用且绕不开时);
+3. 裁决结果与理由写回 decisions 账本;禁止「同名双定义各走各的」——那是两条真源,必然漂移(ui-graph `check-sync` 会在实现侧暴露,但根因在注入时就该消掉)。
+
+### DESIGN.md 结构版本迁移(大版本)
+
+DESIGN.md 携带 schema 版本戳(如 `<!-- maliang:design-schema 3 -->`)。skill 侧契约升级(章节增删、frontmatter 键变化)导致戳不匹配时:
+
+1. **不静默按新 schema 读写旧文件**——旧产物的键可能已被重新解释;
+2. 先按迁移说明逐节映射(旧键 → 新键),映射不了的列清单交用户裁决(丢弃/手工搬移);
+3. 迁移完成后刷新戳;下游产物(产物层 token.md、ui/*.md 的 `spec_version`)随之逐级升版,并用 `ui-graph diff-hash` 固化迁移前基线——迁移本身也是一次可审计的变更。
+
 ### Lint 返回错误
 
 `npx @google/design.md@0.4.0 lint` 报错时:列出全部 error 级问题(不静默忽略);可自动修复的直接修(`colour:`→`colors:`、补 `#`、`fontWeight:"700"`→`fontWeight:700`);需判断的(orphaned token、unknown property)先问用户意图;修复后重跑 lint 确认 exit 0。

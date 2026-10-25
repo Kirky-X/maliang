@@ -1,31 +1,33 @@
 {
-  "computed_at": "2026-09-05T02:33:48+08:00",
-  "target_dir": "/home/kirky/projects/skills/maliang/examples/ui-markdown",
+  "computed_at": "2026-10-26T03:02:08+08:00",
+  "target_dir": "D:\\projects\\maliang\\examples\\ui-markdown",
+  "kind": "draw-md",
+  "scope_note": "指纹范围: draw-md 产物 .md 页面(ui-hash-state.json;critique backlog 指纹判定用)",
   "files": [
     {
       "path": "organisms/dock.md",
-      "sha256": "027eca9f2af7b9f94218535d30a95117bb6b3bc55b28e8e346ed2c828ce372e2",
-      "size": 4938
+      "sha256": "58bcaa136f7c129dac6fd34810396cfe867285c3aa9e7eb9447fae92f7348bbe",
+      "size": 7336
     },
     {
       "path": "organisms/nav-bar.md",
-      "sha256": "0d24dbb211a2b63a36d86008eaf85bbceb93ecd7db5778e8c70a1608578dc94d",
-      "size": 3011
+      "sha256": "f03b9f1345320e1e0ba6d3c92c29bd222728741c536fbcb32b87fccbace3cded",
+      "size": 3055
     },
     {
       "path": "ui/home.md",
-      "sha256": "1eef5f67fdc6ff9f539cb9b04785164de7aab7f39a9c1226b4f81003c6eb6335",
-      "size": 5874
+      "sha256": "29faf7d89c3f8a0fdec65a073c6d9af64017e24746d6c1e668fd9c247272e663",
+      "size": 6291
     },
     {
       "path": "ui/mine.md",
-      "sha256": "162570032261f19ee673c2b4860387be7b418bf303038f86c58c5e2e92499f00",
-      "size": 4866
+      "sha256": "f38e2e9b2df6dba10296764fd4f58484b84710687e975f2b29740ca4f17aaa47",
+      "size": 5262
     },
     {
       "path": "ui/setting/about.md",
-      "sha256": "d5c93078163983424b60b4a6101da777f76f0b87692549ade6fd58cc4d12abe4",
-      "size": 5511
+      "sha256": "570abc76b50749546bae4cafa31b3942473d409a992e6d055b70add05df11e1a",
+      "size": 5903
     }
   ]
 }

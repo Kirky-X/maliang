@@ -3,8 +3,11 @@ name: nav-bar
 description: 顶部导航栏 —— 跨页面复用,页面首章引用
 background: "{color-surface-card}"
 components: [navigation, button, icon, text]
-updated: 2026-07-02
-version: 1.2.0
+platform: mobile
+dir: ltr
+spec_version: 1
+updated: 2026-10-26
+version: 1.3.0
 ---
 
 # 顶部导航栏(nav-bar)
@@ -30,7 +33,7 @@ version: 1.2.0
 | 参数     | 值                          |
 | -------- | --------------------------- |
 | 组件类型 | `button` + `icon`(P0 + P1,组合:可点击按钮 + 图标) |
-| 图标     | icon-back, `{icon-size-lg}` |
+| 图标     | {icon-back}, `{icon-size-lg}` |
 | 热区     | `{icon-touch-target}`       |
 | 字体颜色 | `{color-text-primary}`            |
 | aria-label | "返回上一页"              |

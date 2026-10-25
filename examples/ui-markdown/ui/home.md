@@ -3,11 +3,19 @@ name: home
 description: 首页 —— 搜索 + 金刚区入口 + 内容流
 background: "{color-surface-base}"
 components: [navigation, input, icon, grid, button, list, card]
-updated: 2026-07-02
-version: 1.2.0
+platform: mobile
+dir: ltr
+spec_version: 1
+updated: 2026-10-26
+version: 1.3.0
 ---
 
 # 首页(home)
+
+**thesis**: 三秒内能出发——搜索直达内容,金刚区六入口覆盖主路径
+**own-world**: 灰白底上的一张张白卡,品牌蓝只落在图标与主操作
+**first-viewport**: 搜索框 + 两行金刚区入口 + 首屏两张内容卡
+**signature-interaction**: 长按内容卡弹出分享/收藏/举报菜单
 
 ## 1. 顶部导航
 
@@ -68,12 +76,12 @@ version: 1.2.0
 
 | 顺序 | id        | label | icon           | target           |
 | ---- | --------- | ----- | -------------- | ---------------- |
-| 1    | feed      | 信息流 | icon-feed      | ui/feed.md       |
-| 2    | rank      | 排行榜 | icon-rank      | ui/rank.md       |
-| 3    | category  | 分类  | icon-category  | ui/category.md   |
-| 4    | activity  | 活动  | icon-activity  | ui/activity.md   |
-| 5    | wallet    | 钱包  | icon-wallet    | ui/wallet.md     |
-| 6    | service   | 客服  | icon-service   | ui/service.md    |
+| 1    | feed      | 信息流 | {icon-feed}      | ui/feed.md       |
+| 2    | rank      | 排行榜 | {icon-rank}      | ui/rank.md       |
+| 3    | category  | 分类  | {icon-category}  | ui/category.md   |
+| 4    | activity  | 活动  | {icon-activity}  | ui/activity.md   |
+| 5    | wallet    | 钱包  | {icon-wallet}    | ui/wallet.md     |
+| 6    | service   | 客服  | {icon-service}   | ui/service.md    |
 
 ## 4. 内容流
 

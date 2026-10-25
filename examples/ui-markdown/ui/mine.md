@@ -3,11 +3,19 @@ name: mine
 description: 我的(一级)—— 头像资料 + 概览数据 + 设置入口列表
 background: "{color-surface-base}"
 components: [navigation, image, text, list, button, icon]
-updated: 2026-09-05
-version: 1.0.0
+platform: mobile
+dir: ltr
+spec_version: 1
+updated: 2026-10-26
+version: 1.1.0
 ---
 
 # 我的(mine)
+
+**thesis**: 这是"我"的空间——头像与数据一眼可读,所有管理动作从这出发
+**own-world**: 与首页同底的安静列表区,64px 圆头像居顶建立身份锚点
+**first-viewport**: 大头像 + 昵称签名 + 首屏至少 3 行设置入口
+**signature-interaction**: 点头像唤起编辑资料弹层(action:edit-profile)
 
 一级页面(P0 必备,见 [`../../../references/default-pages/app.md`](../../../references/default-pages/app.md))。示例链路演示:本页 `ui/mine.md` → `ui/setting/about.md` 的跨层级跳转关系,可由 `scripts/ui-graph.py check-nav` 验证。
 
@@ -69,10 +77,10 @@ version: 1.0.0
 
 | 顺序 | id          | label   | icon-left      | value-right | target                    |
 | ---- | ----------- | ------- | -------------- | ----------- | ------------------------- |
-| 1    | settings    | 设置    | icon-settings  |             | action:open-settings      |
-| 2    | wallet      | 钱包    | icon-wallet    |             | action:open-wallet        |
-| 3    | about       | 关于    | icon-info      | v1.0.0      | ui/setting/about.md       |
-| 4    | feedback    | 意见反馈 | icon-feedback |             | action:open-feedback      |
+| 1    | settings    | 设置    | {icon-settings}  |             | action:open-settings      |
+| 2    | wallet      | 钱包    | {icon-wallet}    |             | action:open-wallet        |
+| 3    | about       | 关于    | {icon-info}      | v1.0.0      | ui/setting/about.md       |
+| 4    | feedback    | 意见反馈 | {icon-feedback} |             | action:open-feedback      |
 
 ## 4. 暗色模式
 
