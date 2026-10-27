@@ -1,4 +1,4 @@
-"""validate-draw-md.py 全部 21 项检查的 fixture 单元测试。
+"""validate-draw-md.py 全部 23 项检查的 fixture 单元测试。
 
 双列 fixture 约定(对齐 设计工艺库 TDD 流程):每项检查至少 1 个"应报"用例
 + 1 个"不应报"用例;规则实现为纯函数,直接以合成行列表调用。
@@ -106,13 +106,16 @@ class TestComponentSlugs(unittest.TestCase):
         results = vdm.check_component_slugs("ui/home.md", lines, VALID_SLUGS)
         self.assertTrue(any(r[0] == "ERROR" for r in results))
 
-    def test_vocabulary_slug_allowed(self):
-        # 不应报: vocabulary 登记的模式 slug(chart-line)在传入 vocab_slugs 时放行
-        # (审计 P0-3: framework 45 类无图表类,术语库区块模式需合法表达)
+    def test_vocabulary_slug_now_reports_with_pattern_hint(self):
+        # 应报(2026-10 归一裁决):vocabulary 模式 slug 不再放行进组件类型——
+        # pattern 字段 + 检查 19 已成为合法通道,原 P0-3 放行理由失效;
+        # 消息须指路 pattern 字段
         lines = _rows_to_lines(["| 组件类型 | `chart-line` | 图表 |"])
         results = vdm.check_component_slugs(
             "ui/dashboard.md", lines, VALID_SLUGS, {"chart-line", "chart-bar"})
-        self.assertEqual(results, [])
+        self.assertTrue(any(
+            r[0] == "ERROR" and "chart-line" in r[3] and "pattern" in r[3]
+            for r in results))
 
     def test_invented_slug_still_reports_with_vocab(self):
         # 应报: 传入 vocab_slugs 后,术语库未登记的自创 slug 仍报 error
@@ -530,14 +533,14 @@ class TestFmComponentsAndPattern(unittest.TestCase):
         self.assertTrue(any(r[0] == "ERROR" and "mega-chip" in r[3]
                             for r in results))
 
-    def test_vocab_slug_in_components_warns(self):
-        # 应报(warn): 术语库模式名应走 pattern 字段,不进 components
+    def test_vocab_slug_in_components_reports_error(self):
+        # 应报(2026-10 归一): 术语库模式名进 components 与检查 3 同口径报 error
         text = self._fm(**{"components: [button]": "components: [button, chart-line]"})
         results = vdm.check_fm_components(
             "ui/home.md", text, VALID_SLUGS, {"chart-line"})
-        self.assertTrue(any(r[0] == "WARN" and "chart-line" in r[3]
+        self.assertTrue(any(r[0] == "ERROR" and "chart-line" in r[3]
                             for r in results))
-        self.assertFalse(any(r[0] == "ERROR" for r in results))
+        self.assertFalse(any(r[0] == "WARN" for r in results))
 
     def test_valid_fm_components_pass(self):
         results = vdm.check_fm_components(
@@ -746,6 +749,78 @@ class TestMainExitCodes(unittest.TestCase):
         # 应报: 目标目录不存在 → 退出码 2(没能检查,不得记为通过)
         self._write_page("{surface-base}")
         self.assertEqual(self._run(os.path.join(self.tmp, "nowhere")), 2)
+
+
+class TestBreakpointsAndActionTargets(unittest.TestCase):
+    """检查 22(breakpoints 形态)与检查 23(api=/db= 目标形态)。"""
+
+    def _fm_with(self, extra):
+        return TestFrontmatter.GOOD_FM.replace(
+            "components: [button]\n", "components: [button]\n" + extra + "\n")
+
+    def test_breakpoints_valid_passes(self):
+        text = self._fm_with("breakpoints: [375, 768, 1024]")
+        self.assertEqual(vdm.check_breakpoints("ui/home.md", text), [])
+
+    def test_breakpoints_unsorted_reports(self):
+        text = self._fm_with("breakpoints: [768, 375]")
+        results = vdm.check_breakpoints("ui/home.md", text)
+        self.assertTrue(any("升序" in r[3] for r in results))
+
+    def test_breakpoints_out_of_range_reports(self):
+        text = self._fm_with("breakpoints: [100, 768]")
+        results = vdm.check_breakpoints("ui/home.md", text)
+        self.assertTrue(any("越界" in r[3] for r in results))
+
+    def test_breakpoints_duplicate_or_single_reports(self):
+        text = self._fm_with("breakpoints: [768, 768]")
+        self.assertTrue(any("重复" in r[3] for r in
+                            vdm.check_breakpoints("ui/home.md", text)))
+        text2 = self._fm_with("breakpoints: [768]")
+        self.assertTrue(any("≥2" in r[3] for r in
+                            vdm.check_breakpoints("ui/home.md", text2)))
+
+    def test_breakpoints_absent_passes(self):
+        self.assertEqual(
+            vdm.check_breakpoints("ui/home.md", TestFrontmatter.GOOD_FM), [])
+
+    def _action_table(self, action_value):
+        return _rows_to_lines([
+            "| 组件类型 | `list` | |",
+            "| action | " + action_value + " | |",
+        ])
+
+    def test_api_shape_valid_passes(self):
+        lines = self._action_table(
+            "tap=→ui/feed.md; db=无; api=GET /api/feed?cursor=?; long-press=无")
+        self.assertEqual(vdm.check_action_targets("ui/home.md", lines), [])
+
+    def test_api_without_method_reports(self):
+        # 应报: api= 自由散文(「调接口拿数据」)无映射锚
+        lines = self._action_table(
+            "tap=无; db=无; api=调接口拿数据; long-press=无")
+        results = vdm.check_action_targets("ui/home.md", lines)
+        self.assertTrue(any("METHOD /path" in r[3] for r in results))
+
+    def test_db_without_identifier_reports(self):
+        lines = self._action_table(
+            "tap=无; db=保存用户设置; api=无; long-press=无")
+        results = vdm.check_action_targets("ui/home.md", lines)
+        self.assertTrue(any("表名标识符" in r[3] for r in results))
+
+    def test_db_with_table_passes(self):
+        lines = self._action_table(
+            "tap=无; db=UPDATE user_settings SET last_tab=?; api=无")
+        self.assertEqual(vdm.check_action_targets("ui/home.md", lines), [])
+
+    def test_exempt_values_pass(self):
+        # 不应报: 无 / 视功能 / 按页面声明 等豁免词(nav-bar 右侧按钮旧写法)
+        for value in ("tap=无; db=视功能; api=视功能; long-press=无",
+                      "tap=无; db=无; api=无",
+                      "tap=按页面声明; db=无; api=无"):
+            self.assertEqual(
+                vdm.check_action_targets("ui/home.md", self._action_table(value)),
+                [], value)
 
 
 if __name__ == "__main__":

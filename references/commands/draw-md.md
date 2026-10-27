@@ -61,6 +61,7 @@ pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(�
 platform: mobile # 可选:端型(mobile|web|ios|android|harmony|flutter)——触控阈值分端判定的依据,移动端产物 SHOULD 声明
 dir: ltr # 可选:书写方向(ltr|rtl)——声明 rtl 即承担逻辑属性硬门(检查 15 升 ERROR)
 spec_version: 1 # 可选:契约版本(当前 1;非 1 时校验器按 v1 规则检查并 WARN 提示可能漏检)
+breakpoints: [375, 768, 1024] # 可选:响应式断点(升序整数,≥2 项;draw-* 映射为框架响应式机制,检查 22 校验)
 ---
 ```
 
@@ -72,6 +73,7 @@ spec_version: 1 # 可选:契约版本(当前 1;非 1 时校验器按 v1 规则�
 - `platform` 为可选字段:端型,检查 10(触控目标)按此分端——原生移动端(mobile/ios/android/harmony/flutter)按 44px 硬门,Web 或未声明按 24px 下限 + 44px 推荐;**移动端叙事的页面 SHOULD 显式声明**,否则按 Web 下限误判(检查 20 的 24-43px WARN 会提示补声明)。
 - `dir` 为可选字段:书写方向;声明 `rtl` 后物理方向属性(margin-left 等)从 WARN 升为 ERROR——声明即承担逻辑属性硬门。取值非法(非 ltr|rtl)报 error。
 - `spec_version` 为可选字段:页面所遵循的 ui-markdown 契约版本(区别于 `version` 的产物版本);校验器(检查 4)对非当前版本 WARN,防止契约演进后旧校验器静默漏检。
+- `breakpoints` 为可选字段(数组):页面响应式断点档,整数像素、严格升序、去重、每项 320-3840、≥2 项(检查 22 机械校验);draw-* 阶段映射为框架响应式机制(Element 栅格 / Flutter LayoutBuilder / ArkTS 栅格断点)。参数表内的断点差异细节仍按「响应式」说明书写,本字段是**机器可读的断点目录**。
 
 ### 方向契约块(frontmatter 之后、首个布局章节之前,每页 MUST 含)
 
@@ -147,6 +149,7 @@ spec_version: 1 # 可选:契约版本(当前 1;非 1 时校验器按 v1 规则�
 - 响应式:如有多断点,在表后补"响应式"说明(375 / 768 / 1024 各自差异)。
 - **组件类型**字段 MUST 引用 [`framework/index.md`](../framework/index.md) 的 56 类组件 slug(如 `button`/`input`/`list`/`navigation`),组合组件用 ` + ` 连接(如 `input + icon`)。单列参数表将该字段作为首行;双列对比表(如 dock 选中/未选中态对比)在表前用 `> **组件类型**:...` 引用块标注。
 - **action 字段**:描述组件交互行为,格式 `event=behavior; event=behavior; ...`。常用事件五元组:`tap`(点击)/`state`(状态变化)/`db`(数据库操作)/`api`(接口调用)/`long-press`(长按);输入类组件可扩展 `submit`/`focus`/`blur`/`input` 事件(如搜索框 action 含 `submit=→ui/search.md?q={input-value}`);容器组件(如 `navigation`)action 可全为"无",交互在子组件。action 字段内的 `{xxx}` 占位符为 URL/JS 模板参数(如 `{input-value}`),NOT token 引用,token 悬空检查 SHALL 跳过 action 行(见 [`validate-draw-md.py`](../../scripts/validate-draw-md.py) 检查 1)。
+- **api=/db= 值形态(2026-10 增,检查 23)**:`api=` 值 MUST 为 `METHOD /path` 形态(GET/POST/PUT/DELETE/PATCH/HEAD,如 `GET /api/feed?cursor=?`);`db=` 值 MUST 含表名标识符(kebab/snake_case,如 `UPDATE user_settings SET last_tab=?`)。两值是 draw-* 实现与 data-floor 绑定表的对接锚,自由散文(「调接口拿数据」)无映射与核对锚,报 error。豁免:`无`/`视功能`/`按页面声明`/`待定`/`按页面上下文`。
 
 ### 组件类型标注规范
 
@@ -286,6 +289,8 @@ pattern: [chart-line, table-sortable]
 - [ ] frontmatter `pattern` 数组 slug MUST 为 vocabulary 登记模式,自创即 error(对应检查 19)
 - [ ] 方向契约块四字段 MUST 在 frontmatter 后、首个 `##` 前以加粗字段名行在场(对应检查 20)
 - [ ] 表格值列的 icon-/motion- 族取值 MUST 用 `{token}` 引用形式,裸名 WARN(对应检查 21)
+- [ ] frontmatter `breakpoints`(如声明)MUST 升序整数/去重/320-3840/≥2 项(对应检查 22)
+- [ ] action 的 `api=` 值 MUST 为 `METHOD /path` 形态;`db=` 值 MUST 含表名标识符(豁免词除外)(对应检查 23)
 
 ---
 

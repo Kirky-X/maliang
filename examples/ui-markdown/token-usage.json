@@ -1,79 +1,243 @@
 {
-  "computed_at": "2026-10-26T03:01:09+08:00",
+  "computed_at": "2026-10-27T08:39:14+08:00",
   "target_dir": "D:\\projects\\maliang\\examples\\ui-markdown",
   "tokens": {
     "border-hairline": [
       "organisms/dock.md",
       "organisms/nav-bar.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/service.md",
+      "ui/setting/about-us.md",
+      "ui/setting/about.md",
+      "ui/wallet.md"
+    ],
+    "border-thin": [
+      "ui/activity.md"
+    ],
+    "color-border-base": [
+      "ui/activity.md"
     ],
     "color-brand-primary": [
       "organisms/dock.md",
       "organisms/nav-bar.md",
-      "ui/home.md"
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/home.md",
+      "ui/message.md",
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md"
     ],
     "color-danger": [
-      "organisms/dock.md"
+      "organisms/dock.md",
+      "ui/messages.md",
+      "ui/rank.md"
     ],
     "color-divider": [
       "organisms/dock.md",
       "organisms/nav-bar.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/service.md",
+      "ui/setting/about-us.md",
+      "ui/setting/about.md",
+      "ui/wallet.md"
+    ],
+    "color-state-hover": [
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/search.md"
+    ],
+    "color-success": [
+      "ui/activity.md",
+      "ui/rank.md",
+      "ui/wallet.md"
     ],
     "color-surface-base": [
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
       "ui/home.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md",
+      "ui/setting/about-us.md",
+      "ui/setting/about.md",
+      "ui/setting/agreement.md",
+      "ui/setting/privacy.md",
+      "ui/wallet.md"
     ],
     "color-surface-card": [
       "organisms/dock.md",
       "organisms/nav-bar.md",
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
       "ui/home.md",
-      "ui/mine.md"
+      "ui/message.md",
+      "ui/messages.md",
+      "ui/mine.md",
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md",
+      "ui/wallet.md"
+    ],
+    "color-text-disabled": [
+      "ui/activity.md"
+    ],
+    "color-text-on-brand": [
+      "ui/discover.md",
+      "ui/rank.md",
+      "ui/service.md"
     ],
     "color-text-placeholder": [
+      "ui/discover.md",
       "ui/home.md"
     ],
     "color-text-primary": [
       "organisms/dock.md",
       "organisms/nav-bar.md",
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
       "ui/home.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md",
+      "ui/setting/about-us.md",
+      "ui/setting/about.md",
+      "ui/setting/agreement.md",
+      "ui/setting/privacy.md",
+      "ui/wallet.md"
     ],
     "color-text-secondary": [
       "organisms/dock.md",
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
       "ui/home.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md",
+      "ui/setting/about-us.md",
+      "ui/setting/about.md",
+      "ui/setting/privacy.md",
+      "ui/wallet.md"
+    ],
+    "color-warning": [
+      "ui/activity.md",
+      "ui/rank.md"
+    ],
+    "font-family-display": [
+      "ui/wallet.md"
     ],
     "font-size-body": [
       "organisms/nav-bar.md",
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md",
+      "ui/setting/about-us.md",
+      "ui/setting/about.md",
+      "ui/setting/agreement.md",
+      "ui/setting/privacy.md",
+      "ui/wallet.md"
     ],
     "font-size-caption": [
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
       "ui/home.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md",
+      "ui/setting/about.md",
+      "ui/wallet.md"
+    ],
+    "font-size-h1": [
+      "ui/wallet.md"
+    ],
+    "font-size-h2": [
+      "ui/service.md",
+      "ui/wallet.md"
     ],
     "font-size-h3": [
       "organisms/nav-bar.md",
+      "ui/discover.md",
       "ui/mine.md",
+      "ui/rank.md",
       "ui/setting/about.md"
     ],
     "font-size-mini": [
-      "organisms/dock.md"
+      "organisms/dock.md",
+      "ui/activity.md",
+      "ui/message.md",
+      "ui/messages.md",
+      "ui/rank.md"
+    ],
+    "font-weight-bold": [
+      "ui/wallet.md"
+    ],
+    "font-weight-medium": [
+      "ui/activity.md",
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/messages.md",
+      "ui/search.md",
+      "ui/wallet.md"
+    ],
+    "font-weight-regular": [
+      "ui/feed.md",
+      "ui/message.md",
+      "ui/rank.md",
+      "ui/setting/about-us.md",
+      "ui/setting/agreement.md",
+      "ui/setting/privacy.md"
     ],
     "font-weight-semibold": [
       "organisms/nav-bar.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/message.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/rank.md",
+      "ui/service.md",
+      "ui/setting/about.md",
+      "ui/wallet.md"
     ],
     "icon-activity": [
-      "ui/home.md"
+      "ui/home.md",
+      "ui/message.md"
     ],
     "icon-back": [
       "organisms/nav-bar.md"
@@ -82,7 +246,8 @@
       "ui/home.md"
     ],
     "icon-compose-stroke": [
-      "organisms/dock.md"
+      "organisms/dock.md",
+      "ui/messages.md"
     ],
     "icon-discover-filled": [
       "organisms/dock.md"
@@ -98,6 +263,8 @@
     ],
     "icon-feedback": [
       "ui/mine.md",
+      "ui/service.md",
+      "ui/setting/about-us.md",
       "ui/setting/about.md"
     ],
     "icon-home-filled": [
@@ -108,9 +275,11 @@
     ],
     "icon-info": [
       "ui/mine.md",
+      "ui/search.md",
       "ui/setting/about.md"
     ],
     "icon-link": [
+      "ui/setting/about-us.md",
       "ui/setting/about.md"
     ],
     "icon-messages-filled": [
@@ -129,18 +298,30 @@
       "ui/home.md"
     ],
     "icon-search-filled": [
-      "ui/home.md"
+      "ui/home.md",
+      "ui/search.md"
+    ],
+    "icon-search-stroke": [
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/search.md"
     ],
     "icon-service": [
-      "ui/home.md"
+      "ui/home.md",
+      "ui/setting/about-us.md",
+      "ui/wallet.md"
     ],
     "icon-settings": [
-      "ui/mine.md"
+      "ui/mine.md",
+      "ui/service.md"
     ],
     "icon-share": [
+      "ui/rank.md",
       "ui/setting/about.md"
     ],
     "icon-shield": [
+      "ui/message.md",
+      "ui/service.md",
       "ui/setting/about.md"
     ],
     "icon-size-lg": [
@@ -148,51 +329,123 @@
       "organisms/nav-bar.md"
     ],
     "icon-size-md": [
-      "ui/home.md"
+      "ui/home.md",
+      "ui/message.md",
+      "ui/search.md"
+    ],
+    "icon-size-sm": [
+      "ui/search.md"
     ],
     "icon-size-xl": [
       "organisms/dock.md",
-      "ui/home.md"
+      "ui/home.md",
+      "ui/service.md"
     ],
     "icon-touch-target": [
       "organisms/dock.md",
       "organisms/nav-bar.md"
     ],
     "icon-version": [
+      "ui/message.md",
       "ui/setting/about.md"
     ],
     "icon-wallet": [
       "ui/home.md",
-      "ui/mine.md"
+      "ui/message.md",
+      "ui/mine.md",
+      "ui/service.md"
+    ],
+    "line-height-relaxed": [
+      "ui/setting/about-us.md",
+      "ui/setting/agreement.md",
+      "ui/setting/privacy.md"
+    ],
+    "motion-duration-fast": [
+      "ui/category.md",
+      "ui/feed.md",
+      "ui/rank.md"
+    ],
+    "motion-duration-normal": [
+      "ui/discover.md"
+    ],
+    "motion-ease-default": [
+      "ui/feed.md"
+    ],
+    "motion-ease-out": [
+      "ui/discover.md"
     ],
     "radius-full": [
       "organisms/dock.md",
       "ui/home.md",
-      "ui/mine.md"
+      "ui/messages.md",
+      "ui/mine.md",
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md"
+    ],
+    "radius-lg": [
+      "ui/activity.md",
+      "ui/discover.md",
+      "ui/setting/about-us.md",
+      "ui/wallet.md"
     ],
     "radius-rounded": [
-      "ui/home.md"
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/home.md",
+      "ui/rank.md",
+      "ui/search.md"
+    ],
+    "shadow-card": [
+      "ui/discover.md",
+      "ui/wallet.md"
     ],
     "spacing-lg": [
       "organisms/dock.md",
       "organisms/nav-bar.md",
+      "ui/activity.md",
+      "ui/discover.md",
       "ui/home.md",
+      "ui/message.md",
+      "ui/messages.md",
       "ui/mine.md",
-      "ui/setting/about.md"
+      "ui/search.md",
+      "ui/service.md",
+      "ui/setting/about-us.md",
+      "ui/setting/about.md",
+      "ui/setting/agreement.md",
+      "ui/setting/privacy.md",
+      "ui/wallet.md"
     ],
     "spacing-md": [
-      "ui/home.md"
+      "ui/activity.md",
+      "ui/discover.md",
+      "ui/home.md",
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md",
+      "ui/wallet.md"
     ],
     "spacing-sm": [
-      "organisms/dock.md"
+      "organisms/dock.md",
+      "ui/activity.md",
+      "ui/category.md",
+      "ui/discover.md",
+      "ui/feed.md",
+      "ui/rank.md",
+      "ui/search.md",
+      "ui/service.md"
+    ],
+    "spacing-xl": [
+      "ui/setting/privacy.md"
     ]
   },
   "unreferenced": [
     "border-medium",
     "border-thick",
-    "border-thin",
     "color-accent",
-    "color-border-base",
     "color-brand-secondary",
     "color-cover-a1",
     "color-cover-a2",
@@ -204,40 +457,19 @@
     "color-cover-d2",
     "color-link",
     "color-overlay",
-    "color-state-hover",
-    "color-success",
     "color-surface-elevated",
-    "color-text-disabled",
-    "color-text-on-brand",
-    "color-warning",
-    "font-family-display",
     "font-family-ui",
-    "font-size-h1",
-    "font-size-h2",
-    "font-weight-bold",
-    "font-weight-medium",
-    "font-weight-regular",
-    "icon-search-stroke",
-    "icon-size-sm",
     "icon-stroke",
     "line-height-base",
-    "line-height-relaxed",
     "line-height-tight",
-    "motion-duration-fast",
     "motion-duration-instant",
-    "motion-duration-normal",
     "motion-duration-slower",
-    "motion-ease-default",
     "motion-ease-in",
-    "motion-ease-out",
-    "radius-lg",
     "radius-sharp",
     "radius-subtle",
     "radius-xl",
-    "shadow-card",
     "spacing-2xl",
     "spacing-3xl",
-    "spacing-xl",
     "spacing-xs",
     "z-index-base",
     "z-index-drawer",

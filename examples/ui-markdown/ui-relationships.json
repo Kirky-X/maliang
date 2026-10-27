@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-26T03:02:07+08:00",
+  "generated_at": "2026-10-27T08:38:45+08:00",
   "target_dir": "D:\\projects\\maliang\\examples\\ui-markdown",
   "pages": [
     {
@@ -27,6 +27,56 @@
       ]
     },
     {
+      "path": "ui/activity.md",
+      "name": "activity",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "image",
+        "list",
+        "card",
+        "tag"
+      ]
+    },
+    {
+      "path": "ui/category.md",
+      "name": "category",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "list",
+        "grid",
+        "card"
+      ]
+    },
+    {
+      "path": "ui/discover.md",
+      "name": "discover",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "image",
+        "text",
+        "grid",
+        "card"
+      ]
+    },
+    {
+      "path": "ui/feed.md",
+      "name": "feed",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "tabs",
+        "list",
+        "card"
+      ]
+    },
+    {
       "path": "ui/home.md",
       "name": "home",
       "parent": null,
@@ -42,10 +92,90 @@
       ]
     },
     {
+      "path": "ui/message.md",
+      "name": "message",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "list",
+        "icon"
+      ]
+    },
+    {
+      "path": "ui/messages.md",
+      "name": "messages",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "list",
+        "image",
+        "text",
+        "badge"
+      ]
+    },
+    {
       "path": "ui/mine.md",
       "name": "mine",
       "parent": null,
       "depth": 1,
+      "components": [
+        "navigation",
+        "image",
+        "text",
+        "list",
+        "button",
+        "icon"
+      ]
+    },
+    {
+      "path": "ui/rank.md",
+      "name": "rank",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "tabs",
+        "list",
+        "card",
+        "badge",
+        "avatar"
+      ]
+    },
+    {
+      "path": "ui/search.md",
+      "name": "search",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "input",
+        "icon",
+        "grid",
+        "button",
+        "list",
+        "card"
+      ]
+    },
+    {
+      "path": "ui/service.md",
+      "name": "service",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "grid",
+        "button",
+        "icon",
+        "list"
+      ]
+    },
+    {
+      "path": "ui/setting/about-us.md",
+      "name": "about-us",
+      "parent": "setting",
+      "depth": 2,
       "components": [
         "navigation",
         "image",
@@ -67,6 +197,38 @@
         "list",
         "button",
         "icon"
+      ]
+    },
+    {
+      "path": "ui/setting/agreement.md",
+      "name": "agreement",
+      "parent": "setting",
+      "depth": 2,
+      "components": [
+        "navigation",
+        "text"
+      ]
+    },
+    {
+      "path": "ui/setting/privacy.md",
+      "name": "privacy",
+      "parent": "setting",
+      "depth": 2,
+      "components": [
+        "navigation",
+        "text"
+      ]
+    },
+    {
+      "path": "ui/wallet.md",
+      "name": "wallet",
+      "parent": null,
+      "depth": 1,
+      "components": [
+        "navigation",
+        "card",
+        "statistic",
+        "list"
       ]
     }
   ],
@@ -92,6 +254,18 @@
     {
       "from": "organisms/dock.md",
       "to": "ui/mine.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/discover.md",
+      "to": "ui/search.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/feed.md",
+      "to": "ui/search.md",
       "event": "tap",
       "source_component": null
     },
@@ -158,6 +332,12 @@
     {
       "from": "ui/setting/about.md",
       "to": "ui/setting/about-us.md",
+      "event": "tap",
+      "source_component": null
+    },
+    {
+      "from": "ui/wallet.md",
+      "to": "ui/service.md",
       "event": "tap",
       "source_component": null
     }

@@ -176,7 +176,10 @@
 
 > **全部 [运行时]** — LCP/CLS/INP/FCP/TBT 是运行时指标,静态无法测量,需浏览器
 > 实测(Chrome DevTools Performance 面板 / Lighthouse / web-vitals 库)。5.2 的
-> img 尺寸、font-display 是其静态前置条件。
+> img 尺寸、font-display 是其静态前置条件。**测量对象注记(2026-10)**:实测
+> 对象是本节预览 HTML(Element Plus 分支的 preview 孪生),CWV 结论 qualify
+> 的是 preview 孪生;三框架产物的包体/首屏性能无传递关系,框架侧性能验证
+> 属 UNMEASURED(见 draw-flutter/draw-harmony 诚实范围)。
 
 - [ ] **LCP ≤ 2.5s**:最大内容绘制(Hero 图/标题)在 2.5s 内完成;超 4s = 差 <sub>[运行时]</sub>
 - [ ] **CLS ≤ 0.1**:累计布局偏移;所有图片/字体含尺寸预留(`<img width height>` / `aspect-ratio` / `font-display: swap`) <sub>[运行时;前置项已由 5.2 脚本覆盖]</sub>

@@ -53,11 +53,16 @@
       须在首个 ## 章节前,写法 **thesis**: 等)
   21. 表格值列裸 token 名(warn,icon-/motion- 族    rule=bare-token
       未加 {} 引用形式)
+  22. frontmatter breakpoints 形态(error,声明即校验: rule=responsive-breakpoints
+      整数/升序/去重/320-3840/≥2 项)
+  23. action api=/db= 值形态(error,api= 须 METHOD      rule=action-target
+      /path;db= 须含表名标识符;无/视功能等豁免)
 
 frontmatter 可选契约字段:
   - platform: mobile|web|ios|android|harmony|flutter(端型,触控阈值分端判定)
   - dir: ltr|rtl(书写方向;rtl 时检查 15 升 ERROR)
   - spec_version: 契约版本(当前 1;非 1 时 WARN 提示按 v1 规则可能有漏检)
+  - breakpoints: 响应式断点数组(检查 22)
 """
 
 import argparse
@@ -169,6 +174,8 @@ RULE_FM_COMPONENTS = "fm-components"              # 无 ux-rules 对应(framewor
 RULE_PATTERN_SLUG = "pattern-slug"                # 无 ux-rules 对应(vocabulary 契约项)
 RULE_DIRECTION_CONTRACT = "direction-contract"    # 无 ux-rules 对应(draw-md 方向契约 MUST)
 RULE_BARE_TOKEN = "bare-token"                    # 无 ux-rules 对应(token 引用形式契约)
+RULE_BREAKPOINTS = "responsive-breakpoints"       # 无 ux-rules 对应(draw-md 响应式断点契约)
+RULE_ACTION_TARGET = "action-target"              # 无 ux-rules 对应(action api/db 目标形态契约)
 
 # 当前 ui-markdown 契约版本(与 draw-md.md「页面 markdown 契约」同步演进;
 # frontmatter spec_version 声明未来版本时校验器按本版本规则检查并 WARN)
@@ -198,6 +205,17 @@ ORGANISM_REF_RE = re.compile(
 # {icon-x} 引用;反引号不豁免——`icon-x` 同样是逃逸校验的裸名;只扫值列,
 # 字段名列如 icon-right 不误报)
 BARE_TOKEN_NAME_RE = re.compile(r"(?<!\{)\b(?:icon|motion)-[a-z][a-z0-9-]*(?![\w}])")
+
+# 检查 22:响应式断点(整数,320-3840)
+BREAKPOINT_RE = re.compile(r"^\d+$")
+BREAKPOINT_MIN = 320
+BREAKPOINT_MAX = 3840
+
+# 检查 23:action 字段 api= 值形态(METHOD + /path);豁免词(无/视功能/按页面声明)
+ACTION_API_SHAPE_RE = re.compile(
+    r"^(?:GET|POST|PUT|DELETE|PATCH|HEAD)\s+/\S", re.IGNORECASE)
+ACTION_EXEMPT_RE = re.compile(r"视功能|按页面声明|待定|按页面上下文")
+ACTION_DB_IDENT_RE = re.compile(r"\b[a-z][a-z0-9_]{1,}\b")
 
 # z-index 字面量(匹配 z-index: <数字> 形式,排除 token 引用 {z-index-*})
 Z_INDEX_LITERAL_RE = re.compile(
@@ -422,22 +440,25 @@ def check_color_literals(rel_path, lines):
 
 
 def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
-    """检查 3:组件类型字段缺失或自创 slug(error/warning)。
+    """检查 3:组件类型字段缺失或非法 slug(error/warning)。
 
     参数表(header 含"参数")无"组件类型"行 -> warning;
-    组件类型值含不在 framework 组件类且不在术语库的 slug -> error。
-    references/vocabulary/*.md 登记的模式 slug(如 chart-line / filter-chip)
-    放行:framework 组件类是组件抽象,charts/search 等术语库模式是区块抽象,
-    需在组件类型字段合法表达(审计 P0-3);由 main() 解析 vocabulary 目录传入。
-    注意:draw-md.md「模式引用」节另规定 vocabulary 模式名应走 pattern 字段、
-    不得混入组件类型——两条裁决并存,最终归一待契约侧决策(见
-    tests/test_validate_draw_md.py TestComponentSlugs 用例注释)。
+    组件类型值含不在 framework 组件类的 slug -> error。vocabulary 模式 slug
+    (如 chart-line)同样 error,消息指路 pattern 字段——2026-10 归一裁决:
+    pattern 字段(vocabulary 模式的合法通道)+ 检查 19 机械校验已就位,
+    原 P0-3「放行」的历史理由(模式无合法表达通道)不再成立,契约
+    draw-md.md「模式引用」的不得混写禁令恢复为唯一裁决(冲突消除)。
     双列对比表允许用表前 `> **组件类型**:` 引用块标注(draw-md.md 规范),
     引用块与表格行二选一即可,两者皆无才报 warning。
     """
 
-    def _invented(slug):
-        return slug not in valid_slugs and not (vocab_slugs and slug in vocab_slugs)
+    def _verdict(slug):
+        """返回 (非法?, 指路尾注)。"""
+        if slug in valid_slugs:
+            return False, ""
+        if vocab_slugs and slug in vocab_slugs:
+            return True, "(术语库模式 slug 应移至 frontmatter pattern 字段)"
+        return True, ""
 
     results = []
     for header_line, rows in _extract_param_tables(lines):
@@ -451,16 +472,17 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
             if blockquote is not None:
                 bq_line_no, bq_slugs = blockquote
                 for slug in bq_slugs:
-                    if _invented(slug):
+                    illegal, hint = _verdict(slug)
+                    if illegal:
                         results.append(
                             (
                                 "ERROR",
                                 rel_path,
                                 bq_line_no,
-                                "自创组件 slug: "
+                                "非法组件 slug: "
                                 + slug
                                 + ",应引用 framework/index.md 组件类"
-                                + "或 references/vocabulary/ 已登记 slug",
+                                + hint,
                             )
                         )
                 continue
@@ -471,16 +493,17 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
         line_no, cells = type_row
         value = cells[1] if len(cells) > 1 else ""
         for slug in _extract_slugs_from_value(value):
-            if _invented(slug):
+            illegal, hint = _verdict(slug)
+            if illegal:
                 results.append(
                     (
                         "ERROR",
                         rel_path,
                         line_no,
-                        "自创组件 slug: "
+                        "非法组件 slug: "
                         + slug
                         + ",应引用 framework/index.md 组件类"
-                        + "或 references/vocabulary/ 已登记 slug",
+                        + hint,
                     )
                 )
     return results
@@ -1039,12 +1062,12 @@ def _as_slug_list(value):
 
 
 def check_fm_components(rel_path, text, valid_slugs, vocab_slugs=None):
-    """检查 18:frontmatter components 数组 slug 对齐(error/warn)。
+    """检查 18:frontmatter components 数组 slug 对齐(error)。
 
     components 应为 framework/index.md 组件类 slug 清单(draw-md.md
     「组件类型标注规范」);此前 frontmatter 只查字段存在,自创 slug 不报。
-    术语库模式 slug(如 chart-line)出现在 components → WARN,提示移至
-    pattern 字段(契约:两套命名各司其职,不得混写)。
+    术语库模式 slug(如 chart-line)出现在 components 同样 error(2026-10
+    归一:与检查 3 同口径),应移至 pattern 字段(两套命名各司其职)。
     """
     results = []
     fm = parse_frontmatter(text)
@@ -1053,9 +1076,9 @@ def check_fm_components(rel_path, text, valid_slugs, vocab_slugs=None):
             continue
         if vocab_slugs and slug in vocab_slugs:
             results.append(
-                ("WARN", rel_path, 0,
+                ("ERROR", rel_path, 0,
                  "frontmatter components 含术语库模式 slug: " + slug
-                 + ",区块模式应移至 pattern 字段(组件类与模式名各司其职)")
+                 + ",应移至 pattern 字段(组件类与模式名各司其职)")
             )
         else:
             results.append(
@@ -1147,6 +1170,89 @@ def check_bare_token_names(rel_path, lines):
                      "裸 token 名: " + name + ",应写 {" + name
                      + "} 引用形式(裸名逃逸悬空检查)")
                 )
+    return results
+
+
+def check_breakpoints(rel_path, text):
+    """检查 22:frontmatter breakpoints 数组形态(error)。
+
+    可选字段;声明即校验:整数、≥2 项、严格升序、去重、每项
+    320-3840(BREAKPOINT_MIN/MAX,与检查 16 的 px 上限同口径)。断点是
+    draw-* 阶段映射框架响应式机制的输入,乱序/越界/重复会让映射结果
+    不确定,故机械校验。
+    """
+    results = []
+    fm = parse_frontmatter(text)
+    bps = _as_slug_list(fm.get("breakpoints", []))
+    if not bps:
+        return results
+    values = []
+    for raw in bps:
+        v = str(raw).strip().rstrip("px")
+        if not BREAKPOINT_RE.match(v):
+            results.append(
+                ("ERROR", rel_path, 0,
+                 "breakpoints 取值非法: " + str(raw) + "(须整数像素,如 768)"))
+            continue
+        values.append(int(v))
+    if len(bps) < 2:
+        results.append(
+            ("ERROR", rel_path, 0,
+             "breakpoints 须 ≥2 个断点(单断点直接在参数表写响应式说明即可)"))
+    if len(values) != len(bps):
+        return results
+    for v in values:
+        if v < BREAKPOINT_MIN or v > BREAKPOINT_MAX:
+            results.append(
+                ("ERROR", rel_path, 0,
+                 "breakpoints 越界: " + str(v) + "px(允许 "
+                 + str(BREAKPOINT_MIN) + "-" + str(BREAKPOINT_MAX) + ")"))
+    if len(set(values)) != len(values):
+        results.append(("ERROR", rel_path, 0, "breakpoints 含重复断点"))
+    if values != sorted(values):
+        results.append(
+            ("ERROR", rel_path, 0, "breakpoints 须升序排列(如 [375, 768, 1024])"))
+    return results
+
+
+def check_action_targets(rel_path, lines):
+    """检查 23:action 字段 api=/db= 值形态(error)。
+
+    draw-md 契约(2026-10 增):api= 值为 `METHOD /path` 形态
+    (GET/POST/PUT/DELETE/PATCH/HEAD),db= 值须含表名标识符
+    (kebab/snake_case)——两值是下游实现与 data-floor 绑定表的对接点,
+    自由散文会让映射与核对无锚。豁免:无 / 视功能 / 按页面声明 /
+    待定 / 按页面上下文。action 行内容整体是散文的旧写法不受影响
+    (无 api=/db= 键即不触发)。
+    """
+    results = []
+    for header_line, rows in _extract_param_tables(lines):
+        for line_no, cells in rows:
+            if not cells or cells[0] != "action":
+                continue
+            for value in cells[1:]:
+                for seg in value.split(";"):
+                    seg = seg.strip()
+                    if seg.startswith("api="):
+                        target = seg[4:].strip()
+                        if not target or ACTION_EXEMPT_RE.search(target):
+                            continue
+                        if target == "无":
+                            continue
+                        if not ACTION_API_SHAPE_RE.match(target):
+                            results.append(
+                                ("ERROR", rel_path, line_no,
+                                 "api= 值须为 `METHOD /path` 形态(如 GET /api/feed): "
+                                 + target))
+                    elif seg.startswith("db="):
+                        target = seg[3:].strip()
+                        if not target or target == "无" or ACTION_EXEMPT_RE.search(target):
+                            continue
+                        if not ACTION_DB_IDENT_RE.search(target):
+                            results.append(
+                                ("ERROR", rel_path, line_no,
+                                 "db= 值须含表名标识符(kebab/snake_case,如 user_settings): "
+                                 + target))
     return results
 
 
@@ -1244,6 +1350,12 @@ def run_checks(rel_path, text, lines, valid_tokens, valid_slugs, is_ui_top_level
     results.extend(
         _tag(RULE_BARE_TOKEN, check_bare_token_names(rel_path, lines))
     )
+    results.extend(
+        _tag(RULE_BREAKPOINTS, check_breakpoints(rel_path, text))
+    )
+    results.extend(
+        _tag(RULE_ACTION_TARGET, check_action_targets(rel_path, lines))
+    )
     if is_ui_top_level:
         results.extend(_tag(RULE_SECTION_ORDER, check_section_order(rel_path, lines)))
         results.extend(_tag(RULE_PAGE_LOCATION, check_secondary_pages(rel_path)))
@@ -1270,7 +1382,8 @@ def main(argv):
         "--vocabulary-dir",
         default=None,
         help="references/vocabulary 目录路径(默认 references/vocabulary);"
-        "其登记的模式 slug(如 chart-line)在组件类型校验中放行",
+        "用于识别术语库模式 slug——出现在组件类型/组件字段时报错并指路 pattern 字段,"
+        "出现在 pattern 字段时放行",
     )
     parser.add_argument(
         "--format",

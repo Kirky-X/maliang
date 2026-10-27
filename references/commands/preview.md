@@ -134,7 +134,7 @@ flowchart LR
 
 ### 校验强化
 
-preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 21 项检查(验证批 8 项:暗色/aria/触控区/动效/radius/z-index/固定宽度文本容器/非逻辑属性;契约完备性批 6 项:数值合理性/organisms 引用/frontmatter components·pattern 校验/方向契约块/裸 token 名),不通过则回退 draw-md 修补。
+preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(验证批 8 项:暗色/aria/触控区/动效/radius/z-index/固定宽度文本容器/非逻辑属性;契约完备性批 6 项:数值合理性/organisms 引用/frontmatter components·pattern 校验/方向契约块/裸 token 名),不通过则回退 draw-md 修补。
 
 **状态态对比度门(G31,CRITICAL)**:对每个交互元素取 default / hover / focus **三态的真实计算样式**——沿祖先链回溯有效背景(透明则取父背景),阈值按元素性质:无直接文字节点的图形控件 3:1;文本按字号 / 字重取 4.5:1 或 3:1(≥ 24px,或 ≥ 18.66px 且 bold);native checkbox/radio/switch 与 disabled / opacity:0 按 WCAG 1.4.3 / 1.4.11 豁免。执行:`python3 scripts/verify-states.py <preview.html>`;**无浏览器时显式降级 UNMEASURED(退出码 2),不得记为通过**(三态语义见 [`EXIT-CODES.md`](../../scripts/EXIT-CODES.md))。
 

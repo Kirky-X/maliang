@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-10-26T03:02:08+08:00",
+  "built_at": "2026-10-27T08:39:11+08:00",
   "base_dir": "D:\\projects\\maliang",
   "anchors": {
     "preview_root": "D:\\projects\\maliang\\examples\\preview",
@@ -27,6 +27,46 @@
       "status": "missing"
     },
     {
+      "logical_ui": "ui/activity.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/category.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/discover.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/feed.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
       "logical_ui": "ui/home.md",
       "preview_html": "preview_home_iphone15.html",
       "framework_code": {
@@ -35,6 +75,26 @@
         "element": "views/Home.vue"
       },
       "status": "implemented"
+    },
+    {
+      "logical_ui": "ui/message.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/messages.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
     },
     {
       "logical_ui": "ui/mine.md",
@@ -47,7 +107,77 @@
       "status": "missing"
     },
     {
+      "logical_ui": "ui/rank.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/search.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/service.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/setting/about-us.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
       "logical_ui": "ui/setting/about.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/setting/agreement.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/setting/privacy.md",
+      "preview_html": null,
+      "framework_code": {
+        "harmony": null,
+        "flutter": null,
+        "element": null
+      },
+      "status": "missing"
+    },
+    {
+      "logical_ui": "ui/wallet.md",
       "preview_html": null,
       "framework_code": {
         "harmony": null,

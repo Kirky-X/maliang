@@ -34,6 +34,8 @@
 
 绑定表随 DESIGN.md 的决策表落库(数据型产品的 `constraints:` 块)。
 
+> **机械化子集(2026-10)**:[`../../scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 交叉 5 在 DESIGN.md 文内出现绑定表(header 含「字段」+「写入方」的表格)时校验形态——六列无空格 / 写入方须为 user·derived·system·integration 之一 / integration 行须带 `exists_today` 声明(违规 error);day 1/2/7 台词标记缺失降 WARN(写法变体不误杀)。**表格形态归脚本,产品判型与分句归属仍归 G29 人工**;design-md 交付时随 V1–V4 一并运行。
+
 ## 3. 四种写入方
 
 | 写入方 | 含义 | 成本 | 陷阱 |

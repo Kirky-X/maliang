@@ -22,7 +22,7 @@
 #
 # 覆盖:
 #   1. tests/ fixture 单元测试
-#   2. validate-draw-md.py  — draw-md 产物 21 项检查(目标: examples/ui-markdown/)
+#   2. validate-draw-md.py  — draw-md 产物 23 项检查(目标: examples/ui-markdown/)
 #   3. validate-framework.py — framework 组件文档检查(目标: references/framework/)
 #   4. ui-graph.py check-nav — 导航关系图冒烟(缺页为 informational,不拦截)
 #   5. preview-check.py     — 若 examples/preview/ 存在则跑 Pre-Flight 自动化检查

@@ -127,7 +127,7 @@ flowchart LR
 - [ ] 组件属性与 `framework/harmony/` 文档一致(无杜撰 API)
 - [ ] 产出文件含注释标注来源(`// 由 draw-harmony 从 <page>.md 生成`)
 
-**诚实范围**:本节静态检查与编译校验证明**组件产出**(语法、token 解析、映射完整、可编译);**不证明点击行为**——交互真实性与运行时状态由 preview 的运行时探针与评审覆盖(见 [`preview.md`](./preview.md)),不在本命令的证明范围。
+**诚实范围**:本节静态检查与编译校验证明**组件产出**(语法、token 解析、映射完整、可编译);**不证明点击行为,且 preview 的运行时探针不覆盖本框架产物**——preview 探针运行在 Element Plus 分支的预览 HTML 上(见 [`preview.md`](./preview.md)),ArkTS 分支的运行时交互在 skill 内属 UNMEASURED。需要运行时验证时用 hvigor/DevEco 测试(ohosTest 断言 action 五元组的跳转/状态),工具链可用时 SHOULD 补;**禁止引用 preview 结论充当本框架的实测证据**(G24 静态声明代替实测)。
 
 **🔴 CHECKPOINT · 校验通过确认**:确认无裸值、无悬空 token、组件映射完整,ArkTS 代码方可交付使用。
 

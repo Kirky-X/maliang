@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-10-26T03:02:08+08:00",
+  "computed_at": "2026-10-27T08:39:12+08:00",
   "target_dir": "D:\\projects\\maliang\\examples\\ui-markdown",
   "kind": "draw-md",
   "scope_note": "指纹范围: draw-md 产物 .md 页面(ui-hash-state.json;critique backlog 指纹判定用)",
@@ -15,9 +15,39 @@
       "size": 3055
     },
     {
+      "path": "ui/activity.md",
+      "sha256": "afac4a2f1619ab39f264deef8c41b3d02d74cbcbfae2f88e54ffa6a3bc3402da",
+      "size": 6246
+    },
+    {
+      "path": "ui/category.md",
+      "sha256": "20b3e17760f97f8543a01ec2939be4cb18f6107e132acfcc716792454495c5d0",
+      "size": 6418
+    },
+    {
+      "path": "ui/discover.md",
+      "sha256": "086b373b8fd0474d9b126ee4f77d9159e7c2a9c0014ef358e65b1f66a1b03457",
+      "size": 7399
+    },
+    {
+      "path": "ui/feed.md",
+      "sha256": "b01b3cf2374492043aa7bda87c19478e8f81b9c94431d6225c98be3581e851c0",
+      "size": 6357
+    },
+    {
       "path": "ui/home.md",
       "sha256": "29faf7d89c3f8a0fdec65a073c6d9af64017e24746d6c1e668fd9c247272e663",
       "size": 6291
+    },
+    {
+      "path": "ui/message.md",
+      "sha256": "8bd6d00977fc7aec06d76843730a77598cfc013096b8e93eccf31084e4a175ba",
+      "size": 5894
+    },
+    {
+      "path": "ui/messages.md",
+      "sha256": "c162657a62c972f56917e3891064ecd776cfafd1b828851c20b8f06a206e1c8b",
+      "size": 5949
     },
     {
       "path": "ui/mine.md",
@@ -25,9 +55,44 @@
       "size": 5262
     },
     {
+      "path": "ui/rank.md",
+      "sha256": "a72d79d83cc0dfc3424ba50f80ef5b2093831f8b7dba799d942c2250500b8a7d",
+      "size": 6953
+    },
+    {
+      "path": "ui/search.md",
+      "sha256": "5d309d53dd80177103c8efda3334b336f2b48ade471499987af17d296effe8b6",
+      "size": 8949
+    },
+    {
+      "path": "ui/service.md",
+      "sha256": "f299a8a4f663717d37a2acfa087f4cf701a2549ec9f86ed679f71f0a26f59dbe",
+      "size": 8350
+    },
+    {
+      "path": "ui/setting/about-us.md",
+      "sha256": "5d1e3c4e400ca93cd0937cb38595619ec626ab24889ede45a8e569810e030c24",
+      "size": 6229
+    },
+    {
       "path": "ui/setting/about.md",
       "sha256": "570abc76b50749546bae4cafa31b3942473d409a992e6d055b70add05df11e1a",
       "size": 5903
+    },
+    {
+      "path": "ui/setting/agreement.md",
+      "sha256": "3fd4e180d183c64f3e594d0ee173948cc0d88b046c7cb5e174fe588b204732e0",
+      "size": 3548
+    },
+    {
+      "path": "ui/setting/privacy.md",
+      "sha256": "359f13f6301aa7309892a578a1f7a9ebddf3cb7cf92ecddcf5608e7a0ec55f29",
+      "size": 3706
+    },
+    {
+      "path": "ui/wallet.md",
+      "sha256": "b137bd4ba1be8a6ecfd070bcc169ad5abbc950e39e956c7ddf5f16aeebe54808",
+      "size": 6292
     }
   ]
 }

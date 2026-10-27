@@ -12,7 +12,12 @@
   3. V3 空原则 —— `## Overview` 声明的每条原则(P1/P2/P3 标记,或 decisions
      id 里出现过的原则号)至少要有一个 token 引用它;
   4. no-decision 占比 —— 超过 1/3 的 token 键写 no-decision 时警告:说明这次
-     没做定义阶段,应回 Phase 0,而不是把 no-decision 铺满当通过。
+     没做定义阶段,应回 Phase 0,而不是把 no-decision 铺满当通过;
+  5. data-floor 绑定表形态(机械化子集)—— 文内出现绑定表(header 含
+     「字段」+「写入方」)时校验:六列无空格、写入方为四规范值之一、
+     integration 行须带 exists_today、day 1/2/7 台词标记在场(缺标记降
+     WARN——写法变体不误杀,结构违规是 ERROR)。无绑定表 = 无数据型
+     hook 声明,本检查不触发(G29 的产品判型仍归人工)。
 
 派生一致性:token.md 里的每个 token 必须能追回 DESIGN.md 的 frontmatter
 (按类别前缀映射 key,或值本身出现在 DESIGN.md 中);跨文件命名漂移在此拦截。
@@ -61,6 +66,89 @@ PREFIX_TO_CATEGORY = (
 
 HEX_RE = re.compile(r"#[0-9A-Fa-f]{3,8}\b")
 RGB_RE = re.compile(r"rgba?\([^)]*\)", re.IGNORECASE)
+
+# 交叉 5:data-floor 绑定表(data-floor.md §2 六列;写入方四规范值 §3)
+BINDING_HEADER_REQUIRED = ("字段", "写入方")
+BINDING_WRITERS = ("user", "derived", "system", "integration")
+BINDING_WRITER_RE = re.compile(r"\b(user|derived|system|integration)\b", re.IGNORECASE)
+BINDING_EXISTS_TODAY_RE = re.compile(r"exists_today|今天已存在", re.IGNORECASE)
+BINDING_SEP_RE = re.compile(r"^\|[\s\-:|]+\|?\s*$")
+BINDING_CELL_COUNT = 6  # 字段/读什么/写入方/何时写/第一天空/断连日
+
+
+def _day_marker_re(n):
+    """day N 台词标记:day N / dayN / 第 N 天;n=1 另容「第一天」。"""
+    variants = [r"day\s*%d\b" % n, r"第\s*%d\s*天" % n]
+    if n == 1:
+        variants.append("第一天")
+    return re.compile("|".join(variants), re.IGNORECASE)
+
+
+def check_data_floor_binding(text):
+    """交叉 5:绑定表形态机械化子集(判型仍归 G29 人工)。
+
+    返回 findings(dict:line/severity/rule/message,severity=ERROR/WARN);
+    文内无绑定表时返回 [](不触发)。
+    """
+    findings = []
+    lines = text.split("\n")
+    table = None  # (header_line_no, [列名])
+    for i, raw in enumerate(lines):
+        if "|" not in raw:
+            continue
+        cells = [c.strip() for c in raw.strip().strip("|").split("|")]
+        if (all(col in cells for col in BINDING_HEADER_REQUIRED)
+                and i + 1 < len(lines) and BINDING_SEP_RE.match(lines[i + 1].strip())):
+            table = (i + 1, cells)
+            break
+    if table is None:
+        return findings
+    header_line, header_cells = table
+    col_of = {name: header_cells.index(name) for name in header_cells if name}
+    for i in range(header_line + 1, len(lines)):
+        row = lines[i].strip()
+        if not row.startswith("|"):
+            break
+        if BINDING_SEP_RE.match(row):
+            continue
+        cells = [c.strip() for c in row.strip().strip("|").split("|")]
+        if not any(cells):
+            continue
+        # 六列无空格(header 列数不足六列时按实际列数判空格)
+        for idx, cell in enumerate(cells):
+            if not cell:
+                col_name = header_cells[idx] if idx < len(header_cells) else "第%d列" % (idx + 1)
+                findings.append({
+                    "line": i + 1, "severity": "ERROR",
+                    "rule": "design-md.binding-empty-cell",
+                    "message": "绑定表「%s」列为空(data-floor §2:有空格即不批准)" % col_name,
+                })
+        writer = cells[col_of["写入方"]] if "写入方" in col_of and col_of["写入方"] < len(cells) else ""
+        if writer and not BINDING_WRITER_RE.search(writer):
+            findings.append({
+                "line": i + 1, "severity": "ERROR",
+                "rule": "design-md.binding-writer",
+                "message": "绑定表写入方须为 user/derived/system/integration 之一(data-floor §3): "
+                           + writer,
+            })
+        if writer and "integration" in writer.lower():
+            row_text = "|".join(cells)
+            if not BINDING_EXISTS_TODAY_RE.search(row_text):
+                findings.append({
+                    "line": i + 1, "severity": "ERROR",
+                    "rule": "design-md.binding-integration",
+                    "message": "integration 行缺 exists_today/今天已存在 声明(data-floor §3:"
+                               "字段只有当集成真建了才存在;今天不存在的离场进 depends_on)",
+                })
+    for n in (1, 2, 7):
+        if not _day_marker_re(n).search(text):
+            findings.append({
+                "line": 0, "severity": "WARN",
+                "rule": "design-md.binding-day-missing",
+                "message": "未检测到 day %d 台词标记(data-floor §5:day 1/2/7 写全,进 spec;"
+                           "允许写法 day 1/第 1 天/第一天;若已写请对齐标记,未写按 G29 人工复核)" % n,
+            })
+    return findings
 
 
 # ---------------------------------------------------------------------------
@@ -335,6 +423,22 @@ def analyze(design_path, token_path=None, token_explicit=False):
                        "而不是把 no-decision 铺满当通过" % (no_decision_count, total_keys),
         })
 
+    # 行号基准(frontmatter 起始前的行数;findings 的行号统一按「相对
+    # frontmatter」存储,末尾统一 +base 还原为绝对行号)
+    base = text[:body_offset].count("\n")
+
+    # 交叉 5:data-floor 绑定表形态(机械化子集;判型仍归 G29 人工)。
+    # 本交叉直接扫全文,行号已是绝对值:ERROR 进 findings 须预扣 base
+    # (末尾统一 +base 还原),WARN 进 warnings 不做偏移。
+    for item in check_data_floor_binding(text):
+        entry = {"line": item["line"], "rule": item["rule"], "message": item["message"]}
+        if item["severity"] == "ERROR":
+            if entry["line"] > 0:
+                entry["line"] -= base
+            findings.append(entry)
+        else:
+            warnings.append(entry)
+
     # 派生一致性:token.md → DESIGN.md
     if token_path:
         if not os.path.isfile(token_path):
@@ -354,8 +458,7 @@ def analyze(design_path, token_path=None, token_explicit=False):
                     "message": "%s:%d %s" % (os.path.basename(token_path), item["line"], item["message"]),
                 })
 
-    # 行号修正:frontmatter 内相对行号 → 文件绝对行号(yaml_str 前一行的 --- 计 1 行)
-    base = text[:body_offset].count("\n")
+    # 行号还原:frontmatter 相对行号 → 文件绝对行号(yaml_str 前一行的 --- 计 1 行)
     for item in findings:
         if item["line"] > 0:
             item["line"] += base
@@ -364,8 +467,9 @@ def analyze(design_path, token_path=None, token_explicit=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(
-        description="DESIGN.md token 溯源核对:V1 悬空 / V2 孤儿 / V3 空原则 / "
-                    "no-decision 占比 + token.md 派生一致性(退出码见 scripts/EXIT-CODES.md)"
+        description="DESIGN.md 溯源核对:V1 悬空 / V2 孤儿 / V3 空原则 / "
+                    "no-decision 占比 / data-floor 绑定表形态 + token.md 派生一致性"
+                    "(退出码见 scripts/EXIT-CODES.md)"
     )
     parser.add_argument("design_md", help="DESIGN.md 路径")
     parser.add_argument("--token-file", default=None,
