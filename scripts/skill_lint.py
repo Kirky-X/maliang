@@ -8,7 +8,7 @@
 检查项（FAIL 阻断 / WARN 提示）:
   FAIL  SKILL.md 存在；frontmatter 闭合且含 name/description；name 与目录名一致；
         description ≤1024 字符；.gitignore 含 specmark/（全局规则 24）；
-        JSON 资产（skill.json/evals/*.json/根级 *.json）可解析；
+        JSON 资产（根级 *.json）可解析；
         frontmatter metadata 与 skill.json version 一致；
         SKILL.md 与 references/**/*.md 中引用的 .md 路径存在；
         可选 lint-checks.json 声明的仓内自检规则未满足（require-pattern /

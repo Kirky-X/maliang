@@ -25,7 +25,6 @@ English | [中文](README.md)
 
 - **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 24 component-naming vocabulary docs + nine dimension specs (color / type / icon / spacing / radius / border / layout / alignment / elevation)
 - **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (51 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
-- **Research log**: [`research/`](research/README.md) (measure-it-yourself records that may overturn the repo's own rules: real problem · real method · data with context · landing trace)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Merged assets**: the former craft 方法集 now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (pin info lives solely in that file's header), critique reads it for UI-compliance/a11y checklists
 - **Script verification layer**: `validate-draw-md.py` (23 checks), `preview-check.py` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (9 subcommands, incl. check-sync spec↔implementation sync and token-usage impact analysis), `validate-generated.py` (generated-code checks + G46 injection-surface scan), `ci-gate.sh` unified entry — pure Python standard library
@@ -110,7 +109,6 @@ maliang/
 │   ├── templates/           # template wall: 14 design languages + full-page patterns + landing-page orchestration
 │   ├── vocabulary/          # 24 component-naming vocabulary docs (incl. pro-motion, chat)
 │   └── default-pages/       # default page lists (15 app + 15 web pages, P0–P2)
-├── research/                # measurement-driven rule-revision log (problem · method · data with context · landing trace)
 ├── scripts/                 # verification layer: preview-check / preview-lint.js / verify-states / verify-interactive / validate-design-md / validate-generated / extract-tokens / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate (exit-code canonical: scripts/EXIT-CODES.md); second batch: verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy; base layer: ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / design_md_to_token_md / dark-palette-derive / device_models / maliang_common / devices/
 ├── examples/                # 12 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue)
 └── tests/                   # pytest suite (445 cases, 31 files)

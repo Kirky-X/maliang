@@ -25,7 +25,6 @@
 
 - **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 24 篇组件命名词汇 + 九维规范（色/字/图/距/角/线/布局/对齐/海拔）
 - **区段原型库**：[`references/components/`](references/components/INDEX.md)（51 个区段原型 + 索引——**从索引挑名、只加载选中的那几个**，典型一次构建 5-7 个文件：1 hero + 1 区段头 + 1-2 主体区段 + 1 CTA + 1 页脚 + 1 导航；区段原型管「这段长成什么」，元素级外观仍在 `references/vocabulary/`）
-- **研究记录**：[`research/`](research/README.md)（自己测量、可以推翻自己规则的过程记录：真实问题 · 真实方法 · 带语境的数据 · 落地留痕）
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **已并入资产**：原 craft 方法集 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（钉定信息唯一来源见该文件头部），critique 的 UI 合规/a11y 清单读取该快照
 - **脚本验证层**：`validate-draw-md.py`（23 项检查）、`preview-check.py`（51/143 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（9 子命令，含 check-sync 规格↔实现同步判定与 token-usage 波及分析）、`validate-generated.py`（生成码校验 + G46 注入面扫描）、`ci-gate.sh` 统一入口——纯 Python 标准库
@@ -110,7 +109,6 @@ maliang/
 │   ├── templates/           # 模板墙：14 种设计语言 + 整页模式 + 落地页编排
 │   ├── vocabulary/          # 24 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息）
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
-├── research/                # 测量驱动的规则修订目录（问题 · 方法 · 带语境的数据 · 落地留痕）
 ├── scripts/                 # 验证层：preview-check / preview-lint.js / verify-states / verify-interactive / validate-design-md / validate-generated / extract-tokens / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate（退出码 canonical 见 scripts/EXIT-CODES.md）；第二批：verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy；基础层：ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / design_md_to_token_md / dark-palette-derive / device_models / maliang_common / devices/
 ├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
 └── tests/                   # pytest 套件（445 用例，31 文件）
