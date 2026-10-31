@@ -39,6 +39,7 @@
 
 ### 0a · 领域探索(四产出)
 
+
 动手查表之前,先进入"产品的世界",产出四件套:
 
 | 产出              | 要求                                                   | 判定                            |
@@ -516,6 +517,13 @@ npx @google/design.md@0.4.0 spec --rules-only --format json
 ```
 
 **方向字段约定(防跨项目收敛,克制扩展)**:方向类决策按"vibe 名 + 色板(名 + 核心 hex)+ display/body 字体"打包写入 decision 字段(如 `vibe:午夜灯箱;色板:#10233F/#E8452C;字体:Clash Display + Karla`),scope 标全站;**不新增账本列**,五字段结构不变。后续项目的 Phase 0a freshness 自检以此记录作为"近期项目"判定依据。
+
+
+```
+外观账本:python3 {SKILL_DIR}/scripts/style-ledger.py add --project <项目名> <DESIGN.md 路径>
+```
+
+运行一次即可(同 project+path 重复运行会被幂等守卫拦下,不重复记账);它把本轮交付的底色/主色/字族指纹记进 `~/.maliang/style-ledger.jsonl`,供后续项目 explore/draw-md 开工前 `check` 主动避开重复外观。
 
 ### Confidence map(交付末尾固定动作)
 

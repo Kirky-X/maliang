@@ -88,6 +88,28 @@ metadata:
 
 **呈现纪律**:交付说明首行挂 `⚠️ DEGRADED: unattended（<原因>）`(沿用 critique/preview 既有 DEGRADED 形状,不引入第二模式);自选决定与理由逐条写入设计说明;看不了图时写明「未验证实际视觉」、不给视觉打分;没有可运行环境时不说交互已通过。用户回归后按其意见修订,修订走决策回写。
 
+### 弱 runtime 与跨 agent 降级
+
+
+按吃紧程度逐级降级,降级牺牲流程,不牺牲硬约束(a11y 检查、token 引用、G01–G46 CRITICAL 门、真实资产协议不豁免):
+
+1. explore 多方向并行 → 串行:每方向开工前只读 DESIGN.md 契约与自己那张方向卡,不参考已做的方向;
+2. 仍吃紧 → 主方向 1 份完整规格 + 其余方向轻量卡(只写方向卡 7 栏 + 首屏骨架),比较页降为方向卡并排;
+3. references 只读当前子命令「meta 文档加载时序」的必读列,不全读;
+4. draw-md 大批量页面先交 P0 页(见 default-pages),其余页方向确认后分批;
+5. 检查点问答改为产出里的 assumption 清单(gate 文件与 CHECKPOINT 降级语义照旧——见上一节,两者共用)。
+
+### 版本检查
+
+
+使用本 skill 时先跑 `python3 {SKILL_DIR}/scripts/version-check.py due`;输出 `skip:*` 直接跳过本节。输出 `due` 时:
+
+1. 运行 `git -C {SKILL_DIR} ls-remote --tags --refs --sort=-v:refname origin 'v*'`,取第一行 tag 传给 `python3 {SKILL_DIR}/scripts/version-check.py compare <tag>`(`--current` 缺省读本仓 SKILL.md frontmatter);
+2. `compare` 输出 `same`(含 tag 不符合 vX.Y.Z 形状——按没有标签处理)就不用提;输出 `newer` 时**先完成用户的任务**,结束时告诉用户「maliang 有新版本 vX.Y.Z,更新见 https://github.com/Kirky-X/maliang/releases ,需要时运行 `git -C {SKILL_DIR} pull --ff-only`;不想再收到提醒,运行 `python3 {SKILL_DIR}/scripts/version-check.py record off`」;
+3. 无论查到什么,以实际结果收尾:`python3 {SKILL_DIR}/scripts/version-check.py record ok`(查到了)或 `record failed`(断网/沙箱禁网,7 天后再试)。
+
+是否更新由用户决定,不自动执行更新,不下载任何文件。
+
 ### meta 文档加载时序(阶段 × 必读)
 
 规范层 references/meta/ 不要求一次全读——按所处阶段加载,规划类工作不加载执行期文档:
@@ -96,8 +118,8 @@ metadata:
 | --- | --- | --- |
 | design-md(创建系统) | [`product-reasoning.md`](references/meta/product-reasoning.md)、[`philosophy.md`](references/meta/philosophy.md)(Phase 1 prose 前必读)、[`principles.md`](references/meta/principles.md)、[`ux-laws.md`](references/meta/ux-laws.md)(定律层“为什么”) | [`token-provenance.md`](references/meta/token-provenance.md)(Phase 0d 决策表 + token 溯源)、[`dials.md`](references/meta/dials.md)、[`spec-schema.md`](references/meta/spec-schema.md)、[`analytics-events.md`](references/meta/analytics-events.md)(埋点事件表)、[`content-guide.md`](references/meta/content-guide.md)、[templates/README.md](references/templates/README.md)(选型四步)、[`data-floor.md`](references/meta/data-floor.md)(数据型产品 Phase 0a 必过:绑定表+冷启动台词)、[`workbench-structures.md`](references/meta/workbench-structures.md)(11 结构判定) |
 | redesign(改版) | [`ai-tells.md`](references/meta/ai-tells.md)、[`rules-priority.md`](references/meta/rules-priority.md) | [`dials.md`](references/meta/dials.md)、[`accessibility.md`](references/meta/accessibility.md)、[`surface-modes.md`](references/meta/surface-modes.md)、[`ux-rules.md`](references/meta/ux-rules.md) |
-| explore(方向未定多方案比较) | [`dials.md`](references/meta/dials.md)、[`surface-modes.md`](references/meta/surface-modes.md)、[`token.md`](references/meta/token.md) | [`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`ux-rules.md`](references/meta/ux-rules.md)、[`workbench-structures.md`](references/meta/workbench-structures.md)(数据型界面发散前判主副结构) |
-| draw-md(产出页面规格) | [`token.md`](references/meta/token.md)、[`ai-tells.md`](references/meta/ai-tells.md) | [`surface-modes.md`](references/meta/surface-modes.md)、[`visual-assets.md`](references/meta/visual-assets.md)、[`copy-strategy.md`](references/meta/copy-strategy.md)(Persuade 页面文案策略)、[templates/INDEX.md](references/templates/INDEX.md)、[`ux-rules.md`](references/meta/ux-rules.md)、[`llm-behavior.md`](references/meta/llm-behavior.md)(长产物防截断)、[`performance.md`](references/meta/performance.md)、[`alignment.md`](references/dimensions/alignment.md)(对齐轴/同排等高,G44/G45)、[`workbench-structures.md`](references/meta/workbench-structures.md)(步骤 2.7 结构判定)、[`data-floor.md`](references/meta/data-floor.md)(步骤 2.7 数据底座绑定表) |
+| explore(方向未定多方案比较) | [`dials.md`](references/meta/dials.md)、[`surface-modes.md`](references/meta/surface-modes.md)、[`token.md`](references/meta/token.md) | [`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`ux-rules.md`](references/meta/ux-rules.md)、[`workbench-structures.md`](references/meta/workbench-structures.md)(数据型界面发散前判主副结构);开工前 `python3 {SKILL_DIR}/scripts/style-ledger.py check`(跨项目外观账本,重复底色/字族主动避开,不阻塞) |
+| draw-md(产出页面规格) | [`token.md`](references/meta/token.md)、[`ai-tells.md`](references/meta/ai-tells.md) | [`surface-modes.md`](references/meta/surface-modes.md)、[`visual-assets.md`](references/meta/visual-assets.md)、[`copy-strategy.md`](references/meta/copy-strategy.md)(Persuade 页面文案策略)、[templates/INDEX.md](references/templates/INDEX.md)、[`ux-rules.md`](references/meta/ux-rules.md)、[`llm-behavior.md`](references/meta/llm-behavior.md)(长产物防截断)、[`performance.md`](references/meta/performance.md)、[`alignment.md`](references/dimensions/alignment.md)(对齐轴/同排等高,G44/G45)、[`workbench-structures.md`](references/meta/workbench-structures.md)(步骤 2.7 结构判定)、[`data-floor.md`](references/meta/data-floor.md)(步骤 2.7 数据底座绑定表);开工前 `python3 {SKILL_DIR}/scripts/style-ledger.py check`(跨项目外观账本,不阻塞) |
 | preview(验证交付) | [`numbered-gates.md`](references/meta/numbered-gates.md)(编号门禁 G01–G46,交付与否决层)、[`ai-tells.md`](references/meta/ai-tells.md)(豁免总则)、[`performance.md`](references/meta/performance.md) | [`token-provenance.md`](references/meta/token-provenance.md)(A 组溯源判定留痕)、[`ux-rules.md`](references/meta/ux-rules.md)、[`accessibility.md`](references/meta/accessibility.md)、[`content-guide.md`](references/meta/content-guide.md)、[`hardening.md`](references/meta/hardening.md)(生产化加固) |
 | critique(可用性深评) | [`surface-modes.md`](references/meta/surface-modes.md)、[`principles.md`](references/meta/principles.md) | [`accessibility.md`](references/meta/accessibility.md)、[`ux-rules.md`](references/meta/ux-rules.md)、[`day-two-blacklist.md`](references/meta/day-two-blacklist.md)(第四问·定义级 audit) |
 | draw-harmony/flutter/element | [`performance.md`](references/meta/performance.md)、[`accessibility.md`](references/meta/accessibility.md)、[`polish-craft.md`](references/meta/polish-craft.md)(微雕手艺,多数条目 web-only) | [`token.md`](references/meta/token.md)(命名回填)、[`ux-rules.md`](references/meta/ux-rules.md) |
@@ -121,6 +143,8 @@ metadata:
 - UI 关系管理工具 [`scripts/ui-graph.py`](scripts/ui-graph.py) 提供 9 个子命令(generate/list-missing/check-nav/compute-hash/diff-hash/build-impl-map/list-unimplemented/token-usage/check-sync),纯 Python 标准库实现,产出 ui-relationships.json(层级 + 跳转)、ui-hash-state.json(哈希基线)、ui-implementation-map.json(逻辑 UI ↔ 实现映射)、code-hash-state.json(实现指纹)、token-usage.json(token→页面反向索引 + 孤儿 token),供 `ui-graph` 子命令调用——check-sync 判「规格改了代码没跟 / 代码手改了规格没动」,token-usage 供 DESIGN.md token 变更波及分析;配套 [`scripts/validate-draw-md.py`](scripts/validate-draw-md.py) 含 23 项检查(aria/touch-target/dark-mode/motion/radius/z-index/方向契约块/organisms 引用/数值合理性等),供 `preview` 子命令校验。
 - **验证层脚本**(纯 Python 标准库):由 [`scripts/ci-gate.sh`](scripts/ci-gate.sh) 统一编排,逐脚本职责见 README「功能特性」与各脚本自身 docstring;退出码三态语义唯一 canonical 见 [`scripts/EXIT-CODES.md`](scripts/EXIT-CODES.md)——0 看了没问题 / 1 看了有问题 / 2 没能检查,未测量不得记为通过。**段级审计** [`scripts/stage-audit.py`](scripts/stage-audit.py) `--stage N`(1-7)/`--all` 把「产物存在性 + 段门禁 + 测量收据(init→attach→verify)」串成一跑,三态退出;产物路径按 [workspace-layout.md](references/meta/workspace-layout.md)(design/ canonical,examples/ 存量兼容),进段 N+1 前该段审计须为 0(--skip-gates 的 0 仅覆盖产物面,不算过;段6 无机械审计面,判定在 preview-checklist + 编号门禁)。
 - **token 溯源**在 [`references/meta/token-provenance.md`](references/meta/token-provenance.md):DESIGN.md 每个 token 顶层键行尾注释指回产生它的决策 id(`primary: "#212121" # D-P1-1`),无本地依据的写 `# no-decision: <来源>`;`## Overview` 的 2–3 条原则须各落到至少一个 token 上,否则是装饰不是立场。`design-md` Phase 0d 先写决策表再填模板,违规三类(悬空溯源 / 孤儿 token / 空原则)在 `preview` 交付时被门禁 G01–G03 拦。
+- **跨项目外观账本** [`scripts/style-ledger.py`](scripts/style-ledger.py):`add --project <名> <DESIGN.md>` 把每次交付的外观指纹(底色/主色/字族)记进 `~/.maliang/style-ledger.jsonl`,`check` 在 explore/draw-md 开工前列出最近 8 个交付反复出现的底色与字族供主动避开(报告不阻塞,与 profile.json 偏好先验、`.maliang/feedback/` 协作规则、build-log 构图轮换四账分工互不写入);`list` 全量回看。机制详述见脚本 docstring。
+- **版本检查** [`scripts/version-check.py`](scripts/version-check.py):`due` 节流判定 → `git ls-remote` 取 tag → `compare` 比较 → `record ok|failed|off` 记录;状态文件 `~/.maliang/version-check`。完整流程见下方「版本检查」节。
 - **编号门禁**在 [`references/meta/numbered-gates.md`](references/meta/numbered-gates.md):G01–G46 二元否决清单(A 溯源与 token / B 可访问性与触控 / C 视觉签名 / D 交互与状态 / E 布局与响应 / F 交付与可核验性·含安全注入面 / G 定义层成立性),每条写明违反什么 / 怎么判定 / 怎么修。`preview` 第 5 节的 143 项机械检查与本门禁**两处都过才算过**(规则 canonical 见上链 numbered-gates.md §0),任一 CRITICAL 门失败一票否决。
 
 ## 失败模式与 fallback

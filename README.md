@@ -31,7 +31,7 @@
 - **脚本验证层**：`validate-draw-md.py`（23 项检查）、`preview-check.py`（51/143 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（9 子命令，含 check-sync 规格↔实现同步判定与 token-usage 波及分析）、`validate-generated.py`（生成码校验 + G46 注入面扫描）、`ci-gate.sh` 统一入口——纯 Python 标准库
 - **第二批验证脚本**（同标准库）：`verify-color-fidelity.py`（重建 vs 参考图 ΔE 保真门）、`measure-colors.py`（图片确定性测色）、`palette-solver.py`（OKLCH 亮度求解 + 配对矩阵）、`verify-assets.py`（资产位在场验证）、`source-fingerprint.py`（重审计源码指纹）、`check-structure-history.py`（轮换重复 / 热轴 / 盖章真伪）、`check-copy.py`（句型级反模板）
 - **新增参考层**：[`references/meta/source-hygiene.md`](references/meta/source-hygiene.md)（来源卫生：拒载名单 / 私网拒绝 / junk 信号 / Provenance）、[`references/meta/visual-symptoms.md`](references/meta/visual-symptoms.md)（感知症状 → 病灶 → 修复）
-- **辅助脚本**：`install-skill.sh`（安装器，见下文安装）、`design_md_to_token_md.py`（DESIGN.md → 产物层 token.md 自动生成）、`skill_lint.py`（仓库级 SKILL.md 工程体检）
+- **辅助脚本**：`install-skill.sh`（安装器，见下文安装）、`design_md_to_token_md.py`（DESIGN.md → 产物层 token.md 自动生成）、`skill_lint.py`（仓库级 SKILL.md 工程体检）、`style-ledger.py`（跨项目外观账本，设计方法库 扩充）、`version-check.py`（版本检查确定性逻辑）
 
 ## 📦 安装
 

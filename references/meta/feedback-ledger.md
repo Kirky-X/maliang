@@ -96,6 +96,7 @@ proposed ──(source: agent-pending)──→ pending-review ──用户复�
 | 主题 | canonical 在哪 | 本文 |
 | ---- | -------------- | ---- |
 | 设计决策账本 | DESIGN.md `decisions:`([`spec-schema.md`](spec-schema.md)) | 只管协作规则,边界见 §1 |
+| 跨项目外观产出史 | [`../../scripts/style-ledger.py`](../../scripts/style-ledger.py)(`~/.maliang/style-ledger.jsonl`) | 记「每次交付长什么样子」(底色/主色/字族指纹);防跨项目收敛的产出史,不记偏好(那是本账本与 profile 的事),不记项目内构图类轮换(那是 build-log 的事) |
 | 跨项目构建记忆 | [`../templates/variation-engine.md`](../templates/variation-engine.md) | 同用 `.maliang/` 域,各账各的 |
 | 决策阶段的口头推翻 | [`../commands/design-md.md`](../commands/design-md.md) 0d | 项目决策不进本账本 |
 | 门禁执行 | [`numbered-gates.md`](numbered-gates.md) F 组 | 提供判据,门禁在那边执行 |

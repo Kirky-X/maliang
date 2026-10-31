@@ -582,3 +582,17 @@ def load_yaml_block(block, fallback=None, on_not_map="error"):
         return _parse_frontmatter_lines(block), None
     except Exception as exc:
         return None, f"frontmatter YAML 非法: {exc}"
+
+
+def parse_frontmatter_lenient(block):
+    """宽容解析 frontmatter 正文:PyYAML,报错或缺失时降级逐行解析。
+
+    供消费「设计产物 frontmatter」的读取方使用(style-ledger 指纹提取等)
+    ——真实产物常含 `"Fraunces", serif` 这类 PyYAML 严格语法拒收的值,
+    逐行降级解析器可容忍。与 load_yaml_block 的差别:后者把 PyYAML 报错
+    当失败返回(校验器语义),本函数把报错当「换宽容解析器」的信号。
+    """
+    data, err = load_yaml_block(block)
+    if err:
+        return _parse_frontmatter_lines(block)
+    return data
