@@ -125,7 +125,11 @@ FRONTMATTER_RE = re.compile(r"\A---\r?\n(.*?)\r?\n---\r?\n", re.DOTALL)
 
 
 def strip_code(text: str) -> str:
-    return CODE_FENCE_RE.sub("", text)
+    """剥代码围栏与 HTML 注释:两者不参与 markdown 渲染,围栏内代码与
+    注释里的占位链接(如模板注记 `../<id>.md`)不构成活链接,
+    链接存在性检查与孤儿判定均不应计活。"""
+    text = CODE_FENCE_RE.sub("", text)
+    return re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
 
 def section_slice(text: str, section: str | None) -> str:
