@@ -136,13 +136,13 @@ fi
 # 前置:目标 0 文件时不得记为通过(未测量不通过;占位在墙角,不是绿)
 if find examples/ui-markdown -name '*.md' -print -quit 2>/dev/null | grep -q .; then
   gate "validate-draw-md(draw-md 产物检查)" \
-    python3 scripts/validate-draw-md.py examples/ui-markdown/
+    python3 scripts/validate.py draw-md examples/ui-markdown/
 else
   echo "[GATE] ✗ validate-draw-md — 目标目录 0 个 .md 文件(未测量不得记为通过)"; FAIL=1
 fi
 if find references/framework -name '*.md' -print -quit 2>/dev/null | grep -q .; then
   gate "validate-framework(framework 组件文档检查)" \
-    python3 scripts/validate-framework.py
+    python3 scripts/validate.py framework
 else
   echo "[GATE] ✗ validate-framework — references/framework 下 0 个 .md(未测量不得记为通过)"; FAIL=1
 fi
@@ -185,7 +185,7 @@ fi
 gate_if_script scripts/validate-design-md.py "validate-design-md(DESIGN.md 溯源交叉检查)" \
   python3 scripts/design-md.py validate examples/design-system/DESIGN.md
 gate_if_script scripts/validate-generated.py "validate-generated(生成码机械校验)" \
-  python3 scripts/validate-generated.py examples/element-plus/
+  python3 scripts/validate.py generated examples/element-plus/
 
 # 9. 项目反馈账本(存在才校验;账本是项目级 .maliang/feedback/ 状态,不存在即未启用)
 if [ -f .maliang/feedback/decisions.jsonl ]; then

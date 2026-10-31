@@ -230,7 +230,7 @@ findings 按**两段拆分**,不混写:
 | gesture seams | 拖拽生硬:松手瞬移、拖到一半无回弹 | drag handler 无速度/动量处理 | Harmony 手势无弹簧收尾;Flutter 无 SpringDescription/Fling 物理收尾;Element 无拖拽动量处理 |
 | delight budget | 高情绪时刻(支付成功 / 里程碑 / 完成态)被画平 | 关键成功态与普通态视觉无差异 | 三框架同判:成功页/完成反馈无任何庆祝表达 |
 
-> **与 GATE 的分工**:GATE([`motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) §1)是**生成前自检**——写第一个 keyframe 前过四查;本清单是**审计期反向搜索**——对现成代码找"哪里缺一拍"。方向相反,判据同源:扫出的每条缝,补拍前仍须过 GATE 四查,过不了(如高频操作件补按压动效)就写否决记录,不硬补;确要补拍的时长一律遵循 maliang ≤400ms 强制口径(validate-draw-md.py 检查 11)。
+> **与 GATE 的分工**:GATE([`motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) §1)是**生成前自检**——写第一个 keyframe 前过四查;本清单是**审计期反向搜索**——对现成代码找"哪里缺一拍"。方向相反,判据同源:扫出的每条缝,补拍前仍须过 GATE 四查,过不了(如高频操作件补按压动效)就写否决记录,不硬补;确要补拍的时长一律遵循 maliang ≤400ms 强制口径(validate.py draw-md 检查 11)。
 
 ### 维度 5 · Content(内容)
 

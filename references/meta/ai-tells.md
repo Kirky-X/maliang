@@ -331,7 +331,7 @@ Fraunces / Playfair Display / Cormorant / Lora / Crimson / Newsreader / Syne / S
 
 ## 12. Motion(动效签名)
 
-> 动效也有一组"模板编排"签名:不是"有没有动",而是"动得是不是默认剧本"。本节不另立标准,与三处既有口径对齐:[`dials.md`](dials.md) MOTION_INTENSITY 1-3 档禁入场动画、[`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) §1 GATE 四查、[`../commands/preview-checklist.md`](../commands/preview-checklist.md) 5.9 动画动机 7 项;时长硬值走 maliang ≤400ms 强制口径(validate-draw-md.py 检查 11)。
+> 动效也有一组"模板编排"签名:不是"有没有动",而是"动得是不是默认剧本"。本节不另立标准,与三处既有口径对齐:[`dials.md`](dials.md) MOTION_INTENSITY 1-3 档禁入场动画、[`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) §1 GATE 四查、[`../commands/preview-checklist.md`](../commands/preview-checklist.md) 5.9 动画动机 7 项;时长硬值走 maliang ≤400ms 强制口径(validate.py draw-md 检查 11)。
 
 ### Tell · 每节 fade-and-slide-up 入场 + 每卡 hover 过渡
 

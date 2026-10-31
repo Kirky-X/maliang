@@ -33,7 +33,7 @@
 
 ### G02 · 孤儿 token
 - **违反什么**:`colors` / `typography` / `rounded` / `spacing` / `components` 顶层键既无 id 也无 `no-decision:`;或下游产物(ui-markdown / 框架代码 / 预览 HTML)出现 DESIGN.md 里不存在的视觉值。
-- **怎么判定**:人工判定顶层键覆盖 + 人工/脚本混合判定下游值(下游值另见 `validate-draw-md.py` 的 `color-literal` 检查)。判据见 [`token-provenance.md`](token-provenance.md) §4 V2 与 §6。
+- **怎么判定**:人工判定顶层键覆盖 + 人工/脚本混合判定下游值(下游值另见 `validate.py draw-md` 的 `color-literal` 检查)。判据见 [`token-provenance.md`](token-provenance.md) §4 V2 与 §6。
 - **怎么修**:归到一条决策下,或回 design-md 补决策再把值写进系统;无依据的写 `# no-decision: <原因>` 显式声明。
 
 ### G03 · 空原则
@@ -43,7 +43,7 @@
 
 ### G04 · 硬编码视觉值
 - **违反什么**:产物中出现 token 体系外的字面值——`#FF0000` / `14px` / `16px` 等直接写在样式或示例代码里。跨框架转换中的 N/A 组件、文档说明里的 token 映射对照不算命中。
-- **怎么判定**:`python3 scripts/validate-draw-md.py` 的 `color-literal` 等检查 + [`../commands/draw-md.md`](../commands/draw-md.md) 约束汇总逐条过。CRITICAL 侧的对应项是 SKILL.md 禁止事项 #2。
+- **怎么判定**:`python3 scripts/validate.py draw-md` 的 `color-literal` 等检查 + [`../commands/draw-md.md`](../commands/draw-md.md) 约束汇总逐条过。CRITICAL 侧的对应项是 SKILL.md 禁止事项 #2。
 - **怎么修**:换成 `{token-name}` 引用;确需 token 外的值时先回 design-md 补 token,再引用。
 
 ### G05 · token 跨层直连 / 混用命名
@@ -53,7 +53,7 @@
 
 ### G06 · 暗色未走 mode 引用
 - **违反什么**:暗色模式用 `filter: invert()` / 运行时 HSL 计算反色,或暗色区块里沿用亮色文字 token 而未取 `mode` 后缀的暗色值。
-- **怎么判定**:`validate-draw-md.py` 的 dark-mode 覆盖检查 + 人工看语义 token 是否随主题指向不同值(反演 ≠ 重映射)。
+- **怎么判定**:`validate.py draw-md` 的 dark-mode 覆盖检查 + 人工看语义 token 是否随主题指向不同值(反演 ≠ 重映射)。
 - **怎么修**:按 [`../dimensions/color.md`](../dimensions/color.md) 的暗色重映射写法重建语义指向。
 
 ---
@@ -62,12 +62,12 @@
 
 ### G07 · 焦点不可见 / 焦点只在鼠标下出现
 - **违反什么**:`outline: none` 未补替代焦点样式;或焦点环用 `:focus` 写,导致鼠标点击也弹出焦点环(应为 `:focus-visible`);或路由切换把焦点移到容器元素后视觉焦点环仍画在容器上。
-- **怎么判定**:Tab 实测 + `validate-draw-md.py` 的 `aria-label` / 焦点相关检查。对应 ux-rules slug `focus-states`(ERROR)。
+- **怎么判定**:Tab 实测 + `validate.py draw-md` 的 `aria-label` / 焦点相关检查。对应 ux-rules slug `focus-states`(ERROR)。
 - **怎么修**:2–4px 可见焦点环,`:focus-visible` 限定;程序性聚焦的容器抑制视觉环但保留焦点(`#page-title:focus { outline: none }`)。见 [`accessibility.md`](accessibility.md)。
 
 ### G08 · 触控目标缩水
 - **违反什么**:指针目标小于平台下限(原生 ≥44pt/48dp/44vp,Web ≥24×24 CSS px,推荐 44px),或相邻目标间距 <8px。
-- **怎么判定**:`validate-draw-md.py` 的 `touch-target` 检查 + 设备预览实测。对应 ux-rules slug `touch-target-44` / `web-target-size-24` / `touch-spacing`。
+- **怎么判定**:`validate.py draw-md` 的 `touch-target` 检查 + 设备预览实测。对应 ux-rules slug `touch-target-44` / `web-target-size-24` / `touch-spacing`。
 - **怎么修**:视觉尺寸不变、热区扩展到达标,或加大相邻间距。
 
 ### G09 · 正文对比度不足
@@ -122,12 +122,12 @@
 
 ### G16 · 状态间改几何
 - **违反什么**:状态切换时改 `border-width`(输入框 1px→2px 抖动)、用 border 冒充焦点、或 input 高度与相邻按钮高度不等。
-- **怎么判定**:人工判定(逐组件比对 default / hover / focus / disabled 的 box metrics);`validate-draw-md.py` 的固定宽度文本等几何检查为辅。
+- **怎么判定**:人工判定(逐组件比对 default / hover / focus / disabled 的 box metrics);`validate.py draw-md` 的固定宽度文本等几何检查为辅。
 - **怎么修**:用阴影 / 背景 / ring 表达焦点,几何尺寸跨状态恒定;input 与 button 高度取同一档。
 
 ### G17 · 动效不遵守硬约束
 - **违反什么**:`transition: all`;动画 layout 属性(width / height / top / margin);入场时长 >400ms;`prefers-reduced-motion: reduce` 下不回落到静态。
-- **怎么判定**:`validate-draw-md.py` 的 `motion-duration`(400ms 口径)与 `physical-property` 检查 + 人工 grep `transition: all` + 减少动效实测。
+- **怎么判定**:`validate.py draw-md` 的 `motion-duration`(400ms 口径)与 `physical-property` 检查 + 人工 grep `transition: all` + 减少动效实测。
 - **怎么修**:改 `transition: transform, opacity` 等具体属性;时长回 400ms 内;补 `@media (prefers-reduced-motion: reduce)` 回落。分层长动效见 [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)。
 
 ### G18 · 庆祝性反馈用于无操作结果
@@ -220,7 +220,7 @@
 
 ### G35 · 生成码未校验
 - **违反什么**:交付的框架生成码(`examples/element-plus/` 等生成码目录)存在以下任一——token 占位符残留(`{token}` 未解析);颜色字面量无法回溯 token.md;组件标签 / Widget 不在 [`../framework/index.md`](../framework/index.md) 白名单;类名无定义(模板里每个 class 必须在同文件 style 或框架基础类有定义,使用即需有出处)。
-- **怎么判定**:[`../../scripts/validate-generated.py`](../../scripts/validate-generated.py) + ci-gate.sh 新 gate(目标为生成码目录);输出摘要作判定记录。只对**生成码**生效,手写业务代码不在此门。
+- **怎么判定**:[`../../scripts/validate.py generated`](../../scripts/validate.py generated) + ci-gate.sh 新 gate(目标为生成码目录);输出摘要作判定记录。只对**生成码**生效,手写业务代码不在此门。
 - **怎么修**:补回 token 引用(先回 design-md 补 token 再引用);补类定义;非白名单标签换白名单组件。**诚实范围**:本门只证明组件**产出**合规(服务端 / 静态检查),**不证明点击行为**——交互真实性另按 G32 / G33 实测。
 
 ### G36 · 证据无活收据
@@ -265,7 +265,7 @@
 
 ### G46 · 生成码注入面(安全)
 - **违反什么**:交付的生成码(preview HTML / 三框架代码)出现**执行面 API**(eval / new Function / javascript: URL);或 v-html / innerHTML / outerHTML / dangerouslySetInnerHTML 绑定的内容**不是仓库内本地常量且未经消毒**——产物是可交互 HTML/代码,交付前却从无安全视角。
-- **怎么判定**:[`../../scripts/validate-generated.py`](../../scripts/validate-generated.py) 检查 6(gen.dangerous-api):执行面命中即 ERROR(与数据来源无关,一律拦截);HTML 绑定面命中出 WARN,再人工判定绑定来源——仓库内本地常量(如 ICONS 数据块)可过,外部/用户来源未消毒判 CRITICAL。手写业务代码不在此门(与 G35 同边界),但 preview 产物同样适用。
+- **怎么判定**:[`../../scripts/validate.py generated`](../../scripts/validate.py generated) 检查 6(gen.dangerous-api):执行面命中即 ERROR(与数据来源无关,一律拦截);HTML 绑定面命中出 WARN,再人工判定绑定来源——仓库内本地常量(如 ICONS 数据块)可过,外部/用户来源未消毒判 CRITICAL。手写业务代码不在此门(与 G35 同边界),但 preview 产物同样适用。
 - **怎么修**:执行面 API 一律移除(没有合法场景);绑定面改框架文本插值 / 组件化渲染,确需原始 HTML 时先消毒(DOMPurify 类)再绑定,并在交付说明写明消毒依据。出处：2026-10 架构审查(验证侧安全门禁整体缺失驱动补建)。
 
 ---

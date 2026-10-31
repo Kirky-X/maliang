@@ -154,7 +154,7 @@ V3 判定时**只数 token**,不看散文。理由写在正文但没落成值 = 
 3. `## Overview` 每条原则至少被一个 token 引用 —— 零引用 = V3(空原则,只数 token 不看散文);
 4. `no-decision` 占比(> 1/3 提示回 Phase 0 重走)。
 
-另加 **DESIGN.md → token.md 派生一致性**:token.md 里的 token 能追回 DESIGN.md(反向孤儿)。典型盲区——跨文件命名漂移(页面用了 `--border-vis` 类错名而检查仍全绿)——由此兜住。脚本退出码与 validate-draw-md.py 同三态语义(0 看了没问题 / 1 看了有问题 / 2 没能检查,canonical 见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md));未测量不得记为通过。
+另加 **DESIGN.md → token.md 派生一致性**:token.md 里的 token 能追回 DESIGN.md(反向孤儿)。典型盲区——跨文件命名漂移(页面用了 `--border-vis` 类错名而检查仍全绿)——由此兜住。脚本退出码与 validate.py draw-md 同三态语义(0 看了没问题 / 1 看了有问题 / 2 没能检查,canonical 见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md));未测量不得记为通过。
 
 脚本覆盖不到的残余形态才留给人工判断;人工复核结论逐项写出,与脚本输出摘要一并进判定记录。
 

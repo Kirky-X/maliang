@@ -97,7 +97,7 @@ breakpoints: [375, 768, 1024] # 可选:响应式断点(升序整数,≥2 项;dra
 **signature-interaction**: <一句话>
 ```
 
-`validate-draw-md.py` 检查 20 按**字段在场**判定(四字段缺失即 error,写在首个 `##` 之后不算);字段内容的兑现度仍由 preview 的 Brand Fit 人工复核——机器管在场,人管成立。
+`validate.py draw-md` 检查 20 按**字段在场**判定(四字段缺失即 error,写在首个 `##` 之后不算);字段内容的兑现度仍由 preview 的 Brand Fit 人工复核——机器管在场,人管成立。
 
 ### 正文:按视觉顺序的布局章节
 
@@ -148,7 +148,7 @@ breakpoints: [375, 768, 1024] # 可选:响应式断点(升序整数,≥2 项;dra
 - **intent 字段**:每页 ≤ 3 个核心组件(hero / 主操作 / 关键转化点)SHOULD 声明,一句话回答"**这些值为什么成立**"——它承载 DESIGN.md 的意图落到参数表的最后一环,防止"从 prose 到硬值"的传递中意图丢失。写决定,不写描述:❌"一个主要按钮" ✅"首屏唯一 CTA,故 primary 底 + 44px 触控区 + 固定高度"。非核心组件可省略。
 - 响应式:如有多断点,在表后补"响应式"说明(375 / 768 / 1024 各自差异)。
 - **组件类型**字段 MUST 引用 [`framework/index.md`](../framework/index.md) 的 56 类组件 slug(如 `button`/`input`/`list`/`navigation`),组合组件用 ` + ` 连接(如 `input + icon`)。单列参数表将该字段作为首行;双列对比表(如 dock 选中/未选中态对比)在表前用 `> **组件类型**:...` 引用块标注。
-- **action 字段**:描述组件交互行为,格式 `event=behavior; event=behavior; ...`。常用事件五元组:`tap`(点击)/`state`(状态变化)/`db`(数据库操作)/`api`(接口调用)/`long-press`(长按);输入类组件可扩展 `submit`/`focus`/`blur`/`input` 事件(如搜索框 action 含 `submit=→ui/search.md?q={input-value}`);容器组件(如 `navigation`)action 可全为"无",交互在子组件。action 字段内的 `{xxx}` 占位符为 URL/JS 模板参数(如 `{input-value}`),NOT token 引用,token 悬空检查 SHALL 跳过 action 行(见 [`validate-draw-md.py`](../../scripts/validate-draw-md.py) 检查 1)。
+- **action 字段**:描述组件交互行为,格式 `event=behavior; event=behavior; ...`。常用事件五元组:`tap`(点击)/`state`(状态变化)/`db`(数据库操作)/`api`(接口调用)/`long-press`(长按);输入类组件可扩展 `submit`/`focus`/`blur`/`input` 事件(如搜索框 action 含 `submit=→ui/search.md?q={input-value}`);容器组件(如 `navigation`)action 可全为"无",交互在子组件。action 字段内的 `{xxx}` 占位符为 URL/JS 模板参数(如 `{input-value}`),NOT token 引用,token 悬空检查 SHALL 跳过 action 行(见 [`validate.py`](../../scripts/validate.py) 的 `draw-md` 子命令 检查 1)。
 - **api=/db= 值形态(2026-10 增,检查 23)**:`api=` 值 MUST 为 `METHOD /path` 形态(GET/POST/PUT/DELETE/PATCH/HEAD,如 `GET /api/feed?cursor=?`);`db=` 值 MUST 含表名标识符(kebab/snake_case,如 `UPDATE user_settings SET last_tab=?`)。两值是 draw-* 实现与 data-floor 绑定表的对接锚,自由散文(「调接口拿数据」)无映射与核对锚,报 error。豁免:`无`/`视功能`/`按页面声明`/`待定`/`按页面上下文`。
 
 ### 组件类型标注规范

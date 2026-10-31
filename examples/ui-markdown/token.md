@@ -65,7 +65,7 @@ version: 1.3.0
   - `color-text-secondary` 4.55:1 贴 4.5 线,换底色或深一档即失守,复验后再用。
   - 色底型 token(brand/accent/功能色/渐变端点)作**色底**时,达标线是白字压底的比值:`color-text-on-brand` #FFFFFF 压 `color-brand-primary` #5B7CFA = **3.68:1**、压 success #10B981 = 2.54:1、压 warning #F59E0B = 2.15:1 —— **主按钮文案不可用小号正文**,须 ≥18.66px 粗体或把品牌色加深(color.md §9 逃生舱)。
   - `color-border-base` 1.17:1 低于表单边框要求的 3:1,输入框边框须另取一档深色。
-- **本表是示例产物**:`⚠` 是已知的未达标项,按「如实标注为反例」处理(**不假装通过**),不代表放行;改色值属设计决策,须连带复验 `examples/element-plus` 的映射与 `validate-draw-md.py` 的检查。
+- **本表是示例产物**:`⚠` 是已知的未达标项,按「如实标注为反例」处理(**不假装通过**),不代表放行;改色值属设计决策,须连带复验 `examples/element-plus` 的映射与 `validate.py draw-md` 的检查。
 
 ## 2. 字体(typography)
 

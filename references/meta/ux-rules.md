@@ -1,7 +1,7 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
 > 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,全库共 54 条。
-> 与脚本的关系:`scripts/validate-draw-md.py` 现有 23 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 19 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
+> 与脚本的关系:`scripts/validate.py draw-md` 现有 23 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 19 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
 
@@ -138,7 +138,7 @@
 - WCAG 2.2 增量准则与韧性文本细则的展开版见 [`accessibility.md`](./accessibility.md) 第 7/8 节;触控目标分层口径(原生 44pt/48dp/44vp、Web 最低 24px/推荐 44px)与其 §5 强制项、§6 预检项、§7 target-size-minimum 一致
 - 对比度阈值与 prefers-* 强制支持的完整规范见 [`accessibility.md`](./accessibility.md),本文 color-contrast 等条目是其规则出处
 - 复用阶梯与结构性 hack 禁令见 [`framework/index.md`](../framework/index.md)
-- `scripts/validate-draw-md.py` 各检查项在脚本 R_* 常量行内注释标注本文 slug 回链:aria-label → aria-labels、touch-target → touch-target-44 / web-target-size-24,其余 11 项为结构/token 契约项注明"无 ux-rules 对应";新增脚本检查时先在本文登记规则条目
+- `scripts/validate.py draw-md` 各检查项在脚本 R_* 常量行内注释标注本文 slug 回链:aria-label → aria-labels、touch-target → touch-target-44 / web-target-size-24,其余 11 项为结构/token 契约项注明"无 ux-rules 对应";新增脚本检查时先在本文登记规则条目
 - §11 浏览器原生面主题化的交付检查点在 [`preview-checklist.md`](../commands/preview-checklist.md) 5.11「原生面锁」三条(Web 项;Harmony/Flutter n/a)
 - overscroll 双层模型 / 键盘属性分派 / user-select 控件-内容二分的完整口径见 [`web-interface-guidelines.md`](./web-interface-guidelines.md)(input-type-keyboard 是其表单侧对齐条目)
 - §8 等待反馈三条的时长分档与降级阶梯 canonical 见 [`ux-laws.md`](./ux-laws.md) Doherty 专节(六级映射 + 五级阶梯);§13 层级与动作的用户感知症状对照表见 [`visual-symptoms.md`](./visual-symptoms.md)(按危害排序)

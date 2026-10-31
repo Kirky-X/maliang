@@ -27,7 +27,7 @@ English | [中文](README.md)
 - **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (51 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Merged assets**: the former craft 方法集 now lives in [`references/interface-design/`](references/interface-design/) (product-UI craft discipline and strict review / de-slop deep process); a Vercel Web Interface Guidelines snapshot sits at [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md) (pin info lives solely in that file's header), critique reads it for UI-compliance/a11y checklists
-- **Script verification layer**: `validate-draw-md.py` (23 checks), `preview-check.py` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (9 subcommands, incl. check-sync spec↔implementation sync and token-usage impact analysis), `validate-generated.py` (generated-code checks + G46 injection-surface scan), `ci-gate.sh` unified entry — pure Python standard library
+- **Script verification layer**: `validate.py draw-md` (23 checks), `preview-check.py` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (9 subcommands, incl. check-sync spec↔implementation sync and token-usage impact analysis), `validate.py generated` (generated-code checks + G46 injection-surface scan), `ci-gate.sh` unified entry — pure Python standard library
 - **Second-batch verification scripts** (same standard library): `verify.py color-fidelity` (rebuild-vs-reference ΔE fidelity gate), `verify.py measure-colors` (deterministic image color measurement), `verify.py palette-solver` (OKLCH brightness solver + pairing matrix), `verify.py assets` (asset-slot presence check), `audit.py fingerprint` (source fingerprint for re-audits), `audit.py structure-history` (rotation repeats / hot axis / stamp truth), `audit.py copy` (template-phrase scanner)
 - **New reference layer**: [`references/meta/source-hygiene.md`](references/meta/source-hygiene.md) (source hygiene: blocklist / private-network rejection / junk signals / Provenance), [`references/meta/visual-symptoms.md`](references/meta/visual-symptoms.md) (perceived symptom → root cause → fix)
 - **Auxiliary scripts**: `install-skill.sh` (installer, see Installation below), `design-md.py` (design-md domain merged entry: token-md / extract-tokens / derive-dark / validate subcommands), `skill_lint.py` (repo-level SKILL.md hygiene lint), `style-ledger.py` (cross-project style ledger), `version-check.py` (deterministic version-check logic)
@@ -63,7 +63,7 @@ The script layer runs standalone too:
 ```bash
 python3 {SKILL_DIR}/scripts/ui-graph.py generate --target ui-markdown/      # build the UI relationship graph
 python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target ui-markdown/     # navigation dead-link check
-python3 {SKILL_DIR}/scripts/validate-draw-md.py ui-markdown/ --format text  # 15 compliance checks
+python3 {SKILL_DIR}/scripts/validate.py draw-md ui-markdown/ --format text  # 15 compliance checks
 bash {SKILL_DIR}/scripts/ci-gate.sh                                          # CI gate (tests + 3 validators)
 ```
 

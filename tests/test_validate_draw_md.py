@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-vdm = load("validate-draw-md.py")
+vdm = load("validate.py")
 
 import unittest  # noqa: E402
 
@@ -728,7 +728,7 @@ class TestMainExitCodes(unittest.TestCase):
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
             # main(argv) 按 argv[1:] 解析,首位是程序名——target 不可放 [0]
-            return vdm.main([
+            return vdm._main_draw_md([
                 "validate-draw-md.py",
                 target or self.target,
                 "--token-file", self.token_file,
@@ -824,4 +824,4 @@ class TestBreakpointsAndActionTargets(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_draw_md()

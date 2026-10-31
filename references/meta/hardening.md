@@ -67,4 +67,4 @@
 - 极端输入的修复手法与 [`mobile-floor.md`](./mobile-floor.md) M3/M4、[`ux-rules.md`](./ux-rules.md) §6 文本韧性共用一套，不另立数值
 - 错误文案写法（原因 + 可执行建议）归 [`content-guide.md`](./content-guide.md) §4，本文只管"哪些状态必须有"
 - 交付检查点在 [`preview-checklist.md`](../commands/preview-checklist.md) §5.16（5.0 Process 区的两项压力实测是本文件 §1/§2 的执行动作）
-- 可正则判定的子集（固定宽度文本容器、物理属性硬编码）已机械化：`validate-draw-md.py` 检查 14/15（severity WARN，slug `fixed-width-text` / `physical-property` 登记于 [ux-rules.md](./ux-rules.md) §6/§12，回链见脚本 R_* 常量注释）
+- 可正则判定的子集（固定宽度文本容器、物理属性硬编码）已机械化：`validate.py draw-md` 检查 14/15（severity WARN，slug `fixed-width-text` / `physical-property` 登记于 [ux-rules.md](./ux-rules.md) §6/§12，回链见脚本 R_* 常量注释）

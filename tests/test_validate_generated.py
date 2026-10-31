@@ -14,7 +14,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-vg = load("validate-generated.py")
+vg = load("validate.py")
 
 TOKEN_MD = """---
 name: token
@@ -60,7 +60,7 @@ const notify = () => ElMessage("ok");
 def run_main(argv):
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        code = vg.main(argv)
+        code = vg._main_generated(argv)
     return code, buf.getvalue()
 
 
@@ -234,4 +234,4 @@ class TestDangerousApi(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_generated()
