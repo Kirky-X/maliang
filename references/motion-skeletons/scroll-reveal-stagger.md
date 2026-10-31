@@ -143,6 +143,26 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 ```
 
+## 进阶:词级激活(逐词 reveal)
+
+整段揭示的**词级变体**:大字号 tagline/宣言段(Heading 3 至 Heading 1 档),每个词独立过线激活,不做整块翻转。适用营销页的签名宣言时刻;正文段落禁用(词级节奏在阅读文本上是噪音)。
+
+**机制**:段落拆词包 `<span class="reveal-word">`,每词观察各自的触发线(词框顶进入视口下沿即激活),激活即从静默色过渡到全文色:
+
+```css
+.reveal-word {
+  color: rgb(from var(--text-primary) r g b / 0.3);  /* 静默态:基色约 30% 透明度 */
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-word.revealed { color: var(--text-primary); }
+```
+
+- 静默态取基文色的 25-35% 透明度——可见但明显未激活,整段轮廓先行可读;
+- 激活走本骨架 base curve,**禁 linear 渐变**(逐词线性淡入 = 电视字幕感);
+- 逐词用各自的 `IntersectionObserver`(`observer.unobserve` 激活后即卸);整段一个 observer 轮询词框位置是反模式;
+- **必须**实现 `prefers-reduced-motion` 降级:静默态不设,词直接以全文色渲染(逐词动画对读屏与眩晕用户是纯成本);
+- 词数上限:一段 ≤ 24 词,超过拆段——超长逐词序列读感拖沓,且逐词 observer 数量随词数线性涨。
+
 ## 强制规则
 
 - **必须**实现 `prefers-reduced-motion` 降级(直接显示;无障碍细则见 [`accessibility.md`](../meta/accessibility.md) 第 2 节,公共口径见 [ROUTING.md](ROUTING.md) §1.1)
