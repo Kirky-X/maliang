@@ -179,7 +179,7 @@
 
 ### 信息架构前置(草案)
 
-进入页面设计(`draw-md`)之前,先落一份 IA 草案:**页面清单**(每个主任务各需要哪几页,可对照 [`default-pages/index.md`](../default-pages/index.md) 增删)+ **主跳转图**(哪页 → 哪页、带什么状态分支,一张 mermaid 即可)。标注:**`ui-graph generate` 的关系图以此草案为准**——事后从已产出页面反向派生变事前约定,逐页产出时页面边界与跳转不再靠临场。衔接:`ui-graph` 读该草案作期望基线,`check-nav` 校验实现页是否补齐 flow(见 [`ui-graph.md`](./ui-graph.md))。
+进入页面设计(`draw-md`)之前,先落一份 IA 草案:**页面清单**(每个主任务各需要哪几页,可对照 [`default-pages/INDEX.md`](../default-pages/INDEX.md) 增删)+ **主跳转图**(哪页 → 哪页、带什么状态分支,一张 mermaid 即可)。标注:**`ui-graph generate` 的关系图以此草案为准**——事后从已产出页面反向派生变事前约定,逐页产出时页面边界与跳转不再靠临场。衔接:`ui-graph` 读该草案作期望基线,`check-nav` 校验实现页是否补齐 flow(见 [`ui-graph.md`](./ui-graph.md))。
 
 ### Design Read 复用 Pre-Flight 输出形状(项目已有代码时)
 
@@ -277,7 +277,7 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 3. Measure spacing patterns (card padding, vertical rhythm, section gaps)
 4. Note corner radius character (sharp ≈ 0-2px, subtle ≈ 4-8px, rounded ≈ 12-16px+)
 5. Document visible component patterns (button styles, card structure, input fields)
-6. **特效 / 动效识别(13 类逐类过,命中记技术与强度)**:背景效果 / 粒子系统 / 3D 元素 / shader 特效 / 视差滚动 / 滚动触发动画 / 滚动变形 / 文字特效 / 光标特效 / 图像特效 / 玻璃拟态·新拟态 / Canvas 绘制 / SVG 动画。识别结果写入 DESIGN.md 可选 `effects` 段:`performance_tier`(lightweight = CSS + 简单 JS;medium = Canvas 2D、SVG 动画;heavy = WebGL、Three.js、shader)+ `fallback_strategy`(reduced-motion 与低端设备的降级去向)。**与实现路线对账,不重复造词**:heavy 对应 [`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) 六路线表 R5(100-160KB),选型从 R1 停在第一条能干活的路线;Canvas / WebGL 落地过 [`../meta/performance.md`](../meta/performance.md) §6 目的性门槛与降级要求。**静帧看不出动效不编造**:截图提不出的类标 ❓;整段无证据时按 canonical 弃权短语收尾(见下「提取路径置信标记」)——「假设有入场动画」是编造
+6. **特效 / 动效识别(13 类逐类过,命中记技术与强度)**:背景效果 / 粒子系统 / 3D 元素 / shader 特效 / 视差滚动 / 滚动触发动画 / 滚动变形 / 文字特效 / 光标特效 / 图像特效 / 玻璃拟态·新拟态 / Canvas 绘制 / SVG 动画。识别结果写入 DESIGN.md 可选 `effects` 段:`performance_tier`(lightweight = CSS + 简单 JS;medium = Canvas 2D、SVG 动画;heavy = WebGL、Three.js、shader)+ `fallback_strategy`(reduced-motion 与低端设备的降级去向)。**与实现路线对账,不重复造词**:heavy 对应 [`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) 六路线表 R5(100-160KB),选型从 R1 停在第一条能干活的路线;Canvas / WebGL 落地过 [`../meta/performance.md`](../meta/performance.md) §6 目的性门槛与降级要求。**静帧看不出动效不编造**:截图提不出的类标 ❓;整段无证据时按 canonical 弃权短语收尾(见下「提取路径置信标记」)——「假设有入场动画」是编造
 
 分维度细提取(逐维精读,基础五步的展开,措辞自著):
 

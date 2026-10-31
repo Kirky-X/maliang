@@ -157,7 +157,7 @@ effects:
 | `fallback_strategy`  | 否   | 降级去向(静态 poster 帧 / 降为 CSS / 关闭),与 reduced-motion 静止终态纪律一致 |
 
 - 键带 decision id 溯源注释(写法同「token 溯源」),但溯源核对(五块顶层键计数)**不因本段扩面**,不新增硬门
-- `performance_tier` 与实现路线对账:heavy 对应 [`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) 六路线表 R5(100-160KB),选型从 R1 停在第一条能干活的路线;Canvas / WebGL 落地过 [`performance.md`](performance.md) §6 目的性门槛与降级要求
+- `performance_tier` 与实现路线对账:heavy 对应 [`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) 六路线表 R5(100-160KB),选型从 R1 停在第一条能干活的路线;Canvas / WebGL 落地过 [`performance.md`](performance.md) §6 目的性门槛与降级要求
 
 ---
 

@@ -24,7 +24,7 @@
 - **craft floor 全保留**：tinted neutrals（禁纯 `#fff`/`#000`）、半透明/发丝描边、带色相阴影、对比度地板——任何范围都不可谈判。
 - **现有 token 优先**。先读项目：存在 `DESIGN.md` / `tokens.css` / `:root` 块时，组件**按名消费 token**（`var(--accent)`），不发明任何字面量。往锁定了 accent 的项目里自带一个 `#4F46E5` 是缺陷，不是设计。
 - **廉价黑名单**照常适用：渐变文字、侧条纹边框、装饰性玻璃拟态、未调色中性色、对比度失败、混用圆角刻度（见 [`../meta/ai-tells.md`](../meta/ai-tells.md)）。
-- 有动效就必须 `prefers-reduced-motion` 降级；路线选型见 [`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md)（组件级动效几乎总是 R1）。
+- 有动效就必须 `prefers-reduced-motion` 降级；路线选型见 [`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md)（组件级动效几乎总是 R1）。
 
 ## §2 组件路线跳过什么（明确说出来）
 

@@ -93,7 +93,7 @@ function destroySmoothScroll() {
 - **必须**先过「适用判定」:非营销/品牌叙事站不引入;单页少量动效不引入
 - **必须**唯一引擎:Lenis 或 Locomotive **二选一**,禁双装、禁双初始化(两套 transform + 双 RAF 互相打架)
 - **必须**单一时钟:引擎 RAF 挂 `gsap.ticker`,引擎 `scroll` 事件接 `ScrollTrigger.update`;禁独立 rAF 循环
-- **必须** `prefers-reduced-motion: reduce` 时不初始化引擎——降级为原生滚动,ScrollTrigger 场景动画照常(内容不丢失,只去掉惯性);无障碍细则见 [`accessibility.md`](../meta/accessibility.md) 第 2 节,公共口径见 [ROUTING.md](ROUTING.md) §1.1
+- **必须** `prefers-reduced-motion: reduce` 时不初始化引擎——降级为原生滚动,ScrollTrigger 场景动画照常(内容不丢失,只去掉惯性);无障碍细则见 [`accessibility.md`](../meta/accessibility.md) 第 2 节,公共口径见 [INDEX.md](INDEX.md) §1.1
 - **必须**在 `window load`、`document.fonts.ready`、图片懒加载完成后、媒体查询变更后调 `ScrollTrigger.refresh()`,否则场景位置错位
 - **必须**清理:SPA 路由卸载时 `lenis.destroy()` + `ScrollTrigger.getAll().kill()` + 移除 ticker 回调
 - **必须**保留键盘与触屏滚动路径:只接管滚轮(`smoothWheel`),禁劫持 Tab 滚动/触摸原生滚动;锚点跳转经 `anchors` 选项或 `lenis.scrollTo()` 保证可达(焦点管理见 [`../meta/accessibility.md`](../meta/accessibility.md))

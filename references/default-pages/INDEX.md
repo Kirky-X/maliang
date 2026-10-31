@@ -17,7 +17,7 @@ App/Web 各 15 页的页面 slug、描述、优先级与示例链接**以平台�
 
 ## 页面 × 支撑资产映射(30 页)
 
-> 每个页面类型的三层落点:首选 [vocabulary](../vocabulary/) 模式 → [模板墙](../templates/INDEX.md) 条目 → [framework](../framework/index.md) 组件类(该列均为 framework 索引表中的组件类型 slug)。标注"缺口"的是暂无现成支撑、建议后续补充的资产。
+> 每个页面类型的三层落点:首选 [vocabulary](../vocabulary/) 模式 → [模板墙](../templates/INDEX.md) 条目 → [framework](../framework/INDEX.md) 组件类(该列均为 framework 索引表中的组件类型 slug)。标注"缺口"的是暂无现成支撑、建议后续补充的资产。
 
 ### App 端(15 页)
 
@@ -99,7 +99,7 @@ P0 不得删减,用户裁剪仅限 P1/P2。
 | -------- | -------- | ---- |
 | App 端(移动) | [app.md](./app.md) | 移动端 15 页清单 |
 | Web 后台/官网 | [web.md](./web.md) | Web 端 15 页清单 |
-| 跨端(移动+Web) | app.md + web.md | 两端清单各自适用,共享 design token 保证视觉一致(呼应 `framework/index.md` 框架选型指南的"需要同时支持移动+Web"行) |
+| 跨端(移动+Web) | app.md + web.md | 两端清单各自适用,共享 design token 保证视觉一致(呼应 `framework/INDEX.md` 框架选型指南的"需要同时支持移动+Web"行) |
 
 ---
 
@@ -112,4 +112,4 @@ P0 不得删减,用户裁剪仅限 P1/P2。
 ## 参考链接
 
 - [draw-md 子命令](../commands/draw-md.md)
-- [框架资源总览](../framework/index.md)
+- [框架资源总览](../framework/INDEX.md)

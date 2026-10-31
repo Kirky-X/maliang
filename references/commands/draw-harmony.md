@@ -3,7 +3,7 @@
 > 本文件是 `draw-harmony` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
 > 输入 = `draw-md` 产出的页面级 UI markdown(`design/ui-markdown/` 下),输出 = HarmonyOS ArkTS 框架实现代码。
 > 组件映射参考 [`framework/harmony/`](../framework/harmony/) 下的组件文档。
-> **API 基线**:HarmonyOS NEXT 6.0.0(API 20) Release;超基线 API 标 `⚠`,分 `safe to plan around`(可规划,实现附降级写法) / `unsafe to write today`(禁止直写)两级,完整约定见 [`framework/index.md`](../framework/index.md)「API 基线」节。
+> **API 基线**:HarmonyOS NEXT 6.0.0(API 20) Release;超基线 API 标 `⚠`,分 `safe to plan around`(可规划,实现附降级写法) / `unsafe to write today`(禁止直写)两级,完整约定见 [`framework/INDEX.md`](../framework/INDEX.md)「API 基线」节。
 
 ---
 

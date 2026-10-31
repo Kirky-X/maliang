@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Glassmorphism
-description: A frosted-glass UI style using translucency, backdrop blur, and subtle highlights to float content above vibrant backgrounds.
+description: 磨砂玻璃界面风格：以半透明、背景模糊与微妙高光，让内容悬浮在鲜艳背景之上。
 verified: 2026-10-24
 license: 自著
 colors:
@@ -84,124 +84,87 @@ components:
 
 ## Overview
 
-Glassmorphism floats content on translucent, frosted-glass surfaces that blur and tint
-whatever sits behind them. By combining `backdrop-filter: blur`, semi-transparent fills,
-and subtle white borders and highlights, the style creates depth through atmospheric
-layering rather than opaque cards. The result feels light, modern, and immersive — UI that
-belongs to its environment rather than sitting on top of it.
+Glassmorphism 将内容浮在半透明磨砂玻璃表面上，这些表面会模糊并染色其背后的任何东西。通过组合 `backdrop-filter: blur`、半透明填充以及微妙的白色边框与高光，这种风格以氛围式分层而非不透明卡片来营造深度。结果轻盈、现代且沉浸——界面属于它所处的环境，而不是压在环境之上。
 
-Target audience: high-end product and brand sites, system and tool applications,
-data-visualisation dashboards, mobile interfaces, and creative or art projects where
-atmosphere and a sense of future-forward polish matter more than information density. Best
-used over vibrant or gradient backgrounds where the blur effect is visible.
+目标受众：高端产品与品牌站点、系统与工具类应用、数据可视化仪表盘、移动界面，以及氛围与未来感打磨比信息密度更重要的创意或艺术项目。最适合用在鲜艳或渐变背景之上，这样模糊效果才可见。
 
 ## Colors
 
-The palette splits into **vibrant glass tints** (for backgrounds and accents) and
-**translucent whites** (for the glass surfaces themselves).
+调色板分为**鲜艳玻璃色**（用于背景与点缀）与**半透明白色**（用于玻璃表面本身）。
 
-- **primary (#7EA8FF):** Soft blue — the brand accent and default chip/active tint. Paired
-  with `on-color` (#0F172A, near-black) for labels at 7.6:1.
-- **secondary (#A78BFA):** Soft purple — secondary accent and gradient endpoint.
-- **accent-pink (#F9A8D4) / accent-yellow (#FCD34D) / accent-green (#6EE7B7):** Vibrant
-  tints for data visualisation, tags, and decorative gradients. Used as backgrounds with
-  `on-color` dark text.
-- **glass-bg (#FFFFFF26):** The core glass fill — white at 15% opacity. Every glass surface
-  (cards, inputs, buttons) uses this. Combined with `backdrop-filter: blur(20px)` it
-  produces the frosted effect.
-- **glass-border (#FFFFFF40):** A 1px white border at 25% opacity. Defines the glass edge
-  and catches light.
-- **glass-shadow (#1F2687):** The coloured drop-shadow tint behind the canonical
-  `0 8px 32px rgba(31,38,135,0.37)`. Gives glass a sense of floating above the canvas.
-- **on-glass (#0F172A):** Dark slate text on glass surfaces. Clears AA against the light
-  frosted fill (≈18:1 over white).
-- **on-color (#0F172A):** Same dark slate, used on vibrant tints where white text would
-  fail (e.g. `primary` + white = 2.4:1 ✗; `primary` + `on-color` = 7.6:1 ✓).
-- **text-muted (#64748B):** Secondary text and captions. Use only on glass over light
-  backgrounds.
-- **white (#FFFFFF):** Highlights and the inset top-edge light
-  (`inset 0 1px 0 rgba(255,255,255,0.4)`).
+- **primary (#7EA8FF)：** 柔和蓝——品牌点缀色与默认 chip/激活色调。搭配 `on-color`（#0F172A，近黑）作为标签，对比度 7.6:1。
+- **secondary (#A78BFA)：** 柔和紫——次级点缀色与渐变端点。
+- **accent-pink (#F9A8D4) / accent-yellow (#FCD34D) / accent-green (#6EE7B7)：** 鲜艳色调，用于数据可视化、标签与装饰性渐变。作为背景时搭配 `on-color` 深色文字。
+- **glass-bg (#FFFFFF26)：** 核心玻璃填充——15% 不透明度的白色。每个玻璃表面（卡片、输入框、按钮）都使用它。配合 `backdrop-filter: blur(20px)` 产生磨砂效果。
+- **glass-border (#FFFFFF40)：** 25% 不透明度的 1px 白色边框。定义玻璃边缘并捕捉光线。
+- **glass-shadow (#1F2687)：** 标准投影 `0 8px 32px rgba(31,38,135,0.37)` 背后的彩色阴影色调。赋予玻璃悬浮于画布之上的感觉。
+- **on-glass (#0F172A)：** 玻璃表面上的深石板色文字。在浅色磨砂填充上满足 AA（在白色上约 18:1）。
+- **on-color (#0F172A)：** 同样的深石板色，用于白色文字会失败的鲜艳色调（例如 `primary` + 白色 = 2.4:1 ✗；`primary` + `on-color` = 7.6:1 ✓）。
+- **text-muted (#64748B)：** 次级文字与说明文字。仅用于浅色背景之上的玻璃。
+- **white (#FFFFFF)：** 高光与内嵌顶边光（`inset 0 1px 0 rgba(255,255,255,0.4)`）。
 
 ## Typography
 
-**Inter** (or SF Pro Display) across five weights (Light 300, Regular 400, Medium 500,
-Semibold 600, Bold 700).
+**Inter**（或 SF Pro Display），覆盖五个字重（Light 300、Regular 400、Medium 500、Semibold 600、Bold 700）。
 
-- **headline-lg (32px / 600):** Hero and page titles on glass. Rendered in `on-glass`.
-- **headline-md (24px / 500):** Card titles and section headers.
-- **body-md (16px / 400):** Primary body copy at 1.5 line-height. Keep at or above 16px.
-- **body-sm (14px / 400):** Captions and helper text, in `text-muted`.
-- **label (12px / 500, 0.05em tracking):** Buttons, chips, and tab labels.
+- **headline-lg (32px / 600)：** 玻璃上的主视觉与页面标题。以 `on-glass` 渲染。
+- **headline-md (24px / 500)：** 卡片标题与区块页头。
+- **body-md (16px / 400)：** 主正文，1.5 行高。保持 16px 或以上。
+- **body-sm (14px / 400)：** 说明文字与辅助文字，使用 `text-muted`。
+- **label (12px / 500，0.05em 字距)：** 按钮、chip 与标签页标签。
 
-The type should feel light — favour Regular and Medium over Bold. Heavy weights crowd the
-airy aesthetic.
+字体应显得轻盈——优先使用 Regular 与 Medium 而非 Bold。重字重会挤占通透的美学。
 
 ## Layout
 
-A fluid grid with a 4px base. The spacing scale — `xs` (4), `sm` (8), `md` (16), `lg` (24),
-`xl` (32) — stays generous so glass panels have room to float.
+流式网格，4px 基准。间距刻度——`xs`（4）、`sm`（8）、`md`（16）、`lg`（24）、`xl`（32）——保持宽松，让玻璃面板有悬浮的空间。
 
-- Glass card padding: `lg` (24px) on desktop, `md` (16px) on mobile.
-- Gap between glass panels: `md` (16px) minimum — panels must not touch, or the blur
-  overlaps unattractively.
-- Section rhythm: `xl` (32px).
-- Breakpoint: single column below 768px; reduce the blur radius on mobile for performance.
+- 玻璃卡片内边距：桌面端 `lg`（24px），移动端 `md`（16px）。
+- 玻璃面板之间的间隙：最少 `md`（16px）——面板不能相接，否则模糊会重叠得很难看。
+- 区块节奏：`xl`（32px）。
+- 断点：768px 以下单列；移动端降低模糊半径以保证性能。
 
 ## Elevation & Depth
 
-Depth comes from **layered translucency**, not opaque shadows. A glass surface floats
-because it blurs and tints the vibrant background behind it, framed by a hairline
-`glass-border` and a soft coloured shadow using the `glass-shadow` tint.
+深度来自**分层半透明**，而不是不透明阴影。玻璃表面之所以悬浮，是因为它模糊并染色其背后的鲜艳背景，并由细线 `glass-border` 与使用 `glass-shadow` 色调的柔和彩色阴影框住。
 
-The canonical glass recipe (per source):
+标准玻璃配方（依据来源）：
 
-- Background: `rgba(255,255,255,0.15)` → `glass-bg` (#FFFFFF26)
-- Blur: `backdrop-filter: blur(20px)`
-- Border: `1px solid rgba(255,255,255,0.25)` → `glass-border` (#FFFFFF40)
-- Shadow: `0 8px 32px rgba(31,38,135,0.37)` → tinted by `glass-shadow`
-- Highlight: `inset 0 1px 0 rgba(255,255,255,0.4)` → uses `white`
+- 背景：`rgba(255,255,255,0.15)` → `glass-bg` (#FFFFFF26)
+- 模糊：`backdrop-filter: blur(20px)`
+- 边框：`1px solid rgba(255,255,255,0.25)` → `glass-border` (#FFFFFF40)
+- 阴影：`0 8px 32px rgba(31,38,135,0.37)` → 由 `glass-shadow` 着色
+- 高光：`inset 0 1px 0 rgba(255,255,255,0.4)` → 使用 `white`
 
-Layer order: vibrant/gradient page background → glass panel → text/controls. Never stack
-more than two glass layers — nested blur destroys legibility and performance.
+层级顺序：鲜艳/渐变页面背景 → 玻璃面板 → 文字/控件。绝不要堆叠超过两层玻璃——嵌套模糊会破坏可读性与性能。
 
 ## Shapes
 
-Glass surfaces favour **soft, generous radii** to complement the frosted aesthetic.
+玻璃表面偏爱**柔和、宽大的圆角**，以呼应磨砂美学。
 
-- **sm (8px):** Inputs and small controls.
-- **md (12px):** Buttons and medium cards — the default.
-- **lg (16px):** Large glass panels, modals, and hero cards.
-- **full (9999px):** Chips, avatars, and pill toggles.
+- **sm (8px)：** 输入框与小控件。
+- **md (12px)：** 按钮与中型卡片——默认值。
+- **lg (16px)：** 大玻璃面板、模态框与主视觉卡片。
+- **full (9999px)：** chip、头像与药丸形开关。
 
-Sharp corners (0px) clash with the soft, liquid feel — avoid them.
+锐角（0px）与柔和、液态的感觉冲突——避免使用。
 
 ## Components
 
-- **button-primary:** `glass-bg` fill with an `on-glass` dark label, `md` radius, `label`
-  typography. Carries a `glass-border` and the canonical shadow. The default CTA — it
-  floats above the canvas.
-- **button-secondary:** Opaque `white` fill with `on-glass` text — used when a glass button
-  would be lost against a busy background.
-- **input:** `glass-bg` fill, `on-glass` text, `sm` radius, inset highlight. Placeholder
-  uses `text-muted`. On focus the `glass-border` brightens.
-- **chip:** `primary` tinted fill with `on-color` dark text, `full` radius. Selected state
-  shifts to `secondary`.
+- **button-primary：** `glass-bg` 填充配 `on-glass` 深色标签，`md` 圆角，`label` 字型。带 `glass-border` 与标准阴影。默认 CTA——它悬浮在画布之上。
+- **button-secondary：** 不透明 `white` 填充配 `on-glass` 文字——用于玻璃按钮会在繁杂背景中消失的场合。
+- **input：** `glass-bg` 填充，`on-glass` 文字，`sm` 圆角，内嵌高光。占位符使用 `text-muted`。聚焦时 `glass-border` 变亮。
+- **chip：** `primary` 色调填充配 `on-color` 深色文字，`full` 圆角。选中态切换为 `secondary`。
 
-Icons follow the Outline style — thin strokes that match the airy, light aesthetic.
+图标采用 Outline 风格——细线条，匹配通透、轻盈的美学。
 
 ## Do's and Don'ts
 
-- **Do** place glass over vibrant or gradient backgrounds — the blur needs something to
-  blur.
-- **Don't** stack more than two glass layers — nested blur kills legibility and performance.
-- **Do** use `on-glass` (#0F172A) dark text on glass; white text fails AA on light frosted
-  fills.
-- **Don't** use white text on `primary`/`secondary` tints — it fails AA (2.4:1). Use
-  `on-color` instead.
-- **Do** include the `backdrop-filter: blur(20px)` — without it, the surface is just a
-  translucent box, not glass.
-- **Don't** use blur in performance-critical lists or on low-end mobile — fall back to
-  opaque `white` surfaces.
-- **Do** add the inset top highlight (`white` at 0.4) — it gives the glass its "lit from
-  above" feel.
-- **Don't** use 0px radii — sharp corners fight the soft aesthetic.
+- **Do** 把玻璃放在鲜艳或渐变背景之上——模糊需要有东西可模糊。
+- **Don't** 堆叠超过两层玻璃——嵌套模糊会毁掉可读性与性能。
+- **Do** 在玻璃上使用 `on-glass`（#0F172A）深色文字；白色文字在浅色磨砂填充上无法通过 AA。
+- **Don't** 在 `primary`/`secondary` 色调上使用白色文字——无法通过 AA（2.4:1）。改用 `on-color`。
+- **Do** 包含 `backdrop-filter: blur(20px)`——没有它，表面只是一个半透明盒子，不是玻璃。
+- **Don't** 在性能关键的列表或低端移动设备上使用模糊——退回到不透明的 `white` 表面。
+- **Do** 加上内嵌顶部高光（`white`，0.4）——它赋予玻璃"被上方照亮"的感觉。
+- **Don't** 使用 0px 圆角——锐角与柔和美学冲突。

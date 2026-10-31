@@ -49,7 +49,7 @@ def main(argv=None):
 
 默认 target_dir = examples/ui-markdown/。
 默认 token-file  = {target_dir}/token.md
-默认 framework-file = references/framework/index.md
+默认 framework-file = references/framework/INDEX.md
 默认 format      = text
 退出码: 见 scripts/EXIT-CODES.md 三态(0=通过,warning 不拦截 / 1=有 error / 2=没能检查)。
 依赖: Python 3 标准库(无第三方依赖)。
@@ -308,7 +308,7 @@ def parse_token_file(path):
 
 
 def parse_framework_file(path):
-    """解析 framework/index.md,提取所有组件 slug(现 56 类,以文件实测为准)。
+    """解析 framework/INDEX.md,提取所有组件 slug(现 56 类,以文件实测为准)。
 
     遍历所有 header 首列为 "组件类型" 的表格,收集 body 行首列的
     kebab-case slug。返回 set of str;文件不存在返回空 set。
@@ -519,7 +519,7 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
                                 bq_line_no,
                                 "非法组件 slug: "
                                 + slug
-                                + ",应引用 framework/index.md 组件类"
+                                + ",应引用 framework/INDEX.md 组件类"
                                 + hint,
                             )
                         )
@@ -540,7 +540,7 @@ def check_component_slugs(rel_path, lines, valid_slugs, vocab_slugs=None):
                         line_no,
                         "非法组件 slug: "
                         + slug
-                        + ",应引用 framework/index.md 组件类"
+                        + ",应引用 framework/INDEX.md 组件类"
                         + hint,
                     )
                 )
@@ -1102,7 +1102,7 @@ def _as_slug_list(value):
 def check_fm_components(rel_path, text, valid_slugs, vocab_slugs=None):
     """检查 18:frontmatter components 数组 slug 对齐(error)。
 
-    components 应为 framework/index.md 组件类 slug 清单(draw-md.md
+    components 应为 framework/INDEX.md 组件类 slug 清单(draw-md.md
     「组件类型标注规范」);此前 frontmatter 只查字段存在,自创 slug 不报。
     术语库模式 slug(如 chart-line)出现在 components 同样 error(2026-10
     归一:与检查 3 同口径),应移至 pattern 字段(两套命名各司其职)。
@@ -1122,7 +1122,7 @@ def check_fm_components(rel_path, text, valid_slugs, vocab_slugs=None):
             results.append(
                 ("ERROR", rel_path, 0,
                  "frontmatter components 自创 slug: " + slug
-                 + ",应引用 framework/index.md 组件类")
+                 + ",应引用 framework/INDEX.md 组件类")
             )
     return results
 
@@ -1414,7 +1414,7 @@ def _main_draw_md(argv):
     parser.add_argument(
         "--framework-file",
         default=None,
-        help="framework/index.md 路径(默认 references/framework/index.md)",
+        help="framework/INDEX.md 路径(默认 references/framework/INDEX.md)",
     )
     parser.add_argument(
         "--vocabulary-dir",
@@ -1924,7 +1924,7 @@ def _main_framework(argv):
 
 默认 target_dir = examples/element-plus/(draw-element 的产出目录)。
 默认 token-file = examples/ui-markdown/token.md
-默认 framework-index = references/framework/index.md(组件白名单从同目录
+默认 framework-index = references/framework/INDEX.md(组件白名单从同目录
 framework/element/ 的文档里抽取 el-* 标签与 El* 服务名)。
 
 检查项:
@@ -2239,7 +2239,7 @@ def _main_generated(argv=None):
     parser.add_argument("--token-file", default=None,
                         help="token.md 路径(默认 examples/ui-markdown/token.md)")
     parser.add_argument("--framework-index", default=None,
-                        help="framework/index.md 路径(默认 references/framework/index.md)")
+                        help="framework/INDEX.md 路径(默认 references/framework/INDEX.md)")
     parser.add_argument("--format", choices=["text", "json"], default="text",
                         help="输出格式: text(人类可读,默认) / json(stdout 仅 JSON 数组)")
     args = parser.parse_args(argv)

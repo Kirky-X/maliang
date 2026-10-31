@@ -137,7 +137,7 @@
 
 - WCAG 2.2 增量准则与韧性文本细则的展开版见 [`accessibility.md`](./accessibility.md) 第 7/8 节;触控目标分层口径(原生 44pt/48dp/44vp、Web 最低 24px/推荐 44px)与其 §5 强制项、§6 预检项、§7 target-size-minimum 一致
 - 对比度阈值与 prefers-* 强制支持的完整规范见 [`accessibility.md`](./accessibility.md),本文 color-contrast 等条目是其规则出处
-- 复用阶梯与结构性 hack 禁令见 [`framework/index.md`](../framework/index.md)
+- 复用阶梯与结构性 hack 禁令见 [`framework/INDEX.md`](../framework/INDEX.md)
 - `scripts/validate.py draw-md` 各检查项在脚本 R_* 常量行内注释标注本文 slug 回链:aria-label → aria-labels、touch-target → touch-target-44 / web-target-size-24,其余 11 项为结构/token 契约项注明"无 ux-rules 对应";新增脚本检查时先在本文登记规则条目
 - §11 浏览器原生面主题化的交付检查点在 [`preview-checklist.md`](../commands/preview-checklist.md) 5.11「原生面锁」三条(Web 项;Harmony/Flutter n/a)
 - overscroll 双层模型 / 键盘属性分派 / user-select 控件-内容二分的完整口径见 [`web-interface-guidelines.md`](./web-interface-guidelines.md)(input-type-keyboard 是其表单侧对齐条目)

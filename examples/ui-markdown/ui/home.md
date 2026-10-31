@@ -30,7 +30,7 @@ version: 1.3.0
 
 | 参数          | 值                              |
 | ------------- | ------------------------------- |
-| 组件类型      | `input` + `icon`(P0 + P1,组合:搜索输入框 + 右侧搜索图标,引用 framework/index.md) |
+| 组件类型      | `input` + `icon`(P0 + P1,组合:搜索输入框 + 右侧搜索图标,引用 framework/INDEX.md) |
 | 宽度          | match-parent − 2×`{spacing-lg}` |
 | 高度          | 44px                            |
 | 圆角          | `{radius-full}`(胶囊形)         |

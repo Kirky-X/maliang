@@ -331,7 +331,7 @@ Fraunces / Playfair Display / Cormorant / Lora / Crimson / Newsreader / Syne / S
 
 ## 12. Motion(动效签名)
 
-> 动效也有一组"模板编排"签名:不是"有没有动",而是"动得是不是默认剧本"。本节不另立标准,与三处既有口径对齐:[`dials.md`](dials.md) MOTION_INTENSITY 1-3 档禁入场动画、[`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) §1 GATE 四查、[`../commands/preview-checklist.md`](../commands/preview-checklist.md) 5.9 动画动机 7 项;时长硬值走 maliang ≤400ms 强制口径(validate.py draw-md 检查 11)。
+> 动效也有一组"模板编排"签名:不是"有没有动",而是"动得是不是默认剧本"。本节不另立标准,与三处既有口径对齐:[`dials.md`](dials.md) MOTION_INTENSITY 1-3 档禁入场动画、[`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) §1 GATE 四查、[`../commands/preview-checklist.md`](../commands/preview-checklist.md) 5.9 动画动机 7 项;时长硬值走 maliang ≤400ms 强制口径(validate.py draw-md 检查 11)。
 
 ### Tell · 每节 fade-and-slide-up 入场 + 每卡 hover 过渡
 
@@ -343,7 +343,7 @@ Fraunces / Playfair Display / Cormorant / Lora / Crimson / Newsreader / Syne / S
 
 - **症状**:Aceternity / Magic UI 式现成效果(光标跟随光斑、滚动视差卡、beam 流光边框)原样贴入
 - **为什么是 Tell**:效果出自他人签名而非本产品动效语言——与"未调主题的组件库默认"同构,只是发生在动效层
-- **替代**:动效走 [`motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) 按效果×路线选型并过 GATE 四查;参考现成库只取思路,不整件搬运。
+- **替代**:动效走 [`motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) 按效果×路线选型并过 GATE 四查;参考现成库只取思路,不整件搬运。
 
 ## 13. 跨项目收敛(系列产出防同款)
 

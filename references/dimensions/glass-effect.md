@@ -135,7 +135,7 @@
 2. **vibrancy(玻璃上的文字)**:文字直接坐在玻璃上时,提高对比、加重字重、微增字距补偿透底噪声;彩色只放玻璃之下的实底层(色块/插画),不把彩色文字直接浮在玻璃上。
 3. **dim-to-focus vs 保持流**:模态(必须处理才能继续)配 scrim 压暗 + 背景后推,聚焦注意力;非阻塞面板(toast/dock/画中画)用位移进入、**不配 scrim**,环境保持可见可操作——给非阻塞面板加 scrim 是把"通知"误做成"模态"。
 4. **滚动边缘渐隐替代硬分割线**:玻璃内容滚到边缘用 mask 渐隐(`mask-image: linear-gradient(...)` 一类)表达"下面还有",替代 1px 实色分割线——玻璃语言里,硬分割线是异物。
-5. **入场 materialize:blur + scale 同步**:玻璃入场是 blur 半径从大到设定值收缩、scale 从略小同步归位(材质"聚拢成形"),而非纯 opacity 淡入;透明度可同步微调但不是主轴。时长与缓动遵循动效规范口径(见 [`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md))。
+5. **入场 materialize:blur + scale 同步**:玻璃入场是 blur 半径从大到设定值收缩、scale 从略小同步归位(材质"聚拢成形"),而非纯 opacity 淡入;透明度可同步微调但不是主轴。时长与缓动遵循动效规范口径(见 [`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md))。
 
 ## 7. 使用场景与禁止场景
 

@@ -188,7 +188,7 @@ frontend-design-实践规范):补入两个压力实测项——设计只对理�
 - [ ] **FCP ≤ 1.8s**:首次内容绘制;首屏 JS ≤ 100KB gzip,字体不阻塞 <sub>[运行时]</sub>
 - [ ] **TBT ≤ 200ms**:总阻塞时间;主线程长任务(> 50ms)总和 ≤ 200ms <sub>[运行时]</sub>
 
-## 5.14 · 交付完备性(8 项,见 [`default-pages/index.md`](../default-pages/index.md))
+## 5.14 · 交付完备性(8 项,见 [`default-pages/INDEX.md`](../default-pages/INDEX.md))
 
 
 - [ ] 法务链接齐备(隐私政策 / 服务条款,页脚可达) <sub>[运行时]</sub>

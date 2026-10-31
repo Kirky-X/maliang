@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Neomorphism
-description: A soft, extruded UI style using dual-direction light and shadow on a monochromatic canvas for a tactile, futuristic feel.
+description: 一种柔和的挤出式 UI 风格，在单色画布上使用双向光影，带来可触的未来感。
 verified: 2026-10-24
 license: 自著
 colors:
@@ -81,125 +81,84 @@ components:
 
 ## Overview
 
-Neomorphism (Soft UI) creates interfaces that feel extruded from a single monochromatic
-surface. By applying soft, dual-direction shadows to elements that share the background
-colour, it produces a tactile, futuristic aesthetic — as if controls were pressed into or
-raised out of a soft material. The result is calm, low-contrast, quietly modern, and
-comfortable for long sessions.
+Neomorphism（Soft UI）创造仿佛从单一单色表面挤出而成的界面。通过对与背景同色的元素施加柔和的双向阴影，它产生可触的、未来感的美学——就像控件被压入或抬出某种柔软材质。结果是平静、低对比、安静现代，长时间使用也舒适。
 
-Target audience: system and tool applications, data and information dashboards,
-collaboration and productivity platforms, and lightweight consumer apps where a restful,
-low-fatigue interface is valued over high-contrast urgency.
+目标受众：系统与工具类应用、数据与信息仪表盘、协作与效率平台，以及重视安宁、低疲劳界面而非高对比紧迫感的轻量消费级应用。
 
-**A note on contrast (surfaced, not hidden):** the source palette is intentionally
-low-saturation and light. Its deepest neutral `primary` (#6B7280) reaches only 3.8:1 on the
-signature `background` (#E0E5EC) canvas — below WCAG AA. To honour the style while keeping
-text legible, body copy uses `on-surface` (#4B5563), a deeper companion grey from the same
-neutral family, which clears AA at 6:1. `primary` (#6B7280) is reserved for button fills,
-where it pairs with `on-primary` white text at 4.8:1. This trade-off follows the source's
-own caution: in low-contrast contexts, ensure legibility and obvious interaction feedback.
+**关于对比度的说明（公开而非隐藏）：** 源调色板有意低饱和、偏浅。它最深的中性色 `primary`（#6B7280）在标志性 `background`（#E0E5EC）画布上仅达到 3.8:1——低于 WCAG AA。为了在尊重风格的同时保持文字可读，正文使用 `on-surface`（#4B5563），这是来自同一中性色族的更深伴随灰，在 6:1 下通过 AA。`primary`（#6B7280）保留给按钮填充，在那里与 `on-primary` 白色文字搭配为 4.8:1。这一取舍遵循来源自身的告诫：在低对比语境中，确保可读性与明显的交互反馈。
 
 ## Colors
 
-The palette is built on one foundational canvas colour with a small set of muted accents.
+调色板建立在一个基础画布色与一小组柔和点缀色之上。
 
-- **background (#E0E5EC):** The signature light grey-blue canvas. Every surface shares this
-  colour so that shadows — not fills — define edges.
-- **surface (#E0E5EC):** Identical to `background` by design. Neomorphic elements are never
-  distinguished by fill; only by light and shadow.
-- **primary (#6B7280):** The deepest neutral from the source palette. Used as a fill for
-  primary buttons and as borders/dividers. Paired with `on-primary` (#FFFFFF) for button
-  labels at 4.8:1.
-- **on-surface (#4B5563):** Body and heading text. A deeper companion to #6B7280, chosen so
-  that text clears WCAG AA (6:1) on the light canvas. All text — headlines, body, labels —
-  uses this token.
-- **accent (#7A87BA):** Muted blue-purple for active states, selected chips, and focus
-  rings. Decorative/interactive only — not for body text (2.8:1 on canvas).
-- **accent-cyan (#7DC9FC) / accent-purple (#AC84E4):** Gradient endpoints and icon tints.
-  Used sparingly for delight (gradients Blue→Cyan, Cyan→Purple, Purple→Pink per the source).
-- **muted (#9CA3AF):** Placeholder text and disabled states. Large-text or non-critical use
-  only.
-- **on-primary (#FFFFFF):** White label text on `primary` fills.
+- **background (#E0E5EC)：** 标志性的浅灰蓝画布。每个表面都共享这个颜色，因此定义边缘的是阴影——而不是填充。
+- **surface (#E0E5EC)：** 按设计就与 `background` 完全相同。新拟态元素从不靠填充区分；只靠光与影。
+- **primary (#6B7280)：** 源调色板中最深的中性色。用作主按钮填充，也用作边框/分隔线。搭配 `on-primary`（#FFFFFF）作为按钮标签，对比度 4.8:1。
+- **on-surface (#4B5563)：** 正文与标题文字。比 #6B7280 更深的伴随色，选择它是为了让文字在浅色画布上通过 WCAG AA（6:1）。所有文字——标题、正文、标签——都使用这个 token。
+- **accent (#7A87BA)：** 柔和的蓝紫色，用于激活态、选中 chip 与焦点环。仅装饰/交互——不用于正文（画布上 2.8:1）。
+- **accent-cyan (#7DC9FC) / accent-purple (#AC84E4)：** 渐变端点与图标色调。少量用于愉悦感（按来源为蓝→青、青→紫、紫→粉的渐变）。
+- **muted (#9CA3AF)：** 占位符文字与禁用态。仅限大字号或非关键用途。
+- **on-primary (#FFFFFF)：** `primary` 填充上的白色标签文字。
 
 ## Typography
 
-**Inter** (or SF Pro Display) carries the entire system across five weights (Light 300,
-Regular 400, Medium 500, Semibold 600, Bold 700).
+**Inter**（或 SF Pro Display）承载整个系统，覆盖五个字重（Light 300、Regular 400、Medium 500、Semibold 600、Bold 700）。
 
-- **headline-lg (32px / 600):** Page titles. Rendered in `on-surface`.
-- **headline-md (24px / 500):** Section headings and card titles.
-- **body-md (16px / 400):** Primary body copy at 1.5 line-height. Never below 16px.
-- **body-sm (14px / 400):** Captions, helper text, and metadata.
-- **label (12px / 500, 0.05em tracking):** Buttons, chips, and toggles. Slightly wider
-  tracking than body to separate control labels from prose.
+- **headline-lg (32px / 600)：** 页面标题。以 `on-surface` 渲染。
+- **headline-md (24px / 500)：** 区块标题与卡片标题。
+- **body-md (16px / 400)：** 主正文，1.5 行高。绝不低于 16px。
+- **body-sm (14px / 400)：** 说明文字、辅助文字与元数据。
+- **label (12px / 500，0.05em 字距)：** 按钮、chip 与开关。字距略宽于正文，以分隔控件标签与散文。
 
-Keep weights restrained — two weights per screen is ideal. The calm aesthetic is undermined
-by heavy bold usage.
+保持字重克制——每屏两个字重最理想。沉重的粗体使用会削弱平静的美学。
 
 ## Layout
 
-A simple fluid grid with a 4px base unit. The spacing scale — `xs` (4), `sm` (8), `md` (16),
-`lg` (24), `xl` (32) — is deliberately tight because Neomorphism relies on generous canvas
-breathing room rather than dense packing.
+简单的流式网格，4px 基准单位。间距刻度——`xs`（4）、`sm`（8）、`md`（16）、`lg`（24）、`xl`（32）——刻意紧凑，因为新拟态依赖宽裕的画布呼吸空间，而不是密集堆叠。
 
-- Card padding: `md` (16px) standard, `lg` (24px) for primary panels.
-- Section gaps: `xl` (32px). Avoid larger gaps — the soft aesthetic benefits from proximity.
-- Touch targets: minimum 44×44px (use `md` spacing to maintain clearance).
-- Breakpoint: single column below 768px; maintain `md` (16px) as minimum padding at all sizes.
+- 卡片内边距：标准 `md`（16px），主面板 `lg`（24px）。
+- 区块间隙：`xl`（32px）。避免更大的间隙——柔和美学受益于邻近感。
+- 触控目标：最小 44×44px（用 `md` 间距保证余量）。
+- 断点：768px 以下单列；在所有尺寸下保持 `md`（16px）作为最小内边距。
 
 ## Elevation & Depth
 
-Depth is the defining feature of Neomorphism. Instead of drop shadows, elements use
-**dual shadows** — a light shadow top-left and a dark shadow bottom-right — to appear
-extruded from (or pressed into) the shared `surface`/`background` canvas.
+深度是新拟态的决定性特征。元素不使用投影，而是使用**双向阴影**——左上浅阴影与右下深阴影——看起来像从共享的 `surface`/`background` 画布上挤出（或被压入）。
 
-- **Raised (default):** `box-shadow: -9px -9px 16px #FFFFFF, 9px 9px 16px rgba(163,177,198,.6);` — the
-  element appears to rise from the surface. (Canonical recipe: [`references/templates/neumorphism.md`](../../../references/templates/neumorphism.md) — offset 8-10px, blur ≈ 2×offset, light top-left / dark bottom-right at 135°.)
-- **Pressed/inset:** `box-shadow: inset -9px -9px 16px #FFFFFF, inset 9px 9px 16px rgba(163,177,198,.6);`
-  — the element appears pressed in. Used for active toggles, pressed buttons, and selected
-  inputs.
-- **Flat:** No shadow — for disabled or informational surfaces.
+- **Raised（默认）：** `box-shadow: -9px -9px 16px #FFFFFF, 9px 9px 16px rgba(163,177,198,.6);` ——元素看起来从表面升起。（标准配方：[`references/templates/neumorphism.md`](../../../references/templates/neumorphism.md) ——偏移 8-10px，模糊 ≈ 2×偏移，浅色左上 / 深色右下，135°。）
+- **Pressed/inset：** `box-shadow: inset -9px -9px 16px #FFFFFF, inset 9px 9px 16px rgba(163,177,198,.6);` ——元素看起来被压入。用于激活开关、按下的按钮与选中的输入框。
+- **Flat：** 无阴影——用于禁用或信息性表面。
 
-The light source is assumed top-left, consistently. Never reverse it within the same screen.
-Shadows must stay soft — sharp shadows break the material illusion. Avoid stacking more than
-two elevation levels; the aesthetic depends on a single, calm plane.
+假设光源在左上方，并始终一致。绝不要在同一屏幕内反转。阴影必须保持柔和——锐利阴影会破坏材质错觉。避免堆叠超过两个海拔层级；美学依赖单一、平静的平面。
 
 ## Shapes
 
-Neomorphism favours **soft, generous radii** — sharp corners fight the soft shadow
-aesthetic.
+新拟态偏爱**柔和、宽大的圆角**——锐角与柔和阴影美学冲突。
 
-- **sm (8px):** Inputs and small controls — the minimum softness.
-- **md (12px):** Buttons and medium cards — the default radius for most components.
-- **lg (16px):** Large panels and containers — softer, more prominent.
-- **full (9999px):** Chips, avatars, and circular toggles.
+- **sm (8px)：** 输入框与小控件——柔和度的下限。
+- **md (12px)：** 按钮与中型卡片——大多数组件的默认圆角。
+- **lg (16px)：** 大面板与容器——更柔和、更显眼。
+- **full (9999px)：** chip、头像与圆形开关。
 
-Never use a 0px radius — it breaks the soft aesthetic. Keep radii consistent within a
-component group.
+绝不使用 0px 圆角——它会破坏柔和美学。在组件组内保持圆角一致。
 
 ## Components
 
-- **button-primary:** Filled `primary` (#6B7280) with an `on-primary` white label. The main
-  CTA. `md` radius, `label` typography. On press, transition to an inset shadow.
-- **button-raised:** `surface` background (same as canvas) with `on-surface` text, raised
-  via the dual shadow. The quintessential neomorphic button — for secondary actions.
-- **input:** `surface` background, `on-surface` text, `sm` radius, inset shadow to appear
-  recessed. Placeholder uses `muted`. On focus the inset shadow deepens slightly and an
-  `accent` ring appears.
-- **chip:** `surface` background, `on-surface` label, `full` radius. Selected state uses
-  the `accent` fill.
+- **button-primary：** `primary`（#6B7280）填充配 `on-primary` 白色标签。主 CTA。`md` 圆角，`label` 字型。按下时过渡为内嵌阴影。
+- **button-raised：** `surface` 背景（与画布相同）配 `on-surface` 文字，通过双向阴影抬升。最典型的新拟态按钮——用于次级动作。
+- **input：** `surface` 背景，`on-surface` 文字，`sm` 圆角，内嵌阴影显得凹陷。占位符使用 `muted`。聚焦时内嵌阴影略微加深，并出现 `accent` 焦点环。
+- **chip：** `surface` 背景，`on-surface` 标签，`full` 圆角。选中态使用 `accent` 填充。
 
-Icons are simple and soft — outline weight, rounded line caps, no sharp detail.
+图标简单而柔和——描边字重、圆头线帽、没有锐利细节。
 
 ## Do's and Don'ts
 
-- **Do** use dual shadows (light top-left, dark bottom-right) for every raised element.
-- **Don't** use fills to distinguish elements — only shadows and insets.
-- **Do** use `on-surface` (#4B5563) for all text to clear WCAG AA on the light canvas.
-- **Don't** use `accent` (#7A87BA) for body text — it fails AA (2.8:1).
-- **Do** keep the light source consistent (top-left) across the whole screen.
-- **Don't** stack more than two elevation levels — the aesthetic needs a single calm plane.
-- **Do** use inset shadows for pressed and active states.
-- **Don't** use 0px radii — they break the soft aesthetic.
-- **Do** fall back to a subtle `primary` border when shadows alone are insufficient for
-  legibility in low-vision contexts.
+- **Do** 每个抬升元素都使用双向阴影（左上浅、右下深）。
+- **Don't** 用填充区分元素——只用阴影与内嵌。
+- **Do** 所有文字使用 `on-surface`（#4B5563），以在浅色画布上通过 WCAG AA。
+- **Don't** 用 `accent`（#7A87BA）做正文——无法通过 AA（2.8:1）。
+- **Do** 在整个屏幕内保持光源一致（左上）。
+- **Don't** 堆叠超过两个海拔层级——美学需要单一平静的平面。
+- **Do** 按下与激活态使用内嵌阴影。
+- **Don't** 使用 0px 圆角——它们会破坏柔和美学。
+- **Do** 当仅靠阴影不足以在低视力语境中保证可读性时，退回到微妙的 `primary` 边框。

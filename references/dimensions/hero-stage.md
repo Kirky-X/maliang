@@ -59,7 +59,7 @@ z:10  内容(标题 / 正文 / CTA)
 | ---- | ---- | ---- |
 | `intensity` | `subtle` | `bold`(×1.4)/ `blown-out`(×1.8)是 **opt-in**,不是起点 |
 | `vignette` | `off` | `subtle` / `strong` |
-| `motion` | `static` | `drift` / `pulse` / `reactive`(动效还须过 [`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) GATE 四查) |
+| `motion` | `static` | `drift` / `pulse` / `reactive`(动效还须过 [`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) GATE 四查) |
 | `saturation` | 跟随色板,不额外加饱和 | `vibrant` / `neon` 需要理由 |
 
 **品牌自己官网看着大胆,渲染里 80% 仍读作 `subtle`**:hero 文案压在场上面,可读性不可谈判。
@@ -120,4 +120,4 @@ z:10  内容(标题 / 正文 / CTA)
 | Hero 布局模式命名与硬约束(HR1-HR4) | [`../vocabulary/hero.md`](../vocabulary/hero.md) | 管首屏**视觉舞台构成**(背景场 / 主体 / 关系),与布局命名正交:先选布局模式,再用本模型填舞台 |
 | 素材来源、有效像素、object/photo 诚实占位 | [`../meta/visual-assets.md`](../meta/visual-assets.md) | 引用其口径,不重复 |
 | 假产品 UI / 装饰零件禁令 | [`../meta/ai-tells.md`](../meta/ai-tells.md) §10 | 提供正向替代配方(§7) |
-| 动效强度与 GATE | [`../meta/dials.md`](../meta/dials.md)、[`../motion-skeletons/ROUTING.md`](../motion-skeletons/ROUTING.md) | 引用其档位与四查,不另立 |
+| 动效强度与 GATE | [`../meta/dials.md`](../meta/dials.md)、[`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) | 引用其档位与四查,不另立 |

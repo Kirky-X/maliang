@@ -219,7 +219,7 @@
 - **怎么修**:条件不一致时**拒绝比较并重建基线**(同条件重取两轮证据,或重选页集并注明分母变化);本轮证据不覆盖上一轮;像素差异只用于定位变化,不折算成还原度百分比。
 
 ### G35 · 生成码未校验
-- **违反什么**:交付的框架生成码(`examples/element-plus/` 等生成码目录)存在以下任一——token 占位符残留(`{token}` 未解析);颜色字面量无法回溯 token.md;组件标签 / Widget 不在 [`../framework/index.md`](../framework/index.md) 白名单;类名无定义(模板里每个 class 必须在同文件 style 或框架基础类有定义,使用即需有出处)。
+- **违反什么**:交付的框架生成码(`examples/element-plus/` 等生成码目录)存在以下任一——token 占位符残留(`{token}` 未解析);颜色字面量无法回溯 token.md;组件标签 / Widget 不在 [`../framework/INDEX.md`](../framework/INDEX.md) 白名单;类名无定义(模板里每个 class 必须在同文件 style 或框架基础类有定义,使用即需有出处)。
 - **怎么判定**:[`../../scripts/validate.py generated`](../../scripts/validate.py generated) + ci-gate.sh 新 gate(目标为生成码目录);输出摘要作判定记录。只对**生成码**生效,手写业务代码不在此门。
 - **怎么修**:补回 token 引用(先回 design-md 补 token 再引用);补类定义;非白名单标签换白名单组件。**诚实范围**:本门只证明组件**产出**合规(服务端 / 静态检查),**不证明点击行为**——交互真实性另按 G32 / G33 实测。
 

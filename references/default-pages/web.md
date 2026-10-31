@@ -82,7 +82,7 @@ Web 站点首页,承载品牌传达、核心功能入口与转化引导。
 
 编辑当前用户个人资料,含头像与基础信息维护。
 
-> 模式支撑见 [cards.md](../vocabulary/cards.md)(card-media-bg 头像区)与 [forms.md](../vocabulary/forms.md)(field-group / input-masked),组件类用 avatar/upload/form/input(见 [framework/index.md](../framework/index.md))。
+> 模式支撑见 [cards.md](../vocabulary/cards.md)(card-media-bg 头像区)与 [forms.md](../vocabulary/forms.md)(field-group / input-masked),组件类用 avatar/upload/form/input(见 [framework/INDEX.md](../framework/INDEX.md))。
 
 ## not-found
 

@@ -165,7 +165,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 ## 强制规则
 
-- **必须**实现 `prefers-reduced-motion` 降级(直接显示;无障碍细则见 [`accessibility.md`](../meta/accessibility.md) 第 2 节,公共口径见 [ROUTING.md](ROUTING.md) §1.1)
+- **必须**实现 `prefers-reduced-motion` 降级(直接显示;无障碍细则见 [`accessibility.md`](../meta/accessibility.md) 第 2 节,公共口径见 [INDEX.md](INDEX.md) §1.1)
 - **必须**用 `transform` + `opacity`,不用 `top` / `margin`
 - **必须**用 `ScrollTrigger.once: true` 或 `observer.unobserve`,避免反复触发
 - `translateY` 偏移 ≤ 30px(超过易引起眩晕,违反无障碍)
