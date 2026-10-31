@@ -291,7 +291,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 过 143 项之后、第 6 节之前,逐条过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) 的 **G01–G46**(A 溯源与 token / B 可访问性与触控 / C 视觉签名 / D 交互与状态 / E 布局与响应 / F 交付与可核验性·含安全注入面 / G 定义层成立性)。执行纪律:
 
 - **全量过,不摘要**——把门禁压缩成「主要几条」等于丢门,门禁的价值正在于覆盖了没被想到的形态
-- **有据才判**——「源码里没看到违反」必须附判定记录(命中行号清单 / 检查点结论),缺证据视为未判定;token 溯源三项由 [`scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定并留 [`../meta/token-provenance.md`](../meta/token-provenance.md) §5 的三行核对,人工仅复核脚本标 unconfirmed 的项
+- **有据才判**——「源码里没看到违反」必须附判定记录(命中行号清单 / 检查点结论),缺证据视为未判定;token 溯源三项由 [`scripts/design-md.py validate`](../../scripts/design-md.py validate) 机械判定并留 [`../meta/token-provenance.md`](../meta/token-provenance.md) §5 的三行核对,人工仅复核脚本标 unconfirmed 的项
 - **不豁免不降级**——唯一合法出路是修复;确属 ai-tells §0 的正当形态时走其显式记录要求,静默豁免 = 失败
 - **CRITICAL 一票否决**——B 组任一失败不得被任何评分补偿(见 [`../meta/rules-priority.md`](../meta/rules-priority.md) 冲突裁决规则 1 与加权评分从属声明)
 

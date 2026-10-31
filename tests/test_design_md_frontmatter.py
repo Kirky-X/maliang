@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-d2t = load("design_md_to_token_md.py")
+d2t = load("design-md.py")
 
 import unittest  # noqa: E402
 

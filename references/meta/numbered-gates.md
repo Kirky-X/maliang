@@ -24,7 +24,7 @@
 ## A 组 · 溯源与 token(设计系统自洽)
 
 > 「悬空溯源 / 孤儿 token / 空原则」三类违规名的 canonical 定义在 [`token-provenance.md`](token-provenance.md) §4(V1/V2/V3);本组 G01–G03 只收交付门禁判定,判据以彼处为准。
-> **机械判定**:V1–V3 由 [`../../scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定(四处交叉:顶层键有 id 或 no-decision → id 在 decisions 可查 → 每条原则至少被一个 token 引用 → no-decision 占比),人工仅复核脚本标 unconfirmed 的项;脚本输出摘要随判定记录留痕。
+> **机械判定**:V1–V3 由 [`../../scripts/design-md.py validate`](../../scripts/design-md.py validate) 机械判定(四处交叉:顶层键有 id 或 no-decision → id 在 decisions 可查 → 每条原则至少被一个 token 引用 → no-decision 占比),人工仅复核脚本标 unconfirmed 的项;脚本输出摘要随判定记录留痕。
 
 ### G01 · 悬空溯源
 - **违反什么**:token 注释里的决策 id 在 `decisions[]` 中查不到,或 `D-P<n>` 指向的 `## Overview` 原则不存在。
@@ -276,7 +276,7 @@
 
 ### G29 · 首屏数据无底座
 - **违反什么**:首屏 / hook 区出现数值、进度、结论条、指标卡,而该数据分句没有绑定表一行(无字段 / 无写入方 / 无冷启动台词);或呈现 `--` / 空表 / 编造演示数;或断连 / 跳过日无专属台词;或 `integration` 字段未声明 exists_today。
-- **怎么判定**:人工判定,逐个首屏数据分句对 [`data-floor.md`](data-floor.md) §2 绑定表;design-md 交付时检查 `constraints:` 块是否含绑定表与 day 1/2/7 三行台词(数据型产品)。CRITICAL 级,一票否决。**机械化子集(2026-10)**:`validate-design-md.py` 交叉 5 在文内出现绑定表时校验形态(六列无空格 / 写入方四规范值 / integration 行带 exists_today → error;day 台词标记缺失 → WARN)——表格形态归脚本,产品判型与分句归属仍归人工。
+- **怎么判定**:人工判定,逐个首屏数据分句对 [`data-floor.md`](data-floor.md) §2 绑定表;design-md 交付时检查 `constraints:` 块是否含绑定表与 day 1/2/7 三行台词(数据型产品)。CRITICAL 级,一票否决。**机械化子集(2026-10)**:`design-md.py validate` 交叉 5 在文内出现绑定表时校验形态(六列无空格 / 写入方四规范值 / integration 行带 exists_today → error;day 台词标记缺失 → WARN)——表格形态归脚本,产品判型与分句归属仍归人工。
 - **怎么修**:给字段挂写入方(优先 `system` 副作用写入,见 data-floor §4 Move 0);今天不存在的集成数字离场进 depends_on;补冷启动台词;首屏禁假演示数(与 [`../vocabulary/states.md`](../vocabulary/states.md) 的 state-empty-starter 边界按 data-floor §7 裁决)。
 
 ### G30 · 定义级死法命中

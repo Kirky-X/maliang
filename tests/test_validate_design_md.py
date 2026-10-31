@@ -14,7 +14,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-vd = load("validate-design-md.py")
+vd = load("design-md.py")
 
 GOOD_DESIGN = """---
 version: alpha
@@ -82,7 +82,7 @@ GOOD_TOKEN = """# token.md
 def run_main(argv):
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        code = vd.main(argv)
+        code = vd._main_validate(argv)
     return code, buf.getvalue()
 
 

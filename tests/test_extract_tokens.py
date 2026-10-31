@@ -14,7 +14,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-et = load("extract-tokens.py")
+et = load("design-md.py")
 
 SITE_CSS = """:root {
   --color-brand-primary: #5B7CFA;
@@ -38,7 +38,7 @@ SITE_CSS = """:root {
 def run_main(argv):
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        code = et.main(argv)
+        code = et._main_extract_tokens(argv)
     return code, buf.getvalue()
 
 

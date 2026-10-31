@@ -70,7 +70,7 @@
 ### 暗色派生脚本挂接
 
 
-design-md 暗色场景可走确定性派生:`scripts/dark-palette-derive.py`(纯标准库)从 [`color-palettes.md`](./color-palettes.md) 的亮色行出发,按固定规则派生暗色行——**品牌色保留**(不换色相)、**表面色固定 slate 系**(不从品牌色派生)、**Ring 按对暗底对比度 ≥ 3:1 自动选**(品牌色组内择优,均不达标则确定性提亮 Primary)、**已是暗色的行直接命中不重派生**;每行输出 `_mode_derivation` 溯源字段记录每列处理方式。产物仍须过第 8 节对比度校验,脚本结果不豁免校验。
+design-md 暗色场景可走确定性派生:`scripts/design-md.py derive-dark`(纯标准库)从 [`color-palettes.md`](./color-palettes.md) 的亮色行出发,按固定规则派生暗色行——**品牌色保留**(不换色相)、**表面色固定 slate 系**(不从品牌色派生)、**Ring 按对暗底对比度 ≥ 3:1 自动选**(品牌色组内择优,均不达标则确定性提亮 Primary)、**已是暗色的行直接命中不重派生**;每行输出 `_mode_derivation` 溯源字段记录每列处理方式。产物仍须过第 8 节对比度校验,脚本结果不豁免校验。
 
 ## 6. 功能色(语义固定)
 
@@ -189,7 +189,7 @@ maliang 口径(自研,外部原文无数值上限):
 
 ### 不扩充声明
 
-外部原文的配色构造顺序(查库 → 映射 → 派生)maliang 已机制化(第 3 节档位映射 + 第 5 节暗色派生脚本 `scripts/dark-palette-derive.py`),不重复扩充。
+外部原文的配色构造顺序(查库 → 映射 → 派生)maliang 已机制化(第 3 节档位映射 + 第 5 节暗色派生脚本 `scripts/design-md.py derive-dark`),不重复扩充。
 
 ## 与调色板/产物层的关系
 

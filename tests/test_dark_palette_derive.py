@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-dpd = load("dark-palette-derive.py")
+dpd = load("design-md.py")
 
 import unittest  # noqa: E402
 
@@ -125,7 +125,7 @@ class TestCli(unittest.TestCase):
         self.assertEqual(row["Background"], "#F8FAFC")
 
     def test_main_rejects_bad_arg_format(self):
-        self.assertEqual(dpd.main(["not-a-kv"]), 1)
+        self.assertEqual(dpd._main_derive_dark(["not-a-kv"]), 1)
 
     def test_main_emits_json_with_trail(self):
         import contextlib
@@ -134,7 +134,7 @@ class TestCli(unittest.TestCase):
         argv = [f"{k}={v}" for k, v in LIGHT_ROW.items()]
         buffer = io.StringIO()
         with contextlib.redirect_stdout(buffer):
-            code = dpd.main(argv)
+            code = dpd._main_derive_dark(argv)
         self.assertEqual(code, 0)
         payload = json.loads(buffer.getvalue())
         self.assertEqual(payload["_mode_derivation"]["mode"], "derived")

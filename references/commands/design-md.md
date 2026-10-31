@@ -214,7 +214,7 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
    - **按类别配额输出并披露丢弃行数**:色彩 / 字号 / 间距 / 圆角各类设配额,超出按频次裁,并在提取报告写明「丢弃 N 行」——静默丢弃 = 未判定
    - **缺值就地检索**:某个值缺失时用 grep 在已落盘文件(样式表 / token 文件)里就地查,不整读大文件
 
-   优先跑:`python3 {SKILL_DIR}/scripts/extract-tokens.py <文件...>`(标准库,选项 `--json` 机器可读 / `--strict` 严格档;退出码三态 0=无问题 / 1=有发现 / 2=没能检查,canonical 见 [`EXIT-CODES.md`](../../scripts/EXIT-CODES.md))。脚本未就绪时按上述五条手动执行,纪律不变。
+   优先跑:`python3 {SKILL_DIR}/scripts/design-md.py extract-tokens <文件...>`(标准库,选项 `--json` 机器可读 / `--strict` 严格档;退出码三态 0=无问题 / 1=有发现 / 2=没能检查,canonical 见 [`EXIT-CODES.md`](../../scripts/EXIT-CODES.md))。脚本未就绪时按上述五条手动执行,纪律不变。
 
    **确定性测色(输入附带参考图时,色彩不目测)**:目测取色漂移可达 ΔE10+,measure instead——`python3 {SKILL_DIR}/scripts/measure-colors.py <参考图>` 输出各色 hex / 覆盖率 / 角色,实测值原样入表并按 ✅ 标注;测量配置(含 k)与实测色板随产物持久化到 `measurement` / `measured_palette` 字段(定义见 [`../meta/spec-schema.md`](../meta/spec-schema.md)),后续验证环节读回**同 k 同参数**复测——参数不同结果不可比。图片格式不可测(如缺 Pillow 的 JPEG)时显式声明「未测量」,退回目测值按 ⚠️ 标注,不编实测。
 

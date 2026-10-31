@@ -145,9 +145,9 @@ V3 判定时**只数 token**,不看散文。理由写在正文但没落成值 = 
 
 溯源核对覆盖 front matter 五个块的**顶层键**:`colors` / `typography` / `rounded` / `spacing` / `components`。`typography` 内部字段(`fontSize` / `lineHeight` / …)与 `components` 内部属性属实现细节,不要求逐字段溯源,顶层键有 id 即可。
 
-### 机械判定(validate-design-md.py)
+### 机械判定(design-md.py validate)
 
-**V1–V3 由 [`../../scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定,人工仅复核脚本标 `unconfirmed` 的项**。脚本做四处交叉,缺哪一环就落在哪一类违规:
+**V1–V3 由 [`../../scripts/design-md.py validate`](../../scripts/design-md.py validate) 机械判定,人工仅复核脚本标 `unconfirmed` 的项**。脚本做四处交叉,缺哪一环就落在哪一类违规:
 
 1. 每个顶层键有 id 或 `no-decision` —— 缺 = V2(孤儿 token);
 2. 注释里的 id 在 `decisions[]` 可查 —— 查不到 = V1(悬空溯源);
@@ -160,7 +160,7 @@ V3 判定时**只数 token**,不看散文。理由写在正文但没落成值 = 
 
 ### 判定记录(缺证据 = 未判定)
 
-每次 design-md 交付、以及改过 token 的 redesign 交付,产物报告须留下三行核对结果(附 validate-design-md.py 输出摘要),格式固定:
+每次 design-md 交付、以及改过 token 的 redesign 交付,产物报告须留下三行核对结果(附 design-md.py validate 输出摘要),格式固定:
 
 ```
 溯源核对(YYYY-MM-DD):

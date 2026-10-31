@@ -183,7 +183,7 @@ fi
 # 8. A1 侧无浏览器脚本:交付即接入(目标以各自 --help 为准)
 #    advisory 原因与清账方式见头部「advisory 登记」;清账后改回 strict。
 gate_if_script scripts/validate-design-md.py "validate-design-md(DESIGN.md 溯源交叉检查)" \
-  python3 scripts/validate-design-md.py examples/design-system/DESIGN.md
+  python3 scripts/design-md.py validate examples/design-system/DESIGN.md
 gate_if_script scripts/validate-generated.py "validate-generated(生成码机械校验)" \
   python3 scripts/validate-generated.py examples/element-plus/
 
