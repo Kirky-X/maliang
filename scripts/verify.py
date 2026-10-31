@@ -17,7 +17,7 @@ contrast_ratio_hex_pair)。依赖: Python 3 标准库;states/interactive 需浏�
 """
 import sys
 
-_SUBCOMMANDS = ("states", "interactive", "color-fidelity", "assets",
+_SUBCOMMANDS = ("capture", "states", "interactive", "color-fidelity", "assets",
                 "measure-colors", "palette-solver")
 
 
@@ -27,6 +27,7 @@ def main(argv=None):
         print("usage: verify.py {" + "|".join(_SUBCOMMANDS) + "} [args...]")
         return 2
     dispatch = {
+        "capture": _main_capture,
         "states": _main_states,
         "interactive": _main_interactive,
         "color-fidelity": _main_color_fidelity,
@@ -72,6 +73,7 @@ import argparse
 import base64
 import json
 import os
+import pathlib
 import re
 import shutil
 import socket
@@ -640,6 +642,80 @@ def collect_html_files(target):
 
 def _fmt_rgb(rgb):
     return "rgb(%d,%d,%d)" % (rgb[0], rgb[1], rgb[2])
+
+
+def _to_browse_url(target):
+    """目标转可导航 URL:http(s) 原样;本地路径转 file URI;不存在返回 None。"""
+    if re.match(r"^https?://", target):
+        return target
+    abs_path = os.path.abspath(target)
+    if not os.path.isfile(abs_path):
+        return None
+    return pathlib.Path(abs_path).as_uri()
+
+
+def _main_capture(argv=None):
+    parser = argparse.ArgumentParser(
+        description="对 URL 或本地 HTML 真浏览器截图入库(show, don't describe 的工具化;"
+                    "退出码见 scripts/EXIT-CODES.md)"
+    )
+    parser.add_argument("target", help="http(s) URL 或本地 HTML 文件路径")
+    parser.add_argument("--out", default=None,
+                        help="输出 PNG 路径(默认 capture_<slug>.png,落当前目录)")
+    parser.add_argument("--viewport", type=parse_viewport, default=(1280, 800),
+                        help="视口,形如 1280x800(默认 1280x800)")
+    parser.add_argument("--wait-ms", type=int, default=800,
+                        help="readyState complete 后的稳定等待毫秒(默认 800)")
+    parser.add_argument("--browser", default=None,
+                        help="浏览器可执行文件路径(默认取 MALIANG_BROWSER 或 PATH 里的 Chrome/Chromium)")
+    args = parser.parse_args(argv)
+
+    url = _to_browse_url(args.target)
+    if not url:
+        print("[ERROR] 目标不是 URL 且本地文件不存在: " + args.target)
+        print("没能截图,不得记为已截图(见 scripts/EXIT-CODES.md)。")
+        return 2
+    slug = re.sub(r"[^a-z0-9-]+", "-", re.sub(r"^https?://", "",
+                  args.target).rstrip("/").replace("\\", "/").split("/")[-1]
+                  or "capture").strip("-") or "capture"
+    out_path = os.path.abspath(args.out or ("capture_%s.png" % slug))
+
+    binary = find_browser(args.browser)
+    if not binary:
+        print("UNMEASURED: 没找到浏览器(尝试过 --browser / MALIANG_BROWSER / PATH 里的 "
+              + "/".join(BROWSER_CANDIDATES) + ");截图必须在真浏览器里完成")
+        return 2
+    proc = profile_dir = session = None
+    try:
+        try:
+            proc, profile_dir, port = launch_browser(binary)
+        except CDPError as exc:
+            print("UNMEASURED: " + str(exc))
+            return 2
+        try:
+            session = connect_session(port)
+            session.call("Page.enable", timeout=10.0)
+            w, h = args.viewport
+            session.call("Emulation.setDeviceMetricsOverride", {
+                "width": w, "height": h, "deviceScaleFactor": 2,
+                "mobile": False}, timeout=10.0)
+            session.navigate(url, timeout=30.0)
+            time.sleep(max(0, args.wait_ms) / 1000.0)
+            shot = session.call("Page.captureScreenshot", {"format": "png"}, timeout=30.0)
+        except (CDPError, OSError, ValueError) as exc:
+            print("UNMEASURED: 截图失败: %s" % exc)
+            return 2
+        with open(out_path, "wb") as fh:
+            fh.write(base64.b64decode(shot["data"]))
+        print("已截图: " + out_path + "(%d bytes, viewport %dx%d)" % (
+            os.path.getsize(out_path), w, h))
+        return 0
+    finally:
+        stop_browser(proc, profile_dir)
+        try:
+            session.close()
+        except Exception:
+            pass
 
 
 def _main_states(argv=None):
