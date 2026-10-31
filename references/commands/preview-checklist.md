@@ -9,7 +9,7 @@
 >
 > **脚本覆盖**:51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理、5.6 孤儿类选择器与未定义 var);
 > 3 项由本批门禁脚本覆盖(5.0 参考图 ΔE 保真 → `verify.py color-fidelity`、5.14 资产位在场 → `verify.py assets`、
-> 5.1 句型级反模板 → `check-copy.py`);其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
+> 5.1 句型级反模板 → `audit.py copy`);其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
 > 可由页面内探针([`scripts/preview-lint.js`](../../scripts/preview-lint.js),注入预览临时副本、只读取证)
 > 实测取回的条目标 **[运行时·探针]**(按 [`preview.md`](./preview.md)「运行时实测探针」节三档处置判定);
 > 未标记项按分区语义与 5.13 的 MANUAL/脚本能力归属判断。
@@ -45,7 +45,7 @@ frontend-design-实践规范):补入两个压力实测项——设计只对理�
 - [ ] 非默认 Lucide `Rocket/Zap/Shield` 三件套
 - [ ] 无 `source.unsplash.com/random` 占位
 - [ ] 字体非走 Google Fonts CDN 阻塞首屏
-- [ ] **句型级反模板**:跑 `python3 scripts/check-copy.py <产物文件>`,无 10 式模板句命中;英文 em-dash 插入语滥用判 HIGH(中文全角破折号「——」豁免,与 ai-tells §6 一致);headline 经 mechanism / outcome / tension 三角度候选淘汰产出,非首念模板句直出 <sub>[脚本 check-copy]</sub>
+- [ ] **句型级反模板**:跑 `python3 scripts/audit.py copy <产物文件>`,无 10 式模板句命中;英文 em-dash 插入语滥用判 HIGH(中文全角破折号「——」豁免,与 ai-tells §6 一致);headline 经 mechanism / outcome / tension 三角度候选淘汰产出,非首念模板句直出 <sub>[脚本 check-copy]</sub>
 
 ## 5.2 · Performance(10 项,见 [`performance.md`](../meta/performance.md))
 - [ ] 所有图片含 `width` + `height` 或 `aspect-ratio`

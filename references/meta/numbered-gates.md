@@ -98,7 +98,7 @@
 
 ### G12 · 渐变文字 / 紫蓝粉大面积渐变
 - **违反什么**:`background-clip: text` 渐变标题;紫→蓝 / 青→洋红渐变大面积铺底。
-- **怎么判定**:`python3 scripts/detect-tells.py <文件...>` 扫描 + 人工复核豁免语义。对应 ai-tells §1。
+- **怎么判定**:`python3 scripts/audit.py tells <文件...>` 扫描 + 人工复核豁免语义。对应 ai-tells §1。
 - **怎么修**:单色高字重 + 一个强调色块;必须用渐变时限制在同一品牌色相内两阶梯度。
 
 ### G13 · 纯黑纯白基色
@@ -250,12 +250,12 @@
 
 ### G41 · stamp lies(盖章与实物不符)
 - **违反什么**:产物的设计归属声明与其描述系统、与实物对不上,按命中形态定级——①构图章写 Bento 实际居中单列等「章说谎」(**CRITICAL**,章必须反映已交付物);②DESIGN.md 在场时页面 token / 字体 / accent 漂移出声明系统(theme drift,**CRITICAL**——系统管理项目里逐页自选主题即 slop);③页面落在 DESIGN.md 声明的构图 family 之外(HIGH);④系统管理项目的页面完全缺归属声明缺 stamp(HIGH);⑤无 DESIGN.md 的项目与前次产出共享宏观结构 / 主题(MEDIUM,variety drift)。
-- **怎么判定**:人工对账 + `python3 scripts/check-structure-history.py`(章与构图家族核验,读 `.maliang/build-log.json`);DESIGN.md 在场时逐页对其 colors / typography / family 声明核;盖章核验 = 章名与页面实际结构逐项比对,不以章文为准。
+- **怎么判定**:人工对账 + `python3 scripts/audit.py structure-history`(章与构图家族核验,读 `.maliang/build-log.json`);DESIGN.md 在场时逐页对其 colors / typography / family 声明核;盖章核验 = 章名与页面实际结构逐项比对,不以章文为准。
 - **怎么修**:章与实物不符 → 改章或改页面,二者取实,禁止留说谎的章;theme drift → 拉回 DESIGN.md token;family 外 → 换 family 内构图或回 design-md 扩 family;缺 stamp → 补归属声明;variety drift → 换构图类并过 G42。
 
 ### G42 · 轮换违例(连续重复 / 热轴)
 - **违反什么**:跨次构建的多样性机械指标失守——同一变化轴取相同值**连续两次**且未换 knob 未声明(immediate repeat);或变化轴取值聚合中任一轴占比 > 0.6(hot axis——「当下正在成为热默认」)而未处置。复用的唯一合法形态:换了至少一个 variation knob 并在盖章 / build-log 声明。
-- **怎么判定**:`python3 scripts/check-structure-history.py` 两查(立即重复 / 热轴),读 `.maliang/build-log.json`;轴集与 knob 词表以 [`../templates/variation-engine.md`](../templates/variation-engine.md) 为准;build-log 缺失 = UNMEASURED,不得记通过(§0 第 6 条)。
+- **怎么判定**:`python3 scripts/audit.py structure-history` 两查(立即重复 / 热轴),读 `.maliang/build-log.json`;轴集与 knob 词表以 [`../templates/variation-engine.md`](../templates/variation-engine.md) 为准;build-log 缺失 = UNMEASURED,不得记通过(§0 第 6 条)。
 - **怎么修**:换轴或换 knob 并声明后再交付;热轴时换冷轴取值或在交付说明写出「此时此地为何复用正确」的显式理由——variety 不能靠嘴上请求(抽签机制见 variation-engine)。
 
 ### G43 · 构图类声明未兑现

@@ -161,7 +161,7 @@ fi
 
 # 6. 公开声明对账(无浏览器;计数唯一来源 + 必现短语 + 禁用语表)
 gate "check-claims(公开声明对账)" \
-  python3 scripts/check-claims.py .
+  python3 scripts/audit.py claims .
 
 # 6b. skill_lint 工程基线体检(SKILL.md/frontmatter/资产 JSON/引用路径/lint-checks 规则;
 #     兄弟仓根不可定位时其 sibling 检查显性 WARN 跳过,退出码不受 WARN 影响)
@@ -175,7 +175,7 @@ gate "stage-audit --list(段审计表冒烟)" \
 # 7. 取证齐套(本轮真的取过证时才跑;无 report.json = 本轮无取证,不是通过也不是失败)
 if find examples -name report.json -print -quit 2>/dev/null | grep -q .; then
   gate "evidence-check(取证齐套)" \
-    python3 scripts/evidence-check.py examples/
+    python3 scripts/audit.py evidence examples/
 else
   skip_note "evidence-check" "examples/ 下没有 report.json(本轮未取证)"
 fi
@@ -205,14 +205,14 @@ echo "    无浏览器时两脚本自报 UNMEASURED / 退出码 2 —— 未测�
 #     对 tests/fixtures 的已知 PASS 样例跑一遍:退出码非 0 即脚本身上有回归。
 #     真实产物上的运行位置在 preview.md 第 4 节与 numbered-gates.md(门文档)。
 gate_if_script scripts/check-structure-history.py "check-structure-history(G41/G42 冒烟)" \
-  python3 scripts/check-structure-history.py \
+  python3 scripts/audit.py structure-history \
     --current tests/fixtures/build-log/current.json \
     --log tests/fixtures/build-log/log.json \
     --stamp tests/fixtures/build-log/stamp.css
 gate_if_script scripts/check-copy.py "check-copy(句型扫描冒烟)" \
   python3 scripts/check-copy.py tests/fixtures/copy/clean.html
 gate_if_script scripts/detect-tells.py "detect-tells(AI 味扫描冒烟)" \
-  python3 scripts/detect-tells.py tests/fixtures/detect_tells/clean.html
+  python3 scripts/audit.py tells tests/fixtures/detect_tells/clean.html
 gate_if_script scripts/verify-color-fidelity.py "verify-color-fidelity(G39 冒烟)" \
   python3 scripts/verify.py color-fidelity tests/fixtures/color/impl.png \
     --reference tests/fixtures/color/ref.png

@@ -15,7 +15,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-dt = load("detect-tells.py")
+dt = load("audit.py")
 
 # 字体已声明加载(@font-face),只留「display 用了反射字体」这一个信号——
 # 无 @font-face 时 undeclared-font 告警(2026-10-25 批三)会叠加命中
@@ -58,7 +58,7 @@ class TestWarningChannelCli(unittest.TestCase):
                 fh.write(content)
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = dt.main([path] + (argv_extra or []))
+                code = dt._main_tells([path] + (argv_extra or []))
             return code, buf.getvalue()
 
     def test_warning_does_not_change_exit_code(self):
@@ -84,4 +84,4 @@ class TestWarningChannelCli(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_tells()

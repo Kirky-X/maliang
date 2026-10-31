@@ -13,7 +13,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load, write  # noqa: E402
 
-dt = load("detect-tells.py")
+dt = load("audit.py")
 
 
 def findings_rules(findings):
@@ -208,13 +208,13 @@ class TestCli(unittest.TestCase):
     def test_hit_file_exits_1(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = self._write(tmp, "bad.html", '<h1 class="bg-clip-text text-transparent">Hi</h1>')
-            exit_code = dt.main([path])
+            exit_code = dt._main_tells([path])
             self.assertEqual(exit_code, 1)
 
     def test_clean_file_exits_0(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = self._write(tmp, "good.html", "<p>干净内容,无 tell。</p>")
-            exit_code = dt.main([path])
+            exit_code = dt._main_tells([path])
             self.assertEqual(exit_code, 0)
 
     def test_json_output_shape(self):
@@ -224,7 +224,7 @@ class TestCli(unittest.TestCase):
             import io
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                exit_code = dt.main([path, "--format", "json"])
+                exit_code = dt._main_tells([path, "--format", "json"])
             self.assertEqual(exit_code, 1)
             payload = json.loads(buf.getvalue())
             self.assertEqual(payload["files_scanned"], 1)
@@ -244,7 +244,7 @@ class TestCli(unittest.TestCase):
             import io
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                exit_code = dt.main([tmp])
+                exit_code = dt._main_tells([tmp])
             self.assertEqual(exit_code, 1)
             self.assertIn("page.html", buf.getvalue())
             self.assertNotIn("notes.txt", buf.getvalue())
@@ -256,10 +256,10 @@ class TestCli(unittest.TestCase):
             import io
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                exit_code = dt.main([missing])
+                exit_code = dt._main_tells([missing])
             self.assertEqual(exit_code, 2)
             self.assertIn("路径不存在", err.getvalue())
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_tells()

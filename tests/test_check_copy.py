@@ -10,7 +10,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load, write  # noqa: E402
 
-cc = load("check-copy.py")
+cc = load("audit.py")
 
 FIXTURES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "copy")
 
@@ -72,7 +72,7 @@ class TestCli(unittest.TestCase):
     def test_fixture_clean_passes(self):
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = cc.main([os.path.join(FIXTURES, "clean.html")])
+            code = cc._main_copy([os.path.join(FIXTURES, "clean.html")])
         self.assertEqual(code, 0, buf.getvalue())
 
     def test_hit_file_exits_1(self):
@@ -80,30 +80,30 @@ class TestCli(unittest.TestCase):
             path = self._write(tmp, "bad.html", "<h1>Where design meets code</h1>")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = cc.main([path])
+                code = cc._main_copy([path])
             self.assertEqual(code, 1)
             self.assertIn("copy-template/where-x-meets-y", buf.getvalue())
 
     def test_headline_flag_mode(self):
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = cc.main(["--headline", "Invoicing made easy"])
+            code = cc._main_copy(["--headline", "Invoicing made easy"])
         self.assertEqual(code, 1)
         self.assertIn("noun-made-adj", buf.getvalue())
 
     def test_no_target_exits_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = cc.main([])
+            code = cc._main_copy([])
         self.assertEqual(code, 2)
         self.assertIn("没能检查", err.getvalue())
 
     def test_missing_path_exits_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = cc.main([os.path.join("no", "such", "dir")])
+            code = cc._main_copy([os.path.join("no", "such", "dir")])
         self.assertEqual(code, 2)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_copy()

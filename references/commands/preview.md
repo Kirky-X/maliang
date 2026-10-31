@@ -144,7 +144,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 
 **资产在场门(G40,HIGH)**:生成后执行 `python3 scripts/verify.py assets <preview.html>`:逐资产位枚举(数出应有图槽 / logo 位)→ 逐一验证渲染的是**声明的真实资产**(URL / logoAssetKey 匹配)→ 显式拒绝灰 div / emoji / 首字母 / 纯文字 / 自造 SVG 五类顶替物 → 失败做同产物最小确定性修复 → 复查;仍失败**如实上报,不许宣称完成**。诚实范围:结构化 HTML 验证,不冒充视觉 QA。判据 canonical 见 G40。
 
-**AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/detect-tells.py <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集,)。命中非豁免 tell = 硬性失败;豁免沿用 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的「三豁免 + tell-exempt 标注」机制。扫描结果与人工自查(第 6 节)互为通道,合并时按下方「双通道不变式」标注。文案**句型层**由 `python3 {SKILL_DIR}/scripts/check-copy.py <产物文件...>` 承接(10 式模板句正则;英文 em-dash 插入语滥用判 HIGH,中文全角破折号「——」豁免,与 ai-tells §6 口径一致),清单挂 5.1 句型级反模板项。
+**AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/audit.py tells <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集,)。命中非豁免 tell = 硬性失败;豁免沿用 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的「三豁免 + tell-exempt 标注」机制。扫描结果与人工自查(第 6 节)互为通道,合并时按下方「双通道不变式」标注。文案**句型层**由 `python3 {SKILL_DIR}/scripts/audit.py copy <产物文件...>` 承接(10 式模板句正则;英文 em-dash 插入语滥用判 HIGH,中文全角破折号「——」豁免,与 ai-tells §6 口径一致),清单挂 5.1 句型级反模板项。
 
 **aria-label 在 HTML 的映射规则:**
 - button → `<el-button aria-label="语义描述">`
@@ -200,7 +200,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 ### 取证契约(截图纪律)
 
 
-**用途分流**:「看一眼」只截当前这一屏(一批改动攒完再截,页面没变不重复截);「取证」一次取齐——状态图 / 2x 图 / 并排图 / 遮字图 / 动效探测 / 录屏六类,**只在送评审前与交付前**做,由 [`scripts/evidence-check.py`](../../scripts/evidence-check.py) 按 report.json 校验齐套:缺项逐条列清单并把相关结论推 `unverified`。取证记录按元素结构存 `{file, meta, animationWaitMs, issues, lint}`。
+**用途分流**:「看一眼」只截当前这一屏(一批改动攒完再截,页面没变不重复截);「取证」一次取齐——状态图 / 2x 图 / 并排图 / 遮字图 / 动效探测 / 录屏六类,**只在送评审前与交付前**做,由 [`scripts/audit.py evidence`](../../scripts/audit.py evidence) 按 report.json 校验齐套:缺项逐条列清单并把相关结论推 `unverified`。取证记录按元素结构存 `{file, meta, animationWaitMs, issues, lint}`。
 
 - **每轮只重取受影响的证据**:没动过的状态与动效沿用上一轮文件,交接时注明哪些是沿用的;拿不准是否受影响(如改了共享样式)就重取那一项;
 - **静止终态以截图为准**:汇总提示录屏与截图不一致时,以终态截图为准,单独重录那一段核对过渡;**空 WebGL 截图不当证据**;

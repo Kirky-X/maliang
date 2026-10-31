@@ -16,7 +16,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-dt = load("detect-tells.py")
+dt = load("audit.py")
 
 FIXTURES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "detect_tells")
 
@@ -142,7 +142,7 @@ class TestLineRules(unittest.TestCase):
                 fh.write("<div><span>01 · About</span></div>")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = dt.main([path])
+                code = dt._main_tells([path])
             self.assertEqual(code, 0)  # 告警档不拦截
             self.assertIn("numbered-eyebrow", buf.getvalue())
 
@@ -186,9 +186,9 @@ class TestFixturePairing(unittest.TestCase):
         slop = os.path.join(FIXTURES, "slop.html")
         clean = os.path.join(FIXTURES, "clean.html")
         with contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(dt.main([slop]), 1)
-            self.assertEqual(dt.main([clean]), 0)
+            self.assertEqual(dt._main_tells([slop]), 1)
+            self.assertEqual(dt._main_tells([clean]), 0)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_tells()

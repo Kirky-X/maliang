@@ -16,7 +16,7 @@ from pathlib import Path
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load, write  # noqa: E402
 
-ec = load("evidence-check.py")
+ec = load("audit.py")
 
 
 
@@ -65,7 +65,7 @@ class TestEvidenceCheck(unittest.TestCase):
         # 不应报: 齐套样例通过(exit 0)
         self._complete_report()
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = ec.main([str(self.root)])
+            code = ec._main_evidence([str(self.root)])
         self.assertEqual(code, 0)
         self.assertIn("齐套", out.getvalue())
 
@@ -77,7 +77,7 @@ class TestEvidenceCheck(unittest.TestCase):
         del report["pages"][0]["recording"]
         write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = ec.main([str(path)])
+            code = ec._main_evidence([str(path)])
         self.assertEqual(code, 1)
         text = out.getvalue()
         self.assertIn("遮字图", text)
@@ -89,7 +89,7 @@ class TestEvidenceCheck(unittest.TestCase):
         path = self._complete_report()
         (self.shots / "home-idle@2x.png").write_text("", encoding="utf-8")
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = ec.main([str(path)])
+            code = ec._main_evidence([str(path)])
         self.assertEqual(code, 1)
         self.assertIn("文件为空", out.getvalue())
 
@@ -100,14 +100,14 @@ class TestEvidenceCheck(unittest.TestCase):
         report["pages"][0]["states"][0]["shot2x"] = "shots/home-idle.png"
         write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = ec.main([str(path)])
+            code = ec._main_evidence([str(path)])
         self.assertEqual(code, 1)
         self.assertIn("复用", out.getvalue())
 
     def test_no_report_exit_2(self):
         # 验收: 找不到 report.json → 没能检查 exit 2
         with contextlib.redirect_stderr(io.StringIO()) as err:
-            code = ec.main([str(self.root)])
+            code = ec._main_evidence([str(self.root)])
         self.assertEqual(code, 2)
         self.assertIn("未测量", err.getvalue())
 
@@ -116,7 +116,7 @@ class TestEvidenceCheck(unittest.TestCase):
         path = self.root / "report.json"
         write(path, "{not json")
         with contextlib.redirect_stderr(io.StringIO()), contextlib.redirect_stdout(io.StringIO()):
-            code = ec.main([str(path)])
+            code = ec._main_evidence([str(path)])
         self.assertEqual(code, 1)
 
     def test_single_state_page_no_sheet_is_note(self):
@@ -137,7 +137,7 @@ class TestEvidenceCheck(unittest.TestCase):
         path = self.root / "report.json"
         write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = ec.main([str(path)])
+            code = ec._main_evidence([str(path)])
         self.assertEqual(code, 0)
         self.assertIn("n/a", out.getvalue())
 
@@ -149,10 +149,10 @@ class TestEvidenceCheck(unittest.TestCase):
         report["pages"][0]["states"][1]["error"] = "SCREENSHOT_TIMEOUT"
         write(path, json.dumps(report, ensure_ascii=False))
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = ec.main([str(path)])
+            code = ec._main_evidence([str(path)])
         self.assertEqual(code, 1)
         self.assertIn("SCREENSHOT_TIMEOUT", out.getvalue())
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_evidence()

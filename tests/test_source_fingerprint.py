@@ -13,7 +13,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-sf = load("source-fingerprint.py")
+sf = load("audit.py")
 
 HAS_GIT = shutil.which("git") is not None
 
@@ -35,7 +35,7 @@ class TestCreate(unittest.TestCase):
             out = os.path.join(tmp, "baseline.json")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = sf.main(["create", root, "--output", out])
+                code = sf._main_fingerprint(["create", root, "--output", out])
             self.assertEqual(code, 0)
             with open(out, encoding="utf-8") as fh:
                 data = json.load(fh)
@@ -52,7 +52,7 @@ class TestCreate(unittest.TestCase):
                     fh.write("secret")
             out = os.path.join(tmp, "baseline.json")
             with contextlib.redirect_stdout(io.StringIO()):
-                sf.main(["create", root, "--output", out])
+                sf._main_fingerprint(["create", root, "--output", out])
             with open(out, encoding="utf-8") as fh:
                 data = json.load(fh)
             self.assertNotIn(".env", data["files"])
@@ -62,7 +62,7 @@ class TestCreate(unittest.TestCase):
     def test_missing_repo_exit_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = sf.main(["create", os.path.join("no", "such")])
+            code = sf._main_fingerprint(["create", os.path.join("no", "such")])
         self.assertEqual(code, 2)
 
 
@@ -70,7 +70,7 @@ class TestCheck(unittest.TestCase):
     def _baseline(self, tmp, root):
         out = os.path.join(tmp, "baseline.json")
         with contextlib.redirect_stdout(io.StringIO()):
-            sf.main(["create", root, "--output", out])
+            sf._main_fingerprint(["create", root, "--output", out])
         return out
 
     def test_unchanged_exit_0(self):
@@ -79,7 +79,7 @@ class TestCheck(unittest.TestCase):
             baseline = self._baseline(tmp, root)
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = sf.main(["check", root, "--baseline", baseline])
+                code = sf._main_fingerprint(["check", root, "--baseline", baseline])
             self.assertEqual(code, 0)
             self.assertIn("指纹一致", buf.getvalue())
 
@@ -91,7 +91,7 @@ class TestCheck(unittest.TestCase):
                 fh.write("export const b = 2;\n")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = sf.main(["check", root, "--baseline", baseline])
+                code = sf._main_fingerprint(["check", root, "--baseline", baseline])
             self.assertEqual(code, 1)
             self.assertIn("changed: src/a.ts", buf.getvalue())
             self.assertIn("不得以变更行数或整文件哈希推断重要性", buf.getvalue())
@@ -105,7 +105,7 @@ class TestCheck(unittest.TestCase):
                 fh.write("x\n")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = sf.main(["check", root, "--baseline", baseline])
+                code = sf._main_fingerprint(["check", root, "--baseline", baseline])
             self.assertEqual(code, 1)
             self.assertIn("added:   src/c.md", buf.getvalue())
             self.assertIn("removed: src/b.css", buf.getvalue())
@@ -121,7 +121,7 @@ class TestCheck(unittest.TestCase):
                 json.dump(data, fh)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = sf.main(["check", root, "--baseline", baseline])
+                code = sf._main_fingerprint(["check", root, "--baseline", baseline])
             self.assertEqual(code, 2)
             self.assertIn("UNTRUSTED", err.getvalue())
 
@@ -136,7 +136,7 @@ class TestCheck(unittest.TestCase):
                 json.dump(data, fh)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = sf.main(["check", root, "--baseline", baseline])
+                code = sf._main_fingerprint(["check", root, "--baseline", baseline])
             self.assertEqual(code, 2)
             self.assertIn("涉密", err.getvalue())
 
@@ -151,7 +151,7 @@ class TestCheck(unittest.TestCase):
                 json.dump(data, fh)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = sf.main(["check", root, "--baseline", baseline])
+                code = sf._main_fingerprint(["check", root, "--baseline", baseline])
             self.assertEqual(code, 2)
 
 
@@ -161,10 +161,10 @@ class TestDiff(unittest.TestCase):
             root = _repo(tmp)
             baseline = os.path.join(tmp, "b.json")
             with contextlib.redirect_stdout(io.StringIO()):
-                sf.main(["create", root, "--output", baseline])
+                sf._main_fingerprint(["create", root, "--output", baseline])
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = sf.main(["diff", root, "--baseline", baseline, "--path", "../x.ts"])
+                code = sf._main_fingerprint(["diff", root, "--baseline", baseline, "--path", "../x.ts"])
             self.assertEqual(code, 2)
 
     def test_unchanged_file_short_circuits_without_git(self):
@@ -173,10 +173,10 @@ class TestDiff(unittest.TestCase):
             root = _repo(tmp)
             baseline = os.path.join(tmp, "b.json")
             with contextlib.redirect_stdout(io.StringIO()):
-                sf.main(["create", root, "--output", baseline])
+                sf._main_fingerprint(["create", root, "--output", baseline])
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = sf.main(["diff", root, "--baseline", baseline, "--path", "src/a.ts"])
+                code = sf._main_fingerprint(["diff", root, "--baseline", baseline, "--path", "src/a.ts"])
             self.assertEqual(code, 0)
             self.assertIn("与基线一致", buf.getvalue())
 
@@ -190,12 +190,12 @@ class TestDiff(unittest.TestCase):
                             "commit", "-qm", "init"], check=True)
             baseline = os.path.join(tmp, "b.json")
             with contextlib.redirect_stdout(io.StringIO()):
-                sf.main(["create", root, "--output", baseline])
+                sf._main_fingerprint(["create", root, "--output", baseline])
             with open(os.path.join(root, "src", "a.ts"), "a") as fh:
                 fh.write("export const b = 2;\n")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = sf.main(["diff", root, "--baseline", baseline, "--path", "src/a.ts"])
+                code = sf._main_fingerprint(["diff", root, "--baseline", baseline, "--path", "src/a.ts"])
             self.assertEqual(code, 0)
             self.assertIn("diff --git", buf.getvalue())
             self.assertIn("export const b = 2;", buf.getvalue())
@@ -206,15 +206,15 @@ class TestDiff(unittest.TestCase):
             root = _repo(tmp)
             baseline = os.path.join(tmp, "b.json")
             with contextlib.redirect_stdout(io.StringIO()):
-                sf.main(["create", root, "--output", baseline])
+                sf._main_fingerprint(["create", root, "--output", baseline])
             with open(os.path.join(root, "src", "a.ts"), "a") as fh:
                 fh.write("export const b = 2;\n")
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = sf.main(["diff", root, "--baseline", baseline, "--path", "src/a.ts"])
+                code = sf._main_fingerprint(["diff", root, "--baseline", baseline, "--path", "src/a.ts"])
             self.assertEqual(code, 2)
             self.assertIn("delta 不可得", err.getvalue())
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_fingerprint()

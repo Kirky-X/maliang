@@ -15,7 +15,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-dt = load("detect-tells.py")
+dt = load("audit.py")
 
 FIXTURES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "detect_tells")
 
@@ -123,7 +123,7 @@ class TestGlassAdvisory(unittest.TestCase):
                 fh.write('<div class="glass-card backdrop-blur-md">x</div>')
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = dt.main([path])
+                code = dt._main_tells([path])
             self.assertEqual(code, 0)
             self.assertIn("glass-backdrop-blur", buf.getvalue())
 
@@ -185,8 +185,8 @@ class TestFixturePairingBatch3(unittest.TestCase):
     def test_cli_slop_exits_1(self):
         slop = os.path.join(FIXTURES, "slop.html")
         with contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(dt.main([slop]), 1)
+            self.assertEqual(dt._main_tells([slop]), 1)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_tells()

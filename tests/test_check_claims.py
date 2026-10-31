@@ -16,7 +16,7 @@ from pathlib import Path
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load, write  # noqa: E402
 
-cc = load("check-claims.py")
+cc = load("audit.py")
 
 
 
@@ -64,7 +64,7 @@ class TestCheckClaims(unittest.TestCase):
         # 不应报: 声明数与 INDEX 表行数一致
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 0)
         self.assertIn("一致", out.getvalue())
 
@@ -73,7 +73,7 @@ class TestCheckClaims(unittest.TestCase):
         write(self.root / "SKILL.md", "共 12 种设计语言。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 0)
         text = out.getvalue()
         self.assertIn("SKILL.md:1", text)
@@ -85,7 +85,7 @@ class TestCheckClaims(unittest.TestCase):
         write(self.root / "SKILL.md", "共 12 种设计语言。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()):
-            code = cc.main([str(self.root), "--strict"])
+            code = cc._main_claims([str(self.root), "--strict"])
         self.assertEqual(code, 1)
 
     def test_min_claims_vacuity_reported(self):
@@ -93,7 +93,7 @@ class TestCheckClaims(unittest.TestCase):
         write(self.root / "SKILL.md", "模板墙见 INDEX。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 0)
         self.assertIn("形同虚设", out.getvalue())
 
@@ -105,7 +105,7 @@ class TestCheckClaims(unittest.TestCase):
         }])
         write(self.root / "SKILL.md", "这是一个完美的方案。\n")
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 1)
         self.assertIn("禁用表述", out.getvalue())
 
@@ -117,7 +117,7 @@ class TestCheckClaims(unittest.TestCase):
         }]}, ensure_ascii=False))
         write(self.root / "SKILL.md", "禁止清单: 完美/革命性\n")
         with contextlib.redirect_stdout(io.StringIO()):
-            code = cc.main([str(self.root), "--strict"])
+            code = cc._main_claims([str(self.root), "--strict"])
         self.assertEqual(code, 0)
 
     def test_require_pattern_phrase(self):
@@ -127,14 +127,14 @@ class TestCheckClaims(unittest.TestCase):
             "file": "SKILL.md", "pattern": "纯 Python 标准库",
         }])
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 1)
         self.assertIn("必现短语未满足", out.getvalue())
 
     def test_missing_config_exit_2(self):
         # 没能检查: 没有 lint-checks.json
         with contextlib.redirect_stderr(io.StringIO()):
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 2)
 
     def test_missing_source_exit_2(self):
@@ -142,7 +142,7 @@ class TestCheckClaims(unittest.TestCase):
         self.config["checks"][0]["source"] = "references/templates/GONE.md"
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 2)
 
     def test_no_handled_rules_exit_2(self):
@@ -150,14 +150,14 @@ class TestCheckClaims(unittest.TestCase):
         write(self.root / "lint-checks.json", json.dumps({"checks": [
             {"name": "x", "type": "file-header", "dirs": ["references"], "fields": ["来源"]}]}))
         with contextlib.redirect_stderr(io.StringIO()):
-            code = cc.main([str(self.root)])
+            code = cc._main_claims([str(self.root)])
         self.assertEqual(code, 2)
 
     def test_json_output_shape(self):
         write(self.root / "SKILL.md", "共 12 种设计语言。\n")
         self._write_config()
         with contextlib.redirect_stdout(io.StringIO()) as out:
-            code = cc.main([str(self.root), "--format", "json"])
+            code = cc._main_claims([str(self.root), "--format", "json"])
         self.assertEqual(code, 0)
         data = json.loads(out.getvalue())
         self.assertEqual(data["summary"]["warn"], 1)
@@ -165,4 +165,4 @@ class TestCheckClaims(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_claims()

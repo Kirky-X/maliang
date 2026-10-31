@@ -15,7 +15,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-csh = load("check-structure-history.py")
+csh = load("audit.py")
 
 FIXTURES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "build-log")
 
@@ -117,7 +117,7 @@ class TestCli(unittest.TestCase):
     def test_fixture_smoke_passes(self):
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = csh.main([
+            code = csh._main_structure_history([
                 "--current", os.path.join(FIXTURES, "current.json"),
                 "--log", os.path.join(FIXTURES, "log.json"),
                 "--stamp", os.path.join(FIXTURES, "stamp.css"),
@@ -132,7 +132,7 @@ class TestCli(unittest.TestCase):
             cur = self._current(tmp, axes=dict(AXES_A))
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = csh.main(["--current", cur, "--log", log_path])
+                code = csh._main_structure_history(["--current", cur, "--log", log_path])
             self.assertEqual(code, 1)
             out = buf.getvalue()
             self.assertIn("重复", out)
@@ -143,7 +143,7 @@ class TestCli(unittest.TestCase):
             cur = self._current(tmp)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = csh.main(["--current", cur, "--log",
+                code = csh._main_structure_history(["--current", cur, "--log",
                                  os.path.join(tmp, "no-such-log.json")])
             self.assertEqual(code, 2)
             self.assertIn("UNMEASURED", err.getvalue())
@@ -151,7 +151,7 @@ class TestCli(unittest.TestCase):
     def test_missing_current_exits_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = csh.main(["--current", "/nonexistent/current.json"])
+            code = csh._main_structure_history(["--current", "/nonexistent/current.json"])
         self.assertEqual(code, 2)
 
     def test_stamp_lie_flagged(self):
@@ -162,10 +162,10 @@ class TestCli(unittest.TestCase):
                                 "/* maliang · mode=experience · A=deep-dark */")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = csh.main(["--current", cur, "--log", log_path, "--stamp", stamp])
+                code = csh._main_structure_history(["--current", cur, "--log", log_path, "--stamp", stamp])
             self.assertEqual(code, 1)
             self.assertIn("stamp lies", buf.getvalue())
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_structure_history()
