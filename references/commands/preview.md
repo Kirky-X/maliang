@@ -217,7 +217,7 @@ preview 产出的 HTML 必须通过 `validate.py draw-md` 全部 23 项检查(�
 
 **首稿视觉偏薄的定向打磨(参考锚定)**:修复循环里判定「整体成立但视觉偏薄」时,走固定模式——**重附同一参考** → 按 hierarchy / ornamentation / typographic rhythm / motion / materiality / overall UI 六维定向审计 → 把审计结论**合回当前实现**(增量改),不重开新稿、不换参考、不借机 restructure。六维与 redesign 9 维审计共用词汇,materiality(质感层:表面处理 / 光影 / 材质暗示)为补充维度;该模式同样适用于 redesign Refresh·Deslop 快速通道。
 
-**双通道不变式**:LLM 自查(第 6 节)与确定性检测(`preview-check.py`)是两条通道——**先完成自查、再读检测结果**(检测输出是确定性的,但仍会锚定判断);两边结果合并时,每条发现必须标注通道(`[自查]` / `[脚本]` / `[双方]`)。
+**双通道不变式**:LLM 自查(第 6 节)与确定性检测(`preview.py check`)是两条通道——**先完成自查、再读检测结果**(检测输出是确定性的,但仍会锚定判断);两边结果合并时,每条发现必须标注通道(`[自查]` / `[脚本]` / `[双方]`)。
 
 ### 证据四分类(产物报告必填字段)
 
@@ -225,7 +225,7 @@ preview 产出的 HTML 必须通过 `validate.py draw-md` 全部 23 项检查(�
 
 | 类别 | 含义 | 合格证据形态 |
 | ---- | ---- | ------------ |
-| `automated` | 脚本 / 工具跑出 | `preview-check.py` / `validate.py draw-md` 输出摘要(含命令与参数) |
+| `automated` | 脚本 / 工具跑出 | `preview.py check` / `validate.py draw-md` 输出摘要(含命令与参数) |
 | `measured` | 量测数值 | CWV 指标 / 对比度比值 / 触控目标尺寸,附数值 + 测量工具与环境 |
 | `manual` | 人工实测 | 浏览器 / 真机逐项确认,注明设备型号、系统、浏览器与网络环境 |
 | `unverified` | 未验证 | 显式列出未验证项与原因,禁止默认通过、禁止留空 |
@@ -413,7 +413,7 @@ preview 产出的 HTML 必须通过 `validate.py draw-md` 全部 23 项检查(�
 
 预览页里的选择与确认要可靠回传当前会话,不靠用户复述。
 
-- **本地回传桥**:`python3 scripts/preview-server.py <预览目录>` 起 127.0.0.1 本地服务(自动选端口、自动开浏览器、幂等注入选择外壳);用户**在确认弹层确认后**才写 `selection.json`,并向 stdout 打印哨兵 `MALIANG_DESIGN_SELECTION::{...}`;带 `--exit-on-select` 时确认后服务退出;
+- **本地回传桥**:`python3 scripts/preview.py serve <预览目录>` 起 127.0.0.1 本地服务(自动选端口、自动开浏览器、幂等注入选择外壳);用户**在确认弹层确认后**才写 `selection.json`,并向 stdout 打印哨兵 `MALIANG_DESIGN_SELECTION::{...}`;带 `--exit-on-select` 时确认后服务退出;
 - **读取方式**:watcher 文件事件优先,短轮询并发兜底(不作为默认路径);未见回传证据前调用方不得结束回合;
 - **禁止**:倒计时 / 超时默认 / 推荐态自动写入 `selection.json`;把页面上的推荐态当作用户选择;
 - **降级路径**:服务不可用时退回 `file://` + 页面高亮 + 剪贴板复制「选 X」文本,并**明说「当前不会自动回传,请在对话里回复选择」**;

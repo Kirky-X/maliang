@@ -25,7 +25,7 @@
 #   2. validate.py draw-md  — draw-md 产物 23 项检查(目标: examples/ui-markdown/)
 #   3. validate-framework.py — framework 组件文档检查(目标: references/framework/)
 #   4. ui-graph.py check-nav — 导航关系图冒烟(缺页为 informational,不拦截)
-#   5. preview-check.py     — 若 examples/preview/ 存在则跑 Pre-Flight 自动化检查
+#   5. preview.py check      — 若 examples/preview/ 存在则跑 Pre-Flight 自动化检查
 #   6. check-claims.py      — 公开声明对账(计数唯一来源 / 必现短语 / 禁用语表)
 #   7. evidence-check.py    — 若 examples/ 下有取证 report.json 则跑齐套校验
 #   8. validate-design-md.py / validate-generated.py — 交付后自动接入(存在即跑,strict)
@@ -153,10 +153,10 @@ gate "ui-graph check-nav(导航关系冒烟)" \
 
 # 5. preview Pre-Flight(目录存在时;已迁移三态:2=无目标 → 拦截)
 if [ -d examples/preview ]; then
-  gate "preview-check(Pre-Flight 自动化检查)" \
-    python3 scripts/preview-check.py examples/preview/
+  gate "preview.py check(Pre-Flight 自动化检查)" \
+    python3 scripts/preview.py check examples/preview/
 else
-  skip_note "preview-check" "examples/preview/ 不存在"
+  skip_note "preview.py check" "examples/preview/ 不存在"
 fi
 
 # 6. 公开声明对账(无浏览器;计数唯一来源 + 必现短语 + 禁用语表)

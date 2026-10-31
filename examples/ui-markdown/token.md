@@ -54,7 +54,7 @@ version: 1.3.0
 
 ### 对比度实测口径
 
-- **公式**:WCAG 2.x 相对亮度比值,取自本仓 [`scripts/verify.py`](../../scripts/verify.py) `palette-solver` 子命令的 `contrast_ratio_hex_pair()`(与 `verify.py states` / `preview-check.py` 同公式)。复现命令(仓库根执行):
+- **公式**:WCAG 2.x 相对亮度比值,取自本仓 [`scripts/verify.py`](../../scripts/verify.py) `palette-solver` 子命令的 `contrast_ratio_hex_pair()`(与 `verify.py states` / `preview.py check` 同公式)。复现命令(仓库根执行):
   `python3 -c "import importlib.util;s=importlib.util.spec_from_file_location('ps','scripts/verify.py');ps=importlib.util.module_from_spec(s);s.loader.exec_module(ps);print('%.2f'%ps.contrast_ratio('#9CA3AF','#F7F8FA'))"` → `2.39`
 - **分母**:页面底色 `color-surface-base` #F7F8FA 与卡片面 `color-surface-card` #FFFFFF 两列并给——**卡片面永远更高**(底色更暗),真实使用取更严的那一列。
 - **半透明先合成再测**([`color.md`](../../references/dimensions/color.md) §8 范式):`color-overlay` 合成到 #F7F8FA 为 #7C7C7D、到 #FFFFFF 为 #808080;`color-state-hover` 合成后为 #ECEDEF / #F4F4F4。**遮罩的真实约束是它背后的内容**,该列只作参考。

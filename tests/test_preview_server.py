@@ -21,7 +21,7 @@ from pathlib import Path
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-ps = load("preview-server.py")
+ps = load("preview.py")
 
 PAGE = """<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>explorer</title></head>
@@ -154,7 +154,7 @@ class TestWatchAndFallback(unittest.TestCase):
         self.selection.write_text(json.dumps({"id": "1", "name": "甲"}), encoding="utf-8")
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = ps.main(["watch", "--selection", str(self.selection), "--timeout", "2000"])
+            code = ps._main_serve(["watch", "--selection", str(self.selection), "--timeout", "2000"])
         self.assertEqual(code, 0)
         self.assertIn("MALIANG_DESIGN_SELECTION_OBSERVED::", buf.getvalue())
 
@@ -162,7 +162,7 @@ class TestWatchAndFallback(unittest.TestCase):
         # 超时未选 → exit 2 + TIMEOUT 哨兵(未测量不是通过)
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = ps.main(["watch", "--selection", str(self.selection), "--timeout", "120"])
+            code = ps._main_serve(["watch", "--selection", str(self.selection), "--timeout", "120"])
         self.assertEqual(code, 2)
         self.assertIn("MALIANG_DESIGN_SELECTION_TIMEOUT::", err.getvalue())
 
@@ -172,7 +172,7 @@ class TestWatchAndFallback(unittest.TestCase):
 
         def run():
             with contextlib.redirect_stdout(io.StringIO()):
-                result["code"] = ps.main(
+                result["code"] = ps._main_serve(
                     ["watch", "--selection", str(self.selection), "--timeout", "3000",
                      "--interval", "30"])
 
@@ -187,7 +187,7 @@ class TestWatchAndFallback(unittest.TestCase):
         # 降级说明句必须明说「不会自动回传」
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = ps.main(["fallback-note"])
+            code = ps._main_serve(["fallback-note"])
         self.assertEqual(code, 0)
         self.assertIn("不会自动回传", buf.getvalue())
 
@@ -195,9 +195,9 @@ class TestWatchAndFallback(unittest.TestCase):
         # 没能检查: --file 不存在
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = ps.main(["serve", "--file", str(self.root / "ghost.html"), "--no-open"])
+            code = ps._main_serve(["serve", "--file", str(self.root / "ghost.html"), "--no-open"])
         self.assertEqual(code, 2)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_serve()

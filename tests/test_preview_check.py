@@ -11,7 +11,7 @@ import tempfile
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-pc = load("preview-check.py")
+pc = load("preview.py")
 
 import unittest  # noqa: E402
 
@@ -393,7 +393,7 @@ class TestCliExitCodes(unittest.TestCase):
         import io
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = pc.main(argv)
+            code = pc._main_check(argv)
         return code, buf.getvalue()
 
     def test_warning_only_exits_0(self):
@@ -405,7 +405,7 @@ class TestCliExitCodes(unittest.TestCase):
             path = os.path.join(tmp, "warn-only.html")
             with open(path, "w", encoding="utf-8") as fh:
                 fh.write(html)
-            code, out = self._run_main(["preview-check.py", path])
+            code, out = self._run_main([path])
             self.assertEqual(code, 0, out)
             self.assertIn("1 warnings", out)
 
@@ -419,7 +419,7 @@ class TestCliExitCodes(unittest.TestCase):
             path = os.path.join(tmp, "orphan.html")
             with open(path, "w", encoding="utf-8") as fh:
                 fh.write(html)
-            code, out = self._run_main(["preview-check.py", path])
+            code, out = self._run_main([path])
             self.assertEqual(code, 1, out)
             self.assertIn("css.orphan-class", out)
             self.assertIn("css.undefined-var", out)
@@ -429,7 +429,7 @@ class TestCliExitCodes(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with open(os.path.join(tmp, "notes.txt"), "w", encoding="utf-8") as fh:
                 fh.write("没有 HTML")
-            code, out = self._run_main(["preview-check.py", tmp])
+            code, out = self._run_main([tmp])
             self.assertEqual(code, 2, out)
             self.assertIn("没能检查", out)
 
@@ -454,4 +454,4 @@ class TestEndToEnd(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_check()

@@ -60,7 +60,7 @@
 
 设计评审(A)与确定性检测(B)必须**互不先见**——检测输出虽是确定性的,但仍会锚定判断:
 
-1. **优先双通道并行**:通过 Task/subagent 工具派生两个**隔离的评审代理**——A 只拿交付物与本文评分标准做设计评审;B 只跑 [`scripts/preview-check.py`](../../scripts/preview-check.py) 等确定性检测并汇报结果。两者不可见对方输出,综合阶段才合并。
+1. **优先双通道并行**:通过 Task/subagent 工具派生两个**隔离的评审代理**——A 只拿交付物与本文评分标准做设计评审;B 只跑 [`scripts/preview.py check`](../../scripts/preview.py check) 等确定性检测并汇报结果。两者不可见对方输出,综合阶段才合并。
 2. **顺序保底**:无法并行时,先完成并记录 A 的全部结论,**之后**才运行 B 读检测结果——禁止边跑检测边评审。
 3. **降级必须挂横幅**:因任何原因退化为单上下文(无 subagent 工具 / 用户拒绝),报告**首行**必须标注 `⚠️ DEGRADED: single-context (<原因>)`。静默降级 = 评审失败。
 4. **合并标注通道**:两边结果合并时,每条发现标注通道(`[评审]` / `[脚本]` / `[双方]`);双方都命中的发现优先级最高。
@@ -75,7 +75,7 @@
 
 1. **判模式** —— 按 [`meta/surface-modes.md`](../meta/surface-modes.md) 判定页面模式(Persuade / Operate / Read / Experience),写进报告头。模式决定"好"的定义与启发式 n/a 项。
 2. **评审 A · 设计评审**(隔离上下文)—— 走下方 Nielsen 打分表 + 认知负荷清单 + persona 走查,产出评分与发现。
-3. **检测 B · 确定性证据**(隔离上下文)—— 跑 `preview-check.py` 可脚本化 51 项(143 项中其余 92 项:89 项运行时/人工 + 3 项门禁脚本项) + 按需跑门禁脚本——有参考图跑 `verify.py color-fidelity`(ΔE 保真,G39)、产物含资产位跑 `verify.py assets`(资产在场,G40)、文案跑 `audit.py copy`(句型级反模板) + (有浏览器时)逐页截图走查 + `verify.py states` 三态对比度与 `verify.py interactive` **交互真实性**(控件点击实测:声明状态契约却无变化、状态翻转但外观不变两条信号命中即失败;无状态契约的普通按钮无效果仅 advisory),产出机械发现。截图纪律按 [`preview.md`](./preview.md) "取证契约"节执行;无浏览器时上述两门记 UNMEASURED,不得记为通过。
+3. **检测 B · 确定性证据**(隔离上下文)—— 跑 `preview.py check` 可脚本化 51 项(143 项中其余 92 项:89 项运行时/人工 + 3 项门禁脚本项) + 按需跑门禁脚本——有参考图跑 `verify.py color-fidelity`(ΔE 保真,G39)、产物含资产位跑 `verify.py assets`(资产在场,G40)、文案跑 `audit.py copy`(句型级反模板) + (有浏览器时)逐页截图走查 + `verify.py states` 三态对比度与 `verify.py interactive` **交互真实性**(控件点击实测:声明状态契约却无变化、状态翻转但外观不变两条信号命中即失败;无状态契约的普通按钮无效果仅 advisory),产出机械发现。截图纪律按 [`preview.md`](./preview.md) "取证契约"节执行;无浏览器时上述两门记 UNMEASURED,不得记为通过。
 4. **综合报告** —— 合并 A/B(标注通道),按严重度排序,以**固定判词行 + verdict** 收束(见下方「判词行与 verdict」),落快照,给行动建议。
 
 ---

@@ -7,7 +7,7 @@
 >
 > **本清单不豁免编号门禁**:本清单是「全量机械检查」(该项过没过),[`../meta/numbered-gates.md`](../meta/numbered-gates.md) 是「否决门」(这种形态不许交)。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。门禁在本清单全过之后、第 6 节 Pre-Delivery Checklist 之前逐条过,执行纪律见 [`preview.md`](./preview.md) 第 5 节「编号门禁」。
 >
-> **脚本覆盖**:51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理、5.6 孤儿类选择器与未定义 var);
+> **脚本覆盖**:51 项由 [`scripts/preview.py check`](../../scripts/preview.py check) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理、5.6 孤儿类选择器与未定义 var);
 > 3 项由本批门禁脚本覆盖(5.0 参考图 ΔE 保真 → `verify.py color-fidelity`、5.14 资产位在场 → `verify.py assets`、
 > 5.1 句型级反模板 → `audit.py copy`);其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
 > 可由页面内探针([`scripts/preview-lint.js`](../../scripts/preview-lint.js),注入预览临时副本、只读取证)
@@ -61,7 +61,7 @@ frontend-design-实践规范):补入两个压力实测项——设计只对理�
 
 ## 5.3 · Accessibility · WCAG 对比度(8 项,见 [`accessibility.md`](../meta/accessibility.md))
 
-> 脚本化:`preview-check.py` 静态解析 `<style>` 内 color × background 组合(正文/大文本/placeholder/disabled/暗色 media 内规则);渐变、透明、CDN 框架默认色无法静态解析,不猜测。
+> 脚本化:`preview.py check` 静态解析 `<style>` 内 color × background 组合(正文/大文本/placeholder/disabled/暗色 media 内规则);渐变、透明、CDN 框架默认色无法静态解析,不猜测。
 > 对比度计算规则:正文 ≥ 4.5:1;大文本(≥ 24px,或 ≥ 18.66px 且 weight ≥ 700)≥ 3:1;disabled ≥ 3:1。
 
 - [ ] 所有正文文字对比度 ≥ 4.5:1 <sub>[脚本 contrast.low;渐变/透明等静态不可判组合由 [运行时·探针] 复核]</sub>

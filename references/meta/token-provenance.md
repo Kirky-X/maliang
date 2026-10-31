@@ -86,7 +86,7 @@ colors:
 
 **硬约束**:
 
-- **比值必须实测,不许标意图值**——公式用 WCAG 2.x 相对亮度,脚本取 `scripts/palette-solver.py` 的 `contrast_ratio()`(与 `verify-states.py` / `preview-check.py` 同公式);自标值会被复算,写错即暴露(见 color.md §8 范式)。
+- **比值必须实测,不许标意图值**——公式用 WCAG 2.x 相对亮度,脚本取 `scripts/palette-solver.py` 的 `contrast_ratio()`(与 `verify-states.py` / `preview.py check` 同公式);自标值会被复算,写错即暴露(见 color.md §8 范式)。
 - **分母必须写清**:默认页面底色;压品牌色、压图片、压渐变等非默认底色一律写长式 `vs <底色> = <比值>`,否则比值无意义。
 - **不达标就标不达标**:低于角色阈值(正文 4.5 / 非文本 3 / disabled 3)的比值照写并在交付说明里列反例,**不改值凑数**——本仓口径是"如实标注",不是"标注到通过"。
 - 与产物层 token 表**同源**:产物层 [`../../examples/ui-markdown/token.md`](../../examples/ui-markdown/token.md) 的对比度列给的是同一批比值;两处不一致时以脚本实测为准并同步两处。

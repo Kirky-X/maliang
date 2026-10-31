@@ -1961,7 +1961,7 @@ import sys
 
 SCAN_EXTENSIONS = (".vue", ".ts", ".tsx", ".js", ".jsx")
 
-# {token-name} 占位符(与 preview-check.py 的 token.residue 同 regex)
+# {token-name} 占位符(与 preview.py check 的 token.residue 同 regex)
 TOKEN_RESIDUE_RE = re.compile(r"\{([a-z][a-z0-9-]*)\}")
 # 颜色字面量(hex / rgb / rgba / hsl / oklch 只做可回溯判定的子集:hex + rgb(a))
 COLOR_LITERAL_RE = re.compile(

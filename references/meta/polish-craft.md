@@ -152,7 +152,7 @@ CSS 自定义属性默认是「不透明字符串」，**无法插值**——直
 ## 八、静默失败清单(改完先查,别靠眼睛;仅 Web CSS)
 
 
-1. **类选择器必须命中**——样式表里每个 class 选择器,markup 里必须有对应 class(`classList.add` 与模板字符串里的类名也算使用)。CSS 写了 `.hero h1` 而 HTML 只有 `.lp-hero` 时,h1 静默退回浏览器默认样式;机械检查由 [`../../scripts/preview-check.py`](../../scripts/preview-check.py) 以 ERROR 报告(对应清单 5.6)。
+1. **类选择器必须命中**——样式表里每个 class 选择器,markup 里必须有对应 class(`classList.add` 与模板字符串里的类名也算使用)。CSS 写了 `.hero h1` 而 HTML 只有 `.lp-hero` 时,h1 静默退回浏览器默认样式;机械检查由 [`../../scripts/preview.py check`](../../scripts/preview.py check) 以 ERROR 报告(对应清单 5.6)。
 2. **`var()` 必须有同文件定义**——`var(--x)` 引用 N 次而从未定义(定义含 `setProperty(` 写入)即为 ERROR;拼错一个字符,整条声明静默失效(对应清单 5.6)。
 3. **flex 父级会压缩内部容器**——`display: flex; align-items: center` 的 hero 会把内部 `.container` 压到内在内容宽度:1320px max-width 容器会**静默变成 721px**。给内部容器 `width: 100%`,或让 hero 用 `display: block` + margin 居中。
 4. **打开页面看 computed style,不能只读源码**——h1 的 computed `font-family` / `font-size` 是 `Inter 32px` 而设计是 `Cormorant Garamond 96px` 时,是 display 字体规则没匹配:修选择器,不要带着 bug 交付;亮 / 暗两模式都要看。
