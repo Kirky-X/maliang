@@ -21,10 +21,9 @@ HOME_MD = os.path.join(BASE, "examples", "ui-markdown", "ui", "home.md")
 VUE = os.path.join(BASE, "examples", "element-plus", "views", "Home.vue")
 PREVIEW = os.path.join(BASE, "examples", "preview", "preview_home_iphone15.html")
 
-# home.md 的 SHA-256(2026-10-26 补批改动:方向契约块 + platform/dir/spec_version
-# frontmatter 字段 + 金刚区图标 {icon-*} 引用形式;数据块 ICONS/entries/feed/tabs
-# 与两份产物核对未变,产物无需再生成)
-HOME_MD_SHA256 = "29faf7d89c3f8a0fdec65a073c6d9af64017e24746d6c1e668fd9c247272e663"
+# home.md 的 SHA-256(2026-11-01 目录入口统一命名批:home.md 仅说明文字里
+# 的 framework/index.md → framework/INDEX.md 引用更新,数据块与两份产物未动)
+HOME_MD_SHA256 = "d4978d1c80be026eb405c31b451e832331aab87579b980a4654745150ab5571f"
 
 
 def _read(path):
