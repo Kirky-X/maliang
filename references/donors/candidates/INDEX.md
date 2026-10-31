@@ -1,6 +1,6 @@
 # 候选池索引（Candidates）—— 上游原文快照总目录
 
-> **provenance**：原始出处 [样张源](https://样张源) DESIGNS 索引；上游 [/设计样张集](https://github.com//设计样张集)，许可 MIT。站点条目上游路径为 `design-md/<slug>/DESIGN.md`，风格模板条目为 `extra/uiuxskillProMax/generated/<n>-<name>/DESIGN.md`。快照日期 2026-10-25，共 112 条 / 9 组。
+> **provenance**：原始出处 [样张源](https://样张源) DESIGNS 索引；上游 [/设计样张集](https://github.com//设计样张集)，许可 MIT。站点条目上游路径为 `design-md/<slug>/DESIGN.md`，风格模板条目为 `extra/uiuxskillProMax/generated/<n>-<name>/DESIGN.md`。快照日期 2026-10-31，共 112 条 / 9 组。
 > 每条原文存档为同目录 `<slug>.md`，文件头有完整 provenance 注释（原始出处 / 上游路径 / 许可证 / 分组 / 站点摘要 / 站点色板 / 快照日期）。
 
 ## 本目录的定位

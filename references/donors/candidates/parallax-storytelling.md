@@ -1,6 +1,6 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 通用风格模板(styleGeneral) · 站点摘要: Parallax Storytelling is a UI style reference for general interfaces, focused on Scroll-driven, narrative, layered scrolling, immersive, progressive disclosure.
-     站点色板: 
+     站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Parallax Storytelling

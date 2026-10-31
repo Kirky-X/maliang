@@ -1,6 +1,6 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 落地页风格模板(styleLanding) · 站点摘要: Minimal & Direct is a UI style reference for landing pages, focused on Minimal text, white space heavy, single column layout, direct messaging, clean typography.
-     站点色板: 
+     站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Minimal & Direct

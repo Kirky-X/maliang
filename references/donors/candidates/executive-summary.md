@@ -1,6 +1,6 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Executive Dashboard is a UI style reference for analytics and BI dashboards, focused on High-level KPIs, large key metrics, minimal detail, summary view, trend indicators.
-     站点色板: 
+     站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Executive Dashboard

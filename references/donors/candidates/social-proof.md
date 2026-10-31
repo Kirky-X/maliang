@@ -1,6 +1,6 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 落地页风格模板(styleLanding) · 站点摘要: Social Proof-Focused is a UI style reference for landing pages, focused on Testimonials prominent, client logos displayed, case studies sections, reviews/ratings, user avatars.
-     站点色板: 
+     站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Social Proof-Focused
