@@ -584,6 +584,20 @@ def load_yaml_block(block, fallback=None, on_not_map="error"):
         return None, f"frontmatter YAML 非法: {exc}"
 
 
+def extract_frontmatter(text):
+    """DESIGN.md/页面 markdown 的 --- 围栏提取(单一实现)。
+
+    返回 (yaml_str, body);无围栏或未闭合返回 ("", 原文)。
+    design-md.py token-md 节与 style-ledger.py 指纹提取共用。
+    """
+    if not text.startswith("---"):
+        return "", text
+    m = re.match(r"^---[ \t]*\n(.*?)\n---[ \t]*\n?(.*)$", text, re.DOTALL)
+    if not m:
+        return "", text
+    return m.group(1), m.group(2)
+
+
 def parse_frontmatter_lenient(block):
     """宽容解析 frontmatter 正文:PyYAML,报错或缺失时降级逐行解析。
 

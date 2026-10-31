@@ -68,14 +68,7 @@ def die(msg):
 # frontmatter 解析
 # ---------------------------------------------------------------------------
 
-def extract_frontmatter(text):
-    """从 markdown 提取 YAML frontmatter 与正文。返回 (yaml_str, body)。"""
-    if not text.startswith("---"):
-        return "", text
-    m = re.match(r"^---[ \t]*\n(.*?)\n---[ \t]*\n?(.*)$", text, re.DOTALL)
-    if not m:
-        return "", text
-    return m.group(1), m.group(2)
+from maliang_common import extract_frontmatter  # noqa: E402  单一实现,style-ledger 共用
 
 
 def parse_frontmatter(yaml_str):

@@ -35,7 +35,7 @@ _DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _DIR)
 
 import maliang_common
-import design_md_to_token_md as dmt
+from maliang_common import extract_frontmatter
 
 HEX_RE = re.compile(r"#[0-9A-Fa-f]{3,8}\b")
 LEDGER_FILE = "style-ledger.jsonl"
@@ -139,7 +139,7 @@ def extract_fingerprint(design_text):
     字族取 typography 的 display/body 键。解析不到的项为 None,desc 如实
     写「?」——指纹只量事实,不编造。
     """
-    yaml_str, _body = dmt.extract_frontmatter(design_text)
+    yaml_str, _body = extract_frontmatter(design_text)
     if not yaml_str.strip():
         return None
     # canonical 优先(dmt.parse_frontmatter,与 validate-design-md 同路径,
