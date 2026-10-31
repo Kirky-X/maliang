@@ -8,7 +8,7 @@
 > **本清单不豁免编号门禁**:本清单是「全量机械检查」(该项过没过),[`../meta/numbered-gates.md`](../meta/numbered-gates.md) 是「否决门」(这种形态不许交)。两处都过才算过(规则 canonical 见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) §0)。门禁在本清单全过之后、第 6 节 Pre-Delivery Checklist 之前逐条过,执行纪律见 [`preview.md`](./preview.md) 第 5 节「编号门禁」。
 >
 > **脚本覆盖**:51 项由 [`scripts/preview-check.py`](../../scripts/preview-check.py) 自动执行(含 5.3 WCAG 对比度、5.7 交互状态静态代理、5.6 孤儿类选择器与未定义 var);
-> 3 项由本批门禁脚本覆盖(5.0 参考图 ΔE 保真 → `verify-color-fidelity.py`、5.14 资产位在场 → `verify-assets.py`、
+> 3 项由本批门禁脚本覆盖(5.0 参考图 ΔE 保真 → `verify.py color-fidelity`、5.14 资产位在场 → `verify.py assets`、
 > 5.1 句型级反模板 → `check-copy.py`);其余 89 项为**运行时项**(需浏览器实测/视觉比对/业务交互验证);部分条目标记 **[运行时]**,
 > 可由页面内探针([`scripts/preview-lint.js`](../../scripts/preview-lint.js),注入预览临时副本、只读取证)
 > 实测取回的条目标 **[运行时·探针]**(按 [`preview.md`](./preview.md)「运行时实测探针」节三档处置判定);
@@ -27,7 +27,7 @@ frontend-design-实践规范):补入两个压力实测项——设计只对理�
 - [ ] **暗色模式独立测对比**:切到暗色后逐区域核对对比度(非简单反色) <sub>[运行时]</sub>
 - [ ] **长内容/本地化膨胀实测**:用最长真实内容与译语膨胀文本(德/俄等常见 +30-40%)填充后,布局不破、关键操作不截断 <sub>[运行时]</sub>
 - [ ] **慢/失败依赖实测**:接口超时、失败、离线时页面有分状态处置与恢复路径,无无限 spinner <sub>[运行时]</sub>
-- [ ] **参考图保真实测(ΔE)**:有参考图锚定的重建/复刻任务,重建截图对参考图跑 `python3 scripts/verify-color-fidelity.py <重建截图> <参考图或测量 spec>`——mean ΔE ≤ 5 / max ΔE ≤ 20 / coverage drift ≤ 0.35,附逐色报告;FAIL 修到过为止,未跑不得交付(门禁 G39;无参考图任务 n/a) <sub>[运行时;脚本 verify-color-fidelity;门禁 G39]</sub>
+- [ ] **参考图保真实测(ΔE)**:有参考图锚定的重建/复刻任务,重建截图对参考图跑 `python3 scripts/verify.py color-fidelity <重建截图> <参考图或测量 spec>`——mean ΔE ≤ 5 / max ΔE ≤ 20 / coverage drift ≤ 0.35,附逐色报告;FAIL 修到过为止,未跑不得交付(门禁 G39;无参考图任务 n/a) <sub>[运行时;脚本 verify-color-fidelity;门禁 G39]</sub>
 
 ## 5.1 · AI Tells(16 项,见 [`ai-tells.md`](../meta/ai-tells.md))
 - [ ] 无 Tailwind 渐变文字 + 中性灰背景组合
@@ -199,7 +199,7 @@ frontend-design-实践规范):补入两个压力实测项——设计只对理�
 - [ ] favicon 存在(含移动端 bookmark 图标) <sub>[运行时;可静态抽检 head 引用]</sub>
 - [ ] **数据型页面诚实性**(有图表 / 数据展示时):柱 / 条从 0 起(折线截断轴须标注范围);缺失值 ≠ 0(断点 / 空白 / 明确标记);单位在轴标题 / 列头 / 数值中稳定出现;时间轴粒度 / 时区 / 采样周期可见;颜色只用于编码(告警色与普通类别色分离);交付前过 [`../vocabulary/charts.md`](../vocabulary/charts.md)「诚实性与极值」九问与极值谱系(负值 / 全 0 / 单点 / 缺失 / 超长类别 / 大量系列 / 窄屏 / 无数据) <sub>[运行时]</sub>
 
-- [ ] **资产位在场验收**:逐资产位枚举(数出应有图槽 / logo 位)→ 逐一验证渲染的是声明的真实资产 → 显式拒绝灰 div / emoji / 首字母 / 纯文字 / 自造 SVG 五类顶替物;跑 `python3 scripts/verify-assets.py <preview.html>`,失败先做最小确定性修复再复查,仍失败如实上报不许宣称完成(结构化 HTML 验证,不冒充视觉 QA;门禁 G40) <sub>[脚本 verify-assets;门禁 G40]</sub>
+- [ ] **资产位在场验收**:逐资产位枚举(数出应有图槽 / logo 位)→ 逐一验证渲染的是声明的真实资产 → 显式拒绝灰 div / emoji / 首字母 / 纯文字 / 自造 SVG 五类顶替物;跑 `python3 scripts/verify.py assets <preview.html>`,失败先做最小确定性修复再复查,仍失败如实上报不许宣称完成(结构化 HTML 验证,不冒充视觉 QA;门禁 G40) <sub>[脚本 verify-assets;门禁 G40]</sub>
 
 ## 5.15 · 真机验证(8 项,全部需真机)
 

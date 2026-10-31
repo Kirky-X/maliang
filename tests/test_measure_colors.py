@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 from _png import write_png
 
-mc = load("measure-colors.py")
+mc = load("verify.py")
 
 try:
     import PIL  # type: ignore
@@ -124,7 +124,7 @@ class TestUnmeasured(unittest.TestCase):
                 fh.write(b"RIFFxxxxWEBP")
             buf, err = io.StringIO(), io.StringIO()
             with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(err):
-                code = mc.main([path])
+                code = mc._main_measure_colors([path])
             self.assertEqual(code, 2)
             payload = json.loads(buf.getvalue())
             self.assertFalse(payload["measured"])
@@ -133,7 +133,7 @@ class TestUnmeasured(unittest.TestCase):
     def test_missing_file_exits_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = mc.main([os.path.join("no", "such.png")])
+            code = mc._main_measure_colors([os.path.join("no", "such.png")])
         self.assertEqual(code, 2)
 
     @unittest.skipIf(HAS_PIL, "Pillow 在场:JPEG 可测,UNMEASURED 降级路径不触发")
@@ -144,7 +144,7 @@ class TestUnmeasured(unittest.TestCase):
                 fh.write(b"\xff\xd8\xff\xe0fake")
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = mc.main([path])
+                code = mc._main_measure_colors([path])
             self.assertEqual(code, 2)
             self.assertIn("Pillow", err.getvalue())
 
@@ -160,4 +160,4 @@ class TestUnmeasured(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_measure_colors()

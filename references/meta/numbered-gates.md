@@ -82,7 +82,7 @@
 
 ### G31 · 状态态对比度未实测(CRITICAL)
 - **违反什么**:交互元素的 default / hover / focus 任一次态下,文本或图形对比度低于阈值(图形控件 3:1;文本 4.5:1,大文本 ≥ 24px 或 ≥ 18.66px 且 bold 取 3:1);或本轮**未实测**却记为通过(无浏览器时把 UNMEASURED 当 PASS)。
-- **怎么判定**:[`../../scripts/verify-states.py`](../../scripts/verify-states.py) 取三态真实计算样式,沿祖先链回溯有效背景;native checkbox/radio/switch 与 disabled / opacity:0 按 WCAG 1.4.3 / 1.4.11 豁免;退出码 2 / UNMEASURED 记「未判定」,不得记 PASS(§0 第 6 条)。对应 ux-rules slug `color-contrast`;执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」;坏 fixture(静态通过、hover 失败)在 tests/。
+- **怎么判定**:[`../../scripts/verify.py states`](../../scripts/verify.py states) 取三态真实计算样式,沿祖先链回溯有效背景;native checkbox/radio/switch 与 disabled / opacity:0 按 WCAG 1.4.3 / 1.4.11 豁免;退出码 2 / UNMEASURED 记「未判定」,不得记 PASS(§0 第 6 条)。对应 ux-rules slug `color-contrast`;执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」;坏 fixture(静态通过、hover 失败)在 tests/。
 - **怎么修**:调字色 / 底色或换对比更高的 token 组合,修复后重跑三态;未测的补测再交。
 
 ---
@@ -137,7 +137,7 @@
 
 ### G32 · 交互状态契约未兑现
 - **违反什么**:声明了状态契约(`aria-pressed` / `aria-expanded` / `aria-checked` / `aria-selected` / `aria-sort`,或 switch / tab / menuitemcheckbox / menuitemradio / option 角色)的已启用可见控件,**真实点击后文档内无任何变化**——无属性翻转、无 DOM 变更、无焦点转移;控件承诺了状态却不兑现。
-- **怎么判定**:[`../../scripts/verify-interactive.py`](../../scripts/verify-interactive.py) 信号 A;每次点击在**新加载页面**上进行(一个控件不能遮住另一个);控件上的 `data-demo-state` 是作者手写的「这是状态渲染、不是活控件」声明,按豁免处理。**无状态契约的普通按钮**点击无效果仅 advisory(静态演示按钮是合法形态),不构成本门失败。对应 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么判定**:[`../../scripts/verify.py interactive`](../../scripts/verify.py interactive) 信号 A;每次点击在**新加载页面**上进行(一个控件不能遮住另一个);控件上的 `data-demo-state` 是作者手写的「这是状态渲染、不是活控件」声明,按豁免处理。**无状态契约的普通按钮**点击无效果仅 advisory(静态演示按钮是合法形态),不构成本门失败。对应 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
 - **怎么修**:接上 handler 让状态属性真正变化;或撤掉 `aria-*` 与相应可交互外观——不承诺做不到的事。
 
 ---
@@ -210,7 +210,7 @@
 
 ### G33 · 状态变化不可见
 - **违反什么**:状态属性翻转了(读屏能听到),但控件**自身**的计算样式 / 文本 / 几何完全一致——视障用户之外的人看不到任何变化(invisible state)。
-- **怎么判定**:[`../../scripts/verify-interactive.py`](../../scripts/verify-interactive.py) 信号 C:状态值确实移动,且外观指纹(自身与内部元素的样式 + 文本 + 几何)前后一致(等过渡结束再比);状态值未移动的点击(点已选中的项 / 当前 tab)是 no-op,不算命中。
+- **怎么判定**:[`../../scripts/verify.py interactive`](../../scripts/verify.py interactive) 信号 C:状态值确实移动,且外观指纹(自身与内部元素的样式 + 文本 + 几何)前后一致(等过渡结束再比);状态值未移动的点击(点已选中的项 / 当前 tab)是 no-op,不算命中。
 - **怎么修**:给控件自身一个视觉状态——轨道填充、图标切换、标签变化;`aria-checked` 单独只服务读屏,不构成视觉状态。
 
 ### G34 · 跨轮结论无同条件对比
@@ -240,12 +240,12 @@
 
 ### G39 · 参考图保真 FAIL(ΔE)
 - **违反什么**:有参考图锚定的重建 / 复刻任务,重建截图对参考图的逐色保真任一阈值不过——mean ΔE > 5 / max ΔE > 20 / coverage drift > 0.35;或把「尺寸一致 / 像素接近」当还原度而没跑保真测量就把「还原了」写进结论(未测量当通过)。无参考图的任务本门不适用(n/a,不是 UNMEASURED);有参考图却没跑 = UNMEASURED。
-- **怎么判定**:`python3 scripts/verify-color-fidelity.py <重建截图> <参考图或测量 spec>` 输出逐色报告(每个参考色的最近实现色 / ΔE / 覆盖率),退出码按 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md) 三态(0 = PASS / 1 = FAIL / 2 = 没能检查——缺参考图、缺测量 spec 或格式不支持,**2 不得记通过**,§0 第 6 条)。脚本对实现侧显著簇逐簇计分:显著错误色块不得被覆盖率加权平均掩盖;显著参考色在实现侧缺失时走参考侧 max ΔE 反向暴露;残渣(覆盖 < 0.5%)不算保留该色。攻击盲区用例(错误色块 ΔE>90 不被平均掉 / 大错误区域配稀有参考色仍 FAIL / coverage 0.3502 > 0.35 边界)在 tests/ 固化。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么判定**:`python3 scripts/verify.py color-fidelity <重建截图> <参考图或测量 spec>` 输出逐色报告(每个参考色的最近实现色 / ΔE / 覆盖率),退出码按 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md) 三态(0 = PASS / 1 = FAIL / 2 = 没能检查——缺参考图、缺测量 spec 或格式不支持,**2 不得记通过**,§0 第 6 条)。脚本对实现侧显著簇逐簇计分:显著错误色块不得被覆盖率加权平均掩盖;显著参考色在实现侧缺失时走参考侧 max ΔE 反向暴露;残渣(覆盖 < 0.5%)不算保留该色。攻击盲区用例(错误色块 ΔE>90 不被平均掉 / 大错误区域配稀有参考色仍 FAIL / coverage 0.3502 > 0.35 边界)在 tests/ 固化。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
 - **怎么修**:按逐色报告定位偏差最大的色位,回 token / 样式修正后重截重测;**禁止调阈值凑 PASS**;阈值不可比时(测量参数变化)先回到同一组参数。与 G34 互补:G34 禁「尺寸一致冒充还原度」,本门给「还原度」以机械判据。
 
 ### G40 · 资产位在场未验证
 - **违反什么**:设计里声明了真实资产位(图槽 / logo 位),交付时资产位**没被逐一验证在场**——渲染的是灰 div / emoji / 首字母 / 纯文字占位 / 自造 SVG 顶替,或「该有图的位置」根本没数过;或验证失败后不修复就宣称完成。
-- **怎么判定**:`python3 scripts/verify-assets.py <preview.html>`(或 preview 探针内等价检查):①逐资产位枚举(数出应有的图槽 / logo 位);②逐一验证渲染的是**声明的真实资产**(URL / logoAssetKey 匹配);③显式拒绝上述五类顶替物;④失败 → 同产物最小确定性修复 → 复查;⑤仍失败如实上报,禁止宣称完成。诚实范围:结构化 HTML 验证,**不冒充视觉 QA**——视觉还原仍按截图走查。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么判定**:`python3 scripts/verify.py assets <preview.html>`(或 preview 探针内等价检查):①逐资产位枚举(数出应有的图槽 / logo 位);②逐一验证渲染的是**声明的真实资产**(URL / logoAssetKey 匹配);③显式拒绝上述五类顶替物;④失败 → 同产物最小确定性修复 → 复查;⑤仍失败如实上报,禁止宣称完成。诚实范围:结构化 HTML 验证,**不冒充视觉 QA**——视觉还原仍按截图走查。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
 - **怎么修**:补真实资产(官方来源优先,取用协议见 [`visual-assets.md`](visual-assets.md));确以结构占位交付时,必须在交付说明显式声明为占位并列入未完成项,禁止静默顶替。
 
 ### G41 · stamp lies(盖章与实物不符)

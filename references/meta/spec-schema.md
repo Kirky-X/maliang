@@ -114,11 +114,11 @@ users:
 
 ## 测量持久化块(measurement / measured_palette)
 
-顶层可选扩展键(lint 静默,同 `decisions` / `users`)。参考图经确定性测色(`{SKILL_DIR}/scripts/measure-colors.py`)后,把**测量配置**与**实测色板**随 DESIGN.md 持久化,供验证环节(preview / verify)读回**同 k 同参数**复测——复测参数不同(如 k 不同)结果不可比,等于没测。两键成对出现;**目测取色不写本块**。
+顶层可选扩展键(lint 静默,同 `decisions` / `users`)。参考图经确定性测色(`{SKILL_DIR}/scripts/verify.py measure-colors`)后,把**测量配置**与**实测色板**随 DESIGN.md 持久化,供验证环节(preview / verify)读回**同 k 同参数**复测——复测参数不同(如 k 不同)结果不可比,等于没测。两键成对出现;**目测取色不写本块**。
 
 ```yaml
 measurement:                  # 测量配置;存在即声明「下面的值是测出来的」
-  tool: measure-colors.py
+  tool: verify.py measure-colors
   k: 6                        # 聚类数;复测必须同 k 同参数,否则不可比
   merge_threshold: 2.5        # ΔE 合并档(PNG 2.5 / JPEG 5,以脚本口径为准)
 measured_palette:             # 逐色 hex / coverage / role;coverage 为 0..1 分数
@@ -202,7 +202,7 @@ Material Design 3 (MD3) 配对 token(`on-primary`、`primary-container` 等)被�
 
 只用两级说明层级太扁。出处：interface-design(Text hierarchy)。
 
-参考图反推色彩时优先确定性测色(`{SKILL_DIR}/scripts/measure-colors.py`,目测取色漂移可达 ΔE10+):实测配置与色板持久化见下方「测量持久化块」,实测值按 ✅ 置信标注、目测值按 ⚠️(判据见 [`../commands/design-md.md`](../commands/design-md.md) 提取路径置信标记)。
+参考图反推色彩时优先确定性测色(`{SKILL_DIR}/scripts/verify.py measure-colors`,目测取色漂移可达 ΔE10+):实测配置与色板持久化见下方「测量持久化块」,实测值按 ✅ 置信标注、目测值按 ⚠️(判据见 [`../commands/design-md.md`](../commands/design-md.md) 提取路径置信标记)。
 
 ---
 

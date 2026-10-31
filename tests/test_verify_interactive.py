@@ -13,18 +13,17 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-vi = load("verify-interactive.py")
-vs = vi.vs
+vi = load("verify.py")
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures", "verify_interactive")
-BROWSER = vs.find_browser()
+BROWSER = vi.find_browser()
 NO_BROWSER_REASON = "本机没有 Chrome/Chromium,浏览器用例跳过(UNMEASURED 路径仍受测)"
 
 
 def run_main(argv):
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        code = vi.main(argv)
+        code = vi._main_interactive(argv)
     return code, buf.getvalue()
 
 
@@ -88,4 +87,4 @@ class TestBrowserSignals(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_interactive()

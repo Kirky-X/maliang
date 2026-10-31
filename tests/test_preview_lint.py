@@ -15,7 +15,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-vs = load("verify-states.py")
+vs = load("verify.py")
 
 HERE = os.path.dirname(__file__)
 LINT_JS = os.path.join(HERE, "..", "scripts", "preview-lint.js")

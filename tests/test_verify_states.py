@@ -13,7 +13,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-vs = load("verify-states.py")
+vs = load("verify.py")
 
 FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures", "verify_states")
 BROWSER = vs.find_browser()
@@ -23,7 +23,7 @@ NO_BROWSER_REASON = "本机没有 Chrome/Chromium,浏览器用例跳过(UNMEASUR
 def run_main(argv):
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
-        code = vs.main(argv)
+        code = vs._main_states(argv)
     return code, buf.getvalue()
 
 
@@ -115,4 +115,4 @@ class TestBrowserGates(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_states()

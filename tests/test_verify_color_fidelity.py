@@ -17,8 +17,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 from _png import png_bytes, write_png
 
-mc = load("measure-colors.py")
-vcf = load("verify-color-fidelity.py")
+mc = load("verify.py")
+vcf = load("verify.py")
 
 
 def _build(tmp, name, pixel_at, size=(100, 100)):
@@ -159,7 +159,7 @@ class TestCli(unittest.TestCase):
             impl, ref = self._fixture_pair(tmp)
             err, out = io.StringIO(), io.StringIO()
             with contextlib.redirect_stderr(err), contextlib.redirect_stdout(out):
-                code = vcf.main([impl, "--reference", ref])
+                code = vcf._main_color_fidelity([impl, "--reference", ref])
             self.assertEqual(code, 0)
             self.assertIn("PASS", err.getvalue())
             payload = json.loads(out.getvalue())
@@ -171,7 +171,7 @@ class TestCli(unittest.TestCase):
             impl, ref = self._fixture_pair(tmp, lambda x, y: (180, 40, 40))
             err, out = io.StringIO(), io.StringIO()
             with contextlib.redirect_stderr(err), contextlib.redirect_stdout(out):
-                code = vcf.main([impl, "--reference", ref])
+                code = vcf._main_color_fidelity([impl, "--reference", ref])
             self.assertEqual(code, 1)
             self.assertIn("FAIL", err.getvalue())
 
@@ -180,10 +180,10 @@ class TestCli(unittest.TestCase):
             impl, ref = self._fixture_pair(tmp)
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = vcf.main([impl, "--reference", os.path.join(tmp, "gone.png")])
+                code = vcf._main_color_fidelity([impl, "--reference", os.path.join(tmp, "gone.png")])
             self.assertEqual(code, 2)
             self.assertIn("UNMEASURED", err.getvalue())
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_color_fidelity()

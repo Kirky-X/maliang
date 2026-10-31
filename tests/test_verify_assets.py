@@ -11,7 +11,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-va = load("verify-assets.py")
+va = load("verify.py")
 
 FIXTURES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "assets")
 
@@ -88,7 +88,7 @@ class TestCli(unittest.TestCase):
     def test_fixture_passes_exit_0(self):
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = va.main([os.path.join(FIXTURES, "pass.html"),
+            code = va._main_assets([os.path.join(FIXTURES, "pass.html"),
                             "--manifest", os.path.join(FIXTURES, "manifest.json")])
         self.assertEqual(code, 0, buf.getvalue())
 
@@ -99,7 +99,7 @@ class TestCli(unittest.TestCase):
                 fh.write("<p>x</p>")
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = va.main([html])
+                code = va._main_assets([html])
             self.assertEqual(code, 2)
             self.assertIn("manifest", err.getvalue())
 
@@ -111,13 +111,13 @@ class TestCli(unittest.TestCase):
             bad = _manifest(tmp, {"not": "a list"})
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
-                code = va.main([html, "--manifest", bad])
+                code = va._main_assets([html, "--manifest", bad])
             self.assertEqual(code, 2)
 
     def test_missing_html_exit_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = va.main([os.path.join("no", "such.html")])
+            code = va._main_assets([os.path.join("no", "such.html")])
         self.assertEqual(code, 2)
 
     def test_failure_exits_1(self):
@@ -128,10 +128,10 @@ class TestCli(unittest.TestCase):
             manifest = _manifest(tmp, MANIFEST)
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
-                code = va.main([html, "--manifest", manifest])
+                code = va._main_assets([html, "--manifest", manifest])
             self.assertEqual(code, 1)
             self.assertIn("不许宣称完成", buf.getvalue())
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_assets()

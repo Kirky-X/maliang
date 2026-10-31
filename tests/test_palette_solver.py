@@ -10,16 +10,16 @@ import unittest
 sys.path.insert(0, os.path.dirname(__file__))
 from _load import load  # noqa: E402
 
-ps = load("palette-solver.py")
+ps = load("verify.py")
 
 
 class TestSolve(unittest.TestCase):
     def test_three_roles_meet_floors(self):
         roles, missing = ps.solve_palette("0b0d12", hue=150, chroma=0.12)
         self.assertEqual(missing, [])
-        self.assertGreaterEqual(ps.contrast_ratio(roles["text"], roles["bg"]), 4.5)
-        self.assertGreaterEqual(ps.contrast_ratio(roles["ui"], roles["bg"]), 3.0)
-        self.assertLess(ps.contrast_ratio(roles["decorative"], roles["bg"]), 3.0)
+        self.assertGreaterEqual(ps.contrast_ratio_hex_pair(roles["text"], roles["bg"]), 4.5)
+        self.assertGreaterEqual(ps.contrast_ratio_hex_pair(roles["ui"], roles["bg"]), 3.0)
+        self.assertLess(ps.contrast_ratio_hex_pair(roles["decorative"], roles["bg"]), 3.0)
         # 三档互不撞色(近底微差色 ≠ UI 档)
         self.assertNotEqual(roles["decorative"], roles["ui"])
         self.assertNotEqual(roles["ui"], roles["text"])
@@ -27,7 +27,7 @@ class TestSolve(unittest.TestCase):
     def test_light_bg_solves_dark_foreground(self):
         roles, missing = ps.solve_palette("fbfbfe", hue=220, chroma=0.10)
         self.assertEqual(missing, [])
-        self.assertGreaterEqual(ps.contrast_ratio(roles["text"], roles["bg"]), 4.5)
+        self.assertGreaterEqual(ps.contrast_ratio_hex_pair(roles["text"], roles["bg"]), 4.5)
 
     def test_unreachable_floor_returns_none(self):
         # 显性无解:floor 15 不可达 → None(不得静默给不达标色)
@@ -51,7 +51,7 @@ class TestCli(unittest.TestCase):
     def test_text_report_has_legal_pairings(self):
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = ps.main(["--bg", "0b0d12", "--hue", "150", "--chroma", "0.12"])
+            code = ps._main_palette_solver(["--bg", "0b0d12", "--hue", "150", "--chroma", "0.12"])
         self.assertEqual(code, 0)
         out = buf.getvalue()
         self.assertIn("Contrast matrix", out)
@@ -61,7 +61,7 @@ class TestCli(unittest.TestCase):
     def test_json_shape(self):
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            code = ps.main(["--bg", "0b0d12", "--hue", "150", "--json"])
+            code = ps._main_palette_solver(["--bg", "0b0d12", "--hue", "150", "--json"])
         self.assertEqual(code, 0)
         payload = json.loads(buf.getvalue())
         self.assertEqual(set(payload["roles"]) - {"bg"}, {"text", "ui", "decorative"})
@@ -71,15 +71,15 @@ class TestCli(unittest.TestCase):
     def test_bad_bg_exits_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = ps.main(["--bg", "xyz", "--hue", "150"])
+            code = ps._main_palette_solver(["--bg", "xyz", "--hue", "150"])
         self.assertEqual(code, 2)
 
     def test_bad_hue_exits_2(self):
         err = io.StringIO()
         with contextlib.redirect_stderr(err):
-            code = ps.main(["--bg", "0b0d12", "--hue", "999"])
+            code = ps._main_palette_solver(["--bg", "0b0d12", "--hue", "999"])
         self.assertEqual(code, 2)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest._main_palette_solver()

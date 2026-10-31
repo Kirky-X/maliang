@@ -75,7 +75,7 @@
 
 1. **判模式** —— 按 [`meta/surface-modes.md`](../meta/surface-modes.md) 判定页面模式(Persuade / Operate / Read / Experience),写进报告头。模式决定"好"的定义与启发式 n/a 项。
 2. **评审 A · 设计评审**(隔离上下文)—— 走下方 Nielsen 打分表 + 认知负荷清单 + persona 走查,产出评分与发现。
-3. **检测 B · 确定性证据**(隔离上下文)—— 跑 `preview-check.py` 可脚本化 51 项(143 项中其余 92 项:89 项运行时/人工 + 3 项门禁脚本项) + 按需跑门禁脚本——有参考图跑 `verify-color-fidelity.py`(ΔE 保真,G39)、产物含资产位跑 `verify-assets.py`(资产在场,G40)、文案跑 `check-copy.py`(句型级反模板) + (有浏览器时)逐页截图走查 + `verify-states.py` 三态对比度与 `verify-interactive.py` **交互真实性**(控件点击实测:声明状态契约却无变化、状态翻转但外观不变两条信号命中即失败;无状态契约的普通按钮无效果仅 advisory),产出机械发现。截图纪律按 [`preview.md`](./preview.md) "取证契约"节执行;无浏览器时上述两门记 UNMEASURED,不得记为通过。
+3. **检测 B · 确定性证据**(隔离上下文)—— 跑 `preview-check.py` 可脚本化 51 项(143 项中其余 92 项:89 项运行时/人工 + 3 项门禁脚本项) + 按需跑门禁脚本——有参考图跑 `verify.py color-fidelity`(ΔE 保真,G39)、产物含资产位跑 `verify.py assets`(资产在场,G40)、文案跑 `check-copy.py`(句型级反模板) + (有浏览器时)逐页截图走查 + `verify.py states` 三态对比度与 `verify.py interactive` **交互真实性**(控件点击实测:声明状态契约却无变化、状态翻转但外观不变两条信号命中即失败;无状态契约的普通按钮无效果仅 advisory),产出机械发现。截图纪律按 [`preview.md`](./preview.md) "取证契约"节执行;无浏览器时上述两门记 UNMEASURED,不得记为通过。
 4. **综合报告** —— 合并 A/B(标注通道),按严重度排序,以**固定判词行 + verdict** 收束(见下方「判词行与 verdict」),落快照,给行动建议。
 
 ---

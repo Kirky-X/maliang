@@ -197,8 +197,8 @@ fi
 # 10. 浏览器依赖门(design 口径:不进 CI 默认路径;无浏览器时不得记为通过)
 echo ""
 echo "==> 浏览器依赖门(不在 CI 内运行)"
-echo "    python3 scripts/verify-states.py examples/preview/        # 三态对比度实测"
-echo "    python3 scripts/verify-interactive.py examples/preview/   # 交互真实性实测"
+echo "    python3 scripts/verify.py states examples/preview/            # 三态对比度实测"
+echo "    python3 scripts/verify.py interactive examples/preview/       # 交互真实性实测"
 echo "    无浏览器时两脚本自报 UNMEASURED / 退出码 2 —— 未测量不得记为通过。"
 
 # 11. 第二批检测脚本(已知正确样例冒烟;strict 三态,G39/G40/G41/G42 脚本层)
@@ -214,10 +214,10 @@ gate_if_script scripts/check-copy.py "check-copy(句型扫描冒烟)" \
 gate_if_script scripts/detect-tells.py "detect-tells(AI 味扫描冒烟)" \
   python3 scripts/detect-tells.py tests/fixtures/detect_tells/clean.html
 gate_if_script scripts/verify-color-fidelity.py "verify-color-fidelity(G39 冒烟)" \
-  python3 scripts/verify-color-fidelity.py tests/fixtures/color/impl.png \
+  python3 scripts/verify.py color-fidelity tests/fixtures/color/impl.png \
     --reference tests/fixtures/color/ref.png
 gate_if_script scripts/verify-assets.py "verify-assets(G40 冒烟)" \
-  python3 scripts/verify-assets.py tests/fixtures/assets/pass.html \
+  python3 scripts/verify.py assets tests/fixtures/assets/pass.html \
     --manifest tests/fixtures/assets/manifest.json
 
 echo ""
