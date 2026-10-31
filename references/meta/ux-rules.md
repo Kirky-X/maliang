@@ -1,6 +1,6 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
-> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 4 条,全库共 52 条。
+> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,全库共 53 条。
 > 与脚本的关系:`scripts/validate-draw-md.py` 现有 23 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 19 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
@@ -130,6 +130,7 @@
 | label-fold-into-value  | label 是最后手段,能折进 value 就折     | 值自明格式(`$19.99`、邮箱地址)不配 label;确需 label 时折进值(「仅剩 12 件」,不是「库存: 12」)或排为显著次级内容;规格表式页面(用户扫的就是 label)才反向强调 label | `label: value` 平铺,给所有数据同等权重(数据库导出感) | 全端 | WARN     |
 | weight-contrast-balance| 重量与对比互偿:加重量修低对比,降对比修超重 | 实心图标压过旁边文字 → 降图标对比(更柔的色);1px 边框柔色太隐、加深又太凶 → 保柔色加粗到 2px | 用同一种预算硬扛(只加深 / 只加粗)把另一维推过头 | 全端 | ADVISORY |
 | baseline-align-mixed   | 一行混排字号对齐用 baseline             | 一行内大小字号混排用 `align-items: baseline`(Web)/ `CrossAxisAlignment.baseline`(Flutter),大数字与单位/标签底对齐 | 垂直居中对齐混排行,字面看起来各飘各的      | 全端 | ADVISORY |
+| layout-explains        | 删掉不必要的次要标签与描述,让布局本身传达(Avoid unnecessary secondary labels and descriptions — let the layout do the explaining) | 层级靠尺度差/重量差/留白差/分组表达,先试「不加任何说明能不能不言自明」;说明文字只在删掉后会误读或误操作时保留(单位/法律/风险类);同组卡片用版式差异区分身份,说明只留一份且放在唯一需要处 | 每个标题上挂一行全大写小标签(eyebrow)充当层级;卡片下配「这是 XX 卡片」式自我描述行;标签与描述双份说同一件事;用说明行补版式没做出来的分组 | 全端 | WARN     |
 
 ## 与其他文档的关系
 
