@@ -121,15 +121,15 @@
 
 | slug | 名称 | 气质一句话 | 签名色板（前 3 个 hex） | 文件 |
 | ---- | ---- | ---------- | ------------------------ | ---- |
-| `01-minimalism` | Minimalism & Swiss Style | 黑白单色加米灰中性，大留白网格秩序 | `#000000` `#ffffff` `#808080` | [01-minimalism.md](01-minimalism.md) |
-| `02-neumorphism` | Neumorphism | 软粉彩底，同色凸凹浮雕阴影 | `#e8e8e8` `#ffffff` `#d1d1d1` | [02-neumorphism.md](02-neumorphism.md) |
-| `03-glassmorphism` | Glassmorphism | 半透白磨砂层叠，鲜艳底色透出模糊 | `#667eea` `#764ba2` `#f093fb` | [03-glassmorphism.md](03-glassmorphism.md) |
-| `04-brutalism` | Brutalism | 红蓝黄黑原色硬撞，裸文本高对比零修饰 | `#ff0000` `#0000ff` `#ffff00` | [04-brutalism.md](04-brutalism.md) |
+| `minimalism` | Minimalism & Swiss Style | 黑白单色加米灰中性，大留白网格秩序 | `#000000` `#ffffff` `#808080` | [minimalism.md](minimalism.md) |
+| `neumorphism` | Neumorphism | 软粉彩底，同色凸凹浮雕阴影 | `#e8e8e8` `#ffffff` `#d1d1d1` | [neumorphism.md](neumorphism.md) |
+| `glassmorphism` | Glassmorphism | 半透白磨砂层叠，鲜艳底色透出模糊 | `#667eea` `#764ba2` `#f093fb` | [glassmorphism.md](glassmorphism.md) |
+| `brutalism` | Brutalism | 红蓝黄黑原色硬撞，裸文本高对比零修饰 | `#ff0000` `#0000ff` `#ffff00` | [brutalism.md](brutalism.md) |
 | `05-3d-hyperrealism` | 3D & Hyperrealism | 深海军蓝酒红金多档渐变，拟真光影厚阴影 | `#ffd700` `#ffa500` `#667eea` | [05-3d-hyperrealism.md](05-3d-hyperrealism.md) |
-| `06-vibrant-block` | Vibrant & Block-based | 霓虹原色几何色块拼贴，高饱和分区 | `#39ff14` `#bf00ff` `#ff1493` | [06-vibrant-block.md](06-vibrant-block.md) |
-| `07-dark-mode-oled` | Dark Mode (OLED) | 纯黑 OLED 底，午夜蓝分域配霓虹强调 | `#000000` `#121212` `#39ff14` | [07-dark-mode-oled.md](07-dark-mode-oled.md) |
-| `08-accessible` | Accessible & Ethical | WCAG AA/AAA 对比底，色彩永不单独编码 | `#0066cc` `#000000` `#ffffff` | [08-accessible.md](08-accessible.md) |
-| `09-claymorphism` | Claymorphism | 蜜桃婴儿蓝薄荷粉彩，黏土软 3D 厚圆角 | `#fef3f2` `#f0f9ff` `#ffffff` | [09-claymorphism.md](09-claymorphism.md) |
+| `vibrant-block` | Vibrant & Block-based | 霓虹原色几何色块拼贴，高饱和分区 | `#39ff14` `#bf00ff` `#ff1493` | [vibrant-block.md](vibrant-block.md) |
+| `dark-mode-oled` | Dark Mode (OLED) | 纯黑 OLED 底，午夜蓝分域配霓虹强调 | `#000000` `#121212` `#39ff14` | [dark-mode-oled.md](dark-mode-oled.md) |
+| `accessible` | Accessible & Ethical | WCAG AA/AAA 对比底，色彩永不单独编码 | `#0066cc` `#000000` `#ffffff` | [accessible.md](accessible.md) |
+| `claymorphism` | Claymorphism | 蜜桃婴儿蓝薄荷粉彩，黏土软 3D 厚圆角 | `#fef3f2` `#f0f9ff` `#ffffff` | [claymorphism.md](claymorphism.md) |
 | `10-aurora-ui` | Aurora UI | 蓝紫粉青极光渐变融合，网格渐变发光 | `#667eea` `#764ba2` `#f093fb` | [10-aurora-ui.md](10-aurora-ui.md) |
 | `11-retro-futurism` | Retro-Futurism | 深黑底霓虹蓝粉青，CRT 扫描线加金属银 | `#1a1a2e` `#0080ff` `#ff006e` | [11-retro-futurism.md](11-retro-futurism.md) |
 | `12-flat-design` | Flat Design | 4-6 色高饱和实色，零阴影零拟物 | `#3498db` `#e74c3c` `#f39c12` | [12-flat-design.md](12-flat-design.md) |
