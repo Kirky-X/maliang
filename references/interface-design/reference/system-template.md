@@ -1,20 +1,20 @@
-# Design System
+# 设计系统
 
-## Direction
+## 方向
 
-**Personality:** [Precision & Density | Warmth & Approachability | Sophistication & Trust | Boldness & Clarity | Utility & Function | Data & Analysis]
+**性格：** [精密与密度 | 温暖与亲和 | 精致与信任 | 大胆与清晰 | 实用与功能 | 数据与分析]
 
-**Foundation:** [warm | cool | neutral | tinted]
+**基础：** [暖 | 冷 | 中性 | 着色]
 
-**Depth:** [borders-only | subtle-shadows | layered-shadows]
+**深度：** [仅边框 | 微妙阴影 | 分层阴影]
 
 ## Tokens
 
-### Spacing
-Base: [4px | 8px]
-Scale: [4, 8, 12, 16, 24, 32, 64]
+### 间距
+基准：[4px | 8px]
+刻度：[4, 8, 12, 16, 24, 32, 64]
 
-### Colors
+### 颜色
 ```
 --foreground: [slate-900]
 --secondary: [slate-600]
@@ -23,34 +23,34 @@ Scale: [4, 8, 12, 16, 24, 32, 64]
 --accent: [blue-600]
 ```
 
-### Radius
-Scale: [4px, 6px, 8px] (sharp) | [8px, 12px, 16px] (soft)
+### 圆角
+刻度：[4px, 6px, 8px]（锐利）| [8px, 12px, 16px]（柔和）
 
-### Typography
-Font: [system | Inter | Geist]
-Scale: 12, 13, 14 (base), 16, 18, 24, 32
-Weights: 400, 500, 600
+### 排版
+字体：[system | Inter | Geist]
+刻度：12, 13, 14（基准）, 16, 18, 24, 32
+字重：400, 500, 600
 
-## Patterns
+## 模式
 
-### Button Primary
-- Height: 36px
-- Padding: 12px 16px
-- Radius: 6px
-- Font: 14px, 500 weight
-- Background: accent color
-- Usage: Primary actions
+### 主按钮
+- 高度：36px
+- 内边距：12px 16px
+- 圆角：6px
+- 字体：14px，500 字重
+- 背景：强调色
+- 用途：主要动作
 
-### Card Default
-- Border: 0.5px solid (faint)
-- Padding: 16px
-- Radius: 8px
-- Background: white
-- Usage: Content containers
+### 默认卡片
+- 边框：0.5px 实线（faint）
+- 内边距：16px
+- 圆角：8px
+- 背景：白色
+- 用途：内容容器
 
-## Decisions
+## 决策
 
-| Decision | Rationale | Date |
-|----------|-----------|------|
-| Borders-only depth | Dashboard tool, users want density. Shadows add visual weight without information value. | YYYY-MM-DD |
-| 4px spacing base | Tight enough for data tables, divisible by common UI sizes | YYYY-MM-DD |
+| 决策 | 理由 | 日期 |
+|------|------|------|
+| 仅用边框营造深度 | 仪表盘工具，用户需要密度。阴影增加视觉重量，却不带来信息价值。 | YYYY-MM-DD |
+| 4px 间距基准 | 对数据表格足够紧凑，且能被常见 UI 尺寸整除 | YYYY-MM-DD |

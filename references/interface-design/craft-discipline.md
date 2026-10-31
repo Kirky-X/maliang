@@ -9,6 +9,7 @@ description: Craft-first interface design for dashboards, admin panels, SaaS app
 
 Build product interfaces with the craft of a top design team — Linear, Vercel, Stripe, Apple. The difference between those and generic output is not talent. It is that every decision was *decided*, the hierarchy is unmistakable, and a hundred small details are correct at once. This skill is how you get there.
 
+> **Canonical 分工（2026-10）**：本文件是并入的英文原版参考。与中文规范重叠的主题，**修订责任与数值正本在中文侧**——海拔与边框 → [`../dimensions/elevation.md`](../dimensions/elevation.md)、同心圆角与图片描边 → [`../dimensions/radius.md`](../dimensions/radius.md)、60/30/10 → [`../dimensions/color.md`](../dimensions/color.md)、动效时长预算 → [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)、触控热区 → [`../meta/accessibility.md`](../meta/accessibility.md)。下文与正典冲突时以正典为准；借鉴纪律正本在 [`../donors/README.md`](../donors/README.md)（见下文「Adapt the Values, Not the Looks」节指针）。
 
 ## Scope
 
@@ -156,10 +157,11 @@ Every product exists in a world, and that world has colors. Before reaching for 
 
 ---
 
+# Adapt the Values, Not the Looks
 
-> Source: 规则库 craft-loop "steal before you build" (absorbed 2026-10; the value library lives in [`../donors/`](../donors/README.md)). **The canonical steal-discipline text is [`../donors/README.md`](../donors/README.md) §3** — the two texts had drifted, so this section now carries only the pointer; on any conflict donors/README.md §3 wins. Run it before writing code; it sits alongside "Render It When You Can" — one governs what to look at before building, the other what to steal before building.
+> Source: 规则库 craft-loop "adapt before you build" (absorbed 2026-10; the value library lives in [`../donors/`](../donors/README.md)). **The canonical adaptation-discipline text is [`../donors/README.md`](../donors/README.md) §3** — the two texts had drifted, so this section now carries only the pointer; on any conflict donors/README.md §3 wins. Run it before writing code; it sits alongside "Render It When You Can" — one governs what to look at before building, the other what to adapt before building.
 
-Once the direction is set and before writing the first component, pick **1-2 donor sites** from [`../donors/`](../donors/README.md) whose character is closest, and extract **3-5 concrete values or moves** into the design plan — then state "stole X from {site}" line by line. The full rule (steal values not vibes, the fair-game list, brand-identity exclusions, and the DESIGN.md-wins conflict clause) lives in donors/README.md §3.
+Once the direction is set and before writing the first component, pick **1-2 donor sites** from [`../donors/`](../donors/README.md) whose character is closest, and extract **3-5 concrete values or moves** into the design plan — then state "adapted X from {site}" line by line. The full rule (adapt values not vibes, the fair-game list, brand-identity exclusions, and the DESIGN.md-wins conflict clause) lives in donors/README.md §3.
 
 # Before Writing Each Component
 

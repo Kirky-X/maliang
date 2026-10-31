@@ -1,20 +1,20 @@
-# Design System - Warmth & Approachability
+# 设计系统 - 温暖与亲和
 
-Example system for collaborative/consumer apps
+用于协作/消费级应用的示例系统
 
-## Direction
+## 方向
 
-**Personality:** Warmth & Approachability
-**Foundation:** Warm (stone)
-**Depth:** Subtle shadows
+**性格：** 温暖与亲和
+**基础：** 暖（stone）
+**深度：** 微妙阴影
 
 ## Tokens
 
-### Spacing
-Base: 4px
-Scale: 8, 12, 16, 24, 32, 48 (generous)
+### 间距
+基准：4px
+刻度：8, 12, 16, 24, 32, 48（宽裕）
 
-### Colors
+### 颜色
 ```
 --foreground: stone-900
 --secondary: stone-600
@@ -24,40 +24,40 @@ Scale: 8, 12, 16, 24, 32, 48 (generous)
 --shadow: 0 1px 3px rgba(0, 0, 0, 0.08)
 ```
 
-### Radius
-Scale: 8px, 12px, 16px (soft, friendly)
+### 圆角
+刻度：8px, 12px, 16px（柔和、友好）
 
-### Typography
-Font: Inter (approachable, readable)
-Scale: 13, 14, 15, 16 (base), 18, 20, 24
-Weights: 400, 500, 600
+### 排版
+字体：Inter（亲和、易读）
+刻度：13, 14, 15, 16（基准）, 18, 20, 24
+字重：400, 500, 600
 
-## Patterns
+## 模式
 
-### Button
-- Height: 40px (comfortable)
-- Padding: 12px 20px
-- Radius: 8px
-- Font: 15px, 500 weight
-- Shadow: subtle
+### 按钮
+- 高度：40px（舒适）
+- 内边距：12px 20px
+- 圆角：8px
+- 字体：15px，500 字重
+- 阴影：微妙
 
-### Card
-- Border: none
-- Padding: 20px
-- Radius: 12px
-- Shadow: 0 1px 3px rgba(0,0,0,0.08)
-- Background: white on stone-50
+### 卡片
+- 边框：无
+- 内边距：20px
+- 圆角：12px
+- 阴影：0 1px 3px rgba(0,0,0,0.08)
+- 背景：stone-50 上的白色
 
-### Input
-- Height: 44px
-- Padding: 12px 16px
-- Radius: 8px
-- Border: 1.5px solid (faint)
+### 输入框
+- 高度：44px
+- 内边距：12px 16px
+- 圆角：8px
+- 边框：1.5px 实线（faint）
 
-## Decisions
+## 决策
 
-| Decision | Rationale | Date |
-|----------|-----------|------|
-| Subtle shadows | Gentle depth, approachable feel | 2026-01-15 |
-| Generous spacing | Focused tasks, not cramming info | 2026-01-15 |
-| Warm foundation | Human, comfortable, inviting | — |
+| 决策 | 理由 | 日期 |
+|------|------|------|
+| 微妙阴影 | 轻柔深度，亲和感 | 2026-01-15 |
+| 宽裕间距 | 专注任务，不塞满信息 | 2026-01-15 |
+| 暖色基础 | 人性、舒适、宜人 | — |

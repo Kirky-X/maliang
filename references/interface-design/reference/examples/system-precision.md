@@ -1,20 +1,20 @@
-# Design System - Precision & Density
+# 设计系统 - 精密与密度
 
-Example system for dashboard/admin interfaces
+用于仪表盘/管理界面的示例系统
 
-## Direction
+## 方向
 
-**Personality:** Precision & Density
-**Foundation:** Cool (slate)
-**Depth:** Borders-only
+**性格：** 精密与密度
+**基础：** 冷（slate）
+**深度：** 仅边框
 
 ## Tokens
 
-### Spacing
-Base: 4px
-Scale: 4, 8, 12, 16, 24, 32
+### 间距
+基准：4px
+刻度：4, 8, 12, 16, 24, 32
 
-### Colors
+### 颜色
 ```
 --foreground: slate-900
 --secondary: slate-600
@@ -24,39 +24,39 @@ Scale: 4, 8, 12, 16, 24, 32
 --accent: blue-600
 ```
 
-### Radius
-Scale: 4px, 6px, 8px (sharp, technical)
+### 圆角
+刻度：4px, 6px, 8px（锐利、技术感）
 
-### Typography
-Font: system-ui (fast, native)
-Scale: 11, 12, 13, 14 (base), 16, 18
-Weights: 400, 500, 600
-Mono: SF Mono, Consolas (for data)
+### 排版
+字体：system-ui（快速、原生）
+刻度：11, 12, 13, 14（基准）, 16, 18
+字重：400, 500, 600
+等宽：SF Mono, Consolas（用于数据）
 
-## Patterns
+## 模式
 
-### Button
-- Height: 32px (compact)
-- Padding: 8px 12px
-- Radius: 4px
-- Font: 13px, 500 weight
-- Border: 1px solid
+### 按钮
+- 高度：32px（紧凑）
+- 内边距：8px 12px
+- 圆角：4px
+- 字体：13px，500 字重
+- 边框：1px 实线
 
-### Card
-- Border: 0.5px solid (faint)
-- Padding: 12px
-- Radius: 6px
-- No shadow
+### 卡片
+- 边框：0.5px 实线（faint）
+- 内边距：12px
+- 圆角：6px
+- 无阴影
 
-### Table Cell
-- Padding: 8px 12px
-- Font: 13px tabular-nums
-- Border-bottom: 1px solid (faint)
+### 表格单元格
+- 内边距：8px 12px
+- 字体：13px tabular-nums
+- 下边框：1px 实线（faint）
 
-## Decisions
+## 决策
 
-| Decision | Rationale | Date |
-|----------|-----------|------|
-| Borders-only | Information density matters more than lift | 2026-01-15 |
-| Compact sizing | Power users, high information density | 2026-01-15 |
-| System fonts | Performance, native feel | — |
+| 决策 | 理由 | 日期 |
+|------|------|------|
+| 仅用边框 | 信息密度比悬浮感更重要 | 2026-01-15 |
+| 紧凑尺寸 | 面向高级用户，高信息密度 | 2026-01-15 |
+| 系统字体 | 性能、原生感 | — |

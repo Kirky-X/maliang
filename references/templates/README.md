@@ -37,7 +37,7 @@ platforms: <适用平台>
 | `landing-pattern` | 落地页章节编排 + CTA 策略（[landing-patterns.md](landing-patterns.md)） | — |
 | `character-direction` | 性格方向卡（精密密度 / 温暖亲和…，与 product-reasoning 产品类型正交的第二轴） | — |
 | `components` | 区段级编码原型（导航 14 / hero 9 / 区段头 5 / 主体 6 / CTA 4 / 证言 4 / 页脚 8），从索引挑名、只加载选中的那几个（[INDEX.md](../components/INDEX.md)）；原型含变体旋钮，供 [variation-engine.md](variation-engine.md) 盖章扩 knob | 见 components/ |
-| `donor` | 品牌供体值库（Linear / Vercel / Stripe / Raycast…「借鉴不偷感觉」，见 [donors/README.md](../donors/README.md)） | 见 donors/ |
+| `donor` | 品牌供体值库（Linear / Vercel / Stripe / Raycast…「借鉴数值,不借鉴观感」，见 [donors/README.md](../donors/README.md)） | 见 donors/ |
 
 ## 3. 选型路由（四步，进入 design-md 方向阶段时执行）
 
