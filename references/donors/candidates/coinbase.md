@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 金融与加密(finance) · 站点摘要: Crypto exchange. Clean blue identity, trust-focused, institutional feel
      站点色板: #0a0b0d, #0052ff, #578bfa, #eef0f3, #282b31, #5b616e
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Coinbase
 

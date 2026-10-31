@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 开发工具与平台(dev) · 站点摘要: Project management for engineers. Ultra-minimal, precise, purple accent
      站点色板: #f7f8f8, #ffffff, #f3f4f5, #1a1a1e, #3c3c43, #62666d
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Linear
 

@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 设计与生产力(design) · 站点摘要: Website builder. Bold black and blue, motion-first, design-forward
      站点色板: #000000, #ffffff, #0099ff, #a6a6a6, #090909, #ff4444
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Framer
 

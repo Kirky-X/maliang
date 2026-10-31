@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 基础设施与云(infra) · 站点摘要: Headless CMS. Red accent, content-first editorial layout
      站点色板: #f7f7f7, #ffffff, #f0f0f0, #0b0b0b, #212121, #f36458
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Sanity
 

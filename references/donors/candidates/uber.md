@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 企业与消费(enterprise) · 站点摘要: Mobility platform. Bold black and white, tight type, urban energy
      站点色板: #000000, #ffffff, #e2e2e2, #f3f3f3, #efefef, #4b4b4b
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Uber
 

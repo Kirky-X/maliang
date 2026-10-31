@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: AI 与机器学习(ai) · 站点摘要: Anthropic's AI assistant. Warm terracotta accent, clean editorial layout
      站点色板: #141413, #c96442, #d97757, #b53333, #3898ec, #f5f4ed
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Claude (Anthropic)
 

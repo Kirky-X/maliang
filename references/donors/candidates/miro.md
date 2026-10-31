@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 设计与生产力(design) · 站点摘要: Visual collaboration. Bright yellow accent, infinite canvas aesthetic
      站点色板: #1c1c1e, #5b76fe, #2a41b6, #00b473, #ffc6c6, #600000
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Miro
 

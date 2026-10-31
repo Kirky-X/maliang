@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 金融与加密(finance) · 站点摘要: Digital banking. Sleek dark interface, gradient cards, fintech precision
      站点色板: #ffffff, #191c1f, #f4f4f4, #494fdf, #4f55f1, #e23b4a
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Revolut
 

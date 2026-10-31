@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 开发工具与平台(dev) · 站点摘要: Product analytics. Playful hedgehog branding, developer-friendly dark UI
      站点色板: #4d4f46, #23251d, #f54e00, #f7a501, #b17816, #3b82f6
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: PostHog
 

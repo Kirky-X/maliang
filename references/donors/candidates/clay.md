@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 设计与生产力(design) · 站点摘要: Creative agency. Organic shapes, soft gradients, art-directed layout
      站点色板: #faf9f7, #000000, #ffffff, #dad4c8, #eee9df, #9f9b93
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: Clay
 

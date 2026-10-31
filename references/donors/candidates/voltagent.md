@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: AI 与机器学习(ai) · 站点摘要: AI agent framework. Void-black canvas, emerald accent, terminal-native
      站点色板: #050507, #101010, #00d992, #2fd6a1, #10b981, #818cf8
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: 
 

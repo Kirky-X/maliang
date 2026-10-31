@@ -1,7 +1,7 @@
 <!-- 供体候选池快照(原文存档,非蒸馏供体)。
      站点分组: 基础设施与云(infra) · 站点摘要: Document database. Green leaf branding, developer documentation focus
      站点色板: #001e2b, #00ed64, #00684a, #006cfa, #3860be, #1c2d38
-     晋升正式供体须满足 references/donors/README.md §5 三条件;蒸馏稿另立 references/donors/<id>.md,与本快照并存。 -->
+     晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Design System: MongoDB
 
