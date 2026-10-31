@@ -125,67 +125,67 @@
 | `neumorphism` | Neumorphism | 软粉彩底，同色凸凹浮雕阴影 | `#e8e8e8` `#ffffff` `#d1d1d1` | [neumorphism.md](neumorphism.md) |
 | `glassmorphism` | Glassmorphism | 半透白磨砂层叠，鲜艳底色透出模糊 | `#667eea` `#764ba2` `#f093fb` | [glassmorphism.md](glassmorphism.md) |
 | `brutalism` | Brutalism | 红蓝黄黑原色硬撞，裸文本高对比零修饰 | `#ff0000` `#0000ff` `#ffff00` | [brutalism.md](brutalism.md) |
-| `05-3d-hyperrealism` | 3D & Hyperrealism | 深海军蓝酒红金多档渐变，拟真光影厚阴影 | `#ffd700` `#ffa500` `#667eea` | [05-3d-hyperrealism.md](05-3d-hyperrealism.md) |
+| `3d-hyperrealism` | 3D & Hyperrealism | 深海军蓝酒红金多档渐变，拟真光影厚阴影 | `#ffd700` `#ffa500` `#667eea` | [05-3d-hyperrealism.md](3d-hyperrealism.md) |
 | `vibrant-block` | Vibrant & Block-based | 霓虹原色几何色块拼贴，高饱和分区 | `#39ff14` `#bf00ff` `#ff1493` | [vibrant-block.md](vibrant-block.md) |
 | `dark-mode-oled` | Dark Mode (OLED) | 纯黑 OLED 底，午夜蓝分域配霓虹强调 | `#000000` `#121212` `#39ff14` | [dark-mode-oled.md](dark-mode-oled.md) |
 | `accessible` | Accessible & Ethical | WCAG AA/AAA 对比底，色彩永不单独编码 | `#0066cc` `#000000` `#ffffff` | [accessible.md](accessible.md) |
 | `claymorphism` | Claymorphism | 蜜桃婴儿蓝薄荷粉彩，黏土软 3D 厚圆角 | `#fef3f2` `#f0f9ff` `#ffffff` | [claymorphism.md](claymorphism.md) |
-| `10-aurora-ui` | Aurora UI | 蓝紫粉青极光渐变融合，网格渐变发光 | `#667eea` `#764ba2` `#f093fb` | [10-aurora-ui.md](10-aurora-ui.md) |
-| `11-retro-futurism` | Retro-Futurism | 深黑底霓虹蓝粉青，CRT 扫描线加金属银 | `#1a1a2e` `#0080ff` `#ff006e` | [11-retro-futurism.md](11-retro-futurism.md) |
-| `12-flat-design` | Flat Design | 4-6 色高饱和实色，零阴影零拟物 | `#3498db` `#e74c3c` `#f39c12` | [12-flat-design.md](12-flat-design.md) |
-| `13-skeuomorphism` | Skeuomorphism | 木纹皮革金属材质，8-12 档渐变拟真 | `#c8c8c8` `#a0a0a0` `#f5f5f5` | [13-skeuomorphism.md](13-skeuomorphism.md) |
-| `14-liquid-glass` | Liquid Glass | 彩虹虹彩流质渐变，红青色差流动变形 | `#667eea` `#764ba2` `#f093fb` | [14-liquid-glass.md](14-liquid-glass.md) |
-| `15-motion-driven` | Motion-Driven | 高对比强调色承载动效，绿红语义状态色 | `#22c55e` `#ef4444` | [15-motion-driven.md](15-motion-driven.md) |
-| `16-micro-interactions` | Micro-interactions | 10-20% 细微色移做反馈，中性底配状态点 | `#3b82f6` `#22c55e` `#ef4444` | [16-micro-interactions.md](16-micro-interactions.md) |
-| `17-inclusive-design` | Inclusive Design | WCAG AAA 7:1 对比，红绿不单独编码，纹样辅助 | `#0066cc` `#003366` `#2563eb` | [17-inclusive-design.md](17-inclusive-design.md) |
-| `18-zero-interface` | Zero Interface | 软白暖米底，可见界面元素降到近零 | `#fafafa` `#e5e5e5` `#f5f1e8` | [18-zero-interface.md](18-zero-interface.md) |
-| `19-soft-ui-evolution` | Soft UI Evolution | 高对比粉彩，软 UI 投影的可及性迭代 | `#e0f2fe` `#f0f9ff` `#ecfeff` | [19-soft-ui-evolution.md](19-soft-ui-evolution.md) |
-| `38-neubrutalism` | Neubrutalism | 黄红蓝原色块黑粗描边硬投影，零渐变 | `#fff8e7` `#ff6b6b` `#4ecdc4` | [38-neubrutalism.md](38-neubrutalism.md) |
-| `39-bento-box` | Bento Box Grid | 中性底加品牌色，不对称模块瓷砖拼格 | `#ffffff` `#f5f5f5` | [39-bento-box.md](39-bento-box.md) |
-| `40-y2k-revival` | Y2K Aesthetic | 荧光粉青铬银金属，气泡光泽虹彩 | `#ff00ff` `#00ffff` `#ffff00` | [40-y2k-revival.md](40-y2k-revival.md) |
-| `41-cyberpunk` | Cyberpunk UI | 深黑底矩阵绿品红青霓虹，扫描线加故障色 | `#ff00ff` `#00ffff` `#ffff00` | [41-cyberpunk.md](41-cyberpunk.md) |
-| `42-organic-biophilic` | Organic Biophilic | 森林绿大地棕米色自然系，有机圆角形 | `#f5f1e8` `#e0d8c8` `#5d6b4d` | [42-organic-biophilic.md](42-organic-biophilic.md) |
-| `43-ai-native` | AI-Native UI | 中性底配 AI 紫单强调，会话流状态点 | `#667eea` `#764ba2` `#6366f1` | [43-ai-native.md](43-ai-native.md) |
-| `44-memphis-revival` | Memphis Design | 粉黄青几何撞色，波普纹样填充 | `#fff5e6` `#ffe66d` `#ff6b6b` | [44-memphis-revival.md](44-memphis-revival.md) |
-| `45-vaporwave` | Vaporwave | 粉青薄荷紫日落渐变，VHS 故障质感 | `#ff71ce` `#c0c0c0` `#01cdfe` | [45-vaporwave.md](45-vaporwave.md) |
-| `46-dimensional-layering` | Dimensional Layering | 中性底配 sm 至 xl 阴影阶梯，层叠表达深度 | `#ffffff` `#f5f5f5` `#e0e0e0` | [46-dimensional-layering.md](46-dimensional-layering.md) |
-| `47-exaggerated-minimalism` | Exaggerated Minimalism | 黑白加单一艳色，超大字号排印做主角 | `#000000` `#ffffff` | [47-exaggerated-minimalism.md](47-exaggerated-minimalism.md) |
-| `48-kinetic-typography` | Kinetic Typography | 文字动效主导，高对比底渐变字填充 | — | [48-kinetic-typography.md](48-kinetic-typography.md) |
-| `49-parallax-storytelling` | Parallax Storytelling | 滚动分层叙事，分段专属色板与深度层色 | — | [49-parallax-storytelling.md](49-parallax-storytelling.md) |
-| `50-swiss-modernism` | Swiss Modernism 2.0 | 黑白灰网格系统，Helvetica 血统单点缀色 | `#000000` `#ffffff` `#f5f5f5` | [50-swiss-modernism.md](50-swiss-modernism.md) |
-| `51-hud-scifi` | HUD / Sci-Fi FUI | 霓虹青全息蓝警报红，网格线加透明黑 HUD | `#00ffff` `#0080ff` `#ff0000` | [51-hud-scifi.md](51-hud-scifi.md) |
-| `52-pixel-art` | Pixel Art | NES 调色板低饱和，抖动着色像素块 | `#0f380f` `#9bbc0f` `#306230` | [52-pixel-art.md](52-pixel-art.md) |
-| `53-bento-grids` | Bento Grids | 米白底 Apple 式模块卡配柔影 | `#f5f5f7` `#ffffff` `#1d1d1f` | [53-bento-grids.md](53-bento-grids.md) |
-| `54-neubrutalism-v2` | Neubrutalism | 爆黄亮红黑主色，薰衣草薄荷辅助，粗野扁平 | `#fffbf0` `#ff6b6b` `#a388ee` | [54-neubrutalism-v2.md](54-neubrutalism-v2.md) |
-| `55-spatial-ui` | Spatial UI (VisionOS) | 白磨砂玻璃层配深投影，空间深度视觉 | `#ffffff` | [55-spatial-ui.md](55-spatial-ui.md) |
-| `56-e-ink-paper` | E-Ink / Paper | 纸白墨黑高对比，荧光黄笔刷点缀，哑光纸感 | `#1a1a1a` `#f5f1eb` `#fdfbf7` | [56-e-ink-paper.md](56-e-ink-paper.md) |
-| `57-gen-z-chaos` | Gen Z Chaos / Maximalism | 品红绿黄蓝硬撞色，贴纸拼贴噪点满铺 | `#ff6b6b` `#4ecdc4` `#ffe66d` | [57-gen-z-chaos.md](57-gen-z-chaos.md) |
-| `58-biomimetic-organic` | Biomimetic / Organic 2.0 | 细胞粉叶绿素绿生物荧光蓝，深海底色 | `#001e3c` `#00ff41` `#ff9999` | [58-biomimetic-organic.md](58-biomimetic-organic.md) |
+| `aurora-ui` | Aurora UI | 蓝紫粉青极光渐变融合，网格渐变发光 | `#667eea` `#764ba2` `#f093fb` | [10-aurora-ui.md](aurora-ui.md) |
+| `retro-futurism` | Retro-Futurism | 深黑底霓虹蓝粉青，CRT 扫描线加金属银 | `#1a1a2e` `#0080ff` `#ff006e` | [11-retro-futurism.md](retro-futurism.md) |
+| `flat-design` | Flat Design | 4-6 色高饱和实色，零阴影零拟物 | `#3498db` `#e74c3c` `#f39c12` | [12-flat-design.md](flat-design.md) |
+| `skeuomorphism` | Skeuomorphism | 木纹皮革金属材质，8-12 档渐变拟真 | `#c8c8c8` `#a0a0a0` `#f5f5f5` | [13-skeuomorphism.md](skeuomorphism.md) |
+| `liquid-glass` | Liquid Glass | 彩虹虹彩流质渐变，红青色差流动变形 | `#667eea` `#764ba2` `#f093fb` | [14-liquid-glass.md](liquid-glass.md) |
+| `motion-driven` | Motion-Driven | 高对比强调色承载动效，绿红语义状态色 | `#22c55e` `#ef4444` | [15-motion-driven.md](motion-driven.md) |
+| `micro-interactions` | Micro-interactions | 10-20% 细微色移做反馈，中性底配状态点 | `#3b82f6` `#22c55e` `#ef4444` | [16-micro-interactions.md](micro-interactions.md) |
+| `inclusive-design` | Inclusive Design | WCAG AAA 7:1 对比，红绿不单独编码，纹样辅助 | `#0066cc` `#003366` `#2563eb` | [17-inclusive-design.md](inclusive-design.md) |
+| `zero-interface` | Zero Interface | 软白暖米底，可见界面元素降到近零 | `#fafafa` `#e5e5e5` `#f5f1e8` | [18-zero-interface.md](zero-interface.md) |
+| `soft-ui-evolution` | Soft UI Evolution | 高对比粉彩，软 UI 投影的可及性迭代 | `#e0f2fe` `#f0f9ff` `#ecfeff` | [19-soft-ui-evolution.md](soft-ui-evolution.md) |
+| `neubrutalism` | Neubrutalism | 黄红蓝原色块黑粗描边硬投影，零渐变 | `#fff8e7` `#ff6b6b` `#4ecdc4` | [38-neubrutalism.md](neubrutalism.md) |
+| `bento-box` | Bento Box Grid | 中性底加品牌色，不对称模块瓷砖拼格 | `#ffffff` `#f5f5f5` | [39-bento-box.md](bento-box.md) |
+| `y2k-revival` | Y2K Aesthetic | 荧光粉青铬银金属，气泡光泽虹彩 | `#ff00ff` `#00ffff` `#ffff00` | [40-y2k-revival.md](y2k-revival.md) |
+| `cyberpunk` | Cyberpunk UI | 深黑底矩阵绿品红青霓虹，扫描线加故障色 | `#ff00ff` `#00ffff` `#ffff00` | [41-cyberpunk.md](cyberpunk.md) |
+| `organic-biophilic` | Organic Biophilic | 森林绿大地棕米色自然系，有机圆角形 | `#f5f1e8` `#e0d8c8` `#5d6b4d` | [42-organic-biophilic.md](organic-biophilic.md) |
+| `ai-native` | AI-Native UI | 中性底配 AI 紫单强调，会话流状态点 | `#667eea` `#764ba2` `#6366f1` | [43-ai-native.md](ai-native.md) |
+| `memphis-revival` | Memphis Design | 粉黄青几何撞色，波普纹样填充 | `#fff5e6` `#ffe66d` `#ff6b6b` | [44-memphis-revival.md](memphis-revival.md) |
+| `vaporwave` | Vaporwave | 粉青薄荷紫日落渐变，VHS 故障质感 | `#ff71ce` `#c0c0c0` `#01cdfe` | [45-vaporwave.md](vaporwave.md) |
+| `dimensional-layering` | Dimensional Layering | 中性底配 sm 至 xl 阴影阶梯，层叠表达深度 | `#ffffff` `#f5f5f5` `#e0e0e0` | [46-dimensional-layering.md](dimensional-layering.md) |
+| `exaggerated-minimalism` | Exaggerated Minimalism | 黑白加单一艳色，超大字号排印做主角 | `#000000` `#ffffff` | [47-exaggerated-minimalism.md](exaggerated-minimalism.md) |
+| `kinetic-typography` | Kinetic Typography | 文字动效主导，高对比底渐变字填充 | — | [48-kinetic-typography.md](kinetic-typography.md) |
+| `parallax-storytelling` | Parallax Storytelling | 滚动分层叙事，分段专属色板与深度层色 | — | [49-parallax-storytelling.md](parallax-storytelling.md) |
+| `swiss-modernism` | Swiss Modernism 2.0 | 黑白灰网格系统，Helvetica 血统单点缀色 | `#000000` `#ffffff` `#f5f5f5` | [50-swiss-modernism.md](swiss-modernism.md) |
+| `hud-scifi` | HUD / Sci-Fi FUI | 霓虹青全息蓝警报红，网格线加透明黑 HUD | `#00ffff` `#0080ff` `#ff0000` | [51-hud-scifi.md](hud-scifi.md) |
+| `pixel-art` | Pixel Art | NES 调色板低饱和，抖动着色像素块 | `#0f380f` `#9bbc0f` `#306230` | [52-pixel-art.md](pixel-art.md) |
+| `bento-grids` | Bento Grids | 米白底 Apple 式模块卡配柔影 | `#f5f5f7` `#ffffff` `#1d1d1f` | [53-bento-grids.md](bento-grids.md) |
+| `neubrutalism-v2` | Neubrutalism | 爆黄亮红黑主色，薰衣草薄荷辅助，粗野扁平 | `#fffbf0` `#ff6b6b` `#a388ee` | [54-neubrutalism-v2.md](neubrutalism-v2.md) |
+| `spatial-ui` | Spatial UI (VisionOS) | 白磨砂玻璃层配深投影，空间深度视觉 | `#ffffff` | [55-spatial-ui.md](spatial-ui.md) |
+| `e-ink-paper` | E-Ink / Paper | 纸白墨黑高对比，荧光黄笔刷点缀，哑光纸感 | `#1a1a1a` `#f5f1eb` `#fdfbf7` | [56-e-ink-paper.md](e-ink-paper.md) |
+| `gen-z-chaos` | Gen Z Chaos / Maximalism | 品红绿黄蓝硬撞色，贴纸拼贴噪点满铺 | `#ff6b6b` `#4ecdc4` `#ffe66d` | [57-gen-z-chaos.md](gen-z-chaos.md) |
+| `biomimetic-organic` | Biomimetic / Organic 2.0 | 细胞粉叶绿素绿生物荧光蓝，深海底色 | `#001e3c` `#00ff41` `#ff9999` | [58-biomimetic-organic.md](biomimetic-organic.md) |
 
 ## 落地页风格模板（styleLanding · 8 条）
 
 | slug | 名称 | 气质一句话 | 签名色板（前 3 个 hex） | 文件 |
 | ---- | ---- | ---------- | ------------------------ | ---- |
-| `20-hero-centric` | Hero-Centric Design | 大幅 hero 配高对比 CTA，品牌主色定调 | — | [20-hero-centric.md](20-hero-centric.md) |
-| `21-conversion-optimized` | Conversion-Optimized | 表单聚焦单 CTA，白底高对比加限时紧迫色 | — | [21-conversion-optimized.md](21-conversion-optimized.md) |
-| `22-feature-rich` | Feature-Rich Showcase | 功能卡网格铺陈，绿红蓝紫按语义分色 | — | [22-feature-rich.md](22-feature-rich.md) |
-| `23-minimal-direct` | Minimal & Direct | 单栏黑白灰，强调色只留给 CTA | — | [23-minimal-direct.md](23-minimal-direct.md) |
-| `24-social-proof` | Social Proof-Focused | 信任蓝配成功绿，浅灰 logo 墙与证言高亮 | — | [24-social-proof.md](24-social-proof.md) |
-| `25-interactive-demo` | Interactive Product Demo | 内嵌产品演示，界面同源色加编号步骤色阶 | — | [25-interactive-demo.md](25-interactive-demo.md) |
-| `26-trust-authority` | Trust & Authority | 专业蓝灰底，金银徽章色做资质背书 | — | [26-trust-authority.md](26-trust-authority.md) |
-| `27-storytelling` | Storytelling-Driven | 叙事分段换色，每段独立情绪色板与过渡渐变 | — | [27-storytelling.md](27-storytelling.md) |
+| `hero-centric` | Hero-Centric Design | 大幅 hero 配高对比 CTA，品牌主色定调 | — | [20-hero-centric.md](hero-centric.md) |
+| `conversion-optimized` | Conversion-Optimized | 表单聚焦单 CTA，白底高对比加限时紧迫色 | — | [21-conversion-optimized.md](conversion-optimized.md) |
+| `feature-rich` | Feature-Rich Showcase | 功能卡网格铺陈，绿红蓝紫按语义分色 | — | [22-feature-rich.md](feature-rich.md) |
+| `minimal-direct` | Minimal & Direct | 单栏黑白灰，强调色只留给 CTA | — | [23-minimal-direct.md](minimal-direct.md) |
+| `social-proof` | Social Proof-Focused | 信任蓝配成功绿，浅灰 logo 墙与证言高亮 | — | [24-social-proof.md](social-proof.md) |
+| `interactive-demo` | Interactive Product Demo | 内嵌产品演示，界面同源色加编号步骤色阶 | — | [25-interactive-demo.md](interactive-demo.md) |
+| `trust-authority` | Trust & Authority | 专业蓝灰底，金银徽章色做资质背书 | — | [26-trust-authority.md](trust-authority.md) |
+| `storytelling` | Storytelling-Driven | 叙事分段换色，每段独立情绪色板与过渡渐变 | — | [27-storytelling.md](storytelling.md) |
 
 ## 分析仪表板模板（styleAnalytics · 10 条）
 
 | slug | 名称 | 气质一句话 | 签名色板（前 3 个 hex） | 文件 |
 | ---- | ---- | ---------- | ------------------------ | ---- |
-| `28-data-dense-dashboard` | Data-Dense Dashboard | 浅灰底高密度网格，红绿蓝数据语义色，最小内边距 | `#f5f5f5` `#333333` `#22c55e` | [28-data-dense-dashboard.md](28-data-dense-dashboard.md) |
-| `29-heatmap-density` | Heat Map & Heatmap Style | 蓝到红热度梯度尺，白黄中点双向发散 | `#1e293b` `#1e3a5f` `#0369a1` | [29-heatmap-density.md](29-heatmap-density.md) |
-| `30-executive-summary` | Executive Dashboard | 大号 KPI 数字主导，蓝灰专业底红色警报 | — | [30-executive-summary.md](30-executive-summary.md) |
-| `31-real-time-monitoring` | Real-Time Monitoring | 红橙绿警报三色加蓝色刷新动效，状态灯主导 | `#ff0000` `#ffa500` `#22c55e` | [31-real-time-monitoring.md](31-real-time-monitoring.md) |
-| `32-drill-down-analytics` | Drill-Down Analytics | 层级深度分色，面包屑与下钻路径指示 | — | [32-drill-down-analytics.md](32-drill-down-analytics.md) |
-| `33-comparative-analytics` | Comparative Analysis Dashboard | 蓝对橙紫对比双系，绿红增量指标 | — | [33-comparative-analytics.md](33-comparative-analytics.md) |
-| `34-predictive-analytics` | Predictive Analytics | 预测线独立用色，置信区间明暗分层 | `#3b82f6` `#a855f7` | [34-predictive-analytics.md](34-predictive-analytics.md) |
-| `35-user-behavior-analytics` | User Behavior Analytics | 漏斗阶段分色：高参与绿、流失红、转化蓝，灰流向箭头 | — | [35-user-behavior-analytics.md](35-user-behavior-analytics.md) |
-| `36-financial-analytics` | Financial Dashboard | 盈绿亏红加信任深蓝，预算偏差橙红 | `#334155` `#10b981` `#22c55e` | [36-financial-analytics.md](36-financial-analytics.md) |
-| `37-sales-intelligence` | Sales Intelligence Dashboard | 赢单绿输单红进行蓝加配额金，管道阶段分色 | — | [37-sales-intelligence.md](37-sales-intelligence.md) |
+| `data-dense-dashboard` | Data-Dense Dashboard | 浅灰底高密度网格，红绿蓝数据语义色，最小内边距 | `#f5f5f5` `#333333` `#22c55e` | [28-data-dense-dashboard.md](data-dense-dashboard.md) |
+| `heatmap-density` | Heat Map & Heatmap Style | 蓝到红热度梯度尺，白黄中点双向发散 | `#1e293b` `#1e3a5f` `#0369a1` | [29-heatmap-density.md](heatmap-density.md) |
+| `executive-summary` | Executive Dashboard | 大号 KPI 数字主导，蓝灰专业底红色警报 | — | [30-executive-summary.md](executive-summary.md) |
+| `real-time-monitoring` | Real-Time Monitoring | 红橙绿警报三色加蓝色刷新动效，状态灯主导 | `#ff0000` `#ffa500` `#22c55e` | [31-real-time-monitoring.md](real-time-monitoring.md) |
+| `drill-down-analytics` | Drill-Down Analytics | 层级深度分色，面包屑与下钻路径指示 | — | [32-drill-down-analytics.md](drill-down-analytics.md) |
+| `comparative-analytics` | Comparative Analysis Dashboard | 蓝对橙紫对比双系，绿红增量指标 | — | [33-comparative-analytics.md](comparative-analytics.md) |
+| `predictive-analytics` | Predictive Analytics | 预测线独立用色，置信区间明暗分层 | `#3b82f6` `#a855f7` | [34-predictive-analytics.md](predictive-analytics.md) |
+| `user-behavior-analytics` | User Behavior Analytics | 漏斗阶段分色：高参与绿、流失红、转化蓝，灰流向箭头 | — | [35-user-behavior-analytics.md](user-behavior-analytics.md) |
+| `financial-analytics` | Financial Dashboard | 盈绿亏红加信任深蓝，预算偏差橙红 | `#334155` `#10b981` `#22c55e` | [36-financial-analytics.md](financial-analytics.md) |
+| `sales-intelligence` | Sales Intelligence Dashboard | 赢单绿输单红进行蓝加配额金，管道阶段分色 | — | [37-sales-intelligence.md](sales-intelligence.md) |
