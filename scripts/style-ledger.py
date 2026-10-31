@@ -11,7 +11,8 @@
 指纹从 DESIGN.md frontmatter 的结构化 token 提取(不解析 HTML):底色 /
 主色 / 色板 / display·body 字族 / 一句话 desc。
 
-为产出史,与 profile.json 偏好先验、项目 .maliang/feedback/ 协作规则账本、
+三个时机(maliang 落点
+为跨项目产出史,与 profile.json 偏好先验、项目 .maliang/feedback/ 协作规则账本、
 项目内 build-log 构图轮换四账分工,互不写入——登记表见 feedback-ledger.md §8):
   - explore / draw-md 开工前:`check` —— 最近 N 个交付反复出现的底色/字体/
     主色,这次主动避开(报告,不阻塞;项目 brief 与 DESIGN.md 契约永远优先)
@@ -136,7 +137,7 @@ def extract_fingerprint(design_text):
 
     bg 取底色系键,primary 取主色系键,palette 收 colors 块全部 hex(≤8),
     字族取 typography 的 display/body 键。解析不到的项为 None,desc 如实
-    写「?」——不编造(既定口径:指纹只量事实)。
+    写「?」——指纹只量事实,不编造。
     """
     yaml_str, _body = dmt.extract_frontmatter(design_text)
     if not yaml_str.strip():

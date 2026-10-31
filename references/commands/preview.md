@@ -140,9 +140,11 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 
 **交互真实性门(G32/G33)**:执行 `python3 scripts/verify-interactive.py <preview.html>`,每次点击在**新加载页面**上进行。三信号——A:声明了状态契约(`aria-pressed` / `expanded` / `checked` / `selected` / `sort`,或 switch / tab / menuitemcheckbox / menuitemradio / option 角色)的已启用可见控件,真实点击后文档内无任何变化 → **失败**;B:无状态契约的普通按钮点击无效果 → **仅 advisory**(静态演示按钮是合法形态,不算失败);C:状态属性翻转了,但控件自身计算样式 / 文本 / 几何完全一致(invisible state,读屏听得见、眼睛看不见)→ **失败**。控件上的 `data-demo-state` 是作者手写的「这是状态渲染、不是活控件」声明,按豁免处理。
 
+**ΔE 保真门(G39,HIGH)**:有参考图锚定的重建 / 复刻任务,截图后执行 `python3 scripts/verify-color-fidelity.py <重建截图> <参考图或测量 spec>`——阈值 mean ΔE ≤ 5 / max ΔE ≤ 20 / coverage drift ≤ 0.35,输出**逐色报告**(每个参考色的最近实现色 / ΔE / 覆盖率;显著错误色块不得被均值掩盖,缺失的显著参考色反向暴露)。退出码按 [`EXIT-CODES.md`](../../scripts/EXIT-CODES.md) 三态:0 = PASS / 1 = FAIL(任一阈值不过)/ 2 = 没能检查(缺参考图、缺测量 spec、格式不支持)——**2 不得记通过**。无参考图的任务本门不适用;FAIL 修到过为止,禁止调阈值。判据 canonical 见 G39。
 
+**资产在场门(G40,HIGH)**:生成后执行 `python3 scripts/verify-assets.py <preview.html>`:逐资产位枚举(数出应有图槽 / logo 位)→ 逐一验证渲染的是**声明的真实资产**(URL / logoAssetKey 匹配)→ 显式拒绝灰 div / emoji / 首字母 / 纯文字 / 自造 SVG 五类顶替物 → 失败做同产物最小确定性修复 → 复查;仍失败**如实上报,不许宣称完成**。诚实范围:结构化 HTML 验证,不冒充视觉 QA。判据 canonical 见 G40。
 
-**AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/detect-tells.py <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集
+**AI 味确定性扫描**:自包含 HTML 生成后,对产物运行 `python3 {SKILL_DIR}/scripts/detect-tells.py <preview.html>`(确定性正则检测器,只收可机械判定的 tell 子集,)。命中非豁免 tell = 硬性失败;豁免沿用 [`../meta/ai-tells.md`](../meta/ai-tells.md) 的「三豁免 + tell-exempt 标注」机制。扫描结果与人工自查(第 6 节)互为通道,合并时按下方「双通道不变式」标注。文案**句型层**由 `python3 {SKILL_DIR}/scripts/check-copy.py <产物文件...>` 承接(10 式模板句正则;英文 em-dash 插入语滥用判 HIGH,中文全角破折号「——」豁免,与 ai-tells §6 口径一致),清单挂 5.1 句型级反模板项。
 
 **aria-label 在 HTML 的映射规则:**
 - button → `<el-button aria-label="语义描述">`
@@ -156,6 +158,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 
 ### 运行时实测探针(只读取证)
 
+静态扫描看不到真实渲染结果。把页面内探针 [`scripts/preview-lint.js`](../../scripts/preview-lint.js) 注入 preview 的**临时副本**运行,经宿主浏览器工具取回报告;探针**只读取证**——只采样计算样式 / 几何 / 动画事件,**不改页面样式**,与「禁止用开发者工具手动改样式代替预览验证」的禁令(约束汇总)同源:探针发现的问题回产物源修复,不得就地图改。
 
 **可量测问题 16 类**(只报不拦,按处置分级处理):
 
@@ -212,6 +215,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 
 **验证两轮封顶**:发现 → 修复 → 复验的循环最多两轮;两轮后仍有发现,升级 disposition(`fix` → `rebuild`)而非开启第三轮——开放式自检烧钱且收敛差。
 
+**首稿视觉偏薄的定向打磨(参考锚定)**:修复循环里判定「整体成立但视觉偏薄」时,走固定模式——**重附同一参考** → 按 hierarchy / ornamentation / typographic rhythm / motion / materiality / overall UI 六维定向审计 → 把审计结论**合回当前实现**(增量改),不重开新稿、不换参考、不借机 restructure。六维与 redesign 9 维审计共用词汇,materiality(质感层:表面处理 / 光影 / 材质暗示)为补充维度;该模式同样适用于 redesign Refresh·Deslop 快速通道。
 
 **双通道不变式**:LLM 自查(第 6 节)与确定性检测(`preview-check.py`)是两条通道——**先完成自查、再读检测结果**(检测输出是确定性的,但仍会锚定判断);两边结果合并时,每条发现必须标注通道(`[自查]` / `[脚本]` / `[双方]`)。
 
@@ -230,6 +234,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 - `unverified` 非空时 disposition 不得为 `deliver`(只能 `fix` / `blocked`);
 - 与双通道不变式互补:通道标注**谁发现了问题**,证据分类标注**凭什么断言已解决**。
 
+**证据须带产物哈希(哈希变了证据作废)**——:
 
 - `automated` / `measured` 证据附**活收据**:门禁名 / 被测文件路径 + **测量前**取的 SHA-256(哈希记录的就是数字所描述的那个状态)/ 退出码 / 关键数字 / 时间戳,由 [`scripts/receipts.py`](../../scripts/receipts.py) 记录与查询;
 - `--check` 三态:**OK** / **EXPIRED**(「was measured, then edited」——被测文件在测量后被编辑,旧证据作废,须重跑)/ **UNMEASURED**(没有测量记录,**不是通过**);
@@ -239,6 +244,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 
 ### 收尾前未测量清单(会话纪律)
 
+本次会话**改过**的可渲染产物(预览 HTML / 组件代码 / 样式),收尾前逐项对收据——**没有活收据 = 未测量**。
 
 1. 收尾回复必须**显式列出未测量项与原因**,不得以「已通过 / 应该没问题」措辞收尾;
 2. 无浏览器(探针与三态门跑不了)时允许结束,但回答必须写明 **UNMEASURED**(不是通过),并给出补测路径;
@@ -405,6 +411,7 @@ preview 产出的 HTML 必须通过 `validate-draw-md.py` 全部 23 项检查(�
 
 ### 回传协议(用户选择回传)
 
+预览页里的选择与确认要可靠回传当前会话,不靠用户复述。
 
 - **本地回传桥**:`python3 scripts/preview-server.py <预览目录>` 起 127.0.0.1 本地服务(自动选端口、自动开浏览器、幂等注入选择外壳);用户**在确认弹层确认后**才写 `selection.json`,并向 stdout 打印哨兵 `MALIANG_DESIGN_SELECTION::{...}`;带 `--exit-on-select` 时确认后服务退出;
 - **读取方式**:watcher 文件事件优先,短轮询并发兜底(不作为默认路径);未见回传证据前调用方不得结束回合;

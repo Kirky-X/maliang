@@ -150,6 +150,7 @@ body::before {
 
 ## §5 时序模型：spring / easing / linear / 无动画
 
+> 按动效的**驱动源**选时序模型，不按「想要什么感觉」。
 >
 > **时长从属声明**：本节只取决策框架；一切时长数值以 maliang 强制口径为准（反馈 <300ms、浮层转场 ≤400ms，见 [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 分层口径，从属 [`rules-priority`](../meta/rules-priority.md) 裁决层）。上游 500ms drawer 一类数值与本口径冲突，弃用。
 

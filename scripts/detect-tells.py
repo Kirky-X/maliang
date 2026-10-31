@@ -9,7 +9,7 @@
 扫描,留给 ai-tells.md 的人工对照流程——确定性判断用代码,品味判断留给人与
 LLM 评审。
 
-检测规则按**四档严重级**对齐(critical / major / minor / warn;出处：规则库
+检测规则按**四档严重级**对齐:
 critical 与 major 进「硬命中」通道 → 退出码 1;minor 与 warn 进告警档,只报不拦。
 
 硬命中通道(退出码 1):
@@ -58,7 +58,9 @@ critical 与 major 进「硬命中」通道 → 退出码 1;minor 与 warn 进�
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
         告警档(minor/warn)命中不改变退出码。
 依赖: Python 3 标准库(无第三方依赖)。
+      四档对齐与机械规则扩充: 规则库 scripts/detect/rules.mjs(#21)
       第三批(gradient-button/aurora-blob/library-primary/uniform-shadow/
+      glass-backdrop-blur/undeclared-font): 社区 AI-slop 清单扩充
       (developersdigest.dev 16 patterns / funboy322 avoid-ai-design),2026-10-25。
 """
 
@@ -389,6 +391,7 @@ _COOL_HUE_LO, _COOL_HUE_HI = 170.0, 255.0
 def css_hue(token):
     """CSS 颜色字面量的色相(度),读不出返回 None(近灰无有效色相亦 None)。
 
+    改写自 规则库 scripts/detect/rules.mjs cssHue(#21)
     """
     v = token.strip().lower()
     m = re.match(r"^hsla?\(\s*([\d.]+)(?:deg)?", v)
@@ -507,6 +510,7 @@ _EMOJI_ICON_EMBED_RE = re.compile(
 def check_emoji_icon(rel_path, lines, file_scope, line_scope):
     """规则 8:emoji 当功能图标(元素内容全 emoji,或 emoji 前缀标题)。
 
+    句中 emoji 不算;来源 规则库 emoji-feature-icon(#21)
     """
     findings = []
     for i, line in enumerate(lines, 1):
@@ -521,6 +525,7 @@ def check_emoji_icon(rel_path, lines, file_scope, line_scope):
 
 
 # ---------------------------------------------------------------------------
+# 第三批扩充规则(2026-10-25):社区 AI-slop 清单扩充(developersdigest 16
 # patterns / funboy322 avoid-ai-design)——CTA 渐变 / aurora 色斑 / 全场同款
 # 重阴影进硬通道;玻璃拟态与未加载字体的告警档在文件尾部
 # ---------------------------------------------------------------------------

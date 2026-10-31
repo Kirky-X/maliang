@@ -1,7 +1,7 @@
 """style-ledger.py:跨项目外观账本(指纹提取 / add / check / list)。
 
-profile.json 先验、项目 feedback 账本三分),指纹从 DESIGN.md 结构化
-token 提取(不解析 HTML)。
+指纹从 DESIGN.md 结构化 token 提取(不解析 HTML);账本为跨项目产出史,
+与 profile.json 偏好先验、项目 feedback 账本三分。
 """
 
 import contextlib
@@ -111,7 +111,7 @@ class TestAddListCheck(unittest.TestCase):
         self.assertIn("frontmatter", out)
 
     def test_check_empty_ledger_not_blocking(self):
-        # 不应报: 账本缺失/为空 = 无历史可查,显式提示后退 0(不阻塞,同 huashu)
+        # 不应报: 账本缺失/为空 = 无历史可查,显式提示后退 0(不阻塞)
         code, out = run_main(self._argv("check"))
         self.assertEqual(code, 0)
         self.assertIn("为空", out)

@@ -180,4 +180,5 @@
 - 反模式与 [`ai-tells.md`](./ai-tells.md) §4 Content Tells 联动
 - 截断信号与 [`llm-behavior.md`](./llm-behavior.md) §4 联动
 - CTA 规范与 [`principles.md`](./principles.md) 改版案例 #22(优先级按钮)联动
+- CTA 全页唯一 / 折行禁令 / 动词一致的机械检查点在 [`preview-checklist.md`](../commands/preview-checklist.md) 5.7
 - redesign 审计时,Content 维度(维度 5)对照本文检查

@@ -19,6 +19,7 @@ checkbox/radio、role=switch、opacity:0、disabled / aria-disabled(WCAG 1.4.3/1
         没装浏览器 / 目标不存在 / 页面上一个可比对元素都没有 → UNMEASURED + 2,
         绝不静默通过。
 依赖: Python 3 标准库 + 本机 Chrome/Chromium(可选依赖,经 DevTools 协议驱动)。
+     scripts/_targets.mjs(三态退出码、「未测量不算通过」)
      浏览器驱动为本地自研的轻量 CDP 实现(不引入 Playwright)。
 """
 

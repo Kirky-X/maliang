@@ -60,10 +60,7 @@ decisions:
 
 - 迭代 / redesign 交付后,把本轮新出现的设计决策追加进账本,防止跨轮次漂移
 - `id` 一经分配不复用:决策被推翻后保留条目并标注取代关系,新决策接下一个序号
-
----
-
-## token 溯源(行尾注释)
+- 出处：interface-design `system.md` Decisions 表(Decision | Rationale | Date)
 
 `colors` / `typography` / `rounded` / `spacing` / `components` 的**顶层键**可带行尾溯源注释,指回产生该值的决策 id:
 
@@ -117,6 +114,7 @@ users:
 
 ## 测量持久化块(measurement / measured_palette)
 
+顶层可选扩展键(lint 静默,同 `decisions` / `users`)。参考图经确定性测色(`{SKILL_DIR}/scripts/measure-colors.py`)后,把**测量配置**与**实测色板**随 DESIGN.md 持久化,供验证环节(preview / verify)读回**同 k 同参数**复测——复测参数不同(如 k 不同)结果不可比,等于没测。两键成对出现;**目测取色不写本块**。
 
 ```yaml
 measurement:                  # 测量配置;存在即声明「下面的值是测出来的」
@@ -143,6 +141,7 @@ measured_palette:             # 逐色 hex / coverage / role;coverage 为 0..1 �
 
 ## 特效段(effects)
 
+顶层可选扩展键(lint 静默同上)。记录参考提取(1C 第 6 步)或设计声明的特效立场,供动效实现与验证对账。**静帧提不出的动效不编造**:整段无证据时按 [`token-provenance.md`](token-provenance.md) §3 canonical 弃权短语收尾或整段省略,单个未知类目标 ❓。
 
 ```yaml
 effects:

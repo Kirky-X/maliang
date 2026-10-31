@@ -31,6 +31,7 @@
 #   8. validate-design-md.py / validate-generated.py — 交付后自动接入(存在即跑,strict)
 #   9. ledger.py verify     — 项目反馈账本存在时校验
 #  10. 浏览器依赖门清单      — 不运行,只打印手动入口与「未测量不得记为通过」口径
+#  11. 第二批检测脚本    — check-structure-history(G41/G42)/check-copy/
 #                             verify-color-fidelity(G39)/verify-assets(G40),
 #                             对 tests/fixtures 已知 PASS 样例冒烟(strict)
 
@@ -200,6 +201,7 @@ echo "    python3 scripts/verify-states.py examples/preview/        # 三态对�
 echo "    python3 scripts/verify-interactive.py examples/preview/   # 交互真实性实测"
 echo "    无浏览器时两脚本自报 UNMEASURED / 退出码 2 —— 未测量不得记为通过。"
 
+# 11. 第二批检测脚本(已知正确样例冒烟;strict 三态,G39/G40/G41/G42 脚本层)
 #     对 tests/fixtures 的已知 PASS 样例跑一遍:退出码非 0 即脚本身上有回归。
 #     真实产物上的运行位置在 preview.md 第 4 节与 numbered-gates.md(门文档)。
 gate_if_script scripts/check-structure-history.py "check-structure-history(G41/G42 冒烟)" \

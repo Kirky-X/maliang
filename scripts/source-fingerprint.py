@@ -6,7 +6,7 @@
 上下文**(外部原口径:Hashing is a cheap freshness check)。
 
 信任边界(改写自 方法库 RESUME.md「Trust boundary」,#30,
-  - 仅仓库内路径:resolve 后必须落在仓库根内,拒绝绝对路径与 ../ 逃逸;
+- 仅仓库内路径:resolve 后必须落在仓库根内,拒绝绝对路径与 ../ 逃逸;
   - 拒涉密文件: .env* / .git/ / credentials* / 私钥证书(*.pem、id_rsa*、
     *.key)/ 任何疑似 secret store;
   - 键集精确相等:check 模式要求基线 files 键集与重算键集可逐键对账,

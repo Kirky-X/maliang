@@ -15,6 +15,7 @@ references/templates/variation-engine.md「构建日志」节),做三查:
 七轴键集(theme/background/typography/hero/section/signature/motion)以
 variation-engine.md 为唯一词表;本脚本只做机械一致性,轴值优劣不由脚本判断。
 
+hot axis 思想stamp-lies 与 设计基准库(#19)同门合并(裁决见
 .absorb-external/ui-benchmark-batch2-findings.md #31)。
 
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。

@@ -1,5 +1,6 @@
 # 微雕手艺集 —— 光学修正与 CSS 打磨配方
 
+> 规范层。专业感不是单点突破，而是大量小而有意的决定叠加——单个不值一提，合起来就是「这东西说不出哪里好但就是 feels right」。本文收录这类微雕配方，宁缺毋滥，逐条可核对。（中文自研，非文本翻译）
 > **框架边界（先读）**：除光学修正清单为跨端通用的经验数值外，**其余各节均为 Web CSS 专属机制**——ArkTS/Flutter/Element 无对应 CSS 能力，禁止跨框架套用（各端等价能力查 [`../framework/index.md`](../framework/index.md)）。glass/毛玻璃与 squircle 圆角**不在本文**：maliang 已收 [`../templates/glassmorphism.md`](../templates/glassmorphism.md)、[`../dimensions/glass-effect.md`](../dimensions/glass-effect.md)、[`../dimensions/radius.md`](../dimensions/radius.md)。
 
 ## 一、六层按钮阴影解剖（仅 Web CSS）

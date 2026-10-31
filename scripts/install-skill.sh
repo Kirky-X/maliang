@@ -127,21 +127,21 @@ parse_target_agent() {
         ((i++)) || true
         [[ $i -lt ${#args[@]} ]] || { err "--target 需要参数"; exit 1; }
         TARGET_DIR="${args[$i]}"
-        ;;
+;
       --agent)
         ((i++)) || true
         [[ $i -lt ${#args[@]} ]] || { err "--agent 需要参数"; exit 1; }
         AGENT_FLAG="${args[$i]}"
-        ;;
+;
       --all-agents)
         AGENT_FLAG="all"
-        ;;
+;
       -h|--help)
         usage; exit 0
-        ;;
+;
       *)
         err "未知参数: ${args[$i]}"; usage; exit 1
-        ;;
+;
     esac
     ((i++)) || true
   done
@@ -313,24 +313,24 @@ cmd_update() {
         shift
         [[ $# -gt 0 ]] || { err "--target 需要参数"; exit 1; }
         TARGET_DIR="$1"
-        ;;
+;
       --agent)
         shift
         [[ $# -gt 0 ]] || { err "--agent 需要参数"; exit 1; }
         AGENT_FLAG="$1"
-        ;;
+;
       --all-agents)
         AGENT_FLAG="all"
-        ;;
+;
       -h|--help)
         usage; exit 0
-        ;;
+;
       -*)
         err "未知参数: $1"; usage; exit 1
-        ;;
+;
       *)
         [[ -z "$skill_name" ]] && skill_name="$1" || { err "多余参数: $1"; usage; exit 1; }
-        ;;
+;
     esac
     shift
   done
@@ -519,7 +519,7 @@ cmd_status() {
         shift
         [[ $# -gt 0 ]] || { err "--target 需要参数"; exit 1; }
         TARGET_DIR="$1"
-        ;;
+;
       -h|--help) usage; exit 0 ;;
       *) err "未知参数: $1"; usage; exit 1 ;;
     esac
@@ -612,20 +612,20 @@ cmd_generate_commands() {
         shift
         [[ $# -gt 0 ]] || { err "--target 需要参数"; exit 1; }
         TARGET_DIR="$1"
-        ;;
+;
       --agent)
         shift
         [[ $# -gt 0 ]] || { err "--agent 需要参数"; exit 1; }
         AGENT_FLAG="$1"
-        ;;
+;
       --all-agents)
         AGENT_FLAG="all"
-        ;;
+;
       --commands)
         shift
         [[ $# -gt 0 ]] || { err "--commands 需要参数"; exit 1; }
         commands_arg="$1"
-        ;;
+;
       -h|--help) usage; exit 0 ;;
       *) err "未知参数: $1"; usage; exit 1 ;;
     esac

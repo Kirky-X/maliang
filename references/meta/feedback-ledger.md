@@ -62,6 +62,7 @@ proposed ──(source: agent-pending)──→ pending-review ──用户复�
 
 **自发现的问题强制附 `evidence` 路径**(截图 / 日志 / 测试输出 / 复现记录);「看起来不对」不算证据。自动化可以收集证据、生成候选,但**不能替用户批准主观审美规则**。
 
+**无人值守捕获规则**:用户不在场时做出的审美自选,候选照记,但状态标 `pending-review`、`source: agent-pending`,附自选理由;交付说明中如实写「待用户复核,未批准」,严禁表述为已确认或已生效。
 
 ## 5. 已发布规则的五字段格式
 
@@ -103,6 +104,7 @@ proposed ──(source: agent-pending)──→ pending-review ──用户复�
 
 ## 9. 跨项目 profile 层(`~/.maliang/profile.json`,priors 非命令)
 
+> 项目账本(§2)只管本项目;跨项目该带走的品味沉淀进用户主目录 profile。
 
 profile 收**跨项目可复用的偏好先验(priors)**——它是先验不是命令:项目 brief、品牌系统、DESIGN.md 契约、用户当前请求都能覆盖它。格式(JSON):
 

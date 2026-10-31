@@ -90,6 +90,7 @@ metadata:
 
 ### 弱 runtime 与跨 agent 降级
 
+> 与上一节互补:无人值守表管**用户缺席轴**,本表管**运行能力轴**(无 subagent / 非主流模型 / 上下文小的 runtime)。
 
 按吃紧程度逐级降级,降级牺牲流程,不牺牲硬约束(a11y 检查、token 引用、G01–G46 CRITICAL 门、真实资产协议不豁免):
 
@@ -101,6 +102,7 @@ metadata:
 
 ### 版本检查
 
+本节让用户知道 maliang skill 有没新版本。确定性逻辑(节流判定 / 版本比较 / 记录)在 [`scripts/version-check.py`](scripts/version-check.py),状态文件默认 `~/.maliang/version-check`(`--state` 可改);agent 只跑命令与 `git ls-remote`。
 
 使用本 skill 时先跑 `python3 {SKILL_DIR}/scripts/version-check.py due`;输出 `skip:*` 直接跳过本节。输出 `due` 时:
 

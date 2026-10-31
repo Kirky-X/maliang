@@ -1,5 +1,6 @@
 # 转化文案策略 —— Persuade surface 的设计输入
 
+> 规范层。**定位：设计输入，不是独立产物**——仅在 surface=Persuade（见 [`surface-modes.md`](surface-modes.md)：落地页/营销首页/活动页）的设计与审计中作为输入生效，不触发独立的文案生成任务；Operate/Read/Experience 等 surface 不适用。（中文自研，非文本翻译）分工：[`../templates/landing-patterns.md`](../templates/landing-patterns.md) 模式表管页面「**必须有什么**」（章节序列与 CTA 位置），[`content-guide.md`](content-guide.md) 管「**怎么写合格**」（语气/长度/格式），本文管「**说什么、按什么策略说**」（转化逻辑）。
 
 ## 总纲方程
 
@@ -113,6 +114,7 @@ CTA：[headline 的下一句] / 万能词判定 [非万能]
 
 ## 真实声音样本库与禁用开场白
 
+> 落地页文案有一个分布默认：不给他国非默认声音时，模型会滑向「Built for the modern team / Unleash your X / Where A meets B」。样本库是**真实站点的真实开场白**——给它非默认的模仿对象。判定原则：**模仿的是具体性的种类，不是措辞**——具名地点、具名日期、具名数字、拒绝隐喻、拒绝营销动词。开场白按品牌声音挑最接近的一型作基准；与 [`content-guide.md`](content-guide.md) §1 三级语气模型的分工：三级管 UI 文案的礼貌度，本节七型管 Persuade 页开场白的品牌气质。句型级机械扫描另按 `scripts/check-copy.py`（10 式模板句正则）。（样本为真实站点开场白，引文保留原文；标注「自建样例」的为外部 skill 检具，非真实站点）。
 
 ### 七型真实开场白
 
@@ -147,6 +149,7 @@ CTA：[headline 的下一句] / 万能词判定 [非万能]
 
 ## 数字阶梯（未供量化声明的三种处置）
 
+**适用面（窄口，先划界）**：首屏 / hook 的数据条款与 persuade 信任数字归 [`data-floor.md`](data-floor.md) 门禁（绑定表 / 写入方 / 禁编造）；社证区数字归上方 ⑤ 禁造假；**本阶梯管剩下的说服位**——proof strip 的指标、对比行、功能区的效率数字、CTA 旁的承诺数字。（适用面经复核收窄：data-floor §0 已覆盖 persuade 首屏信任数字，本阶梯只补非首屏非社证区的空当）。
 
 **触发**：页面出现用户未供、无来源、为填版面而写的量化声明——「10× faster」「每周省 5 小时」「50,000+ 团队」「99.9% uptime」「+47% 转化」——判失败。
 

@@ -61,3 +61,4 @@ platforms: Web
 3. 主 CTA 全页唯一主色；次级 CTA 降级为描边样式。
 4. 每个模式配 `ai-tells` 自检：章节编号眉标、装饰性状态点、"Scroll to explore" 提示均为禁项（见 ai-tells.md 第 10 节）。
 5. **双轴验收**：每个转化要素同时过「功能有效（推进转化）+ 设计卓越（值得记住）」两关，只过一关即不合格——要素构成表管"必须有什么"，验收管"必须两关都过"；此为页面级验收，与 `draw-md` intent 字段的组件级定位区分。
+6. **文案层挂接**：Persuade 场景下 headline / feature / CTA 的写法策略见 [`../meta/copy-strategy.md`](../meta/copy-strategy.md)（要素构成表管"必须有什么"，文案策略管"怎么说"）。

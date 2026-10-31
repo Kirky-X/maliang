@@ -105,11 +105,13 @@ z-index:
 - **按 intent 预取,不按 viewport**:禁止预取所有可见链接——多数可见链接用户根本不会点
 - **适用场景收敛**:数据密集 dashboard、慢 API 的 MPA、电商收益明显;静态站导航本就即时,直接跳过
 
+> 本小节
 
 ## 6. Canvas/WebGL 预算
 
 > 特效运行档降级:`navigator.hardwareConcurrency <= 2` 视为低端档,与 prefers-reduced-motion 并列触发 fallback(降级三选:关闭特效/降为 CSS/静态快照)。
 
+> 规范层。canvas/WebGL(粒子、流体、着色器背景、3D 场景)的取舍与护栏。通用工程约束,不绑任何库版本;dispose 清单为 Web/Element 场景专属,Harmony/Flutter 无手动 WebGL context 管理问题。
 
 **目的性门槛**:
 

@@ -99,6 +99,7 @@ function currentIndex() { return Math.round(-gsap.getProperty(pager, 'x') / page
 
 ## 帧级平滑
 
+> 顺滑是「帧里有什么」的问题,不只是帧率问题。
 
 - **per-frame 位移守住感知阈值**:每帧位置增量过小会产生频闪感(strobing);手势速度天然连续,但动画回弹段若逐帧位移忽大忽小,肉眼读作卡顿——回弹用弹簧连续插值(见 [`interruptible-motion.md`](interruptible-motion.md) 两参数模型),禁止分段补间。
 - **极快速运动用 motion blur / stretch 编码速度**:轻微拉伸或模糊比一条生硬的锐利轨迹更可读;Web 无原生 motion blur,用 `scale` 沿运动轴向拉伸(stretch)近似。

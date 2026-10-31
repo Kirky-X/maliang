@@ -29,6 +29,7 @@
     1 = 存在 error 级发现（FAIL 级规则命中；--strict 下所有发现都升级为 error）
     2 = 没能检查（没有 lint-checks.json / 没有可执行的声明规则 / 用法错误）
 依赖: Python 3 标准库(无第三方依赖)。
+denylist)与 .github/workflows/validate-engine.yml, 中文自研实现。
 """
 
 from __future__ import annotations

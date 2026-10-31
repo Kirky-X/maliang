@@ -1,5 +1,6 @@
 # UIUX 全生命周期地图（Lifecycle Map）
 
+> 规范层。maliang 负责 UIUX 全生命周期的总图：七段（研究 → 定义 → 设计 → 实现 → 验证 → 交付 → 迭代），每段给出目标、载体（子命令 × 参考文件 × 产物）与出口检查点。跨段裁决仍以 [`rules-priority.md`](rules-priority.md) 与 [`philosophy.md`](philosophy.md) 为准。
 
 ## 七段总览
 

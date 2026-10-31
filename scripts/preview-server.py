@@ -31,6 +31,7 @@ stdout 哨兵（供 Agent/脚本解析）:
   1 = 运行中出错（端口绑定失败、selection 目录不可写等）
   2 = 没能检查或用法错误（--file 不存在 / watch 超时 / 参数错误）
 依赖: Python 3 标准库(无第三方依赖)。出处： 设计方法库 preview-server 与
+watch-selection, 中文自研实现。
 """
 
 from __future__ import annotations

@@ -50,6 +50,7 @@ design/ip-handbook/<project-name>/
 
 ## 模块 0 · 共享美术基串(所有资产 prompt 的公共前缀)
 
+> 事后一致性(module 3 漂移了再重生成)是补丁;事前一次抽取的公共基串才是纪律。
 
 流程第一个生成动作:从 DESIGN.md 调色板与 IP 形象一次抽出五段,写进 `00-style-base.md`,**此后每个资产 prompt = 基串 + 只换 SUBJECT 段**:
 

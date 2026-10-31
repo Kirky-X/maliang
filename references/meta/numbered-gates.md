@@ -2,6 +2,7 @@
 
 > 规范层。清单式 reference 满仓都是(ai-tells 的 Tell、ux-rules 的 slug、preview-checklist 的 143 项),但它们多数回答「这样好不好」,不回答「不这样能不能交」。本文只收**二元门禁**:每条要么 PASS 要么 FAIL,无灰区,任一命中即不许交付,修复后重跑全部。
 >
+> 每条门禁三段写死:**违反什么**(可被指认的字面形态)/ **怎么判定**(证据从哪来)/ **怎么修**(指回可执行的文档)。软提示式表述(「注意质量」「保持一致」「尽量避免」)一律不构成门禁。机制,条目与判据中文自研)。
 
 ---
 
@@ -12,6 +13,7 @@
 3. **不豁免、不降级**。唯一合法出路是修复。确有正当理由(如 DESIGN.md 显式批准某个 AI Tells 值)时,走 [`ai-tells.md`](ai-tells.md) §0 豁免总则的**显式记录**要求,静默豁免 = FAIL。
 4. **CRITICAL 一票否决**。任一 CRITICAL 门 FAIL,不得被任何评分补偿——沿用 [`rules-priority.md`](rules-priority.md) 冲突裁决规则 1 与「加权评分从属声明」。
 5. **修复后重跑全部**,不可只跑失败项(与 [`../commands/preview-checklist.md`](../commands/preview-checklist.md) 执行规则一致)。
+6. **未测量不得记为通过**。退出码 2 / UNMEASURED 表示「**没能检查**」(路径不存在 / 没装浏览器 / 无目标),不是「检查通过」——Nothing was measured. This is not a pass;调用方禁止把 2 当 0,报告禁止把未测量项写成 PASS。三态 canonical 声明见 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md)(0 = 看了没问题 / 1 = 看了有问题 / 2 = 没能检查);凡「本轮未实测」的项,判定结论只能记 UNMEASURED。**附注**:全局性异常(渲染空白/系统性怪象)先用已知正确文件做对照实验,判别环境问题 vs 产物问题,再决定记 UNMEASURED 还是 FAIL。
 
 **严重级**:CRITICAL(可访问性 / 功能损坏,一票否决)· HIGH(AI 味 / 系统一致性,阻断交付)· MEDIUM(打磨项,不阻断但须在报告列为 known issue)。
 
@@ -22,6 +24,7 @@
 ## A 组 · 溯源与 token(设计系统自洽)
 
 > 「悬空溯源 / 孤儿 token / 空原则」三类违规名的 canonical 定义在 [`token-provenance.md`](token-provenance.md) §4(V1/V2/V3);本组 G01–G03 只收交付门禁判定,判据以彼处为准。
+> **机械判定**:V1–V3 由 [`../../scripts/validate-design-md.py`](../../scripts/validate-design-md.py) 机械判定(四处交叉:顶层键有 id 或 no-decision → id 在 decisions 可查 → 每条原则至少被一个 token 引用 → no-decision 占比),人工仅复核脚本标 unconfirmed 的项;脚本输出摘要随判定记录留痕。
 
 ### G01 · 悬空溯源
 - **违反什么**:token 注释里的决策 id 在 `decisions[]` 中查不到,或 `D-P<n>` 指向的 `## Overview` 原则不存在。
@@ -80,6 +83,7 @@
 ### G31 · 状态态对比度未实测(CRITICAL)
 - **违反什么**:交互元素的 default / hover / focus 任一次态下,文本或图形对比度低于阈值(图形控件 3:1;文本 4.5:1,大文本 ≥ 24px 或 ≥ 18.66px 且 bold 取 3:1);或本轮**未实测**却记为通过(无浏览器时把 UNMEASURED 当 PASS)。
 - **怎么判定**:[`../../scripts/verify-states.py`](../../scripts/verify-states.py) 取三态真实计算样式,沿祖先链回溯有效背景;native checkbox/radio/switch 与 disabled / opacity:0 按 WCAG 1.4.3 / 1.4.11 豁免;退出码 2 / UNMEASURED 记「未判定」,不得记 PASS(§0 第 6 条)。对应 ux-rules slug `color-contrast`;执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」;坏 fixture(静态通过、hover 失败)在 tests/。
+- **怎么修**:调字色 / 底色或换对比更高的 token 组合,修复后重跑三态;未测的补测再交。
 
 ---
 
@@ -134,6 +138,7 @@
 ### G32 · 交互状态契约未兑现
 - **违反什么**:声明了状态契约(`aria-pressed` / `aria-expanded` / `aria-checked` / `aria-selected` / `aria-sort`,或 switch / tab / menuitemcheckbox / menuitemradio / option 角色)的已启用可见控件,**真实点击后文档内无任何变化**——无属性翻转、无 DOM 变更、无焦点转移;控件承诺了状态却不兑现。
 - **怎么判定**:[`../../scripts/verify-interactive.py`](../../scripts/verify-interactive.py) 信号 A;每次点击在**新加载页面**上进行(一个控件不能遮住另一个);控件上的 `data-demo-state` 是作者手写的「这是状态渲染、不是活控件」声明,按豁免处理。**无状态契约的普通按钮**点击无效果仅 advisory(静态演示按钮是合法形态),不构成本门失败。对应 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么修**:接上 handler 让状态属性真正变化;或撤掉 `aria-*` 与相应可交互外观——不承诺做不到的事。
 
 ---
 
@@ -206,46 +211,57 @@
 ### G33 · 状态变化不可见
 - **违反什么**:状态属性翻转了(读屏能听到),但控件**自身**的计算样式 / 文本 / 几何完全一致——视障用户之外的人看不到任何变化(invisible state)。
 - **怎么判定**:[`../../scripts/verify-interactive.py`](../../scripts/verify-interactive.py) 信号 C:状态值确实移动,且外观指纹(自身与内部元素的样式 + 文本 + 几何)前后一致(等过渡结束再比);状态值未移动的点击(点已选中的项 / 当前 tab)是 no-op,不算命中。
+- **怎么修**:给控件自身一个视觉状态——轨道填充、图标切换、标签变化;`aria-checked` 单独只服务读屏,不构成视觉状态。
 
 ### G34 · 跨轮结论无同条件对比
 - **违反什么**:「改善了 / 退步了 / 趋势向好」的结论建立在两轮**评估条件不一致**上——评估页集与分母、设备与视口、字号与内容、模式任一字段不同;或产物轮次目录被覆盖(旧轮次被新证据写掉);或把尺寸一致 / 像素差异直接当「还原度」。
 - **怎么判定**:对账两轮评估记录的四个条件字段 + 检查轮次目录(每轮一律新目录,拒绝覆盖);比较报告以尺寸一致代替视觉判断即为命中——**误差不等于还原度,尺寸一致 ≠ 视觉通过**。对应 [`../commands/preview.md`](../commands/preview.md)「取证契约」跨轮比较条件指纹与 [`../commands/critique.md`](../commands/critique.md) 产物·趋势节。
+- **怎么修**:条件不一致时**拒绝比较并重建基线**(同条件重取两轮证据,或重选页集并注明分母变化);本轮证据不覆盖上一轮;像素差异只用于定位变化,不折算成还原度百分比。
 
 ### G35 · 生成码未校验
 - **违反什么**:交付的框架生成码(`examples/element-plus/` 等生成码目录)存在以下任一——token 占位符残留(`{token}` 未解析);颜色字面量无法回溯 token.md;组件标签 / Widget 不在 [`../framework/index.md`](../framework/index.md) 白名单;类名无定义(模板里每个 class 必须在同文件 style 或框架基础类有定义,使用即需有出处)。
 - **怎么判定**:[`../../scripts/validate-generated.py`](../../scripts/validate-generated.py) + ci-gate.sh 新 gate(目标为生成码目录);输出摘要作判定记录。只对**生成码**生效,手写业务代码不在此门。
+- **怎么修**:补回 token 引用(先回 design-md 补 token 再引用);补类定义;非白名单标签换白名单组件。**诚实范围**:本门只证明组件**产出**合规(服务端 / 静态检查),**不证明点击行为**——交互真实性另按 G32 / G33 实测。
 
 ### G36 · 证据无活收据
 - **违反什么**:报告声称「已解决 / 已通过」的项拿不出**活收据**(门禁名 / 被测文件路径 + 测量前取的 SHA-256 / 退出码 / 关键数字 / 时间戳);或收据已作废(EXPIRED:被测文件在测量后被编辑);或引用了上一会话的收据充当本轮证据。
 - **怎么判定**:[`../../scripts/receipts.py`](../../scripts/receipts.py) `--check` 三态 OK / EXPIRED / UNMEASURED——**哈希变了证据作废**(旧数字描述的是旧状态);上一会话收据永不复用;**写不出收据 = 当作未记录**。口径见 [`../commands/preview.md`](../commands/preview.md)「证据四分类」哈希条款;与 G24(静态声明代替实测)互补:G24 管「有没有实测」,本门管「实测证据还活着吗」。
+- **怎么修**:对当前产物重跑门禁生成新收据;暂时测不了就把结论降为 `unverified` 并显式列出未测量项;禁止用记忆中的数字充当收据。
 
 ### G37 · 一次性要求写成长期禁令
 - **违反什么**:单次任务的一次性要求(「这页先这样」「这个圆角临时调一下」)被直接写成长期规则 / 长期禁令——进规则库、进长期账本,或写进后续所有人必须遵守的约束。
 - **怎么判定**:新增规则 / 禁令是否附**原话摘录 + 级别 + 何时适用**三字段,以及反馈账本候选的事件依据;一次性需求入长期账本即为命中。边界:设计决策进 design-md `decisions` 账本(记「为什么是这样」),用户反馈规则进 [`feedback-ledger.md`](feedback-ledger.md)(记「谁要求了什么、何时生效」),两者不混。
+- **怎么修**:把该要求收回本次交付说明,或作为 scope 限于本变更的候选记录;确属长期规则的走 observed → proposed → accepted → published 状态机(附 evidence 路径),发布后重跑门禁失败则 rollback。
 
 ### G38 · token 覆盖率不足
 - **违反什么**:DESIGN.md 里定义、但从未在任何交付视图中出现的 token(EVERY token must show up at least once);或缺少自证视图(token 全量展板 + 一张高密度产品屏),无法证明 token 落到真实产品 UI——「营销页好看、密集屏散架」是无门可拦的系统级失败,**app screen is the proof**。
 - **怎么判定**:渲染 token 全量展板 + 高密度产品屏,逐个 token 对账出现 ≥ 1 次;密度底线:Dashboard 4-8 指标块 + 1 图 + 1 表,List-detail 10+ 项。对应 [`../commands/design-md.md`](../commands/design-md.md) Phase 3 交付物。
+- **怎么修**:在视图里用上该 token,或回 design-md 删掉它——无人用的 token 就是装饰性 token,与 [`token-provenance.md`](token-provenance.md) §4 V2 联动。
 
 ### G39 · 参考图保真 FAIL(ΔE)
 - **违反什么**:有参考图锚定的重建 / 复刻任务,重建截图对参考图的逐色保真任一阈值不过——mean ΔE > 5 / max ΔE > 20 / coverage drift > 0.35;或把「尺寸一致 / 像素接近」当还原度而没跑保真测量就把「还原了」写进结论(未测量当通过)。无参考图的任务本门不适用(n/a,不是 UNMEASURED);有参考图却没跑 = UNMEASURED。
 - **怎么判定**:`python3 scripts/verify-color-fidelity.py <重建截图> <参考图或测量 spec>` 输出逐色报告(每个参考色的最近实现色 / ΔE / 覆盖率),退出码按 [`../../scripts/EXIT-CODES.md`](../../scripts/EXIT-CODES.md) 三态(0 = PASS / 1 = FAIL / 2 = 没能检查——缺参考图、缺测量 spec 或格式不支持,**2 不得记通过**,§0 第 6 条)。脚本对实现侧显著簇逐簇计分:显著错误色块不得被覆盖率加权平均掩盖;显著参考色在实现侧缺失时走参考侧 max ΔE 反向暴露;残渣(覆盖 < 0.5%)不算保留该色。攻击盲区用例(错误色块 ΔE>90 不被平均掉 / 大错误区域配稀有参考色仍 FAIL / coverage 0.3502 > 0.35 边界)在 tests/ 固化。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么修**:按逐色报告定位偏差最大的色位,回 token / 样式修正后重截重测;**禁止调阈值凑 PASS**;阈值不可比时(测量参数变化)先回到同一组参数。与 G34 互补:G34 禁「尺寸一致冒充还原度」,本门给「还原度」以机械判据。
 
 ### G40 · 资产位在场未验证
 - **违反什么**:设计里声明了真实资产位(图槽 / logo 位),交付时资产位**没被逐一验证在场**——渲染的是灰 div / emoji / 首字母 / 纯文字占位 / 自造 SVG 顶替,或「该有图的位置」根本没数过;或验证失败后不修复就宣称完成。
 - **怎么判定**:`python3 scripts/verify-assets.py <preview.html>`(或 preview 探针内等价检查):①逐资产位枚举(数出应有的图槽 / logo 位);②逐一验证渲染的是**声明的真实资产**(URL / logoAssetKey 匹配);③显式拒绝上述五类顶替物;④失败 → 同产物最小确定性修复 → 复查;⑤仍失败如实上报,禁止宣称完成。诚实范围:结构化 HTML 验证,**不冒充视觉 QA**——视觉还原仍按截图走查。执行位置见 [`../commands/preview.md`](../commands/preview.md) 第 4 节「校验强化」。
+- **怎么修**:补真实资产(官方来源优先,取用协议见 [`visual-assets.md`](visual-assets.md));确以结构占位交付时,必须在交付说明显式声明为占位并列入未完成项,禁止静默顶替。
 
 ### G41 · stamp lies(盖章与实物不符)
 - **违反什么**:产物的设计归属声明与其描述系统、与实物对不上,按命中形态定级——①构图章写 Bento 实际居中单列等「章说谎」(**CRITICAL**,章必须反映已交付物);②DESIGN.md 在场时页面 token / 字体 / accent 漂移出声明系统(theme drift,**CRITICAL**——系统管理项目里逐页自选主题即 slop);③页面落在 DESIGN.md 声明的构图 family 之外(HIGH);④系统管理项目的页面完全缺归属声明缺 stamp(HIGH);⑤无 DESIGN.md 的项目与前次产出共享宏观结构 / 主题(MEDIUM,variety drift)。
+- **怎么判定**:人工对账 + `python3 scripts/check-structure-history.py`(章与构图家族核验,读 `.maliang/build-log.json`);DESIGN.md 在场时逐页对其 colors / typography / family 声明核;盖章核验 = 章名与页面实际结构逐项比对,不以章文为准。
 - **怎么修**:章与实物不符 → 改章或改页面,二者取实,禁止留说谎的章;theme drift → 拉回 DESIGN.md token;family 外 → 换 family 内构图或回 design-md 扩 family;缺 stamp → 补归属声明;variety drift → 换构图类并过 G42。
 
 ### G42 · 轮换违例(连续重复 / 热轴)
 - **违反什么**:跨次构建的多样性机械指标失守——同一变化轴取相同值**连续两次**且未换 knob 未声明(immediate repeat);或变化轴取值聚合中任一轴占比 > 0.6(hot axis——「当下正在成为热默认」)而未处置。复用的唯一合法形态:换了至少一个 variation knob 并在盖章 / build-log 声明。
 - **怎么判定**:`python3 scripts/check-structure-history.py` 两查(立即重复 / 热轴),读 `.maliang/build-log.json`;轴集与 knob 词表以 [`../templates/variation-engine.md`](../templates/variation-engine.md) 为准;build-log 缺失 = UNMEASURED,不得记通过(§0 第 6 条)。
+- **怎么修**:换轴或换 knob 并声明后再交付;热轴时换冷轴取值或在交付说明写出「此时此地为何复用正确」的显式理由——variety 不能靠嘴上请求(抽签机制见 variation-engine)。
 
 ### G43 · 构图类声明未兑现
 - **违反什么**:build-log 声明了首屏构图类(fold class),实际构建未按声明类实现(declared class not honoured——比不声明更糟,声明即承诺);或绕过未花费集合抽签、人工挑选顺手的构图类(抽签是机制,不是建议);或 build-log 缺「Fold classes used」append-only 段,跨次构图无法对账。
 - **怎么判定**:对账 `.maliang/build-log.json`「Fold classes used」段与产物实际首屏构图;抽签由项目种子确定性派生(FNV-1a 播种、spent 类沉底),声明类可复算验证。判据与抽签机制见 [`../templates/variation-engine.md`](../templates/variation-engine.md)。
+- **怎么修**:按声明类重实现;确需改判时改声明并注明理由(改判同样入账),禁止静默换类;缺段则先补 build-log 再过本门。
 
 ### G46 · 生成码注入面(安全)
 - **违反什么**:交付的生成码(preview HTML / 三框架代码)出现**执行面 API**(eval / new Function / javascript: URL);或 v-html / innerHTML / outerHTML / dangerouslySetInnerHTML 绑定的内容**不是仓库内本地常量且未经消毒**——产物是可交互 HTML/代码,交付前却从无安全视角。

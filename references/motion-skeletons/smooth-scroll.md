@@ -1,5 +1,6 @@
 # Smooth Scroll —— 惯性平滑滚动引擎骨架
 
+> Framework 模板。滚轮输入经 Lenis/Locomotive 插值为惯性跟随滚动,GSAP ScrollTrigger 挂在同一时钟上驱动章节动画。**适用范围仅 Web 营销/品牌站**(沉浸式滚动叙事);工具型/后台/表单密集页禁用(操作效率优先,原生滚动即预期),HarmonyOS/Flutter 无 DOM smooth-scroll 对应物,勿跨框架套用。MOTION_INTENSITY ≥ 7 适用(见 [`dials.md`](../meta/dials.md))。
 
 ## 视觉效果
 

@@ -34,6 +34,7 @@ framework/element/ 的文档里抽取 el-* 标签与 El* 服务名)。
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
         目标目录/token.md/framework 目录缺失 → 没能检查,退出码 2。
 依赖: Python 3 标准库(无第三方依赖)。
+     在链接的样式表里有定义»、服务端渲染的诚实范围声明)
 """
 
 import argparse

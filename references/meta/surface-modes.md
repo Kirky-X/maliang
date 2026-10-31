@@ -1,6 +1,6 @@
 # Surface Modes 访客模式 —— Persuade / Operate / Read / Experience / Delegate / Data / Commerce
 
-> 规范层。七模式"访客模式"回答一个问题：**这个页面为谁的成功服务？** 模式按 surface（页面）选择而非按项目选择——工具的落地页仍是 Persuade，时尚屋的文档仍是 Read。模式级联校准色彩默认、字体口味、动效容忍度与审计侧重。
+> 规范层。七模式"访客模式"回答一个问题：**这个页面为谁的成功服务？** 模式按 surface（页面）选择而非按项目选择——工具的落地页仍是 Persuade，时尚屋的文档仍是 Read。模式级联校准色彩默认、字体口味、动效容忍度与审计侧重。Delegate 第五模式Data/Commerce 第六、七模式据 frontend-design-实践规范 思想中文自研
 
 ## 使用时机
 

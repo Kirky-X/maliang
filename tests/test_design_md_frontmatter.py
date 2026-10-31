@@ -1,5 +1,6 @@
 """design_md_to_token_md.py 的 frontmatter 解析测试(两条路径须一致)。
 
+背景: token 溯源(design-md Phase 0d 决策表 + token 行尾 `# D-P<n>-<m>` 注释)后,
 PyYAML 路径会正确丢弃注释,但 PyYAML 缺席时的缩进降级路径会把注释吃进标量
 (`primary` 变成 `"#212121" # D-P1-1`),并把 `headline-lg: # D-P2-1` 误判成标量而非子块,
 导致无 PyYAML 环境下导出的 token.md 全线失真。故用等价性断言守住降级路径。

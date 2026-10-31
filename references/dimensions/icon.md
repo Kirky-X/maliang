@@ -51,6 +51,7 @@
 
 ## 动效图标(设计决策层)
 
+> 本节只回答**何时用、何约束、何降级**;图标库选型与资产下载一律走 xizhi skill(其路由已覆盖 lordicon 动效图标与 morphicons 变形库),maliang 不复述其 API,防双处维护。lordicon 原 GitHub 仓库已 deprecated,细节以 lordicon.com 官方现行文档为准。
 
 ### 何时值得动效化
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """资产在场后置验收门(G40 脚本层):品牌/内容资产渲染在场验证。
 
-生成后逐资产位核验(改写自 方法库 LOGO RENDER POSTCONDITION,
+生成后逐资产位核验:
   1. 逐资产位枚举:数出页面里应有的图槽(<img>/<svg>/<picture> 与 CSS
      background-image)与 logo 位;
   2. 逐一验证渲染的是**声明的真实资产**:manifest 里声明的 URL / assetKey

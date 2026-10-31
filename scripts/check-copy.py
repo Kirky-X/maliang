@@ -2,7 +2,7 @@
 """句型级反模板文案扫描(G32/preview-checklist §5.1 脚本层)。
 
 词表禁令挡不住换同义词——真正的 tell 是**句子模板**本身:"The [adj] way to
-[verb]" 换哪个词都读作生成。本脚本收 10 式模板句正则(改写自 检测工具
+[verb]" 换哪个词都读作生成。本脚本收 10 式模板句正则,另收
 em-dash 滥用:英文 em-dash(—)插入语判 critical(外部 HIGH 口径);
 中文全角破折号「——」是规范用法,豁免(与 ai-tells §6 口径一致)。
 
@@ -14,6 +14,7 @@ em-dash 滥用:英文 em-dash(—)插入语判 critical(外部 HIGH 口径);
 
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
 依赖: Python 3 标准库。
+      HIGH 口径(#32)中文破折号例外为本仓 ai-tells §6 既有口径。
 """
 
 import argparse

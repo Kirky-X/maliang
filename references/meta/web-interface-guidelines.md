@@ -103,7 +103,6 @@ Read files, check against rules below. Output concise but comprehensive—sacrif
 
 ### Touch & Interaction
 
-
 - `touch-action: manipulation` (prevents double-tap zoom delay)
 - `-webkit-tap-highlight-color` set intentionally — killing it obligates explicit `:active` press feedback on every interactive element (see Gesture Feel below), or touch loses all feedback
 - `overscroll-behavior` is two-layer: root scroller `none` only in app-like shells to kill pull-to-refresh hijack (content/docs pages keep default); inner scroll containers `contain`—modals/drawers/sheets included

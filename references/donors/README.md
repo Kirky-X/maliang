@@ -2,7 +2,6 @@
 
 > 供体层是"写码前先偷"的**具体数值库**:每个文件记录一家真实产品站点的可借鉴(hex / 字重 / 字距 / 阴影栈 / OpenType / 圆角刻度 / 交互位移等),粒度到具体值,来源可溯。
 > 与另两层分工:[`../dimensions/design-systems.md`](../dimensions/design-systems.md) 是**对外锚点**("本设计对齐哪个系统");[`../templates/`](../templates/README.md) 是**可执行配方**(模板墙);供体层是**值仓库**——只借值,不借外观。
-> 出处：规则库 仓的 design-systems 索引 + craft-loop 借鉴纪律,2026-10 扩充;值核读自 设计样张集 库(设计方法库 仓的 design-systems 库收录),措辞自著。
 
 ---
 

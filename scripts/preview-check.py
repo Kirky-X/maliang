@@ -23,7 +23,7 @@
   5.5  交互可达       — alt / aria-label / skip-link / tabindex / label / focus ring
   5.6  Token 完整性   — {token} 残留 / 硬编码颜色字号间距 / z-index / kebab-case
                         (:root 内的 CSS 变量定义是 token 解析锚点,豁免硬编码检查)
-                        + CSS 静默失败:孤儿类选择器 / 未定义 var()(#30,来源 hue
+                        + CSS 静默失败:孤儿类选择器 / 未定义 var()
   5.7  交互状态       — hover/active/focus/disabled/tactile 存在性(静态代理,框架
                         CDN 提供的样式降级为 warning;outline:none 无替代为 error)
   5.8  LLM 截断信号   — // .../TODO / 空泛词 / placeholder 占比
@@ -178,6 +178,7 @@ FOCUS_RING_OVERRIDE_RE = re.compile(
 
 # --- 5.6 CSS 静默失败(孤儿类选择器 / 未定义 var()) ---
 # 出处：hue scripts/validate.mjs::collectUsedClasses / extractClassSelectors /
+# checkCssVars(css-orphans 与 css-vars 两条检查)
 CLASS_ATTR_RE = re.compile(
     r"""class\s*=\s*(?:"([^"]*)"|'([^']*)'|\\"([^"\\]*)\\")""", re.IGNORECASE
 )
@@ -873,6 +874,7 @@ def check_5_6_css_vars(text, fname):
 
     定义面:CSS 声明 `--x:`、内联 style、JS setProperty("--x")。
     框架 CDN 自带主题变量(el-* 等,由外部样式表在运行时提供)降级 WARN 并
+    注明,不误报 ERROR。
     """
     results = []
     defined = set(CSS_VAR_DEF_RE.findall(text))

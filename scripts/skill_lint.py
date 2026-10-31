@@ -20,7 +20,7 @@
         pattern，命中即发现（ignore 正则可豁免行），用于公开文案禁用语表。
         count-matches：数 source 文件（可限 section 标题节）里符合
         row_pattern 的行数为**唯一事实**，与 claim_files 中 claim_pattern(s)
-        抓到的数字对账——公开计数漂移门禁（机制出处： 规则库
+        抓到的数字对账——公开计数漂移门禁。
   WARN  frontmatter metadata 缺失（agentskills 规范）；SKILL.md >500 行；
         scripts/ 有可执行脚本但无 tests/；references 孤儿文件；LICENSE 缺失；
         非链接的散文路径 token（如 `ui/home.md`）在三处均未命中：

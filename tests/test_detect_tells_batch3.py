@@ -1,3 +1,4 @@
+"""detect-tells.py 第三批扩充规则(社区 AI-slop 清单扩充,2026-10-25)的单元测试。
 
 硬通道 4 条(gradient-button / aurora-blob / library-primary / uniform-shadow)
 进 findings(退出码 1);告警档 2 条(glass-backdrop-blur / undeclared-font)只报

@@ -16,6 +16,7 @@
 (record these in the style lock)」清单。design-md Phase 0d 的颜色契约:
 模型只能组合矩阵内配对;调色板扩充必须重跑矩阵。
 
+(:83-111 矩阵分类)(#33)MOODS 按裁决 6 砍除。
 
 退出码: 见 scripts/EXIT-CODES.md(0=求解成功 / 1=有档位无解 / 2=没能检查;#16)。
 依赖: Python 3 标准库。

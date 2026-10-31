@@ -2,6 +2,7 @@
 
 > 规范层。DESIGN.md 最常见的病是 token 只有值没有来由:改它没人知道能不能改,评审只能靠「看着顺眼」争论,跨会话后新做的会话根本看不出某值是深思熟虑还是随手填的。本文给 token 加一条**反向索引**——每个 token 值指回产生它的那条设计决策的 id。
 >
+> 决策 id 的字段定义与 `decisions` 账本写法见 [`spec-schema.md`](spec-schema.md);本文只管溯源约定与违规判据。机制
 
 ---
 
@@ -109,6 +110,7 @@ colors:
 | `material sufficient` | 材料足够(无开放问题) | 开放问题节 |
 | `no open questions` | 同上的等价写法 | 开放问题节 |
 
+弃权必须写明**缺什么材料才能结束弃权**;弃权只对提取型输入成立,生成型任务(greenfield design-md)不得用它替代溯源——能溯源就必须溯源。机械检查把 canonical 短语读作 pass。
 
 **置信标记通道(提取型输入)**:溯源行尾注释同时承载**提取置信三档**——✅ 直接看到(代码 / computed style 原值)/ ⚠️ 有据推断(像素采样、视觉识别)/ ❓ 公开推测:
 
@@ -119,6 +121,7 @@ secondary: "#9D9D9D" # no-decision: 提取来源 ⚠️
 
 - 标记写在 id 或 `no-decision` **之后**,不替代 id;标记语义与交付末尾 Confidence map 表(Layer | Confidence | Why)由 [`../commands/design-md.md`](../commands/design-md.md) 的 1A / 1C 提取路径定义;
 - 「只报观察到的数量」同理:看到 1 个按钮变体写「1 variant observed」,不写「primary, secondary, tertiary」;
+- 与证据四分类是**不同轴**:置信标记回答「凭什么相信这个值」,证据四分类回答「凭什么断言已解决」——两者互补,不互相替代。
 
 ---
 
