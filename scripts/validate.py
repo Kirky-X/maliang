@@ -45,7 +45,7 @@ def main(argv=None):
            (未测量不得记为通过)。
 
 用法:
-    python3 scripts/validate-draw-md.py [target_dir] [--token-file PATH] [--framework-file PATH] [--format {text,json}]
+    python3 scripts/validate.py draw-md [target_dir] [--token-file PATH] [--framework-file PATH] [--format {text,json}]
 
 默认 target_dir = examples/ui-markdown/。
 默认 token-file  = {target_dir}/token.md
@@ -1429,7 +1429,7 @@ def _main_draw_md(argv):
         default="text",
         help="输出格式: text(人类可读,默认) / json(机器可读,stdout 仅 JSON 数组)",
     )
-    args = parser.parse_args(argv[1:])
+    args = parser.parse_args(argv)
     fmt = args.format
 
     target_dir = os.path.abspath(args.target_dir)
@@ -1611,7 +1611,7 @@ def _main_draw_md(argv):
 """framework 组件文档规范性检查脚本。
 
 用法:
-    python3 scripts/validate-framework.py [--framework-dir PATH] [--format {text,json}]
+    python3 scripts/validate.py framework [--framework-dir PATH] [--format {text,json}]
 
 默认 framework-dir = references/framework/。
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)
@@ -1826,7 +1826,7 @@ def _main_framework(argv):
     parser.add_argument(
         "--format", choices=["text", "json"], default="text",
         help="输出格式: text(默认) / json")
-    args = parser.parse_args(argv[1:])
+    args = parser.parse_args(argv)
     fmt = args.format
 
     framework_dir = os.path.abspath(
@@ -1918,7 +1918,7 @@ def _main_framework(argv):
 """生成码机械校验:框架产物(dist draw-element 等的产出)是否守住 token 与组件契约。
 
 用法:
-    python3 scripts/validate-generated.py [target_dir] [--token-file PATH]
+    python3 scripts/validate.py generated [target_dir] [--token-file PATH]
                                           [--framework-index PATH]
                                           [--format {text,json}]
 

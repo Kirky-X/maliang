@@ -452,10 +452,12 @@ def _resolve_impl_path(impl, root_key, raw_path):
     ——impl-map 是仓库内可篡改文件,路径消费前必须校验,防存在性探测/
     越界读取(安全审查 M-1)。失败抛 ValueError(调用方按三态退 2)。
     """
-    if os.path.isabs(raw_path):
+    raw_norm = raw_path.replace("\\", "/")
+    if os.path.isabs(raw_norm) or (
+            len(raw_norm) >= 2 and raw_norm[0].isalpha() and raw_norm[1] == ":"):
         raise ValueError(
             "impl-map 记录了绝对路径(拒绝执行,防越界): " + raw_path)
-    parts = raw_path.replace("\\", "/").split("/")
+    parts = raw_norm.split("/")
     if ".." in parts:
         raise ValueError(
             "impl-map 路径含 .. 穿越(拒绝执行,防越界): " + raw_path)

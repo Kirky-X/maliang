@@ -986,7 +986,7 @@ def check_5_9_animation(text, fname):
     results = []
 
     # 5.9.3: 入场动画 duration ≤ 400ms
-    # （与 validate-draw-md.py 检查11 的 400ms 硬约束对齐——原先这里放宽到 600ms，
+    # （与 validate.py draw-md 检查11 的 400ms 硬约束对齐——原先这里放宽到 600ms，
     #   400-600ms 区间实现违反规格时双门全绿，属双门槛漂移，已统一为 400ms）
     for m in DURATION_MS_RE.finditer(text):
         duration = int(m.group(1))

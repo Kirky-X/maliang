@@ -50,7 +50,7 @@
 
 > **全库统一分层口径**(其他文档涉及动效时长时以此为准,冲突数值保留但须注"见 micro-interactions 分层口径"):
 > 1. **反馈类**(按压 / tooltip / toast 等元素级反馈)duration **< 300ms**;
-> 2. **浮层转场**(modal / drawer / popover 入退场)**≤ 400ms**——`validate-draw-md.py` 检查 11 硬门(ERROR);如确需更长转场,须同步调整脚本阈值并说明理由,或改用 `{duration-*}` token 引用(不含字面量 ms,脚本自然跳过)。**弹簧路线豁免**:弹簧无固定时长,声明为弹簧驱动(`motion-model: spring`)且显式给出弹簧参数(damping / response 等)的行不受 400ms 硬门约束,脚本仅留 WARN 痕;只写 spring 不写参数仍按违规报 ERROR(豁免是显式条件,不是阈值放宽,见 [`interruptible-motion.md`](../motion-skeletons/interruptible-motion.md) 弹簧两参数模型);
+> 2. **浮层转场**(modal / drawer / popover 入退场)**≤ 400ms**——`validate.py draw-md` 检查 11 硬门(ERROR);如确需更长转场,须同步调整脚本阈值并说明理由,或改用 `{duration-*}` token 引用(不含字面量 ms,脚本自然跳过)。**弹簧路线豁免**:弹簧无固定时长,声明为弹簧驱动(`motion-model: spring`)且显式给出弹簧参数(damping / response 等)的行不受 400ms 硬门约束,脚本仅留 WARN 痕;只写 spring 不写参数仍按违规报 ERROR(豁免是显式条件,不是阈值放宽,见 [`interruptible-motion.md`](../motion-skeletons/interruptible-motion.md) 弹簧两参数模型);
 > 3. **装饰 / 骨架类长动效**(滚动揭示、skeleton shimmer 等非入场循环 / 长动效)**≤ 600ms** 且**必须可跳过**(prefers-reduced-motion 降级或用户可跳过)。**入场 / 转场类不适用本档**,一律按第 2 层 ≤400ms 执行(2026-09 整合收敛:原「缓动库入场 150-600ms」与 validate-draw-md 检查 11、preview-check 5.9.3 两道 400ms 硬门冲突,按预览侧既有收敛决策统一)。本档 >400ms 的动效在 draw-md 规格中必须以 `{duration-*}` token 引用表达(不含字面量 ms,检查 11 自然跳过),禁直写字面量 ms;preview 实现侧受 preview-check 5.9.3 无条件 400ms 门约束,>400ms 装饰档要在实现层落地,须预览验证组先在其脚本开显式豁免口径(参照检查 11 弹簧豁免的显式条件模式),未开前实现一律 ≤400ms;
 > 4. **stagger 间隔单档 ≤ 80ms**;装饰档放宽到 ≤ 120ms 须 MOTION_INTENSITY ≥ 8(见 [`dials.md`](../meta/dials.md))。
 >

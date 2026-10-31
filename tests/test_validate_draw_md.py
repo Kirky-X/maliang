@@ -1,4 +1,4 @@
-"""validate-draw-md.py 全部 23 项检查的 fixture 单元测试。
+"""validate.py draw-md 全部 23 项检查的 fixture 单元测试。
 
 双列 fixture 约定(对齐 设计工艺库 TDD 流程):每项检查至少 1 个"应报"用例
 + 1 个"不应报"用例;规则实现为纯函数,直接以合成行列表调用。
@@ -727,9 +727,8 @@ class TestMainExitCodes(unittest.TestCase):
         import io
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
-            # main(argv) 按 argv[1:] 解析,首位是程序名——target 不可放 [0]
+            # 合并入口的 _main_draw_md 直接 parse_args(argv),首位即 target
             return vdm._main_draw_md([
-                "validate-draw-md.py",
                 target or self.target,
                 "--token-file", self.token_file,
                 "--framework-file", self.framework_file,

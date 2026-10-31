@@ -9,7 +9,7 @@
 #   退出码 2(三态)           → 拦截(没能检查:路径不存在/无目标/没装浏览器)
 #                               —— Nothing was measured. This is not a pass。
 #   其他退出码                → 拦截(异常退出)
-#   (历史)迁移中脚本 warn-pass 通道已退役:validate-draw-md.py / validate-framework.py
+#   (历史)迁移中脚本 warn-pass 通道已退役:validate.py draw-md / validate-framework.py
 #   完成三态迁移后均按 strict 接线;--warn-pass 机制保留但无使用方,新脚本不得登记。
 #
 # 历史债备忘:接线时曾登记的两处 advisory(examples/design-system 29 处孤儿 token、
@@ -22,7 +22,7 @@
 #
 # 覆盖:
 #   1. tests/ fixture 单元测试
-#   2. validate-draw-md.py  — draw-md 产物 23 项检查(目标: examples/ui-markdown/)
+#   2. validate.py draw-md  — draw-md 产物 23 项检查(目标: examples/ui-markdown/)
 #   3. validate-framework.py — framework 组件文档检查(目标: references/framework/)
 #   4. ui-graph.py check-nav — 导航关系图冒烟(缺页为 informational,不拦截)
 #   5. preview-check.py     — 若 examples/preview/ 存在则跑 Pre-Flight 自动化检查

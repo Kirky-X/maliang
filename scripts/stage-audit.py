@@ -94,13 +94,13 @@ def _dir_has_preview(root):
 
 def _gate_validate_design_md(root):
     design = os.path.join(root, "DESIGN.md")
-    return [sys.executable, os.path.join(SCRIPT_DIR, "validate-design-md.py"), design]
+    return [sys.executable, os.path.join(SCRIPT_DIR, "design-md.py"), "validate", design]
 
 
 def _gate_validate_draw_md(root):
     spec, _ = _spec_dir(root)
     return [
-        sys.executable, os.path.join(SCRIPT_DIR, "validate-draw-md.py"), spec,
+        sys.executable, os.path.join(SCRIPT_DIR, "validate.py"), "draw-md", spec,
         "--framework-file", os.path.join(SKILL_DIR, "references", "framework", "index.md"),
         "--vocabulary-dir", os.path.join(SKILL_DIR, "references", "vocabulary"),
     ]
