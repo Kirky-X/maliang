@@ -111,6 +111,7 @@ function currentIndex() { return Math.round(-gsap.getProperty(pager, 'x') / page
 
 | 触发条件 | 处理 |
 | --- | --- |
+| 拖拽随列表变长越来越卡 | 进度/位移写在**父容器 CSS 变量**上,变量继承导致每个子元素每帧重算样式——位移直接写被拖元素自身的 `style.transform`;动画库 `x/y/scale` 简写底层走 CSS 变量时同理 |
 | 斜向拖动抖动换轴 | 每帧重判轴向;改为首次越阈值一次性锁定 |
 | 横滑时页面跟着竖滚 | 未锁定轴就 set 了位移;锁定前禁止驱动任何 transform |
 | 甩一半停住不动 | 速度阈值判定的回弹 tween 未建;flung 分支必须始终落到一个确定页 |

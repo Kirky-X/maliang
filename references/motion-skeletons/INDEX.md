@@ -7,7 +7,7 @@
 
 | 轴 | 问的问题 | 在哪回答 |
 | --- | --- | --- |
-| **EFFECT 效果** | 观众看到什么：长廊？粒子？逐字？重排？ | §3 十族目录 |
+| **EFFECT 效果** | 观众看到什么：长廊？粒子？逐字？重排？ | §3 十一族目录 |
 | **ROUTE 路线** | 怎么实现：CSS？原生滚动？GSAP？WebGL？ | §2 六路线表 |
 
 同一个效果可以走三条路线，成本差 60KB："元素随滚动入场"用 CSS 四行，用 GSAP 60KB——输出一样。**每次都伸手拿重路线的页面不是更强，是更贵更慢，而且看起来和别人一样。**
@@ -38,13 +38,14 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 > **兜底是地板，不是降级方案。** 它让动画停止，但不构成静止终态。一个内容 `opacity: 0` 等动画才能出现的 hero，在兜底之下将**永久不可见**。每个动效元素必须以**终态**为默认写法、从别处动画过来，或显式给出 reduced-motion 终态规则。
 
-### §1.1 骨架公共兜底（十族通用，口径源）
+### §1.1 骨架公共兜底（各族通用，口径源）
 
 各骨架文件「强制规则」节中重复出现的公共段，**口径源在本节**——改口径先改这里，各骨架随之同步；骨架按 ROUTING 单篇加载，故各篇仍内联保留公共行的自包含副本，漂移由本节仲裁：
 
 - **reduced-motion 强制**：每篇第一条**必须**实现 `prefers-reduced-motion` 降级，判定与无障碍细则 canonical 见 [`../meta/accessibility.md`](../meta/accessibility.md) 第 2 节；静止终态要求见上 §1 第 3 查。
 - **will-change 生命周期**：`will-change` 不在 CSS 中常驻，由 JS 在动画前动态设置、动画后移除（`ScrollTrigger` 场景在 `onLeave`/`onLeaveBack` 清除）；canonical 见 [`../meta/performance.md`](../meta/performance.md) §2 Hardware Accel。
 - **只动 transform + opacity**：禁 `top` / `margin` / `width` 布局属性动画（§1 第 4 查的展开）；GSAP 通用失败行（探针四相位取不到 / 时间轴被杀 / 兜底未交付）按各篇失败表处置，共性症状右列为「检查 JS 是否在动画前动态设置 `will-change`」。
+- **删动画必须连带删两类残留**（redesign/restructure 剥动效时逐项核对）：①隐藏初态——`opacity: 0` 初始态、`fill-mode`、`initial={{ opacity: 0 }}` 之类"为动画而设"的初值，删了动画不删初态，元素永久不可见；②等待动画的代码——`onAnimationEnd` / `transitionend` / 按时长写死的 `setTimeout` / 动画完成回调里移焦点或提交表单的逻辑，动画一删这些回调永不触发。
 
 ## §2 六条路线
 
@@ -61,7 +62,9 @@ const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 **R5 的真实代价不是 KB，是 DOM。**内容一旦变成纹理就不再是内容——不可选中、不可索引、读屏器读不到、没有 `loading="lazy"`。**当"3D 的东西"是照片和文字时，R6 胜 R5**；R5 留给真正的材质（流体、烟雾、虹彩、渲染体），不是画廊。
 
-## §3 十族效果目录
+**线程分工补充理由**：CSS 动画 / WAAPI 跑在合成器线程，页面主线程忙（导航、加载、hydration）时依然流畅；rAF JS 动画跑在主线程，页面一忙就掉帧。这就是「预定动效走 CSS，可中断动效走 JS」的性能论据——与可中断性论据（§5）并列。
+
+## §3 十一族效果目录
 
 > 从 brief 的**内容**里选族，不从"什么看起来厉害"里选。每族给出：变体池（轮换用）、默认路线、SPECTACLE 区间、**slop form**（已经做滥、读起来就是 AI 味的形态）、死法。与 maliang 骨架的挂接在每族末尾。
 
@@ -135,6 +138,11 @@ body::before {
 }
 ```
 
+### 3.11 Scene · 页面级滚动叙事
+变体：sticky-stage-scrub（舞台钉住进度擦洗构图）/ opening-window（中缝或圆形开口揭示下一节）/ held-picture-captions（大图钉住字幕逐段更替）。默认 **R2/R4**（进度来自原生滚动；需 pin 与跨元素编排时 R4）。SPECTACLE 8-10（页面级编排，全库最高档）。
+**slop form**：背靠背连续场景、hold 超 4 屏狂滚、场景内 mono 计数器 chrome、"空白舞台等动画"式伪完成态。
+**死法**：只验首尾帧——时间线错误只在中间帧暴露；交付前必须出 0/10/…/100% 十帧 contact sheet，桌面/手机/reduced 三份全读。挂接骨架：[`scroll-scene-sticky-stage.md`](scroll-scene-sticky-stage.md)（含场景层时长豁免口径与逐帧验收强制项）。
+
 ## §4 四拍节奏表
 
 > 替代"一个炫技 hero + 满页 fade-up"的默认构图：一页取 **4 拍，来自 4 个不同的族**，强度递减。SPECTACLE 高档位（Experience/Persuade 模式，见 [`../meta/surface-modes.md`](../meta/surface-modes.md)）取"1 个 hero 级 + 3 个次级"；Operate 页只保留 3.9 状态转场族。
@@ -164,6 +172,8 @@ body::before {
 **回弹要用真弹簧，不用 easing 伪装**：过冲落定（bounce-and-settle）是弹簧的语义，cubic-bezier 近似只够一次性过渡（近似边界见 [`spring-reorder.md`](spring-reorder.md)）；Web 侧起步参数换算成 damping/response 后按两参数模型声明。**动效嫌慢先砍 duration，不动缓动曲线**——慢几乎总是时长问题。
 
 **exit 原则**：入场 ≠ 退场。退场比入场幅度小、更快——用固定小位移（如 `y: -12px`）表达方向即可，不做全程撤离动画；叠一层轻 `blur(4px)` 软化消失感。退场元素禁交互（指针事件关闭），防止用户点到正在离开的东西。
+
+**blur 遮罩两用途与成本上限**：①blur 除了退场软化，还是 **crossfade 遮罩**——两态过渡叠影调不干净时，给过渡层加 `filter: blur(2px)` 把两个状态融为一次感知变换（2-5px 足够）；②**动画中的 blur ≤20px**——大半径 blur 在 Safari 下按帧重算极贵，静态 backdrop-filter 的预算口径（glass-effect）不覆盖过渡帧，过渡里自己设上限。
 
 **常驻循环避开 ~0.2Hz 振荡**：环境循环类动画（呼吸、漂浮、脉冲）的振荡频率避开约 0.2 Hz（5 秒周期附近）——人眼/前庭对该频率最敏感，易引起不安；必须用该频段时把幅度压到最低。环境循环属 Atmosphere 族（§3.10），落地走 R1 路线。
 

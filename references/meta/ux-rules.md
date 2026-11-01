@@ -1,6 +1,6 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
-> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,§14 包容性 5 条、§15 键盘与指针 7 条、§5 触控目标增补 3 条为 2026-11 增补(中文自研),§3/§4/§6/§13/§15 再增 5 条为 2026-11 二批(中文自研),全库共 73 条。
+> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,§14 包容性 5 条、§15 键盘与指针 7 条、§5 触控目标增补 3 条为 2026-11 增补(中文自研),§3/§4/§6/§13/§15 再增 5 条为 2026-11 二批(中文自研),§16 页面框架 7 条为 2026-11 三批(实证蒸馏),全库共 80 条。
 > 与脚本的关系:`scripts/validate.py draw-md` 现有 23 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 19 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
@@ -69,7 +69,7 @@
 | long-token-wrapping         | 长 token(URL/ID/哈希)必须可断行 | `overflow-wrap: anywhere` + flex/grid 文本子项可收缩 | 对正文 prose 用 `word-break: break-all` | Web  | WARN     |
 | chip-collection-reflow      | chip 集合先换行再缩短          | 允许换行;`+n` 折叠必须是可点开的披露               | 全塞一行裁切,`+n` 只是藏值      | 全端 | WARN     |
 | number-tabular              | 数据数字用等宽数字             | 表格数字/价格/计时用 tabular-nums 防列宽抖动        | 比例数字导致整列微跳            | 全端 | ADVISORY |
-| truncation-strategy         | 截断必须留全文路径             | ellipsis + tooltip/展开,键盘可达                   | 只在 hover 出 tooltip           | 全端 | WARN     |
+| truncation-strategy         | 截断必须留全文路径,且按字段分型 | 识别型字段(人名/标题)换行不截断;次要元数据尾部省略号;差异在后半段的(文件名/UUID/长域名)中段省略号保头尾;卡片预览 line-clamp;**数字/金额/日期永不截断**;任何截断配 tooltip/展开的全文路径,键盘可达 | 一刀切尾部省略号;只认 hover 出 tooltip;截断金额与日期 | 全端 | WARN     |
 | fixed-width-text            | 文本容器禁固定宽度             | min-width / max-width / match-parent / flex 弹性,留换行与缩放余量 | 给 text 组件写死 `width: Npx`(超长词/emoji/RTL 溢出截断);登记:2026-09 整合审查(validate-draw-md 检查 14 回链) | 全端 | WARN     |
 | cancellable-state-transitions | 动画可被打断且终态正确        | 快速状态切换取消/替换前序微交互,直接设置终态语义并清理副作用   | 依赖 animationend/transitionend 保证状态正确(被打断即坏);登记:2026-10 自 accessibility.md §8 收敛 | 全端 | WARN     |
 | hyphenation-split   | 西文断词按文本长度二分         | 短文本(弹窗/标语/按钮)禁音节断行保整词;长文窄栏可音节断行,但行末 ≥3 字符、行首 ≥2 字符,连字符行数受限 | 短文案被拆成音节;长文行末 1-2 字符孤段 | 全端 | ADVISORY |
@@ -139,6 +139,20 @@
 | baseline-align-mixed   | 一行混排字号对齐用 baseline             | 一行内大小字号混排用 `align-items: baseline`(Web)/ `CrossAxisAlignment.baseline`(Flutter),大数字与单位/标签底对齐 | 垂直居中对齐混排行,字面看起来各飘各的      | 全端 | ADVISORY |
 | layout-explains        | 删掉不必要的次要标签与描述,让布局本身传达(Avoid unnecessary secondary labels and descriptions — let the layout do the explaining) | 层级靠尺度差/重量差/留白差/分组表达,先试「不加任何说明能不能不言自明」;说明文字只在删掉后会误读或误操作时保留(单位/法律/风险类);同组卡片用版式差异区分身份,说明只留一份且放在唯一需要处 | 每个标题上挂一行全大写小标签(eyebrow)充当层级;卡片下配「这是 XX 卡片」式自我描述行;标签与描述双份说同一件事;用说明行补版式没做出来的分组 | 全端 | WARN     |
 | info-depth-3           | 单页面主要信息层级 ≤3 级      | 超过 3 级先合并/折叠(渐进披露)再谈排版                     | 4 层以上的嵌套分组硬排(人因实验:层级 >3 视觉复杂度显著上升) | 全端 | ADVISORY |
+
+## 16. 页面框架
+
+> 数据密集屏另见 [`app-screen-floor.md`](./app-screen-floor.md) 实测地板;本节管所有页面的**框架完整性**——空带、失衡、无边界是模板稿最常见的水印。
+
+| slug                   | 一句话规则                                        | Do(怎么做)                                                                 | Don't(别怎么做)                          | 端   | Severity |
+| ---------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- | ---- | -------- |
+| margin-pair            | 页面左右外边距是一对等值,全页复用                  | 16-32px 一档贯穿所有断点,逐宽度校验左右相等                                 | 各节 margin 各拍各的;左右不等               | 全端 | WARN     |
+| half-width-needs-mate  | 文本占半宽时,另一半必须有内容                      | 图/第二列/列表/图元补位;实在无内容就收窄文本                                 | 半屏文本 + 半屏空白带                       | 全端 | WARN     |
+| no-void-band           | >半屏的连续空白带禁止                              | "留白"必须有 closer 才成立(图本身/图跨洞/字跨洞/四角装裱),每页至多一次刻意 rest | 无 closer 的大空洞;节距拉到 250px+ 凑高度   | 全端 | WARN     |
+| named-sections         | 每节有可命名的标题或明确的构成角色                | 逐节自检:这一节叫什么名字?答不出=没有存在理由                              | 无标题、无角色、纯装饰凑数节                | 全端 | ADVISORY |
+| h1-says-what           | 首屏 h1 说出这是什么                               | h1 = 产品/页面是什么 + 给谁;副标补一行 how                                 | 抽象口号式大标题,看完不知道页面是什么       | 全端 | WARN     |
+| anchor-lines           | 全页竖向锚线(左缘对齐轴)2-3 条                     | 数一遍左缘 x 位置:2-3 条=有决策,6 条=逐个摆放                              | 每节各起一个左缘,页边参差                   | 全端 | ADVISORY |
+| section-rhythm         | 节间距 > 节内间距,节距 120-240(手机 72-112)        | 节与节的开合感明显;同页节距一致                                             | 节距与行距拉不开;节距忽大忽小               | 全端 | WARN     |
 
 ## 14. 包容性
 

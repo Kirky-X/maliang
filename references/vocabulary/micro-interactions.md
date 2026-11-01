@@ -10,7 +10,7 @@
 | `micro-press-scale`   | 按下时 scale 0.97 + 短促过渡                     | 按钮、可点击卡片                      |
 | `micro-focus-ring`    | 键盘聚焦时显示 ring(outline 替代)               | 所有交互元素(强制)                  |
 | `micro-ripple`        | 点击位置涟漪扩散                                  | Material 风、移动按钮                 |
-| `micro-tooltip`       | hover 延迟 500ms 显示 tooltip                     | 图标按钮、密度高的工具栏              |
+| `micro-tooltip`       | hover 延迟 500ms 显示 tooltip;**相邻 tooltip 已打开时跳过延迟与动画**(`transition-duration: 0ms` 直出)——整条工具栏因此显得快 | 图标按钮、密度高的工具栏              |
 | `micro-skeleton`      | Loading 时显示骨架占位                            | 数据加载、列表、详情                  |
 | `micro-shimmer`       | 骨架上的微光扫过                                  | 骨架占位的进阶版                      |
 | `micro-toast`         | 操作反馈 toast(成功 / 失败)                     | 表单提交、删除、加入购物车            |
@@ -31,6 +31,8 @@
 | 每天 100+ 次的操作(快捷键、命令面板等)     | 禁止动画,延迟即成本         |
 | 每天几十次的操作(hover 状态、列表导航、频繁 toggle) | 否决,或仅近乎无感的反馈(快而轻) |
 | 偶发表面(modal / drawer / toast / popover) | 标准入场 / 退场动画          |
+
+**反向检查(防死页)**:频率法则全是上限口径;MOTION_INTENSITY ≥ 6 的页面还要查下限——可视可动元素 < 8 个时检查页面是否"死页"(静态稿直出),< 16 个为警告;下限不过就补反馈与过渡,不是补装饰动画。
 | 首次运行(onboarding / 空状态)              | 才可加惊喜动效               |
 
 **键盘一票否决**:键盘发起的操作(命令面板、快捷键、焦点跳转)是一票否决项,不是判断题——这类操作每天重复上百次,动画让它们显得慢、迟滞、与手脱节。参照 Raycast:无任何开合动画,就是最优体验。

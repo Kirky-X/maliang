@@ -30,6 +30,9 @@
 **强制规则**:
 
 - 入场动画用 `transform: translateY(8px) → 0` + `opacity: 0 → 1`,不用 `top` / `margin-top`
+- **`height` 唯一例外是 accordion**:折叠展开用 `grid-template-rows: 0fr → 1fr`(或 WAAPI 一次性测高),它是布局属性动不了高频,低频手风琴可接受;高频/连续场景仍只动 transform
+- **`clip-path` 是第四个可用属性**(reveal/窗口开合类):走合成路径,与 transform/opacity 同级,配合场景类揭示用
+- **禁父级 CSS 变量驱动子元素 transform**:CSS 变量可继承,把拖拽距离/进度写在父容器变量上,每个子元素每帧都会重算样式(实测:抽屉拖拽带 20+ 项列表,越拉越卡)——进度值直接写目标元素自己的 `style.transform`;同理,动画库的 `x/y/scale` 简写若底层走 CSS 变量即不硬件加速,确认无表现后才用
 - 滚动揭示用 `transform` + `opacity`,触发器用 `IntersectionObserver` 而非 scroll 事件
 - 视差用 `transform: translate3d()`,且仅 MOTION_INTENSITY ≥ 7 时启用
 - `will-change` 仅在动画进行中临时设置,完成后移除(常驻 `will-change` 会爆显存)

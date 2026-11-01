@@ -9,7 +9,14 @@
 | 1 | **图像生成工具**（ip 子命令 / text_to_image API） | 有明确情绪与主题要求的场合 | prompt 写主题不写"abstract tech background" |
 | 2 | **带语义 seed 的 picsum**（`https://picsum.photos/seed/<语义词>/<w>/<h>`） | 快速原型、占位 | seed 用语义词（`seed/forest-lab/800/600`），禁 `?random` |
 | 3 | **真实来源图**（用户素材 / 官方 asset / 已授权图库） | 品牌页、证言、Logo 墙 | 记录来源；禁止热链未授权 CDN |
+| 3b | **开放图库检索**（Openverse / Wikimedia Commons / Art Institute of Chicago / Met 开放接口） | 需要"主体的世界"的真实素材：老明信片、旧地图、材料特写、行业版画、同类馆藏 | 免 key；许可默认仅取 CC0 / PD / BY / BY-SA（NC/ND 出局）；**下载到本地用，禁热链**；CC BY/BY-SA 按档案原文写署名与许可链（`--credits`） |
 | 4 | **显式占位槽**：输出 `<img>` 槽 + 尺寸/比例/内容说明，并告知用户"待替换" | 无法安全取图时 | 禁止静默留空或用灰色 div 顶替 |
+
+## 开放图库诚实细则
+
+- **found 图永非客户自有**：可以展示"主体的世界"（行业/年代/材质语境），不可冒充其产品、空间或团队——冒充即造假
+- **caption 按档案原文写**：馆藏名/作者/年代照录，不润色不改写
+- **CC BY-SA 衍生图同许可**传承；检索词写"主体的世界"（老明信片/旧地图/材料特写），不写"generic landscape"
 
 ## 硬禁令
 
@@ -62,9 +69,17 @@
 
 | 页面模式（surface-modes） | 真图基线 |
 | --- | --- |
-| Experience / Persuade | ≥ 2-3 张（首屏至少 1 张主视觉） |
+| Experience / Persuade | ≥ 4 张（常态 6-12；首屏至少 1 张主视觉）——114 站实测弱站的共同点正是图少，评委把"图不够"记为 fault |
 | Operate | 0-1 张（图标即可，不强求） |
 | Read | 0-2 张（配图须承载信息） |
+
+## 视频/动图规范
+
+- **poster 必备**：`<video poster>` 帧与视频首帧一致——实测仅 31% 的站点有 poster,评委把缺失记为 fault;加载慢时白屏一闪即 AI 稿感
+- **一屏一动态图**：两个自动播放的动图同屏互相抵消
+- **规格**：5-15s、<5-10MB、循环无跳帧(首尾帧相接)
+- **对比度逐帧检查**：文字压在视频上时,视频的每一帧都是背景——只查 poster 不够,抽查中段帧
+- **reduced-motion 显示 poster**;进入视口才播(`IntersectionObserver`),离开视口暂停
 
 ## 空态插画策略
 
