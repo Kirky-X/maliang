@@ -1,5 +1,5 @@
 ---
-description: 按 Vercel Web Interface Guidelines 审查 UI 代码的合规性
+description: 按 Web 界面规则快照审查 UI 代码的合规性
 argument-hint: <file-or-pattern>
 ---
 

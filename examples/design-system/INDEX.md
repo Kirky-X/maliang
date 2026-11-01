@@ -17,4 +17,4 @@
 | [swiss-style](swiss-style/DESIGN.md) | 网格驱动 + 排版理性 + 单信号红 | [editorial-swiss](../../references/templates/editorial-swiss.md)（瑞士编辑族） |
 | [y2k](y2k/DESIGN.md) | 千禧未来主义（霓虹渐变/金属玻璃/镀铬） | —（无对应模板） |
 
-治理：范例随 skill 版本演进，过时条目不静默删除——按 [references/templates/README.md「废弃重定向」](../../references/templates/README.md) 的规则处置（frontmatter 加 `replaced-by` + 正文首行标注）。新增范例必须在本表登记，不得出现清单外孤儿目录。
+治理：范例随 skill 版本演进，过时条目不静默删除——按 [references/templates/README.md「废弃重定向」](../../references/templates/README.md) 的规则处置（frontmatter 加 `replaced-by` + 正文首行标注）。新增范例必须在本表登记（对应模板或「无」），不得出现清单外孤儿目录。

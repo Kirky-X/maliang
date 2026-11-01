@@ -1,6 +1,6 @@
 # N1b · SaaS 三段标准栏（Canonical SaaS Three-Section）
 
-> 字标贴左 · 中簇 4-6 条链接（可带 hover 下拉）· 登录 + 实心 CTA 贴右。2024-26 的主导营销导航（Stripe / Linear / Vercel / Figma / Notion 谱系）。N1 是极简双链变体；本原型是密集均衡版。
+> 字标贴左 · 中簇 4-6 条链接（可带 hover 下拉）· 登录 + 实心 CTA 贴右。2024-26 的主导营销导航。N1 是极简双链变体；本原型是密集均衡版。
 
 ## 名称与形状
 
