@@ -2,6 +2,7 @@
 
 > 规范层。值型 token 管「每个元素长什么样」(色/字/距/角,单元素属性,可 grep);本文件管「元素相对彼此站在哪」——对齐轴、同排等高、混排基线、光学修正、凸起与越界关系。布局容器选型见 [layout.md](./layout.md)(用什么容器),间距数值见 [spacing.md](./spacing.md)(离多远);本文件补的是两者之间的**相对位置**维度。机械判据由 [`../../scripts/preview-lint.js`](../../scripts/preview-lint.js) 的 `siblingRowMisalign` / `siblingUnequalSize` 承担,交付门禁为 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) G44/G45。
 >
+> 本节因关系型错误(值全对但位置错)此前既无规范也无门禁而补建——值型约束不覆盖位置关系。
 
 ## 值型 vs 关系型(为什么需要本文件)
 

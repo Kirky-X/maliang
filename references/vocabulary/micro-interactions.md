@@ -64,7 +64,7 @@
 > **全库统一分层口径**(其他文档涉及动效时长时以此为准,冲突数值保留但须注"见 micro-interactions 分层口径"):
 > 1. **反馈类**(按压 / tooltip / toast 等元素级反馈)duration **< 300ms**;
 > 2. **浮层转场**(modal / drawer / popover 入退场)**≤ 400ms**——`validate.py draw-md` 检查 11 硬门(ERROR);如确需更长转场,须同步调整脚本阈值并说明理由,或改用 `{duration-*}` token 引用(不含字面量 ms,脚本自然跳过)。**弹簧路线豁免**:弹簧无固定时长,声明为弹簧驱动(`motion-model: spring`)且显式给出弹簧参数(damping / response 等)的行不受 400ms 硬门约束,脚本仅留 WARN 痕;只写 spring 不写参数仍按违规报 ERROR(豁免是显式条件,不是阈值放宽,见 [`interruptible-motion.md`](../motion-skeletons/interruptible-motion.md) 弹簧两参数模型);
-> 3. **装饰 / 骨架类长动效**(滚动揭示、skeleton shimmer 等非入场循环 / 长动效)**≤ 600ms** 且**必须可跳过**(prefers-reduced-motion 降级或用户可跳过)。**入场 / 转场类不适用本档**,一律按第 2 层 ≤400ms 执行(2026-09 整合收敛:原「缓动库入场 150-600ms」与 validate-draw-md 检查 11、preview-check 5.9.3 两道 400ms 硬门冲突,按预览侧既有收敛决策统一)。本档 >400ms 的动效在 draw-md 规格中必须以 `{duration-*}` token 引用表达(不含字面量 ms,检查 11 自然跳过),禁直写字面量 ms;preview 实现侧受 preview-check 5.9.3 无条件 400ms 门约束,>400ms 装饰档要在实现层落地,须预览验证组先在其脚本开显式豁免口径(参照检查 11 弹簧豁免的显式条件模式),未开前实现一律 ≤400ms;
+> 3. **装饰 / 骨架类长动效**(滚动揭示、skeleton shimmer 等非入场循环 / 长动效)**≤ 600ms** 且**必须可跳过**(prefers-reduced-motion 降级或用户可跳过)。**入场 / 转场类不适用本档**,一律按第 2 层 ≤400ms 执行(原「缓动库入场 150-600ms」与 validate-draw-md 检查 11、preview-check 5.9.3 两道 400ms 硬门冲突,统一收敛到 400ms)。本档 >400ms 的动效在 draw-md 规格中必须以 `{duration-*}` token 引用表达(不含字面量 ms,检查 11 自然跳过),禁直写字面量 ms;preview 实现侧受 preview-check 5.9.3 无条件 400ms 门约束,>400ms 装饰档要在实现层落地,须预览验证组先在其脚本开显式豁免口径(参照检查 11 弹簧豁免的显式条件模式),未开前实现一律 ≤400ms;
 > 4. **stagger 间隔单档 ≤ 80ms**;装饰档放宽到 ≤ 120ms 须 MOTION_INTENSITY ≥ 8(见 [`dials.md`](../meta/dials.md))。
 >
 > 上表数值是第 1/2 层的按组件细分;骨架 / 滚动揭示等装饰类长动效不受本表上限约束,按第 3 层执行(缓动库入场 ≤400ms、dials L4-7 ≤400ms、motion-skeletons ≤600ms 装饰循环与之相容)。
@@ -84,7 +84,7 @@
   - **`never`(例外档)**——动效即交互本体、降级即功能损坏的场合(拖拽跟手、弹簧物理反馈):允许不降级,须在使用处说明理由。
 - `micro-hold-confirm` 的「2s」是**长按判定窗口**(随按压持续的进度填充),非一次性转场时长,不受 400ms 硬门约束;draw-md 产物中勿写成 `duration: 2000ms`(会触发检查 11),应写 `long-press=hold 2s` 类交互语义
 - Web 端入场过渡可渐进增强 `@starting-style`(元素首次渲染 / 从 `display:none` 出现时的过渡起点)
-- **动效描述句式**(**转录补全**,2026-10):向 AI 或 draw-md 描述动效时,禁止笼统的「加点高级动效」;必须写成「触发 + 顺序 + 数值 + 缓动」四段——触发(什么元素+在什么情况下)、顺序(先…再…最后…)、数值(缩放倍数/位移 px/时长 ms,如 0.8→1.2 倍、600ms)、缓动(带回弹弹簧曲线/ease-out/ease-in-out)。手势类必写三要素:阻尼(跟手减速比,如下拉 2:1 越拉越沉)、阈值(吸附/触发的距离线,松手按阈值分流)、回弹(弹簧曲线)——"硬邦邦"手感即三者缺失。示例数值按本表口径收敛(错峰单档 ≤ 80ms、时长按层级预算)
+- **动效描述句式**:向 AI 或 draw-md 描述动效时,禁止笼统的「加点高级动效」;必须写成「触发 + 顺序 + 数值 + 缓动」四段——触发(什么元素+在什么情况下)、顺序(先…再…最后…)、数值(缩放倍数/位移 px/时长 ms,如 0.8→1.2 倍、600ms)、缓动(带回弹弹簧曲线/ease-out/ease-in-out)。手势类必写三要素:阻尼(跟手减速比,如下拉 2:1 越拉越沉)、阈值(吸附/触发的距离线,松手按阈值分流)、回弹(弹簧曲线)——"硬邦邦"手感即三者缺失。示例数值按本表口径收敛(错峰单档 ≤ 80ms、时长按层级预算)
 
 > **@starting-style 注记(仅 Web)**:兼容性 Chrome 117+ / Edge 117+ / Safari 17.5+ / Firefox 129+(2024 Baseline Newly Available,来源 caniuse/MDN);且 `@supports at-rule (@starting-style)` 特性检测尚不可用(CSSWG #10648)。**不可作唯一入场路径**——不支持浏览器中元素会直接以终态出现,这本身可接受;但若初态依赖它隐藏元素(如从 `opacity:0` 过渡),必须保证无支持时不残缺:默认态写终态,起点只放进 `@starting-style` 块;JS fallback 为元素插入后强制 reflow 再移除初始 class,或直接接受无动画直显。HarmonyOS / Flutter 无对应概念,n/a。
 

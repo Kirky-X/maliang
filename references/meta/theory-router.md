@@ -1,6 +1,6 @@
 # 理论模型路由 —— 判阶 + 段 × 理论包 + 复合规则
 
-> 规范层(路由层)。回答「**现在处于哪个阶段、该用哪个理论模型做判断、什么条件用、怎么组合**」。三层数据流:本文(判阶/条件/组合) → [`design-theory-models.md`](design-theory-models.md)(全量 174 模型明细,按锚点查单条) → [`ux-laws.md`](ux-laws.md)(常用定律的机制与 UI 含义,重叠条目以它为 canonical)。阶段本体是 [`lifecycle.md`](lifecycle.md) 七段,本文不另造流程。理论是**推理/归因/说服层**:核对与门禁以 [`ux-rules.md`](ux-rules.md) 与 [`numbered-gates.md`](numbered-gates.md) 为准,理论判断不能抵扣规则(§3 决策链)。出处：模型清单取自 design-theory-models.md(
+> 规范层(路由层)。回答「**现在处于哪个阶段、该用哪个理论模型做判断、什么条件用、怎么组合**」。三层数据流:本文(判阶/条件/组合) → [`design-theory-models.md`](design-theory-models.md)(全量 174 模型明细,按锚点查单条) → [`ux-laws.md`](ux-laws.md)(常用定律的机制与 UI 含义,重叠条目以它为 canonical)。阶段本体是 [`lifecycle.md`](lifecycle.md) 七段,本文不另造流程。理论是**推理/归因/说服层**:核对与门禁以 [`ux-rules.md`](ux-rules.md) 与 [`numbered-gates.md`](numbered-gates.md) 为准,理论判断不能抵扣规则(§3 决策链)。模型清单取自 design-theory-models.md,判阶表与复合规则中文自研。
 
 ## 0. 使用协议(agent 三步)
 
@@ -140,4 +140,4 @@
 - 定律的机制/UI 含义/适用边界以 [`ux-laws.md`](ux-laws.md) 为 canonical,本文只路由不复述;
 - 条目定义与出处以 [`design-theory-models.md`](design-theory-models.md) 为详尽层,按锚点查单条;
 - 可核对规则与门禁以 [`ux-rules.md`](ux-rules.md) / [`numbered-gates.md`](numbered-gates.md) 为准,理论判断不能抵扣;
-- 模型清单 2026-10-25 随手册登记;手册修订(增删条目)时同步本文路由表,两处模型名保持一致。
+- 手册修订(增删条目)时同步本文路由表,两处模型名保持一致。

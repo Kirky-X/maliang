@@ -215,7 +215,7 @@ design-md 暗色场景可走确定性派生:`scripts/design-md.py derive-dark`(�
 - **自标值会被复算**:nothing-design tokens 自标 `#666666` on `#000` 为 4.0:1,实算 **3.66:1**——引以为鉴。标注范式(色值 + 背景 + 比值)使偏差可被机械复核,写错即暴露;不标注或标虚数,则错值永远不会被发现
 - 标注格式:`#616161 · vs #000 = 3.39:1`(值 · 背景 = 比值),逐档附在灰阶 / 色阶表行尾
 
-产物层 [`../../examples/ui-markdown/token.md`](../../examples/ui-markdown/token.md) 的对比度列按本范式执行。两处比值均经 WCAG 公式复算核实(2026-10)。
+产物层 [`../../examples/ui-markdown/token.md`](../../examples/ui-markdown/token.md) 的对比度列按本范式执行。两处比值均经 WCAG 公式复算核实。
 
 ## 9. 对比度两个逃生舱(过不了 AA 时的两条合法路径)
 

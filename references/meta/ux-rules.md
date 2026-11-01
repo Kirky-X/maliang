@@ -1,6 +1,6 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
-> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。基础精选 40 条;§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,§14 包容性 5 条、§15 键盘与指针 7 条、§5 触控目标增补 3 条为 2026-11 增补(中文自研),§3/§4/§6/§13/§15 再增 5 条为 2026-11 二批(中文自研),§16 页面框架 7 条为 2026-11 三批(实证蒸馏),全库共 80 条。
+> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。基础精选 40 条,经多批增补现全库共 80 条(§14 包容性 5 条、§15 键盘与指针 7 条、§16 页面框架 7 条等)。
 > 与脚本的关系:`scripts/validate.py draw-md` 现有 23 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 19 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
@@ -70,7 +70,7 @@
 | chip-collection-reflow      | chip 集合先换行再缩短          | 允许换行;`+n` 折叠必须是可点开的披露               | 全塞一行裁切,`+n` 只是藏值      | 全端 | WARN     |
 | number-tabular              | 数据数字用等宽数字             | 表格数字/价格/计时用 tabular-nums 防列宽抖动        | 比例数字导致整列微跳            | 全端 | ADVISORY |
 | truncation-strategy         | 截断必须留全文路径,且按字段分型 | 识别型字段(人名/标题)换行不截断;次要元数据尾部省略号;差异在后半段的(文件名/UUID/长域名)中段省略号保头尾;卡片预览 line-clamp;**数字/金额/日期永不截断**;任何截断配 tooltip/展开的全文路径,键盘可达 | 一刀切尾部省略号;只认 hover 出 tooltip;截断金额与日期 | 全端 | WARN     |
-| fixed-width-text            | 文本容器禁固定宽度             | min-width / max-width / match-parent / flex 弹性,留换行与缩放余量 | 给 text 组件写死 `width: Npx`(超长词/emoji/RTL 溢出截断);登记:2026-09 整合审查(validate-draw-md 检查 14 回链) | 全端 | WARN     |
+| fixed-width-text            | 文本容器禁固定宽度             | min-width / max-width / match-parent / flex 弹性,留换行与缩放余量 | 给 text 组件写死 `width: Npx`(超长词/emoji/RTL 溢出截断);validate-draw-md 检查 14 回链 | 全端 | WARN     |
 | cancellable-state-transitions | 动画可被打断且终态正确        | 快速状态切换取消/替换前序微交互,直接设置终态语义并清理副作用   | 依赖 animationend/transitionend 保证状态正确(被打断即坏);登记:2026-10 自 accessibility.md §8 收敛 | 全端 | WARN     |
 | hyphenation-split   | 西文断词按文本长度二分         | 短文本(弹窗/标语/按钮)禁音节断行保整词;长文窄栏可音节断行,但行末 ≥3 字符、行首 ≥2 字符,连字符行数受限 | 短文案被拆成音节;长文行末 1-2 字符孤段 | 全端 | ADVISORY |
 
@@ -123,6 +123,7 @@
 
 ## 12. 国际化与方向
 
+> validate.py draw-md 检查 15 回链本节 slug。物理方向属性(left/right)不随书写方向翻转,RTL 语境下布局不镜像;逻辑属性(start/end / -inline-*)一次编写双向成立。行内 `ltr-only` 标注为显式豁免(确与方向无关时使用)。HarmonyOS / Flutter 有各自的方向镜像机制,本条 CSS 属性名仅 Web 端可核对。
 
 | slug               | 一句话规则                    | Do(怎么做)                                        | Don't(别怎么做)                | 端   | Severity |
 | ------------------ | ----------------------------- | -------------------------------------------------- | ------------------------------- | ---- | -------- |

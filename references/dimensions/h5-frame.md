@@ -34,7 +34,7 @@
 ```
 
 - `viewport-fit=cover` 让 `env(safe-area-inset-*)` 返回真实数值——没有它 safe-area 全部静默变 `0px`，内容钻进刘海底下。
-- **永不禁缩放**（2026-09 维护者裁决，来源 mobile-native Hard Rule 4）：禁写 `maximum-scale=1 / user-scalable=no`——那是禁果式修法，从需要捏合缩放的用户手里夺走能力（WCAG 1.4.4 缩放不受限）。输入聚焦自动放大的「因」是输入框字号 < 16px，用下面重置里的 16px 规则修因，不禁缩放禁果。
+- **永不禁缩放**：禁写 `maximum-scale=1 / user-scalable=no`——那是禁果式修法，从需要捏合缩放的用户手里夺走能力（WCAG 1.4.4 缩放不受限）。输入聚焦自动放大的「因」是输入框字号 < 16px，用下面重置里的 16px 规则修因，不禁缩放禁果。
 - `interactive-widget=resizes-content`（Android Chrome 生效，他端静默忽略）：软键盘弹出时**挤压**视口而非覆盖，Android 键盘行为与 iOS 对齐——固定底栏不再被键盘盖住、焦点输入框不被遮挡。
 - `theme-color` 把浏览器 chrome 染成页面色。
 

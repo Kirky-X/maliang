@@ -167,7 +167,7 @@
 ### G44 · 同排元素行位错位 / 等高破坏
 - **违反什么**:同排同构元素(统计指标卡/表单项/同组卡片/dock tab)的对应内容行(图标/数值/副文案)顶基线偏差肉眼可辨(> 2px),或 flex 行 stretch 语义下同构卡片渲染高不等、等分(`flex-grow`)元素渲染宽不等——「值全对但排歪」。
 - **怎么判定**:探针 [`../../scripts/preview-lint.js`](../../scripts/preview-lint.js) `siblingRowMisalign` / `siblingUnequalSize`(注入临时副本取回报告,容差 2px)+ 截图核对;规范判据见 [`../dimensions/alignment.md`](../dimensions/alignment.md)(对齐轴/同排等高与行槽)。
-- **怎么修**:图标定框(固定宽高容器)、行槽化(第 k 行跨卡对齐),禁「内容天然高度」决定行位;混排行 `align-items: baseline`(ux-rules `baseline-align-mixed`);修复后重跑探针。出处：2026-10 用户实测反馈(四宫格统计卡错位)驱动补建。
+- **怎么修**:图标定框(固定宽高容器)、行槽化(第 k 行跨卡对齐),禁「内容天然高度」决定行位;混排行 `align-items: baseline`(ux-rules `baseline-align-mixed`);修复后重跑探针。
 
 ### G45 · 凸起元素无规格依据
 - **违反什么**:越出容器的凸起元素(dock 中心主操作按钮/FAB/骑缝头像)未同时声明三要素——凸起量(落 spacing token 档且 ≤ 按钮高 50%)、锚定轴(偏差 ≤ 2px)、与相邻元素的基线关系;或实测凸起超过声明值,造成与相邻项基线断裂。

@@ -44,7 +44,7 @@
 - `state-focus-spotlight` 未选中项降饱和 60% + 模糊 2px + 缩小 0.96 为上限,过强会像禁用态(与 [`states.md`](#) 禁用语义区分)
 - `state-adaptive-invert` 以元素背后采样区域亮度切换 `color: white/black`,过渡 200ms 连续插值,禁止硬切
 - 骨架屏高度必须用与真实内容相同的布局结构渲染(同一组件两态),禁止固定假高度
-- 加载动效配自然隐喻(骨架浮现如退潮、`state-image-blur-up` 如相机对焦、列表接续如传送带、流式回复如真人打字),实现与提示词都把隐喻目标写进去;骨架数据到达后按头像/标题/图块自上而下错峰浮现(单档 ≤ 80ms,口径同 [`micro-interactions.md`](micro-interactions.md));等待尽量前置消化:`scroll-infinite` 距底约一屏预载、图片距进入视口约 300px 预载(**转录补全**,2026-10)
+- 加载动效配自然隐喻(骨架浮现如退潮、`state-image-blur-up` 如相机对焦、列表接续如传送带、流式回复如真人打字),实现与提示词都把隐喻目标写进去;骨架数据到达后按头像/标题/图块自上而下错峰浮现(单档 ≤ 80ms,口径同 [`micro-interactions.md`](micro-interactions.md));等待尽量前置消化:`scroll-infinite` 距底约一屏预载、图片距进入视口约 300px 预载
 
 ## 使用规则
 

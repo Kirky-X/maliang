@@ -1,4 +1,4 @@
-"""detect-tells.py 第二批扩充规则(#21)的单元测试 + slop/clean 夹具对拍。
+"""detect-tells.py 扩充规则(渐变/ALL CAPS/emoji)的单元测试 + slop/clean 夹具对拍。
 
 四档对齐:critical/major 进硬命中(findings,退出码 1);minor/warn 进告警档
 (warnings,不拦截)。既有五规则行为由 tests/test_detect_tells.py 守护,本文件

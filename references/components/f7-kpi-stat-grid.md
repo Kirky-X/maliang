@@ -55,4 +55,4 @@ App/后台首屏的「今日概览」区：一排（窄屏两排）同构指标�
 
 ## 来源
 
-maliang 自研，2026-10（用户实测反馈「四宫格统计卡各列错位」驱动补建，配 alignment.md 关系型判据与 preview-lint `siblingRowMisalign` / `siblingUnequalSize` 探针）。
+maliang 自研（配 alignment.md 关系型判据与 preview-lint `siblingRowMisalign` / `siblingUnequalSize` 探针）。
