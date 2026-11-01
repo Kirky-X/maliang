@@ -1,6 +1,6 @@
 # Sticky Stack —— 粘性堆叠 GSAP 骨架
 
-> Framework 模板。滚动时章节依次堆叠(sticky),新章节从下方覆盖旧章节,旧章节按比例缩小 / 变暗。
+> Framework 模板。滚动时章节依次堆叠(sticky),新章节从下方覆盖旧章节,旧章节按比例缩小 / 变暗。MOTION_INTENSITY ≥ 7 适用(见 [`dials.md`](../meta/dials.md))。
 
 ## 视觉效果
 

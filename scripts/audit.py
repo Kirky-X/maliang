@@ -116,7 +116,7 @@ import re
 import sys
 from urllib.parse import unquote
 
-# 扫描的代码文件扩展名(设计相关文件;参考 设计工艺库 hooks 内建清单)
+# 扫描的代码文件扩展名(设计相关文件)
 SCAN_EXTENSIONS_TELLS = {
     ".html", ".htm", ".css", ".scss", ".sass", ".less",
     ".js", ".jsx", ".ts", ".tsx", ".vue", ".svelte", ".astro",
@@ -125,7 +125,7 @@ SCAN_EXTENSIONS_TELLS = {
 # 目录递归扫描时跳过
 SKIP_DIRS_TELLS = {"node_modules", ".git", "dist", "build", ".next", "__pycache__", ".venv"}
 
-# 四档严重级(与 maliang 审查三档 + 告警档对齐;出处：规则库 #21 四档)
+# 四档严重级(与 maliang 审查三档 + 告警档对齐)
 SEV_CRITICAL = "critical"   # 硬失败
 SEV_MAJOR = "major"         # 硬失败
 SEV_MINOR = "minor"         # 告警档(不拦截)
@@ -434,10 +434,7 @@ _COOL_HUE_LO, _COOL_HUE_HI = 170.0, 255.0
 
 
 def css_hue(token):
-    """CSS 颜色字面量的色相(度),读不出返回 None(近灰无有效色相亦 None)。
-
-    改写自 规则库 scripts/detect/rules.mjs cssHue(#21)
-    """
+    """CSS 颜色字面量的色相(度),读不出返回 None(近灰无有效色相亦 None)。"""
     v = token.strip().lower()
     m = re.match(r"^hsla?\(\s*([\d.]+)(?:deg)?", v)
     if m:
@@ -1048,7 +1045,7 @@ em-dash 滥用:英文 em-dash(—)插入语判 critical(外部 HIGH 口径);
 
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
 依赖: Python 3 标准库。
-      HIGH 口径(#32)中文破折号例外为本仓 ai-tells §6 既有口径。
+中文破折号例外为本仓 ai-tells §6 既有口径。
 """
 # ---- 模块说明结束 ----
 import argparse
@@ -1072,7 +1069,7 @@ _COMMENT_RE = re.compile(r"<!--.*?-->|/\*.*?\*/", re.DOTALL)
 _CN_DASH_RE = re.compile(r"——")
 _EN_EM_DASH_RE = re.compile(r"[A-Za-z0-9]\s*—\s*[A-Za-z0-9]")
 
-# 10 式模板句(改写自 检测工具 TEMPLATE_PATTERNS,#32;正则 → 规则名 → 释义)
+# 10 式模板句(正则 → 规则名 → 释义)
 TEMPLATE_PATTERNS = (
     (r"\bthe\s+\w+\s+way\s+to\s+\w+", "the-adj-way-to", "「The [adjective] way to [verb]」"),
     (r"\bbuilt\s+for\s+\w+(?:\s+\w+)?\s+who\s+\w+", "built-for-who", "「Built for [audience] who [verb]」作全部主张"),
@@ -1221,7 +1218,6 @@ def _main_copy(argv=None):
     1 = 存在 error 级发现（FAIL 级规则命中；--strict 下所有发现都升级为 error）
     2 = 没能检查（没有 lint-checks.json / 没有可执行的声明规则 / 用法错误）
 依赖: Python 3 标准库(无第三方依赖)。
-denylist)与 .github/workflows/validate-engine.yml, 中文自研实现。
 """
 # ---- 模块说明结束 ----
 
@@ -1351,9 +1347,6 @@ references/templates/variation-engine.md「构建日志」节),做三查:
 
 七轴键集(theme/background/typography/hero/section/signature/motion)以
 variation-engine.md 为唯一词表;本脚本只做机械一致性,轴值优劣不由脚本判断。
-
-hot axis 思想stamp-lies 与 设计基准库(#19)同门合并(裁决见
-.absorb-external/ui-benchmark-batch2-findings.md #31)。
 
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
         build-log 缺失或非法 = UNMEASURED → 2(G42:不得记通过)。
@@ -1563,7 +1556,7 @@ def _main_structure_history(argv=None):
 对比得出 changed/added/removed——全程只算哈希,**不把文件内容读进模型
 上下文**(外部原口径:Hashing is a cheap freshness check)。
 
-信任边界(改写自 方法库 RESUME.md「Trust boundary」,#30,
+信任边界:
 - 仅仓库内路径:resolve 后必须落在仓库根内,拒绝绝对路径与 ../ 逃逸;
   - 拒涉密文件: .env* / .git/ / credentials* / 私钥证书(*.pem、id_rsa*、
     *.key)/ 任何疑似 secret store;
@@ -2073,9 +2066,6 @@ references/templates/variation-engine.md「构建日志」节),做三查:
 七轴键集(theme/background/typography/hero/section/signature/motion)以
 variation-engine.md 为唯一词表;本脚本只做机械一致性,轴值优劣不由脚本判断。
 
-hot axis 思想stamp-lies 与 设计基准库(#19)同门合并(裁决见
-.absorb-external/ui-benchmark-batch2-findings.md #31)。
-
 退出码: 见 scripts/EXIT-CODES.md(0=看了没问题 / 1=看了有问题 / 2=没能检查;#16)。
         build-log 缺失或非法 = UNMEASURED → 2(G42:不得记通过)。
 依赖: Python 3 标准库。
@@ -2284,7 +2274,7 @@ def _main_structure_history(argv=None):
 对比得出 changed/added/removed——全程只算哈希,**不把文件内容读进模型
 上下文**(外部原口径:Hashing is a cheap freshness check)。
 
-信任边界(改写自 方法库 RESUME.md「Trust boundary」,#30,
+信任边界:
 - 仅仓库内路径:resolve 后必须落在仓库根内,拒绝绝对路径与 ../ 逃逸;
   - 拒涉密文件: .env* / .git/ / credentials* / 私钥证书(*.pem、id_rsa*、
     *.key)/ 任何疑似 secret store;

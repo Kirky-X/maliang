@@ -24,7 +24,6 @@
 | `table-zebra`           | 隔行底色辅助横向扫读                                 | 宽表多列对照                          | <6 行或已用 hover 态时二选一,勿叠加                  |
 | `table-descriptions`    | 键值对详情:两列 label/value 成组分节,只读摘要        | 详情页字段摘要(订单/资产/配置;与 [data-dense-dashboard](../templates/data-dense-dashboard.md) 模板呼应) | 需排序/筛选/多行对比仍用数据表;可编辑字段改表单      |
 
-
 ## 使用规则
 
 - 分工:图表选型在 [charts.md](charts.md),搜索与筛选交互在 [search.md](search.md),本文只管表格结构;图表的无障碍 fallback 数据表遵循 ux-rules.md 的 data-table 条目

@@ -42,6 +42,3 @@
 - 用「大数字 + 小标签 + 渐变 accent」品类默认套路而不声明拒绝——见 [design-md.md](../commands/design-md.md) Defaults 机制。
 - 数字编尾数充门面：stat 永不做 hero 唯一标题的借口；没有真实数字就换 [H1](h1-marquee.md) 或 [H3](h3-quote-led.md)。
 - 跨产出照抄同组旋钮值 = 同款；复用必须至少换一个旋钮并盖章声明。
-
-## 来源
-

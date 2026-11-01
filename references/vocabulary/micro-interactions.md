@@ -24,7 +24,7 @@
 
 ## 频率法则:该不该动
 
-> 动画成本按操作频率判断,不是"越动越好"。出处：interface-design;中间档、键盘否决与 utility 法则:动效机会分析 + 设计参考 + prototype + web-design-pascalorg 四源印证
+> 动画成本按操作频率判断,不是"越动越好"。
 
 | 使用频率                                     | 动画策略                     |
 | -------------------------------------------- | ---------------------------- |
@@ -52,7 +52,7 @@
 
 ## 时长预算表
 
-> 按组件类型的 duration 上限;全局上限 UI 一律 < 300ms(仅 modal / drawer 类大表面可放宽到 400ms)。出处：interface-design。
+> 按组件类型的 duration 上限;全局上限 UI 一律 < 300ms(仅 modal / drawer 类大表面可放宽到 400ms)。
 
 | 组件类型          | 时长预算   |
 | ----------------- | ---------- |
@@ -166,7 +166,7 @@
 | `collab-cursor` | 他人光标带彩色名签缓动跟随(惯性 lerp 0.1-0.2),空闲 2s 淡出;颜色按用户 ID 稳定映射 | 协作画布 / 文档(Figma、Notion 类);单人工具禁用 |
 | `collab-select-halo` | 他人正在编辑的元素描边呼吸晕环(周期 ≤ 2s);在线超 5 人只显示活跃前 5 | 实时协同编辑的占位感知 |
 
-- **实现**:他人光标只动 transform;晕环呼吸只动 opacity / transform;出处：外部对标(Figma multiplayer 惯例,2026-10)
+- **实现**:他人光标只动 transform;晕环呼吸只动 opacity / transform
 - **降级**:`prefers-reduced-motion` 时名签与晕环直接显示 / 隐藏,不缓动
 
 ### cubic-bezier 缓动曲线库

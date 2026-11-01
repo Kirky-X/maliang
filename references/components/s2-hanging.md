@@ -38,6 +38,3 @@
 - 手痒补一条分割线或底色——负空间就是本原型的全部；要线就用 [S1 左栏编号](s1-left-margin-numbered.md) 的体系。
 - 悬置量全页恒定、节与节无密度对比——与「交替疏密」的节奏纪律相抵（[variation-engine.md](../templates/variation-engine.md) 密度轴）。
 - 跨产出照抄同组旋钮值 = 同款；复用至少换一个旋钮并盖章声明。
-
-## 来源
-

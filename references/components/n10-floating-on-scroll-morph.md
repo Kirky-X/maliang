@@ -4,7 +4,7 @@
 
 ## 名称与形状
 
-一个 `<header>` 内外两层：外层 `.nav` 持有「落地栏」视觉，内层 `.nav__inner` 持有「药丸」视觉；滚过阈值切一次 `.is-floating`，所有共享属性交叉淡变。落点配方（四铁律、属性形变表、滚动处理器全文）见 设计基准库 floating-nav 原文，此处收其骨架。
+一个 `<header>` 内外两层：外层 `.nav` 持有「落地栏」视觉，内层 `.nav__inner` 持有「药丸」视觉；滚过阈值切一次 `.is-floating`，所有共享属性交叉淡变。
 
 **四条铁律（简化记）**：①总高恒定（两态 padding 互补，页面不跳）；②位移只用 `transform: translateY()`，禁 margin/padding；③每个共享视觉属性（background / border / backdrop-filter / box-shadow）两态都要显式中性化并进 transition 列表；④全部属性共用一条时长与曲线（~520ms，`cubic-bezier(0.16, 1, 0.3, 1)`）。`backdrop-filter` 两态写 `blur(0)` 不写 `none`（`none` 不参与过渡）。
 
@@ -51,6 +51,3 @@
 - 两个 `<header>` 用 opacity 对切——DOM 翻倍、焦点序错乱、内容失同步；只许单 DOM 交叉淡变。
 - 形变中总高变化——内容抖动是本模式最致命的单点错误（铁律 ①）。
 - 阈值设 0（一滚就变）——抖动；≥60px。写导航标记前声明：「上一构建导航：X。本构建：Y，因为 Z」（总则 2）；跨产出照抄同组旋钮值 = 同款，复用至少换一个旋钮并盖章声明。
-
-## 来源
-

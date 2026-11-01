@@ -23,8 +23,8 @@
 - 分组容器四档从轻序：**仅间距 → 单分隔线 → 描边 → 卡片底色**，用能成立的最轻工具（与 craft-discipline「深度策略四选一不混用」分工：那条管全站深度语言，本序管单屏内分组工具择序）。
 - **永不框住最重要元素**——primary 浮在背景上，容器信号会稀释焦点（与 preview 推定阻断「焦点元素不赢」衔接：焦点被容器框住是同族失败形态）。
 
-> 第 13 / 14 定律
-> 第 15 定律出处：interface-design(Visual Hierarchy:One focal point / weight beats size)。
+> 第 13 定律与 [`dials.md`](./dials.md) MOTION_INTENSITY 联动:Level 1-3 严格只允许有动机动画;第 14 定律的 Tactile Feedback 与 [`vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md) 联动。
+> 第 15 定律(Visual Hierarchy:One focal point / weight beats size)。
 
 ## 二、UI 技巧(48 项,按主题)
 
@@ -96,13 +96,6 @@
 
 - 地图类卡片加视觉引导(地标元素)
 - 可点击信息标签化(降认知)
-
-### 来源标注(48 项技巧)
-
-按主题分组,来源如下(供后续维护时溯源):
-
-| 主题分组        | 来源                                                                 |
-| --------------- | -------------------------------------------------------------------- |
 
 **冲突处理**:若某项技巧与 [`ai-tells.md`](./ai-tells.md) / [`performance.md`](./performance.md) / [`accessibility.md`](./accessibility.md) 冲突,以后者为准(后者是 CRITICAL/HIGH 硬性规则,本节技巧是 MEDIUM 经验沉淀)。例:本节"毛玻璃卡片"技巧需遵守 [`glass-effect.md`](../dimensions/glass-effect.md) 的性能预算。
 

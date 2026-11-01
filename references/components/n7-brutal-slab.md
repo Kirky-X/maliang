@@ -47,6 +47,3 @@
 - N7 配圆角、软影或 backdrop-blur——词汇对冲；要 blur 退 [N5](n5-floating-pill.md)，要圆角退 [N1](n1-wordmark-2-links.md)。
 - 加字距大写用在中文链接——中文无大写，等价物是加字距 + 字重（[font.md](../dimensions/font.md)），硬写 `text-transform` 无效。
 - 写导航标记前声明：「上一构建导航：X。本构建：Y，因为 Z」——同类导航连续两次构建相同即违规（总则 2）；跨产出照抄同组旋钮值 = 同款，复用至少换一个旋钮并盖章声明。
-
-## 来源
-

@@ -31,7 +31,6 @@ DESIGN.md 头部(front matter 之前)须带 schema 版本戳注释:
 - 戳标识的是 **schema 结构版本**(顶层键与章节约定),不是产物 release 版本
 - schema 结构变化(增删顶层键 / 字段语义调整)时递增 N;仅改 token 值不递增
 - 戳供**人与 agent** 识别 schema 版本;下游工具(validate / ui-graph)读戳自动校验为**规划项**——当前仓内无脚本消费该戳,勿假设存在自动漂移检测
--
 - **2 号变更**:`decisions` 增 `id` 必选字段;token 顶层键可带行尾溯源注释(见下方「token 溯源」)
 - **3 号变更**:增三个可选扩展键 `measurement` / `measured_palette` / `effects`(均可选、均 lint 静默,不影响既有契约,见下方两节)
 
@@ -60,7 +59,6 @@ decisions:
 
 - 迭代 / redesign 交付后,把本轮新出现的设计决策追加进账本,防止跨轮次漂移
 - `id` 一经分配不复用:决策被推翻后保留条目并标注取代关系,新决策接下一个序号
-- 出处：interface-design `system.md` Decisions 表(Decision | Rationale | Date)
 
 `colors` / `typography` / `rounded` / `spacing` / `components` 的**顶层键**可带行尾溯源注释,指回产生该值的决策 id:
 
@@ -200,7 +198,7 @@ Material Design 3 (MD3) 配对 token(`on-primary`、`primary-container` 等)被�
 | `color-text-tertiary`  | 元数据     |
 | `color-text-muted`     | 禁用       |
 
-只用两级说明层级太扁。出处：interface-design(Text hierarchy)。
+只用两级说明层级太扁。
 
 参考图反推色彩时优先确定性测色(`{SKILL_DIR}/scripts/verify.py measure-colors`,目测取色漂移可达 ΔE10+):实测配置与色板持久化见下方「测量持久化块」,实测值按 ✅ 置信标注、目测值按 ⚠️(判据见 [`../commands/design-md.md`](../commands/design-md.md) 提取路径置信标记)。
 

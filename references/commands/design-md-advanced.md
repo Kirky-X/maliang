@@ -7,7 +7,7 @@
 
 ## Phase 4: Variation Engine(变体生成)
 
-> 从一份主 DESIGN.md 派生多个主题变体(明/暗 / 季节 / A/B / 品牌)。
+> 从一份主 DESIGN.md 派生多个主题变体(明/暗 / 季节 / A/B / 品牌)。**输入**:主 DESIGN.md + 变体规格。**输出**:N 个 `DESIGN.<variant>.md` 文件 + diff 报告。
 
 ### 触发场景
 

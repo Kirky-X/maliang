@@ -66,8 +66,8 @@ checkbox/radio、role=switch、opacity:0、disabled / aria-disabled(WCAG 1.4.3/1
         没装浏览器 / 目标不存在 / 页面上一个可比对元素都没有 → UNMEASURED + 2,
         绝不静默通过。
 依赖: Python 3 标准库 + 本机 Chrome/Chromium(可选依赖,经 DevTools 协议驱动)。
-     scripts/_targets.mjs(三态退出码、「未测量不算通过」)
-     浏览器驱动为本地自研的轻量 CDP 实现(不引入 Playwright)。
+口径:同阈值/同豁免口径;三态退出码,「未测量不算通过」。
+浏览器驱动为本地自研的轻量 CDP 实现(不引入 Playwright)。
 """
 # ---- 模块说明结束 ----
 import argparse
@@ -859,6 +859,7 @@ def _main_states(argv=None):
         没装浏览器 / 目标不存在 / 一个控件都没点到 → UNMEASURED + 2。
 依赖: Python 3 标准库 + 本机 Chrome/Chromium(共享 scripts/verify-states.py 的
       CDP 轻实现)。
+口径:三信号与豁免口径。
 """
 # ---- 模块说明结束 ----
 import argparse
@@ -1894,7 +1895,7 @@ class UnmeasurableError(Exception):
 
 
 # ---------------------------------------------------------------------------
-# 采样 / k-means / ΔE 合并 / 角色分配(改写自外部 measure-colors.mjs)
+# 采样 / k-means / ΔE 合并 / 角色分配
 # ---------------------------------------------------------------------------
 
 def _mix32(value):
@@ -2165,8 +2166,6 @@ def _main_measure_colors(argv=None):
 (record these in the style lock)」清单。design-md Phase 0d 的颜色契约:
 模型只能组合矩阵内配对;调色板扩充必须重跑矩阵。
 
-(:83-111 矩阵分类)(#33)MOODS 按裁决 6 砍除。
-
 退出码: 见 scripts/EXIT-CODES.md(0=求解成功 / 1=有档位无解 / 2=没能检查;#16)。
 依赖: Python 3 标准库。
 """
@@ -2185,7 +2184,7 @@ CHROMA_MAX_TRIES = 8
 GAMUT_MAX_TRIES = 40
 
 
-# ---------- sRGB <-> OKLab <-> OKLCH(改写自外部 generate_palette.py) ----------
+# ---------- sRGB <-> OKLab <-> OKLCH ----------
 
 from maliang_common import srgb_to_linear as _srgb_to_linear  # 全库唯一 WCAG/线性化实现
 
@@ -2236,7 +2235,7 @@ def oklch_to_hex(L, C, H):
     return "%02x%02x%02x" % (r, g, b)
 
 
-# ---------- WCAG 对比度(改写自外部 check_contrast.py) ----------
+# ---------- WCAG 对比度 ----------
 
 def _linearize(c):
     return _srgb_to_linear(c / 255)

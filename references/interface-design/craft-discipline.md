@@ -8,7 +8,7 @@ description: 面向仪表盘、管理后台、SaaS 应用、工具、设置页�
 
 用顶级设计团队的 craft 构建产品界面 —— Linear、Vercel、Stripe、Apple。它们与通用产出的差别不在天赋。差别在于每个决策都被*决定*过,层级不容误读,一百个小细节同时正确。本 skill 就是通往那里的路径。
 
-> **Canonical 分工（2026-10）**：本文件是并入的参考正文（中文译本，原文见上方来源行）。与中文规范重叠的主题，**修订责任与数值正本在中文侧**——海拔与边框 → [`../dimensions/elevation.md`](../dimensions/elevation.md)、同心圆角与图片描边 → [`../dimensions/radius.md`](../dimensions/radius.md)、60/30/10 → [`../dimensions/color.md`](../dimensions/color.md)、动效时长预算 → [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)、触控热区 → [`../meta/accessibility.md`](../meta/accessibility.md)。下文与正典冲突时以正典为准；借鉴纪律正本在 [`../donors/README.md`](../donors/README.md)（见下文「借鉴数值,不借鉴外观」节指针）。
+> **Canonical 分工（2026-10）**：本文件是并入的参考正文（中文译本）。与中文规范重叠的主题，**修订责任与数值正本在中文侧**——海拔与边框 → [`../dimensions/elevation.md`](../dimensions/elevation.md)、同心圆角与图片描边 → [`../dimensions/radius.md`](../dimensions/radius.md)、60/30/10 → [`../dimensions/color.md`](../dimensions/color.md)、动效时长预算 → [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)、触控热区 → [`../meta/accessibility.md`](../meta/accessibility.md)。下文与正典冲突时以正典为准；借鉴纪律正本在 [`../donors/README.md`](../donors/README.md)（见下文「借鉴数值,不借鉴外观」节指针）。
 
 ## 适用范围
 
@@ -158,6 +158,7 @@ Linear 紧;Stripe 松。两者都不是默认 —— 两者都是*选出来的*,
 
 # 借鉴数值,不借鉴外观
 
+> **借鉴纪律的正本在 [`../donors/README.md`](../donors/README.md) §3** —— 两处文字曾经漂移,故本节只留指针;任何冲突以 donors/README.md §3 为准。写代码前跑一遍;它与「能渲染时就渲染」并列 —— 一个管构建前看什么,一个管构建前借鉴什么。
 
 方向定了之后、写第一个组件之前,从 [`../donors/`](../donors/README.md) 挑 **1-2 个气质最接近的供体站点**,提取 **3-5 个具体值或动作**写进设计计划 —— 然后逐条写明「从 {site} 借鉴了 X」。完整规则(借值不借气质、可借鉴清单、品牌身份排除项,以及 DESIGN.md 优先的冲突条款)在 donors/README.md §3。
 

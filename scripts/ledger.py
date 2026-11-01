@@ -8,7 +8,8 @@
 `events.jsonl` / `candidates.jsonl` / `decisions.jsonl` + `rules.md`
 （级别 / 何时适用 / 原话摘录 / 收录日期｜状态）。
 
-状态机职责不同,互不替代）:
+状态机（本账本管「反馈→给 Skill 的长期规则」,与 design-md 的
+`decisions[]`（项目级设计决策）职责不同,互不替代）:
 
     observed → proposed → accepted → published → retired
                   ↓           ↓          ↓

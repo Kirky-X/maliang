@@ -216,8 +216,6 @@ FOCUS_RING_OVERRIDE_RE = re.compile(
 )
 
 # --- 5.6 CSS 静默失败(孤儿类选择器 / 未定义 var()) ---
-# 出处：hue scripts/validate.mjs::collectUsedClasses / extractClassSelectors /
-# checkCssVars(css-orphans 与 css-vars 两条检查)
 CLASS_ATTR_RE = re.compile(
     r"""class\s*=\s*(?:"([^"]*)"|'([^']*)'|\\"([^"\\]*)\\")""", re.IGNORECASE
 )
@@ -1344,8 +1342,7 @@ stdout 哨兵（供 Agent/脚本解析）:
   0 = 正常结束（serve 关停 / watch 观察到选择）
   1 = 运行中出错（端口绑定失败、selection 目录不可写等）
   2 = 没能检查或用法错误（--file 不存在 / watch 超时 / 参数错误）
-依赖: Python 3 标准库(无第三方依赖)。出处： 设计方法库 preview-server 与
-watch-selection, 中文自研实现。
+依赖: Python 3 标准库(无第三方依赖)。
 """
 # ---- 模块说明结束 ----
 

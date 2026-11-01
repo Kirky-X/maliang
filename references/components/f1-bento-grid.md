@@ -45,6 +45,3 @@ CSS Grid 特性区：等宽轨道 + 固定行高，瓦片用不同 span 制造�
 - 瓦片 >8 还要继续铺——Hum 等圆润系的硬上限是 8；密度失控读作 dashboard（DENSITY dial 越界）。
 - 「图标瓦片 + 标题 + 两行灰字」×3 等距——这是被 [ai-tells.md](../meta/ai-tells.md) 点名的三等卡反射单元；有_three 件事就说成别的形状。
 - 跨产出照抄同组旋钮值（上一次 `tiles=6, spans=irregular, accent=corner-only`，这次照抄 = 同款）：至少换一个旋钮并盖章声明。
-
-## 来源
-

@@ -1,6 +1,6 @@
 # 产品类型推理 —— 从 Brief 到设计方向
 
-> 规范层。基于产品类型推理出全套设计方向,避免 LLM 默认审美(见 [`ai-tells.md`](./ai-tells.md))。本文列出 10+ 常见产品类型的推理规则,完整 161 类索引见 [`../dimensions/color-palettes.md`](../dimensions/color-palettes.md) 的 192 套调色板(产品类型 × 主题)。出处：UX 规则库。
+> 规范层。基于产品类型推理出全套设计方向,避免 LLM 默认审美(见 [`ai-tells.md`](./ai-tells.md))。本文列出 10+ 常见产品类型的推理规则,完整 161 类索引见 [`../dimensions/color-palettes.md`](../dimensions/color-palettes.md) 的 192 套调色板(产品类型 × 主题)。
 
 ## 1. 推理维度
 

@@ -47,6 +47,3 @@
 - 编辑/安静语境用跑马灯——运动在安静页面读作吵闹；与 [motion-skeletons](../motion-skeletons/) 的降级纪律一致：`prefers-reduced-motion: reduce` 必须停滚（上述 CSS 已内建）。
 - track 内容只复制一份——循环会跳变；必须两份 + `translateX(-50%)`。
 - 写页脚标记前未声明轮换：「上一构建页脚：X。本构建：Y，因为 Z」；跨产出照抄同组旋钮值 = 同款，复用至少换一个旋钮并盖章声明。
-
-## 来源
-

@@ -1,6 +1,6 @@
 """validate.py draw-md 全部 23 项检查的 fixture 单元测试。
 
-双列 fixture 约定(对齐 设计工艺库 TDD 流程):每项检查至少 1 个"应报"用例
+双列 fixture 约定:每项检查至少 1 个"应报"用例
 + 1 个"不应报"用例;规则实现为纯函数,直接以合成行列表调用。
 16-21 为 2026-10 契约完备性补批(数值合理性/organisms 引用/frontmatter
 components 与 pattern 校验/方向契约块/裸 token 名)+ dir=rtl 升级与

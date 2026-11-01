@@ -43,6 +43,3 @@
 - 砍掉 label 只留 placeholder——placeholder 在输入后消失且对比度常不达标（[accessibility.md](../meta/accessibility.md)）；视觉可省，语义 label 不可省。
 - 提交按钮 `<div>` 顶替——表单语义完整性（Enter 提交、校验反馈）随语义元素一起消失。
 - 跨产出照抄同组旋钮值 = 同款；复用至少换一个旋钮并盖章声明。
-
-## 来源
-

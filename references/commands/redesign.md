@@ -2,6 +2,7 @@
 
 > 本文件是 `redesign` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
 > 输入 = 现有 UI 截图 / 代码 / URL,输出 = 改版后的 UI markdown + 改动清单(改动什么 + 为什么 + 风险)。
+> `redesign` 是与 `design-md` 并列的"上游"子命令,但目标不是从零创建,而是**改造现有**。
 
 > **CHECKPOINT 与无人值守**:无人值守时按 [`SKILL.md`](../../SKILL.md)「无人值守与 CHECKPOINT 降级」节的默认取值表执行,不逐点阻塞;自选决定与理由写入交付说明。
 
