@@ -121,3 +121,9 @@ z:10  内容(标题 / 正文 / CTA)
 | 素材来源、有效像素、object/photo 诚实占位 | [`../meta/visual-assets.md`](../meta/visual-assets.md) | 引用其口径,不重复 |
 | 假产品 UI / 装饰零件禁令 | [`../meta/ai-tells.md`](../meta/ai-tells.md) §10 | 提供正向替代配方(§7) |
 | 动效强度与 GATE | [`../meta/dials.md`](../meta/dials.md)、[`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) | 引用其档位与四查,不另立 |
+
+## 首屏记忆与配速
+
+- **一小时记忆测试**:问"访客一小时后能描述首屏的什么?"——答案是情绪而非具体物=概念还没 commit
+- **滚动像工作室配速**:同一视觉语法内变密度/尺度/图像/动效/静;密的段落挣来一段静;页面以真实收尾锚定,不匀速节奏到底
+- **世界命名了技术就建技术**:canvas/WebGL/view transitions 是设计承诺时,建技术本身,禁静态仿品

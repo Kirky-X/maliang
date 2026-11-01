@@ -246,3 +246,7 @@ brief → 产品类型推理(见 product-reasoning.md)→ 匹配下表"适用场
 - **Kit 组件优先**:选定 kit 后,kit 内已有等价组件不重复自造(与「官方包安装与文档入口速查」的"先装官方包再动手"同向);kit 未覆盖的组件才按 DESIGN.md token 定制。
 - **token 纪律不因 kit 松绑**:颜色 / 间距仍从 DESIGN.md 派生导出——禁随机色、渐变须 DESIGN.md 明示(与 [`ai-tells.md`](../meta/ai-tells.md) 同向);kit 默认主题等于"通用感"风险源,深度定制逻辑与上方 Bootstrap / Material 警告一致。
 - 单项目 ≤ 1 个 kit,沿用上方「选包约束(硬性)」。
+
+## 抽取门槛
+
+≥3 处出现同一意图才抽成 token/组件;过早抽象比重复更糟;意图不同即使形似也分开;禁为每个值造 token。

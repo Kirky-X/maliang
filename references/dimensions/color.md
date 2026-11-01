@@ -114,6 +114,10 @@ design-md 暗色场景可走确定性派生:`scripts/design-md.py derive-dark`(�
 
 **Accent from world**:无真实品牌色时,accent 从世界取——warm 世界配 amber/coral/ember;冷世界配 cobalt/teal/sky;natural 配 moss/sage;**紫蓝系默认回避**(品牌真是紫才用)。accent 压满屏幕的百分之几(主操作/选中态/一个关键数字),文字压 accent 须过 4.5:1,不够就加深或改深色文字。**暗色主按钮优先用 ramp 内 off-white 底+深色文字**,accent 留给更小处(选中态/关键数字)——比彩色按钮更显"有意"。
 
+### 叠加链禁令
+
+优先显式色值,禁半透明叠加链——alpha 叠层让对比度变成上下文相关,验收不可传递(一层改透明度,下面所有配对全变);确需叠层时先算合成色再落 token。
+
 ## 6. 功能色(语义固定)
 
 | 语义色  | 角色            | 约束               |

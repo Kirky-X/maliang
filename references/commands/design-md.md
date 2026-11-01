@@ -590,3 +590,8 @@ Confidence map(YYYY-MM-DD):
 - [`../meta/source-hygiene.md`](../meta/source-hygiene.md) — 提取来源准入:拒载名单 / 远程 URL 安全检查 / junk 五信号 / Provenance 三选 attestation(study 型提取安全管线)
 - [`philosophy.md`](../meta/philosophy.md) — DESIGN.md 写作三原则(prose 优先 / 具体参考 / 负约束),Phase 1 写 prose 前必读
 - [`../../examples/design-system/heritage/DESIGN.md`](../../examples/design-system/heritage/DESIGN.md) — 生产级 DESIGN.md 范例,含完整 component 变体(hover/active/disabled/chip/input)
+
+## Named Rules 器具与反 canonical 化
+
+- **Named Rules**:DESIGN.md 每节可写 1-3 条「**The X Rule.** 一句话教义」(如 The One Voice Rule:主强调色 ≤10% 屏占比,稀有即重点)——命名规则比 bullet 清单对 AI 消费者更粘
+- **反 canonical 化双规则**:①地板拒绝件(eyebrow/硬投影/glyph 图标类)禁写进 DESIGN.md 变成 house style——「一次会话发明的 kicker 被记进家规,一个违规就此变成制度」;②记录规则前问两种死法:这条禁令是否禁掉了世界自己原生在用的器件?这个值是在记录还是在给缺陷洗白?
