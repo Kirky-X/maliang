@@ -1,6 +1,6 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
-> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,§14 包容性 5 条、§15 键盘与指针 7 条、§5 触控目标增补 3 条为 2026-11 增补(中文自研),全库共 68 条。
+> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,§14 包容性 5 条、§15 键盘与指针 7 条、§5 触控目标增补 3 条为 2026-11 增补(中文自研),§3/§4/§6/§13/§15 再增 5 条为 2026-11 二批(中文自研),全库共 73 条。
 > 与脚本的关系:`scripts/validate.py draw-md` 现有 23 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 19 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
@@ -36,6 +36,7 @@
 | loading-buttons      | 异步提交期间按钮进入 loading 态 | 禁用 + spinner/进度,防重复提交          | 处理中仍可连点           | 全端 | WARN     |
 | empty-states         | 空状态给消息与下一步动作        | 说明为何为空 + 主行动按钮               | 空白屏或干巴巴"暂无数据"  | 全端 | WARN     |
 | toast-accessibility  | toast 不抢焦点且会消失          | aria-live="polite" 通报,3-5s 自动消失   | 抢焦点、永不消失的 toast | 全端 | WARN     |
+| transition-duration-floor | 转场有时长下限,禁单帧硬切 | 全屏页面转场 ≥200ms 平滑过渡;转场过程不得插入 loading/加载态(缓存视图直接呈现) | 转场闪帧、路由切换闪 loading | 全端 | WARN     |
 | disabled-states      | 禁用态可视且语义可辨            | 降透明度 + cursor 变化 + disabled 语义属性 | 禁用与可用外观无差别     | 全端 | ADVISORY |
 
 ## 4. 导航
@@ -47,6 +48,7 @@
 | modal-escape      | 模态必须提供明确退出途径  | 关闭按钮 + Esc/物理返回 + 点遮罩    | 仅靠隐藏手势或无退出    | 全端         | ERROR    |
 | bottom-nav-limit  | 底部导航 ≤ 5 项且图标带文字 | 图标 + 短标签,超量收进"更多"        | 塞 6+ 项或纯图标导航    | ArkTS/Flutter | ADVISORY |
 | no-dead-links     | 占位链接要么接真目标要么视觉禁用 | `#` 占位 href 换成真路由;确实未实现时用 `action:` 动作标识(draw-md 约定)或加视觉禁用态,不保留可点但无处去的链接 | 留 `href="#"` 的死链接充数;明知未实现还渲染成正常可点态 | 全端 | WARN     |
+| back-no-interception | 退出/返回不拦截 | 一键返回目标页;确需拦截仅限未保存数据一类真损失,且只拦一次并给明确理由 | beforeunload 滥用、history 劫持、二次弹框确认"确定离开吗" | Web  | WARN     |
 
 ## 5. 触控目标
 
@@ -70,6 +72,7 @@
 | truncation-strategy         | 截断必须留全文路径             | ellipsis + tooltip/展开,键盘可达                   | 只在 hover 出 tooltip           | 全端 | WARN     |
 | fixed-width-text            | 文本容器禁固定宽度             | min-width / max-width / match-parent / flex 弹性,留换行与缩放余量 | 给 text 组件写死 `width: Npx`(超长词/emoji/RTL 溢出截断);登记:2026-09 整合审查(validate-draw-md 检查 14 回链) | 全端 | WARN     |
 | cancellable-state-transitions | 动画可被打断且终态正确        | 快速状态切换取消/替换前序微交互,直接设置终态语义并清理副作用   | 依赖 animationend/transitionend 保证状态正确(被打断即坏);登记:2026-10 自 accessibility.md §8 收敛 | 全端 | WARN     |
+| hyphenation-split   | 西文断词按文本长度二分         | 短文本(弹窗/标语/按钮)禁音节断行保整词;长文窄栏可音节断行,但行末 ≥3 字符、行首 ≥2 字符,连字符行数受限 | 短文案被拆成音节;长文行末 1-2 字符孤段 | 全端 | ADVISORY |
 
 ## 7. 错误处理
 
@@ -135,6 +138,7 @@
 | weight-contrast-balance| 重量与对比互偿:加重量修低对比,降对比修超重 | 实心图标压过旁边文字 → 降图标对比(更柔的色);1px 边框柔色太隐、加深又太凶 → 保柔色加粗到 2px | 用同一种预算硬扛(只加深 / 只加粗)把另一维推过头 | 全端 | ADVISORY |
 | baseline-align-mixed   | 一行混排字号对齐用 baseline             | 一行内大小字号混排用 `align-items: baseline`(Web)/ `CrossAxisAlignment.baseline`(Flutter),大数字与单位/标签底对齐 | 垂直居中对齐混排行,字面看起来各飘各的      | 全端 | ADVISORY |
 | layout-explains        | 删掉不必要的次要标签与描述,让布局本身传达(Avoid unnecessary secondary labels and descriptions — let the layout do the explaining) | 层级靠尺度差/重量差/留白差/分组表达,先试「不加任何说明能不能不言自明」;说明文字只在删掉后会误读或误操作时保留(单位/法律/风险类);同组卡片用版式差异区分身份,说明只留一份且放在唯一需要处 | 每个标题上挂一行全大写小标签(eyebrow)充当层级;卡片下配「这是 XX 卡片」式自我描述行;标签与描述双份说同一件事;用说明行补版式没做出来的分组 | 全端 | WARN     |
+| info-depth-3           | 单页面主要信息层级 ≤3 级      | 超过 3 级先合并/折叠(渐进披露)再谈排版                     | 4 层以上的嵌套分组硬排(人因实验:层级 >3 视觉复杂度显著上升) | 全端 | ADVISORY |
 
 ## 14. 包容性
 
@@ -150,13 +154,14 @@
 
 | slug                   | 一句话规则                                        | Do(怎么做)                                                                 | Don't(别怎么做)                          | 端   | Severity |
 | ---------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- | ---- | -------- |
-| keyboard-standard-shortcuts | 尊重标准快捷键语义,Esc=取消当前操作       | 仅为高频专属命令新增快捷键;Ctrl/Cmd+Z 撤销、Ctrl/Cmd+F 查找等标准语义不挪用 | 给标准快捷键重绑异义;堆砌快捷键降低可学性   | Web/桌面 | WARN     |
+| keyboard-standard-shortcuts | 尊重标准快捷键语义,Esc=取消当前操作       | 仅为高频专属命令新增快捷键,组合键数 ≤3;Ctrl/Cmd+Z 撤销、Ctrl/Cmd+F 查找等标准语义不挪用 | 给标准快捷键重绑异义;堆砌快捷键降低可学性;给低频功能配快捷键   | Web/桌面 | WARN     |
 | keyboard-modifier-roles | 修饰键分层:Ctl/Cmd 主命令、Shift 补充/反向、Alt 低频 | Shift-Tab 反向移动、Shift+Cmd+Z 重做;多修饰键按 Control→Alt→Shift→Command 顺序书写 | 给双字符键的上位字符再加 Shift;Alt 承载高频命令 | Web/桌面 | ADVISORY |
 | input-compose-stability | 组合输入(IME/手写/语音)期间文本字段保持静止       | 候选窗/转写进行中不移动字段、不缩放、不自动滚动已转写文本                    | 输入中途重排布局或滚走落笔位置              | 全端 | WARN     |
 | cursor-semantics       | cursor 跟随内容语义映射                           | 文本 I-beam、链接 pointer、拖拽 grab/grabbing、禁用 not-allowed、缩放 zoom-in/out、方向调整 resize-* | 全站默认 cursor 或漏设可点元素的 pointer    | Web  | ADVISORY |
 | hover-delay-tiered     | hover 反馈延迟按用途分三档                        | 细微/邀请型即时显示;快速交互型(面板展开)短延迟;附加信息型(tooltip)更长延迟 | 所有 hover 一刀切零延迟(误扫即触发)或统一长延迟 | Web  | ADVISORY |
 | hover-style-by-element | hover 效果按元素类型三选一                        | 组内控件=高亮;独立控件=lift(缩放+投影+高光,阴影不脱离缩放);大元素=自定义;表格行不用缩放 | 对所有元素套同一种 lift;只用阴影不缩放      | Web  | ADVISORY |
 | no-gesture-hijack      | 不劫持浏览器原生手势                              | 双指滚动/捏合缩放/历史导航滑动保持系统行为;自定义手势只加在非冲突区          | preventDefault 掉捏合缩放或右键菜单且无替代  | Web  | WARN     |
+| tap-lift-commit        | 点击抬手才生效,抬起前可反悔                       | 按下仅反馈、抬起且在热区内才提交;抬起前移出热区即取消——天然容错;"按下即生效"仅限可轻易撤销的场景 | 高压操作用按下触发(无反悔机会);按下即生效无撤销路径 | 全端 | WARN     |
 
 ## 与其他文档的关系
 

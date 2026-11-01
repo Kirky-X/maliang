@@ -48,6 +48,7 @@
 - **需要补输入的动作加省略号**:标题尾加"…"表示还有后续输入(Export… / 导出…);与菜单省略号规则同源([`menus.md`](menus.md))
 - **钮内异步反馈**:非即时完成的动作在按钮内转圈并切换文案(Checkout → Checking out…),完成后原地变成功态(与 `btn-commit-morph` 同构);触发后禁用按钮防重复提交
 - **热区下限**:按钮触控热区 ≥44×44(Web ≥24px 口径见 [`../meta/ux-rules.md`](../meta/ux-rules.md) touch-target 条目);视觉可小于热区,热区不可小于阈值
+- **等待态按钮替代加载弹框的两场景**:①动作极快、弹框会闪现;②多步连续跳转、层层弹加载框——此时在按钮内转圈更稳;真正的长任务仍用进度/弹框(见 [`progress-confirm.md`](progress-confirm.md))
 
 ## 在 draw-md 中的写法
 

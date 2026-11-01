@@ -23,6 +23,7 @@
 - 数字必须用 `font-variant-numeric: tabular-nums`(对齐位数),见 [`principles.md`](../meta/principles.md) UI 技巧
 - 触发 [`ai-tells.md`](../meta/ai-tells.md) "Inter 单字族" 时,改 `type-editorial` 或 `type-display`
 - `type-marquee` 必须实现 `prefers-reduced-motion` 降级(静态显示完整文字)
+- `type-marquee` 跑马灯细节:渐隐区域从文本消失处起向前扩展约 16px(透明度渐变),只计文本区域不含容器 padding;限制滚动次数(如每次激活只滚一遍)控功耗与骚扰感
 - `type-kinetic` 仅 MOTION_INTENSITY ≥ 8 使用(见 [`dials.md`](../meta/dials.md))
 - 中文行高 ≥ 1.6,英文 ≥ 1.4
 

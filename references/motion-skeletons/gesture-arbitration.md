@@ -95,6 +95,7 @@ function currentIndex() { return Math.round(-gsap.getProperty(pager, 'x') / page
 - 锁定竖轴时立刻把控制权交还页面滚动(`touch-action: pan-y` 配合),禁止再拦截
 - 点按(总位移 < 6px)不计为滑动手势,正常派发 click
 - 手势不可用必须显式说明原因:对象被锁定/权限不足/场景禁用拖拽时,给可见的锁定态或禁用提示——不说明原因的无效手势会被当成应用卡死
+- 通用基础手势在任何位置同义:不得用用户熟悉的基础手势(滑动/捏合/长按)承载场景专属操作;自定义手势不能是当前场景中执行操作的唯一方式,须有可见替代入口
 - 页面级转场动画时长 ≤ 400ms(见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 分层口径)
 - 回弹 / 落定用 JS 弹簧驱动;本骨架的手势段禁用 CSS transition 驱动(CSS 过渡无法中途抓取反转,见 [`INDEX.md`](INDEX.md) R1 死法栏)
 
