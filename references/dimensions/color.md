@@ -83,6 +83,37 @@ design-md 暗色场景可走确定性派生:`scripts/design-md.py derive-dark`(�
 - 场序像章节:open strong(强开场)→ rest(静场)→ surprise(反差场)→ close dark(深色收尾)
 - 实测锚:强站的整场底色中位 2 种/页;0 种是白纸,3+ 种即花
 
+### World-tint 中性 ramp(按产品世界选 tint)
+
+中性色不是纯灰——按产品归属的世界给整条 ramp 一个极低饱和的 tint(表面永不读作"一个颜色"):工具/技术 → **graphite**;纸/木/食/手作等人文世界 → **warm**;夜/天/水等冷世界 → **ink**。**App 与 dashboard 的表面一律用中性档,世界只出现在 accent/图表/moments**;落地页可把表面向世界多染一档。
+
+**Dark:**
+
+| 角色 | Graphite | Warm | Ink |
+| --- | --- | --- | --- |
+| 最深表面(侧栏) | #0f0f10 | #12110f | #07080d |
+| 页面底 | #141415 | #161513 | #0b0d14 |
+| 卡片 | #19191b | #1c1a18 | #11141c |
+| 抬升(激活行/输入) | #232325 | #262421 | #1a1e28 |
+| 主文字 | #ededed | #efe9de | #eef0f5 |
+| 次级文字 | #a1a1a6 | #aaa398 | #a3a9b8 |
+| 弱文字/图标 | #85858b | #8a847a | #7a8296 |
+
+**Light:**
+
+| 角色 | Graphite | Warm | Ink |
+| --- | --- | --- | --- |
+| 页面底 | #fafafa | #f7f4ee | #f5f7fa |
+| 卡片 | #ffffff | #fdfbf7 | #ffffff |
+| 抬升 | #f4f4f5 | #efe9df | #eceff4 |
+| 主文字 | #171717 | #1f1b16 | #111827 |
+| 次级文字 | #525252 | #5e554a | #4b5565 |
+| 弱文字/图标 | #737373 | #7b7266 | #6b7487 |
+
+发丝线一律用主文字色 8% 透明度;弱文字仅用于 meta 与 caption,对比度不低于 4.5:1,正文用主/次级两档。
+
+**Accent from world**:无真实品牌色时,accent 从世界取——warm 世界配 amber/coral/ember;冷世界配 cobalt/teal/sky;natural 配 moss/sage;**紫蓝系默认回避**(品牌真是紫才用)。accent 压满屏幕的百分之几(主操作/选中态/一个关键数字),文字压 accent 须过 4.5:1,不够就加深或改深色文字。**暗色主按钮优先用 ramp 内 off-white 底+深色文字**,accent 留给更小处(选中态/关键数字)——比彩色按钮更显"有意"。
+
 ## 6. 功能色(语义固定)
 
 | 语义色  | 角色            | 约束               |
