@@ -49,4 +49,3 @@ platforms: Web 桌面端
 /* JS: wheel 速度 → 冲量 0.42 → rAF lerp 更新 --z；离屏作品降级为静态 */
 @media (prefers-reduced-motion: reduce) { .track { transform: none !important; } }
 ```
-

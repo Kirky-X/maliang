@@ -62,4 +62,3 @@ license: 未考(上游待核)
               radial-gradient(500px 500px at 75% 70%, #EC4899, transparent 70%);
   filter: blur(80px); }
 ```
-

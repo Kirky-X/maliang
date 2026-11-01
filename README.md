@@ -26,7 +26,7 @@
 - **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 30 篇组件命名词汇 + 九维规范（色/字/图/距/角/线/布局/对齐/海拔）
 - **区段原型库**：[`references/components/`](references/components/INDEX.md)（51 个区段原型 + 索引——**从索引挑名、只加载选中的那几个**，典型一次构建 5-7 个文件：1 hero + 1 区段头 + 1-2 主体区段 + 1 CTA + 1 页脚 + 1 导航；区段原型管「这段长成什么」，元素级外观仍在 `references/vocabulary/`）
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
-- **已并入资产**：原 craft 方法集 并入 [`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Vercel Web Interface Guidelines 快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)（钉定信息唯一来源见该文件头部），critique 的 UI 合规/a11y 清单读取该快照
+- **craft 纪律与评审**：[`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Web 界面规则快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)，critique 的 UI 合规/a11y 清单读取该快照
 - **脚本验证层**：`validate.py draw-md`（23 项检查）、`preview.py check`（51/143 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（9 子命令，含 check-sync 规格↔实现同步判定与 token-usage 波及分析）、`validate.py generated`（生成码校验 + G46 注入面扫描）、`ci-gate.sh` 统一入口——纯 Python 标准库
 - **第二批验证脚本**（同标准库）：`verify.py color-fidelity`（重建 vs 参考图 ΔE 保真门）、`verify.py measure-colors`（图片确定性测色）、`verify.py palette-solver`（OKLCH 亮度求解 + 配对矩阵）、`verify.py assets`（资产位在场验证）、`audit.py fingerprint`（重审计源码指纹）、`audit.py structure-history`（轮换重复 / 热轴 / 盖章真伪）、`audit.py copy`（句型级反模板）
 - **新增参考层**：[`references/meta/source-hygiene.md`](references/meta/source-hygiene.md)（来源卫生：拒载名单 / 私网拒绝 / junk 信号 / Provenance）、[`references/meta/visual-symptoms.md`](references/meta/visual-symptoms.md)（感知症状 → 病灶 → 修复）
@@ -139,4 +139,4 @@ maliang/
 
 ## 📄 License 与归属
 
-MIT License（© 2026 Kirky-X）。`references/interface-design/` 来自已并入的原 craft 方法集；`references/meta/web-interface-guidelines.md` 为 [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) 的本地快照（钉定信息见文件头部）。
+MIT License（© 2026 Kirky-X）。第三方 MIT 内容的许可声明：`references/interface-design/`（原 craft 方法集）与 `references/donors/candidates/`（设计样张集 快照集）各自保留于对应目录。

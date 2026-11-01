@@ -47,4 +47,3 @@ platforms: Web 桌面端
 .wall img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
 @media (max-width: 1024px) { .hero { grid-template-columns: 1fr; } .gap { display: none; } }
 ```
-

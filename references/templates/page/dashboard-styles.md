@@ -70,4 +70,3 @@ platforms: Web 桌面端
 .dark { background: #17181c; --g1: #1d1e23; --g2: #26282e; --g3: #34373f; } /* 灰阶差十几点 */
 .pill { border-radius: 999px; background: var(--hl); } /* 圆头胶囊图表；强调色全页只一处当前态 */
 ```
-

@@ -51,4 +51,3 @@ platforms: Web 桌面端
 /* JS: rAF 内 lerp 跟随 mousemove 更新 --mx/--my，惯性插值 0.08-0.12 */
 @media (pointer: coarse) { .stack .top { clip-path: none; opacity: 0; } }
 ```
-

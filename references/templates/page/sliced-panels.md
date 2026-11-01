@@ -49,4 +49,3 @@ platforms: Web 桌面端
 .desc { opacity: 0; transform: translateY(8px); transition: .4s; }
 @media (max-width: 768px) { .panels { flex-direction: column; } }
 ```
-

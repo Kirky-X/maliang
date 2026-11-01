@@ -70,4 +70,3 @@ platforms: Web 桌面端
 .twist li:nth-child(even) { transform: rotateX(180deg); backface-visibility: visible; }
 .title { letter-spacing: calc(var(--v) * 2px); } /* 同一个 velocity 喂第二处 */
 ```
-

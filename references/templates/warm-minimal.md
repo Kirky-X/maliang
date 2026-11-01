@@ -102,4 +102,3 @@ kbd { border: 1px solid var(--line); border-radius: 4px;
       background: var(--canvas); font-family: var(--font-mono); }
 .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 ```
-

@@ -54,4 +54,3 @@ platforms: Web 桌面端
 }
 .ghost { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.4); }
 ```
-

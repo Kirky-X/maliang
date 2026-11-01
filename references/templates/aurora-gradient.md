@@ -58,4 +58,3 @@ license: 未考(上游待核)
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"); }
 @media (prefers-reduced-motion: reduce) { .aurora::before { animation:none; } }
 ```
-

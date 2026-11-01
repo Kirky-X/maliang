@@ -66,4 +66,3 @@ platforms: 移动端
 .page { --ink: oklch(.55 .12 30); color: var(--ink); } /* 全页 1 个色相 */
 .accent { color: var(--ink); } /* 红只给刻度/按钮/当前页三处 */
 ```
-

@@ -56,4 +56,3 @@ license: 未考(上游待核)
 .kpi-label { font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:#6B7280; }
 @media (max-width:1024px) { .kpi { grid-column:span 6; } }
 ```
-

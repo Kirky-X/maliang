@@ -17,7 +17,7 @@
 | `nav-command-palette` | ⌘K 命令面板;区段原型对照 [N13](../components/n13-inline-cmdk-pill.md)(可见入口)/ [N4](../components/n4-hidden-behind-k.md)(仅 ⌘K);搜索侧同模式见 [search.md](search.md) `search-command` | DevTool、SaaS、生产力工具             |
 | `nav-floating-pill`   | 浮动药丸式导航,滚动时显隐;区段原型对照 [N5](../components/n5-floating-pill.md) | 长滚动页(单页营销 / 品牌站)         |
 | `nav-stepper`         | 步进式导航(1/2/3)                                | 流程页(结账、注册、向导)            |
-| `nav-floating-island` | 浮岛导航:悬浮胶囊 + 汉堡→X 形变 + 蒙版错峰揭示   | 品牌 / 创意站;移动端降级为全宽 dock(
+| `nav-floating-island` | 浮岛导航:悬浮胶囊 + 汉堡→X 形变 + 蒙版错峰揭示   | 品牌 / 创意站;移动端降级为全宽 dock |
 | `nav-fab`             | 悬浮操作按钮:右下角单 FAB(一屏仅一个主操作),滚动下滑出现 / 上滑收起联动,避开底部导航安全区 | 移动 App 新建/发布/写等一级操作入口                |
 | `nav-tab-spring-underline` | 顶部标签页跟手下划线:下划线随拖动半路跟手,松手落定,选中标签自动滚动居中 | 顶部多 tab(资讯、订单分类)                     |
 | `nav-tab-liquid`      | 液态 tab 指示器:选中背景移动中先拉长再收缩最后回弹,像液体流过去 | 分段切换(MOTION ≥ 7)                          |
