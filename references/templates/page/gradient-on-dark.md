@@ -4,8 +4,6 @@ title: 暗底流光型
 category: page-pattern
 status: style
 era: 2026
-verified: 2026-09-07
-license: 自著
 variance: "5-8"
 motion: "2-5"
 density: "1-4"

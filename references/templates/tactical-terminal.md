@@ -8,8 +8,6 @@ variance: 7-10          # dials VARIANCE 适配区间
 motion: 1-3          # dials MOTION 适配区间
 density: 7-10          # dials DENSITY 适配区间
 platforms: Web（监控大屏 / 遥测仪表盘 / 军工风作品集）
-verified: 2026-10-11
-license: 未考(上游待核)
 ---
 # 战术遥测终端（Tactical Telemetry & CRT Terminal）
 

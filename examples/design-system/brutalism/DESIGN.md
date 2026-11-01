@@ -2,8 +2,6 @@
 version: alpha
 name: Brutalism
 description: 高对比、原始材质的功能主义，以强有力的排版服务于数据密集与工业界面。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#00F5C3"
   secondary: "#007BFF"

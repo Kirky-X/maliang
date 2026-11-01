@@ -15,9 +15,6 @@ name: <kebab-case-id>          # 全库唯一,如 linear
 title: <站点名>
 category: donor                # 供体层取值(模板墙枚举以 templates/README.md 为准)
 status: production             # production | style | experimental(语义同模板墙)
-source: <站点 URL + 采样库注记> # 必须可溯源;禁止"网上看到的"
-era: <采样年份>
-verified: <YYYY-MM-DD>         # 最后人工核验日期;超 365 天须复核或降级
 variance/motion/density        # 站点实测气质折算的 dial 参考区间(见 §4 注)
 platforms: <适用平台>
 ---
@@ -53,7 +50,5 @@ platforms: <适用平台>
 
 ## 5. 维护规则
 
-- **来源可溯**:无 `source` 的条目不收录;数值必须来自可复核的采样(样式表 / computed styles / 公开 design 文档),禁止凭印象
-- **核验时效**:`verified` 超 365 天须复核或降级;站点改版后旧值标 `status: style` 或注明"历史值,以当前站点为准"
 - **增强条件**:新增供体须 ① 与首批气质轴不重复(暗 / 亮 / 工具 / 内容至少一轴不同)② 9 节能写到具体值 ③ 与既有供体查重(避免同质)
 - 候选池:设计样张集 库收录的 58 站均可按上述条件晋升;不做"整库平移",逐家按需收录;本地快照: [candidates/INDEX.md](candidates/INDEX.md)(112 条 / 9 组;正文已译为中文,专有名词保留英文)

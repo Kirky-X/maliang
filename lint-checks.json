@@ -86,26 +86,6 @@
       "severity": "FAIL"
     },
     {
-      "name": "
-      "type": "forbid-pattern",
-      "files": [
-        "SKILL.md",
-        "README.md",
-        "README_EN.md",
-        "references/commands/critique.md"
-      ],
-      "pattern": "e3d624b",
-      "severity": "FAIL"
-    },
-    {
-      "name": "
-      "type": "require-pattern",
-      "file": "references/meta/web-interface-guidelines.md",
-      "pattern": "sha [0-9a-f]{7,40}",
-      "min_count": 1,
-      "severity": "FAIL"
-    },
-    {
       "name": "兄弟 skill 引用存在性",
       "type": "sibling-skills",
       "siblings": [

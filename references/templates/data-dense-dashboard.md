@@ -8,8 +8,6 @@ variance: 2-4          # dials VARIANCE 适配区间
 motion: 1-3          # dials MOTION 适配区间
 density: 7-10          # dials DENSITY 适配区间
 platforms: Web 后台
-verified: 2026-09-07
-license: 未考(上游待核)
 ---
 # 数据密集型仪表盘（Data-Dense Dashboard）
 

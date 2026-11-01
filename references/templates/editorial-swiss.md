@@ -8,8 +8,6 @@ variance: 3-6          # dials VARIANCE 适配区间
 motion: 1-4          # dials MOTION 适配区间
 density: 2-5          # dials DENSITY 适配区间
 platforms: Web（内容/品牌站）
-verified: 2026-09-07
-license: 未考(上游待核)
 ---
 # 瑞士编辑排版风（Editorial / Swiss International Style）
 

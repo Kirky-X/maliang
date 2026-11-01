@@ -2,8 +2,6 @@
 version: alpha
 name: Editorial
 description: 杂志级的排版叙事，配宽裕留白与单一暖金点缀。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#000000"
   secondary: "#333333"

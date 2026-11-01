@@ -2,8 +2,6 @@
 version: alpha
 name: Heritage
 description: 以建筑式极简与新闻般的庄重感打造的编辑型产品。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#1A1C1E"
   secondary: "#6C7278"

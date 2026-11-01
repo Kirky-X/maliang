@@ -1,14 +1,12 @@
 ---
 name: raycast
 title: Raycast
-era: 2026
 category: donor
 status: production
 variance: "5-8"
 motion: "4-7"
 density: "6-9"
 platforms: web
-verified: 2026-10-12
 ---
 
 # Raycast —— 桌面原生暗色(macOS 窗口物理)

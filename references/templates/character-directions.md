@@ -4,8 +4,6 @@ title: 六种性格方向
 category: character-direction
 status: production
 era: 2026
-verified: 2026-09-07
-license: 未考(上游待核)
 variance: "2-9"
 motion: "1-7"
 density: "2-9"

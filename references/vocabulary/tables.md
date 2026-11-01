@@ -27,12 +27,12 @@
 ## 使用规则
 
 - 分工:图表选型在 [charts.md](charts.md),搜索与筛选交互在 [search.md](search.md),本文只管表格结构;图表的无障碍 fallback 数据表遵循 ux-rules.md 的 data-table 条目
-- 行高分档同表一档:Carbon 五档行高中表头必须与数据行同高,不混用;仅行内双行内容才允许最大档
+- 行高分档同表一档:表头必须与数据行同高,不混用;仅行内双行内容才允许最大档
 - 排序图标只在当前排序列显示,未排序列 hover 时浮现;行 hover 态恒开辅助扫读,与斑马纹按需二选一
 - 数字列右对齐并用等宽数字,排版细节见 [typography.md](typography.md);列头 1-2 个词,截断必须留 tooltip 全文路径
 - 选中行后批量操作栏接管工具栏,行内溢出菜单在批量模式下禁用;批量按钮与筛选片的撤销反馈动效见 [buttons.md](buttons.md)
-- 慢数据用骨架屏替代 spinner;空表给空态与下一步动作(ux-rules empty-data-state),表格不要嵌套表格、不塞进滚动文本容器(M3)
-- 移动端禁止页面级横向滚动(ux-rules horizontal-scroll):宽表要么局部横滚,要么 `table-card-reflow`;触控行高 ≥48dp(M3)
+- 慢数据用骨架屏替代 spinner;空表给空态与下一步动作(ux-rules empty-data-state),表格不要嵌套表格、不塞进滚动文本容器
+- 移动端禁止页面级横向滚动(ux-rules horizontal-scroll):宽表要么局部横滚,要么 `table-card-reflow`;触控行高 ≥48dp
 - 筛选交互细节(分面/chip/抽屉)见 [search.md](search.md);本表 `table-filterable` 只定结构位
 - 窄列截断用中置省略号(保头尾,如 `6228…4567`),尾部省略号留给纯文本溢出;识别性靠头尾比对的内容(卡号/文件名)必须中置
 - 选中反馈两型:导航型表持久高亮选中行(标记"当前所在");选项型表短暂高亮后以打勾确认(标记"已选择")——两型不混用

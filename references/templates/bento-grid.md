@@ -8,8 +8,6 @@ variance: 5-8          # dials VARIANCE 适配区间
 motion: 2-6          # dials MOTION 适配区间
 density: 3-7          # dials DENSITY 适配区间
 platforms: 全平台（Web 官网为主）
-verified: 2026-09-07
-license: 未考(上游待核)
 ---
 # 便当盒网格（Bento Grid）
 

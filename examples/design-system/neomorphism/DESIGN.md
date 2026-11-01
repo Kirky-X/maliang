@@ -2,8 +2,6 @@
 version: alpha
 name: Neomorphism
 description: 一种柔和的挤出式 UI 风格，在单色画布上使用双向光影，带来可触的未来感。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#6B7280"
   accent: "#7A87BA"

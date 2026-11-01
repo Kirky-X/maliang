@@ -1,14 +1,12 @@
 ---
 name: stripe
 title: Stripe
-era: 2026
 category: donor
 status: production
 variance: "5-8"
 motion: "4-7"
 density: "5-8"
 platforms: web
-verified: 2026-10-12
 ---
 
 # Stripe —— 金融精致(轻字重 + 蓝调阴影)

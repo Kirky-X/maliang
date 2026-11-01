@@ -17,7 +17,7 @@
 | `state-error-crash` | 错误插画 + 平实文案(无错误码) + 重试/返回首页 | 页面崩溃、渲染兜底 |
 | `state-error-network` | 断网插画 + 重试按钮,保留已加载数据 | 请求失败;文案直述问题,不指责用户 |
 | `state-error-permission` | 锁形插画 + 权限说明 + 申请入口/联系管理员 | 无权限访问 |
-| `state-offline` | 持久但不打扰的离线指示/横幅,说明仍可用范围 | 断网或离线操作(Material "offline by choice";ServiceNow 连接异常模板) |
+| `state-offline` | 持久但不打扰的离线指示/横幅,说明仍可用范围 | 断网或离线操作 |
 | `state-partial-load` | 分批渲染 + 失败区块"重试"入口 | 分批渐进加载部分失败 |
 | `state-stale-data` | 数据过期标记/横幅("数据截至 XX:XX") + 立即刷新按钮;旧数据保持可读不隐藏 | 后台数据已更新而页面未刷新、实时性非关键的列表/详情 |
 | `state-auth-expired` | 会话过期说明(直述原因) + 重新登录入口;登录成功后返回中断位置并恢复未提交输入 | 会话/令牌过期、权限变更;登录页选型走 [`auth.md`](auth.md),本条只命名页面状态 |
@@ -51,7 +51,7 @@
 - principles 第 14 定律:Loading / Empty / Error / Tactile 四类状态必须齐备,缺任一类即半成品;本表命名前三类,Tactile Feedback 见 [`micro-interactions.md`](micro-interactions.md)
 - 空态三要素:是什么(状态)、为什么(可省)、下一步(主按钮或文案内链接),不把用户引进死胡同
 - 加载中禁止提前显示"无记录"空文案;skeleton 只停留数秒,超时转入错误态并给重试
-- 错误文案用平实语言、不带错误码,直述问题并建议修复(呼应 尼尔森诺曼集团 启发式:帮助用户识别、诊断并从错误中恢复)
+- 错误文案用平实语言、不带错误码,直述问题并建议修复(启发式:帮助用户识别、诊断并从错误中恢复)
 - 同屏多个空态降级为文本 + 次级按钮,避免堆叠多个主按钮;一个空态只保留一个主行动
 - 与 cards.md / popups.md 分工:页面级状态归本表;卡片局部骨架/空态复用 [`cards.md`](cards.md) 的 `card-skeleton` / `card-empty`;弹窗内的成功反馈走 [`popups.md`](popups.md) 的 `popup-modal-to-success`
 - 空态插画策略见 [../meta/visual-assets.md](../meta/visual-assets.md);状态文案写法见 [../meta/content-guide.md](../meta/content-guide.md)

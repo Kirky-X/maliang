@@ -2,8 +2,6 @@
 version: alpha
 name: Illustrative
 description: 温暖、故事驱动的系统，将手绘插画与鲜艳、圆润的几何形结合。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#5C5CE7"
   secondary: "#FF8A56"

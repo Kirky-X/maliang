@@ -2,8 +2,6 @@
 version: alpha
 name: Minimalism
 description: 瑞士国际主义平面设计的数字延续——网格先行、留白即层级、单一蓝色强调色驱动所有交互。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#212121"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）
   secondary: "#9D9D9D"  # no-decision: 示例样张（瑞士极简 heritage 范例，未做决策溯源）

@@ -8,8 +8,6 @@ variance: 2-5          # dials VARIANCE 适配区间
 motion: 2-5          # dials MOTION 适配区间
 density: 4-8          # dials DENSITY 适配区间
 platforms: Windows / Web / 跨平台
-verified: 2026-09-07
-license: 未考(上游待核)
 ---
 # Fluent 2（Microsoft Fluent 2）
 

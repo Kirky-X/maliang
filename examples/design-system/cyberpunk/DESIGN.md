@@ -2,8 +2,6 @@
 version: alpha
 name: Cyberpunk
 description: 深色霓虹界面：发光青、紫与洋红在深蓝黑表面上让数据获得视觉形态。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#00F0FF"
   secondary: "#1D7AFE"

@@ -2,8 +2,6 @@
 version: alpha
 name: Skeuomorphism
 description: 一种可触的界面，借用现实世界材质——皮革、纸张、木材、玻璃——让数字可供性显得熟悉而可信。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#2E1E15"
   secondary: "#8B6B4D"

@@ -2,8 +2,6 @@
 version: alpha
 name: Material Design
 description: Google 的跨平台设计语言，建立在材质隐喻、有意义的动效与基于阴影的海拔之上。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#6200EE"
   primary-light: "#7C4DFF"

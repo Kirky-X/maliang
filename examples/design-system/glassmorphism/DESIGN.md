@@ -2,8 +2,6 @@
 version: alpha
 name: Glassmorphism
 description: 磨砂玻璃界面风格：以半透明、背景模糊与微妙高光，让内容悬浮在鲜艳背景之上。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#7EA8FF"
   secondary: "#A78BFA"

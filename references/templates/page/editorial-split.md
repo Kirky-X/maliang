@@ -4,8 +4,6 @@ title: 编辑分栏型
 category: page-pattern
 status: production
 era: 2026
-verified: 2026-09-07
-license: 自著
 variance: "4-7"
 motion: "1-4"
 density: "2-5"

@@ -4,8 +4,6 @@ title: AI 工作台 / Agent 控制台
 category: page-pattern
 status: production
 era: 2026-09
-verified: 2026-09-07
-license: MIT
 variance: "2-4"
 motion: "2-4"
 density: "6-9"

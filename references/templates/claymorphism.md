@@ -8,8 +8,6 @@ variance: 5-8          # dials VARIANCE 适配区间
 motion: 3-6          # dials MOTION 适配区间
 density: 2-5          # dials DENSITY 适配区间
 platforms: 移动 / Web 消费类
-verified: 2026-09-07
-license: 未考(上游待核)
 ---
 # 黏土拟态（Claymorphism）
 

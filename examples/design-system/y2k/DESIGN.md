@@ -2,8 +2,6 @@
 version: alpha
 name: Y2K
 description: 千禧未来主义，霓虹渐变、金属玻璃拟态与高饱和镀铬质感。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#7A00FF"
   secondary: "#00F0FF"

@@ -12,10 +12,7 @@ name: <kebab-case-id>          # 全库唯一
 title: 中文名
 category: design-language      # design-language | page-pattern | landing-pattern | character-direction | donor
 status: production             # production(生产级) | style(风格级) | experimental(实验级) | unverified(未验证/待复核)
-source: <官方来源/出处项目>      # 必须可溯源；禁止"网上看到的"
 era: <年份/版本>
-verified: <YYYY-MM-DD>         # 最后人工核验日期；超 365 天须复核或降级
-license: <MIT | CC-BY | 自著 | 未考(上游待核)>  # 许可;外部扩充项必填,未考的不得默示为可自由分发
 variance: "3-8"                # dials VARIANCE 适配区间
 motion: "2-7"                  # dials MOTION 适配区间
 density: "2-8"                 # dials DENSITY 适配区间

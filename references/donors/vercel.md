@@ -1,14 +1,12 @@
 ---
 name: vercel
 title: Vercel
-era: 2026
 category: donor
 status: production
 variance: "3-6"
 motion: "2-5"
 density: "5-8"
 platforms: web
-verified: 2026-10-12
 ---
 
 # Vercel —— 工程静默(Geist 系统)

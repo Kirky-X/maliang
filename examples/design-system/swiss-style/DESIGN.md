@@ -2,8 +2,6 @@
 version: alpha
 name: Swiss Style
 description: 网格驱动、排版理性的系统，以单一信号红承担交互。
-verified: 2026-10-24
-license: 自著
 colors:
   primary: "#E30613"
   ink: "#000000"

@@ -1,14 +1,12 @@
 ---
 name: linear
 title: Linear
-era: 2026
 category: donor
 status: production
 variance: "4-7"
 motion: "3-6"
 density: "7-10"
 platforms: web
-verified: 2026-10-12
 ---
 
 # Linear —— 暗色原生精密工程

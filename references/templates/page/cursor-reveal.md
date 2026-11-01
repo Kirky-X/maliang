@@ -4,8 +4,6 @@ title: 叠影显影型
 category: page-pattern
 status: style
 era: 2026
-verified: 2026-09-07
-license: 自著
 variance: "5-8"
 motion: "4-7"
 density: "1-4"
