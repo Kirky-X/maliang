@@ -172,7 +172,7 @@
 ### G45 · 凸起元素无规格依据
 - **违反什么**:越出容器的凸起元素(dock 中心主操作按钮/FAB/骑缝头像)未同时声明三要素——凸起量(落 spacing token 档且 ≤ 按钮高 50%)、锚定轴(偏差 ≤ 2px)、与相邻元素的基线关系;或实测凸起超过声明值,造成与相邻项基线断裂。
 - **怎么判定**:人工对账 organisms 规格声明(canonical 示例:dock 中心凸起位,见 [`../../examples/ui-markdown/organisms/dock.md`](../../examples/ui-markdown/organisms/dock.md))+ 渲染实测凸起量;判据见 [`../dimensions/alignment.md`](../dimensions/alignment.md) 凸起与越界关系。
-- **怎么修**:回规格补齐三要素或收敛凸起;禁止「大概齐」偏移——偏移量没有依据,就没有上限。出处：同 G44(dock 中心按钮上移过大)驱动补建。
+- **怎么修**:回规格补齐三要素或收敛凸起;禁止「大概齐」偏移——偏移量没有依据,就没有上限。
 
 ---
 
@@ -266,7 +266,7 @@
 ### G46 · 生成码注入面(安全)
 - **违反什么**:交付的生成码(preview HTML / 三框架代码)出现**执行面 API**(eval / new Function / javascript: URL);或 v-html / innerHTML / outerHTML / dangerouslySetInnerHTML 绑定的内容**不是仓库内本地常量且未经消毒**——产物是可交互 HTML/代码,交付前却从无安全视角。
 - **怎么判定**:[`../../scripts/validate.py generated`](../../scripts/validate.py generated) 检查 6(gen.dangerous-api):执行面命中即 ERROR(与数据来源无关,一律拦截);HTML 绑定面命中出 WARN,再人工判定绑定来源——仓库内本地常量(如 ICONS 数据块)可过,外部/用户来源未消毒判 CRITICAL。手写业务代码不在此门(与 G35 同边界),但 preview 产物同样适用。
-- **怎么修**:执行面 API 一律移除(没有合法场景);绑定面改框架文本插值 / 组件化渲染,确需原始 HTML 时先消毒(DOMPurify 类)再绑定,并在交付说明写明消毒依据。出处：2026-10 架构审查(验证侧安全门禁整体缺失驱动补建)。
+- **怎么修**:执行面 API 一律移除(没有合法场景);绑定面改框架文本插值 / 组件化渲染,确需原始 HTML 时先消毒(DOMPurify 类)再绑定,并在交付说明写明消毒依据。
 
 ---
 

@@ -181,7 +181,7 @@
 | `ease-spring`    | `cubic-bezier(0.34, 1.56, 0.64, 1)` | 弹性(过冲回弹)       | 按下回弹、卡片落下(MOTION ≥ 7) |
 | `ease-snappy`    | `cubic-bezier(0.16, 1, 0.3, 1)` | 干脆(快速减速)       | 按钮反馈、toggle          |
 | `ease-glass`     | `cubic-bezier(0.32, 0.72, 0, 1)` | 液态玻璃感(平滑长尾) | Liquid Glass 元素过渡     |
-| `ease-out-expo`  | `cubic-bezier(0.23, 1, 0.32, 1)` | 入场标准 ease-out(快起步,长尾减速) | 微交互入场一律用此(三禁令指定;出处：interface-design) |
+| `ease-out-expo`  | `cubic-bezier(0.23, 1, 0.32, 1)` | 入场标准 ease-out(快起步,长尾减速) | 微交互入场一律用此(三禁令指定) |
 
 **使用规则**:
 - 状态过渡 duration ≤ 150ms → 用 `ease-snappy`
