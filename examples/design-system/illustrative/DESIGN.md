@@ -138,11 +138,11 @@ Illustrative 是一种建立在温暖、角色与故事之上的设计语言。�
 
 ## Typography
 
-两种友好的字体：**Round Friendly** 用于展示标题（圆润的终端强化亲和力），**Inter** 用于正文与 UI 标签（开放的计数器保持可读性）。
+两种友好的字体：**Round Friendly** 用于展示标题（圆润的字端强化亲和力），**Inter** 用于正文与 UI 标签（开放的字怀保持可读性）。
 
 - **Headlines：** Round Friendly Bold/Semibold，大字号。展示字号下的紧凑负字距让标题足够密集，显得有意为之。Round Friendly 只是展示字体——绝不要用于正文。
 - **Body：** Inter Regular，16px，宽松的 1.6 行高。开放感匹配友好语调——正文行高绝不压缩到 1.5 以下，正文也绝不低于 16px。
-- **Labels：** Inter Medium，12px，0.08em 字距。用于标签、元数据与按钮标签。全大写是可选的——Illustrative 不像编辑型系统那样僵硬；为温暖感可以接受句首大写。
+- **Labels：** Inter Medium，12px，0.08em 字距。用于标签、元数据与按钮标签。全大写是可选的——Illustrative 不像编辑型系统那样僵硬；为温暖感可以接受句子式大小写。
 
 ## Layout
 

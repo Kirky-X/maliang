@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Editorial
-description: Magazine-grade typographic storytelling with generous white space and a single warm gold accent.
+description: 杂志级的排版叙事，配宽裕留白与单一暖金点缀。
 verified: 2026-10-24
 license: 自著
 colors:

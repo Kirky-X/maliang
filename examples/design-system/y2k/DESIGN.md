@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Y2K
-description: Millennial futurism with neon gradients, metallic glassmorphism, and high-saturation chrome.
+description: 千禧未来主义，霓虹渐变、金属玻璃拟态与高饱和镀铬质感。
 verified: 2026-10-24
 license: 自著
 colors:
