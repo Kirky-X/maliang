@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Hero-Centric Design is a UI style reference for landing pages, focused on Large hero section, compelling headline, high-contrast CTA, product showcase, value proposition.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: 主视觉中心式设计是为落地页提供的 UI 风格参照,侧重大幅 hero 区、抓人标题、高对比 CTA、产品展示、价值主张。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Hero-Centric Design
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Hero-Centric Design is a UI style reference for landing pages, combining Large hero section, compelling headline, high-contrast CTA, product showcase, value proposition, hero image/video, dramatic visual. The visual direction is shaped by Smooth scroll reveal, fade-in animations on hero, subtle background parallax, CTA glow/pulse effect.
+主视觉中心式设计是为落地页提供的 UI 风格参照,融合大幅 hero 区、抓人标题、高对比 CTA、产品展示、价值主张、hero 图像/视频、戏剧化视觉。视觉方向由平滑滚动揭示、hero 淡入动画、细微背景视差、CTA 光晕/脉冲效果塑造。
 
-Use it for SaaS landing pages (登陸頁面), product launches, service landing pages (登陸頁面), B2B platforms (平台), tech companies. Avoid it for Complex navigation, multi-page experiences, data-heavy applications.
+用于 SaaS 落地页、产品发布、服务落地页、B2B 平台、科技公司。避免用于复杂导航、多页体验、数据密集的应用。
 
-**Key Characteristics:**
-- Primary palette: Brand primary color, white/light backgrounds for contrast, accent color for CTA
-- Secondary palette: Supporting colors for secondary CTAs, accent highlights, trust elements (testimonials, logos)
-- Effects: Smooth scroll reveal, fade-in animations on hero, subtle background parallax, CTA glow/pulse effect
-- Accessibility: ✓ WCAG AA; performance: ⚡ Good; dark mode: ✓ Full.
-- Best for: SaaS landing pages (登陸頁面), product launches, service landing pages (登陸頁面), B2B platforms (平台), tech companies
-- Avoid for: Complex navigation, multi-page experiences, data-heavy applications
+**关键特征:**
+- 主色板:品牌主色、用于对比的白/浅背景、CTA 强调色
+- 次色板:辅助色,用于次级 CTA、强调高亮、信任元素(客户证言、logo)
+- 效果:平滑滚动揭示、hero 淡入动画、细微背景视差、CTA 光晕/脉冲效果
+- 无障碍:✓ 达 WCAG AA;性能:⚡ 良好;暗色模式:✓ 完整。
+- 最适用于:SaaS 落地页、产品发布、服务落地页、B2B 平台、科技公司
+- 避免用于:复杂导航、多页体验、数据密集的应用
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/20-hero-centric.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/20-hero-centric.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Vibrant & Block-based is a UI style reference for general interfaces, focused on Bold, energetic, playful, block layout, geometric shapes.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 鲜活与块状布局是为通用界面提供的 UI 风格参照,侧重大胆、能量感、趣味、块状布局、几何形状。
      站点色板: #39ff14, #bf00ff, #ff1493, #00ffff, #ffaa00, #ff006e
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Vibrant & Block-based
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Vibrant & Block-based is a UI style reference for general interfaces, combining Bold, energetic, playful, block layout, geometric shapes, high color contrast, duotone, modern, energetic. The visual direction is shaped by Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms.
+鲜活与块状布局是为通用界面提供的 UI 风格参照,融合大胆、能量感、趣味、块状布局、几何形状、高色彩对比、双色调、现代、有活力。视觉方向由大区块(48px+ 间隙)、动画图案、醒目 hover(色相偏移)、scroll-snap、大字号(32px+)、200-300ms 塑造。
 
-Use it for Startups, creative agencies (創意), gaming (遊戲), social media (社交), youth-focused, entertainment (娛樂), consumer. Avoid it for Financial institutions, healthcare (健康), formal business, government, conservative, elderly.
+用于初创公司、创意机构、游戏、社交媒体、面向年轻人、娱乐、消费品。避免用于金融机构、医疗健康、正式商务、政府、保守场景、老年用户。
 
-**Key Characteristics:**
-- Primary palette: Neon Green #39FF14, Electric Purple #BF00FF, Vivid Pink #FF1493, Bright Cyan #00FFFF, Sunburst #FFAA00
-- Secondary palette: Complementary: Orange #FF7F00, Shocking Pink #FF006E, Lime #CCFF00, triadic schemes
-- Effects: Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms
-- Accessibility: ◐ Ensure WCAG; performance: ⚡ Good; dark mode: ✓ Full.
-- Best for: Startups, creative agencies (創意), gaming (遊戲), social media (社交), youth-focused, entertainment (娛樂), consumer
-- Avoid for: Financial institutions, healthcare (健康), formal business, government, conservative, elderly
+**关键特征:**
+- 主色板:霓虹绿 #39FF14、电紫 #BF00FF、艳粉 #FF1493、亮青 #00FFFF、日光橙 #FFAA00
+- 次色板:互补色:橙 #FF7F00、震撼粉 #FF006E、青柠 #CCFF00、三色组合方案
+- 效果:大区块(48px+ 间隙)、动画图案、醒目 hover(色相偏移)、scroll-snap、大字号(32px+)、200-300ms
+- 无障碍:◐ 须确保 WCAG;性能:⚡ 良好;暗色模式:✓ 完整。
+- 最适用于:初创公司、创意机构、游戏、社交媒体、面向年轻人、娱乐、消费品
+- 避免用于:金融机构、医疗健康、正式商务、政府、保守场景、老年用户
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Chakra 9/10, Styled 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/06-vibrant-block.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Chakra 9/10、Styled 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/06-vibrant-block.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

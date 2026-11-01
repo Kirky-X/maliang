@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: E-Ink / Paper is a UI style reference for general interfaces, focused on Paper-like, matte, high contrast, texture, reading.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: E-Ink / Paper 是为通用界面提供的 UI 风格参照,侧重纸质、哑光、高对比、纹理、阅读。
      站点色板: #1a1a1a, #f5f1eb, #fdfbf7, #f5f5f5, #4a4a4a, #ffff00
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # E-Ink / Paper
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-E-Ink / Paper is a UI style reference for general interfaces, combining Paper-like, matte, high contrast, texture, reading, calm, slow tech, monochrome. The visual direction is shaped by No motion blur, distinct page turns, grain/noise texture, sharp transitions (no fade).
+E-Ink / Paper 是为通用界面提供的 UI 风格参照,融合纸质、哑光、高对比、纹理、阅读、平静、慢科技、单色。视觉方向由无运动模糊、明确的翻页、颗粒/噪点纹理、锐利过渡(无淡入)塑造。
 
-Use it for Reading apps (應用程式), digital newspapers, minimal journals, distraction-free writing, slow-living brands (品牌). Avoid it for Gaming (遊戲), video platforms (平台), high-energy marketing (行銷), dark mode dependent apps (應用程式).
+用于阅读应用、数字报纸、极简日记、无干扰写作、慢生活品牌。避免用于游戏、视频平台、高能营销、依赖暗色模式的应用。
 
-**Key Characteristics:**
-- Primary palette: Off-White #FDFBF7, Paper White #F5F5F5, Ink Black #1A1A1A
-- Secondary palette: Pencil Grey #4A4A4A, Highlighter Yellow #FFFF00 (accent)
-- Effects: No motion blur, distinct page turns, grain/noise texture, sharp transitions (no fade)
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✗ Low (inverted only).
-- Best for: Reading apps (應用程式), digital newspapers, minimal journals, distraction-free writing, slow-living brands (品牌)
-- Avoid for: Gaming (遊戲), video platforms (平台), high-energy marketing (行銷), dark mode dependent apps (應用程式)
+**关键特征:**
+- 主色板:米白 #FDFBF7、纸白 #F5F5F5、墨黑 #1A1A1A
+- 次色板:铅笔灰 #4A4A4A、荧光笔黄 #FFFF00(强调)
+- 效果:无运动模糊、明确的翻页、颗粒/噪点纹理、锐利过渡(无淡入)
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✗ 低(仅反色)。
+- 最适用于:阅读应用、数字报纸、极简日记、无干扰写作、慢生活品牌
+- 避免用于:游戏、视频平台、高能营销、依赖暗色模式的应用
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, CSS 10/10
-- Era reference: 2020s Digital Well-being
-- Local preview: [Open HTML preview](../../refstyles/56-e-ink-paper.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、CSS 10/10
+- 年代参照:2020 年代数字健康
+- 本地预览:[打开 HTML 预览](../../refstyles/56-e-ink-paper.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

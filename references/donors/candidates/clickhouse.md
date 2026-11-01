@@ -1,286 +1,286 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 基础设施与云(infra) · 站点摘要: Fast analytics database. Yellow-accented, technical documentation style
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 基础设施与云(infra) · 站点摘要: 快速分析数据库。黄色强调、技术文档式风格
      站点色板: #faff69, #166534, #14572f, #f4f692, #4f5100, #161600
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: ClickHouse
+# 设计系统:ClickHouse
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-ClickHouse's interface is a high-performance cockpit rendered in acid yellow-green on obsidian black — a design that screams "speed" before you read a single word. The entire experience lives in darkness: pure black backgrounds (`#000000`) with dark charcoal cards (`#414141` borders) creating a terminal-grade aesthetic where the only chromatic interruption is the signature neon yellow-green (`#faff69`) that slashes across CTAs, borders, and highlighted moments like a highlighter pen on a dark console.
+ClickHouse 的界面是一台高性能座舱,以酸性黄绿渲染在曜石黑上——还没读一个字,设计就在喊"快"。整个体验活在黑暗里:纯黑背景(`#000000`)配暗炭灰卡片(`#414141` 边框),构成终端级审美,唯一的彩色插入是招牌霓虹黄绿(`#faff69`),它划过 CTA、边框和高亮时刻,像暗色控制台上的一支荧光笔。
 
-The typography is aggressively heavy — Inter at weight 900 (Black) for the hero headline at 96px creates text blocks that feel like they have physical mass. This "database for AI" site communicates raw power through visual weight: thick type, high-contrast neon accents, and performance stats displayed as oversized numbers. There's nothing subtle about ClickHouse's design, and that's entirely the point — it mirrors the product's promise of extreme speed and performance.
+排版极端厚重——Inter 900 字重(Black)配 96px 的 hero 标题,让文本块像有物理质量。这个"为 AI 而生的数据库"站点用视觉重量传达原始力量:粗字、高对比霓虹强调、把性能数据做成超大字号的数字。ClickHouse 的设计没有任何含蓄之处,而这正是重点——它映照产品"极速与性能"的承诺。
 
-What makes ClickHouse distinctive is the electrifying tension between the near-black canvas and the neon yellow-green accent. This color combination (`#faff69` on `#000000`) creates one of the highest-contrast pairings in any tech brand, making every CTA button, every highlighted card, and every accent border impossible to miss. Supporting this is a forest green (`#166534`) for secondary CTAs that adds depth to the action hierarchy without competing with the neon.
+让 ClickHouse 与众不同的是近黑画布与霓虹黄绿之间的电击式张力。这一配色(`#faff69` 配 `#000000`)是科技品牌里对比度最高的组合之一,让每个 CTA 按钮、每张高亮卡片、每条强调边框都无法错过。支撑它的是森林绿(`#166534`),用于次级 CTA,给动作层级增加深度,又不与霓虹争抢。
 
-**Key Characteristics:**
-- Pure black canvas (#000000) with neon yellow-green (#faff69) accent — maximum contrast
-- Extra-heavy display typography: Inter at weight 900 (Black) up to 96px
-- Dark charcoal card system with #414141 borders at 80% opacity
-- Forest green (#166534) secondary CTA buttons
-- Performance stats as oversized display numbers
-- Uppercase labels with wide letter-spacing (1.4px) for navigation structure
-- Active/pressed state shifts text to pale yellow (#f4f692)
-- All links hover to neon yellow-green — unified interactive signal
-- Inset shadows on select elements creating "pressed into the surface" depth
+**关键特征:**
+- 纯黑画布(#000000)配霓虹黄绿(#faff69)强调——最大对比
+- 超重展示排版:Inter 900 字重(Black),最大到 96px
+- 暗炭灰卡片系统,#414141 边框、80% 不透明度
+- 森林绿(#166534)次级 CTA 按钮
+- 性能数据做成超大展示数字
+- 大写标签配宽字距(1.4px),构成导航结构
+- 激活/按下态文字转为浅黄(#f4f692)
+- 所有链接 hover 转霓虹黄绿——统一的交互信号
+- 部分元素用内阴影,造出"压进表面"的深度
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Primary
-- **Neon Volt** (`#faff69`): The signature brand color — a vivid acid yellow-green that's the sole chromatic accent on the black canvas. Used for primary CTAs, accent borders, link hovers, and highlighted moments.
-- **Forest Green** (`#166534`): Secondary CTA color — a deep, saturated green for "Get Started" and primary action buttons that need distinction from the neon.
-- **Dark Forest** (`#14572f`): A darker green variant for borders and secondary accents.
+### 主色
+- **Neon Volt**(`#faff69`):签名品牌色——一种鲜艳的酸性黄绿,是黑画布上唯一的彩色强调。用于主 CTA、强调边框、链接 hover、高亮时刻。
+- **Forest Green**(`#166534`):次级 CTA 色——深饱和绿,用于"Get Started"与需要与霓虹区分的主操作按钮。
+- **Dark Forest**(`#14572f`):更深的绿色变体,用于边框与次级强调。
 
-### Secondary & Accent
-- **Pale Yellow** (`#f4f692`): Active/pressed state text color — a softer, more muted version of Neon Volt for state feedback.
-- **Border Olive** (`#4f5100`): A dark olive-yellow for ghost button borders — the neon's muted sibling.
-- **Olive Dark** (`#161600`): The darkest neon-tinted color for subtle brand text.
+### 次级与强调
+- **Pale Yellow**(`#f4f692`):激活/按下态文字色——Neon Volt 更柔和、更弱化的版本,用于状态反馈。
+- **Border Olive**(`#4f5100`):暗橄榄黄,用于幽灵按钮边框——霓虹的弱化同胞。
+- **Olive Dark**(`#161600`):最深的霓虹调色,用于微妙的品牌文字。
 
-### Surface & Background
-- **Pure Black** (`#000000`): The primary page background — absolute black for maximum contrast.
-- **Near Black** (`#141414`): Button backgrounds and slightly elevated dark surfaces.
-- **Charcoal** (`#414141`): The primary border color at 80% opacity — the workhorse for card and container containment.
-- **Deep Charcoal** (`#343434`): Darker border variant for subtle division lines.
-- **Hover Gray** (`#3a3a3a`): Button hover state background — slightly lighter than Near Black.
+### 表面与背景
+- **Pure Black**(`#000000`):主页面背景——绝对黑,追求最大对比。
+- **Near Black**(`#141414`):按钮背景与略微抬升的暗色表面。
+- **Charcoal**(`#414141`):主边框色,80% 不透明度——卡片与容器包裹的主力。
+- **Deep Charcoal**(`#343434`):更深的边框变体,用于微妙分割线。
+- **Hover Gray**(`#3a3a3a`):按钮 hover 态背景——比 Near Black 略亮。
 
-### Neutrals & Text
-- **Pure White** (`#ffffff`): Primary text on dark surfaces.
-- **Silver** (`#a0a0a0`): Secondary body text and muted content.
-- **Mid Gray** (`#585858` at 28%): Subtle gray overlay for depth effects.
-- **Border Gray** (`#e5e7eb`): Light border variant (used in rare light contexts).
+### 中性色与文本
+- **Pure White**(`#ffffff`):暗色表面上的主文本。
+- **Silver**(`#a0a0a0`):次级正文与弱化内容。
+- **Mid Gray**(`#585858`,28%):微妙灰覆盖层,用于深度效果。
+- **Border Gray**(`#e5e7eb`):浅色边框变体(用于少见的浅色语境)。
 
-### Gradient System
-- **None in the traditional sense.** ClickHouse uses flat color blocks and high-contrast borders. The "gradient" is the contrast itself — neon yellow-green against pure black creates a visual intensity that gradients would dilute.
+### 渐变系统
+- **传统意义上没有。** ClickHouse 用平色块与高对比边框。这里的"渐变"就是对比本身——霓虹黄绿对纯黑造出视觉强度,任何渐变都会冲淡它。
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Family
-- **Primary**: `Inter` (Next.js optimized variant `__Inter_d1b8ee`)
-- **Secondary Display**: `Basier` (`__basier_a58b65`), with fallbacks: `Arial, Helvetica`
-- **Code**: `Inconsolata` (`__Inconsolata_a25f62`)
+### 字族
+- **主字族**:`Inter`(Next.js 优化变体 `__Inter_d1b8ee`)
+- **次级显示**:`Basier`(`__basier_a58b65`),回退:`Arial, Helvetica`
+- **代码**:`Inconsolata`(`__Inconsolata_a25f62`)
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Mega | Inter | 96px (6rem) | 900 | 1.00 (tight) | normal | Maximum impact, extra-heavy |
-| Display / Hero | Inter | 72px (4.5rem) | 700 | 1.00 (tight) | normal | Section hero titles |
-| Feature Heading | Basier | 36px (2.25rem) | 600 | 1.30 (tight) | normal | Feature section anchors |
-| Sub-heading | Inter / Basier | 24px (1.5rem) | 600–700 | 1.17–1.38 | normal | Card headings |
-| Feature Title | Inter / Basier | 20px (1.25rem) | 600–700 | 1.40 | normal | Small feature titles |
-| Body Large | Inter | 18px (1.13rem) | 400–700 | 1.56 | normal | Intro paragraphs, button text |
-| Body / Button | Inter | 16px (1rem) | 400–700 | 1.50 | normal | Standard body, nav, buttons |
-| Caption | Inter | 14px (0.88rem) | 400–700 | 1.43 | normal | Metadata, descriptions, links |
-| Uppercase Label | Inter | 14px (0.88rem) | 600 | 1.43 | 1.4px | Section overlines, wide-tracked |
-| Code | Inconsolata | 16px (1rem) | 600 | 1.50 | normal | Code blocks, commands |
-| Small | Inter | 12px (0.75rem) | 500 | 1.33 | normal | Smallest text |
-| Micro | Inter | 11.2px (0.7rem) | 500 | 1.79 (relaxed) | normal | Tags, tiny labels |
+| 显示巨型 | Inter | 96px (6rem) | 900 | 1.00(紧) | normal | 最大冲击,超重 |
+| 显示 / Hero | Inter | 72px (4.5rem) | 700 | 1.00(紧) | normal | 区块 hero 标题 |
+| Feature 标题 | Basier | 36px (2.25rem) | 600 | 1.30(紧) | normal | 特色区块锚点 |
+| 子标题 | Inter / Basier | 24px (1.5rem) | 600–700 | 1.17–1.38 | normal | 卡片标题 |
+| 小号 Feature 标题 | Inter / Basier | 20px (1.25rem) | 600–700 | 1.40 | normal | 小特色标题 |
+| 大号正文 | Inter | 18px (1.13rem) | 400–700 | 1.56 | normal | 引言段落、按钮文字 |
+| 正文 / 按钮 | Inter | 16px (1rem) | 400–700 | 1.50 | normal | 标准正文、导航、按钮 |
+| 说明 | Inter | 14px (0.88rem) | 400–700 | 1.43 | normal | 元数据、描述、链接 |
+| 大写标签 | Inter | 14px (0.88rem) | 600 | 1.43 | 1.4px | 区块上标,宽字距 |
+| 代码 | Inconsolata | 16px (1rem) | 600 | 1.50 | normal | 代码块、命令 |
+| 小号 | Inter | 12px (0.75rem) | 500 | 1.33 | normal | 最小文字 |
+| 微型 | Inter | 11.2px (0.7rem) | 500 | 1.79(松) | normal | 标签、极小标签 |
 
-### Principles
-- **Weight 900 is the weapon**: The display headline uses Inter Black (900) — a weight most sites never touch. Combined with 96px size, this creates text with a physical, almost architectural presence.
-- **Full weight spectrum**: The system uses 400, 500, 600, 700, and 900 — covering the full gamut. Weight IS hierarchy.
-- **Uppercase with maximum tracking**: Section overlines use 1.4px letter-spacing — wider than most systems — creating bold structural labels that stand out against the dense dark background.
-- **Dual sans-serif**: Inter handles display and body; Basier handles feature section headings at 600 weight. This creates a subtle personality shift between "data/performance" (Inter) and "product/feature" (Basier) contexts.
+### 原则
+- **900 字重是武器**:展示标题用 Inter Black(900)——多数站点从不触碰的字重。配上 96px 字号,造出有物理感、近乎建筑感的文本存在。
+- **全字重谱系**:系统用 400、500、600、700、900——覆盖全域。字重就是层级。
+- **最大字距的大写**:区块上标用 1.4px 字距——比多数系统更宽——造出醒目的结构标签,在密集暗底上立得住。
+- **双无衬线**:Inter 负责展示与正文;Basier 负责 600 字重的特色区块标题。这在"数据/性能"(Inter)与"产品/特色"(Basier)语境之间造出微妙的人格切换。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Neon Primary**
-- Background: Neon Volt (`#faff69`)
-- Text: Near Black (`#151515`)
-- Padding: 0px 16px
-- Radius: sharp (4px)
-- Border: `1px solid #faff69`
-- Hover: background shifts to dark (`rgb(29, 29, 29)`), text stays
-- Active: text shifts to Pale Yellow (`#f4f692`)
-- The eye-catching CTA — neon on black
+**霓虹主按钮**
+- 背景:Neon Volt(`#faff69`)
+- 文字:Near Black(`#151515`)
+- 内边距:0px 16px
+- 圆角:锐(4px)
+- 边框:`1px solid #faff69`
+- hover:背景转为暗色(`rgb(29, 29, 29)`),文字不变
+- 激活:文字转 Pale Yellow(`#f4f692`)
+- 吸睛的 CTA——黑上的霓虹
 
-**Dark Solid**
-- Background: Near Black (`#141414`)
-- Text: Pure White (`#ffffff`)
-- Padding: 12px 16px
-- Radius: 4px or 8px
-- Border: `1px solid #141414`
-- Hover: bg shifts to Hover Gray (`#3a3a3a`), text to 80% opacity
-- Active: text to Pale Yellow
-- The standard action button
+**暗色实底**
+- 背景:Near Black(`#141414`)
+- 文字:Pure White(`#ffffff`)
+- 内边距:12px 16px
+- 圆角:4px 或 8px
+- 边框:`1px solid #141414`
+- hover:背景转 Hover Gray(`#3a3a3a`),文字 80% 不透明度
+- 激活:文字转 Pale Yellow
+- 标准操作按钮
 
-**Forest Green**
-- Background: Forest Green (`#166534`)
-- Text: Pure White (`#ffffff`)
-- Padding: 12px 16px
-- Border: `1px solid #141414`
-- Hover: same dark shift
-- Active: Pale Yellow text
-- The "Get Started" / primary conversion button
+**森林绿**
+- 背景:Forest Green(`#166534`)
+- 文字:Pure White(`#ffffff`)
+- 内边距:12px 16px
+- 边框:`1px solid #141414`
+- hover:同样的暗色位移
+- 激活:Pale Yellow 文字
+- "Get Started" / 主转化按钮
 
-**Ghost / Outlined**
-- Background: transparent
-- Text: Pure White (`#ffffff`)
-- Padding: 0px 32px
-- Radius: 4px
-- Border: `1px solid #4f5100` (olive-tinted)
-- Hover: dark bg shift
-- Active: Pale Yellow text
-- Secondary actions with neon-tinted border
+**幽灵 / 描边**
+- 背景:透明
+- 文字:Pure White(`#ffffff`)
+- 内边距:0px 32px
+- 圆角:4px
+- 边框:`1px solid #4f5100`(橄榄调)
+- hover:暗色背景位移
+- 激活:Pale Yellow 文字
+- 次级操作,带霓虹调边框
 
-**Pill Toggle**
-- Background: transparent
-- Radius: pill (9999px)
-- Used for toggle/switch elements
+**药丸开关**
+- 背景:透明
+- 圆角:药丸(9999px)
+- 用于开关/切换元素
 
-### Cards & Containers
-- Background: transparent or Near Black
-- Border: `1px solid rgba(65, 65, 65, 0.8)` — the signature charcoal containment
-- Radius: 4px (small elements) or 8px (cards, containers)
-- Shadow Level 1: subtle (`rgba(0,0,0,0.1) 0px 1px 3px, rgba(0,0,0,0.1) 0px 1px 2px -1px`)
-- Shadow Level 2: medium (`rgba(0,0,0,0.1) 0px 10px 15px -3px, rgba(0,0,0,0.1) 0px 4px 6px -4px`)
-- Shadow Level 3: inset (`rgba(0,0,0,0.06) 0px 4px 4px, rgba(0,0,0,0.14) 0px 4px 25px inset`) — the "pressed" effect
-- Neon-highlighted cards: selected/active cards get neon yellow-green border or accent
+### 卡片与容器
+- 背景:透明或 Near Black
+- 边框:`1px solid rgba(65, 65, 65, 0.8)`——签名的炭灰包裹
+- 圆角:4px(小元素)或 8px(卡片、容器)
+- 阴影 Level 1:微妙(`rgba(0,0,0,0.1) 0px 1px 3px, rgba(0,0,0,0.1) 0px 1px 2px -1px`)
+- 阴影 Level 2:中等(`rgba(0,0,0,0.1) 0px 10px 15px -3px, rgba(0,0,0,0.1) 0px 4px 6px -4px`)
+- 阴影 Level 3:内嵌(`rgba(0,0,0,0.06) 0px 4px 4px, rgba(0,0,0,0.14) 0px 4px 25px inset`)——"按下"效果
+- 霓虹高亮卡片:选中/激活卡片获得霓虹黄绿边框或强调
 
-### Navigation
-- Dark nav on black background
-- Logo: ClickHouse wordmark + icon in yellow/neon
-- Links: white text, hover to Neon Volt (#faff69)
-- CTA: Neon Volt button or Forest Green button
-- Uppercase labels for categories
+### 导航
+- 黑底上的暗色导航
+- 标志:ClickHouse 字标 + 图标,黄色/霓虹
+- 链接:白字,hover 转 Neon Volt(#faff69)
+- CTA:Neon Volt 按钮或 Forest Green 按钮
+- 分类用大写标签
 
-### Distinctive Components
+### 特色组件
 
-**Performance Stats**
-- Oversized numbers (72px+, weight 700–900)
-- Brief descriptions beneath
-- High-contrast neon accents on key metrics
-- The primary visual proof of performance claims
+**性能数据**
+- 超大数字(72px+、字重 700–900)
+- 下方配简短描述
+- 关键指标上高对比霓虹强调
+- 性能主张的首要视觉证据
 
-**Neon-Highlighted Card**
-- Standard dark card with neon yellow-green border highlight
-- Creates "selected" or "featured" treatment
-- The accent border makes the card pop against the dark canvas
+**霓虹高亮卡片**
+- 标准暗色卡片加霓虹黄绿边框高亮
+- 造出"选中"或"精选"处理
+- 强调边框让卡片在暗画布上跳出
 
-**Code Blocks**
-- Dark surface with Inconsolata at weight 600
-- Neon and white syntax highlighting
-- Terminal-like aesthetic
+**代码块**
+- 暗色表面配 Inconsolata 600 字重
+- 霓虹与白色语法高亮
+- 终端式审美
 
-**Trust Bar**
-- Company logos on dark background
-- Monochrome/white logo treatment
-- Horizontal layout
+**信任栏**
+- 暗底上的公司标志
+- 单色/白色标志处理
+- 横向布局
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 2px, 6px, 7px, 8px, 10px, 12px, 16px, 20px, 24px, 25px, 32px, 40px, 44px, 48px, 64px
-- Button padding: 12px 16px (standard), 0px 16px (compact), 0px 32px (wide ghost)
-- Section vertical spacing: generous (48–64px)
+### 间距系统
+- 基数:8px
+- 刻度:2px、6px、7px、8px、10px、12px、16px、20px、24px、25px、32px、40px、44px、48px、64px
+- 按钮内边距:12px 16px(标准)、0px 16px(紧凑)、0px 32px(宽幽灵)
+- 区块纵向间距:慷慨(48–64px)
 
-### Grid & Container
-- Max container width: up to 2200px (extra-wide) with responsive scaling
-- Hero: full-width dark with massive typography
-- Feature sections: multi-column card grids with dark borders
-- Stats: horizontal metric bar
-- Full-dark page — no light sections
+### 网格与容器
+- 容器最大宽:最高 2200px(超宽),随视口响应缩放
+- Hero:全宽暗底,巨型排版
+- 特色区块:多列卡片网格,暗色边框
+- 数据:横向指标条
+- 整页全暗——没有浅色区块
 
-### Whitespace Philosophy
-- **Dark void as canvas**: The pure black background provides infinite depth — elements float in darkness.
-- **Dense information**: Feature cards and stats are packed with data, reflecting the database product's performance focus.
-- **Neon highlights as wayfinding**: Yellow-green accents guide the eye through the dark interface like runway lights.
+### 留白哲学
+- **暗虚空即画布**:纯黑背景提供无限深度——元素浮在黑暗里。
+- **信息密集**:特色卡与数据塞满内容,映照数据库产品的性能取向。
+- **霓虹高亮作导览**:黄绿强调像跑道灯一样,引导视线穿过暗色界面。
 
-### Border Radius Scale
-- Sharp (4px): Buttons, badges, small elements, code blocks
-- Comfortable (8px): Cards, containers, dividers
-- Pill (9999px): Toggle buttons, status indicators
+### 圆角刻度
+- 锐(4px):按钮、徽章、小元素、代码块
+- 舒适(8px):卡片、容器、分割线
+- 药丸(9999px):开关按钮、状态指示
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow | Black background, text blocks |
-| Bordered (Level 1) | `1px solid rgba(65,65,65,0.8)` | Standard cards, containers |
-| Subtle (Level 2) | `0px 1px 3px rgba(0,0,0,0.1)` | Subtle card lift |
-| Elevated (Level 3) | `0px 10px 15px -3px rgba(0,0,0,0.1)` | Feature cards, hover states |
-| Pressed/Inset (Level 4) | `0px 4px 25px rgba(0,0,0,0.14) inset` | Active/pressed elements — "sunk into the surface" |
-| Neon Highlight (Level 5) | Neon Volt border (`#faff69`) | Featured/selected cards, maximum emphasis |
+| 平(Level 0) | 无阴影 | 黑色背景、文本块 |
+| 描边(Level 1) | `1px solid rgba(65,65,65,0.8)` | 标准卡、容器 |
+| 微妙(Level 2) | `0px 1px 3px rgba(0,0,0,0.1)` | 微卡抬升 |
+| 抬高(Level 3) | `0px 10px 15px -3px rgba(0,0,0,0.1)` | 特色卡、hover 态 |
+| 按下/内嵌(Level 4) | `0px 4px 25px rgba(0,0,0,0.14) inset` | 激活/按下元素——"陷进表面" |
+| 霓虹高亮(Level 5) | Neon Volt 边框(`#faff69`) | 精选/选中卡片,最大强调 |
 
-**Shadow Philosophy**: ClickHouse uses shadows on a black canvas, where they're barely visible — they exist more for subtle dimensionality than obvious elevation. The most distinctive depth mechanism is the **inset shadow** (Level 4), which creates a "pressed into the surface" effect unique to ClickHouse. The neon border highlight (Level 5) is the primary attention-getting depth mechanism.
+**阴影哲学**:ClickHouse 在黑画布上用阴影,而阴影几乎看不见——它们更多是为微妙的立体感存在,而非明显的海拔。最具辨识度的深度机制是**内阴影**(Level 4),造出 ClickHouse 独有的"压进表面"效果。霓虹边框高亮(Level 5)是首要的抓注意力深度机制。
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use Neon Volt (#faff69) as the sole chromatic accent — it must pop against pure black
-- Use Inter at weight 900 for hero display text — the extreme weight IS the personality
-- Keep everything on pure black (#000000) — never use dark gray as the page background
-- Use charcoal borders (rgba(65,65,65,0.8)) for all card containment
-- Apply Forest Green (#166534) for primary CTA buttons — distinct from neon for action hierarchy
-- Show performance stats as oversized display numbers — it's the core visual argument
-- Use uppercase with wide letter-spacing (1.4px) for section labels
-- Apply Pale Yellow (#f4f692) for active/pressed text states
-- Link hovers should ALWAYS shift to Neon Volt — unified interactive feedback
+- 用 Neon Volt(#faff69)作唯一彩色强调——它必须在纯黑上跳出
+- hero 展示文字用 Inter 900 字重——极端字重就是性格
+- 一切保持在纯黑(#000000)——永不用暗灰作页面背景
+- 所有卡片包裹用炭灰边框(rgba(65,65,65,0.8))
+- 主 CTA 按钮用 Forest Green(#166534)——与霓虹区分,构成动作层级
+- 性能数据做成超大展示数字——它是核心视觉论证
+- 区块标签用大写配宽字距(1.4px)
+- 激活/按下文字态用 Pale Yellow(#f4f692)
+- 链接 hover 应始终转为 Neon Volt——统一的交互反馈
 
 ### Don't
-- Don't introduce additional colors — the palette is strictly black, neon, green, and gray
-- Don't use the neon as a background fill — it's an accent and border color only (except on CTA buttons)
-- Don't reduce display weight below 700 — heavy weight is core to the personality
-- Don't use light/white backgrounds anywhere — the entire experience is dark
-- Don't round corners beyond 8px — the sharp geometry reflects database precision
-- Don't use soft/diffused shadows on black — they're invisible. Use border-based depth instead
-- Don't skip the inset shadow on active states — the "pressed" effect is distinctive
-- Don't use warm neutrals — all grays are perfectly neutral
+- 不引入额外颜色——色板严格限定为黑、霓虹、绿、灰
+- 不把霓虹当背景填充——它只作强调与边框色(CTA 按钮除外)
+- 不把展示字重降到 700 以下——厚重是性格核心
+- 任何地方都不用浅色/白色背景——整个体验都是暗色
+- 圆角不超过 8px——锐利几何映照数据库的精密
+- 不在黑上用柔和/扩散阴影——它们看不见。改用基于边框的深度
+- 激活态不跳过内阴影——"按下"效果是辨识点
+- 不用暖中性色——所有灰都是完全中性的
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile | <640px | Single column, stacked cards |
-| Small Tablet | 640–768px | Minor adjustments |
-| Tablet | 768–1024px | 2-column grids |
-| Desktop | 1024–1280px | Standard layout |
-| Large Desktop | 1280–1536px | Expanded content |
-| Ultra-wide | 1536–2200px | Maximum container width |
+| 手机 | <640px | 单列、堆叠卡片 |
+| 小屏平板 | 640–768px | 小幅调整 |
+| 平板 | 768–1024px | 2 列网格 |
+| 桌面 | 1024–1280px | 标准布局 |
+| 大屏桌面 | 1280–1536px | 展开内容 |
+| 超宽 | 1536–2200px | 最大容器宽度 |
 
-### Touch Targets
-- Buttons with 12px 16px padding minimum
-- Card surfaces as touch targets
-- Adequate nav link spacing
+### 触控目标
+- 按钮最小 12px 16px 内边距
+- 卡面作为触控目标
+- 导航链接间距充足
 
-### Collapsing Strategy
-- **Hero text**: 96px → 72px → 48px → 36px
-- **Feature grids**: Multi-column → 2 → 1 column
-- **Stats**: Horizontal → stacked
-- **Navigation**: Full → hamburger
+### 折叠策略
+- **Hero 文字**:96px → 72px → 48px → 36px
+- **特色网格**:多列 → 2 → 1 列
+- **数据**:横向 → 堆叠
+- **导航**:完整 → 汉堡
 
-### Image Behavior
-- Product screenshots maintain aspect ratio
-- Code blocks use horizontal scroll on narrow screens
-- All images on dark backgrounds
+### 图像行为
+- 产品截图保持宽高比
+- 窄屏上代码块横向滚动
+- 所有图片位于暗色背景
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Brand Accent: "Neon Volt (#faff69)"
-- Page Background: "Pure Black (#000000)"
-- CTA Green: "Forest Green (#166534)"
-- Card Border: "Charcoal (rgba(65,65,65,0.8))"
-- Primary Text: "Pure White (#ffffff)"
-- Secondary Text: "Silver (#a0a0a0)"
-- Active State: "Pale Yellow (#f4f692)"
-- Button Surface: "Near Black (#141414)"
+### 快速取色参考
+- 品牌强调:"Neon Volt (#faff69)"
+- 页面背景:"Pure Black (#000000)"
+- CTA 绿:"Forest Green (#166534)"
+- 卡片边框:"Charcoal (rgba(65,65,65,0.8))"
+- 主文本:"Pure White (#ffffff)"
+- 次级文本:"Silver (#a0a0a0)"
+- 激活态:"Pale Yellow (#f4f692)"
+- 按钮表面:"Near Black (#141414)"
 
-### Example Component Prompts
-- "Create a hero section on Pure Black (#000000) with a massive headline at 96px Inter weight 900, line-height 1.0. Pure White text. Add a Neon Volt (#faff69) CTA button (dark text, 4px radius, 0px 16px padding) and a ghost button (transparent, 1px solid #4f5100 border)."
-- "Design a feature card on black with 1px solid rgba(65,65,65,0.8) border and 8px radius. Title at 24px Inter weight 700, body at 16px in Silver (#a0a0a0). Add a neon-highlighted variant with 1px solid #faff69 border."
-- "Build a performance stats bar: large numbers at 72px Inter weight 700 in Pure White. Brief descriptions at 14px in Silver. On black background."
-- "Create a Forest Green (#166534) CTA button: white text, 12px 16px padding, 4px radius, 1px solid #141414 border. Hover: bg shifts to #3a3a3a, text to 80% opacity."
-- "Design an uppercase section label: 14px Inter weight 600, letter-spacing 1.4px, uppercase. Silver (#a0a0a0) text on black background."
+### 组件提示词示例
+- "在 Pure Black(#000000)上做一个 hero 区块,巨型标题 96px Inter 字重 900,行高 1.0。Pure White 文字。加一个 Neon Volt(#faff69) CTA 按钮(暗字、4px 圆角、0px 16px 内边距)和一个幽灵按钮(透明、1px solid #4f5100 边框)。"
+- "在黑色上设计一张特色卡,1px solid rgba(65,65,65,0.8) 边框、8px 圆角。标题 24px Inter 字重 700,正文 16px Silver(#a0a0a0)。再加一个霓虹高亮变体,1px solid #faff69 边框。"
+- "做一条性能数据栏:大数字 72px Inter 字重 700,Pure White。简短描述 14px Silver。黑底。"
+- "做一个 Forest Green(#166534) CTA 按钮:白字、12px 16px 内边距、4px 圆角、1px solid #141414 边框。Hover:背景转 #3a3a3a,文字 80% 不透明度。"
+- "设计一个大写区块标签:14px Inter 字重 600,字距 1.4px,大写。黑底上 Silver(#a0a0a0) 文字。"
 
-### Iteration Guide
-1. Keep everything on pure black — no dark gray alternatives
-2. Neon Volt (#faff69) is for accents and CTAs only — never large backgrounds
-3. Weight 900 for hero, 700 for headings, 600 for labels, 400-500 for body
-4. Active states use Pale Yellow (#f4f692) — not just opacity changes
-5. All links hover to Neon Volt — consistent interactive feedback
-6. Charcoal borders (rgba(65,65,65,0.8)) are the primary depth mechanism
+### 迭代指南
+1. 一切保持在纯黑——没有暗灰替代
+2. Neon Volt(#faff69)只用于强调与 CTA——绝不用作大面积背景
+3. hero 用 900 字重,标题 700,标签 600,正文 400-500
+4. 激活态用 Pale Yellow(#f4f692)——不只是改不透明度
+5. 所有链接 hover 转 Neon Volt——一致的交互反馈
+6. 炭灰边框(rgba(65,65,65,0.8))是主要深度机制

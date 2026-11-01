@@ -1,333 +1,333 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 开发工具与平台(dev) · 站点摘要: Automation platform. Warm orange, friendly illustration-driven
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 开发工具与平台(dev) · 站点摘要: 自动化平台。暖橙强调,友好的插画驱动
      站点色板: #201515, #fffefb, #fffdf9, #36342e, #939084, #c5c0b1
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Zapier
+# 设计系统:Zapier
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Zapier's website radiates warm, approachable professionalism. It rejects the cold monochrome minimalism of developer tools in favor of a cream-tinted canvas (`#fffefb`) that feels like unbleached paper -- the digital equivalent of a well-organized notebook. The near-black (`#201515`) text has a faint reddish-brown warmth, creating an atmosphere more human than mechanical. This is automation designed to feel effortless, not technical.
+Zapier 的网站散发温暖、可亲近的专业感。它拒绝开发者工具那种冷调单色极简,改用奶油色画布(`#fffefb`)——像未漂白的纸,数字化地对应一本整理得当的笔记本。近黑(`#201515`)文字带一丝红棕暖意,造出比机械更有人味的氛围。这是被设计成"毫不费力"而非"技术性"的自动化。
 
-The typographic system is a deliberate interplay of two distinct personalities. **Degular Display** -- a geometric, wide-set display face -- handles hero-scale headlines at 56-80px with medium weight (500) and extraordinarily tight line-heights (0.90), creating headlines that compress vertically like stacked blocks. **Inter** serves as the workhorse for everything else, from section headings to body text and navigation, with fallbacks to Helvetica and Arial. **GT Alpina**, an elegant thin-weight serif with aggressive negative letter-spacing (-1.6px to -1.92px), makes occasional appearances for softer editorial moments. This three-font system gives Zapier the ability to shift register -- from bold and punchy (Degular) to clean and functional (Inter) to refined and literary (GT Alpina).
+排版体系是两种鲜明个性的刻意交织。**Degular Display**——一款几何、字幅宽的显示字体——承担 hero 级标题,56-80px、中等字重(500)、行高低得异常(0.90),造出像堆叠积木一样纵向压缩的标题。**Inter** 作其余一切的主力,从区块标题到正文与导航,回退 Helvetica 与 Arial。**GT Alpina**——一款优雅的细字重衬线体,配激进的负字距(-1.6px 至 -1.92px)——在较柔的编辑式时刻偶尔出场。这套三字体体系让 Zapier 能切换语域——从粗而有力(Degular),到干净且功能化(Inter),再到精致且文学化(GT Alpina)。
 
-The brand's signature orange (`#ff4f00`) is unmistakable -- a vivid, saturated red-orange that sits precisely between traffic-cone urgency and sunset warmth. It's used sparingly but decisively: primary CTA buttons, active state underlines, and accent borders. Against the warm cream background, this orange creates a color relationship that feels energetic without being aggressive.
+品牌的签名橙(`#ff4f00`)无法认错——一种鲜亮、饱和的红橙,精确坐在交通锥的急迫与日落的温暖之间。它用得克制但果断:主 CTA 按钮、激活态下划线、强调边框。在暖奶油底上,这个橙造出一种有活力而不具攻击性的色彩关系。
 
-**Key Characteristics:**
-- Warm cream canvas (`#fffefb`) instead of pure white -- organic, paper-like warmth
-- Near-black with reddish undertone (`#201515`) -- text that breathes rather than dominates
-- Degular Display for hero headlines at 0.90 line-height -- compressed, impactful, modern
-- Inter as the universal UI font across all functional typography
-- GT Alpina for editorial accents -- thin-weight serif with extreme negative tracking
-- Zapier Orange (`#ff4f00`) as the single accent -- vivid, warm, sparingly applied
-- Warm neutral palette: borders (`#c5c0b1`), muted text (`#939084`), surface tints (`#eceae3`)
-- 8px base spacing system with generous padding on CTAs (20px 24px)
-- Border-forward design: `1px solid` borders in warm grays define structure over shadows
+**关键特征:**
+- 暖奶油画布(`#fffefb`)而非纯白——有机、纸般的温暖
+- 近黑带红底调(`#201515`)——会呼吸而不压迫的文字
+- Degular Display 承担 hero 标题,0.90 行高——压缩、有冲击、现代
+- Inter 作通用 UI 字体,覆盖全部功能性排版
+- GT Alpina 作编辑式强调——细字重衬线配极端负字距
+- Zapier 橙(`#ff4f00`)作唯一强调——鲜亮、温暖、克制使用
+- 暖中性色板:边框(`#c5c0b1`)、弱化文本(`#939084`)、表面浅调(`#eceae3`)
+- 8px 基数间距体系,CTA 内边距慷慨(20px 24px)
+- 边框优先的设计:暖灰 `1px solid` 边框定义结构,而非阴影
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Primary
-- **Zapier Black** (`#201515`): Primary text, headings, dark button backgrounds. A warm near-black with reddish undertones -- never cold.
-- **Cream White** (`#fffefb`): Page background, card surfaces, light button fills. Not pure white; the yellowish warmth is intentional.
-- **Off-White** (`#fffdf9`): Secondary background surface, subtle alternate tint. Nearly indistinguishable from cream white but creates depth.
+### 主色
+- **Zapier 黑**(`#201515`):主文本、标题、暗按钮背景。一种带红底调的暖近黑——绝不冷。
+- **奶油白**(`#fffefb`):页面背景、卡片表面、亮按钮填充。不是纯白;偏黄的暖意是刻意的。
+- **近白**(`#fffdf9`):次级背景表面、细微替代浅调。与奶油白几乎分辨不出,但造出深度。
 
-### Brand Accent
-- **Zapier Orange** (`#ff4f00`): Primary CTA buttons, active underline indicators, accent borders. The signature color -- vivid and warm.
+### 品牌强调
+- **Zapier 橙**(`#ff4f00`):主 CTA 按钮、激活下划线指示、强调边框。签名色——鲜亮而温暖。
 
-### Neutral Scale
-- **Dark Charcoal** (`#36342e`): Secondary text, footer text, border color for strong dividers. A warm dark gray-brown with 70% opacity variant.
-- **Warm Gray** (`#939084`): Tertiary text, muted labels, timestamp-style content. Mid-range with greenish-warm undertone.
-- **Sand** (`#c5c0b1`): Primary border color, hover state backgrounds, divider lines. The backbone of Zapier's structural elements.
-- **Light Sand** (`#eceae3`): Secondary button backgrounds, light borders, subtle card surfaces.
-- **Mid Warm** (`#b5b2aa`): Alternate border tone, used on specific span elements.
+### 中性刻度
+- **深炭**(`#36342e`):次级文本、footer 文本、强分隔线的边框色。一种暖调深灰棕,另有 70% 不透明度变体。
+- **暖灰**(`#939084`):三级文本、弱化标签、时间戳式内容。中段,带绿暖底调。
+- **沙**(`#c5c0b1`):主边框色、hover 态背景、分隔线。Zapier 结构元素的骨架。
+- **浅沙**(`#eceae3`):次级按钮背景、浅边框、细微卡片表面。
+- **中暖**(`#b5b2aa`):替代边框色,用于特定 span 元素。
 
-### Interactive
-- **Orange CTA** (`#ff4f00`): Primary action buttons and active tab underlines.
-- **Dark CTA** (`#201515`): Secondary dark buttons with sand hover state.
-- **Light CTA** (`#eceae3`): Tertiary/ghost buttons with sand hover.
-- **Link Default** (`#201515`): Standard link color, matching body text.
-- **Hover Underline**: Links remove `text-decoration: underline` on hover (inverse pattern).
+### 交互
+- **橙 CTA**(`#ff4f00`):主操作按钮与激活标签下划线。
+- **暗 CTA**(`#201515`):次级暗按钮,沙色 hover 态。
+- **亮 CTA**(`#eceae3`):三级 / 幽灵按钮,沙色 hover。
+- **默认链接**(`#201515`):标准链接色,与正文一致。
+- **Hover 下划线**:链接在 hover 时移除 `text-decoration: underline`(反向模式)。
 
-### Overlay & Surface
-- **Semi-transparent Dark** (`rgba(45, 45, 46, 0.5)`): Overlay button variant, backdrop-like elements.
-- **Pill Surface** (`#fffefb`): White pill buttons with sand borders.
+### 叠加与表面
+- **半透明暗**(`rgba(45, 45, 46, 0.5)`):叠加按钮变体、类遮罩元素。
+- **药丸表面**(`#fffefb`):白药丸按钮,配沙色边框。
 
-### Shadows & Depth
-- **Inset Underline** (`rgb(255, 79, 0) 0px -4px 0px 0px inset`): Active tab indicator -- orange underline using inset box-shadow.
-- **Hover Underline** (`rgb(197, 192, 177) 0px -4px 0px 0px inset`): Inactive tab hover -- sand-colored underline.
+### 阴影与深度
+- **内嵌下划线**(`rgb(255, 79, 0) 0px -4px 0px 0px inset`):激活标签指示——用内嵌投影做的橙下划线。
+- **Hover 下划线**(`rgb(197, 192, 177) 0px -4px 0px 0px inset`):非激活标签 hover——沙色下划线。
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Families
-- **Display**: `Degular Display` -- wide geometric display face for hero headlines
-- **Primary**: `Inter`, with fallbacks: `Helvetica, Arial`
-- **Editorial**: `GT Alpina` -- thin-weight serif for editorial moments
-- **System**: `Arial` -- fallback for form elements and system UI
+### 字族
+- **显示**:`Degular Display`——字幅宽的几何显示字体,用于 hero 标题
+- **主字体**:`Inter`,回退:`Helvetica, Arial`
+- **编辑式**:`GT Alpina`——细字重衬线,用于编辑式时刻
+- **系统**:`Arial`——表单元素与系统 UI 的回退
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Hero XL | Degular Display | 80px (5.00rem) | 500 | 0.90 (tight) | normal | Maximum impact, compressed block |
-| Display Hero | Degular Display | 56px (3.50rem) | 500 | 0.90-1.10 (tight) | 0-1.12px | Primary hero headlines |
-| Display Hero SM | Degular Display | 40px (2.50rem) | 500 | 0.90 (tight) | normal | Smaller hero variant |
-| Display Button | Degular Display | 24px (1.50rem) | 600 | 1.00 (tight) | 1px | Large CTA button text |
-| Section Heading | Inter | 48px (3.00rem) | 500 | 1.04 (tight) | normal | Major section titles |
-| Editorial Heading | GT Alpina | 48px (3.00rem) | 250 | normal | -1.92px | Thin editorial headlines |
-| Editorial Sub | GT Alpina | 40px (2.50rem) | 300 | 1.08 (tight) | -1.6px | Editorial subheadings |
-| Sub-heading LG | Inter | 36px (2.25rem) | 500 | normal | -1px | Large sub-sections |
-| Sub-heading | Inter | 32px (2.00rem) | 400 | 1.25 (tight) | normal | Standard sub-sections |
-| Sub-heading MD | Inter | 28px (1.75rem) | 500 | normal | normal | Medium sub-headings |
-| Card Title | Inter | 24px (1.50rem) | 600 | normal | -0.48px | Card headings |
-| Body Large | Inter | 20px (1.25rem) | 400-500 | 1.00-1.20 (tight) | -0.2px | Feature descriptions |
-| Body Emphasis | Inter | 18px (1.13rem) | 600 | 1.00 (tight) | normal | Emphasized body text |
-| Body | Inter | 16px (1.00rem) | 400-500 | 1.20-1.25 | -0.16px | Standard reading text |
-| Body Semibold | Inter | 16px (1.00rem) | 600 | 1.16 (tight) | normal | Strong labels |
-| Button | Inter | 16px (1.00rem) | 600 | normal | normal | Standard buttons |
-| Button SM | Inter | 14px (0.88rem) | 600 | normal | normal | Small buttons |
-| Caption | Inter | 14px (0.88rem) | 500 | 1.25-1.43 | normal | Labels, metadata |
-| Caption Upper | Inter | 14px (0.88rem) | 600 | normal | 0.5px | Uppercase section labels |
-| Micro | Inter | 12px (0.75rem) | 600 | 0.90-1.33 | 0.5px | Tiny labels, often uppercase |
-| Micro SM | Inter | 13px (0.81rem) | 500 | 1.00-1.54 | normal | Small metadata text |
+| 显示 Hero XL | Degular Display | 80px (5.00rem) | 500 | 0.90(紧) | normal | 冲击力最大,压缩块 |
+| 显示 Hero | Degular Display | 56px (3.50rem) | 500 | 0.90-1.10(紧) | 0-1.12px | 主 hero 标题 |
+| 显示 Hero SM | Degular Display | 40px (2.50rem) | 500 | 0.90(紧) | normal | 较小 hero 变体 |
+| 显示按钮 | Degular Display | 24px (1.50rem) | 600 | 1.00(紧) | 1px | 大 CTA 按钮文字 |
+| 区块标题 | Inter | 48px (3.00rem) | 500 | 1.04(紧) | normal | 主要区块标题 |
+| 编辑式标题 | GT Alpina | 48px (3.00rem) | 250 | normal | -1.92px | 细字重编辑式标题 |
+| 编辑式副标 | GT Alpina | 40px (2.50rem) | 300 | 1.08(紧) | -1.6px | 编辑式副标题 |
+| 大号子标题 | Inter | 36px (2.25rem) | 500 | normal | -1px | 大号次级区块 |
+| 子标题 | Inter | 32px (2.00rem) | 400 | 1.25(紧) | normal | 标准次级区块 |
+| 中号子标题 | Inter | 28px (1.75rem) | 500 | normal | normal | 中等子标题 |
+| 卡片标题 | Inter | 24px (1.50rem) | 600 | normal | -0.48px | 卡片标题 |
+| 大号正文 | Inter | 20px (1.25rem) | 400-500 | 1.00-1.20(紧) | -0.2px | Feature 描述 |
+| 正文强调 | Inter | 18px (1.13rem) | 600 | 1.00(紧) | normal | 强调型正文 |
+| 正文 | Inter | 16px (1.00rem) | 400-500 | 1.20-1.25 | -0.16px | 标准阅读文本 |
+| 正文半粗 | Inter | 16px (1.00rem) | 600 | 1.16(紧) | normal | 强标签 |
+| 按钮 | Inter | 16px (1.00rem) | 600 | normal | normal | 标准按钮 |
+| 小号按钮 | Inter | 14px (0.88rem) | 600 | normal | normal | 小按钮 |
+| 说明 | Inter | 14px (0.88rem) | 500 | 1.25-1.43 | normal | 标签、元数据 |
+| 大写说明 | Inter | 14px (0.88rem) | 600 | normal | 0.5px | 全大写区块标签 |
+| 微型 | Inter | 12px (0.75rem) | 600 | 0.90-1.33 | 0.5px | 极小标签,多为全大写 |
+| 小号微型 | Inter | 13px (0.81rem) | 500 | 1.00-1.54 | normal | 小号元数据文本 |
 
-### Principles
-- **Three-font system, clear roles**: Degular Display commands attention at hero scale only. Inter handles everything functional. GT Alpina adds editorial warmth sparingly.
-- **Compressed display**: Degular at 0.90 line-height creates vertically compressed headline blocks that feel modern and architectural.
-- **Weight as hierarchy signal**: Inter uses 400 (reading), 500 (navigation/emphasis), 600 (headings/CTAs). Degular uses 500 (display) and 600 (buttons).
-- **Uppercase for labels**: Section labels (like "01 / Colors") and small categorization use `text-transform: uppercase` with 0.5px letter-spacing.
-- **Negative tracking for elegance**: GT Alpina uses -1.6px to -1.92px letter-spacing for its thin-weight editorial headlines.
+### 原则
+- **三字体体系,角色清晰**:Degular Display 只在 hero 字号抓注意力。Inter 处理所有功能性内容。GT Alpina 克制地加入编辑式温度。
+- **压缩显示**:Degular 配 0.90 行高,造出纵向压缩的标题块,显得现代、有建筑感。
+- **字重作层级信号**:Inter 用 400(阅读)、500(导航 / 强调)、600(标题 / CTA)。Degular 用 500(显示)与 600(按钮)。
+- **标签用全大写**:区块标签(如 "01 / Colors")与小分类用 `text-transform: uppercase` 配 0.5px 字距。
+- **负字距换优雅**:GT Alpina 的细字重编辑式标题用 -1.6px 至 -1.92px 字距。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Primary Orange**
-- Background: `#ff4f00`
-- Text: `#fffefb`
-- Padding: 8px 16px
-- Radius: 4px
-- Border: `1px solid #ff4f00`
-- Use: Primary CTA ("Start free with email", "Sign up free")
+**主橙**
+- 背景:`#ff4f00`
+- 文字:`#fffefb`
+- 内边距:8px 16px
+- 圆角:4px
+- 边框:`1px solid #ff4f00`
+- 用途:主 CTA("Start free with email"、"Sign up free")
 
-**Primary Dark**
-- Background: `#201515`
-- Text: `#fffefb`
-- Padding: 20px 24px
-- Radius: 8px
-- Border: `1px solid #201515`
-- Hover: background shifts to `#c5c0b1`, text to `#201515`
-- Use: Large secondary CTA buttons
+**主暗**
+- 背景:`#201515`
+- 文字:`#fffefb`
+- 内边距:20px 24px
+- 圆角:8px
+- 边框:`1px solid #201515`
+- hover:背景转 `#c5c0b1`,文字转 `#201515`
+- 用途:大号次级 CTA 按钮
 
-**Light / Ghost**
-- Background: `#eceae3`
-- Text: `#36342e`
-- Padding: 20px 24px
-- Radius: 8px
-- Border: `1px solid #c5c0b1`
-- Hover: background shifts to `#c5c0b1`, text to `#201515`
-- Use: Tertiary actions, filter buttons
+**亮 / 幽灵**
+- 背景:`#eceae3`
+- 文字:`#36342e`
+- 内边距:20px 24px
+- 圆角:8px
+- 边框:`1px solid #c5c0b1`
+- hover:背景转 `#c5c0b1`,文字转 `#201515`
+- 用途:三级动作、筛选按钮
 
-**Pill Button**
-- Background: `#fffefb`
-- Text: `#36342e`
-- Padding: 0px 16px
-- Radius: 20px
-- Border: `1px solid #c5c0b1`
-- Use: Tag-like selections, filter pills
+**药丸按钮**
+- 背景:`#fffefb`
+- 文字:`#36342e`
+- 内边距:0px 16px
+- 圆角:20px
+- 边框:`1px solid #c5c0b1`
+- 用途:类标签的选择、筛选药丸
 
-**Overlay Semi-transparent**
-- Background: `rgba(45, 45, 46, 0.5)`
-- Text: `#fffefb`
-- Radius: 20px
-- Hover: background becomes fully opaque `#2d2d2e`
-- Use: Video play buttons, floating actions
+**叠加半透明**
+- 背景:`rgba(45, 45, 46, 0.5)`
+- 文字:`#fffefb`
+- 圆角:20px
+- hover:背景变为完全不透明 `#2d2d2e`
+- 用途:视频播放按钮、浮动动作
 
-**Tab / Navigation (Inset Shadow)**
-- Background: transparent
-- Text: `#201515`
-- Padding: 12px 16px
-- Shadow: `rgb(255, 79, 0) 0px -4px 0px 0px inset` (active orange underline)
-- Hover shadow: `rgb(197, 192, 177) 0px -4px 0px 0px inset` (sand underline)
-- Use: Horizontal tab navigation
+**标签 / 导航(内嵌阴影)**
+- 背景:透明
+- 文字:`#201515`
+- 内边距:12px 16px
+- 阴影:`rgb(255, 79, 0) 0px -4px 0px 0px inset`(激活橙下划线)
+- Hover 阴影:`rgb(197, 192, 177) 0px -4px 0px 0px inset`(沙色下划线)
+- 用途:横向标签导航
 
-### Cards & Containers
-- Background: `#fffefb`
-- Border: `1px solid #c5c0b1` (warm sand border)
-- Radius: 5px (standard), 8px (featured)
-- No shadow elevation by default -- borders define containment
-- Hover: subtle border color intensification
+### 卡片与容器
+- 背景:`#fffefb`
+- 边框:`1px solid #c5c0b1`(暖沙边框)
+- 圆角:5px(标准)、8px(特色)
+- 默认无阴影海拔——边框定义围合
+- hover:边框色细微加深
 
-### Inputs & Forms
-- Background: `#fffefb`
-- Text: `#201515`
-- Border: `1px solid #c5c0b1`
-- Radius: 5px
-- Focus: border color shifts to `#ff4f00` (orange)
-- Placeholder: `#939084`
+### 输入与表单
+- 背景:`#fffefb`
+- 文字:`#201515`
+- 边框:`1px solid #c5c0b1`
+- 圆角:5px
+- 焦点:边框色转 `#ff4f00`(橙)
+- 占位:`#939084`
 
-### Navigation
-- Clean horizontal nav on cream background
-- Zapier logotype left-aligned, 104x28px
-- Links: Inter 16px weight 500, `#201515` text
-- CTA: Orange button ("Start free with email")
-- Tab navigation uses inset box-shadow underline technique
-- Mobile: hamburger collapse
+### 导航
+- 奶油底上干净的横向导航
+- Zapier 字标左对齐,104x28px
+- 链接:Inter 16px 500 字重,`#201515` 文字
+- CTA:橙按钮("Start free with email")
+- 标签导航用内嵌投影下划线技法
+- 移动端:汉堡折叠
 
-### Image Treatment
-- Product screenshots with `1px solid #c5c0b1` border
-- Rounded corners: 5-8px
-- Dashboard/workflow screenshots prominent in feature sections
-- Light gradient backgrounds behind hero content
+### 图像处理
+- 产品截图配 `1px solid #c5c0b1` 边框
+- 圆角:5-8px
+- 仪表盘 / 工作流截图在 feature 区块中占显著位置
+- hero 内容后有浅渐变背景
 
-### Distinctive Components
+### 特色组件
 
-**Workflow Integration Cards**
-- Display connected app icons in pairs
-- Arrow or connection indicator between apps
-- Sand border containment
-- Inter weight 500 for app names
+**工作流集成卡**
+- 成对展示已连接的应用图标
+- 应用之间用箭头或连接指示
+- 沙色边框围合
+- 应用名用 Inter 500 字重
 
-**Stat Counter**
-- Large display number using Inter 48px weight 500
-- Muted description below in `#36342e`
-- Used for social proof metrics
+**数据计数器**
+- 大号展示数字用 Inter 48px 500 字重
+- 下方弱化描述用 `#36342e`
+- 用于社会证明指标
 
-**Social Proof Icons**
-- Circular icon buttons: 14px radius
-- Sand border: `1px solid #c5c0b1`
-- Used for social media follow links in footer
+**社会证明图标**
+- 圆形图标按钮:14px 圆角
+- 沙色边框:`1px solid #c5c0b1`
+- 用于 footer 里的社交媒体关注链接
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 1px, 4px, 6px, 8px, 10px, 12px, 16px, 20px, 24px, 32px, 40px, 48px, 56px, 64px, 72px
-- CTA buttons use generous padding: 20px 24px for large, 8px 16px for standard
-- Section padding: 64px-80px vertical
+### 间距系统
+- 基数:8px
+- 刻度:1px, 4px, 6px, 8px, 10px, 12px, 16px, 20px, 24px, 32px, 40px, 48px, 56px, 64px, 72px
+- CTA 按钮用慷慨内边距:大号 20px 24px,标准 8px 16px
+- 区块内边距:纵向 64px-80px
 
-### Grid & Container
-- Max content width: approximately 1200px
-- Hero: centered single-column with large top padding
-- Feature sections: 2-3 column grids for integration cards
-- Full-width sand-bordered dividers between sections
-- Footer: multi-column dark background (`#201515`)
+### 网格与容器
+- 内容最大宽:约 1200px
+- Hero:居中单列,顶部内边距大
+- Feature 区块:集成卡用 2-3 列网格
+- 区块之间用全宽沙色边框分隔线
+- Footer:多列暗背景(`#201515`)
 
-### Whitespace Philosophy
-- **Warm breathing room**: Generous vertical spacing between sections (64px-80px), but content areas are relatively dense -- Zapier packs information efficiently within its cream canvas.
-- **Architectural compression**: Degular Display headlines at 0.90 line-height compress vertically, contrasting with the open spacing around them.
-- **Section rhythm**: Cream background throughout, with sections separated by sand-colored borders rather than background color changes.
+### 留白哲学
+- **暖色呼吸空间**:区块纵向间距慷慨(64px-80px),但内容区相对密实——Zapier 在奶油画布里高效地打包信息。
+- **建筑式压缩**:Degular Display 标题配 0.90 行高,纵向压缩,与四周的开阔间距形成对比。
+- **区块节奏**:奶油背景贯穿全站,区块之间靠沙色边框分隔,而非背景色变化。
 
-### Border Radius Scale
-- Tight (3px): Small inline spans
-- Standard (4px): Buttons (orange CTA), tags, small elements
-- Content (5px): Cards, links, general containers
-- Comfortable (8px): Featured cards, large buttons, tabs
-- Social (14px): Social icon buttons, pill-like elements
-- Pill (20px): Play buttons, large pill buttons, floating actions
+### 圆角刻度
+- 紧(3px):小的行内 span
+- 标准(4px):按钮(橙 CTA)、标签、小元素
+- 内容(5px):卡片、链接、通用容器
+- 舒适(8px):特色卡片、大按钮、标签页
+- 社交(14px):社交图标按钮、类药丸元素
+- 药丸(20px):播放按钮、大药丸按钮、浮动动作
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow | Page background, text blocks |
-| Bordered (Level 1) | `1px solid #c5c0b1` | Standard cards, containers, inputs |
-| Strong Border (Level 1b) | `1px solid #36342e` | Dark dividers, emphasized sections |
-| Active Tab (Level 2) | `rgb(255, 79, 0) 0px -4px 0px 0px inset` | Active tab underline (orange) |
-| Hover Tab (Level 2b) | `rgb(197, 192, 177) 0px -4px 0px 0px inset` | Hover tab underline (sand) |
-| Focus (Accessibility) | `1px solid #ff4f00` outline | Focus ring on interactive elements |
+| 平(层 0) | 无阴影 | 页面背景、文本块 |
+| 描边(层 1) | `1px solid #c5c0b1` | 标准卡片、容器、输入 |
+| 强边框(层 1b) | `1px solid #36342e` | 暗分隔线、强调区块 |
+| 激活标签(层 2) | `rgb(255, 79, 0) 0px -4px 0px 0px inset` | 激活标签下划线(橙) |
+| Hover 标签(层 2b) | `rgb(197, 192, 177) 0px -4px 0px 0px inset` | hover 标签下划线(沙) |
+| 焦点(无障碍) | `1px solid #ff4f00` 轮廓 | 交互元素上的焦点环 |
 
-**Shadow Philosophy**: Zapier deliberately avoids traditional shadow-based elevation. Structure is defined almost entirely through borders -- warm sand (`#c5c0b1`) borders for standard containment, dark charcoal (`#36342e`) borders for emphasis. The only shadow-like technique is the inset box-shadow used for tab underlines, where a `0px -4px 0px 0px inset` shadow creates a bottom-bar indicator. This border-first approach keeps the design grounded and tangible rather than floating.
+**阴影哲学**:Zapier 刻意避开传统投影式海拔。结构几乎全靠边框定义——暖沙(`#c5c0b1`)边框给标准围合,深炭(`#36342e`)边框给强调。唯一的类阴影技法是用在标签下划线的内嵌投影:`0px -4px 0px 0px inset` 造出一条底栏指示。这种边框优先的做法让设计保持落地、可触,而非漂浮。
 
-### Decorative Depth
-- Orange inset underline on active tabs creates visual "weight" at the bottom of elements
-- Sand hover underlines provide preview states without layout shifts
-- No background gradients in main content -- the cream canvas is consistent
-- Footer uses full dark background (`#201515`) for contrast reversal
+### 装饰性深度
+- 激活标签的橙内嵌下划线在元素底部造出视觉"重量"
+- 沙色 hover 下划线提供预览态,不引起布局位移
+- 主内容区无背景渐变——奶油画布始终一致
+- Footer 用全暗背景(`#201515`)做对比反转
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use Degular Display exclusively for hero-scale headlines (40px+) with 0.90 line-height for compressed impact
-- Use Inter for all functional UI -- navigation, body text, buttons, labels
-- Apply warm cream (`#fffefb`) as the background, never pure white
-- Use `#201515` for text, never pure black -- the reddish warmth matters
-- Keep Zapier Orange (`#ff4f00`) reserved for primary CTAs and active state indicators
-- Use sand (`#c5c0b1`) borders as the primary structural element instead of shadows
-- Apply generous button padding (20px 24px) for large CTAs to match Zapier's spacious button style
-- Use inset box-shadow underlines for tab navigation rather than border-bottom
-- Apply uppercase with 0.5px letter-spacing for section labels and micro-categorization
+- Degular Display 只用于 hero 级标题(40px+)配 0.90 行高,换取压缩式冲击
+- 所有功能性 UI 用 Inter——导航、正文、按钮、标签
+- 用暖奶油(`#fffefb`)作背景,绝不用纯白
+- 文字用 `#201515`,绝不用纯黑——红调暖意很重要
+- Zapier 橙(`#ff4f00`)只留给主 CTA 与激活态指示
+- 用沙色(`#c5c0b1`)边框作主要结构元素,而非阴影
+- 大 CTA 用慷慨按钮内边距(20px 24px),匹配 Zapier 宽松的按钮风格
+- 标签导航用内嵌投影下划线,而非 border-bottom
+- 区块标签与微小分类用全大写配 0.5px 字距
 
 ### Don't
-- Don't use Degular Display for body text or UI elements -- it's display-only
-- Don't use pure white (`#ffffff`) or pure black (`#000000`) -- Zapier's palette is warm-shifted
-- Don't apply box-shadow elevation to cards -- use borders instead
-- Don't scatter Zapier Orange across the UI -- it's reserved for CTAs and active states
-- Don't use tight padding on large CTA buttons -- Zapier's buttons are deliberately spacious
-- Don't ignore the warm neutral system -- borders should be `#c5c0b1`, not gray
-- Don't use GT Alpina for functional UI -- it's an editorial accent at thin weights only
-- Don't apply positive letter-spacing to GT Alpina -- it uses aggressive negative tracking (-1.6px to -1.92px)
-- Don't use rounded pill shapes (9999px) for primary buttons -- pills are for tags and social icons
+- 正文或 UI 元素不要用 Degular Display——它只给显示级
+- 不要用纯白(`#ffffff`)或纯黑(`#000000`)——Zapier 的色板整体偏暖
+- 不要给卡片上投影海拔——改用边框
+- 不要把 Zapier 橙撒满 UI——它只留给 CTA 与激活态
+- 大 CTA 按钮不要用紧内边距——Zapier 的按钮刻意宽松
+- 不要忽略暖中性体系——边框应是 `#c5c0b1`,不是灰
+- 功能性 UI 不要用 GT Alpina——它只在细字重下作编辑式强调
+- GT Alpina 不要用正字距——它用激进负字距(-1.6px 至 -1.92px)
+- 主按钮不要用药丸形(9999px)——药丸只给标签与社交图标
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile Small | <450px | Tight single column, reduced hero text |
-| Mobile | 450-600px | Standard mobile, stacked layout |
-| Mobile Large | 600-640px | Slight horizontal breathing room |
-| Tablet Small | 640-680px | 2-column grids begin |
-| Tablet | 680-768px | Card grids expand |
-| Tablet Large | 768-991px | Full card grids, expanded padding |
-| Desktop Small | 991-1024px | Desktop layout initiates |
-| Desktop | 1024-1280px | Full layout, maximum content width |
-| Large Desktop | >1280px | Centered with generous margins |
+| 小屏手机 | <450px | 紧凑单列,hero 文字缩小 |
+| 手机 | 450-600px | 标准移动端,堆叠布局 |
+| 大屏手机 | 600-640px | 略多横向呼吸空间 |
+| 小平板 | 640-680px | 开始 2 列网格 |
+| 平板 | 680-768px | 卡片网格扩展 |
+| 大平板 | 768-991px | 完整卡片网格,内边距扩展 |
+| 小桌面 | 991-1024px | 桌面布局启动 |
+| 桌面 | 1024-1280px | 完整布局,内容最大宽 |
+| 大桌面 | >1280px | 居中,边距慷慨 |
 
-### Touch Targets
-- Large CTA buttons: 20px 24px padding (comfortable 60px+ height)
-- Standard buttons: 8px 16px padding
-- Navigation links: 16px weight 500 with adequate spacing
-- Social icons: 14px radius circular buttons
-- Tab items: 12px 16px padding
+### 触控目标
+- 大 CTA 按钮:20px 24px 内边距(舒适 60px+ 高)
+- 标准按钮:8px 16px 内边距
+- 导航链接:16px 500 字重,间距充足
+- 社交图标:14px 圆角圆形按钮
+- 标签项:12px 16px 内边距
 
-### Collapsing Strategy
-- Hero: Degular 80px display scales to 40-56px on smaller screens
-- Navigation: horizontal links + CTA collapse to hamburger menu
-- Feature cards: 3-column grid to 2-column to single-column stacked
-- Integration workflow illustrations: maintain aspect ratio, may simplify
-- Footer: multi-column dark section collapses to stacked
-- Section spacing: 64-80px reduces to 40-48px on mobile
+### 折叠策略
+- Hero:Degular 80px 显示字号在小屏缩至 40-56px
+- 导航:横向链接 + CTA 折为汉堡菜单
+- Feature 卡:3 列网格 → 2 列 → 单列堆叠
+- 集成工作流插画:保持宽高比,可简化
+- Footer:多列暗区块折为堆叠
+- 区块间距:64-80px 在移动端减至 40-48px
 
-### Image Behavior
-- Product screenshots maintain sand border treatment at all sizes
-- Integration app icons maintain fixed sizes within responsive containers
-- Hero illustrations scale proportionally
-- Full-width sections maintain edge-to-edge treatment
+### 图像行为
+- 产品截图在各尺寸下保持沙色边框处理
+- 集成应用图标在响应式容器内保持固定尺寸
+- Hero 插画等比缩放
+- 全宽区块保持通栏处理
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Primary CTA: Zapier Orange (`#ff4f00`)
-- Background: Cream White (`#fffefb`)
-- Heading text: Zapier Black (`#201515`)
-- Body text: Dark Charcoal (`#36342e`)
-- Border: Sand (`#c5c0b1`)
-- Secondary surface: Light Sand (`#eceae3`)
-- Muted text: Warm Gray (`#939084`)
+### 快速取色参考
+- 主 CTA:Zapier 橙(`#ff4f00`)
+- 背景:奶油白(`#fffefb`)
+- 标题文字:Zapier 黑(`#201515`)
+- 正文:深炭(`#36342e`)
+- 边框:沙(`#c5c0b1`)
+- 次级表面:浅沙(`#eceae3`)
+- 弱化文本:暖灰(`#939084`)
 
-### Example Component Prompts
-- "Create a hero section on cream background (`#fffefb`). Headline at 56px Degular Display weight 500, line-height 0.90, color `#201515`. Subtitle at 20px Inter weight 400, line-height 1.20, color `#36342e`. Orange CTA button (`#ff4f00`, 4px radius, 8px 16px padding, white text) and dark button (`#201515`, 8px radius, 20px 24px padding, white text)."
-- "Design a card: cream background (`#fffefb`), `1px solid #c5c0b1` border, 5px radius. Title at 24px Inter weight 600, letter-spacing -0.48px, `#201515`. Body at 16px weight 400, `#36342e`. No box-shadow."
-- "Build a tab navigation: transparent background. Inter 16px weight 500, `#201515` text. Active tab: `box-shadow: rgb(255, 79, 0) 0px -4px 0px 0px inset`. Hover: `box-shadow: rgb(197, 192, 177) 0px -4px 0px 0px inset`. Padding 12px 16px."
-- "Create navigation: cream sticky header (`#fffefb`). Inter 16px weight 500 for links, `#201515` text. Orange pill CTA 'Start free with email' right-aligned (`#ff4f00`, 4px radius, 8px 16px padding)."
-- "Design a footer with dark background (`#201515`). Text `#fffefb`. Links in `#c5c0b1` with hover to `#fffefb`. Multi-column layout. Social icons as 14px-radius circles with sand borders."
+### 组件提示词示例
+- "在奶油背景(`#fffefb`)上做一段 hero。标题 56px Degular Display 500 字重,行高 0.90,色 `#201515`。副标 20px Inter 400 字重,行高 1.20,色 `#36342e`。橙 CTA 按钮(`#ff4f00`,4px 圆角,8px 16px 内边距,白字)与暗按钮(`#201515`,8px 圆角,20px 24px 内边距,白字)。"
+- "设计一张卡片:奶油背景(`#fffefb`),`1px solid #c5c0b1` 边框,5px 圆角。标题 24px Inter 600 字重,字距 -0.48px,`#201515`。正文 16px 400 字重,`#36342e`。无投影。"
+- "做一套标签导航:透明背景。Inter 16px 500 字重,`#201515` 文字。激活标签:`box-shadow: rgb(255, 79, 0) 0px -4px 0px 0px inset`。hover:`box-shadow: rgb(197, 192, 177) 0px -4px 0px 0px inset`。内边距 12px 16px。"
+- "做导航:奶油吸顶顶栏(`#fffefb`)。链接用 Inter 16px 500 字重,`#201515` 文字。橙药丸 CTA 'Start free with email' 右对齐(`#ff4f00`,4px 圆角,8px 16px 内边距)。"
+- "设计一个暗背景 footer(`#201515`)。文字 `#fffefb`。链接 `#c5c0b1`,hover 转 `#fffefb`。多列布局。社交图标为 14px 圆角圆形,配沙色边框。"
 
-### Iteration Guide
-1. Always use warm cream (`#fffefb`) background, never pure white -- the warmth defines Zapier
-2. Borders (`1px solid #c5c0b1`) are the structural backbone -- avoid shadow elevation
-3. Zapier Orange (`#ff4f00`) is the only accent color; everything else is warm neutrals
-4. Three fonts, strict roles: Degular Display (hero), Inter (UI), GT Alpina (editorial)
-5. Large CTA buttons need generous padding (20px 24px) -- Zapier buttons feel spacious
-6. Tab navigation uses inset box-shadow underlines, not border-bottom
-7. Text is always warm: `#201515` for dark, `#36342e` for body, `#939084` for muted
-8. Uppercase labels at 12-14px with 0.5px letter-spacing for section categorization
+### 迭代指南
+1. 始终用暖奶油(`#fffefb`)背景,绝不用纯白——暖意定义 Zapier
+2. 边框(`1px solid #c5c0b1`)是结构骨架——避免阴影海拔
+3. Zapier 橙(`#ff4f00`)是唯一强调色;其余全是暖中性
+4. 三款字体,角色严格:Degular Display(hero)、Inter(UI)、GT Alpina(编辑式)
+5. 大 CTA 按钮需要慷慨内边距(20px 24px)——Zapier 的按钮感觉宽松
+6. 标签导航用内嵌投影下划线,不用 border-bottom
+7. 文字永远偏暖:暗色用 `#201515`,正文用 `#36342e`,弱化用 `#939084`
+8. 区块分类用 12-14px 全大写标签配 0.5px 字距

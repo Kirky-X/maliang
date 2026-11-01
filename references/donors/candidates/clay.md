@@ -1,309 +1,309 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 设计与生产力(design) · 站点摘要: Creative agency. Organic shapes, soft gradients, art-directed layout
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 设计与生产力(design) · 站点摘要: 创意机构。有机形状、柔和渐变、艺术指导式布局
      站点色板: #faf9f7, #000000, #ffffff, #dad4c8, #eee9df, #9f9b93
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Clay
+# 设计系统:Clay
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Clay's website is a warm, playful celebration of color that treats B2B data enrichment like a craft rather than an enterprise chore. The design language is built on a foundation of warm cream backgrounds (`#faf9f7`) and oat-toned borders (`#dad4c8`, `#eee9df`) that give every surface the tactile quality of handmade paper. Against this artisanal canvas, a vivid swatch palette explodes with personality — Matcha green, Slushie cyan, Lemon gold, Ube purple, Pomegranate pink, Blueberry navy, and Dragonfruit magenta — each named like flavors at a juice bar, not colors in an enterprise UI kit.
+Clay 的网站是一场温暖、俏皮的颜色庆典,把 B2B 数据增强当成手艺,而不是企业杂务。设计语言的基础是暖奶油底色(`#faf9f7`)与燕麦色调边框(`#dad4c8`、`#eee9df`),让每个表面都带上手工纸的触感。在这块手作画布上,一组鲜艳色板炸开个性——Matcha 绿、Slushie 青、Lemon 金、Ube 紫、Pomegranate 粉、Blueberry 藏青、Dragonfruit 洋红——每个名字都像果汁吧的口味,而不是企业 UI 套件里的颜色。
 
-The typography is anchored by Roobert, a geometric sans-serif with character, loaded with an extensive set of OpenType stylistic sets (`"ss01"`, `"ss03"`, `"ss10"`, `"ss11"`, `"ss12"`) that give the text a distinctive, slightly quirky personality. At display scale (80px, weight 600), Roobert uses aggressive negative letter-spacing (-3.2px) that compresses headlines into punchy, billboard-like statements. Space Mono serves as the monospace companion for code and technical labels, completing the craft-meets-tech duality.
+排版由 Roobert 撑起:一款有性格的几何无衬线字体,加载了整套 OpenType 风格集(`"ss01"`、`"ss03"`、`"ss10"`、`"ss11"`、`"ss12"`),让文字带上独特、略带怪趣的性格。在展示级(80px、字重 600),Roobert 用激进负字距(-3.2px),把标题压成有冲击力的广告牌式语句。Space Mono 担任等宽搭档,供代码与技术标签使用,完成"手作 × 技术"的双重性。
 
-What makes Clay truly distinctive is its hover micro-animations: buttons on hover rotate slightly (`rotateZ(-8deg)`), translate upward (`translateY(-80%)`), change background to a contrasting swatch color, and cast a hard offset shadow (`rgb(0,0,0) -7px 7px`). This playful hover behavior — where a button literally tilts and jumps on interaction — creates a sense of physical delight that's rare in B2B software. Combined with generously rounded containers (24px–40px radius), dashed borders alongside solid ones, and a multi-layer shadow system that includes inset highlights, Clay feels like a design system that was made by people who genuinely enjoy making things.
+真正让 Clay 与众不同的是 hover 微动效:按钮 hover 时轻微旋转(`rotateZ(-8deg)`)、向上位移(`translateY(-80%)`)、底色换成对比色板色,并投下硬偏移阴影(`rgb(0,0,0) -7px 7px`)。这种俏皮的 hover 行为——按钮在交互时真的倾斜、跳起——带来一种物理式愉悦,在 B2B 软件里很少见。再配合慷慨的圆角容器(24px–40px)、实线与虚线边框并用,以及包含内嵌高光的多层阴影系统,Clay 像一个由真心喜欢动手做东西的人做出的设计系统。
 
-**Key Characteristics:**
-- Warm cream canvas (`#faf9f7`) with oat-toned borders (`#dad4c8`) — artisanal, not clinical
-- Named swatch palette: Matcha, Slushie, Lemon, Ube, Pomegranate, Blueberry, Dragonfruit
-- Roobert font with 5 OpenType stylistic sets — quirky geometric character
-- Playful hover animations: rotateZ(-8deg) + translateY(-80%) + hard offset shadow
-- Space Mono for code and technical labels
-- Generous border radius: 24px cards, 40px sections, 1584px pills
-- Mixed border styles: solid + dashed in the same interface
-- Multi-layer shadow with inset highlight: `0px 1px 1px` + `-1px inset` + `-0.5px`
+**关键特征:**
+- 暖奶油画布(`#faf9f7`)配燕麦调边框(`#dad4c8`)——手作感,不是诊所感
+- 命名色板:Matcha、Slushie、Lemon、Ube、Pomegranate、Blueberry、Dragonfruit
+- Roobert 配 5 个 OpenType 风格集——怪趣几何性格
+- 俏皮 hover 动效:rotateZ(-8deg) + translateY(-80%) + 硬偏移阴影
+- Space Mono 供代码与技术标签
+- 慷慨圆角:卡片 24px、区块 40px、药丸 1584px
+- 混用边框样式:同一界面内实线 + 虚线
+- 带内嵌高光的多层阴影:`0px 1px 1px` + `-1px inset` + `-0.5px`
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Primary
-- **Clay Black** (`#000000`): Text, headings, pricing card text, `--_theme--pricing-cards---text`
-- **Pure White** (`#ffffff`): Card backgrounds, button backgrounds, inverse text
-- **Warm Cream** (`#faf9f7`): Page background — the warm, paper-like canvas
+### 主色
+- **Clay Black**(`#000000`):文本、标题、定价卡文本、`--_theme--pricing-cards---text`
+- **Pure White**(`#ffffff`):卡片背景、按钮背景、反白文本
+- **Warm Cream**(`#faf9f7`):页面背景——温暖、纸张般的画布
 
-### Swatch Palette — Named Colors
+### 色板 —— 命名色
 
-**Matcha (Green)**
-- **Matcha 300** (`#84e7a5`): `--_swatches---color--matcha-300`, light green accent
-- **Matcha 600** (`#078a52`): `--_swatches---color--matcha-600`, mid green
-- **Matcha 800** (`#02492a`): `--_swatches---color--matcha-800`, deep green for dark sections
+**Matcha(绿)**
+- **Matcha 300**(`#84e7a5`):`--_swatches---color--matcha-300`,浅绿强调
+- **Matcha 600**(`#078a52`):`--_swatches---color--matcha-600`,中绿
+- **Matcha 800**(`#02492a`):`--_swatches---color--matcha-800`,深绿,用于暗色区块
 
-**Slushie (Cyan)**
-- **Slushie 500** (`#3bd3fd`): `--_swatches---color--slushie-500`, bright cyan accent
-- **Slushie 800** (`#0089ad`): `--_swatches---color--slushie-800`, deep teal
+**Slushie(青)**
+- **Slushie 500**(`#3bd3fd`):`--_swatches---color--slushie-500`,明亮青强调
+- **Slushie 800**(`#0089ad`):`--_swatches---color--slushie-800`,深青
 
-**Lemon (Gold)**
-- **Lemon 400** (`#f8cc65`): `--_swatches---color--lemon-400`, warm pale gold
-- **Lemon 500** (`#fbbd41`): `--_swatches---color--lemon-500`, primary gold
-- **Lemon 700** (`#d08a11`): `--_swatches---color--lemon-700`, deep amber
-- **Lemon 800** (`#9d6a09`): `--_swatches---color--lemon-800`, dark amber
+**Lemon(金)**
+- **Lemon 400**(`#f8cc65`):`--_swatches---color--lemon-400`,暖浅金
+- **Lemon 500**(`#fbbd41`):`--_swatches---color--lemon-500`,主金
+- **Lemon 700**(`#d08a11`):`--_swatches---color--lemon-700`,深琥珀
+- **Lemon 800**(`#9d6a09`):`--_swatches---color--lemon-800`,暗琥珀
 
-**Ube (Purple)**
-- **Ube 300** (`#c1b0ff`): `--_swatches---color--ube-300`, soft lavender
-- **Ube 800** (`#43089f`): `--_swatches---color--ube-800`, deep purple
-- **Ube 900** (`#32037d`): `--_swatches---color--ube-900`, darkest purple
+**Ube(紫)**
+- **Ube 300**(`#c1b0ff`):`--_swatches---color--ube-300`,柔和薰衣草
+- **Ube 800**(`#43089f`):`--_swatches---color--ube-800`,深紫
+- **Ube 900**(`#32037d`):`--_swatches---color--ube-900`,最深紫
 
-**Pomegranate (Pink/Red)**
-- **Pomegranate 400** (`#fc7981`): `--_swatches---color--pomegranate-400`, warm coral-pink
+**Pomegranate(粉/红)**
+- **Pomegranate 400**(`#fc7981`):`--_swatches---color--pomegranate-400`,暖珊瑚粉
 
-**Blueberry (Navy Blue)**
-- **Blueberry 800** (`#01418d`): `--_swatches---color--blueberry-800`, deep navy
+**Blueberry(藏青)**
+- **Blueberry 800**(`#01418d`):`--_swatches---color--blueberry-800`,深藏青
 
-### Neutral Scale (Warm)
-- **Warm Silver** (`#9f9b93`): Secondary/muted text, footer links
-- **Warm Charcoal** (`#55534e`): Tertiary text, dark muted links
-- **Dark Charcoal** (`#333333`): Link text on light backgrounds
+### 中性阶(暖)
+- **Warm Silver**(`#9f9b93`):次级/弱化文本、页脚链接
+- **Warm Charcoal**(`#55534e`):三级文本、暗底弱化链接
+- **Dark Charcoal**(`#333333`):浅底上的链接文本
 
-### Surface & Border
-- **Oat Border** (`#dad4c8`): Primary border — warm, cream-toned structural lines
-- **Oat Light** (`#eee9df`): Secondary lighter border
-- **Cool Border** (`#e6e8ec`): Cool-toned border for contrast sections
-- **Dark Border** (`#525a69`): Border on dark sections
-- **Light Frost** (`#eff1f3`): Subtle button background (at 0% opacity on hover)
+### 表面与边框
+- **Oat Border**(`#dad4c8`):主边框——温暖、奶油调的结构线
+- **Oat Light**(`#eee9df`):次级浅边框
+- **Cool Border**(`#e6e8ec`):对比区块用的冷调边框
+- **Dark Border**(`#525a69`):暗色区块上的边框
+- **Light Frost**(`#eff1f3`):微妙按钮背景(hover 时 0% 不透明度)
 
-### Badges
-- **Badge Blue Bg** (`#f0f8ff`): Blue-tinted badge surface
-- **Badge Blue Text** (`#3859f9`): Vivid blue badge text
-- **Focus Ring** (`rgb(20, 110, 245) solid 2px`): Accessibility focus indicator
+### 徽章
+- **Badge Blue Bg**(`#f0f8ff`):蓝调徽章表面
+- **Badge Blue Text**(`#3859f9`):鲜蓝徽章文本
+- **Focus Ring**(`rgb(20, 110, 245) solid 2px`):无障碍焦点指示
 
-### Shadows
-- **Clay Shadow** (`rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset, rgba(0,0,0,0.05) 0px -0.5px 1px`): Multi-layer with inset highlight — the signature
-- **Hard Offset** (`rgb(0,0,0) -7px 7px`): Hover state — playful hard shadow
+### 阴影
+- **Clay Shadow**(`rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset, rgba(0,0,0,0.05) 0px -0.5px 1px`):带内嵌高光的多层阴影——签名
+- **Hard Offset**(`rgb(0,0,0) -7px 7px`):hover 态——俏皮硬阴影
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Families
-- **Primary**: `Roobert`, fallback: `Arial`
-- **Monospace**: `Space Mono`
-- **OpenType Features**: `"ss01"`, `"ss03"`, `"ss10"`, `"ss11"`, `"ss12"` on all Roobert text (display uses all 5; body/UI uses `"ss03"`, `"ss10"`, `"ss11"`, `"ss12"`)
+### 字族
+- **主字族**:`Roobert`,回退 `Arial`
+- **等宽**:`Space Mono`
+- **OpenType 特性**:`"ss01"`、`"ss03"`、`"ss10"`、`"ss11"`、`"ss12"`,用于全部 Roobert 文本(展示级用全 5 个;正文/UI 用 `"ss03"`、`"ss10"`、`"ss11"`、`"ss12"`)
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Hero | Roobert | 80px (5.00rem) | 600 | 1.00 (tight) | -3.2px | All 5 stylistic sets |
-| Display Secondary | Roobert | 60px (3.75rem) | 600 | 1.00 (tight) | -2.4px | All 5 stylistic sets |
-| Section Heading | Roobert | 44px (2.75rem) | 600 | 1.10 (tight) | -0.88px to -1.32px | All 5 stylistic sets |
-| Card Heading | Roobert | 32px (2.00rem) | 600 | 1.10 (tight) | -0.64px | All 5 stylistic sets |
-| Feature Title | Roobert | 20px (1.25rem) | 600 | 1.40 | -0.4px | All 5 stylistic sets |
-| Sub-heading | Roobert | 20px (1.25rem) | 500 | 1.50 | -0.16px | 4 stylistic sets (no ss01) |
-| Body Large | Roobert | 20px (1.25rem) | 400 | 1.40 | normal | 4 stylistic sets |
-| Body | Roobert | 18px (1.13rem) | 400 | 1.60 (relaxed) | -0.36px | 4 stylistic sets |
-| Body Standard | Roobert | 16px (1.00rem) | 400 | 1.50 | normal | 4 stylistic sets |
-| Body Medium | Roobert | 16px (1.00rem) | 500 | 1.20–1.40 | -0.16px to -0.32px | 4–5 stylistic sets |
-| Button | Roobert | 16px (1.00rem) | 500 | 1.50 | -0.16px | 4 stylistic sets |
-| Button Large | Roobert | 24px (1.50rem) | 400 | 1.50 | normal | 4 stylistic sets |
-| Button Small | Roobert | 12.8px (0.80rem) | 500 | 1.50 | -0.128px | 4 stylistic sets |
-| Nav Link | Roobert | 15px (0.94rem) | 500 | 1.60 (relaxed) | normal | 4 stylistic sets |
-| Caption | Roobert | 14px (0.88rem) | 400 | 1.50–1.60 | -0.14px | 4 stylistic sets |
-| Small | Roobert | 12px (0.75rem) | 400 | 1.50 | normal | 4 stylistic sets |
-| Uppercase Label | Roobert | 12px (0.75rem) | 600 | 1.20 (tight) | 1.08px | `text-transform: uppercase`, 4 sets |
-| Badge | Roobert | 9.6px | 600 | — | — | Pill badges |
+| 显示 Hero | Roobert | 80px (5.00rem) | 600 | 1.00(紧) | -3.2px | 全 5 个风格集 |
+| 显示次级 | Roobert | 60px (3.75rem) | 600 | 1.00(紧) | -2.4px | 全 5 个风格集 |
+| 区块标题 | Roobert | 44px (2.75rem) | 600 | 1.10(紧) | -0.88px 至 -1.32px | 全 5 个风格集 |
+| 卡片标题 | Roobert | 32px (2.00rem) | 600 | 1.10(紧) | -0.64px | 全 5 个风格集 |
+| Feature 标题 | Roobert | 20px (1.25rem) | 600 | 1.40 | -0.4px | 全 5 个风格集 |
+| 子标题 | Roobert | 20px (1.25rem) | 500 | 1.50 | -0.16px | 4 个风格集(不含 ss01) |
+| 大号正文 | Roobert | 20px (1.25rem) | 400 | 1.40 | normal | 4 个风格集 |
+| 正文 | Roobert | 18px (1.13rem) | 400 | 1.60(松) | -0.36px | 4 个风格集 |
+| 正文标准 | Roobert | 16px (1.00rem) | 400 | 1.50 | normal | 4 个风格集 |
+| 中号正文 | Roobert | 16px (1.00rem) | 500 | 1.20–1.40 | -0.16px 至 -0.32px | 4–5 个风格集 |
+| 按钮 | Roobert | 16px (1.00rem) | 500 | 1.50 | -0.16px | 4 个风格集 |
+| 大号按钮 | Roobert | 24px (1.50rem) | 400 | 1.50 | normal | 4 个风格集 |
+| 小号按钮 | Roobert | 12.8px (0.80rem) | 500 | 1.50 | -0.128px | 4 个风格集 |
+| 导航链接 | Roobert | 15px (0.94rem) | 500 | 1.60(松) | normal | 4 个风格集 |
+| 说明 | Roobert | 14px (0.88rem) | 400 | 1.50–1.60 | -0.14px | 4 个风格集 |
+| 小号 | Roobert | 12px (0.75rem) | 400 | 1.50 | normal | 4 个风格集 |
+| 大写标签 | Roobert | 12px (0.75rem) | 600 | 1.20(紧) | 1.08px | `text-transform: uppercase`,4 个风格集 |
+| 徽章 | Roobert | 9.6px | 600 | — | — | 药丸徽章 |
 
-### Principles
-- **Five stylistic sets as identity**: The combination of `"ss01"`, `"ss03"`, `"ss10"`, `"ss11"`, `"ss12"` on Roobert creates a distinctive typographic personality. `ss01` is reserved for headings and emphasis — body text omits it, creating a subtle hierarchy through glyph variation.
-- **Aggressive display compression**: -3.2px at 80px, -2.4px at 60px — the most compressed display tracking alongside the most generous body spacing (1.60 line-height), creating dramatic contrast.
-- **Weight 600 for headings, 500 for UI, 400 for body**: Clean three-tier system where each weight has a strict role.
-- **Uppercase labels with positive tracking**: 12px uppercase at 1.08px letter-spacing creates the systematic wayfinding pattern.
+### 原则
+- **五个风格集即身份**:`"ss01"`、`"ss03"`、`"ss10"`、`"ss11"`、`"ss12"` 在 Roobert 上的组合,造出独特的排版性格。`ss01` 只留给标题与强调——正文省略它,通过字形变化形成微妙层级。
+- **激进的展示压缩**:80px 时 -3.2px、60px 时 -2.4px——最压缩的展示字距,配最舒展的正文间距(1.60 行高),形成戏剧性对比。
+- **标题 600、UI 500、正文 400**:干净的三档体系,每档字重职责严格。
+- **正字距的大写标签**:12px 大写配 1.08px 字距,构成系统的导览模式。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Primary (Transparent with Hover Animation)**
-- Background: transparent (`rgba(239, 241, 243, 0)`)
-- Text: `#000000`
-- Padding: 6.4px 12.8px
-- Border: none (or `1px solid #717989` for outlined variant)
-- Hover: background shifts to swatch color (e.g., `#434346`), text to white, `rotateZ(-8deg)`, `translateY(-80%)`, hard shadow `rgb(0,0,0) -7px 7px`
-- Focus: `rgb(20, 110, 245) solid 2px` outline
+**主按钮(透明 + hover 动效)**
+- 背景:透明(`rgba(239, 241, 243, 0)`)
+- 文字:`#000000`
+- 内边距:6.4px 12.8px
+- 边框:无(描边变体用 `1px solid #717989`)
+- hover:背景换成色板色(如 `#434346`)、文字转白、`rotateZ(-8deg)`、`translateY(-80%)`、硬阴影 `rgb(0,0,0) -7px 7px`
+- 焦点:`rgb(20, 110, 245) solid 2px` 描边
 
-**White Solid**
-- Background: `#ffffff`
-- Text: `#000000`
-- Padding: 6.4px
-- Hover: oat-200 swatch color, animated rotation + shadow
-- Use: Primary CTA on colored sections
+**白色实底**
+- 背景:`#ffffff`
+- 文字:`#000000`
+- 内边距:6.4px
+- hover:oat-200 色板色、旋转 + 阴影动效
+- 用途:彩色区块上的主 CTA
 
-**Ghost Outlined**
-- Background: transparent
-- Text: `#000000`
-- Padding: 8px
-- Border: `1px solid #717989`
-- Radius: 4px
-- Hover: dragonfruit swatch color, white text, animated rotation
+**幽灵描边**
+- 背景:透明
+- 文字:`#000000`
+- 内边距:8px
+- 边框:`1px solid #717989`
+- 圆角:4px
+- hover:Dragonfruit 色板色、白字、旋转动效
 
-### Cards & Containers
-- Background: `#ffffff` on cream canvas
-- Border: `1px solid #dad4c8` (warm oat) or `1px dashed #dad4c8`
-- Radius: 12px (standard cards), 24px (feature cards/images), 40px (section containers/footer)
-- Shadow: `rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset, rgba(0,0,0,0.05) 0px -0.5px 1px`
-- Colorful section backgrounds using swatch palette (matcha, slushie, ube, lemon)
+### 卡片与容器
+- 背景:奶油画布上的 `#ffffff`
+- 边框:`1px solid #dad4c8`(暖燕麦)或 `1px dashed #dad4c8`
+- 圆角:12px(标准卡)、24px(特色卡/图片)、40px(区块容器/页脚)
+- 阴影:`rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset, rgba(0,0,0,0.05) 0px -0.5px 1px`
+- 彩色区块背景取自色板(matcha、slushie、ube、lemon)
 
-### Inputs & Forms
-- Text: `#000000`
-- Border: `1px solid #717989`
-- Radius: 4px
-- Focus: `rgb(20, 110, 245) solid 2px` outline
+### 输入与表单
+- 文字:`#000000`
+- 边框:`1px solid #717989`
+- 圆角:4px
+- 焦点:`rgb(20, 110, 245) solid 2px` 描边
 
-### Navigation
-- Sticky top nav on cream background
-- Roobert 15px weight 500 for nav links
-- Clay logo left-aligned
-- CTA buttons right-aligned with pill radius
-- Border bottom: `1px solid #dad4c8`
-- Mobile: hamburger collapse at 767px
+### 导航
+- 奶油底上的 sticky 顶栏
+- 导航链接 Roobert 15px 字重 500
+- Clay 标志左对齐
+- CTA 按钮右对齐、药丸圆角
+- 底边:`1px solid #dad4c8`
+- 移动端:767px 折为汉堡
 
-### Image Treatment
-- Product screenshots in white cards with oat borders
-- Colorful illustrated sections with swatch background colors
-- 8px–24px radius on images
-- Full-width colorful section backgrounds
+### 图像处理
+- 产品截图放在带燕麦边框的白卡里
+- 彩色插画区块用色板底色
+- 图片圆角 8px–24px
+- 全宽彩色区块背景
 
-### Distinctive Components
+### 特色组件
 
-**Swatch Color Sections**
-- Full-width sections with swatch-colored backgrounds (matcha green, slushie cyan, ube purple, lemon gold)
-- White text on dark swatches, black text on light swatches
-- Each section tells a distinct product story through its color
+**色板彩色区块**
+- 全宽区块,底色取自色板(matcha 绿、slushie 青、ube 紫、lemon 金)
+- 深色板上白字,浅色板上黑字
+- 每个区块用颜色讲一个独立的产品故事
 
-**Playful Hover Buttons**
-- Rotate -8deg + translate upward on hover
-- Hard offset shadow (`-7px 7px`) instead of soft blur
-- Background transitions to contrasting swatch color
-- Creates a physical, toy-like interaction quality
+**俏皮 hover 按钮**
+- hover 时旋转 -8deg + 向上位移
+- 硬偏移阴影(`-7px 7px`)替代柔和模糊
+- 背景过渡到对比色板色
+- 造出物理感、玩具式的交互质感
 
-**Dashed Border Elements**
-- Dashed borders (`1px dashed #dad4c8`) alongside solid borders
-- Used for secondary containers and decorative elements
-- Adds a hand-drawn, craft-like quality
+**虚线边框元素**
+- 虚线边框(`1px dashed #dad4c8`)与实线边框并用
+- 用于次级容器与装饰元素
+- 增加手绘、手作质感
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 1px, 2px, 4px, 6.4px, 8px, 12px, 12.8px, 16px, 18px, 20px, 24px
+### 间距系统
+- 基数:8px
+- 刻度:1px、2px、4px、6.4px、8px、12px、12.8px、16px、18px、20px、24px
 
-### Grid & Container
-- Max content width centered
-- Feature sections alternate between white cards and colorful swatch backgrounds
-- Card grids: 2–3 columns on desktop
-- Full-width colorful sections break the grid
-- Footer with generous 40px radius container
+### 网格与容器
+- 内容最大宽居中
+- 特色区块在白卡与彩色色板底之间交替
+- 卡片网格:桌面 2–3 列
+- 全宽彩色区块打破网格
+- 页脚用 40px 圆角的慷慨容器
 
-### Whitespace Philosophy
-- **Warm, generous breathing**: The cream background provides a warm rest between content blocks. Spacing is generous but not austere — it feels inviting, like a well-set table.
-- **Color as spatial rhythm**: The alternating swatch-colored sections create visual rhythm through hue rather than just whitespace. Each color section is its own "room."
-- **Craft-like density inside cards**: Within cards, content is compact and well-organized, contrasting with the generous outer spacing.
+### 留白哲学
+- **温暖、慷慨的呼吸**:奶油底在内容块之间提供温暖的休息。间距慷慨但不冷峻——它让人想进来,像摆好的餐桌。
+- **色彩即空间节奏**:交替的色板区块用色相造出视觉节奏,而不只靠留白。每个色彩区块自成一间"房间"。
+- **卡内手作式密度**:卡片内部内容紧凑、组织良好,与外部的慷慨间距形成对比。
 
-### Border Radius Scale
-- Sharp (4px): Ghost buttons, inputs
-- Standard (8px): Small cards, images, links
-- Badge (11px): Tag badges
-- Card (12px): Standard cards, buttons
-- Feature (24px): Feature cards, images, panels
-- Section (40px): Large sections, footer, containers
-- Pill (1584px): CTAs, pill-shaped buttons
+### 圆角刻度
+- 锐(4px):幽灵按钮、输入
+- 标准(8px):小卡、图片、链接
+- 徽章(11px):标签徽章
+- 卡片(12px):标准卡、按钮
+- 特色(24px):特色卡、图片、面板
+- 区块(40px):大区块、页脚、容器
+- 药丸(1584px):CTA、药丸按钮
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow, cream canvas | Page background |
-| Clay Shadow (Level 1) | `rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px inset, rgba(0,0,0,0.05) 0px -0.5px` | Cards, buttons — multi-layer with inset highlight |
-| Hover Hard (Level 2) | `rgb(0,0,0) -7px 7px` | Hover state — playful hard offset shadow |
-| Focus (Level 3) | `rgb(20, 110, 245) solid 2px` | Keyboard focus ring |
+| 平(Level 0) | 无阴影,奶油画布 | 页面背景 |
+| Clay Shadow(Level 1) | `rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px inset, rgba(0,0,0,0.05) 0px -0.5px` | 卡片、按钮——带内嵌高光的多层阴影 |
+| Hover Hard(Level 2) | `rgb(0,0,0) -7px 7px` | hover 态——俏皮硬偏移阴影 |
+| Focus(Level 3) | `rgb(20, 110, 245) solid 2px` | 键盘焦点环 |
 
-**Shadow Philosophy**: Clay's shadow system is uniquely three-layered: a downward cast (`0px 1px 1px`), an upward inset highlight (`0px -1px 1px inset`), and a subtle edge (`0px -0.5px 1px`). This creates a "pressed into clay" quality where elements feel both raised AND embedded — like a clay tablet where content is stamped into the surface. The hover hard shadow (`-7px 7px`) is deliberately retro-graphic, referencing print-era drop shadows and adding physical playfulness.
+**阴影哲学**:Clay 的阴影系统独有地分三层:向下投影(`0px 1px 1px`)、向上内嵌高光(`0px -1px 1px inset`)、微妙边缘(`0px -0.5px 1px`)。这造出"压进黏土"的质感——元素既像被抬起,又像被嵌入,如同内容被压印进黏土板的表面。hover 硬阴影(`-7px 7px`)刻意复古,指向印刷时代的投影,增加物理式俏皮感。
 
-### Decorative Depth
-- Full-width swatch-colored sections create dramatic depth through color contrast
-- Dashed borders add visual texture alongside solid borders
-- Product illustrations with warm, organic art style
+### 装饰性深度
+- 全宽色板彩色区块通过色彩对比造出戏剧性深度
+- 虚线边框与实线边框并用,增加视觉纹理
+- 产品插画用温暖、有机的艺术风格
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use warm cream (`#faf9f7`) as the page background — the warmth is the identity
-- Apply all 5 OpenType stylistic sets on Roobert headings: `"ss01", "ss03", "ss10", "ss11", "ss12"`
-- Use the named swatch palette (Matcha, Slushie, Lemon, Ube, Pomegranate, Blueberry) for section backgrounds
-- Apply the playful hover animation: `rotateZ(-8deg)`, `translateY(-80%)`, hard shadow `-7px 7px`
-- Use warm oat borders (`#dad4c8`) — not neutral gray
-- Mix solid and dashed borders for visual variety
-- Use generous radius: 24px for cards, 40px for sections
-- Use weight 600 exclusively for headings, 500 for UI, 400 for body
+- 用暖奶油(`#faf9f7`)作页面背景——温暖就是身份
+- Roobert 标题上应用全部 5 个 OpenType 风格集:`"ss01", "ss03", "ss10", "ss11", "ss12"`
+- 区块背景用命名色板(Matcha、Slushie、Lemon、Ube、Pomegranate、Blueberry)
+- 应用俏皮 hover 动效:`rotateZ(-8deg)`、`translateY(-80%)`、硬阴影 `-7px 7px`
+- 用暖燕麦边框(`#dad4c8`)——不用中性灰
+- 实线与虚线边框混用,制造视觉变化
+- 用慷慨圆角:卡片 24px、区块 40px
+- 字重 600 只给标题,500 给 UI,400 给正文
 
 ### Don't
-- Don't use cool gray backgrounds — the warm cream (`#faf9f7`) is non-negotiable
-- Don't use neutral gray borders (`#ccc`, `#ddd`) — always use the warm oat tones
-- Don't mix more than 2 swatch colors in the same section
-- Don't skip the OpenType stylistic sets — they define Roobert's character
-- Don't use subtle hover effects — the rotation + hard shadow is the signature interaction
-- Don't use small border radius (<12px) on feature cards — the generous rounding is structural
-- Don't use standard shadows (blur-based) — Clay uses hard offset and multi-layer inset
-- Don't forget the uppercase labels with 1.08px tracking — they're the wayfinding system
+- 不用冷灰背景——暖奶油(`#faf9f7`)不可替换
+- 不用中性灰边框(`#ccc`、`#ddd`)——始终用暖燕麦调
+- 同一区块内混用超过 2 个色板色
+- 不跳过 OpenType 风格集——它们定义了 Roobert 的性格
+- 不用微弱的 hover 效果——旋转 + 硬阴影才是签名交互
+- 特色卡不用小圆角(<12px)——慷慨圆角是结构性的
+- 不用标准阴影(基于模糊)——Clay 用硬偏移与多层内嵌
+- 不忘记 1.08px 字距的大写标签——它们是导览系统
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile Small | <479px | Single column, tight padding |
-| Mobile | 479–767px | Standard mobile, stacked layout |
-| Tablet | 768–991px | 2-column grids, condensed nav |
-| Desktop | 992px+ | Full layout, 3-column grids, expanded sections |
+| 小屏手机 | <479px | 单列、紧凑内边距 |
+| 手机 | 479–767px | 标准移动端、堆叠布局 |
+| 平板 | 768–991px | 2 列网格、压缩导航 |
+| 桌面 | 992px+ | 完整布局、3 列网格、展开区块 |
 
-### Touch Targets
-- Buttons: minimum 6.4px + 12.8px padding for adequate touch area
-- Nav links: 15px font with generous spacing
-- Mobile: full-width buttons for easy tapping
+### 触控目标
+- 按钮:最小 6.4px + 12.8px 内边距,保证足够触控面积
+- 导航链接:15px 字号配慷慨间距
+- 移动端:全宽按钮,便于点按
 
-### Collapsing Strategy
-- Hero: 80px → 60px → smaller display text
-- Navigation: horizontal → hamburger at 767px
-- Feature sections: multi-column → stacked
-- Colorful sections: maintain full-width but compress padding
-- Card grids: 3-column → 2-column → single column
+### 折叠策略
+- Hero:80px → 60px → 更小的展示字号
+- 导航:横向 → 767px 折为汉堡
+- 特色区块:多列 → 堆叠
+- 彩色区块:保持全宽但压缩内边距
+- 卡片网格:3 列 → 2 列 → 单列
 
-### Image Behavior
-- Product screenshots scale proportionally
-- Colorful section illustrations adapt to viewport width
-- Rounded corners maintained across breakpoints
+### 图像行为
+- 产品截图按比例缩放
+- 彩色区块插画随视口宽度自适应
+- 圆角跨断点保持一致
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Background: Warm Cream (`#faf9f7`)
-- Text: Clay Black (`#000000`)
-- Secondary text: Warm Silver (`#9f9b93`)
-- Border: Oat Border (`#dad4c8`)
-- Green accent: Matcha 600 (`#078a52`)
-- Cyan accent: Slushie 500 (`#3bd3fd`)
-- Gold accent: Lemon 500 (`#fbbd41`)
-- Purple accent: Ube 800 (`#43089f`)
-- Pink accent: Pomegranate 400 (`#fc7981`)
+### 快速取色参考
+- 背景:Warm Cream(`#faf9f7`)
+- 文本:Clay Black(`#000000`)
+- 次级文本:Warm Silver(`#9f9b93`)
+- 边框:Oat Border(`#dad4c8`)
+- 绿强调:Matcha 600(`#078a52`)
+- 青强调:Slushie 500(`#3bd3fd`)
+- 金强调:Lemon 500(`#fbbd41`)
+- 紫强调:Ube 800(`#43089f`)
+- 粉强调:Pomegranate 400(`#fc7981`)
 
-### Example Component Prompts
-- "Create a hero on warm cream (#faf9f7) background. Headline at 80px Roobert weight 600, line-height 1.00, letter-spacing -3.2px, OpenType 'ss01 ss03 ss10 ss11 ss12', black text. Subtitle at 20px weight 400, line-height 1.40, #9f9b93 text. Two buttons: white solid pill (12px radius) and ghost outlined (4px radius, 1px solid #717989)."
-- "Design a colorful section with Matcha 800 (#02492a) background. Heading at 44px Roobert weight 600, letter-spacing -1.32px, white text. Body at 18px weight 400, line-height 1.60, #84e7a5 text. White card inset with oat border (#dad4c8), 24px radius."
-- "Build a button with playful hover: default transparent background, black text, 16px Roobert weight 500. On hover: background #434346, text white, transform rotateZ(-8deg) translateY(-80%), hard shadow rgb(0,0,0) -7px 7px."
-- "Create a card: white background, 1px solid #dad4c8 border, 24px radius. Shadow: rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset. Title at 32px Roobert weight 600, letter-spacing -0.64px."
-- "Design an uppercase label: 12px Roobert weight 600, text-transform uppercase, letter-spacing 1.08px, OpenType 'ss03 ss10 ss11 ss12'."
+### 组件提示词示例
+- "在暖奶油(#faf9f7)背景上做一个 hero。标题 80px Roobert 字重 600,行高 1.00,字距 -3.2px,OpenType 'ss01 ss03 ss10 ss11 ss12',黑字。副标 20px 字重 400,行高 1.40,#9f9b93 文字。两个按钮:白色实底药丸(12px 圆角)与幽灵描边(4px 圆角,1px solid #717989)。"
+- "用 Matcha 800(#02492a)背景做一个彩色区块。标题 44px Roobert 字重 600,字距 -1.32px,白字。正文 18px 字重 400,行高 1.60,#84e7a5 文字。内嵌白卡配燕麦边框(#dad4c8),24px 圆角。"
+- "做一个带俏皮 hover 的按钮:默认透明背景、黑字、16px Roobert 字重 500。hover 时:背景 #434346、白字、transform rotateZ(-8deg) translateY(-80%)、硬阴影 rgb(0,0,0) -7px 7px。"
+- "做一张卡片:白背景、1px solid #dad4c8 边框、24px 圆角。阴影:rgba(0,0,0,0.1) 0px 1px 1px, rgba(0,0,0,0.04) 0px -1px 1px inset。标题 32px Roobert 字重 600,字距 -0.64px。"
+- "做一个大写标签:12px Roobert 字重 600,text-transform uppercase,字距 1.08px,OpenType 'ss03 ss10 ss11 ss12'。"
 
-### Iteration Guide
-1. Start with warm cream (#faf9f7) — never cool white
-2. Swatch colors are for full sections, not small accents — go bold with matcha, slushie, ube
-3. Oat borders (#dad4c8) everywhere — dashed variants for decoration
-4. OpenType stylistic sets are mandatory — they make Roobert look like Roobert
-5. Hover animations are the signature — rotation + hard shadow, not subtle fades
-6. Generous radius: 24px cards, 40px sections — nothing looks sharp or corporate
-7. Three weights: 600 (headings), 500 (UI), 400 (body) — strict roles
+### 迭代指南
+1. 从暖奶油(#faf9f7)开始——从不用冷白
+2. 色板色用于整段区块,不做小面积强调——用 matcha、slushie、ube 大胆铺色
+3. 燕麦边框(#dad4c8)处处使用——装饰处用虚线变体
+4. OpenType 风格集必须开——它们让 Roobert 看起来像 Roobert
+5. hover 动效是签名——旋转 + 硬阴影,不用微弱淡入
+6. 慷慨圆角:卡片 24px、区块 40px——任何东西都不该显得尖锐或企业化
+7. 三档字重:600(标题)、500(UI)、400(正文)——职责严格

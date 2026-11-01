@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Trust & Authority is a UI style reference for landing pages, focused on Certificates/badges displayed, expert credentials, case studies with metrics, before/after comparisons, industry recognition.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Trust & Authority 是为落地页提供的 UI 风格参照,侧重展示证书/徽章、专家资质、带指标的案例研究、前后对比、行业认可。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Trust & Authority
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Trust & Authority is a UI style reference for landing pages, combining Certificates/badges displayed, expert credentials, case studies with metrics, before/after comparisons, industry recognition, security badges. The visual direction is shaped by Badge hover effects, metric pulse animations, certificate carousel, smooth stat reveal.
+Trust & Authority 是为落地页提供的 UI 风格参照,融合展示证书/徽章、专家资质、带指标的案例研究、前后对比、行业认可、安全徽章。视觉方向由徽章 hover 效果、指标脉冲动画、证书轮播、统计数据平滑揭示塑造。
 
-Use it for Healthcare/medical landing pages (登陸頁面), financial services, enterprise software, premium/luxury products (產品), legal services. Avoid it for Casual products (產品), entertainment (娛樂), viral/social-first products (社交).
+用于医疗/健康落地页、金融服务、企业软件、高端/奢华产品、法律服务。避免用于休闲产品、娱乐、病毒式/社交优先的产品。
 
-**Key Characteristics:**
-- Primary palette: Professional colors (blue/grey), trust colors, certification badge colors (gold/silver accents)
-- Secondary palette: Certificate highlight colors, metric showcase colors, comparison highlight (success green)
-- Effects: Badge hover effects, metric pulse animations, certificate carousel, smooth stat reveal
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Healthcare/medical landing pages (登陸頁面), financial services, enterprise software, premium/luxury products (產品), legal services
-- Avoid for: Casual products (產品), entertainment (娛樂), viral/social-first products (社交)
+**关键特征:**
+- 主色板:专业色(蓝/灰)、信任色、认证徽章色(金/银强调)
+- 次色板:证书高亮色、指标展示色、对比高亮(成功绿)
+- 效果:徽章 hover 效果、指标脉冲动画、证书轮播、统计数据平滑揭示
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:医疗/健康落地页、金融服务、企业软件、高端/奢华产品、法律服务
+- 避免用于:休闲产品、娱乐、病毒式/社交优先的产品
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/26-trust-authority.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/26-trust-authority.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

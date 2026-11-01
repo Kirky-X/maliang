@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Neubrutalism is a UI style reference for general interfaces, focused on Bold, ugly-cute, raw, high contrast, flat.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Neubrutalism 是为通用界面提供的 UI 风格参照,侧重大胆、丑萌、原始、高对比、扁平。
      站点色板: #fffbf0, #ff6b6b, #a388ee, #ffe156, #4ecdc4, #baffc9
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Neubrutalism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Neubrutalism is a UI style reference for general interfaces, combining Bold, ugly-cute, raw, high contrast, flat, hard shadows, distinct, playful, loud. The visual direction is shaped by Hard hover shifts (4px), marquee scrolling, jitter animations, bold borders.
+Neubrutalism 是为通用界面提供的 UI 风格参照,融合大胆、丑萌、原始、高对比、扁平、硬阴影、鲜明、玩趣、喧闹。视觉方向由硬 hover 位移(4px)、跑马灯滚动、抖动动效、粗边框塑造。
 
-Use it for Design tools (工具), creative agencies (創意), Gen Z brands (品牌), personal blogs, gumroad-style. Avoid it for Banking, legal, healthcare (健康), serious enterprise, elderly users.
+用于设计工具、创意机构、Z 世代品牌、个人博客、gumroad 式站点。避免用于银行、法律、医疗健康、严肃企业、老年用户。
 
-**Key Characteristics:**
-- Primary palette: Pop Yellow #FFDE59, Bright Red #FF5757, Black #000000
-- Secondary palette: Lavender #CBA6F7, Mint #76E0C2
-- Effects: Hard hover shifts (4px), marquee scrolling, jitter animations, bold borders
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Design tools (工具), creative agencies (創意), Gen Z brands (品牌), personal blogs, gumroad-style
-- Avoid for: Banking, legal, healthcare (健康), serious enterprise, elderly users
+**关键特征:**
+- 主色板:Pop 黄 #FFDE59、亮红 #FF5757、黑 #000000
+- 次色板:薰衣草紫 #CBA6F7、薄荷绿 #76E0C2
+- 效果:硬 hover 位移(4px)、跑马灯滚动、抖动动效、粗边框
+- 无障碍:✓ 达 WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整支持。
+- 最适用于:设计工具、创意机构、Z 世代品牌、个人博客、gumroad 式站点
+- 避免用于:银行、法律、医疗健康、严肃企业、老年用户
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Plain CSS 10/10
-- Era reference: 2020s Modern Retro
-- Local preview: [Open HTML preview](../../refstyles/54-neubrutalism-v2.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Plain CSS 10/10
+- 年代参照:2020 年代现代复古
+- 本地预览:[打开 HTML 预览](../../refstyles/54-neubrutalism-v2.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

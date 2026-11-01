@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Vaporwave is a UI style reference for general interfaces, focused on Synthwave, retro-futuristic, 80s-90s, neon, glitch.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 蒸汽波是为通用界面提供的 UI 风格参照,侧重合成器浪潮、复古未来主义、80-90 年代、霓虹、故障。
      站点色板: #ff71ce, #c0c0c0, #01cdfe, #05ffa1, #b967ff
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Vaporwave
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Vaporwave is a UI style reference for general interfaces, combining Synthwave, retro-futuristic, 80s-90s, neon, glitch, nostalgic, sunset gradient, dreamy, aesthetic. The visual direction is shaped by text-shadow glow, linear-gradient, filter: hue-rotate(), glitch animations, retro scan lines.
+蒸汽波是为通用界面提供的 UI 风格参照,融合合成器浪潮、复古未来主义、80-90 年代、霓虹、故障、怀旧、日落渐变、梦幻、美学。视觉方向由 text-shadow 辉光、linear-gradient、filter: hue-rotate()、故障动画、复古扫描线塑造。
 
-Use it for Music platforms (平台), gaming (遊戲), creative portfolios (創意), tech startups, entertainment (娛樂), artistic projects. Avoid it for Business apps (應用程式), e-commerce (電子商務), education, healthcare (健康), enterprise software.
+用于音乐平台、游戏、创意作品集、科技初创、娱乐、艺术项目。避免用于商业应用、电子商务、教育、医疗健康、企业软件。
 
-**Key Characteristics:**
-- Primary palette: #FF71CE (Pink), #01CDFE (Cyan), #05FFA1 (Mint), #B967FF (Purple)
-- Secondary palette: Sunset gradients, glitch overlays, VHS effects, neon accents, pastel variations
-- Effects: text-shadow glow, linear-gradient, filter: hue-rotate(), glitch animations, retro scan lines
-- Accessibility: ⚠ Poor (motion); performance: ⚠ Moderate; dark mode: ✓ Dark focused.
-- Best for: Music platforms (平台), gaming (遊戲), creative portfolios (創意), tech startups, entertainment (娛樂), artistic projects
-- Avoid for: Business apps (應用程式), e-commerce (電子商務), education, healthcare (健康), enterprise software
+**关键特征:**
+- 主色板:#FF71CE(粉)、#01CDFE(青)、#05FFA1(薄荷绿)、#B967FF(紫)
+- 次色板:日落渐变、故障叠加、VHS 效果、霓虹强调、粉彩变体
+- 效果:text-shadow 辉光、linear-gradient、filter: hue-rotate()、故障动画、复古扫描线
+- 无障碍:⚠ 差(动效);性能:⚠ 中等;暗色模式:✓ 以暗色为主。
+- 最适用于:音乐平台、游戏、创意作品集、科技初创、娱乐、艺术项目
+- 避免用于:商业应用、电子商务、教育、医疗健康、企业软件
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 8/10, CSS-in-JS 9/10
-- Era reference: 1980s-90s Retro
-- Local preview: [Open HTML preview](../../refstyles/45-vaporwave.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 8/10、CSS-in-JS 9/10
+- 年代参照:1980-90 年代复古
+- 本地预览:[打开 HTML 预览](../../refstyles/45-vaporwave.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

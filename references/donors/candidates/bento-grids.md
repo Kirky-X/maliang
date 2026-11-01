@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Bento Grids is a UI style reference for general interfaces, focused on Apple-style, modular, cards, organized, clean.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 便当格栅是为通用界面提供的 UI 风格参照,侧重 Apple 风、模块化、卡片、有序、干净。
      站点色板: #f5f5f7, #ffffff, #1d1d1f
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Bento Grids
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Bento Grids is a UI style reference for general interfaces, combining Apple-style, modular, cards, organized, clean, hierarchy, grid, rounded, soft. The visual direction is shaped by Hover scale (1.02), soft shadow expansion, smooth layout shifts, content reveal.
+便当格栅是为通用界面提供的 UI 风格参照,融合 Apple 风、模块化、卡片、有序、干净、层级、网格、圆润、柔和。视觉方向由 hover 缩放(1.02)、柔和阴影扩张、平滑布局位移、内容显现塑造。
 
-Use it for Product features, dashboards (儀表板), personal sites (網站), marketing summaries (行銷), galleries. Avoid it for Long-form reading, data tables, complex forms.
+用于产品功能、仪表盘、个人网站、营销摘要、图库。避免用于长文阅读、数据表、复杂表单。
 
-**Key Characteristics:**
-- Primary palette: Off-white #F5F5F7, Clean White #FFFFFF, Text #1D1D1F
-- Secondary palette: Subtle accents, soft shadows, blurred backdrops
-- Effects: Hover scale (1.02), soft shadow expansion, smooth layout shifts, content reveal
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Product features, dashboards (儀表板), personal sites (網站), marketing summaries (行銷), galleries
-- Avoid for: Long-form reading, data tables, complex forms
+**关键特征:**
+- 主色板:米白 #F5F5F7、纯白 #FFFFFF、文本 #1D1D1F
+- 次色板:细微强调、柔和阴影、模糊背景
+- 效果:hover 缩放(1.02)、柔和阴影扩张、平滑布局位移、内容显现
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:产品功能、仪表盘、个人网站、营销摘要、图库
+- 避免用于:长文阅读、数据表、复杂表单
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: CSS Grid 10/10, Tailwind 10/10
-- Era reference: 2020s Apple/Linear
-- Local preview: [Open HTML preview](../../refstyles/53-bento-grids.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:CSS Grid 10/10、Tailwind 10/10
+- 年代参照:2020 年代 Apple/Linear
+- 本地预览:[打开 HTML 预览](../../refstyles/53-bento-grids.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

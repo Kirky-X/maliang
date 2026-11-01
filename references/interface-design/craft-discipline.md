@@ -1,171 +1,169 @@
 ---
 
-> Source: merged from the craft 方法集 by  (MIT) — https://github.com//interface-design
 name: interface-design
-description: Craft-first interface design for dashboards, admin panels, SaaS apps, tools, settings pages, data interfaces, and interactive products. Use when designing, building, reviewing, auditing, or refining product UI where visual craft, layout hierarchy, tokens, states, visual direction, or design-system consistency matter. Not for marketing pages, landing pages, campaigns, or brand-only work.
+description: 面向仪表盘、管理后台、SaaS 应用、工具、设置页、数据界面与交互产品的 craft 优先界面设计。在需要设计、构建、评审、审计或打磨产品 UI,且视觉 craft、布局层级、token、状态、视觉方向或设计系统一致性重要时使用。不适用于营销页、落地页、活动页或纯品牌工作。
 ---
 
-# Interface Design
+# 界面设计
 
-Build product interfaces with the craft of a top design team — Linear, Vercel, Stripe, Apple. The difference between those and generic output is not talent. It is that every decision was *decided*, the hierarchy is unmistakable, and a hundred small details are correct at once. This skill is how you get there.
+用顶级设计团队的 craft 构建产品界面 —— Linear、Vercel、Stripe、Apple。它们与通用产出的差别不在天赋。差别在于每个决策都被*决定*过,层级不容误读,一百个小细节同时正确。本 skill 就是通往那里的路径。
 
-> **Canonical 分工（2026-10）**：本文件是并入的英文原版参考。与中文规范重叠的主题，**修订责任与数值正本在中文侧**——海拔与边框 → [`../dimensions/elevation.md`](../dimensions/elevation.md)、同心圆角与图片描边 → [`../dimensions/radius.md`](../dimensions/radius.md)、60/30/10 → [`../dimensions/color.md`](../dimensions/color.md)、动效时长预算 → [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)、触控热区 → [`../meta/accessibility.md`](../meta/accessibility.md)。下文与正典冲突时以正典为准；借鉴纪律正本在 [`../donors/README.md`](../donors/README.md)（见下文「Adapt the Values, Not the Looks」节指针）。
+> **Canonical 分工（2026-10）**：本文件是并入的参考正文（中文译本，原文见上方来源行）。与中文规范重叠的主题，**修订责任与数值正本在中文侧**——海拔与边框 → [`../dimensions/elevation.md`](../dimensions/elevation.md)、同心圆角与图片描边 → [`../dimensions/radius.md`](../dimensions/radius.md)、60/30/10 → [`../dimensions/color.md`](../dimensions/color.md)、动效时长预算 → [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)、触控热区 → [`../meta/accessibility.md`](../meta/accessibility.md)。下文与正典冲突时以正典为准；借鉴纪律正本在 [`../donors/README.md`](../donors/README.md)（见下文「借鉴数值,不借鉴外观」节指针）。
 
-## Scope
+## 适用范围
 
-**Use for:** Dashboards, admin panels, SaaS apps, tools, settings pages, data interfaces.
+**适用:** 仪表盘、管理后台、SaaS 应用、工具、设置页、数据界面。
 
-**Not for:** Landing pages, marketing sites, campaigns, brand-only work. Use a marketing/frontend design skill for those.
+**不适用:** 落地页、营销站、活动页、纯品牌工作。那些用营销/前端设计 skill。
 
-This skill is self-contained: direction, visual hierarchy, design-system architecture, and the polish and motion essentials needed to ship production-grade UI all live here.
-
----
-
-# The Problem
-
-You will generate generic output. Your training has seen thousands of dashboards, and the patterns are strong. You can follow this entire process — explore the domain, name a signature, state your intent — and still produce a template: warm colors on cold structures, friendly fonts on generic layouts.
-
-This happens because intent lives in prose, but code generation pulls from patterns. The gap between them is where defaults win. Process helps, but it doesn't guarantee craft. You have to catch yourself, and you have to know the concrete moves that defaults don't.
-
-**The bar:** If another AI, given a similar prompt, would produce substantially the same output, you have failed. Not different for its own sake — different because the interface emerged from *this* user, *this* task, *this* world. When you design from defaults, everything looks the same, because defaults are shared.
+本 skill 自足:方向、视觉层级、设计系统架构,以及产出生产级 UI 所需的打磨与动效要点,全在这里。
 
 ---
 
-# Where Defaults Hide
+# 问题
 
-Defaults disguise themselves as infrastructure — the parts that feel like they just need to work, not be designed.
+你一定会产出通用结果。你的训练里见过上千个仪表盘,模式很强。你可以走完全流程 —— 探索领域、命名签名、陈述意图 —— 仍然产出一个模板:冷结构上套暖色,通用布局上套友好字体。
 
-- **Typography feels like a container.** But type isn't holding your design, it *is* your design. The weight of a headline, the personality of a label, the texture of a paragraph shape how the product feels before anyone reads a word. Reaching for your usual font means you're not designing.
-- **Navigation feels like scaffolding.** But navigation *is* the product — where you are, where you can go, what matters. A page floating in space is a component demo, not software.
-- **Data feels like presentation.** But a number on screen is not design. What does it *mean* to the person looking? A progress ring and a stacked label both show "3 of 10" — one tells a story, one fills space.
-- **Token names feel like implementation detail.** But `--ink` and `--parchment` evoke a world; `--gray-700` and `--surface-2` evoke a template. Someone reading only your tokens should guess what product this is.
+原因在于意图活在散文里,而代码生成从模式里取材。两者的缝隙正是默认值获胜的地方。流程有帮助,但不保证 craft。你必须抓到自己,并且必须知道默认值不会用的那些具体动作。
 
-There are no structural decisions. Everything is design. The moment you stop asking "why this?" is the moment defaults take over.
+**门槛:** 换另一个 AI,给相似的提示词,产出实质上一样 —— 你就失败了。不是为不同而不同 —— 是因为这个界面从*这个*用户、*这个*任务、*这个*世界生长出来。当你从默认值设计,一切都长得一样,因为默认值是共享的。
 
 ---
 
-# Intent First
+# 默认值藏在哪里
 
-Before touching code, answer these. Keep it a compact working brief unless the direction needs user confirmation.
+默认值伪装成基础设施 —— 那些感觉"只要能跑就行、不用设计"的部分。
 
-- **Who is this human?** Not "users." The actual person. Where are they when they open this? What did they do 5 minutes ago, what will they do 5 minutes after? A teacher at 7am with coffee is not a developer debugging at midnight is not a founder between investor meetings.
-- **What must they accomplish?** The verb. Grade these submissions. Find the broken deployment. Approve the payment. The answer determines what leads, what follows, what hides.
-- **What should this feel like?** In words that mean something. "Clean and modern" means nothing — every AI says that. Warm like a notebook? Cold like a terminal? Dense like a trading floor? Calm like a reading app? This shapes color, type, spacing, density — everything.
+- **排版感觉像个容器。** 但字体不是在承托你的设计,它*就是*你的设计。标题的字重、标签的性格、段落形状的质地,在任何人读一个字之前就决定了产品的感觉。伸手去拿惯用字体,等于你没在设计。
+- **导航感觉像脚手架。** 但导航*就是*产品 —— 你在哪、能去哪、什么重要。一个漂在空间里的页面是组件 demo,不是软件。
+- **数据感觉像呈现。** 但屏幕上的数字不是设计。对看它的人*意味着*什么?进度环和堆叠标签都显示"3 of 10" —— 一个讲故事,一个填空间。
+- **Token 名感觉像实现细节。** 但 `--ink` 和 `--parchment` 唤起一个世界;`--gray-700` 和 `--surface-2` 唤起一个模板。只读你的 token 的人应该能猜出这是什么产品。
 
-If the prompt is too vague to identify the human, task, and feel, ask one concise question. If context allows a responsible assumption, state it briefly and proceed.
-
-**Intent must be systemic.** Saying "warm" then using cold colors is not following through. If the intent is warm: surfaces, text, borders, accents, semantic colors, type — all warm. If dense: spacing, type size, information architecture — all dense. Check every token against the stated intent. For every choice — layout, color temperature, typeface, spacing scale, hierarchy — you must be able to say *why*. "It's common" or "it works" means you defaulted.
-
----
-
-# Product Domain Exploration
-
-This is where defaults get caught — or don't. Generic path: Task type → visual template → theme. Crafted path: Task type → product domain → signature → structure + expression. The difference is time spent in the product's world before any visual thinking.
-
-**Produce all four before proposing any direction:**
-
-- **Domain** — concepts, metaphors, vocabulary from this product's world. Not features — territory. Minimum 5.
-- **Color world** — what colors exist *naturally* here? Not "warm" or "cool" — go to the actual world. If this product were a physical space, what would you see? List 5+.
-- **Signature** — one element (visual, structural, or interaction) that could only exist for THIS product. If you can't name one, keep exploring.
-- **Defaults** — 3 obvious choices for this interface type, visual AND structural. You can't avoid patterns you haven't named.
-
-**The test:** Read your proposal with the product name removed. Could someone identify what it's for? If not, explore deeper.
+没有"结构性决策"这回事。一切都是设计。你停止问"为什么是这个"的那一刻,默认值就接管了。
 
 ---
 
-# Render It When You Can
+# 意图优先
 
-If an inline visual-rendering tool is available in the session (e.g. a `show_widget` / `visualize` tool that renders HTML or SVG inline in the conversation), prefer **showing** the design over describing it. A direction trapped in prose is a fraction as useful as one the person can look at. This is conditional: when no such tool is present (CI, headless agents, plain terminals), fall back to code, tokens, and a written proposal. Never assume the tool exists; check, then use it.
+碰代码之前,先回答这些。除非方向需要用户确认,否则保持成一页紧凑的工作简报。
 
-Render at three moments:
+- **这个人是谁?** 不是"用户"。是具体的人。他打开这个界面时在哪?5 分钟前在做什么,5 分钟后会做什么?早上 7 点端着咖啡的老师,不是午夜调试的开发者,也不是投资人会议间隙的创始人。
+- **他必须完成什么?** 动词。批改这些提交。找出坏掉的部署。批准这笔支付。答案决定什么领先、什么跟随、什么隐藏。
+- **这应该是什么感觉?** 用有含义的词。"干净现代"毫无意义 —— 每个 AI 都这么说。像笔记本一样温暖?像终端一样冷?像交易大厅一样密?像阅读 app 一样安静?这决定颜色、字体、间距、密度 —— 一切。
 
-1. **Proposing a direction.** Alongside the Suggest + Ask block, render a small live specimen: the palette as actual swatches, the type scale in the real typeface, the surface-elevation steps as stacked cards, the signature element as a real component. The person should *see* "warm like a notebook," not read the words.
-2. **Designing a component.** Render the actual component (or a tight before/after, both variants side by side) so the craft decisions — spacing, borders, hierarchy, states — are visible, not asserted. Render the real states (default, hover, empty, error) where they matter.
-3. **Critiquing or auditing.** Render the current version and the improved version together so the gap is shown, not narrated.
+如果提示词含糊到无法确定这个人、任务和感觉,就问一个简洁的问题。如果上下文允许负责任的假设,简述假设后继续。
 
-Rules when rendering:
-
-- The widget shows the **visual only**. All reasoning, the domain exploration, the rejected-defaults list, and the recommendation stay in your response text — never paste prose into the widget.
-- Match the rendering tool's own design-system contract (load its `read_me`/guidance if it has one). Use its theme variables so the specimen inherits light/dark mode and sits native in the host. Don't fight the host chrome.
-- The specimen must still pass the checks below. A rendered default is still a default — rendering is how craft gets *seen*, not a substitute for it.
-- This renders to the *conversation*, not the project. The actual implementation still lands in the codebase through normal edits.
-
-The point: collapse the loop between "here's my thinking" and "here's what it looks like" into a single message the person can react to.
+**意图必须系统性。** 说了"温暖"却用冷色,就是没落实。意图是温暖:表面、文本、边框、强调色、语义色、字体 —— 全部温暖。意图是密:间距、字号、信息架构 —— 全部密。拿每个 token 对照声明的意图检查。对每个选择 —— 布局、色温、字族、间距刻度、层级 —— 你必须能说出*为什么*。"这很常见"或"这能用"意味着你默认了。
 
 ---
 
-# Visual Hierarchy & Composition
+# 产品领域探索
 
-The single biggest driver of "this looks designed" versus "this looks generated." Defaults produce *flatness* — everything the same size, weight, and spacing, so nothing leads and the eye has nowhere to go. Craft produces *hierarchy* — the eye knows instantly what matters. These are concrete moves, not vibes.
+默认值在这里被抓到 —— 或者没被抓到。通用路径:任务类型 → 视觉模板 → 主题。Craft 路径:任务类型 → 产品领域 → 签名 → 结构 + 表达。差别在于任何视觉思考之前,在产品世界里待了多久。
 
-## One focal point per view
+**在提出任何方向之前,先产出全部四项:**
 
-Every screen has one thing the user came to do. That thing dominates — through size, contrast, position, or the space around it. When everything competes equally, nothing wins and the interface reads like a parking lot. Before building, name the focal element out loud. Then make it win: bigger, higher-contrast, or ringed in whitespace. Demote everything else deliberately.
+- **领域** —— 这个产品世界里的概念、隐喻、词汇。不是功能 —— 是疆域。至少 5 个。
+- **颜色世界** —— 这里*天然*存在什么颜色?不是"暖"或"冷" —— 走进真实世界。如果这个产品是一处物理空间,你会看到什么?列 5 个以上。
+- **签名** —— 一个元素(视觉、结构或交互),只可能为这个产品存在。如果你说不出一个,继续探索。
+- **默认值** —— 这个界面类型最顺手的 3 个选择,视觉层与结构层都要。你无法回避你还没命名的模式。
 
-## Type scale is a ratio, and weight beats size
-
-Don't pick sizes by feel. Pick a ratio and step it: ~1.2 (minor third) for dense/calm UI, ~1.25 for most product UI, ~1.333 for expressive. From a 14–16px body that yields a *visibly* distinct scale, not 15/16/17 mush. A 14px base at 1.25: `caption 11 · body 14 · h4 16 · h3 18 · h2 22 · h1 28 · display 44+`. Round to whole pixels and to your spacing grid.
-
-The Apple/Linear move: **weight and color do more hierarchy work than size.** A single 14px size holds three tiers through weight + opacity alone — `value: 600 / primary`, `label: 500 / secondary`, `meta: 400 / muted` — separating more cleanly than two regular weights two points apart. Build from three levers together (size, weight, color/opacity), never size alone. If you squint and can't tell headline from body from label, the hierarchy is too weak.
-
-Worked example — a metric, flat vs decided. *Flat:* `Revenue` / `$48,200` both 14px regular gray, three identical boxes, no focal point. *Decided:* `REVENUE` 11px/500/muted/tracked · `$48,200` 28px/600/primary/tabular-nums (the hero) · `↑12%` 12px/500/success. Same data, opposite legibility — the figure leads through size+weight+one accent, the label is demoted, secondary metrics drop to a lower tier.
-
-## Density is a decision, expressed in px
-
-Linear is tight; Stripe is airy. Neither is default — both are *chosen*, and the choice is the same number repeated everywhere. Decide the density up front and name the values: a tool panel at 12–16px padding feels workbench-tight; the same card at 24px feels like a brochure. The same number can be right in one context and lazy in another. Pick deliberately, then hold it.
-
-## Spatial rhythm — breathe unevenly
-
-Great interfaces don't space everything equally. Dense control zones give way to open content; heavy elements balance against light ones; the eye travels with purpose. Monotone layouts — same card size, same gap, same density everywhere — are the sound of no one deciding. Vary the rhythm on purpose: group tightly-related things, then put real air between groups.
-
-## Proportions speak
-
-A 280px sidebar next to full-width content says "navigation serves content." A 360px sidebar says "these are peers." The specific number declares what matters. If you can't articulate what a proportion is saying, it isn't saying anything. Choose widths and ratios that state a relationship.
-
-## Distribution and restraint (the "expensive" look)
-
-- **~60/30/10**: a dominant neutral surface, a secondary tone, and ~10% accent. Color is a scarce resource — most of the screen is structure.
-- **One accent, used with intention**, beats five colors used without thought. Gray builds structure; color *communicates* (status, action, identity). Unmotivated color is noise.
-- **Hierarchy through space and weight, not lines.** Reach for whitespace and tonal shift before borders and dividers. The most premium interfaces are mostly invisible structure.
-- **Optical sizing on large type**: tighten letter-spacing as type gets bigger (headings slightly negative tracking); loosen line-height on body for readability (~1.5). Tight type reads as crafted; default tracking on a 32px heading reads as a document.
+**测试:** 去掉产品名,读你的提案。别人能看出它是干什么的吗?看不出,就探索更深。
 
 ---
 
-# Craft Foundations
+# 能渲染时就渲染
 
-## Subtle Layering (the backbone)
+如果会话里有内联视觉渲染工具(例如在对话里内联渲染 HTML 或 SVG 的 `show_widget` / `visualize` 工具),优先**展示**设计而不是描述它。困在散文里的方向,可用性只有人能直接看到的那一小部分。这是有条件的:没有这类工具时(CI、无头 agent、纯终端),退回代码、token 与文字提案。绝不要假设工具存在;先检查,再用。
 
-Regardless of direction, this applies to everything. You should *barely notice the system working* — when you look at Vercel's dashboard you don't think "nice borders," you just understand the structure. Invisible craft is working craft.
+在三个时刻渲染:
 
-**Surface elevation.** Surfaces stack: a dropdown sits above a card sits above the page. Build a numbered system — base, then increasing levels. Each jump is only a few percentage points of lightness — e.g. dark mode base → +7% → +9% → +12%; light mode stays light and adds shadow instead. You can barely see one step in isolation, but stacked, the hierarchy emerges. Whisper-quiet shifts you feel rather than see.
+1. **提出方向时。** 在 Suggest + Ask 块旁边,渲染一个小型实样:色板用真实色块、字阶用真实字体、表面海拔阶梯用堆叠卡片、签名元素用真实组件。这个人应该*看见*"像笔记本一样温暖",而不是读到这几个字。
+2. **设计组件时。** 渲染真实组件(或紧凑的前后对比,两个变体并排),让 craft 决策 —— 间距、边框、层级、状态 —— 可见,而不是只被断言。在重要的地方渲染真实状态(默认、悬浮、空、错误)。
+3. **评审或审计时。** 把当前版本与改进版本一起渲染,让差距被展示而不是被叙述。
 
-- **Sidebars:** same background as canvas, not a different color. Different colors fragment the space into "sidebar world" and "content world." A subtle border is enough.
-- **Dropdowns/popovers:** one level above their parent surface, or they blend in and layering is lost.
-- **Inputs:** slightly *darker* than surroundings, not lighter. Inputs are inset — they receive content. A darker fill signals "type here" without heavy borders.
+渲染时的规则:
 
-**Borders.** Should disappear when you're not looking for them, but be findable when you need structure. Low-opacity rgba blends with the background and defines an edge without demanding attention; solid hex borders look harsh by comparison. Dark mode lives around `rgba(255,255,255,0.06–0.12)`, light mode slightly higher. Build a progression — standard, softer separation, emphasis, focus-ring — and match intensity to the importance of the boundary.
+- 组件只显示**视觉**。全部推理、领域探索、被拒绝的默认值清单与建议,留在你的回复正文里 —— 绝不要把散文粘进组件。
+- 遵守渲染工具自己的设计系统契约(若有 `read_me`/指引就先读)。用它的主题变量,让实样继承明暗模式,与宿主原生一致。不要跟宿主外壳较劲。
+- 实样仍须通过下面的检查。渲染出来的默认值仍是默认值 —— 渲染是让 craft 被*看见*的方式,不是它的替代品。
+- 这渲染到*对话*,不是项目。真实实现仍要通过正常编辑落进代码库。
 
-**The squint test:** blur your eyes at the interface. You should still perceive hierarchy — what's above what, where sections divide — but nothing should jump out. No harsh lines, no jarring shifts. Just quiet structure. Get this wrong and nothing else matters.
-
-## Infinite Expression
-
-Every pattern has infinite expressions — **no two interfaces should look the same.** A metric display could be a hero number, inline stat, sparkline, gauge, progress bar, comparison delta, or trend badge. Same sidebar width, same card grid, same icon-left-number-big-label-small metric boxes every time *signals AI-generated immediately* and is forgettable. Linear's cards don't look like Notion's; Vercel's metrics don't look like Stripe's. Same concepts, infinite expressions. Before building, ask: what's the ONE thing users do here, and what product solves a similar problem brilliantly?
-
-## Color Lives Somewhere
-
-Every product exists in a world, and that world has colors. Before reaching for a palette, walk into the physical version of this space — what materials, what light, what objects? Your palette should feel like it came FROM somewhere, not applied TO something. Temperature is one axis; also ask quiet or loud, dense or spacious, serious or playful, geometric or organic. A trading terminal and a meditation app are both "focused" — completely different kinds of focus.
+要点:把"这是我的思路"和"它长这样"之间的回路压缩成一条消息,让人能直接反应。
 
 ---
 
-# Adapt the Values, Not the Looks
+# 视觉层级与构图
 
-> Source: 规则库 craft-loop "adapt before you build" (absorbed 2026-10; the value library lives in [`../donors/`](../donors/README.md)). **The canonical adaptation-discipline text is [`../donors/README.md`](../donors/README.md) §3** — the two texts had drifted, so this section now carries only the pointer; on any conflict donors/README.md §3 wins. Run it before writing code; it sits alongside "Render It When You Can" — one governs what to look at before building, the other what to adapt before building.
+"这看起来像设计过"与"这看起来是生成的"之间最大的单一驱动因素。默认值产出*平坦* —— 一切同样大小、同样字重、同样间距,于是没有东西领先,眼睛无处可去。Craft 产出*层级* —— 眼睛立刻知道什么重要。这些是具体动作,不是感觉。
 
-Once the direction is set and before writing the first component, pick **1-2 donor sites** from [`../donors/`](../donors/README.md) whose character is closest, and extract **3-5 concrete values or moves** into the design plan — then state "adapted X from {site}" line by line. The full rule (adapt values not vibes, the fair-game list, brand-identity exclusions, and the DESIGN.md-wins conflict clause) lives in donors/README.md §3.
+## 每屏一个焦点
 
-# Before Writing Each Component
+每屏都有一件事是用户来做的。那件事要压倒一切 —— 靠尺寸、对比、位置或它周围的空白。当一切都同等竞争,就没有赢家,界面读起来像停车场。构建之前,大声说出焦点元素。然后让它赢:更大、对比更高,或用留白圈起来。刻意降级其余一切。
 
-**Every time** you write UI code — even small additions — state:
+## 字阶是比率,字重胜过字号
+
+不要凭感觉挑字号。挑一个比率再步进:密集/安静的 UI 用 ~1.2(小三度),多数产品 UI 用 ~1.25,表现性界面用 ~1.333。从 14–16px 正文出发,能得到*可见*的明显阶梯,而不是 15/16/17 的糊状。14px 基准按 1.25:`caption 11 · body 14 · h4 16 · h3 18 · h2 22 · h1 28 · display 44+`。取整到整像素并对齐你的间距网格。
+
+Apple/Linear 的手法:**字重与颜色做的层级工作比字号更多。** 单一 14px 字号仅靠字重 + 不透明度就能撑起三层 —— `value: 600 / primary`、`label: 500 / secondary`、`meta: 400 / muted` —— 比两个相差两点的常规字重分得更干净。从三个杠杆一起构建(字号、字重、颜色/不透明度),绝不用字号单独决定。眯眼看不出标题、正文与标签的差别,层级就太弱。
+
+实例 —— 同一个指标,平坦 vs 有决策。*平坦:* `Revenue` / `$48,200` 都是 14px 常规灰,三个相同的框,没有焦点。*有决策:* `REVENUE` 11px/500/muted/加字距 · `$48,200` 28px/600/primary/tabular-nums(主角)· `↑12%` 12px/500/success。同样数据,可读性相反 —— 数字靠字号+字重+一处强调领先,标签被降级,次要指标落到更低层级。
+
+## 密度是决策,用 px 表达
+
+Linear 紧;Stripe 松。两者都不是默认 —— 两者都是*选出来的*,而且这个选择是同一个数字到处重复。先定密度并命名数值:12–16px 内边距的工具面板感觉像工作台般紧凑;同一张卡片放到 24px 就像宣传册。同一个数字在一种情境里正确,在另一种里是偷懒。刻意选,然后守住它。
+
+## 空间节奏 —— 不均匀地呼吸
+
+好界面不会把所有东西等距排布。密集的控制区让位给开阔的内容区;重元素与轻元素相互平衡;眼睛带着目的移动。单调布局 —— 卡片一样大、间距一样、密度一样 —— 是没人做决策的声音。刻意变化节奏:紧密相关的东西紧挨着,组与组之间留出真正的空气。
+
+## 比例会说话
+
+280px 侧栏配全宽内容,说的是"导航服务于内容"。360px 侧栏说的是"这些是同级的"。具体数字宣告了什么重要。如果你说不出一个比例在说什么,它什么也没说。选那些陈述关系的宽度与比率。
+
+## 分配与克制(所谓"贵"的观感)
+
+- **~60/30/10**:一个主导的中性表面、一个次级色调、约 10% 强调色。颜色是稀缺资源 —— 屏幕大部分是结构。
+- **一个强调色,用得有意**,胜过五个颜色不加思索地用。灰构建结构;颜色*传达*(状态、动作、身份)。无动机的颜色是噪音。
+- **层级靠空间与字重,不靠线。** 先伸手拿留白与色调变化,再考虑边框与分隔线。最高级的界面大部分是隐形结构。
+- **大字的光学调整**:字号变大时收紧字距(标题略负字距);正文放宽行高以便阅读(~1.5)。紧的字距读起来像 craft;32px 标题上用默认字距读起来像文档。
+
+---
+
+# Craft 基础
+
+## 微妙分层(骨架)
+
+无论什么方向,这一条适用于一切。你应当*几乎注意不到系统在工作* —— 看 Vercel 的仪表盘时你不会想"边框不错",你只是理解了结构。看不见的 craft 才是有效的 craft。
+
+**表面海拔。** 表面会堆叠:下拉在卡片之上,卡片在页面之上。建一套编号系统 —— 基准,然后逐级递增。每一跳只差几个百分点的明度 —— 例如暗色模式基准 → +7% → +9% → +12%;亮色模式保持明亮,改用阴影。单看一级你几乎看不出差别,但堆起来,层级就浮现了。是你能感觉到而看不见的低语级变化。
+
+- **侧栏:** 与画布同底,不用另一种颜色。不同颜色把空间割裂成"侧栏世界"与"内容世界"。一条微妙的边框就够了。
+- **下拉/浮层:** 比父表面高一级,否则它们混在一起,分层就丢了。
+- **输入框:** 比周围稍*暗*,不是稍亮。输入框是内凹的 —— 它们接收内容。更暗的填充不需要重边框就能提示"在这里输入"。
+
+**边框。** 你不找它们时它们应该消失,你需要结构时又能找到。低不透明度的 rgba 与背景融合,界定边缘又不索取注意力;相比之下实色 hex 边框显得生硬。暗色模式大致活在 `rgba(255,255,255,0.06–0.12)`,亮色模式稍高。建一个序列 —— 标准、更柔的分隔、强调、焦点环 —— 让强度匹配边界的重性。
+
+**眯眼测试:** 眯眼看界面。你仍应感知到层级 —— 什么在什么之上、区块在哪分开 —— 但没有任何东西跳出来。没有生硬的线,没有刺眼的切换。只有安静的结构。这条做错,其余都不重要。
+
+## 无限表达
+
+每个模式都有无限种表达 —— **没有两个界面应该长得一样。** 一个指标展示可以是主视觉数字、内联统计、迷你走势线、仪表盘、进度条、对比增量或趋势徽章。每次都一样的侧栏宽度、卡片网格、图标在左数字大标签小的指标框,*立刻宣告 AI 生成*,而且转眼被忘掉。Linear 的卡片不像 Notion 的;Vercel 的指标不像 Stripe 的。同样概念,无限表达。构建之前问:用户在这里做的那唯一一件事是什么,哪个产品把同类问题解决得极好?
+
+## 颜色有其来处
+
+每个产品存在于一个世界里,那个世界有颜色。伸手拿色板之前,走进这个空间的物理版本 —— 什么材质、什么光、什么物件?你的色板应该感觉像从某处来,而不是被涂在某物上。色温是一个轴;还要问安静还是喧闹、密集还是开阔、严肃还是活泼、几何还是有机。交易终端和冥想 app 都是"专注" —— 完全不同种类的专注。
+
+---
+
+# 借鉴数值,不借鉴外观
+
+
+方向定了之后、写第一个组件之前,从 [`../donors/`](../donors/README.md) 挑 **1-2 个气质最接近的供体站点**,提取 **3-5 个具体值或动作**写进设计计划 —— 然后逐条写明「从 {site} 借鉴了 X」。完整规则(借值不借气质、可借鉴清单、品牌身份排除项,以及 DESIGN.md 优先的冲突条款)在 donors/README.md §3。
+
+# 写每个组件之前
+
+**每一次**写 UI 代码 —— 即使是很小的补充 —— 都陈述:
 
 ```
 Intent:     [who is this human, what must they do, how should it feel]
@@ -177,112 +175,112 @@ Typography: [typeface + the size/weight/color levers — and WHY]
 Spacing:    [base unit + chosen density]
 ```
 
-This checkpoint is mandatory. If you can't explain WHY for each, you're defaulting — stop and think.
+这个检查点强制。每项都说不出 WHY,就是在默认 —— 停下来想。
 
 ---
 
-# Use What Exists
+# 用已有的东西
 
-The most common way AI degrades a codebase: it hand-rolls what already exists. A bespoke `<div onClick>` "button" beside the project's real `Button`. A from-scratch dropdown with no keyboard support beside an installed primitive that has it. A 14-class Tailwind string copy-pasted onto every card instead of the component or token that's right there. Every one of these is the same failure — generating new instead of using what's present — and the result is inconsistent, inaccessible, and unmaintainable. **Before you build a control or style an element, look at what the project already gives you.**
+AI 让代码库降级最常见的方式:手写已经存在的东西。项目里已有真正的 `Button`,旁边却手搓一个 `<div onClick>`"按钮"。已经装了支持键盘的基础组件,旁边却从零写一个不支持键盘的下拉。把一长串 14 个类的 Tailwind 字符串复制粘贴到每张卡片上,而不是用就在旁边的组件或 token。这些全都是同一个失败 —— 生成新的,而不是用现有的 —— 结果是前后不一致、不可访问、无法维护。**在你构建控件或给元素上样式之前,先看项目已经给了你什么。**
 
-## Controls: native → primitive → hand-roll
+## 控件:native → 基础组件 → 手搓
 
-1. **Native HTML first** where it works. A `<button>` is a button; an `<a>` is a link; `<input type="text">`, `<dialog>`, `<details>` exist. Never `<div onClick>` something the platform already provides — you lose focus, keyboard, and semantics for free.
-2. **A battle-tested headless primitive** for anything stateful and hard to get right — select, combobox, dialog, popover, tooltip, dropdown menu, tabs, date picker. These ship keyboard navigation, focus management, ARIA, and collision/positioning that take days to reproduce correctly. Reach for what the ecosystem already trusts (e.g. Radix UI, React Aria, Ark, Headless UI, Vaul, `cmdk` in React; the equivalent accessible primitive in other frameworks), then style it to your direction. "Build custom" means *compose and style a primitive*, not write the behavior from scratch.
-3. **Hand-roll only as a genuine last resort** — no primitive fits, or there's no dependency budget. Then you owe the complete behavior contract: keyboard nav (arrow keys, Enter, Escape), focus trap/return, full ARIA roles and state, click-outside, and scroll-lock for overlays. A styled control missing these is broken, however good it looks.
+1. **能用原生 HTML 就先用。** `<button>` 就是按钮;`<a>` 就是链接;`<input type="text">`、`<dialog>`、`<details>` 都在。绝不用 `<div onClick>` 造平台已提供的东西 —— 你白丢了焦点、键盘与语义。
+2. **状态复杂、容易做错的东西,用久经考验的无头基础组件** —— select、combobox、dialog、popover、tooltip、下拉菜单、tabs、日期选择器。这些自带键盘导航、焦点管理、ARIA 与碰撞/定位,自己写对要好几天。用生态里已经可信的(例如 React 里的 Radix UI、React Aria、Ark、Headless UI、Vaul、`cmdk`,其他框架用对应的可访问基础组件),再按你的方向给它上样式。"自建"的意思是*组合并给基础组件上样式*,不是从零写行为。
+3. **手搓只在真正无路可走时** —— 没有基础组件适配,或没有依赖预算。那时你欠下完整的行为契约:键盘导航(方向键、Enter、Escape)、焦点陷阱/归还、完整的 ARIA 角色与状态、点击外部关闭、浮层的滚动锁定。缺这些的已上样式控件就是坏的,再好看也一样。
 
-## Styling: system → component → token → utility
+## 上样式:系统 → 组件 → token → 工具类
 
-1. **If the project has a design system, use it.** shadcn/`Button`, a CVA variant set, a theme, a component library — use `<Button variant="…">` and the existing variants before writing a one-off. Match the codebase's styling convention (Tailwind, CSS modules, CSS-in-JS), don't introduce your own.
-2. **When a styled element repeats, extract a component.** The same utility string on nine buttons is duplication, not design. One component (or one CVA/variant) owns it; call sites stay clean. Extract on the second real reuse, not the first.
-3. **Bind to semantic tokens, not hardcoded literals.** `bg-card border-border text-muted-foreground`, not `bg-white border-gray-200 text-gray-500`. Hardcoded `gray-200`/`#fff`/`px-4` raw values are the Tailwind form of random hex — they break theming and dark mode and signal no system. (See Token Architecture below.)
-4. **Inline utilities are for genuine one-offs** — a layout nudge used once. The tell of slop is the *same* long className sprayed everywhere; that's a missing component or token, not styling.
-
----
-
-# Design System Essentials
-
-The token, spacing, and depth architecture beneath every craft decision.
-
-- **Token architecture.** Every color traces to a small set of primitives: foreground (text), background (surface), border, brand, semantic (destructive/warning/success). No random hex — everything maps to primitives.
-- **Text hierarchy — four levels.** Primary, secondary, tertiary, muted (default / supporting / metadata / disabled). Using only two means the hierarchy is too flat.
-- **Spacing.** Pick a base unit (4 or 8px), use multiples only. Scale by context: micro (icon gaps), component (within buttons/cards), section (between groups), major (between areas). Random values signal no system.
-- **Padding.** Symmetrical — if one side has a value, the others match unless content genuinely demands asymmetry.
-- **Depth — choose ONE and commit.** Borders-only (clean, technical, dense tools) · subtle shadows (approachable) · layered shadows (premium, dimensional) · surface-color shifts (tints, no shadows). Don't mix strategies.
-- **Border radius — a scale.** Small for inputs/buttons, medium for cards, large for modals. Don't mix sharp and soft randomly.
-- **Control tokens.** Inputs/selects/checkboxes get dedicated background, border, and focus tokens — don't reuse surface tokens, so you can tune controls independently. Native `<select>`/`<input type="date">` can't be styled — compose a headless primitive instead of hand-rolling one (see "Use What Exists").
-- **Dark mode.** Shadows are weak on dark — lean on borders. Desaturate semantic colors slightly. Same hierarchy system, inverted values. Keep one hue; shift only lightness across surfaces.
+1. **项目有设计系统就用它。** shadcn/`Button`、CVA 变体集、主题、组件库 —— 先写 `<Button variant="…">` 与现有变体,再考虑一次性写法。遵循代码库的样式约定(Tailwind、CSS modules、CSS-in-JS),不要引入自己的一套。
+2. **已上样式的元素重复出现时,抽成组件。** 同一条工具类串出现在九个按钮上,那是重复,不是设计。一个组件(或一个 CVA/变体)拥有它;调用点保持干净。在第二次真实复用时抽取,不是第一次。
+3. **绑定语义 token,不绑硬编码字面值。** 用 `bg-card border-border text-muted-foreground`,不用 `bg-white border-gray-200 text-gray-500`。硬编码的 `gray-200`/`#fff`/`px-4` 原始值是 Tailwind 形式的随机 hex —— 它们破坏主题与暗色模式,并且宣告没有系统。(见下文 Token 架构。)
+4. **内联工具类只用于真正的一次性场景** —— 用一次的位置微调。slop 的迹象是*同一条*长 className 到处喷;那是缺组件或缺 token,不是样式。
 
 ---
 
-# Polish & Motion Essentials
+# 设计系统要点
 
-A hundred small details compound into "feels great." These are the highest-leverage ones — enough to ship genuinely polished UI.
+每个 craft 决策之下的 token、间距与深度架构。
 
-## Static polish
-
-- **Concentric radius.** Nested rounded elements: `outerRadius = innerRadius + padding`. Same radius on parent and child is the most common thing that makes UI feel off.
-- **Tabular numbers.** Any dynamic number (counters, prices, timers, table columns) gets `font-variant-numeric: tabular-nums` to prevent layout shift.
-- **Optical alignment.** When geometric centering looks off, fix it optically — icon-side padding ≈ text-side − 2px; nudge play triangles ~2px right.
-- **States are not optional.** Every interactive element needs default, hover, active, focus, disabled. Data needs loading, empty, error. Missing states feel broken — they're the fastest tell of an unfinished interface.
-- **Hit areas — 44×44px recommended; Web hard floor is 24×24 CSS px** (values canonical in [`../meta/accessibility.md`](../meta/accessibility.md)). If the visible control is smaller (a 20px checkbox), extend with a pseudo-element. Never let two hit areas overlap.
-- **Shadows over borders for elevation.** For cards/buttons/containers that lift, prefer a layered transparent `box-shadow` (it adapts to any background); keep real borders for dividers and input outlines. Light-mode lift stacks three layers — a 1px ring + two soft depths; exact ring/blur/opacity values are canonical in [`../dimensions/elevation.md`](../dimensions/elevation.md) (do not copy numbers from here). Dark mode collapses to a single ring (value likewise per elevation.md — depth shadows don't read on dark).
-- **Text wrapping.** `text-wrap: balance` on headings; `text-wrap: pretty` on body/captions to kill orphans.
-- **Font smoothing.** `-webkit-font-smoothing: antialiased` on the root (macOS renders heavy otherwise).
-- **Image outlines.** 1px inset outline, pure `rgba(0,0,0,0.1)` light / `rgba(255,255,255,0.1)` dark — never a tinted near-black/white (reads as dirt on the edge).
-
-## Motion
-
-Motion should be felt, not watched. Fast, purposeful, and *never* in the way.
-
-- **Should it animate at all?** Actions repeated 100+×/day (keyboard shortcuts, command palette) get **no** animation — it makes them feel slow. Occasional surfaces (modals, drawers, toasts) get standard animation. Rare/first-run moments can add delight.
-- **Duration < 300ms** for UI. Button press 100–160ms; tooltips/popovers 125–200ms; dropdowns 150–250ms; modals/drawers 200–400ms (duration budget canonical in [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md)). A 180ms dropdown feels more responsive than a 400ms one.
-- **Custom ease-out, never ease-in.** Built-in curves are too weak. Use `cubic-bezier(0.23, 1, 0.32, 1)` for entering/interactive; ease-in-out (`cubic-bezier(0.77, 0, 0.175, 1)`) for on-screen movement. `ease-in` delays the first frame — the moment the user is watching — and feels sluggish.
-- **Press feedback.** `transform: scale(0.97)` on `:active` (never below 0.95). Tactile confirmation the UI heard the click.
-- **Never animate from `scale(0)`.** Nothing appears from nothing — start at `scale(0.95)` + `opacity: 0`.
-- **Origin-aware popovers.** Popovers scale from their trigger (`transform-origin` set to the trigger), not center. Modals are the exception — they stay centered.
-- **Only animate `transform` and `opacity`** (GPU-composited). Animating width/height/margin/padding triggers layout + paint and drops frames. Never `transition: all` — name exact properties.
-- **Stagger entrances** 30–80ms between items for a natural cascade; keep exits faster and subtler than enters.
-- **Respect `prefers-reduced-motion`** — keep opacity/color transitions, drop movement.
+- **Token 架构。** 每个颜色都追回到一小组原语:foreground(文本)、background(表面)、border、brand、semantic(destructive/warning/success)。没有随机 hex —— 一切都映射到原语。
+- **文字层级 —— 四级。** primary、secondary、tertiary、muted(默认 / 支撑 / 元数据 / 禁用)。只用两级意味着层级太扁平。
+- **间距。** 选一个基准单位(4 或 8px),只用它的倍数。按上下文分档:微(图标间距)、组件(按钮/卡片内部)、区块(组与组之间)、大区(区域之间)。随机值宣告没有系统。
+- **内边距。** 对称 —— 一侧有值,其余侧就相同,除非内容真的要求不对称。
+- **深度 —— 选一种并坚持。** 仅边框(干净、技术、密集工具)· 微妙阴影(亲和)· 分层阴影(高级、有维度)· 表面色阶(着色调、无阴影)。不要混用策略。
+- **圆角 —— 一套刻度。** 小用于输入框/按钮,中用于卡片,大用于模态。不要随机混用锐角与柔角。
+- **控件 token。** 输入框/选择器/复选框有专门的背景、边框与焦点 token —— 不要复用表面 token,这样能独立调控件。原生 `<select>`/`<input type="date">` 无法上样式 —— 组合一个无头基础组件,而不是手搓一个(见「用已有的东西」)。
+- **暗色模式。** 阴影在暗面上很弱 —— 靠边框。语义色略微降饱和。同一套层级系统,值反转。保持一个色相;跨表面只改明度。
 
 ---
 
-# Avoid
+# 打磨与动效要点
 
-- **Harsh borders** — if borders are the first thing you see, they're too strong
-- **Dramatic surface jumps** — elevation should be whisper-quiet
-- **Flat hierarchy** — everything one size/weight; no clear focal point
-- **Monotone layout** — same card size, gap, and density everywhere
-- **Inconsistent spacing** — the clearest sign of no system
-- **Mixed depth strategies** — pick one and commit
-- **Missing states** — hover, focus, disabled, loading, empty, error
-- **Dramatic drop shadows** — subtle, not attention-grabbing
-- **Large radius on small elements**; **thick decorative borders**
-- **Gradients and color for decoration** — color should mean something
-- **Multiple accent colors** — dilutes focus
-- **Different hues for different surfaces** — keep one hue, shift only lightness
-- **Default typography** — system/Inter fonts and size-only hierarchy where a direction was set
-- **Structural hacks** — negative margins undoing parent padding, escape-hatch `calc()`, absolute positioning to dodge layout flow
+一百个小细节累积成"手感极好"。这些是杠杆最高的 —— 足够产出真正打磨过的 UI。
+
+## 静态打磨
+
+- **同心圆角。** 嵌套圆角元素:`outerRadius = innerRadius + padding`。父子同半径是让 UI 感觉不对最常见的成因。
+- **等宽数字。** 任何会变的数字(计数器、价格、计时器、表格列)加 `font-variant-numeric: tabular-nums`,防布局抖动。
+- **光学对齐。** 几何居中看起来不对时,按光学修正 —— 图标侧内边距 ≈ 文字侧 − 2px;播放三角向右挪 ~2px。
+- **状态不是可选项。** 每个交互元素都需要默认、悬浮、按下、焦点、禁用。数据需要加载、空、错误。缺状态感觉是坏的 —— 它们是未完成界面最快的信号。
+- **热区 —— 建议 44×44px;Web 硬底线是 24×24 CSS px**(数值正本在 [`../meta/accessibility.md`](../meta/accessibility.md))。可见控件更小(比如 20px 复选框)时,用伪元素扩展。绝不让两个热区重叠。
+- **海拔用阴影,不用边框。** 卡片/按钮/容器要抬起时,优先分层透明 `box-shadow`(它适配任何背景);真实边框留给分隔线与输入框轮廓。亮色模式的抬升叠三层 —— 1px 环 + 两层柔深度;环/模糊/不透明度的准确值正本在 [`../dimensions/elevation.md`](../dimensions/elevation.md)(不要从这里抄数字)。暗色模式收敛成单个环(值同样按 elevation.md —— 深度阴影在暗面上不成立)。
+- **文本折行。** 标题用 `text-wrap: balance`;正文/说明用 `text-wrap: pretty`,消灭孤字。
+- **字体平滑。** 根节点加 `-webkit-font-smoothing: antialiased`(否则 macOS 渲染偏重)。
+- **图片描边。** 1px 内描边,亮色纯 `rgba(0,0,0,0.1)` / 暗色纯 `rgba(255,255,255,0.1)` —— 绝不用带色调的近黑/近白(看起来像边缘脏污)。
+
+## 动效
+
+动效应该被感觉到,而不是被看着。快、有目的、*绝不*挡路。
+
+- **到底要不要动?** 每天重复 100+ 次的动作(键盘快捷键、命令面板)**不要**动画 —— 那让它们显得慢。偶发出现的表面(模态、抽屉、吐司)用标准动画。罕见/首次使用的时刻可以加一点愉悦感。
+- **UI 时长 < 300ms**。按钮按下 100–160ms;提示/浮层 125–200ms;下拉 150–250ms;模态/抽屉 200–400ms(时长预算正本在 [`../vocabulary/micro-interactions.md`](../vocabulary/micro-interactions.md))。180ms 的下拉感觉比 400ms 的更快响应。
+- **用自定义 ease-out,绝不用 ease-in。** 内置曲线太弱。进入/交互用 `cubic-bezier(0.23, 1, 0.32, 1)`;屏幕上移动用 ease-in-out(`cubic-bezier(0.77, 0, 0.175, 1)`)。`ease-in` 拖延第一帧 —— 正是用户在看的那一刻 —— 感觉迟钝。
+- **按压反馈。** `:active` 上 `transform: scale(0.97)`(绝不低于 0.95)。这是 UI 听见点击的触觉确认。
+- **绝不从 `scale(0)` 动起来。** 没有东西能从无中出现 —— 从 `scale(0.95)` + `opacity: 0` 开始。
+- **有源浮层。** 浮层从它的触发元素缩放(`transform-origin` 指向触发元素),不从中心。模态是例外 —— 保持居中。
+- **只动 `transform` 与 `opacity`**(GPU 合成)。动 width/height/margin/padding 会触发布局 + 绘制并掉帧。绝不用 `transition: all` —— 点名具体属性。
+- **错峰入场** 项与项之间 30–80ms,形成自然级联;退场比入场更快更轻。
+- **尊重 `prefers-reduced-motion`** —— 保留不透明度/颜色过渡,去掉位移。
 
 ---
 
-# Workflow
+# 避免
 
-## Communication
-Be invisible. Don't announce modes or narrate process. Never say "I'm in ESTABLISH MODE" or "Let me check system.md." Jump into the work; state suggestions with reasoning.
+- **生硬的边框** —— 如果边框是你第一眼看到的东西,它们太强了
+- **突兀的表面跳变** —— 海拔应该是低语级的
+- **扁平层级** —— 一切一个字号/字重;没有明确焦点
+- **单调布局** —— 卡片大小、间距、密度到处一样
+- **不一致的间距** —— 没有系统最清楚的信号
+- **混用深度策略** —— 选一种并坚持
+- **缺状态** —— 悬浮、焦点、禁用、加载、空、错误
+- **夸张的投影** —— 要微妙,不要抢注意力
+- **小元素用大圆角**;**厚重的装饰性边框**
+- **用渐变与颜色做装饰** —— 颜色应该有意义
+- **多个强调色** —— 稀释焦点
+- **不同表面用不同色相** —— 保持一个色相,只改明度
+- **默认排版** —— 方向已定却用系统/Inter 字体,以及只靠字号的层级
+- **结构性取巧** —— 用负 margin 抵消父级内边距、用 `calc()` 逃生舱、用绝对定位绕开布局流
 
-## Execution discipline
-Use this skill as a working discipline, not just advice. When editing UI:
+---
 
-1. Inspect the existing app, design tokens, component patterns, and `.interface-design/system.md` if present.
-2. Make the domain exploration concrete before choosing layout, color, type, density, and navigation.
-3. For greenfield screens, major redesigns, or vague direction, consider a visual reference pass *if an image-generation tool is available* (skip otherwise — it's a companion, never the deliverable). Four modes: **direction board** (2–3 abstract mood/material/color explorations before code — no real UI), **UI reference** (medium-fidelity composition for a chosen direction), **paintover** (a stronger version of an existing screenshot), **raster asset** (empty-state art, textures — never icons/logos/charts). Always reject generic SaaS, illegible text, off-domain palettes; extract palette/density/proportions/signature, then build it in real code and verify in the browser.
-4. Patch the implementation, then run the relevant build/typecheck/tests when available.
-5. Verify visually for non-trivial UI. Use the inline render tool, a local browser, or screenshots at desktop and mobile widths; fix overlap, broken spacing, blank states, unreadable text, missing assets, and generic composition before presenting.
-6. Keep user-facing updates short. Don't expose long private design monologues — surface the useful recommendation or decision.
+# 工作流
 
-## Suggest + Ask
-Lead with exploration and recommendation, then confirm:
+## 沟通
+保持隐形。不要宣告模式,不要叙述过程。绝不说"我现在进入建立模式"或"让我检查 system.md"。直接进入工作;给建议时带上推理。
+
+## 执行纪律
+把这个 skill 当作工作纪律,而不只是建议。编辑 UI 时:
+
+1. 检查现有应用、设计 token、组件模式,以及 `.interface-design/system.md`(如果存在)。
+2. 在选布局、颜色、字体、密度与导航之前,把领域探索做实。
+3. 对新屏、大改版或含糊方向,考虑走一遍视觉参照 —— *前提是有可用的图像生成工具*(没有就跳过,它是伴随物,绝不是交付物)。四种模式:**方向板**(写代码前做 2–3 次抽象的调性/材质/颜色探索 —— 不是真实 UI)、**UI 参照**(为选定方向做的中保真构图)、**涂改稿**(现有截图的更强版本)、**位图资产**(空状态插画、纹理 —— 绝不用图标/logo/图表)。永远拒绝通用 SaaS、不可读的文字、跑出领域的色板;提取色板/密度/比例/签名,然后用真实代码构建并在浏览器里验证。
+4. 改实现,然后在可用时跑相关 build/类型检查/测试。
+5. 对非平凡 UI 做视觉验证。用内联渲染工具、本地浏览器,或桌面与移动宽度的截图;在展示前修掉重叠、坏间距、空白状态、不可读文字、缺失资产与通用构图。
+6. 面向用户的更新保持简短。不要暴露冗长的私人设计独白 —— 只浮出有用的建议或决策。
+
+## 建议 + 询问
+先给探索与建议,再确认:
 
 ```
 Domain:     [5+ concepts from the product's world]
@@ -292,41 +290,41 @@ Rejecting:  [default 1] → [alternative], [default 2] → [alternative], [defau
 Direction:  [approach connecting to the above]
 ```
 
-Then ask: "Does that direction feel right?" If an inline render tool is available, render a live specimen of the direction in the same message — show the palette, type, and signature, don't just name them.
+然后问:"这个方向感觉对吗?"如果有内联渲染工具,在同一条消息里渲染该方向的实样 —— 展示色板、字体与签名,不要只是命名它们。
 
-## Build flow
-- **If `.interface-design/system.md` exists:** read it and apply — decisions are made.
-- **If not:** explore domain (all four outputs) → propose (reference all four) → confirm when the direction is ambiguous or costly to change → build → run the checks below → offer to save.
+## 构建流程
+- **`.interface-design/system.md` 存在时:** 读它并应用 —— 决策已经做完了。
+- **不存在时:** 探索领域(四项产出)→ 提案(引用全部四项)→ 方向含糊或改动代价高时先确认 → 构建 → 跑下面的检查 → 提出保存。
 
-## The checks (before showing)
-Run these against your output; if any fails, iterate before presenting.
+## 检查(展示之前)
+对着你的产出跑这些;任何一条不过,先迭代再呈现。
 
-- **Swap test** — swap your typeface for the usual one, your layout for a standard template: would anything feel different? Where swapping wouldn't matter is where you defaulted.
-- **Squint test** — blur your eyes: hierarchy still readable? Nothing jumping out harshly?
-- **Signature test** — point to five specific elements where your signature appears. "The overall feel" doesn't count.
-- **Token test** — read your CSS variables aloud: do they belong to this product's world, or any project?
-
----
-
-# After Completing a Task
-
-Always offer to save: "Want me to save these patterns for future sessions?" If yes, write to `.interface-design/system.md` (use [`reference/system-template.md`](reference/system-template.md) as the skeleton; filled examples in `reference/examples/`):
-
-- Direction and feel
-- Depth strategy (borders/shadows/layered) and spacing base unit
-- Hierarchy decisions (type scale ratio, density values, focal pattern)
-- Key component patterns — add when a component is used 2+ times, is reusable, or has measurements worth remembering (not one-offs or prop variations). Record the values, e.g. `Button primary — 36px h · 12px 16px pad · 6px radius · 14px/500`.
-- Visual direction notes and selected references when an image pass shaped the design
-
-**Consistency checks.** If system.md defines values, hold to them: spacing on the grid, the declared depth strategy throughout, colors from the palette, documented patterns reused not reinvented. This compounds — each save makes future work faster and more consistent.
+- **替换测试** —— 把你的字族换成惯用的那个,把布局换成标准模板:会有任何不同吗?换了不产生差别的地方,就是你默认了的地方。
+- **眯眼测试** —— 眯起眼:层级仍可读?没有东西刺眼地跳出来?
+- **签名测试** —— 指出五个签名出现的具体元素。"整体感觉"不算。
+- **Token 测试** —— 把你的 CSS 变量读出声:它们属于这个产品的世界,还是任何项目?
 
 ---
 
-# Companion Workflows
+# 完成任务之后
 
-Two optional deep-dive workflows live in `commands/` (read on demand; in Claude Code plugin installs they are also available as slash commands):
+总是提出保存:"要我把这些模式存下来供以后用吗?"如果同意,写入 `.interface-design/system.md`(用 [`reference/system-template.md`](reference/system-template.md) 作骨架;填写好的示例在 `reference/examples/`):
 
-- `commands/design-review.md` — strict craft + hierarchy review of a build, with an approval bar; renders before/after when possible
-- `commands/design-deslop.md` — fast, diff-scoped pass that strips visual slop from a branch
+- 方向与感觉
+- 深度策略(边框/阴影/分层)与间距基准单位
+- 层级决策(字阶比率、密度值、焦点模式)
+- 关键组件模式 —— 在组件被用 2+ 次、可复用、或有值得记住的尺寸时添加(不是一次性场景或 prop 变体)。记录数值,例如 `Button primary —— 36px h · 12px 16px pad · 6px radius · 14px/500`。
+- 视觉方向笔记与选定的参照(当图像环节塑造了设计时)
 
-If a user asks for design status, audit, or pattern extraction in natural language: read `.interface-design/system.md` and summarize it, check UI files against it for drift, or scan for repeated spacing/radius/color/component values and propose a system.md — perform the equivalent inline.
+**一致性检查。** 如果 system.md 定义了值,守住它们:间距在网格上、声明的深度策略贯穿全程、颜色出自色板、有记录的模式被复用而非重新发明。这会产生复利 —— 每次保存都让后续工作更快更一致。
+
+---
+
+# 伴随工作流
+
+两个可选的深挖工作流在 `commands/`(按需阅读;在 Claude Code 插件安装中它们也作为 slash command 可用):
+
+- `commands/design-review.md` —— 对构建做严格的 craft + 层级评审,带 approval bar;可能时渲染前后对比
+- `commands/design-deslop.md` —— 快、只作用于 diff 的一遍,把分支上的视觉 slop 剥掉
+
+如果用户用自然语言问设计现状、审计或模式提取:读 `.interface-design/system.md` 并总结它,对着它检查 UI 文件找漂移,或扫描重复的间距/圆角/颜色/组件值并提议一份 system.md —— 在内联完成等价的事。

@@ -1,6 +1,6 @@
 # design-md 高级特性 —— 变体生成与边缘场景
 
-> 本文件是 [`design-md.md`](./design-md.md) 的延伸,承载 **Phase 4 变体引擎**与 **Edge Cases & Fallbacks**。主流程(Phase 0-3 + Template + Lint)见主文件。
+> 本文件是 [`design-md.md`](./design-md.md) 的延伸,承载 **Phase 4 变体引擎**与 **边缘场景与回退**。主流程(Phase 0-3 + Template + Lint)见主文件。
 > 由顶层 [`SKILL.md`](../../SKILL.md) 路由进入;主文件末尾会引用本文件。
 
 ---
@@ -122,7 +122,7 @@ dials:
 
 ---
 
-## Edge Cases & Fallbacks
+## 边缘场景与回退
 
 ### CLI 不可用(无 npm / node 环境)
 
@@ -199,7 +199,7 @@ DESIGN.md 的 CSS 导出格式不直接适用于原生平台:
 
 ---
 
-## Reference Files
+## 参考文件
 
 - [`design-md.md`](./design-md.md) — 主流程(Phase 0-3 + Template + Lint)
 - [`spec-schema.md`](../meta/spec-schema.md) — 完整 token 类型定义 + 权威 Linter Rules 表

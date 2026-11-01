@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Dark Mode (OLED) is a UI style reference for general interfaces, focused on Dark theme, low light, high contrast, deep black, midnight blue.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Dark Mode (OLED) 是为通用界面提供的 UI 风格参照,侧重暗色主题、低光、高对比、深黑、午夜蓝。
      站点色板: #000000, #121212, #39ff14, #0080ff, #ffd700, #bf00ff
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Dark Mode (OLED)
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Dark Mode (OLED) is a UI style reference for general interfaces, combining Dark theme, low light, high contrast, deep black, midnight blue, eye-friendly, OLED, night mode, power efficient. The visual direction is shaped by Minimal glow (text-shadow: 0 0 10px), dark-to-light transitions, low white emission, high readability, visible focus.
+Dark Mode (OLED) 是为通用界面提供的 UI 风格参照,融合暗色主题、低光、高对比、深黑、午夜蓝、护眼、OLED、夜间模式、省电。视觉方向由微光(text-shadow: 0 0 10px)、暗到亮过渡、低白光输出、高可读性、可见焦点塑造。
 
-Use it for Night-mode apps (應用程式), coding platforms (平台), entertainment (娛樂), eye-strain prevention, OLED devices, low-light. Avoid it for Print-first content, high-brightness outdoor, color-accuracy-critical.
+用于夜间模式应用、编程平台、娱乐、防眼疲劳、OLED 设备、弱光环境。避免用于印刷优先内容、高亮户外、色彩精度关键场景。
 
-**Key Characteristics:**
-- Primary palette: Deep Black #000000, Dark Grey #121212, Midnight Blue #0A0E27
-- Secondary palette: Vibrant accents: Neon Green #39FF14, Electric Blue #0080FF, Gold #FFD700, Plasma Purple #BF00FF
-- Effects: Minimal glow (text-shadow: 0 0 10px), dark-to-light transitions, low white emission, high readability, visible focus
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Only.
-- Best for: Night-mode apps (應用程式), coding platforms (平台), entertainment (娛樂), eye-strain prevention, OLED devices, low-light
-- Avoid for: Print-first content, high-brightness outdoor, color-accuracy-critical
+**关键特征:**
+- 主色板:深黑 #000000、深灰 #121212、午夜蓝 #0A0E27
+- 次色板:鲜亮强调色:霓虹绿 #39FF14、电光蓝 #0080FF、金 #FFD700、等离子紫 #BF00FF
+- 效果:微光(text-shadow: 0 0 10px)、暗到亮过渡、低白光输出、高可读性、可见焦点
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 仅暗色。
+- 最适用于:夜间模式应用、编程平台、娱乐、防眼疲劳、OLED 设备、弱光环境
+- 避免用于:印刷优先内容、高亮户外、色彩精度关键场景
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, MUI 10/10, Chakra 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/07-dark-mode-oled.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、MUI 10/10、Chakra 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/07-dark-mode-oled.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

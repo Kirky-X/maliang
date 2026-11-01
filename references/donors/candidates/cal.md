@@ -1,264 +1,264 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 设计与生产力(design) · 站点摘要: Open-source scheduling. Clean neutral UI, developer-oriented simplicity
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 设计与生产力(design) · 站点摘要: 开源日程调度。干净中性 UI,面向开发者的简洁
      站点色板: #242424, #111111, #898989, #ffffff, #0099ff, #3b82f6
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Cal.com
+# 设计系统:Cal.com
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Cal.com's website is a masterclass in monochromatic restraint — a grayscale world where boldness comes not from color but from the sheer confidence of black text on white space. Inspired by Uber's minimal aesthetic, the palette is deliberately stripped of hue: near-black headings (`#242424`), mid-gray secondary text (`#898989`), and pure white surfaces. Color is treated as a foreign substance — when it appears (a rare blue link, a green trust badge), it feels like a controlled accent in an otherwise black-and-white photograph.
+Cal.com 的网站是单色克制的范本——一个灰度世界,大胆不来自颜色,而来自黑字压白底那份纯粹的自信。受 Uber 极简美学启发,色板刻意抽掉色相:近黑标题(`#242424`)、中灰次级文本(`#898989`)、纯白表面。颜色被当作异物——它出现时(罕见的蓝色链接、绿色信任徽章),就像黑白照片里一处受控的强调。
 
-Cal Sans, the brand's custom geometric display typeface designed by Mark Davis, is the visual centerpiece. Letters are intentionally spaced extremely close at large sizes, creating dense, architectural headlines that feel like they're carved into the page. At 64px and 48px, Cal Sans headings sit at weight 600 with a tight 1.10 line-height — confident, compressed, and immediately recognizable. For body text, the system switches to Inter, providing "rock-solid" readability that complements Cal Sans's display personality. The typography pairing creates a clear division: Cal Sans speaks, Inter explains.
+Cal Sans 是品牌自有的几何显示字体,由 Mark Davis 设计,是视觉中心。大字号下字母刻意排得极紧,造出密集、建筑式的标题,像被刻进页面。64px 与 48px 的 Cal Sans 标题用 600 字重、1.10 的紧行高——自信、压缩、一眼可辨。正文切换到 Inter,提供"稳如磐石"的可读性,补上 Cal Sans 的显示个性。这对搭配划出清晰分工:Cal Sans 说话,Inter 解释。
 
-The elevation system is notably sophisticated for a minimal site — 11 shadow definitions create a nuanced depth hierarchy using multi-layered shadows that combine ring borders (`0px 0px 0px 1px`), soft diffused shadows, and inset highlights. This shadow-first approach to depth (rather than border-first) gives surfaces a subtle three-dimensionality that feels modern and polished. Built on Framer with a border-radius scale from 2px to 9999px (pill), Cal.com balances geometric precision with soft, rounded interactive elements.
+对极简站点而言,这套海拔系统相当精密——11 条阴影定义用多层阴影造出细微的深度层级,把环边框(`0px 0px 0px 1px`)、柔和扩散阴影、inset 高光组合在一起。这种"阴影先行"而非"边框先行"的深度做法,让表面有了微妙的三维感,现代而精致。站点建在 Framer 上,圆角刻度从 2px 到 9999px(pill),Cal.com 在几何精确与柔和圆润的交互元素之间取得平衡。
 
-**Key Characteristics:**
-- Purely grayscale brand palette — no brand colors, boldness through monochrome
-- Cal Sans custom geometric display font with extremely tight default letter-spacing
-- Multi-layered shadow system (11 definitions) with ring borders + diffused shadows + inset highlights
-- Cal Sans for headings, Inter for body — clean typographic division
-- Wide border-radius scale from 2px to 9999px (pill) — versatile rounding
-- White canvas with near-black (#242424) text — maximum contrast, zero decoration
-- Product screenshots as primary visual content — the scheduling UI sells itself
-- Built on Framer platform
+**关键特征:**
+- 纯灰度品牌色板——没有品牌色,大胆靠单色
+- Cal Sans 自有几何显示字体,默认字距极紧
+- 多层阴影系统(11 条定义):环边框 + 扩散阴影 + inset 高光
+- 标题用 Cal Sans,正文用 Inter——干净的排版分工
+- 圆角刻度宽,从 2px 到 9999px(pill)——圆角灵活
+- 白画布配近黑(#242424)文本——最大对比、零装饰
+- 产品截图作主要视觉内容——日程 UI 自己会说话
+- 建在 Framer 平台
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Primary
-- **Charcoal** (`#242424`): Primary heading and button text — Cal.com's signature near-black, warmer than pure black
-- **Midnight** (`#111111`): Deepest text/overlay color — used at 50% opacity for subtle overlays
-- **White** (`#ffffff`): Primary background and surface — the dominant canvas
+### 主色
+- **炭黑**(`#242424`):主标题与按钮文字——Cal.com 的签名近黑,比纯黑更暖
+- **午夜黑**(`#111111`):最深的文本/浮层色——以 50% 不透明度用于细微浮层
+- **白**(`#ffffff`):主背景与表面——占主导的画布
 
-### Secondary & Accent
-- **Link Blue** (`#0099ff`): In-text links with underline decoration — the only blue in the system, reserved strictly for hyperlinks
-- **Focus Ring** (`#3b82f6` at 50% opacity): Keyboard focus indicator — accessibility-only, invisible in normal interaction
-- **Default Link** (`#0000ee`): Browser-default link color on some elements — unmodified, signaling openness
+### 次级与强调
+- **链接蓝**(`#0099ff`):带下划线装饰的行内链接——系统里唯一的蓝,严格留给超链接
+- **焦点环**(`#3b82f6` 50% 不透明度):键盘焦点指示——仅用于无障碍,常规交互中不可见
+- **默认链接**(`#0000ee`):部分元素上的浏览器默认链接色——未改动,示意开放
 
-### Surface & Background
-- **Pure White** (`#ffffff`): Primary page background and card surfaces
-- **Light Gray** (approx `#f5f5f5`): Subtle section differentiation — barely visible tint
-- **Mid Gray** (`#898989`): Secondary text, descriptions, and muted labels
+### 表面与背景
+- **纯白**(`#ffffff`):主页面背景与卡片表面
+- **浅灰**(约 `#f5f5f5`):细微的区块区分——几乎看不见的色调
+- **中灰**(`#898989`):次级文本、描述、弱化标签
 
-### Neutrals & Text
-- **Charcoal** (`#242424`): Headlines, buttons, primary UI text
-- **Midnight** (`#111111`): Deep black for high-contrast links and nav text
-- **Mid Gray** (`#898989`): Descriptions, secondary labels, muted content
-- **Pure Black** (`#000000`): Certain link text elements
-- **Border Gray** (approx `rgba(34, 42, 53, 0.08–0.10)`): Shadow-based borders using ring shadows instead of CSS borders
+### 中性色与文本
+- **炭黑**(`#242424`):标题、按钮、主 UI 文本
+- **午夜黑**(`#111111`):高对比链接与导航文字的深黑
+- **中灰**(`#898989`):描述、次级标签、弱化内容
+- **纯黑**(`#000000`):部分链接文字元素
+- **边框灰**(约 `rgba(34, 42, 53, 0.08–0.10)`):基于阴影的边框,用环阴影而非 CSS 边框
 
-### Semantic & Accent
-- Cal.com is deliberately colorless for brand elements — "a grayscale brand to emphasise on boldness and professionalism"
-- Product UI screenshots show color (blues, greens in the scheduling interface), but the marketing site itself stays monochrome
-- The philosophy mirrors Uber's approach: let the content carry color, the frame stays neutral
+### 语义与强调
+- Cal.com 的品牌元素刻意无色——"一个灰度品牌,用来强调大胆与专业"
+- 产品 UI 截图里有颜色(日程界面里的蓝、绿),但营销站本身保持单色
+- 这一哲学照搬 Uber 的做法:让内容带颜色,画框保持中性
 
-### Gradient System
-- No gradients on the marketing site — the design is fully flat and monochrome
-- Depth is achieved entirely through shadows, not color transitions
+### 渐变系统
+- 营销站上没有渐变——设计完全扁平、单色
+- 深度完全靠阴影达成,不靠颜色过渡
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Family
-- **Display**: `Cal Sans` — custom geometric sans-serif by Mark Davis. Open-source, available on Google Fonts and GitHub. Extremely tight default letter-spacing designed for large headlines. Has 6 character variants (Cc, j, t, u, 0, 1)
-- **Body**: `Inter` — "rock-solid" standard body font. Fallback: `Inter Placeholder`
-- **UI Light**: `Cal Sans UI Variable Light` — light-weight variant (300) for softer UI text with -0.2px letter-spacing
-- **UI Medium**: `Cal Sans UI Medium` — medium-weight variant (500) for emphasized captions
-- **Mono**: `Roboto Mono` — for code blocks and technical content
-- **Tertiary**: `Matter Regular` / `Matter SemiBold` / `Matter Medium` — additional body fonts for specific contexts
+### 字族
+- **显示**:`Cal Sans`——Mark Davis 设计的自有几何无衬线。开源,在 Google Fonts 与 GitHub 上可获取。为大标题设计的极紧默认字距。有 6 个字符变体(Cc、j、t、u、0、1)
+- **正文**:`Inter`——"稳如磐石"的标准正文字体。回退:`Inter Placeholder`
+- **UI Light**:`Cal Sans UI Variable Light`——轻字重变体(300),用于更柔的 UI 文本,字距 -0.2px
+- **UI Medium**:`Cal Sans UI Medium`——中等字重变体(500),用于强调型说明文字
+- **等宽**:`Roboto Mono`——供代码块与技术内容
+- **三级**:`Matter Regular` / `Matter SemiBold` / `Matter Medium`——特定场景下的补充正文字体
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Hero | Cal Sans | 64px | 600 | 1.10 | 0px | Maximum impact, tight default spacing |
-| Section Heading | Cal Sans | 48px | 600 | 1.10 | 0px | Large section titles |
-| Feature Heading | Cal Sans | 24px | 600 | 1.30 | 0px | Feature block headlines |
-| Sub-heading | Cal Sans | 20px | 600 | 1.20 | +0.2px | Positive spacing for readability at smaller size |
-| Sub-heading Alt | Cal Sans | 20px | 600 | 1.50 | 0px | Relaxed line-height variant |
-| Card Title | Cal Sans | 16px | 600 | 1.10 | 0px | Smallest Cal Sans usage |
-| Caption Label | Cal Sans | 12px | 600 | 1.50 | 0px | Small labels in Cal Sans |
-| Body Light | Cal Sans UI Light | 18px | 300 | 1.30 | -0.2px | Light-weight body intro text |
-| Body Light Standard | Cal Sans UI Light | 16px | 300 | 1.50 | -0.2px | Light-weight body text |
-| Caption Light | Cal Sans UI Light | 14px | 300 | 1.40–1.50 | -0.2 to -0.28px | Light captions and descriptions |
-| UI Label | Inter | 16px | 600 | 1.00 | 0px | UI buttons and nav labels |
-| Caption Inter | Inter | 14px | 500 | 1.14 | 0px | Small UI text |
-| Micro | Inter | 12px | 500 | 1.00 | 0px | Smallest Inter text |
-| Code | Roboto Mono | 14px | 600 | 1.00 | 0px | Code snippets, technical text |
-| Body Matter | Matter Regular | 14px | 400 | 1.14 | 0px | Alternate body text (product UI) |
+| 显示 Hero | Cal Sans | 64px | 600 | 1.10 | 0px | 冲击力最大,默认字距极紧 |
+| 区块标题 | Cal Sans | 48px | 600 | 1.10 | 0px | 大号区块标题 |
+| Feature 标题 | Cal Sans | 24px | 600 | 1.30 | 0px | Feature 区块标题 |
+| 子标题 | Cal Sans | 20px | 600 | 1.20 | +0.2px | 小字号下用正字距保可读 |
+| 子标题备选 | Cal Sans | 20px | 600 | 1.50 | 0px | 宽松行高变体 |
+| 卡片标题 | Cal Sans | 16px | 600 | 1.10 | 0px | Cal Sans 的最小用法 |
+| 说明标签 | Cal Sans | 12px | 600 | 1.50 | 0px | Cal Sans 的小号标签 |
+| 正文 Light | Cal Sans UI Light | 18px | 300 | 1.30 | -0.2px | 轻字重正文引言 |
+| 正文 Light 标准 | Cal Sans UI Light | 16px | 300 | 1.50 | -0.2px | 轻字重正文 |
+| 说明 Light | Cal Sans UI Light | 14px | 300 | 1.40–1.50 | -0.2 至 -0.28px | 轻字重说明与描述 |
+| UI 标签 | Inter | 16px | 600 | 1.00 | 0px | UI 按钮与导航标签 |
+| 说明 Inter | Inter | 14px | 500 | 1.14 | 0px | 小号 UI 文本 |
+| 微型 | Inter | 12px | 500 | 1.00 | 0px | 最小的 Inter 文本 |
+| 代码 | Roboto Mono | 14px | 600 | 1.00 | 0px | 代码片段、技术文本 |
+| 正文 Matter | Matter Regular | 14px | 400 | 1.14 | 0px | 备选正文(产品 UI) |
 
-### Principles
-- **Cal Sans at large, Inter at small**: Cal Sans is exclusively for headings and display — never for body text. The system enforces this division strictly
-- **Tight by default, space when small**: Cal Sans letters are "intentionally spaced to be extremely close" at large sizes. At 20px and below, positive letter-spacing (+0.2px) must be applied to prevent cramming
-- **Weight 300 body variant**: Cal Sans UI Variable Light at 300 weight creates an elegant, airy body text that contrasts with the dense 600-weight headlines
-- **Weight 600 dominance**: Nearly all Cal Sans usage is at weight 600 (semi-bold) — the font was designed to perform at this weight
-- **Negative tracking on light text**: Cal Sans UI Light uses -0.2px to -0.28px letter-spacing, subtly tightening the already-compact letterforms
+### 原则
+- **大用 Cal Sans、小用 Inter**:Cal Sans 只给标题与显示——绝不给正文。系统严格执行这一分工
+- **默认收紧、小字放开**:大字号下 Cal Sans 字母"刻意排得极紧"。20px 及以下必须加正字距(+0.2px),防止挤成一团
+- **300 字重正文变体**:Cal Sans UI Variable Light 的 300 字重造出优雅、透气的正文,与密集的 600 字重标题形成对比
+- **600 字重主导**:几乎所有 Cal Sans 用法都是 600 字重(半粗)——该字体就是为这个字重设计的
+- **轻文本负字距**:Cal Sans UI Light 用 -0.2px 至 -0.28px 字距,把本已紧凑的字形再收一点
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
-- **Dark Primary**: `#242424` (or `#1e1f23`) background, white text, 6–8px radius. Hover: opacity reduction to 0.7. The signature CTA — maximally dark on white
-- **White/Ghost**: White background with shadow-ring border, dark text. Uses the multi-layered shadow system for subtle elevation
-- **Pill**: 9999px radius for rounded pill-shaped actions and badges
-- **Compact**: 4px padding, small text — utility actions within product UI
-- **Inset highlight**: Some buttons feature `rgba(255, 255, 255, 0.15) 0px 2px 0px inset` — a subtle inner-top highlight creating a 3D pressed effect
+### 按钮
+- **暗色主按钮**:`#242424`(或 `#1e1f23`)底、白字、6–8px 圆角。hover:不透明度降至 0.7。签名 CTA——白底上最暗的那块
+- **白/幽灵**:白底配环阴影边框、深字。用多层阴影系统做细微抬升
+- **Pill**:9999px 圆角,用于圆润的 pill 形操作与徽章
+- **紧凑**:4px 内边距、小字——产品 UI 内的工具型操作
+- **Inset 高光**:部分按钮带 `rgba(255, 255, 255, 0.15) 0px 2px 0px inset`——内顶部细微高光,造出 3D 按压效果
 
-### Cards & Containers
-- **Shadow Card**: White background, multi-layered shadow — `rgba(19, 19, 22, 0.7) 0px 1px 5px -4px, rgba(34, 42, 53, 0.08) 0px 0px 0px 1px, rgba(34, 42, 53, 0.05) 0px 4px 8px 0px`. The ring shadow (0px 0px 0px 1px) acts as a shadow-border
-- **Product UI Cards**: Screenshots of the scheduling interface displayed in card containers with shadow elevation
-- **Radius**: 8px for standard cards, 12px for larger containers, 16px for prominent sections
-- **Hover**: Likely subtle shadow deepening or scale transform
+### 卡片与容器
+- **阴影卡**:白底、多层阴影——`rgba(19, 19, 22, 0.7) 0px 1px 5px -4px, rgba(34, 42, 53, 0.08) 0px 0px 0px 1px, rgba(34, 42, 53, 0.05) 0px 4px 8px 0px`。环阴影(0px 0px 0px 1px)充当阴影边框
+- **产品 UI 卡**:日程界面的截图放在带阴影抬升的卡片容器里
+- **圆角**:标准卡 8px,大容器 12px,醒目区块 16px
+- **hover**:大概是阴影细微加深或缩放变换
 
-### Inputs & Forms
-- **Select dropdown**: White background, `#000000` text, 1px solid `rgb(118, 118, 118)` border
-- **Focus**: Uses Framer's focus outline system (`--framer-focus-outline`)
-- **Text input**: 8px radius, standard border treatment
-- **Minimal form presence**: The marketing site prioritizes CTA buttons over complex forms
+### 输入与表单
+- **Select 下拉**:白底、`#000000` 字、1px solid `rgb(118, 118, 118)` 边框
+- **焦点**:用 Framer 的焦点轮廓系统(`--framer-focus-outline`)
+- **文本输入**:8px 圆角,标准边框处理
+- **表单极少**:营销站优先 CTA 按钮,不做复杂表单
 
-### Navigation
-- **Top nav**: White/transparent background, Cal Sans links at near-black
-- **Nav text**: `#111111` (Midnight) for primary links, `#000000` for emphasis
-- **CTA button**: Dark Primary in the nav — high contrast call-to-action
-- **Mobile**: Collapses to hamburger with simplified navigation
-- **Sticky**: Fixed on scroll
+### 导航
+- **顶栏**:白/透明背景,Cal Sans 链接接近黑色
+- **导航文字**:主链接 `#111111`(午夜黑),强调用 `#000000`
+- **CTA 按钮**:导航里放暗色主按钮——高对比的行动号召
+- **移动端**:折为汉堡 + 简化导航
+- **吸顶**:滚动时固定
 
-### Image Treatment
-- **Product screenshots**: Large scheduling UI screenshots — the product is the primary visual
-- **Trust logos**: Grayscale company logos in a horizontal trust bar
-- **Aspect ratios**: Wide landscape for product UI screenshots
-- **No decorative imagery**: No illustrations, photos, or abstract graphics — pure product + typography
+### 图像处理
+- **产品截图**:大幅日程 UI 截图——产品本身是主视觉
+- **信任 logo**:灰度公司 logo 排成横向信任条
+- **宽高比**:产品 UI 截图用宽幅横构图
+- **无装饰图像**:没有插画、照片或抽象图形——只有纯产品 + 排版
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- **Base unit**: 8px
-- **Scale**: 1px, 2px, 3px, 4px, 6px, 8px, 12px, 16px, 20px, 24px, 28px, 80px, 96px
-- **Section padding**: 80px–96px vertical between major sections (generous)
-- **Card padding**: 12px–24px internal
-- **Component gaps**: 4px–8px between related elements
-- **Notable jump**: From 28px to 80px — a deliberate gap emphasizing the section-level spacing tier
+### 间距系统
+- **基数**:8px
+- **刻度**:1px, 2px, 3px, 4px, 6px, 8px, 12px, 16px, 20px, 24px, 28px, 80px, 96px
+- **区块内边距**:主要区块之间纵向 80px–96px(慷慨)
+- **卡内边距**:内部 12px–24px
+- **组件间隙**:相关元素之间 4px–8px
+- **显著跳跃**:从 28px 直接到 80px——刻意留出的空档,强调区块级间距档
 
-### Grid & Container
-- **Max width**: ~1200px content container, centered
-- **Column patterns**: Full-width hero, centered text blocks, 2-3 column feature grids
-- **Feature showcase**: Product screenshots flanked by description text
-- **Breakpoints**: 98px, 640px, 768px, 810px, 1024px, 1199px — Framer-generated
+### 网格与容器
+- **最大宽**:内容容器约 1200px,居中
+- **列模式**:全宽 hero、居中文本块、2-3 列 feature 网格
+- **Feature 展示**:产品截图两侧配描述文字
+- **断点**:98px, 640px, 768px, 810px, 1024px, 1199px——Framer 生成
 
-### Whitespace Philosophy
-- **Lavish section spacing**: 80px–96px between sections creates a breathable, premium feel
-- **Product-first content**: Screenshots dominate the visual space — minimal surrounding decoration
-- **Centered headlines**: Cal Sans headings centered with generous margins above and below
+### 留白哲学
+- **慷慨的区块间距**:区块间 80px–96px,造出可呼吸的高级感
+- **产品优先的内容**:截图占据视觉空间——周边装饰极少
+- **居中标题**:Cal Sans 标题居中,上下留足边距
 
-### Border Radius Scale
-- **2px**: Subtle rounding on inline elements
-- **4px**: Small UI components
-- **6px–7px**: Buttons, small cards, images
-- **8px**: Standard interactive elements — buttons, inputs, images
-- **12px**: Medium containers — links, larger cards, images
-- **16px**: Large section containers
-- **29px**: Special rounded elements
-- **100px**: Large rounding — nearly circular on small elements
-- **1000px**: Very large rounding
-- **9999px**: Full pill shape — badges, links
+### 圆角刻度
+- **2px**:行内元素的细微圆角
+- **4px**:小型 UI 组件
+- **6px–7px**:按钮、小卡片、图片
+- **8px**:标准交互元素——按钮、输入、图片
+- **12px**:中等容器——链接、较大卡片、图片
+- **16px**:大区块容器
+- **29px**:特殊圆润元素
+- **100px**:大圆角——小元素上近乎圆形
+- **1000px**:极大圆角
+- **9999px**:完整 pill 形——徽章、链接
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Level 0 (Flat) | No shadow | Page canvas, basic text containers |
-| Level 1 (Inset) | `rgba(0,0,0,0.16) 0px 1px 1.9px 0px inset` | Pressed/recessed elements, input wells |
-| Level 2 (Ring + Soft) | `rgba(19,19,22,0.7) 0px 1px 5px -4px, rgba(34,42,53,0.08) 0px 0px 0px 1px, rgba(34,42,53,0.05) 0px 4px 8px` | Cards, containers — the workhorse shadow |
-| Level 3 (Ring + Soft Alt) | `rgba(36,36,36,0.7) 0px 1px 5px -4px, rgba(36,36,36,0.05) 0px 4px 8px` | Alt card elevation without ring border |
-| Level 4 (Inset Highlight) | `rgba(255,255,255,0.15) 0px 2px 0px inset` or `rgb(255,255,255) 0px 2px 0px inset` | Button inner highlight — 3D pressed effect |
-| Level 5 (Soft Only) | `rgba(34,42,53,0.05) 0px 4px 8px` | Subtle ambient shadow |
+| 层 0(平) | 无阴影 | 页面画布、基础文本容器 |
+| 层 1(Inset) | `rgba(0,0,0,0.16) 0px 1px 1.9px 0px inset` | 按压/内凹元素、输入凹槽 |
+| 层 2(环 + 柔) | `rgba(19,19,22,0.7) 0px 1px 5px -4px, rgba(34,42,53,0.08) 0px 0px 0px 1px, rgba(34,42,53,0.05) 0px 4px 8px` | 卡片、容器——主力阴影 |
+| 层 3(环 + 柔备选) | `rgba(36,36,36,0.7) 0px 1px 5px -4px, rgba(36,36,36,0.05) 0px 4px 8px` | 无环边框的备选卡片抬升 |
+| 层 4(Inset 高光) | `rgba(255,255,255,0.15) 0px 2px 0px inset` 或 `rgb(255,255,255) 0px 2px 0px inset` | 按钮内高光——3D 按压效果 |
+| 层 5(仅柔) | `rgba(34,42,53,0.05) 0px 4px 8px` | 细微环境阴影 |
 
-### Shadow Philosophy
-Cal.com's shadow system is the most sophisticated element of the design — 11 shadow definitions using a multi-layered compositing technique:
-- **Ring borders**: `0px 0px 0px 1px` shadows act as borders, avoiding CSS `border` entirely. This creates hairline containment without affecting layout
-- **Diffused soft shadows**: `0px 4px 8px` at 5% opacity add gentle ambient depth
-- **Sharp contact shadows**: `0px 1px 5px -4px` at 70% opacity create tight bottom-edge shadows for grounding
-- **Inset highlights**: White inset shadows at the top of buttons create a subtle 3D bevel
-- Shadows are composed in comma-separated stacks — each surface gets 2-3 layered shadow definitions working together
+### 阴影哲学
+Cal.com 的阴影系统是这套设计里最精密的元素——11 条阴影定义,用多层合成手法:
+- **环边框**:`0px 0px 0px 1px` 阴影充当边框,完全避开 CSS `border`。这样得到发丝级围合,又不影响布局
+- **扩散柔阴影**:`0px 4px 8px` 配 5% 不透明度,加柔和的环境深度
+- **锐利接触阴影**:`0px 1px 5px -4px` 配 70% 不透明度,造出紧贴底边的阴影,把元素"压住"
+- **Inset 高光**:按钮顶部的白色 inset 阴影,造出细微的 3D 斜面
+- 阴影以逗号分隔的多层栈组合——每个表面由 2-3 条分层阴影协同定义
 
-### Decorative Depth
-- No gradients or glow effects
-- All depth comes from the sophisticated shadow compositing system
-- The overall effect is subtle but precise — surfaces feel like physical cards sitting on a table
+### 装饰性深度
+- 没有渐变或发光效果
+- 所有深度都来自这套精密的阴影合成系统
+- 整体效果细微但精确——表面像桌面上真实的卡片
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use Cal Sans exclusively for headings (24px+) and never for body text — it's a display font with tight default spacing
-- Apply positive letter-spacing (+0.2px) when using Cal Sans below 24px — the font cramps at small sizes without it
-- Maintain the grayscale palette — boldness comes from contrast, not color
-- Use the multi-layered shadow system for card elevation — ring shadow + diffused shadow + contact shadow
-- Keep backgrounds pure white — the monochrome philosophy requires a clean canvas
-- Use Inter for all body text at weight 300–600 — it's the reliable counterpart to Cal Sans's display personality
-- Let product screenshots be the visual content — no illustrations, no decorative graphics
-- Apply generous section spacing (80px–96px) — the breathing room is essential to the premium feel
+- Cal Sans 只用于标题(24px+)与显示,绝不用于正文——它是默认字距极紧的显示字体
+- Cal Sans 用在 24px 以下时加正字距(+0.2px)——不加的话小字号下字会挤
+- 保持灰度色板——大胆来自对比,不来自颜色
+- 卡片抬升用多层阴影系统——环阴影 + 扩散阴影 + 接触阴影
+- 背景保持纯白——单色哲学需要干净画布
+- 所有正文用 Inter,300–600 字重——它是 Cal Sans 显示个性的可靠对手
+- 让产品截图承担视觉内容——不要插画、不要装饰图形
+- 用慷慨的区块间距(80px–96px)——这份留白是高级感的关键
 
 ### Don't
-- Use Cal Sans for body text or text below 16px — it wasn't designed for extended reading
-- Add brand colors — Cal.com is intentionally grayscale, color is reserved for links and UI states only
-- Use CSS borders when shadows can achieve the same containment — the ring-shadow technique is the system's approach
-- Apply negative letter-spacing to Cal Sans at small sizes — it needs positive spacing (+0.2px) below 24px
-- Create heavy, dark shadows — Cal.com's shadows are subtle (5% opacity diffused) with sharp contact edges
-- Use illustrations, abstract graphics, or decorative elements — the visual language is typography + product UI only
-- Mix Cal Sans weights — the font is designed for weight 600, other weights break the intended character
-- Reduce section spacing below 48px — the generous whitespace is core to the premium monochrome aesthetic
+- 不要用 Cal Sans 排正文或 16px 以下的文本——它不是为长读设计的
+- 不要加品牌色——Cal.com 刻意灰度,颜色只留给链接与 UI 状态
+- 阴影能达成的围合就不要用 CSS 边框——环阴影是系统的做法
+- 不要给小字号的 Cal Sans 加负字距——24px 以下它需要正字距(+0.2px)
+- 不要做厚重暗阴影——Cal.com 的阴影是细微的(5% 不透明度扩散)配锐利接触边
+- 不要用插画、抽象图形或装饰元素——视觉语言只有排版 + 产品 UI
+- 不要混用 Cal Sans 字重——该字体为 600 字重设计,别的字重会破坏既定性格
+- 不要把区块间距压到 48px 以下——慷慨留白是高级单色美学的核心
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile | <640px | Single column, hero text ~36px, stacked features, hamburger nav |
-| Tablet Small | 640px–768px | 2-column begins for some elements |
-| Tablet | 768px–810px | Layout adjustments, fuller grid |
-| Tablet Large | 810px–1024px | Multi-column feature grids |
-| Desktop | 1024px–1199px | Full layout, expanded navigation |
-| Large Desktop | >1199px | Max-width container, centered content |
+| 手机 | <640px | 单列,hero 文字约 36px,feature 堆叠,汉堡导航 |
+| 小屏平板 | 640px–768px | 部分元素开始 2 列 |
+| 平板 | 768px–810px | 布局调整,网格更完整 |
+| 大屏平板 | 810px–1024px | 多列 feature 网格 |
+| 桌面 | 1024px–1199px | 完整布局,展开导航 |
+| 大屏桌面 | >1199px | 最大宽容器,内容居中 |
 
-### Touch Targets
-- Buttons: 8px radius with comfortable padding (10px+ vertical)
-- Nav links: Dark text with adequate spacing
-- Mobile CTAs: Full-width dark buttons for easy thumb access
-- Pill badges: 9999px radius creates large, tappable targets
+### 触控目标
+- 按钮:8px 圆角配舒适内边距(纵向 10px+)
+- 导航链接:深色文字配充足间距
+- 移动端 CTA:全宽暗色按钮,方便拇指点按
+- Pill 徽章:9999px 圆角造出大而易点的目标
 
-### Collapsing Strategy
-- **Navigation**: Full horizontal nav → hamburger on mobile
-- **Hero**: 64px Cal Sans display → ~36px on mobile
-- **Feature grids**: Multi-column → 2-column → single stacked column
-- **Product screenshots**: Scale within containers, maintaining aspect ratios
-- **Section spacing**: Reduces from 80px–96px to ~48px on mobile
+### 折叠策略
+- **导航**:完整横向导航 → 移动端汉堡
+- **Hero**:64px Cal Sans 显示 → 移动端约 36px
+- **Feature 网格**:多列 → 2 列 → 单列堆叠
+- **产品截图**:在容器内缩放,保持宽高比
+- **区块间距**:从 80px–96px 降到移动端约 48px
 
-### Image Behavior
-- Product screenshots scale responsively
-- Trust logos reflow to multi-row grid on mobile
-- No art direction changes — same compositions at all sizes
-- Images use 7px–12px border-radius for consistent rounded corners
+### 图像行为
+- 产品截图按响应式缩放
+- 信任 logo 在移动端重排为多行网格
+- 不做艺术指导变更——各尺寸下构图相同
+- 图片用 7px–12px 圆角,保持一致的圆润转角
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Primary Text: Charcoal (`#242424`)
-- Deep Text: Midnight (`#111111`)
-- Secondary Text: Mid Gray (`#898989`)
-- Background: Pure White (`#ffffff`)
-- Link: Link Blue (`#0099ff`)
-- CTA Button: Charcoal (`#242424`) bg, white text
-- Shadow Border: `rgba(34, 42, 53, 0.08)` ring
+### 快速取色参考
+- 主文本:炭黑(`#242424`)
+- 深文本:午夜黑(`#111111`)
+- 次文本:中灰(`#898989`)
+- 背景:纯白(`#ffffff`)
+- 链接:链接蓝(`#0099ff`)
+- CTA 按钮:炭黑(`#242424`)底、白字
+- 阴影边框:`rgba(34, 42, 53, 0.08)` 环
 
-### Example Component Prompts
-- "Create a hero section with white background, 64px Cal Sans heading at weight 600, line-height 1.10, #242424 text, centered layout with a dark CTA button (#242424, 8px radius, white text)"
-- "Design a scheduling card with white background, multi-layered shadow (0px 1px 5px -4px rgba(19,19,22,0.7), 0px 0px 0px 1px rgba(34,42,53,0.08), 0px 4px 8px rgba(34,42,53,0.05)), 12px radius"
-- "Build a navigation bar with white background, Inter links at 14px weight 500 in #111111, a dark CTA button (#242424), sticky positioning"
-- "Create a trust bar with grayscale company logos, horizontally centered, 16px gap between logos, on white background"
-- "Design a feature section with 48px Cal Sans heading (weight 600, #242424), 16px Inter body text (weight 300, #898989, line-height 1.50), and a product screenshot with 12px radius and the card shadow"
+### 组件提示词示例
+- "做一段 hero:白底,64px Cal Sans 标题 600 字重,行高 1.10,#242424 字,居中布局,配暗色 CTA 按钮(#242424,8px 圆角,白字)"
+- "设计一张日程卡:白底,多层阴影(0px 1px 5px -4px rgba(19,19,22,0.7), 0px 0px 0px 1px rgba(34,42,53,0.08), 0px 4px 8px rgba(34,42,53,0.05)),12px 圆角"
+- "做一条导航栏:白底,Inter 链接 14px 500 字重 #111111,一枚暗色 CTA 按钮(#242424),吸顶定位"
+- "做一条信任条:灰度公司 logo,横向居中,logo 间距 16px,白底"
+- "设计一个 feature 区:48px Cal Sans 标题(600 字重,#242424),16px Inter 正文(300 字重,#898989,行高 1.50),配一张 12px 圆角、带卡片阴影的产品截图"
 
-### Iteration Guide
-When refining existing screens generated with this design system:
-1. Verify headings use Cal Sans at weight 600, body uses Inter — never mix them
-2. Check that the palette is purely grayscale — if you see brand colors, remove them
-3. Ensure card elevation uses the multi-layered shadow stack, not CSS borders
-4. Confirm section spacing is generous (80px+) — if sections feel cramped, add more space
-5. The overall tone should feel like a clean, professional scheduling tool — monochrome confidence without any decorative flourishes
+### 迭代指南
+细化用这套设计系统生成的现有页面时:
+1. 核对标题用 Cal Sans 600 字重、正文用 Inter——两者绝不混用
+2. 检查色板是否纯灰度——看到品牌色就删掉
+3. 确认卡片抬升用多层阴影栈,不用 CSS 边框
+4. 确认区块间距慷慨(80px+)——区块显得挤就再加空间
+5. 整体语气应像一件干净、专业的日程工具——单色的自信,不带任何装饰花活

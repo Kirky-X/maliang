@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Financial Dashboard is a UI style reference for analytics and BI dashboards, focused on Revenue metrics, profit/loss visualization, budget tracking, financial ratios, portfolio performance.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Financial Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,侧重营收指标、盈亏可视化、预算追踪、财务比率、投资组合表现。
      站点色板: #334155, #10b981, #22c55e, #ef4444, #003366
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Financial Dashboard
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Financial Dashboard is a UI style reference for analytics and BI dashboards, combining Revenue metrics, profit/loss visualization, budget tracking, financial ratios, portfolio performance, cash flow, audit trail. The visual direction is shaped by Number animations (count-up), trend direction indicators, percentage change animations, profit/loss color transitions.
+Financial Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,融合营收指标、盈亏可视化、预算追踪、财务比率、投资组合表现、现金流、审计追踪。视觉方向由数字动画(递增计数)、趋势方向指示器、百分比变化动画、盈亏色彩过渡塑造。
 
-Use it for Financial reporting, accounting dashboards (儀表板), portfolio tracking, budget monitoring (監控), banking analytics (分析). Avoid it for Simple business dashboards (儀表板), entertainment/social metrics (娛樂), non-financial data.
+用于财务报告、会计仪表板、投资组合追踪、预算监控、银行分析。避免用于简单业务仪表板、娱乐/社交指标、非财务数据。
 
-**Key Characteristics:**
-- Primary palette: Financial colors: profit (green #22C55E), loss (red #EF4444), neutral (grey), trust (dark blue #003366)
-- Secondary palette: Revenue highlight (green), expenses (red), budget variance (orange/red), balance (grey), accuracy (blue)
-- Effects: Number animations (count-up), trend direction indicators, percentage change animations, profit/loss color transitions
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Financial reporting, accounting dashboards (儀表板), portfolio tracking, budget monitoring (監控), banking analytics (分析)
-- Avoid for: Simple business dashboards (儀表板), entertainment/social metrics (娛樂), non-financial data
+**关键特征:**
+- 主色板:财务色:盈利(绿 #22C55E)、亏损(红 #EF4444)、中性(灰)、信任(深蓝 #003366)
+- 次色板:营收高亮(绿)、支出(红)、预算偏差(橙/红)、结余(灰)、准确(蓝)
+- 效果:数字动画(递增计数)、趋势方向指示器、百分比变化动画、盈亏色彩过渡
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:财务报告、会计仪表板、投资组合追踪、预算监控、银行分析
+- 避免用于:简单业务仪表板、娱乐/社交指标、非财务数据
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Recharts 9/10, Chart.js 9/10, AG Grid 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/36-financial-analytics.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Recharts 9/10、Chart.js 9/10、AG Grid 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/36-financial-analytics.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

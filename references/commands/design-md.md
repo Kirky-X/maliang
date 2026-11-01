@@ -12,22 +12,22 @@
 
 > **CHECKPOINT 与无人值守**:无人值守时按 [`SKILL.md`](../../SKILL.md)「无人值守与 CHECKPOINT 降级」节的默认取值表执行,不逐点阻塞;自选决定与理由写入交付说明。
 
-## Workflow Overview
+## 工作流总览
 
-| User Intent                           | Phase                                              |
+| 用户意图                              | 阶段                                               |
 | ------------------------------------- | -------------------------------------------------- |
 | 任意 design-md 触发                   | → **Phase 0**: Brief Inference(推理设计方向)     |
 | 0c 方向确认后、填模板前                | → **Phase 0d**: 决策表(带 id,供 token 反向引用)  |
-| "Create a DESIGN.md for my project"   | → **Phase 1A/1B**: Generate from code or interview |
-| "Extract tokens from my CSS/Tailwind" | → **Phase 1A**: Analyze code                       |
-| Provides a screenshot/mockup          | → **Phase 1C**: Extract from image                 |
-| "Build UI using our design system"    | → **Phase 2**: Apply tokens                        |
-| "Lint / validate my DESIGN.md"        | → **Phase 3**: CLI lint(9 项规则)               |
-| "Export tokens to Tailwind/CSS"       | → **Phase 3**: CLI export                          |
-| "Generate theme variations"           | → **Phase 4**: Variation Engine(见 advanced)     |
-| Starting any frontend project         | → Scaffold DESIGN.md **first**                     |
+| "为我的项目创建 DESIGN.md"            | → **Phase 1A/1B**: 从代码或访谈生成               |
+| "从我的 CSS/Tailwind 提取 token"      | → **Phase 1A**: 分析代码                           |
+| 提供截图/mockup                        | → **Phase 1C**: 从图片提取                         |
+| "用我们的设计系统构建 UI"             | → **Phase 2**: 应用 token                          |
+| "lint / 校验我的 DESIGN.md"           | → **Phase 3**: CLI lint(9 项规则)               |
+| "导出 token 到 Tailwind/CSS"          | → **Phase 3**: CLI export                          |
+| "生成主题变体"                        | → **Phase 4**: Variation Engine(见 advanced)     |
+| 开始任何前端项目                       | → **先**搭 DESIGN.md 骨架                          |
 
-**输入冲突优先级**:若用户同时提供代码和截图,以代码(更精确)为主、截图为辅助校验;若同时表达"新建"和"已有 DESIGN.md",先执行 Edge Cases 中的「合并 vs 覆写」流程(见 advanced)。
+**输入冲突优先级**:若用户同时提供代码和截图,以代码(更精确)为主、截图为辅助校验;若同时表达"新建"和"已有 DESIGN.md",先执行边缘场景中的「合并 vs 覆写」流程(见 advanced)。
 
 **🔴 CHECKPOINT 规则(贯穿全文)**:遇到 🔴 CHECKPOINT 标记时必须真正暂停,等待用户文字回复后才能继续;不能假设默认同意直接往下走。
 
@@ -195,17 +195,17 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 
 ---
 
-## Phase 1: Generate a DESIGN.md
+## Phase 1:生成 DESIGN.md
 
 **写 prose 前先读 [`philosophy.md`](../meta/philosophy.md)**:设计质量由 prose 意图清晰度决定(三原则:prose 优先 / 具体参考 / 负约束),非值的精度。下面三个子流程产出的 prose 都应遵循它。
 
-### 1A. From Existing Code
+### 1A. 从现有代码
 
-1. **Extract token candidates**: scan for color values(所有合法 CSS 颜色格式,见 [`spec-schema.md`](../meta/spec-schema.md) 颜色 token 节)、`font-family`/`font-size`/`font-weight`、spacing values (`px`, `rem`)、border-radius values
-2. **Assign semantic roles**: group colors by function (primary action, body text, surface, border, error); name typography levels by usage (headline, body, label, caption)
-3. **Infer scale**: 统计所有 spacing 数值,若 ≥70% 是 8 的倍数 → base=8px;否则 base=4px。归一化时四舍五入到最近的 base 倍数
-4. **Attach provenance**: 每个提取到的 token 顶层键挂一条 0d 决策 id(`primary: "#212121" # D-P1-1`);**0d 决策表里没有、提取时也判断不出取舍的键,写 `# no-decision: <提取自 file:line>` 显式声明**,不随手编 id。缺这一步的 DESIGN.md 交付在门禁 G02 被拦(见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md))
-5. **Write prose rationale**: for each token group, write 2-4 sentences explaining the design intent, not just the values
+1. **提取 token 候选**:扫描颜色值(所有合法 CSS 颜色格式,见 [`spec-schema.md`](../meta/spec-schema.md) 颜色 token 节)、`font-family`/`font-size`/`font-weight`、spacing 值(`px`、`rem`)、border-radius 值
+2. **指派语义角色**:按功能给颜色分组(主操作、正文、表面、边框、错误);按用途命名排版层级(headline、body、label、caption)
+3. **推断刻度**:统计所有 spacing 数值,若 ≥70% 是 8 的倍数 → base=8px;否则 base=4px。归一化时四舍五入到最近的 base 倍数
+4. **附溯源**:每个提取到的 token 顶层键挂一条 0d 决策 id(`primary: "#212121" # D-P1-1`);**0d 决策表里没有、提取时也判断不出取舍的键,写 `# no-decision: <提取自 file:line>` 显式声明**,不随手编 id。缺这一步的 DESIGN.md 交付在门禁 G02 被拦(见 [`../meta/numbered-gates.md`](../meta/numbered-gates.md))
+5. **写 prose 理由**:对每个 token 组,写 2-4 句话解释设计意图,而不只是列值
 6. **Extract with discipline(提取纪律,五条)**:
 
    - **阶梯折叠一行**:同类数字阶梯(50-900 灰阶、字号序列等)折叠成一行/一表,不逐值铺开;报"阶"不报"值堆"
@@ -234,7 +234,7 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 
 用户确认后,填写 DESIGN.md 模板并写完所有 markdown 章节。
 
-### 1B. From Description — Interview Mode
+### 1B. 从描述 —— 访谈模式
 
 逐一提问(不要一次全抛给用户),每问等待回答后再问下一个:
 
@@ -261,7 +261,7 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 方向确认无误?确认后生成完整 DESIGN.md。
 ```
 
-### 1C. From Screenshot or Image
+### 1C. 从截图或图片
 
 **无参照底稿时:AI mockup 前置生成(可选前置步)**——用户既无竞品截图、又无品牌资产可提取时,先自己造提取底稿,再回到本节提取。两条路线:
 
@@ -272,11 +272,11 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 
 基础五步(全图扫描):
 
-1. Extract dominant colors → assign to `primary`, `secondary`, `tertiary`, `neutral` roles。**色彩用确定性测色,不目测取色**(目测漂移可达 ΔE10+,measure instead):`python3 {SKILL_DIR}/scripts/verify.py measure-colors <参考图>` 输出 hex / 覆盖率 / 角色,实测值原样入表按 ✅ 标注;测量配置(含 k)与实测色板持久化到 `measurement` / `measured_palette`(字段见 [`../meta/spec-schema.md`](../meta/spec-schema.md)),复测必须同参数否则不可比;PNG 纯标准库可测,JPEG 需 Pillow——缺失时报 UNMEASURED 并显式声明,才退回目测(按 ⚠️)
-2. Identify type hierarchy (size ratios, weight contrast between heading and body)
-3. Measure spacing patterns (card padding, vertical rhythm, section gaps)
-4. Note corner radius character (sharp ≈ 0-2px, subtle ≈ 4-8px, rounded ≈ 12-16px+)
-5. Document visible component patterns (button styles, card structure, input fields)
+1. 提取主导色 → 指派到 `primary`、`secondary`、`tertiary`、`neutral` 角色。**色彩用确定性测色,不目测取色**(目测漂移可达 ΔE10+,measure instead):`python3 {SKILL_DIR}/scripts/verify.py measure-colors <参考图>` 输出 hex / 覆盖率 / 角色,实测值原样入表按 ✅ 标注;测量配置(含 k)与实测色板持久化到 `measurement` / `measured_palette`(字段见 [`../meta/spec-schema.md`](../meta/spec-schema.md)),复测必须同参数否则不可比;PNG 纯标准库可测,JPEG 需 Pillow——缺失时报 UNMEASURED 并显式声明,才退回目测(按 ⚠️)
+2. 识别字阶层级(字号比率、标题与正文之间的字重对比)
+3. 测量间距模式(卡片内边距、纵向节奏、区块间隔)
+4. 记录圆角性格(锐利 ≈ 0-2px,微妙 ≈ 4-8px,圆润 ≈ 12-16px+)
+5. 记录可见的组件模式(按钮样式、卡片结构、输入框)
 6. **特效 / 动效识别(13 类逐类过,命中记技术与强度)**:背景效果 / 粒子系统 / 3D 元素 / shader 特效 / 视差滚动 / 滚动触发动画 / 滚动变形 / 文字特效 / 光标特效 / 图像特效 / 玻璃拟态·新拟态 / Canvas 绘制 / SVG 动画。识别结果写入 DESIGN.md 可选 `effects` 段:`performance_tier`(lightweight = CSS + 简单 JS;medium = Canvas 2D、SVG 动画;heavy = WebGL、Three.js、shader)+ `fallback_strategy`(reduced-motion 与低端设备的降级去向)。**与实现路线对账,不重复造词**:heavy 对应 [`../motion-skeletons/INDEX.md`](../motion-skeletons/INDEX.md) 六路线表 R5(100-160KB),选型从 R1 停在第一条能干活的路线;Canvas / WebGL 落地过 [`../meta/performance.md`](../meta/performance.md) §6 目的性门槛与降级要求。**静帧看不出动效不编造**:截图提不出的类标 ❓;整段无证据时按 canonical 弃权短语收尾(见下「提取路径置信标记」)——「假设有入场动画」是编造
 
 分维度细提取(逐维精读,基础五步的展开,措辞自著):
@@ -319,15 +319,15 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 
 ---
 
-## DESIGN.md Template
+## DESIGN.md 模板
 
 > 模板中的 `# D-P<n>-<m>` 是 **token 溯源注释**:每个 token 顶层键指回 `decisions` 里产生它的那条决策。无本地依据的键写 `# no-decision: <来源>`,不随手编 id。编号规则、一族同源判据与违规处置见 [`../meta/token-provenance.md`](../meta/token-provenance.md)。
 
 ```
 ---
 version: alpha
-name: <Product Name>
-description: <one-line brand summary>
+name: <产品名>
+description: <一句话品牌摘要>
 decisions:                          # 0d 决策表;id 供 token 行尾溯源,字段见 spec-schema.md
   - id: D-P1-1                      # 原则 P1 下的第 1 条决策
     decision: <一句话决策,可被 token 引用>
@@ -338,8 +338,8 @@ decisions:                          # 0d 决策表;id 供 token 行尾溯源,字
 colors:
   primary: "#..." # D-P1-1
   secondary: "#..." # D-P1-2
-  tertiary: "#..." # D-P1-1        # accent / CTA
-  neutral: "#..." # D-P1-2         # backgrounds, surfaces
+  tertiary: "#..." # D-P1-1        # 强调色 / CTA
+  neutral: "#..." # D-P1-2         # 背景、表面
 typography:
   headline-lg: # D-P2-1
     fontFamily: ...
@@ -379,20 +379,20 @@ effects:                            # 可选特效段(maliang 扩展键,lint 静
 ---
 
 ## Overview
-<Brand personality, target audience, emotional tone. 2-4 sentences.>
+<品牌性格、目标受众、情感调性。2-4 句。>
 <P1/P2/P3 三条原则,每条须落得到下方至少一个 token 值——只写在散文里不改值的原则不算立场,见 token-provenance.md V3。>
 ## Colors
-<Role of each palette. Where it should/shouldn't appear.>
+<每个色板的角色。该出现在哪、不该出现在哪。>
 ## Typography
-<Font strategy. Role of each typeface. Hierarchy.>
+<字体策略。每个字族的角色。层级。>
 ## Layout
-<Grid model, spacing philosophy, containment. 参考 [`layout.md`](../dimensions/layout.md)>
+<栅格模型、间距哲学、容器约束。参考 [`layout.md`](../dimensions/layout.md)>
 ## Elevation & Depth
-<Shadows, tonal layers, borders, or flat contrast.>
+<阴影、色调分层、边框,或纯对比。>
 ## Shapes
-<Corner radius philosophy. Sharp = engineered, round = approachable.>
+<圆角哲学。锐利 = 工程感,圆润 = 亲和。>
 ## Components
-<Key patterns and interaction states not captured by tokens. 区段形态先从 [`../components/INDEX.md`](../components/INDEX.md) 挑名——从索引挑名、只加载选中的那几个(典型 5-7 个),不整库加载;区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)与模式级命名词汇(含 nav-* 导航等结构条目)都在 [`../vocabulary/`](../vocabulary/)。>
+<token 无法表达的关键模式与交互状态。区段形态先从 [`../components/INDEX.md`](../components/INDEX.md) 挑名——从索引挑名、只加载选中的那几个(典型 5-7 个),不整库加载;区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)与模式级命名词汇(含 nav-* 导航等结构条目)都在 [`../vocabulary/`](../vocabulary/)。>
 ## Do's and Don'ts
 - Do ...
 - Don't ...
@@ -402,7 +402,7 @@ effects:                            # 可选特效段(maliang 扩展键,lint 静
 
 ---
 
-## Phase 2: Apply DESIGN.md
+## Phase 2:应用 DESIGN.md
 
 ### Step 0 — 写入前防覆盖检查
 
@@ -411,9 +411,9 @@ effects:                            # 可选特效段(maliang 扩展键,lint 静
 - **不存在** → 正常写入;
 - **已存在** → 先用 `npx @google/design.md@0.4.0 diff DESIGN.old.md DESIGN.new.md`(或逐节 diff)汇报既有文件与新内容的差异——将新增 / 修改 / 删除哪些 token 与 prose 段落,等待用户显式确认后才写入。**禁止静默覆盖**;既有 decisions 表条目默认原样保留,除非用户逐条同意删除。
 
-### Step 1 — Parse and Internalize
+### Step 1 —— 解析与内化
 
-Read the DESIGN.md completely. Extract all token values into a lookup table. Then read the prose — it contains usage guardrails that tokens alone cannot express (e.g., "use tertiary for at most one CTA per screen", "labels are always uppercase").
+完整读一遍 DESIGN.md。把所有 token 值提取成一张查询表。然后读 prose —— 它包含 token 本身无法表达的使用护栏(例如「tertiary 每屏最多用一次」「标签一律大写」)。
 
 **🔴 CHECKPOINT · 应用前确认**:如果是首次在项目中应用 DESIGN.md,展示解析结果让用户确认范围:
 
@@ -434,7 +434,7 @@ Read the DESIGN.md completely. Extract all token values into a lookup table. The
 | Tailwind v4 | CLI 导出 CSS `@theme` 块       | `npx @google/design.md@0.4.0 export --format css-tailwind DESIGN.md > theme.css`   |
 | Tailwind v3 | CLI 导出 JSON config           | `npx @google/design.md@0.4.0 export --format json-tailwind DESIGN.md > theme.json` |
 | 纯 CSS/SCSS | 手动生成 `:root { --color-* }` | 见下方 CSS 示例                                                              |
-| 原生平台    | 手动转换(见 Edge Cases 节)     | —                                                                            |
+| 原生平台    | 手动转换(见边缘场景与回退节)     | —                                                                            |
 
 **CSS custom properties** 手动写法:
 
@@ -446,9 +446,9 @@ Read the DESIGN.md completely. Extract all token values into a lookup table. The
 }
 ```
 
-### Step 3 — Resolve Token References
+### Step 3 —— 解析 token 引用
 
-In the `components` section, `{path.to.token}` references point into the YAML tree. Always resolve these before generating code:
+在 `components` 节里,`{path.to.token}` 引用指向 YAML 树。生成代码前必须先把它们解析开:
 
 ```yaml
 button-primary:
@@ -459,17 +459,17 @@ button-primary:
 
 对于嵌套引用(复合 Typography 对象),逐字段展开(`font-family`/`font-size`/`font-weight` 等),完整字段列表见 [`spec-schema.md`](../meta/spec-schema.md) Typography Tokens 节。
 
-### Step 4 — Enforce Prose Guardrails
+### Step 4 —— 执行 prose 护栏
 
-Actively check generated code against the **Do's and Don'ts** section. Common examples: Single accent color per screen / Consistent corner radius within a view / WCAG AA contrast ratios (4.5:1) / Typography weight limit per screen.
+主动对照 **Do's and Don'ts** 节检查生成的代码。常见例子:每屏单一强调色 / 单个视图内圆角一致 / WCAG AA 对比度(4.5:1) / 每屏字重上限。
 
 **生成代码时的自查规则**:每写完一个组件,对照 DESIGN.md 的 Do's and Don'ts 列表检查一遍。发现违规时,在代码注释中注明"// ⚠️ 需确认:此处 border-radius 与设计规范 sm=4px 是否一致"。
 
 ---
 
-## Phase 3: Validate & Maintain
+## Phase 3:校验与维护
 
-### Lint a DESIGN.md
+### lint 一份 DESIGN.md
 
 ```bash
 npx @google/design.md@0.4.0 lint DESIGN.md
@@ -569,7 +569,7 @@ Confidence map(YYYY-MM-DD):
 
 ---
 
-## Output Quality Checklist
+## 输出质量清单
 
 交付前核对:YAML 无语法错误 · colors 均以 `"#"` 开头加引号(引号是溯源注释生效的前提) · 每个 token 顶层键带溯源 id 或 `no-decision` · 每个 id 在 `decisions` 中查得到 · `## Overview` 的每条原则至少被一个 token 引用 · 溯源核对三行已留痕 · typography 至少含 fontFamily/fontSize/fontWeight/lineHeight · spacing 遵循统一 base scale · components 用 `{path.to.token}` 引用而非重复字面值 · prose 解释"为什么"而非只列数值 · Do's and Don'ts ≥4条且具体可执行(提取型输入可写 canonical 弃权短语替代凑数) · 提取型交付的每层带 ✅/⚠️/❓ 标记且交付末含 Confidence map · 参考图色彩经 verify.py measure-colors 实测或已声明不可测原因 · URL 来源已过来源准入与 Provenance attestation · effects 段无证据时已弃权而非编造 · 自证视图两屏已产出、每个 token 至少出现一次(不可渲染时已显式声明未验证) · 章节顺序为 Overview→Colors→Typography→Layout→Elevation→Shapes→Components→Do's and Don'ts · CLI 可用时跑一遍 lint 修完所有 error · 过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) A 组门禁
 
@@ -577,13 +577,13 @@ Confidence map(YYYY-MM-DD):
 
 ## 高级特性
 
-**Phase 4 变体引擎(明/暗 / 季节 / A/B / 品牌 / 无障碍)、Edge Cases & Fallbacks(CLI 不可用 / 输入不完整 / 合并覆写 / Lint 错误 / 图片质量不足 / 非 Web 平台等)、Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 三件事)、Working Model(最小成本验证设计方向的工作模型)全部见 [`design-md-advanced.md`](./design-md-advanced.md)。**
+**Phase 4 变体引擎(明/暗 / 季节 / A/B / 品牌 / 无障碍)、边缘场景与回退(CLI 不可用 / 输入不完整 / 合并覆写 / Lint 错误 / 图片质量不足 / 非 Web 平台等)、Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 三件事)、Working Model(最小成本验证设计方向的工作模型)全部见 [`design-md-advanced.md`](./design-md-advanced.md)。**
 
 ---
 
-## Reference Files
+## 参考文件
 
-- [`design-md-advanced.md`](./design-md-advanced.md) — Phase 4 变体引擎 + Edge Cases & Fallbacks
+- [`design-md-advanced.md`](./design-md-advanced.md) — Phase 4 变体引擎 + 边缘场景与回退
 - [`spec-schema.md`](../meta/spec-schema.md) — 完整 token 类型定义 + decisions 五字段 + 溯源注释格式 + 权威 Linter Rules 表(9 条规则名 + severity)
 - [`../meta/token-provenance.md`](../meta/token-provenance.md) — 决策 id 编号规则 + token 溯源写法 + 三类违规(悬空/孤儿/空原则)+ 判定留痕,0d 决策表与 Phase 1/3 溯源环节的 canonical
 - [`../meta/numbered-gates.md`](../meta/numbered-gates.md) — 交付前编号门禁(design-md 交付过 A 组)

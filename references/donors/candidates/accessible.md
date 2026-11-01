@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Accessible & Ethical is a UI style reference for general interfaces, focused on High contrast, large text (16px+), keyboard navigation, screen reader friendly, WCAG compliant.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 无障碍与伦理是为通用界面提供的 UI 风格参照,侧重高对比、大字号(16px+)、键盘导航、屏幕阅读器友好、符合 WCAG。
      站点色板: #0066cc, #000000, #ffffff, #d32f2f, #0052a3
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Accessible & Ethical
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Accessible & Ethical is a UI style reference for general interfaces, combining High contrast, large text (16px+), keyboard navigation, screen reader friendly, WCAG compliant, focus state, semantic. The visual direction is shaped by Clear focus rings (3-4px), ARIA labels, skip links, responsive design, reduced motion, 44x44px touch targets.
+无障碍与伦理是为通用界面提供的 UI 风格参照,融合高对比、大字号(16px+)、键盘导航、屏幕阅读器友好、符合 WCAG、焦点态、语义化。视觉方向由清晰焦点环(3-4px)、ARIA 标签、跳转链接、响应式设计、减弱动效、44x44px 触控目标塑造。
 
-Use it for Government, healthcare (健康), education, inclusive products (產品), large audience, legal compliance, public. Avoid it for None - accessibility universal (無障礙性).
+用于政府、医疗健康、教育、包容性产品、广泛受众、法律合规、公共部门。避免用于:无——无障碍具普适性。
 
-**Key Characteristics:**
-- Primary palette: WCAG AA/AAA (4.5:1 min), simple primary, clear secondary, high luminosity (7:1+)
-- Secondary palette: Symbol-based colors (not color-only), supporting patterns, inclusive combinations
-- Effects: Clear focus rings (3-4px), ARIA labels, skip links, responsive design, reduced motion, 44x44px touch targets
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Government, healthcare (健康), education, inclusive products (產品), large audience, legal compliance, public
-- Avoid for: None - accessibility universal (無障礙性)
+**关键特征:**
+- 主色板:WCAG AA/AAA(最低 4.5:1)、简洁主色、清晰次色、高亮度(7:1+)
+- 次色板:基于符号的用色(不只靠颜色)、辅助图案、包容性组合
+- 效果:清晰焦点环(3-4px)、ARIA 标签、跳转链接、响应式设计、减弱动效、44x44px 触控目标
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:政府、医疗健康、教育、包容性产品、广泛受众、法律合规、公共部门
+- 避免用于:无——无障碍具普适性
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: All frameworks 10/10
-- Era reference: Universal
-- Local preview: [Open HTML preview](../../refstyles/08-accessible.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:所有框架 10/10
+- 年代参照:通用
+- 本地预览:[打开 HTML 预览](../../refstyles/08-accessible.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

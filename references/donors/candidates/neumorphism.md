@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Neumorphism is a UI style reference for general interfaces, focused on Soft UI, embossed, debossed, convex, concave.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Neumorphism 是为通用界面提供的 UI 风格参照,侧重软 UI、浮雕、凹雕、凸面、凹面。
      站点色板: #e8e8e8, #ffffff, #d1d1d1, #fafafa, #d4d4d4, #c8e0f4
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Neumorphism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Neumorphism is a UI style reference for general interfaces, combining Soft UI, embossed, debossed, convex, concave, light source, subtle depth, rounded (12-16px), monochromatic. The visual direction is shaped by Soft box-shadow (multiple: -5px -5px 15px, 5px 5px 15px), smooth press (150ms), inner subtle shadow.
+Neumorphism 是为通用界面提供的 UI 风格参照,融合软 UI、浮雕、凹雕、凸面、凹面、光源、细微深度、圆润(12-16px)、单色。视觉方向由柔和 box-shadow(多层:-5px -5px 15px、5px 5px 15px)、平滑按压(150ms)、内部细微阴影塑造。
 
-Use it for Health/wellness apps (健康), meditation platforms (平台), fitness trackers, minimal interaction UIs. Avoid it for Complex apps (應用程式), critical accessibility (無障礙性), data-heavy dashboards (儀表板), high-contrast required.
+用于健康/康养应用、冥想平台、健身追踪器、交互极简的 UI。避免用于复杂应用、无障碍为硬性要求的场景、数据密集的仪表板、需要高对比的场景。
 
-**Key Characteristics:**
-- Primary palette: Light pastels: Soft Blue #C8E0F4, Soft Pink #F5E0E8, Soft Grey #E8E8E8
-- Secondary palette: Tints/shades (±30%), gradient subtlety, color harmony
-- Effects: Soft box-shadow (multiple: -5px -5px 15px, 5px 5px 15px), smooth press (150ms), inner subtle shadow
-- Accessibility: ⚠ Low contrast; performance: ⚡ Good; dark mode: ◐ Partial.
-- Best for: Health/wellness apps (健康), meditation platforms (平台), fitness trackers, minimal interaction UIs
-- Avoid for: Complex apps (應用程式), critical accessibility (無障礙性), data-heavy dashboards (儀表板), high-contrast required
+**关键特征:**
+- 主色板:浅粉彩系:柔蓝 #C8E0F4、柔粉 #F5E0E8、柔灰 #E8E8E8
+- 次色板:同色深浅(±30%)、渐变细微、色彩和谐
+- 效果:柔和 box-shadow(多层:-5px -5px 15px、5px 5px 15px)、平滑按压(150ms)、内部细微阴影
+- 无障碍:⚠ 低对比;性能:⚡ 良好;暗色模式:◐ 部分支持。
+- 最适用于:健康/康养应用、冥想平台、健身追踪器、交互极简的 UI
+- 避免用于:复杂应用、无障碍为硬性要求的场景、数据密集的仪表板、需要高对比的场景
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 8/10, CSS-in-JS 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/02-neumorphism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 8/10、CSS-in-JS 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/02-neumorphism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

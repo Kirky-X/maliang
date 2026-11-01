@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Executive Dashboard is a UI style reference for analytics and BI dashboards, focused on High-level KPIs, large key metrics, minimal detail, summary view, trend indicators.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Executive Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,侧重高层 KPI、大号关键指标、最少细节、总览视图、趋势指标。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Executive Dashboard
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Executive Dashboard is a UI style reference for analytics and BI dashboards, combining High-level KPIs, large key metrics, minimal detail, summary view, trend indicators, at-a-glance insights, executive summary. The visual direction is shaped by KPI value animations (count-up), trend arrow direction animations, metric card hover lift, alert pulse effect.
+Executive Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,融合高层 KPI、大号关键指标、最少细节、总览视图、趋势指标、一眼洞察、高管摘要。视觉方向由 KPI 数值动画(数字滚动)、趋势箭头方向动画、指标卡悬浮抬升、告警脉冲效果塑造。
 
-Use it for C-suite dashboards (儀表板), business summary reports, decision-maker dashboards (儀表板), strategic planning views. Avoid it for Detailed analyst dashboards (儀表板), technical deep-dives, operational monitoring (監控).
+用于高管仪表板、业务总结报告、决策者仪表板、战略规划视图。避免用于分析师明细仪表板、技术深度分析、运营监控。
 
-**Key Characteristics:**
-- Primary palette: Brand colors, professional palette (blue/grey/white), accent for KPIs, red for alerts/concerns
-- Secondary palette: KPI highlight colors: positive (green), negative (red), neutral (grey), trend arrow colors
-- Effects: KPI value animations (count-up), trend arrow direction animations, metric card hover lift, alert pulse effect
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: C-suite dashboards (儀表板), business summary reports, decision-maker dashboards (儀表板), strategic planning views
-- Avoid for: Detailed analyst dashboards (儀表板), technical deep-dives, operational monitoring (監控)
+**关键特征:**
+- 主色板:品牌色、专业色板(蓝/灰/白)、KPI 强调色、告警/关注用红
+- 次色板:KPI 高光色:正向(绿)、负向(红)、中性(灰)、趋势箭头色
+- 效果:KPI 数值动画(数字滚动)、趋势箭头方向动画、指标卡悬浮抬升、告警脉冲效果
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:高管仪表板、业务总结报告、决策者仪表板、战略规划视图
+- 避免用于:分析师明细仪表板、技术深度分析、运营监控
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Recharts 9/10, Chart.js 9/10, MUI 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/30-executive-summary.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Recharts 9/10、Chart.js 9/10、MUI 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/30-executive-summary.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

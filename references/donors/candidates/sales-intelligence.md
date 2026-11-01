@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Sales Intelligence Dashboard is a UI style reference for analytics and BI dashboards, focused on Deal pipeline, sales metrics, territory performance, sales rep leaderboard, win-loss analysis.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Sales Intelligence Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,侧重交易管道、销售指标、区域业绩、销售代表排行榜、输赢分析。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Sales Intelligence Dashboard
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Sales Intelligence Dashboard is a UI style reference for analytics and BI dashboards, combining Deal pipeline, sales metrics, territory performance, sales rep leaderboard, win-loss analysis, quota tracking, forecast accuracy. The visual direction is shaped by Deal movement animations, metric updates, leaderboard ranking changes, gauge needle movements, status change highlights.
+Sales Intelligence Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,融合交易管道、销售指标、区域业绩、销售代表排行榜、输赢分析、配额追踪、预测准确度。视觉方向由交易移动动画、指标更新、排行榜名次变化、仪表指针摆动、状态变化高亮塑造。
 
-Use it for CRM dashboards (儀表板), sales management, opportunity tracking, performance management (效能), quota planning. Avoid it for Marketing analytics (分析), customer support metrics, HR dashboards (儀表板).
+用于 CRM 仪表板、销售管理、商机追踪、绩效管理、配额规划。避免用于营销分析、客户支持指标、HR 仪表板。
 
-**Key Characteristics:**
-- Primary palette: Sales colors: won (green), lost (red), in-progress (blue), blocked (orange), quota met (gold), quota missed (grey)
-- Secondary palette: Pipeline stage colors, rep performance colors, quota achievement colors, forecast accuracy colors
-- Effects: Deal movement animations, metric updates, leaderboard ranking changes, gauge needle movements, status change highlights
-- Accessibility: ✓ WCAG AA; performance: ⚡ Good; dark mode: ✓ Full.
-- Best for: CRM dashboards (儀表板), sales management, opportunity tracking, performance management (效能), quota planning
-- Avoid for: Marketing analytics (分析), customer support metrics, HR dashboards (儀表板)
+**关键特征:**
+- 主色板:销售状态色——赢单(绿)、丢单(红)、进行中(蓝)、阻塞(橙)、达成配额(金)、未达配额(灰)
+- 次色板:管道阶段色、代表业绩色、配额达成色、预测准确度色
+- 效果:交易移动动画、指标更新、排行榜名次变化、仪表指针摆动、状态变化高亮
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:CRM 仪表板、销售管理、商机追踪、绩效管理、配额规划
+- 避免用于:营销分析、客户支持指标、HR 仪表板
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Recharts 9/10, Chart.js 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/37-sales-intelligence.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Recharts 9/10、Chart.js 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/37-sales-intelligence.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

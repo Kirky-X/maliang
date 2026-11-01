@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Spatial UI (VisionOS) is a UI style reference for general interfaces, focused on Glass, depth, immersion, spatial, translucent.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Spatial UI (VisionOS) 是为通用界面提供的 UI 风格参照,侧重玻璃、深度、沉浸、空间、半透明。
      站点色板: #ffffff
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Spatial UI (VisionOS)
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Spatial UI (VisionOS) is a UI style reference for general interfaces, combining Glass, depth, immersion, spatial, translucent, gaze, gesture, apple, vision-pro. The visual direction is shaped by Parallax depth, dynamic lighting response, gaze-hover effects, smooth scale on focus.
+Spatial UI (VisionOS) 是为通用界面提供的 UI 风格参照,融合玻璃、深度、沉浸、空间、半透明、注视、手势、Apple、vision-pro。视觉方向由视差深度、动态光照响应、注视悬浮效果、聚焦时平滑缩放塑造。
 
-Use it for Spatial computing apps (應用程式), VR/AR interfaces, immersive media, futuristic dashboards (儀表板). Avoid it for Text-heavy documents, high-contrast requirements, non-3D capable devices.
+用于空间计算应用、VR/AR 界面、沉浸式媒体、未来感仪表板。避免用于文字密集的文档、高对比度要求、不支持 3D 的设备。
 
-**Key Characteristics:**
-- Primary palette: Frosted Glass #FFFFFF (15-30% opacity), System White
-- Secondary palette: Vibrant system colors for active states, deep shadows for depth
-- Effects: Parallax depth, dynamic lighting response, gaze-hover effects, smooth scale on focus
-- Accessibility: ⚠ Contrast risks; performance: ⚠ Moderate (blur cost); dark mode: ✓ Full.
-- Best for: Spatial computing apps (應用程式), VR/AR interfaces, immersive media, futuristic dashboards (儀表板)
-- Avoid for: Text-heavy documents, high-contrast requirements, non-3D capable devices
+**关键特征:**
+- 主色板:磨砂玻璃 #FFFFFF(15-30% 不透明度)、系统白
+- 次色板:用于激活态的鲜艳系统色、用于深度的深阴影
+- 效果:视差深度、动态光照响应、注视悬浮效果、聚焦时平滑缩放
+- 无障碍:⚠ 有对比度风险;性能:⚠ 中等(模糊开销);暗色模式:✓ 完整。
+- 最适用于:空间计算应用、VR/AR 界面、沉浸式媒体、未来感仪表板
+- 避免用于:文字密集的文档、高对比度要求、不支持 3D 的设备
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: SwiftUI, React (Three.js/Fiber)
-- Era reference: 2024 Spatial Era
-- Local preview: [Open HTML preview](../../refstyles/55-spatial-ui.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:SwiftUI、React (Three.js/Fiber)
+- 年代参照:2024 空间时代
+- 本地预览:[打开 HTML 预览](../../refstyles/55-spatial-ui.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

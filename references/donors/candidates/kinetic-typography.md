@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Kinetic Typography is a UI style reference for general interfaces, focused on Motion text, animated type, moving letters, dynamic, typing effect.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 动态排版是为通用界面提供的 UI 风格参照,侧重动态文字、动画字体、移动字母、动态感、打字效果。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Kinetic Typography
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Kinetic Typography is a UI style reference for general interfaces, combining Motion text, animated type, moving letters, dynamic, typing effect, morphing, scroll-triggered text. The visual direction is shaped by @keyframes text animation, typing effect, background-clip: text, GSAP ScrollTrigger, split text.
+动态排版是为通用界面提供的 UI 风格参照,融合动态文字、动画字体、移动字母、动态感、打字效果、形变、滚动触发文字。视觉方向由 @keyframes 文字动画、打字效果、background-clip: text、GSAP ScrollTrigger、split text 塑造。
 
-Use it for Hero sections, marketing sites (行銷), video platforms (平台), storytelling, creative portfolios (創意), landing pages (登陸頁面). Avoid it for Long-form content, accessibility-critical (無障礙性), data interfaces, forms, elderly users.
+用于 hero 区、营销站点、视频平台、叙事、创意作品集、落地页。避免用于长文内容、无障碍为硬性要求的场景、数据界面、表单、年长用户。
 
-**Key Characteristics:**
-- Primary palette: Flexible - high contrast recommended, bold colors for emphasis, animation-friendly palette
-- Secondary palette: Accent colors for emphasis, transition colors, gradient text fills
-- Effects: @keyframes text animation, typing effect, background-clip: text, GSAP ScrollTrigger, split text
-- Accessibility: ❌ Poor (motion); performance: ⚠ Moderate; dark mode: ✓ Full.
-- Best for: Hero sections, marketing sites (行銷), video platforms (平台), storytelling, creative portfolios (創意), landing pages (登陸頁面)
-- Avoid for: Long-form content, accessibility-critical (無障礙性), data interfaces, forms, elderly users
+**关键特征:**
+- 主色板:灵活——建议高对比、用粗体色做强调、适合动画的色板
+- 次色板:强调色、过渡色、渐变文字填充
+- 效果:@keyframes 文字动画、打字效果、background-clip: text、GSAP ScrollTrigger、split text
+- 无障碍:❌ 差(动效);性能:⚠ 中等;暗色模式:✓ 完整。
+- 最适用于:hero 区、营销站点、视频平台、叙事、创意作品集、落地页
+- 避免用于:长文内容、无障碍为硬性要求的场景、数据界面、表单、年长用户
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: GSAP 10/10, Framer Motion 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/48-kinetic-typography.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:GSAP 10/10、Framer Motion 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/48-kinetic-typography.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

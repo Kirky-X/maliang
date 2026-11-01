@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Brutalism is a UI style reference for general interfaces, focused on Raw, unpolished, stark, high contrast, plain text.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 粗野主义是为通用界面提供的 UI 风格参照,侧重原始、未打磨、冷硬、高对比、纯文本。
      站点色板: #ff0000, #0000ff, #ffff00, #000000, #ffffff, #00ff00
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Brutalism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Brutalism is a UI style reference for general interfaces, combining Raw, unpolished, stark, high contrast, plain text, default fonts, visible borders, asymmetric, anti-design. The visual direction is shaped by No smooth transitions (instant), sharp corners (0px), bold typography (700+), visible grid, large blocks.
+粗野主义是为通用界面提供的 UI 风格参照,融合原始、未打磨、冷硬、高对比、纯文本、默认字体、可见边框、非对称、反设计。视觉方向由无平滑过渡(即时)、尖角(0px)、粗体排版(700+)、可见网格、大色块塑造。
 
-Use it for Design portfolios (作品集), artistic projects, counter-culture brands (品牌), editorial/media sites (網站), tech blogs. Avoid it for Corporate environments (企業), conservative industries, critical accessibility (無障礙性), customer-facing professional.
+用于作品集、艺术项目、反文化品牌、编辑/媒体站点、技术博客。避免用于企业环境、保守行业、无障碍为硬性要求的场景、面向客户的职业服务。
 
-**Key Characteristics:**
-- Primary palette: Primary: Red #FF0000, Blue #0000FF, Yellow #FFFF00, Black #000000, White #FFFFFF
-- Secondary palette: Limited: Neon Green #00FF00, Hot Pink #FF00FF, minimal secondary
-- Effects: No smooth transitions (instant), sharp corners (0px), bold typography (700+), visible grid, large blocks
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Design portfolios (作品集), artistic projects, counter-culture brands (品牌), editorial/media sites (網站), tech blogs
-- Avoid for: Corporate environments (企業), conservative industries, critical accessibility (無障礙性), customer-facing professional
+**关键特征:**
+- 主色板:红 #FF0000、蓝 #0000FF、黄 #FFFF00、黑 #000000、白 #FFFFFF
+- 次色板:霓虹绿 #00FF00、亮粉 #FF00FF,次级色极少
+- 效果:无平滑过渡(即时)、尖角(0px)、粗体排版(700+)、可见网格、大色块
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:作品集、艺术项目、反文化品牌、编辑/媒体站点、技术博客
+- 避免用于:企业环境、保守行业、无障碍为硬性要求的场景、面向客户的职业服务
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 7/10
-- Era reference: 1950s Brutalist
-- Local preview: [Open HTML preview](../../refstyles/04-brutalism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 7/10
+- 年代参照:1950 年代粗野主义
+- 本地预览:[打开 HTML 预览](../../refstyles/04-brutalism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

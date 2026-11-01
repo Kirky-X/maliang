@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Cyberpunk UI is a UI style reference for general interfaces, focused on Neon, dark mode, terminal, HUD, sci-fi.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Cyberpunk UI 是为通用界面提供的 UI 风格参照,侧重霓虹、暗色模式、终端、HUD、科幻。
      站点色板: #ff00ff, #00ffff, #ffff00, #00ff00, #0d0d0d
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Cyberpunk UI
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Cyberpunk UI is a UI style reference for general interfaces, combining Neon, dark mode, terminal, HUD, sci-fi, glitch, dystopian, futuristic, matrix, tech noir. The visual direction is shaped by Neon glow (text-shadow), glitch animations (skew/offset), scanlines (::before overlay), terminal fonts.
+Cyberpunk UI 是为通用界面提供的 UI 风格参照,融合霓虹、暗色模式、终端、HUD、科幻、故障、反乌托邦、未来感、矩阵、科技黑色电影。视觉方向由霓虹辉光(text-shadow)、故障动画(斜切 / 偏移)、扫描线(::before 覆盖层)、终端字体塑造。
 
-Use it for Gaming platforms (遊戲), tech products (產品), crypto apps (應用程式), sci-fi applications, developer tools (工具), entertainment (娛樂). Avoid it for Corporate enterprise (企業), healthcare (健康), family apps (應用程式), conservative brands (品牌), elderly users.
+用于游戏平台、科技产品、加密应用、科幻应用、开发者工具、娱乐。避免用于企业机构、医疗、家庭应用、保守品牌、年长用户。
 
-**Key Characteristics:**
-- Primary palette: #00FF00 (Matrix Green), #FF00FF (Magenta), #00FFFF (Cyan), #0D0D0D (Dark)
-- Secondary palette: Neon gradients, scanline overlays, glitch colors, terminal green accents
-- Effects: Neon glow (text-shadow), glitch animations (skew/offset), scanlines (::before overlay), terminal fonts
-- Accessibility: ⚠ Limited (dark+neon); performance: ⚠ Moderate; dark mode: ✓ Only.
-- Best for: Gaming platforms (遊戲), tech products (產品), crypto apps (應用程式), sci-fi applications, developer tools (工具), entertainment (娛樂)
-- Avoid for: Corporate enterprise (企業), healthcare (健康), family apps (應用程式), conservative brands (品牌), elderly users
+**关键特征:**
+- 主色板:#00FF00(矩阵绿)、#FF00FF(品红)、#00FFFF(青)、#0D0D0D(暗)
+- 次色板:霓虹渐变、扫描线覆盖层、故障色、终端绿强调
+- 效果:霓虹辉光(text-shadow)、故障动画(斜切 / 偏移)、扫描线(::before 覆盖层)、终端字体
+- 无障碍:⚠ 受限(暗色 + 霓虹);性能:⚠ 中等;暗色模式:✓ 仅此一种。
+- 最适用于:游戏平台、科技产品、加密应用、科幻应用、开发者工具、娱乐
+- 避免用于:企业机构、医疗、家庭应用、保守品牌、年长用户
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 8/10, Custom CSS 10/10
-- Era reference: 2020s Cyberpunk
-- Local preview: [Open HTML preview](../../refstyles/41-cyberpunk.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 8/10、Custom CSS 10/10
+- 年代参照:2020 年代 Cyberpunk
+- 本地预览:[打开 HTML 预览](../../refstyles/41-cyberpunk.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Conversion-Optimized is a UI style reference for landing pages, focused on Form-focused, minimalist design, single CTA focus, high contrast, urgency elements.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: 转化优化型是为落地页提供的 UI 风格参照,侧重表单导向、极简设计、单一 CTA 聚焦、高对比、紧迫感元素。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Conversion-Optimized
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Conversion-Optimized is a UI style reference for landing pages, combining Form-focused, minimalist design, single CTA focus, high contrast, urgency elements, trust signals, social proof, clear value. The visual direction is shaped by Hover states on CTA (color shift, slight scale), form field focus animations, loading spinner, success feedback.
+转化优化型是为落地页提供的 UI 风格参照,融合表单导向、极简设计、单一 CTA 聚焦、高对比、紧迫感元素、信任信号、社会认同、价值清晰。视觉方向由 CTA 悬浮态(色彩偏移、轻微缩放)、表单字段聚焦动画、加载转圈、成功反馈塑造。
 
-Use it for E-commerce product pages (電子商務), free trial signups, lead generation, SaaS pricing pages (SaaS), limited-time offers. Avoid it for Complex feature explanations, multi-product showcases, technical documentation.
+用于电商产品页、免费试用注册、线索获取、SaaS 定价页、限时优惠。避免用于复杂功能讲解、多产品展示、技术文档。
 
-**Key Characteristics:**
-- Primary palette: Primary brand color, high-contrast white/light backgrounds, warning/urgency colors for time-limited offers
-- Secondary palette: Secondary CTA color (muted), trust element colors (testimonial highlights), accent for key benefits
-- Effects: Hover states on CTA (color shift, slight scale), form field focus animations, loading spinner, success feedback
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: E-commerce product pages (電子商務), free trial signups, lead generation, SaaS pricing pages (SaaS), limited-time offers
-- Avoid for: Complex feature explanations, multi-product showcases, technical documentation
+**关键特征:**
+- 主色板:主品牌色、高对比白 / 亮背景、限时优惠用的警示 / 紧迫色
+- 次色板:次级 CTA 色(柔化)、信任元素色(证言高亮)、关键收益强调色
+- 效果:CTA 悬浮态(色彩偏移、轻微缩放)、表单字段聚焦动画、加载转圈、成功反馈
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:电商产品页、免费试用注册、线索获取、SaaS 定价页、限时优惠
+- 避免用于:复杂功能讲解、多产品展示、技术文档
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/21-conversion-optimized.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/21-conversion-optimized.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

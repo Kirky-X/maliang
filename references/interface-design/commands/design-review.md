@@ -1,132 +1,132 @@
 ---
 name: interface-design:design-review
-description: Strict, multi-pass craft and visual-hierarchy review of a UI build, with severity scoring and an explicit approval bar. The design counterpart to a deep code-quality review.
+description: 对 UI 构建做严格、多轮的 craft 与视觉层级评审,带严重度评分与明确的 approval bar。是深度代码质量评审在设计侧的对应物。
 ---
 
-# Design Review
+# 设计评审
 
-An unusually strict review focused on visual craft and hierarchy. The bar is not "does this work" or "does the grid align" — it is **"would a design lead at Linear or Apple put their name on this?"** Most generated UI is *correct* (it renders, it aligns, colors don't clash) and *not crafted* (nothing was decided, the hierarchy is flat, it looks like every other app). This review pulls a build from correct toward crafted, scores what's wrong by how much it matters, and blocks what isn't there yet.
+一场格外严格的评审,聚焦视觉 craft 与层级。门槛不是"这能不能用"或"网格对不对齐" —— 而是**"Linear 或 Apple 的设计主管会把名字署在这上面吗?"** 多数生成 UI 是*正确*的(它能渲染、能对齐、颜色不打架)且*未经 craft*(没做任何决策、层级扁平、看起来跟别的 app 一样)。本评审把构建从"正确"推向"craft",按重要性给问题打分,并把还没到位的挡下来。
 
-Be ambitious. Don't stop at "this border is a little strong." Look for the decisions that were never made — the defaulted typeface, the absent focal point, the monotone layout — and push for the version that looks designed.
+要有野心。不要停在"这个边框有点重"。去找那些从未做过的决策 —— 默认的字族、缺席的焦点、单调的布局 —— 然后推动它走向那个看起来被设计过的版本。
 
-This review **judges by default**. Report findings and a verdict; only rebuild when the user asks. Keep the review and the mutation cleanly separate.
+本评审**默认只做评判**。报出发现与结论;只在用户要求时才重建。把评审与改动干净分开。
 
-## The Gap: Correct vs Crafted
+## 差距:正确 vs craft
 
-There's a distance between correct and crafted. Correct means the layout holds and nothing clashes. Crafted means someone cared about every decision down to the last pixel — the way you tell a hand-thrown mug from an injection-molded one. Both hold coffee; one has presence. Generated output lives in *correct*. Your job is to find every place it defaulted instead of decided, weigh how much each one costs, and name the crafted version.
+正确与 craft 之间有段距离。正确意味着布局撑得住、没有东西打架。Craft 意味着有人在意到最后一个像素的每个决策 —— 就像你能分辨手工拉坯的杯子和注塑的杯子。两者都能装咖啡;一个有存在感。生成产出活在*正确*里。你的工作是找出每一处它默认而非决策的地方,衡量每处代价多少,并说出 craft 版本的样子。
 
 ---
 
-# How to run it
+# 怎么跑
 
-Five steps, in order. Don't skip to the dimension checklist — the procedure is what keeps the review honest and stops it from becoming a list of your personal taste.
+五步,按顺序。不要跳到维度清单 —— 是流程让评审保持诚实,并阻止它变成你个人口味的清单。
 
-## Step 1 — Scope and intent
+## 步骤 1 —— 范围与意图
 
-Establish two things:
+确立两件事:
 
-- **What's under review** — the current build, a named component, or the branch's UI changes. Bound it.
-- **What it's trying to be** — read `.interface-design/system.md` if it exists, and infer the intended user, task, and feel. *You review against the design's own intent, not a generic ideal.* A deliberately dense trading terminal is not failing for being dense. If intent is genuinely unknowable, say so and review against general craft — but note the assumption.
+- **评审对象是什么** —— 当前构建、某个具名组件,或分支的 UI 改动。划定边界。
+- **它想成为什么** —— 读 `.interface-design/system.md`(若存在),推断预期的用户、任务与感觉。*你对着设计自己的意图评审,不是对着某个通用理想。* 一个刻意做密的交易终端不会因为密而失败。如果意图确实无从得知,说明这一点并对着通用 craft 评审 —— 但要标注这个假设。
 
-## Step 2 — See the whole first
+## 步骤 2 —— 先看整体
 
-Before picking anything apart, look at the rendered output as a user would. If a render tool (`show_widget`/`visualize`) or a screenshot is available, use it; otherwise read the layout holistically before the lines. Step back and ask the big questions:
+在拆解任何东西之前,像用户那样看渲染产出。如果有渲染工具(`show_widget`/`visualize`)或截图,就用;否则在逐行之前先整体读布局。退后一步,问大问题:
 
-- Does one thing lead, or is it a parking lot where everything competes equally?
-- Does it breathe, or is it a monotone grid of identical boxes?
-- Does it look like *this specific product*, or like every other dashboard?
-- Squint (blur your eyes): does hierarchy survive? Does anything jump out harshly?
+- 有没有一个东西领先,还是像停车场一样所有东西同等竞争?
+- 它在呼吸,还是同样的框拼成的单调网格?
+- 它看起来像*这个特定产品*,还是像其他任何仪表盘?
+- 眯眼(模糊视线):层级还撑得住吗?有东西刺眼地跳出来吗?
 
-The worst slop is compositional — absent decisions that live in the whole, invisible in any single line of CSS. This step catches them. Everything after is detail.
+最糟的 slop 是构图性的 —— 缺席的决策活在整体里,在任何一行 CSS 里都看不见。这一步抓住它们。之后的一切都是细节。
 
-## Step 3 — Run the lenses
+## 步骤 3 —— 逐个跑透镜
 
-Review through each lens **independently** — one concern at a time, so findings don't blur together. For each, the test is "did they decide, or default?"
+**各自独立**地跑每个透镜 —— 一次一个关注点,这样发现不会糊在一起。对每一个,测试都是"他们做了决策,还是默认了?"
 
-**Lens A · Hierarchy** — the highest-value lens.
-- Name the focal element. Does it actually win (size, weight, contrast, isolation), or sit equal to its neighbors?
-- Is the rest *demoted* — secondary actions ghosted, metadata muted? Promotion without demotion isn't hierarchy.
-- Can you tell primary / secondary / metadata tiers apart without reading the words?
+**透镜 A · 层级** —— 价值最高的透镜。
+- 说出焦点元素。它真的赢了吗(尺寸、字重、对比、孤立),还是与邻座平起平坐?
+- 其余部分是否被*降级* —— 次要动作幽灵化、元数据变淡?只有升格没有降格不叫层级。
+- 不读字面,你能分辨主 / 次 / 元数据三层吗?
 
-**Lens B · Typography & color**
-- Hierarchy from size + weight + color together, or size alone (the weak default)?
-- A real type scale (a ratio), or arbitrary near-equal sizes? Tightened tracking on large headings, or default (reads as a document)?
-- A four-step text-color ramp, or just "text" and "gray text"? Updating numbers in `tabular-nums`?
-- One intentional accent (~60/30/10, accent ≤ ~10%), or several competing? Does color *mean* something (status/action/identity) or decorate?
-- One hue across surfaces shifting only lightness, or different hues fragmenting the space? Does the palette feel like it came from the product's world?
+**透镜 B · 排版与颜色**
+- 层级来自字号 + 字重 + 颜色三者,还是只靠字号(那个弱的默认)?
+- 真实的字阶(一个比率),还是任意且近乎相等的字号?大标题上收紧了字距,还是默认(读起来像文档)?
+- 四级文字色阶,还是只有"文字"和"灰文字"?会变的数字用了 `tabular-nums` 吗?
+- 一个有意为之的强调色(~60/30/10,强调 ≤ ~10%),还是几个在竞争?颜色*有意义*(状态/动作/身份),还是装饰?
+- 跨表面一个色相只改明度,还是不同色相割裂空间?色板感觉像从这个产品的世界来吗?
 
-**Lens C · Surfaces & depth**
-- Elevation steps whisper-quiet (a few percent), or dramatic jumps? Borders low-opacity and findable-not-loud, or harsh 1px solid gray?
-- One depth strategy committed, or mixed (borders + heavy shadows ad hoc)? Sidebar same-canvas + border, or a different-colored "sidebar world"?
-- Nested radii concentric (`outer = inner + padding`)? Squint with borders mentally removed — is structure still perceptible through surface alone?
+**透镜 C · 表面与深度**
+- 海拔阶梯是低语级(几个百分点),还是夸张跳变?边框低不透明度、找得到但不喧闹,还是生硬的 1px 实灰?
+- 一种深度策略贯彻到底,还是混用(边框 + 临时加重阴影)?侧栏与画布同底 + 边框,还是另一种颜色的"侧栏世界"?
+- 嵌套圆角是同心(`outer = inner + padding`)吗?心理上把边框去掉再眯眼 —— 只靠表面还能感知结构吗?
 
-**Lens D · Composition & rhythm**
-- Does the layout breathe unevenly (dense zones giving way to open), or is it monotone — same card size, gap, density everywhere?
-- Do proportions state a relationship (280px vs 360px sidebar say different things)? Can you articulate what they say? Is content width considered, or full-bleed and unconsidered?
+**透镜 D · 构图与节奏**
+- 布局是不均匀呼吸的(密集区让位给开阔区),还是单调 —— 卡片大小、间距、密度到处一样?
+- 比例是否陈述关系(280px 与 360px 侧栏说的是不同的事)?你能说出它们说了什么吗?内容宽度被考虑过,还是满幅且未经考虑?
 
-**Lens E · States, polish & motion**
-- Every interactive element: default, hover, active, focus, disabled? Data: loading, empty, error? Missing states are the fastest tell of unfinished work.
-- Hit areas 44×44px (WCAG, 40 min)? Optical alignment on icons/buttons? Font smoothing on root? `text-wrap: balance` on headings?
-- Anything animating that shouldn't (keyboard-repeated actions)? UI durations < 300ms, custom ease-out (never `ease-in`)? Press feedback (`scale(0.97)`)? Origin-aware popovers? Only `transform`/`opacity` animated, never `transition: all`?
+**透镜 E · 状态、打磨与动效**
+- 每个交互元素:默认、悬浮、按下、焦点、禁用?数据:加载、空、错误?缺状态是未完成工作最快的信号。
+- 热区 44×44px(WCAG,最低 40)?图标/按钮做了光学对齐?根节点有字体平滑?标题用了 `text-wrap: balance`?
+- 有没有本不该动的东西在动(键盘重复触发的动作)?UI 时长 < 300ms、自定义 ease-out(绝不用 `ease-in`)?按压反馈(`scale(0.97)`)?有源浮层?只动 `transform`/`opacity`,绝不用 `transition: all`?
 
-**Lens F · Structure, reuse & content**
-- **Reinvention.** Did they hand-roll what the project (or the platform) already provides? A `<div onClick>` instead of `<button>`/`<a>`; a from-scratch dropdown/select/modal/tooltip instead of a headless accessible primitive or the project's existing component; a one-off className string instead of the shipped `Button`/variant; the same long utility string duplicated instead of a component; hardcoded literals (`bg-white`, `border-gray-200`) instead of semantic tokens. A hand-rolled interactive control missing keyboard nav, focus management, or ARIA is the worst case — it's broken, not just inconsistent.
-- **Structural hacks.** Open the CSS and find the lies: negative margins undoing parent padding, escape-hatch `calc()`, absolute positioning to dodge layout flow. Each is a shortcut where a clean solution exists — the correct answer is simpler than the hack.
-- **Content.** Read every visible string as a user would — not for typos, for truth. Does the screen tell one coherent story, or do the title, body, and metrics belong to three different products? Content incoherence breaks the illusion faster than any visual flaw.
+**透镜 F · 结构、复用与内容**
+- **重复造轮。** 他们是否手搓了项目(或平台)已经提供的东西?用 `<div onClick>` 代替 `<button>`/`<a>`;从零写下拉/选择器/模态/提示,而不是用无头可访问基础组件或项目已有组件;用一次性 className 串而不是已发布的 `Button`/变体;把同一条长工具类串复制粘贴而不是抽成组件;硬编码字面值(`bg-white`、`border-gray-200`)而不是语义 token。手搓的交互控件缺键盘导航、焦点管理或 ARIA 是最糟的情况 —— 它是坏的,不只是不一致。
+- **结构性取巧。** 打开 CSS 找谎言:负 margin 抵消父级内边距、`calc()` 逃生舱、绝对定位绕开布局流。每一条都是本该有干净解时的捷径 —— 正确答案比 hack 更简单。
+- **内容。** 像用户那样读每一个可见字符串 —— 不是为了错别字,是为了真实。这一屏讲的是一个连贯的故事,还是标题、正文与指标属于三个不同的产品?内容不连贯比任何视觉缺陷更快地打破幻觉。
 
-## Step 4 — Score and filter
+## 步骤 4 —— 打分与过滤
 
-For every candidate finding, assign a **severity**, then drop the false positives. This is what separates a review from a wishlist.
+对每个候选发现,赋一个**严重度**,然后丢掉假阳性。这是评审与愿望清单的分界。
 
-Severity:
-- **Blocker** — the design reads as generic or broken because of this. No focal point, flat hierarchy, monotone layout, timid/competing palette, missing states, structural hacks. These fail the approval bar.
-- **Should-fix** — real craft gap that a design lead would call out, but the screen still functions. Slack heading tracking, a slightly harsh border, one inconsistent radius.
-- **Note** — minor; mention once, don't dwell.
+严重度:
+- **Blocker** —— 因为这一点,设计读起来通用或坏掉。没有焦点、层级扁平、布局单调、怯弱或竞争的色板、缺状态、结构性取巧。这些过不了 approval bar。
+- **Should-fix** —— 真实的 craft 缺口,设计主管会点出来,但屏幕仍能用。标题字距松、边框略生硬、一处圆角不一致。
+- **Note** —— 次要;提一次,不要纠缠。
 
-Then **filter out false positives** — do *not* raise these:
+然后**过滤掉假阳性** —— 以下*不要*报:
 
-- **Taste, not defect.** "I'd have used a different font / accent / layout." If the choice is coherent with the intent and executed well, it is not a finding, even if you'd have chosen differently. Distinctive ≠ wrong.
-- **A bold choice working as intended.** A saturated palette or dramatic scale that matches a stated bold intent is a success, not a flag.
-- **Outside the scope** you set in Step 1, or on lines the branch didn't touch (for a diff review).
-- **Ratified by `system.md`.** If the project's design system already decided it, it's a decision, not a defect.
-- **A lint/format/compile concern** — owned elsewhere, not a design finding.
+- **是口味,不是缺陷。** "我会用另一个字体 / 强调色 / 布局。"如果这个选择与意图连贯且执行得好,它不是发现,即使你会选别的。有辨识度 ≠ 错。
+- **一个大胆选择按预期生效。** 与声明的胆量意图匹配的高饱和色板或夸张字阶,是成功,不是问题。
+- **超出你在步骤 1 划定的范围**,或不在分支碰过的行(对 diff 评审而言)。
+- **已被 `system.md` 批准。** 如果项目的设计系统已经决定了它,那是决策,不是缺陷。
+- **lint/格式/编译问题** —— 归属别处,不是设计发现。
 
-If you can't say *why a finding costs the user or makes the UI read as generated*, it's taste — cut it. Prefer a few high-conviction findings over a long cosmetic list. A short review that names the three things actually holding the design back beats forty nitpicks.
+如果你说不出*为什么这条发现让用户付出代价或让 UI 读起来像生成的*,那就是口味 —— 删掉。宁可少而高置信的发现,也不要一长串表面化的清单。一场点名三件真正拖住设计的短评审,胜过长篇吹毛求疵。
 
-## Step 5 — Report and verdict
+## 步骤 5 —— 报告与结论
 
-Synthesize across lenses. Prioritize:
+跨透镜综合。优先级:
 
-1. Hierarchy & focal-point failures
-2. Typography & color defaults that flatten the design
-3. Surface/depth and composition-rhythm issues
-4. Missing states, polish, and motion problems
-5. Structural hacks and content incoherence
+1. 层级与焦点失败
+2. 让设计变扁的排版与颜色默认
+3. 表面/深度与构图节奏问题
+4. 缺失状态、打磨与动效问题
+5. 结构性取巧与内容不连贯
 
-For each finding give three things: **what defaulted**, **why it reads as generic/flat or costs the user**, and the **specific crafted fix** (the decision, not a patch). Tag each with its severity. When a render tool is available, end by showing the improved version beside the current one so the gap is *shown*, not narrated — reasoning stays in your text; the widget shows visuals only.
+对每个发现给三样东西:**什么被默认了**、**为什么它读起来通用/扁平或让用户付出代价**、以及**具体的 craft 修法**(是决策,不是补丁)。给每个打上严重度。有渲染工具时,结尾把改进版本放在当前版本旁边,让差距被*展示*而不是叙述 —— 推理留在你的正文;组件只显示视觉。
 
-Then state the verdict against the bar below.
+然后对着下面的门槛给出结论。
 
 ---
 
 # Approval Bar
 
-Do not approve because it renders and aligns. To pass:
+不要因为它能渲染、能对齐就批准。要通过:
 
-- a clear focal point and readable hierarchy (survives the squint test)
-- typography with real size + weight + color hierarchy, not defaulted fonts or size-only tiers
-- restrained, meaningful color (one accent, ~60/30/10, motivated)
-- subtle layering — quiet elevation, findable-not-harsh borders, one committed depth strategy
-- composition with rhythm, and proportions that state relationships
-- complete states, adequate polish, purposeful sub-300ms motion
-- reuses the project's components/system and accessible primitives — no hand-rolled control that a primitive should own
-- no structural hacks; coherent content
-- would not be mistaken for generic AI output
+- 清晰的焦点与可读的层级(能过眯眼测试)
+- 排版有真实的字号 + 字重 + 颜色层级,不是默认字体或只靠字号的层级
+- 克制、有意义的颜色(一个强调色,~60/30/10,有动机)
+- 微妙分层 —— 低语级海拔、找得到但不生硬的边框、一种贯彻的深度策略
+- 有节奏的构图,比例陈述关系
+- 完整状态、足够打磨、有目的且低于 300ms 的动效
+- 复用项目的组件/系统与可访问基础组件 —— 没有本该由基础组件拥有的手搓控件
+- 没有结构性取巧;内容连贯
+- 不会被误认成通用 AI 产出
 
-**Presumptive blockers** (unless the author justifies them against intent): no focal point · size-only or defaulted typography · monotone layout · timid or competing-accent palette · harsh or fragmented surfaces · missing states · structural hacks · an inaccessible hand-rolled control (no keyboard/focus/ARIA) where a primitive or existing component should be used. Any one present → **not approved**; leave explicit, actionable feedback and push for the crafted version.
+**推定 Blocker**(除非作者对着意图为它们辩护):没有焦点 · 只靠字号或默认的排版 · 单调布局 · 怯弱或竞争强调色的色板 · 生硬或割裂的表面 · 缺状态 · 结构性取巧 · 在本该用基础组件或现有组件处使用了不可访问的手搓控件(无键盘/焦点/ARIA)。任一条出现 → **不予批准**;留下明确、可执行的反馈,并推动 craft 版本。
 
 ---
 
-# Applying fixes
+# 应用修法
 
-Only when the user asks. Then rebuild the flagged parts **from the decision, not as patches over the defaults** — re-derive the focal point, the type hierarchy, the surface system, rather than nudging values. Start with blockers, then should-fix. Don't narrate the walk-through; do the work and show the result. Leave structural rebuilds that exceed a focused fix as clearly-named follow-ups rather than half-doing them.
+只在用户要求时。那时**从决策出发重建被标记的部分,而不是在默认值上打补丁** —— 重新推导焦点、字阶层级、表面系统,而不是微调数值。从 blocker 开始,然后 should-fix。不要叙述走查过程;做工作并展示结果。超出聚焦修复范围的结构性重建,列为清楚命名的后续项,而不是做一半。

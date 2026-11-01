@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Exaggerated Minimalism is a UI style reference for general interfaces, focused on Bold minimalism, oversized typography, high contrast, negative space, loud minimal.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Exaggerated Minimalism 是为通用界面提供的 UI 风格参照,侧重大胆极简、超大排版、高对比、负空间、响亮的极简。
      站点色板: #000000, #ffffff
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Exaggerated Minimalism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Exaggerated Minimalism is a UI style reference for general interfaces, combining Bold minimalism, oversized typography, high contrast, negative space, loud minimal, statement design. The visual direction is shaped by font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace.
+Exaggerated Minimalism 是为通用界面提供的 UI 风格参照,融合大胆极简、超大排版、高对比、负空间、响亮的极简、宣言式设计。视觉方向由 font-size: clamp(3rem 10vw 12rem)、font-weight: 900、letter-spacing: -0.05em、巨大留白塑造。
 
-Use it for Fashion, architecture, portfolios (作品集), agency landing pages (登陸頁面), luxury brands (品牌), editorial. Avoid it for E-commerce catalogs (電子商務), dashboards (儀表板), forms, data-heavy, elderly users, complex apps (應用程式).
+用于时尚、建筑、作品集、机构落地页、奢侈品牌、编辑内容。避免用于电商目录、仪表板、表单、数据密集、年长用户、复杂应用。
 
-**Key Characteristics:**
-- Primary palette: #000000 (Black), #FFFFFF (White), single vibrant accent only
-- Secondary palette: Minimal - single accent color, no secondary colors, extreme restraint
-- Effects: font-size: clamp(3rem 10vw 12rem), font-weight: 900, letter-spacing: -0.05em, massive whitespace
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Fashion, architecture, portfolios (作品集), agency landing pages (登陸頁面), luxury brands (品牌), editorial
-- Avoid for: E-commerce catalogs (電子商務), dashboards (儀表板), forms, data-heavy, elderly users, complex apps (應用程式)
+**关键特征:**
+- 主色板:#000000(黑)、#FFFFFF(白),仅一个鲜亮强调色
+- 次色板:极简——单一强调色,无次色,极端克制
+- 效果:font-size: clamp(3rem 10vw 12rem)、font-weight: 900、letter-spacing: -0.05em、巨大留白
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:时尚、建筑、作品集、机构落地页、奢侈品牌、编辑内容
+- 避免用于:电商目录、仪表板、表单、数据密集、年长用户、复杂应用
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Typography.js 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/47-exaggerated-minimalism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Typography.js 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/47-exaggerated-minimalism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

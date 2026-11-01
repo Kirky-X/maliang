@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Glassmorphism is a UI style reference for general interfaces, focused on Frosted glass, transparent, blurred background, layered, vibrant background.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Glassmorphism 是为通用界面提供的 UI 风格参照,侧重磨砂玻璃、透明、模糊背景、分层、鲜艳背景。
      站点色板: #667eea, #764ba2, #f093fb, #0080ff, #8b00ff, #ff1493
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Glassmorphism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Glassmorphism is a UI style reference for general interfaces, combining Frosted glass, transparent, blurred background, layered, vibrant background, light source, depth, multi-layer. The visual direction is shaped by Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth.
+Glassmorphism 是为通用界面提供的 UI 风格参照,融合磨砂玻璃、透明、模糊背景、分层、鲜艳背景、光源、深度、多层。视觉方向由背景模糊(10-20px)、微弱边框(1px solid rgba white 0.2)、光反射、Z 轴深度塑造。
 
-Use it for Modern SaaS (SaaS), financial dashboards (儀表板), high-end corporate (企業), lifestyle apps (應用程式), modal overlays, navigation. Avoid it for Low-contrast backgrounds, critical accessibility (無障礙性), performance-limited (效能), dark text on dark.
+用于现代 SaaS、财务仪表板、高端企业、生活方式应用、模态叠加、导航。避免用于低对比背景、无障碍为硬性要求的场景、性能受限场景、深底上的深色文字。
 
-**Key Characteristics:**
-- Primary palette: Translucent white: rgba(255,255,255,0.1-0.3)
-- Secondary palette: Vibrant: Electric Blue #0080FF, Neon Purple #8B00FF, Vivid Pink #FF1493, Teal #20B2AA
-- Effects: Backdrop blur (10-20px), subtle border (1px solid rgba white 0.2), light reflection, Z-depth
-- Accessibility: ⚠ Ensure 4.5:1; performance: ⚠ Good; dark mode: ✓ Full.
-- Best for: Modern SaaS (SaaS), financial dashboards (儀表板), high-end corporate (企業), lifestyle apps (應用程式), modal overlays, navigation
-- Avoid for: Low-contrast backgrounds, critical accessibility (無障礙性), performance-limited (效能), dark text on dark
+**关键特征:**
+- 主色板:半透明白:rgba(255,255,255,0.1-0.3)
+- 次色板:鲜艳色:电光蓝 #0080FF、霓虹紫 #8B00FF、艳丽粉 #FF1493、青绿 #20B2AA
+- 效果:背景模糊(10-20px)、微弱边框(1px solid rgba white 0.2)、光反射、Z 轴深度
+- 无障碍:⚠ 需保证 4.5:1;性能:⚠ 良好;暗色模式:✓ 完整。
+- 最适用于:现代 SaaS、财务仪表板、高端企业、生活方式应用、模态叠加、导航
+- 避免用于:低对比背景、无障碍为硬性要求的场景、性能受限场景、深底上的深色文字
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 9/10, MUI 8/10, Chakra 8/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/03-glassmorphism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 9/10、MUI 8/10、Chakra 8/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/03-glassmorphism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

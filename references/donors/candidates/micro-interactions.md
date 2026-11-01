@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Micro-interactions is a UI style reference for general interfaces, focused on Small animations, gesture-based, tactile feedback, subtle animations, contextual interactions.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 微交互是为通用界面提供的 UI 风格参照,侧重小幅动画、基于手势、触觉反馈、微妙动画、上下文交互。
      站点色板: #3b82f6, #22c55e, #ef4444, #f59e0b
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Micro-interactions
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Micro-interactions is a UI style reference for general interfaces, combining Small animations, gesture-based, tactile feedback, subtle animations, contextual interactions, responsive. The visual direction is shaped by Small hover (50-100ms), loading spinners, success/error state anim, gesture-triggered (swipe/pinch), haptic.
+微交互是为通用界面提供的 UI 风格参照,融合小幅动画、基于手势、触觉反馈、微妙动画、上下文交互、响应式。视觉方向由小幅 hover(50-100ms)、加载转圈、成功/错误态动画、手势触发(滑动/捏合)、触觉塑造。
 
-Use it for Mobile apps (行動), touchscreen UIs, productivity tools (工具), user-friendly, consumer apps (應用程式), interactive components. Avoid it for Desktop-only, critical performance (效能), accessibility-first (alternatives needed) (無障礙性).
+用于移动应用、触屏 UI、生产力工具、易用场景、消费类应用、交互组件。避免用于纯桌面端、性能为硬性要求的场景、无障碍优先场景(需替代方案)。
 
-**Key Characteristics:**
-- Primary palette: Subtle color shifts (10-20%), feedback: Green #22C55E, Red #EF4444, Amber #F59E0B
-- Secondary palette: Accent feedback, neutral supporting, clear action indicators
-- Effects: Small hover (50-100ms), loading spinners, success/error state anim, gesture-triggered (swipe/pinch), haptic
-- Accessibility: ✓ Good; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Mobile apps (行動), touchscreen UIs, productivity tools (工具), user-friendly, consumer apps (應用程式), interactive components
-- Avoid for: Desktop-only, critical performance (效能), accessibility-first (alternatives needed) (無障礙性)
+**关键特征:**
+- 主色板:微妙色移(10-20%)、反馈:绿 #22C55E、红 #EF4444、琥珀 #F59E0B
+- 次色板:强调反馈、中性支撑、明确的动作指示
+- 效果:小幅 hover(50-100ms)、加载转圈、成功/错误态动画、手势触发(滑动/捏合)、触觉
+- 无障碍:✓ 良好;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:移动应用、触屏 UI、生产力工具、易用场景、消费类应用、交互组件
+- 避免用于:纯桌面端、性能为硬性要求的场景、无障碍优先场景(需替代方案)
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Framer Motion 10/10, React Spring 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/16-micro-interactions.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Framer Motion 10/10、React Spring 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/16-micro-interactions.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Inclusive Design is a UI style reference for general interfaces, focused on Accessible, color-blind friendly, high contrast, haptic feedback, voice interaction.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 包容性设计是为通用界面提供的 UI 风格参照,侧重无障碍、色盲友好、高对比、触觉反馈、语音交互。
      站点色板: #0066cc, #003366, #2563eb, #f97316, #b91c1c, #006644
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Inclusive Design
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Inclusive Design is a UI style reference for general interfaces, combining Accessible, color-blind friendly, high contrast, haptic feedback, voice interaction, screen reader, WCAG AAA, universal. The visual direction is shaped by Haptic feedback (vibration), voice guidance, focus indicators (4px+ ring), motion options, alt content, semantic.
+包容性设计是为通用界面提供的 UI 风格参照,融合无障碍、色盲友好、高对比、触觉反馈、语音交互、屏幕阅读器、WCAG AAA、通用。视觉方向由触觉反馈(振动)、语音引导、焦点指示(4px+ 环)、动效选项、替代内容、语义化塑造。
 
-Use it for Public services, education, healthcare (健康), finance (金融), government, accessible consumer, inclusive. Avoid it for None - accessibility universal (無障礙性).
+用于公共服务、教育、医疗健康、金融、政府、无障碍消费产品、包容性场景。避免用于:无——无障碍是通用的。
 
-**Key Characteristics:**
-- Primary palette: WCAG AAA (7:1+ contrast), avoid red-green only, symbol-based indicators, high contrast primary
-- Secondary palette: Supporting patterns (stripes, dots, hatch), symbols, combinations, clear non-color indicators
-- Effects: Haptic feedback (vibration), voice guidance, focus indicators (4px+ ring), motion options, alt content, semantic
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Public services, education, healthcare (健康), finance (金融), government, accessible consumer, inclusive
-- Avoid for: None - accessibility universal (無障礙性)
+**关键特征:**
+- 主色板:WCAG AAA(7:1+ 对比度),避免只用红绿、基于符号的指示、高对比主色
+- 次色板:辅助图案(条纹、点阵、斜线填充)、符号、组合、明确的非颜色指示
+- 效果:触觉反馈(振动)、语音引导、焦点指示(4px+ 环)、动效选项、替代内容、语义化
+- 无障碍:✓ 达 WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:公共服务、教育、医疗健康、金融、政府、无障碍消费产品、包容性场景
+- 避免用于:无——无障碍是通用的
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: All frameworks 10/10
-- Era reference: Universal
-- Local preview: [Open HTML preview](../../refstyles/17-inclusive-design.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:所有框架 10/10
+- 年代参照:通用
+- 本地预览:[打开 HTML 预览](../../refstyles/17-inclusive-design.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

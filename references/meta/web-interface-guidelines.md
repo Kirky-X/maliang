@@ -1,186 +1,186 @@
 ---
-description: Review UI code for Vercel Web Interface Guidelines compliance
+description: 按 Vercel Web Interface Guidelines 审查 UI 代码的合规性
 argument-hint: <file-or-pattern>
 ---
 
 # Web Interface Guidelines
 
 
-Review these files for compliance: $ARGUMENTS
+审查以下文件的合规性:$ARGUMENTS
 
-Read files, check against rules below. Output concise but comprehensive—sacrifice grammar for brevity. High signal-to-noise.
+读文件,对照下方规则检查。输出简洁但完整 —— 为简短可以牺牲语法。高信噪比。
 
-## Rules
+## 规则
 
-### Accessibility
+### 无障碍
 
-- Icon-only buttons need `aria-label`
-- Form controls need `<label>` or `aria-label`
-- Interactive elements need keyboard handlers (`onKeyDown`/`onKeyUp`)
-- `<button>` for actions, `<a>`/`<Link>` for navigation (not `<div onClick>`)
-- Images need `alt` (or `alt=""` if decorative)
-- Decorative icons need `aria-hidden="true"`
-- Async updates (toasts, validation) need `aria-live="polite"`
-- Use semantic HTML (`<button>`, `<a>`, `<label>`, `<table>`) before ARIA
-- Headings hierarchical `<h1>`–`<h6>`; include skip link for main content
-- `scroll-margin-top` on heading anchors
-- Meaningful media needs captions, transcripts, or descriptions as applicable
-- Media controls need keyboard support; decorative media needs assistive-tech hiding
+- 纯图标按钮需要 `aria-label`
+- 表单控件需要 `<label>` 或 `aria-label`
+- 交互元素需要键盘处理器(`onKeyDown`/`onKeyUp`)
+- 动作用 `<button>`,导航用 `<a>`/`<Link>`(不用 `<div onClick>`)
+- 图片需要 `alt`(装饰性图片用 `alt=""`)
+- 装饰性图标需要 `aria-hidden="true"`
+- 异步更新(吐司、校验)需要 `aria-live="polite"`
+- 先用语义 HTML(`<button>`、`<a>`、`<label>`、`<table>`),再用 ARIA
+- 标题层级 `<h1>`–`<h6>`;为主内容加跳过链接
+- 标题锚点加 `scroll-margin-top`
+- 有意义的媒体需要按情况提供字幕、文字稿或描述
+- 媒体控件需要键盘支持;装饰性媒体需要对辅助技术隐藏
 
-### Focus States
+### 焦点态
 
-- Interactive elements need visible focus: `focus-visible:ring-*` or equivalent
-- Never `outline-none` / `outline: none` without focus replacement
-- Use `:focus-visible` over `:focus` (avoid focus ring on click)
-- Group focus with `:focus-within` for compound controls
-- Sticky headers/footers/overlays must not cover the focused element
+- 交互元素需要可见焦点:`focus-visible:ring-*` 或等价方案
+- 绝不在没有焦点替代方案时用 `outline-none` / `outline: none`
+- 用 `:focus-visible` 而非 `:focus`(避免点击时出现焦点环)
+- 复合控件用 `:focus-within` 做组焦点
+- 粘性页头/页脚/浮层不得遮住获得焦点的元素
 
-### Forms
+### 表单
 
-- Inputs need `autocomplete` and meaningful `name`
-- Use correct `type` (`email`, `tel`, `url`, `number`) and `inputmode`
-- Keyboard dispatch: `inputmode="numeric"` for verification codes, `"decimal"` for money; `autocapitalize="none"` + `autocorrect="off"` on usernames/codes; `enterkeyhint` matches the action (`go`/`search`/`send`/`next`/`done`)
-- Never block paste (`onPaste` + `preventDefault`)
-- Labels clickable (`htmlFor` or wrapping control)
-- Disable spellcheck on emails, codes, usernames (`spellCheck={false}`)
-- Checkboxes/radios: label + control share single hit target (no dead zones)
-- Submit button stays enabled until request starts; spinner during request
-- Errors inline next to fields; focus first error on submit
-- Placeholders end with `…` and show example pattern
-- `autocomplete="off"` on non-auth fields to avoid password manager triggers
-- Warn before navigation with unsaved changes (`beforeunload` or router guard)
+- 输入框需要 `autocomplete` 与有意义的 `name`
+- 用正确的 `type`(`email`、`tel`、`url`、`number`)与 `inputmode`
+- 键盘调度:验证码用 `inputmode="numeric"`,金额用 `"decimal"`;用户名/验证码上 `autocapitalize="none"` + `autocorrect="off"`;`enterkeyhint` 与动作匹配(`go`/`search`/`send`/`next`/`done`)
+- 绝不阻止粘贴(`onPaste` + `preventDefault`)
+- 标签可点击(`htmlFor` 或包裹控件)
+- 邮箱、验证码、用户名关闭拼写检查(`spellCheck={false}`)
+- 复选框/单选框:标签与控件共用单一热区(无死区)
+- 提交按钮在请求开始前保持可用;请求期间显示 spinner
+- 错误内联显示在字段旁;提交时聚焦第一个错误
+- 占位符以 `…` 结尾并展示示例格式
+- 非认证字段用 `autocomplete="off"`,避免触发密码管理器
+- 有未保存改动时离开前警告(`beforeunload` 或路由守卫)
 
-### Animation
+### 动画
 
-- Honor `prefers-reduced-motion` (provide reduced variant or disable)
-- Animate `transform`/`opacity` only (compositor-friendly)
-- Never `transition: all`—list properties explicitly
-- Set correct `transform-origin`
-- SVG: transforms on `<g>` wrapper with `transform-box: fill-box; transform-origin: center`
-- Animations interruptible—respond to user input mid-animation
-- Autoplay motion >5 seconds alongside other content needs pause, stop, or hide controls
-- Muted decorative loops must stop under `prefers-reduced-motion`
+- 尊重 `prefers-reduced-motion`(提供降级变体或直接禁用)
+- 只动 `transform`/`opacity`(对合成器友好)
+- 绝不用 `transition: all` —— 显式列出属性
+- 设置正确的 `transform-origin`
+- SVG:变换放在 `<g>` 包裹层上,配 `transform-box: fill-box; transform-origin: center`
+- 动画可中断 —— 动画中响应用户输入
+- 自动播放的动效超过 5 秒且与其他内容并存时,需要暂停、停止或隐藏控件
+- 静音装饰性循环在 `prefers-reduced-motion` 下必须停止
 
-### Typography
+### 排版
 
-- `…` not `...`
-- Curly quotes `“` `”` not straight `"`
-- Non-breaking spaces: `10&nbsp;MB`, `⌘&nbsp;K`, brand names
-- Loading states end with `…`: `"Loading…"`, `"Saving…"`
-- `font-variant-numeric: tabular-nums` for number columns/comparisons
-- Use `text-wrap: balance` or `text-pretty` on headings (prevents widows)
+- 用 `…` 不用 `...`
+- 用弯引号 `“` `”` 不用直引号 `"`
+- 不换行空格:`10&nbsp;MB`、`⌘&nbsp;K`、品牌名
+- 加载态以 `…` 结尾:`"Loading…"`、`"Saving…"`
+- 数字列/对比加 `font-variant-numeric: tabular-nums`
+- 标题用 `text-wrap: balance` 或 `text-pretty`(防孤行)
 
-### Content Handling
+### 内容处理
 
-- Text containers handle long content: `truncate`, `line-clamp-*`, or `break-words`
-- Flex children need `min-w-0` to allow text truncation
-- Handle empty states—don't render broken UI for empty strings/arrays
-- User-generated content: anticipate short, average, and very long inputs
+- 文本容器处理长内容:`truncate`、`line-clamp-*` 或 `break-words`
+- flex 子项需要 `min-w-0` 才能截断文本
+- 处理空态 —— 空字符串/空数组不要渲染出坏掉的 UI
+- 用户生成内容:预想短、中等与超长输入
 
-### Images
+### 图片
 
-- `<img>` needs explicit `width` and `height` (prevents CLS)
-- Below-fold images: `loading="lazy"`
-- Above-fold critical images: `priority` or `fetchpriority="high"`
+- `<img>` 需要显式 `width` 与 `height`(防 CLS)
+- 首屏以下图片:`loading="lazy"`
+- 首屏关键图片:`priority` 或 `fetchpriority="high"`
 
-### Performance
+### 性能
 
-- Large lists (>50 items): virtualize (`virtua`, `content-visibility: auto`)
-- No layout reads in render (`getBoundingClientRect`, `offsetHeight`, `offsetWidth`, `scrollTop`)
-- Batch DOM reads/writes; avoid interleaving
-- Prefer uncontrolled inputs; controlled inputs must be cheap per keystroke
-- Add `<link rel="preconnect">` for CDN/asset domains
-- Critical fonts: `<link rel="preload" as="font">` with `font-display: swap`
-- Prefer `<video autoplay muted loop playsinline>` over animated GIF; provide a still alternative
-- Short non-essential loops: Safari H.264 MP4 `<picture>` source, `prefers-reduced-motion` media condition, and still fallback
+- 大列表(>50 项):虚拟化(`virtua`、`content-visibility: auto`)
+- 渲染中不做布局读取(`getBoundingClientRect`、`offsetHeight`、`offsetWidth`、`scrollTop`)
+- 批量读/写 DOM;避免交错
+- 优先非受控输入;受控输入必须每次击键都廉价
+- 为 CDN/资源域加 `<link rel="preconnect">`
+- 关键字体:`<link rel="preload" as="font">` 配 `font-display: swap`
+- 优先 `<video autoplay muted loop playsinline>` 而非动图 GIF;提供静态替代
+- 短的非必要循环:Safari H.264 MP4 `<picture>` 源、`prefers-reduced-motion` 媒体条件、静态回退
 
-### Navigation & State
+### 导航与状态
 
-- URL reflects state—filters, tabs, pagination, expanded panels in query params
-- Links use `<a>`/`<Link>` (Cmd/Ctrl+click, middle-click support)
-- Deep-link all stateful UI (if uses `useState`, consider URL sync via nuqs or similar)
-- Destructive actions need confirmation modal or undo window—never immediate
+- URL 反映状态 —— 筛选、标签页、分页、展开面板写进查询参数
+- 链接用 `<a>`/`<Link>`(支持 Cmd/Ctrl+click、中键点击)
+- 所有有状态 UI 都可深链(若用了 `useState`,考虑通过 nuqs 或类似方案同步 URL)
+- 破坏性动作需要确认模态或撤销窗口 —— 绝不立即执行
 
-### Touch & Interaction
+### 触控与交互
 
-- `touch-action: manipulation` (prevents double-tap zoom delay)
-- `-webkit-tap-highlight-color` set intentionally — killing it obligates explicit `:active` press feedback on every interactive element (see Gesture Feel below), or touch loses all feedback
-- `overscroll-behavior` is two-layer: root scroller `none` only in app-like shells to kill pull-to-refresh hijack (content/docs pages keep default); inner scroll containers `contain`—modals/drawers/sheets included
-- Never fake it with `touchmove` + `preventDefault`: blocks native scrolling, forces non-passive listeners, janks frames
-- During drag: disable text selection, `inert` on dragged elements
-- `user-select: none` only on control chrome (buttons, tabs, sliders) with `-webkit-touch-callout: none`; content text (paragraphs, code, captions) must stay selectable; never on `body`
-- Drag/swipe/pinch/path gestures need tap/click and keyboard alternatives unless essential
-- `autoFocus` sparingly—desktop only, single primary input; avoid on mobile
+- `touch-action: manipulation`(消除双击缩放的延迟)
+- `-webkit-tap-highlight-color` 要刻意设置 —— 关掉它就等于强制每个交互元素都要有显式 `:active` 按压反馈(见下文「手势手感」),否则触控将失去全部反馈
+- `overscroll-behavior` 分两层:根滚动容器只在类 app 外壳里设 `none`,以杀掉下拉刷新劫持(内容页/文档页保持默认);内部滚动容器设 `contain` —— 模态/抽屉/底部面板也算
+- 绝不用 `touchmove` + `preventDefault` 假造:它挡住原生滚动、强制非被动监听、卡帧
+- 拖拽期间:禁用文本选择,被拖元素加 `inert`
+- `user-select: none` 只用于控件外壳(按钮、标签页、滑块)并配 `-webkit-touch-callout: none`;内容文本(段落、代码、说明)必须保持可选;绝不加在 `body` 上
+- 拖拽/滑动/捏合/路径手势需要轻点/点击与键盘替代方案,除非确实必要
+- `autoFocus` 慎用 —— 仅桌面、仅单个主输入框;移动端避免
 
-### Gesture Feel
+### 手势手感
 
 
-- Highlight on touch-down (`:active`), commit on release—press feedback is not commitment
-- Dragging past the cancel threshold must visibly cancel (state + position revert), not silently swallow the gesture
-- Run all plausible gesture recognizers in parallel and cancel the losers once disambiguated—never a recognizer that only reports its final state
-- Double-tap detection puts an ambiguity delay on every single tap; accept that cost consciously or drop the double-tap (axis-lock / hysteresis thresholds live in [`../motion-skeletons/gesture-arbitration.md`](../motion-skeletons/gesture-arbitration.md), not restated here)
+- 触摸按下时高亮(`:active`),松开时提交 —— 按压反馈不等于提交
+- 拖过取消阈值必须可见地取消(状态 + 位置回退),而不是默默吞掉手势
+- 并行运行所有可能的手势识别器,消歧后取消败者 —— 绝不用只报最终状态的识别器
+- 双击检测给每一次单击都加上歧义延迟;要么有意识地接受这个代价,要么放弃双击(轴锁定 / 迟滞阈值在 [`../motion-skeletons/gesture-arbitration.md`](../motion-skeletons/gesture-arbitration.md),此处不复述)
 
-### Safe Areas & Layout
+### 安全区与布局
 
-- Full-bleed layouts need `env(safe-area-inset-*)` for notches
-- Avoid unwanted scrollbars: `overflow-x-hidden` on containers, fix content overflow
-- Flex/grid over JS measurement for layout
+- 满幅布局需要 `env(safe-area-inset-*)` 处理刘海
+- 避免多余滚动条:容器加 `overflow-x-hidden`,修掉内容溢出
+- 布局用 flex/grid,不用 JS 测量
 
-### Dark Mode & Theming
+### 暗色模式与主题
 
-- `color-scheme: dark` on `<html>` for dark themes (fixes scrollbar, inputs)
-- `<meta name="theme-color">` matches page background
-- Native `<select>`: explicit `background-color` and `color` (Windows dark mode)
+- 暗色主题在 `<html>` 上设 `color-scheme: dark`(修正滚动条、输入框)
+- `<meta name="theme-color">` 与页面背景一致
+- 原生 `<select>`:显式 `background-color` 与 `color`(Windows 暗色模式)
 
-### Locale & i18n
+### 语言与 i18n
 
-- Dates/times: use `Intl.DateTimeFormat` not hardcoded formats
-- Numbers/currency: use `Intl.NumberFormat` not hardcoded formats
-- Detect language via `Accept-Language` / `navigator.languages`, not IP
-- Brand names, code tokens, identifiers: wrap with `translate="no"` to prevent garbled auto-translation
+- 日期/时间:用 `Intl.DateTimeFormat`,不用硬编码格式
+- 数字/货币:用 `Intl.NumberFormat`,不用硬编码格式
+- 通过 `Accept-Language` / `navigator.languages` 判断语言,不用 IP
+- 品牌名、代码 token、标识符:用 `translate="no"` 包裹,防自动翻译弄乱
 
-### Hydration Safety
+### 水合安全
 
-- Inputs with `value` need `onChange` (or use `defaultValue` for uncontrolled)
-- Date/time rendering: guard against hydration mismatch (server vs client)
-- `suppressHydrationWarning` only where truly needed
+- 带 `value` 的输入框需要 `onChange`(或改用 `defaultValue` 走非受控)
+- 日期/时间渲染:防住服务端与客户端的水合不匹配
+- `suppressHydrationWarning` 只在真正需要处使用
 
-### Hover & Interactive States
+### 悬浮与交互态
 
-- Buttons/links need `hover:` state (visual feedback)
-- Interactive states increase contrast: hover/active/focus more prominent than rest
-- Wrap hover-only styles in `@media (hover: hover) and (pointer: fine)` — both conditions: touch devices fake fine pointers or latch hover on tap, leaving a stuck hover state until the next tap elsewhere
+- 按钮/链接需要 `hover:` 态(视觉反馈)
+- 交互态提升对比:悬浮/按下/焦点比其余更突出
+- 仅悬浮样式包在 `@media (hover: hover) and (pointer: fine)` 里 —— 两个条件都要:触控设备会伪造精细指针,或在轻点时锁定悬浮,留下一个卡住的悬浮态直到下次点到别处
 
-### Content & Copy
+### 内容与文案
 
-- Active voice: "Install the CLI" not "The CLI will be installed"
-- Title Case for headings/buttons (Chicago style)
-- Numerals for counts: "8 deployments" not "eight"
-- Specific button labels: "Save API Key" not "Continue"
-- Error messages include fix/next step, not just problem
-- Second person; avoid first person
-- `&` over "and" where space-constrained
+- 主动语态:"Install the CLI" 而非 "The CLI will be installed"
+- 标题/按钮用 Title Case(Chicago 风格)
+- 计数用阿拉伯数字:"8 deployments" 而非 "eight"
+- 按钮标签具体:"Save API Key" 而非 "Continue"
+- 错误信息包含修法/下一步,不只是问题
+- 用第二人称;避免第一人称
+- 空间受限时用 `&` 而非 "and"
 
-### Anti-patterns (flag these)
+### 反模式(见到就报)
 
-- `user-scalable=no` or `maximum-scale=1` disabling zoom
-- `onPaste` with `preventDefault`
+- `user-scalable=no` 或 `maximum-scale=1` 禁用缩放
+- `onPaste` 配 `preventDefault`
 - `transition: all`
-- `outline-none` without focus-visible replacement
-- Inline `onClick` navigation without `<a>`
-- `<div>` or `<span>` with click handlers (should be `<button>`)
-- Images without dimensions
-- Large arrays `.map()` without virtualization
-- Form inputs without labels
-- Icon buttons without `aria-label`
-- Hardcoded date/number formats (use `Intl.*`)
-- `autoFocus` without clear justification
-- Animated GIF when compressed video is suitable
-- Gesture-only action without tap/click and keyboard alternative
+- `outline-none` 没有 focus-visible 替代
+- 内联 `onClick` 导航而没有 `<a>`
+- `<div>` 或 `<span>` 挂点击处理器(应为 `<button>`)
+- 图片没有尺寸
+- 大数组 `.map()` 没有虚拟化
+- 表单输入没有标签
+- 图标按钮没有 `aria-label`
+- 硬编码日期/数字格式(应用 `Intl.*`)
+- `autoFocus` 没有明确理由
+- 压缩视频适用时用动图 GIF
+- 仅有手势的动作,没有轻点/点击与键盘替代
 
-## Output Format
+## 输出格式
 
-Group by file. Use `file:line` format (VS Code clickable). Terse findings.
+按文件分组。用 `file:line` 格式(VS Code 可点击)。发现要简短。
 
 ```text
 ## src/Button.tsx
@@ -200,4 +200,4 @@ src/Modal.tsx:34 - "..." → "…"
 ✓ pass
 ```
 
-State issue + location. Skip explanation unless fix non-obvious. No preamble.
+给出问题 + 位置。修法不明显时才解释。不要开场白。

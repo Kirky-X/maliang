@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: HUD / Sci-Fi FUI is a UI style reference for general interfaces, focused on Futuristic, technical, wireframe, neon, data.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: HUD / 科幻 FUI 是为通用界面提供的 UI 风格参照,侧重未来感、技术感、线框、霓虹、数据。
      站点色板: #00ffff, #0080ff, #ff0000, #333333
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # HUD / Sci-Fi FUI
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-HUD / Sci-Fi FUI is a UI style reference for general interfaces, combining Futuristic, technical, wireframe, neon, data, transparency, iron man, sci-fi, interface. The visual direction is shaped by Glow effects, scanning animations, ticker text, blinking markers, fine line drawing.
+HUD / 科幻 FUI 是为通用界面提供的 UI 风格参照,融合未来感、技术感、线框、霓虹、数据、透明、钢铁侠、科幻、界面。视觉方向由光晕效果、扫描动画、滚动字幕、闪烁标记、细线绘制塑造。
 
-Use it for Sci-fi games, space tech, cybersecurity, movie props, immersive dashboards (儀表板). Avoid it for Standard corporate (企業), reading heavy content, accessible public services.
+用于科幻游戏、太空科技、网络安全、电影道具、沉浸式仪表板。避免用于标准企业站、重阅读内容、对无障碍有要求的公共服务。
 
-**Key Characteristics:**
-- Primary palette: Neon Cyan #00FFFF, Holographic Blue #0080FF, Alert Red #FF0000
-- Secondary palette: Transparent Black, Grid Lines #333333
-- Effects: Glow effects, scanning animations, ticker text, blinking markers, fine line drawing
-- Accessibility: ⚠ Poor (thin lines); performance: ⚠ Moderate (renders); dark mode: ✓ Full.
-- Best for: Sci-fi games, space tech, cybersecurity, movie props, immersive dashboards (儀表板)
-- Avoid for: Standard corporate (企業), reading heavy content, accessible public services
+**关键特征:**
+- 主色板:霓虹青 #00FFFF、全息蓝 #0080FF、警示红 #FF0000
+- 次色板:透明黑、网格线 #333333
+- 效果:光晕效果、扫描动画、滚动字幕、闪烁标记、细线绘制
+- 无障碍:⚠ 差(细线);性能:⚠ 中等(渲染开销);暗色模式:✓ 完整。
+- 最适用于:科幻游戏、太空科技、网络安全、电影道具、沉浸式仪表板
+- 避免用于:标准企业站、重阅读内容、对无障碍有要求的公共服务
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: React 9/10, Canvas 10/10
-- Era reference: 2010s Sci-Fi
-- Local preview: [Open HTML preview](../../refstyles/51-hud-scifi.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:React 9/10、Canvas 10/10
+- 年代参照:2010 年代科幻
+- 本地预览:[打开 HTML 预览](../../refstyles/51-hud-scifi.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

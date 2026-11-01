@@ -36,7 +36,7 @@ platforms: <适用平台>
 
 - 不是"参考 Linear 的感觉",而是"借鉴 Linear 的 510 签名字重与 -1.056px@48px 显示字距","借鉴 Stripe 的蓝调多层阴影栈 `rgba(50,50,93,0.25) 0px 30px 45px -30px, rgba(0,0,0,0.1) 0px 18px 36px -18px`"
 - 可借鉴的值:阴影体系 / 圆角刻度 / 字阶比例 / 字重与字距策略 / hover 位移与过渡方式 / 边框策略 / 用色分配 / 留白节奏
-- **写不出「从谁借鉴了什么」= 没借鉴,重来**——本节是借鉴纪律的**唯一 canonical**;[`../interface-design/craft-discipline.md`](../interface-design/craft-discipline.md) 的「Adapt the Values, Not the Looks」节只留指针与语境,两处冲突以本节为准
+- **写不出「从谁借鉴了什么」= 没借鉴,重来**——本节是借鉴纪律的**唯一 canonical**;[`../interface-design/craft-discipline.md`](../interface-design/craft-discipline.md) 的「借鉴数值,不借鉴外观」节只留指针与语境,两处冲突以本节为准
 - **只借鉴数值,不复制品牌外观**:不得整站照搬(与 design-systems.md 的「禁止照搬」同源);品牌识别元素(logo / 吉祥物 / 专属字形 / 标志性插画)不借鉴——它们不是值,是身份
 - 借鉴来的值进入本项目时仍须回 design-md 走 token 与溯源通道(补决策 id 或 `no-decision`),不绕过设计系统;与既有 DESIGN.md token 冲突时 **DESIGN.md wins**(单一真源)——donors 只补系统尚未做出的决定
 
@@ -56,4 +56,4 @@ platforms: <适用平台>
 - **来源可溯**:无 `source` 的条目不收录;数值必须来自可复核的采样(样式表 / computed styles / 公开 design 文档),禁止凭印象
 - **核验时效**:`verified` 超 365 天须复核或降级;站点改版后旧值标 `status: style` 或注明"历史值,以当前站点为准"
 - **增强条件**:新增供体须 ① 与首批气质轴不重复(暗 / 亮 / 工具 / 内容至少一轴不同)② 9 节能写到具体值 ③ 与既有供体查重(避免同质)
-- 候选池:设计样张集 库收录的 58 站均可按上述条件晋升;不做"整库平移",逐家按需收录;本地快照: [candidates/INDEX.md](candidates/INDEX.md)(2026-10-31 抓自 样张源,112 条 / 9 组,MIT)
+- 候选池:设计样张集 库收录的 58 站均可按上述条件晋升;不做"整库平移",逐家按需收录;本地快照: [candidates/INDEX.md](candidates/INDEX.md)(2026-10-31 抓自 样张源,112 条 / 9 组,MIT;正文已译为中文,结构与数值对齐上游原文,专有名词保留英文)

@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Aurora UI is a UI style reference for general interfaces, focused on Vibrant gradients, smooth blend, Northern Lights effect, mesh gradient, luminous.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 极光 UI 是为通用界面提供的 UI 风格参照,侧重鲜艳渐变、平滑混合、北极光效果、网格渐变、发光。
      站点色板: #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #0080ff
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Aurora UI
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Aurora UI is a UI style reference for general interfaces, combining Vibrant gradients, smooth blend, Northern Lights effect, mesh gradient, luminous, atmospheric, abstract. The visual direction is shaped by Large flowing CSS/SVG gradients, subtle 8-12s animations, depth via color layering, smooth morph.
+极光 UI 是为通用界面提供的 UI 风格参照,融合鲜艳渐变、平滑混合、北极光效果、网格渐变、发光、氛围感、抽象。视觉方向由大面积流动的 CSS/SVG 渐变、8-12s 细微动画、靠色彩分层造深度、平滑变形塑造。
 
-Use it for Modern SaaS (SaaS), creative agencies (創意), branding, music platforms (平台), lifestyle, premium products (產品), hero sections. Avoid it for Data-heavy dashboards (儀表板), critical accessibility (無障礙性), content-heavy where distraction issues.
+用于现代 SaaS、创意机构、品牌、音乐平台、生活方式、高端产品、hero 区块。避免用于数据密集的仪表盘、对无障碍要求严苛的场景、内容密集且易受干扰的场景。
 
-**Key Characteristics:**
-- Primary palette: Complementary: Blue-Orange, Purple-Yellow, Electric Blue #0080FF, Magenta #FF1493, Cyan #00FFFF
-- Secondary palette: Smooth transitions (Blue→Purple→Pink→Teal), iridescent effects, blend modes (screen, multiply)
-- Effects: Large flowing CSS/SVG gradients, subtle 8-12s animations, depth via color layering, smooth morph
-- Accessibility: ⚠ Text contrast; performance: ⚠ Good; dark mode: ✓ Full.
-- Best for: Modern SaaS (SaaS), creative agencies (創意), branding, music platforms (平台), lifestyle, premium products (產品), hero sections
-- Avoid for: Data-heavy dashboards (儀表板), critical accessibility (無障礙性), content-heavy where distraction issues
+**关键特征:**
+- 主色板:互补配色——蓝橙、紫黄、电光蓝 #0080FF、品红 #FF1493、青色 #00FFFF
+- 次色板:平滑过渡(蓝→紫→粉→青)、虹彩效果、混合模式(screen、multiply)
+- 效果:大面积流动的 CSS/SVG 渐变、8-12s 细微动画、靠色彩分层造深度、平滑变形
+- 无障碍:⚠ 文本对比;性能:⚠ 良好;暗色模式:✓ 完整。
+- 最适用于:现代 SaaS、创意机构、品牌、音乐平台、生活方式、高端产品、hero 区块
+- 避免用于:数据密集的仪表盘、对无障碍要求严苛的场景、内容密集且易受干扰的场景
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 9/10, CSS-in-JS 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/10-aurora-ui.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 9/10、CSS-in-JS 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/10-aurora-ui.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

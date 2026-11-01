@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Drill-Down Analytics is a UI style reference for analytics and BI dashboards, focused on Hierarchical data exploration, expandable sections, interactive drill-down paths, summary-to-detail flow, context preservation.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Drill-Down Analytics 是为分析与 BI 仪表板提供的 UI 风格参照,侧重分层数据探索、可展开区块、交互式下钻路径、总览到细节流程、上下文保留。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Drill-Down Analytics
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Drill-Down Analytics is a UI style reference for analytics and BI dashboards, combining Hierarchical data exploration, expandable sections, interactive drill-down paths, summary-to-detail flow, context preservation. The visual direction is shaped by Drill-down expand animations, breadcrumb click transitions, smooth detail reveal, level change smooth, data reload animation.
+Drill-Down Analytics 是为分析与 BI 仪表板提供的 UI 风格参照,融合分层数据探索、可展开区块、交互式下钻路径、总览到细节流程、上下文保留。视觉方向由下钻展开动画、面包屑点击过渡、细节平滑显现、层级切换平滑、数据重载动画塑造。
 
-Use it for Sales analytics (分析), product analytics (分析), funnel analysis, multi-dimensional data exploration, business intelligence. Avoid it for Simple linear data, single-metric dashboards (儀表板), streaming real-time dashboards (儀表板).
+用于销售分析、产品分析、漏斗分析、多维数据探索、商业智能。避免用于简单线性数据、单指标仪表板、流式实时仪表板。
 
-**Key Characteristics:**
-- Primary palette: Primary brand, breadcrumb colors, drill-level indicator colors, hierarchy depth colors
-- Secondary palette: Drill-down path indicator colors, level-specific colors, highlight colors for selected level, transition colors
-- Effects: Drill-down expand animations, breadcrumb click transitions, smooth detail reveal, level change smooth, data reload animation
-- Accessibility: ✓ WCAG AA; performance: ⚡ Good; dark mode: ✓ Full.
-- Best for: Sales analytics (分析), product analytics (分析), funnel analysis, multi-dimensional data exploration, business intelligence
-- Avoid for: Simple linear data, single-metric dashboards (儀表板), streaming real-time dashboards (儀表板)
+**关键特征:**
+- 主色板:主品牌色、面包屑色、下钻层级指示色、层级深度色
+- 次色板:下钻路径指示色、分层专用色、选中层高光色、过渡色
+- 效果:下钻展开动画、面包屑点击过渡、细节平滑显现、层级切换平滑、数据重载动画
+- 无障碍:✓ WCAG AA;性能:⚡ 良好;暗色模式:✓ 完整。
+- 最适用于:销售分析、产品分析、漏斗分析、多维数据探索、商业智能
+- 避免用于:简单线性数据、单指标仪表板、流式实时仪表板
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: D3.js 10/10, Recharts 8/10, AG Grid 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/32-drill-down-analytics.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:D3.js 10/10、Recharts 8/10、AG Grid 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/32-drill-down-analytics.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

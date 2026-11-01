@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Y2K Aesthetic is a UI style reference for general interfaces, focused on Neon pink, chrome, metallic, bubblegum, iridescent.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Y2K 美学是为通用界面提供的 UI 风格参照,侧重霓虹粉、铬银、金属、泡泡糖、虹彩。
      站点色板: #ff00ff, #00ffff, #ffff00, #ff69b4, #c0c0c0, #9400d3
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Y2K Aesthetic
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Y2K Aesthetic is a UI style reference for general interfaces, combining Neon pink, chrome, metallic, bubblegum, iridescent, glossy, retro-futurism, 2000s, futuristic nostalgia. The visual direction is shaped by linear-gradient metallic, glossy buttons, 3D chrome effects, glow animations, bubble shapes.
+Y2K 美学是为通用界面提供的 UI 风格参照,融合霓虹粉、铬银、金属、泡泡糖、虹彩、光泽、复古未来主义、2000 年代、未来怀旧。视觉方向由线性渐变金属、光泽按钮、3D 铬银效果、辉光动效、泡泡形状塑造。
 
-Use it for Fashion brands (品牌), music platforms (平台), Gen Z brands (品牌), nostalgia marketing (行銷), entertainment (娛樂), youth-focused. Avoid it for B2B enterprise, healthcare (健康), finance (金融), conservative industries, elderly users.
+用于时尚品牌、音乐平台、Z 世代品牌、怀旧营销、娱乐、面向青年。避免用于 B2B 企业、医疗健康、金融、保守行业、老年用户。
 
-**Key Characteristics:**
-- Primary palette: #FF69B4 (Hot Pink), #00FFFF (Cyan), #C0C0C0 (Silver), #9400D3 (Purple)
-- Secondary palette: Metallic gradients, glossy overlays, iridescent effects, chrome textures
-- Effects: linear-gradient metallic, glossy buttons, 3D chrome effects, glow animations, bubble shapes
-- Accessibility: ⚠ Check contrast; performance: ⚠ Good; dark mode: ◐ Partial.
-- Best for: Fashion brands (品牌), music platforms (平台), Gen Z brands (品牌), nostalgia marketing (行銷), entertainment (娛樂), youth-focused
-- Avoid for: B2B enterprise, healthcare (健康), finance (金融), conservative industries, elderly users
+**关键特征:**
+- 主色板:#FF69B4(亮粉)、#00FFFF(青)、#C0C0C0(银)、#9400D3(紫)
+- 次色板:金属渐变、光泽叠加、虹彩效果、铬银质感
+- 效果:线性渐变金属、光泽按钮、3D 铬银效果、辉光动效、泡泡形状
+- 无障碍:⚠ 检查对比度;性能:⚠ 良好;暗色模式:◐ 部分支持。
+- 最适用于:时尚品牌、音乐平台、Z 世代品牌、怀旧营销、娱乐、面向青年
+- 避免用于:B2B 企业、医疗健康、金融、保守行业、老年用户
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 8/10, CSS-in-JS 9/10
-- Era reference: Y2K 2000s
-- Local preview: [Open HTML preview](../../refstyles/40-y2k-revival.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 8/10、CSS-in-JS 9/10
+- 年代参照:Y2K 2000 年代
+- 本地预览:[打开 HTML 预览](../../refstyles/40-y2k-revival.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

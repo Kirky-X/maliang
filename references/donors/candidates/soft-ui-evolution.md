@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Soft UI Evolution is a UI style reference for general interfaces, focused on Evolved soft UI, better contrast, modern aesthetics, subtle depth, accessibility-focused.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Soft UI Evolution 是为通用界面提供的 UI 风格参照,侧重演进式软 UI、更好的对比、现代审美、细微深度、无障碍导向。
      站点色板: #e0f2fe, #f0f9ff, #ecfeff, #ffffff, #f0f0f0, #60a5fa
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Soft UI Evolution
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Soft UI Evolution is a UI style reference for general interfaces, combining Evolved soft UI, better contrast, modern aesthetics, subtle depth, accessibility-focused, improved shadows, hybrid. The visual direction is shaped by Improved shadows (softer than flat, clearer than neumorphism), modern (200-300ms), focus visible, WCAG AA/AAA.
+Soft UI Evolution 是为通用界面提供的 UI 风格参照,融合演进式软 UI、更好的对比、现代审美、细微深度、无障碍导向、改进的阴影、混合式。视觉方向由改进的阴影(比扁平柔、比新拟态清晰)、现代(200-300ms)、焦点可见、WCAG AA/AAA 塑造。
 
-Use it for Modern enterprise apps (企業應用), SaaS platforms (SaaS), health/wellness (健康), modern business tools (工具), professional, hybrid. Avoid it for Extreme minimalism, critical performance (效能), systems without modern OS.
+用于现代企业应用、SaaS 平台、健康/康养、现代商业工具、专业场景、混合式。避免用于极端极简、性能关键的场景、没有现代操作系统的系统。
 
-**Key Characteristics:**
-- Primary palette: Improved contrast pastels: Soft Blue #87CEEB, Soft Pink #FFB6C1, Soft Green #90EE90, better hierarchy
-- Secondary palette: Better combinations, accessible secondary, supporting with improved contrast, modern accents
-- Effects: Improved shadows (softer than flat, clearer than neumorphism), modern (200-300ms), focus visible, WCAG AA/AAA
-- Accessibility: ✓ WCAG AA+; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Modern enterprise apps (企業應用), SaaS platforms (SaaS), health/wellness (健康), modern business tools (工具), professional, hybrid
-- Avoid for: Extreme minimalism, critical performance (效能), systems without modern OS
+**关键特征:**
+- 主色板:对比改进的粉彩:柔蓝 #87CEEB、柔粉 #FFB6C1、柔绿 #90EE90,层级更清晰
+- 次色板:更好的配色组合、无障碍次级色、对比改进的辅助色、现代强调色
+- 效果:改进的阴影(比扁平柔、比新拟态清晰)、现代(200-300ms)、焦点可见、WCAG AA/AAA
+- 无障碍:✓ 达 WCAG AA+;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:现代企业应用、SaaS 平台、健康/康养、现代商业工具、专业场景、混合式
+- 避免用于:极端极简、性能关键的场景、没有现代操作系统的系统
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 9/10, MUI 9/10, Chakra 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/19-soft-ui-evolution.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 9/10、MUI 9/10、Chakra 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/19-soft-ui-evolution.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

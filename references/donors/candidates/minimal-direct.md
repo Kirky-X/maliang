@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Minimal & Direct is a UI style reference for landing pages, focused on Minimal text, white space heavy, single column layout, direct messaging, clean typography.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Minimal & Direct 是为落地页提供的 UI 风格参照,侧重极简文案、大面积留白、单列布局、直接传达信息、干净排版。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Minimal & Direct
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Minimal & Direct is a UI style reference for landing pages, combining Minimal text, white space heavy, single column layout, direct messaging, clean typography, visual-centric, fast-loading. The visual direction is shaped by Very subtle hover effects, minimal animations, fast page load (no heavy animations), smooth scroll.
+Minimal & Direct 是为落地页提供的 UI 风格参照,融合极简文案、大面积留白、单列布局、直接传达信息、干净排版、以视觉为主、加载快。视觉方向由极微弱的 hover 效果、极简动画、快速页面加载(无重动画)、平滑滚动塑造。
 
-Use it for Simple service landing pages (登陸頁面), indie products (產品), consulting services, micro SaaS (SaaS), freelancer portfolios (作品集). Avoid it for Feature-heavy products (產品), complex explanations, multi-product showcases.
+用于简单服务落地页、独立产品、咨询服务、微型 SaaS、自由职业者作品集。避免用于功能繁多的产品、复杂说明、多产品展示。
 
-**Key Characteristics:**
-- Primary palette: Monochromatic primary, white background, single accent color for CTA, black/dark grey text
-- Secondary palette: Minimal secondary colors, reserved for critical CTAs only, neutral supporting elements
-- Effects: Very subtle hover effects, minimal animations, fast page load (no heavy animations), smooth scroll
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Simple service landing pages (登陸頁面), indie products (產品), consulting services, micro SaaS (SaaS), freelancer portfolios (作品集)
-- Avoid for: Feature-heavy products (產品), complex explanations, multi-product showcases
+**关键特征:**
+- 主色板:单色主色、白色背景、CTA 只用一种强调色、黑/深灰文本
+- 次色板:极简次级色,只留给关键 CTA,中性辅助元素
+- 效果:极微弱的 hover 效果、极简动画、快速页面加载(无重动画)、平滑滚动
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:简单服务落地页、独立产品、咨询服务、微型 SaaS、自由职业者作品集
+- 避免用于:功能繁多的产品、复杂说明、多产品展示
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/23-minimal-direct.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/23-minimal-direct.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

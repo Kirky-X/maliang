@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Interactive Product Demo is a UI style reference for landing pages, focused on Embedded product mockup/video, interactive elements, product walkthrough, step-by-step guides, hover-to-reveal features.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: 交互式产品演示是为落地页提供的 UI 风格参照,侧重嵌入产品原型/视频、交互元素、产品走查、分步引导、hover 揭示功能。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Interactive Product Demo
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Interactive Product Demo is a UI style reference for landing pages, combining Embedded product mockup/video, interactive elements, product walkthrough, step-by-step guides, hover-to-reveal features, embedded demos. The visual direction is shaped by Product animation playback, step progression animations, hover reveal effects, smooth zoom on interaction.
+交互式产品演示是为落地页提供的 UI 风格参照,融合嵌入产品原型/视频、交互元素、产品走查、分步引导、hover 揭示功能、内嵌演示。视觉方向由产品动画播放、步骤推进动画、hover 揭示效果、交互时平滑缩放塑造。
 
-Use it for SaaS platforms (SaaS), tool/software products (產品), productivity apps landing pages (登陸頁面), developer tools (工具), productivity software. Avoid it for Simple services, consulting, non-digital products (產品), complexity-averse audiences (複雜度).
+用于 SaaS 平台、工具/软件产品、生产力应用落地页、开发者工具、生产力软件。避免用于简单服务、咨询、非数字产品、排斥复杂度的受众。
 
-**Key Characteristics:**
-- Primary palette: Primary brand, interface colors matching product, demo highlight colors for interactive elements
-- Secondary palette: Product UI colors, tutorial step colors (numbered progression), hover state indicators
-- Effects: Product animation playback, step progression animations, hover reveal effects, smooth zoom on interaction
-- Accessibility: ✓ WCAG AA; performance: ⚠ Good (video/interactive); dark mode: ✓ Full.
-- Best for: SaaS platforms (SaaS), tool/software products (產品), productivity apps landing pages (登陸頁面), developer tools (工具), productivity software
-- Avoid for: Simple services, consulting, non-digital products (產品), complexity-averse audiences (複雜度)
+**关键特征:**
+- 主色板:品牌主色、与产品一致的界面色、用于交互元素的演示高亮色
+- 次色板:产品 UI 色、教程步骤色(编号推进)、hover 态指示
+- 效果:产品动画播放、步骤推进动画、hover 揭示效果、交互时平滑缩放
+- 无障碍:✓ 达 WCAG AA;性能:⚠ 良好(视频/交互);暗色模式:✓ 完整。
+- 最适用于:SaaS 平台、工具/软件产品、生产力应用落地页、开发者工具、生产力软件
+- 避免用于:简单服务、咨询、非数字产品、排斥复杂度的受众
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 9/10, React 10/10, Framer Motion 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/25-interactive-demo.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 9/10、React 10/10、Framer Motion 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/25-interactive-demo.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

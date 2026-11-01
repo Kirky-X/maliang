@@ -1,286 +1,286 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 开发工具与平台(dev) · 站点摘要: React Native platform. Dark theme, tight letter-spacing, code-centric
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 开发工具与平台(dev) · 站点摘要: React Native 平台。暗色主题、紧凑字距、以代码为中心。
      站点色板: #000000, #1c2024, #0d74ce, #476cff, #47c2ff, #8145b5
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Expo
+# 设计系统:Expo
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Expo's interface is a luminous, confidence-radiating developer platform built on the premise that tools for building apps should feel as polished as the apps themselves. The entire experience lives on a bright, airy canvas — a cool-tinted off-white (`#f0f0f3`) that gives the page a subtle technological coolness without the starkness of pure white. This is a site that breathes: enormous vertical spacing between sections creates a gallery-like pace where each feature gets its own "room."
+Expo 的界面是一座明亮、散发着自信的开发者平台,建立在一个前提之上:构建应用的工具应当与应用本身一样精致。整个体验住在明亮通透的画布上——偏冷的米白(`#f0f0f3`),给页面一种微妙的技术冷感,又不像纯白那样生硬。这是一个会呼吸的站点:区块之间巨大的纵向间距造出画廊般的节奏,每个特色都拥有自己的"房间"。
 
-The design language is decisively monochromatic — pure black (`#000000`) headlines against the lightest possible backgrounds, with a spectrum of cool blue-grays (`#60646c`, `#b0b4ba`, `#555860`) handling all secondary communication. Color is almost entirely absent from the interface itself; when it appears, it's reserved for product screenshots, app icons, and the React universe illustration — making the actual content burst with life against the neutral canvas.
+设计语言果断单色——纯黑(`#000000`)标题压在尽可能浅的背景上,一整套冷蓝灰(`#60646c`、`#b0b4ba`、`#555860`)承担全部次级沟通。颜色在界面本身几乎完全缺席;出现时,只留给产品截图、应用图标与 React 宇宙插画——让真正的内容在中性画布上迸发生气。
 
-What makes Expo distinctive is its pill-shaped geometry. Buttons, tabs, video containers, and even images use generously rounded or fully pill-shaped corners (24px–9999px), creating an organic, approachable feel that contradicts the typical sharp-edged developer tool aesthetic. Combined with tight letter-spacing on massive headlines (-1.6px to -3px at 64px), the result is a design that's simultaneously premium and friendly — like an Apple product page reimagined for developers.
+Expo 的辨识度来自药丸几何。按钮、页签、视频容器、甚至图像都用慷慨圆润或完整药丸的圆角(24px–9999px),造出有机、可亲近的质感,与典型锐利的开发者工具审美相悖。再配上巨大标题上的紧凑字距(64px 下 -1.6px 到 -3px),结果是一套既高级又友好的设计——像一页为开发者重想的 Apple 产品页。
 
-**Key Characteristics:**
-- Luminous cool-white canvas (`#f0f0f3`) with gallery-like vertical spacing
-- Strictly monochromatic: pure black headlines, cool blue-gray body text, no decorative color
-- Pill-shaped geometry everywhere — buttons, tabs, containers, images (24px–9999px radius)
-- Massive display headlines (64px) with extreme negative letter-spacing (-1.6px to -3px)
-- Inter as the sole typeface, used at weights 400–900 for full expressive range
-- Whisper-soft shadows that barely lift elements from the surface
-- Product screenshots as the only source of color in the interface
+**关键特征:**
+- 明亮冷白画布(`#f0f0f3`),配画廊般的纵向间距
+- 严格单色:纯黑标题、冷蓝灰正文、无装饰色
+- 药丸几何无处不在——按钮、页签、容器、图像(24px–9999px 圆角)
+- 巨大显示级标题(64px),极端负字距(-1.6px 到 -3px)
+- Inter 是唯一字族,用 400–900 字重覆盖完整表达区间
+- 耳语般柔和的阴影,几乎不把元素从表面上抬起来
+- 产品截图是界面里唯一的颜色来源
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Primary
-- **Expo Black** (`#000000`): The absolute anchor — used for primary headlines, CTA buttons, and the brand identity. Pure black on cool white creates maximum contrast without feeling aggressive.
-- **Near Black** (`#1c2024`): The primary text color for body content — a barely perceptible blue-black that's softer than pure #000 for extended reading.
+### 主色
+- **Expo 黑**(`#000000`):绝对锚点——用于主标题、CTA 按钮与品牌标识。冷白上的纯黑造出最大对比,又不显攻击性。
+- **近黑**(`#1c2024`):正文的主文本色——几乎察觉不到的蓝黑,比纯 #000 更柔,适合长阅读。
 
-### Secondary & Accent
-- **Link Cobalt** (`#0d74ce`): The standard link color — a trustworthy, saturated blue that signals interactivity without competing with the monochrome hierarchy.
-- **Legal Blue** (`#476cff`): A brighter, more saturated blue for legal/footer links — slightly more attention-grabbing than Link Cobalt.
-- **Widget Sky** (`#47c2ff`): A light, friendly cyan-blue for widget branding elements — the brightest accent in the system.
-- **Preview Purple** (`#8145b5`): A rich violet used for "preview" or beta feature indicators — creating clear visual distinction from standard content.
+### 次级与强调
+- **链接钴蓝**(`#0d74ce`):标准链接色——一种可信、饱和的蓝,标示可交互,又不与单色层级争夺注意力。
+- **法律蓝**(`#476cff`):更亮、更饱和的蓝,用于法律/footer 链接——比链接钴蓝略更抓眼。
+- **组件天蓝**(`#47c2ff`):浅而友好的青蓝,用于组件品牌元素——系统里最亮的强调色。
+- **预览紫**(`#8145b5`):浓郁的紫罗兰,用于"preview"或 beta 功能标记——与标准内容形成清晰的视觉区分。
 
-### Surface & Background
-- **Cloud Gray** (`#f0f0f3`): The primary page background — a cool off-white with the faintest blue-violet tint. Not warm, not sterile — precisely technological.
-- **Pure White** (`#ffffff`): Card surfaces, button backgrounds, and elevated content containers. Creates a clear "lifted" distinction from Cloud Gray.
-- **Widget Dark** (`#1a1a1a`): Dark surface for dark-theme widgets and overlay elements.
-- **Banner Dark** (`#171717`): The darkest surface variant, used for promotional banners and high-contrast containers.
+### 表面与背景
+- **云灰**(`#f0f0f3`):主页面背景——带最微弱蓝紫调的冷米白。不暖、不冷硬——精确地技术感。
+- **纯白**(`#ffffff`):卡片表面、按钮背景、抬升的内容容器。与云灰形成清晰的"被抬起"区分。
+- **组件暗面**(`#1a1a1a`):暗色主题组件与覆盖元素的暗表面。
+- **横幅暗面**(`#171717`):最暗的表面变体,用于推广横幅与高对比容器。
 
-### Neutrals & Text
-- **Slate Gray** (`#60646c`): The workhorse secondary text color (305 instances). A cool blue-gray that's authoritative without being heavy.
-- **Mid Slate** (`#555860`): Slightly darker than Slate, used for emphasized secondary text.
-- **Silver** (`#b0b4ba`): Tertiary text, placeholders, and de-emphasized metadata. Comfortably readable but clearly receded.
-- **Pewter** (`#999999`): Accordion icons and deeply de-emphasized UI elements in dark contexts.
-- **Light Silver** (`#cccccc`): Arrow icons and decorative elements in dark contexts.
-- **Dark Slate** (`#363a3f`): Borders on dark surfaces, switch tracks, and emphasized containment.
-- **Charcoal** (`#333333`): Dark mode switch backgrounds and deep secondary surfaces.
+### 中性色与文本
+- **石板灰**(`#60646c`):主力次级文本色(305 处实例)。一种冷蓝灰,有权威感又不沉重。
+- **中石板**(`#555860`):比石板略深,用于强调型次级文本。
+- **银**(`#b0b4ba`):三级文本、占位符、弱化的元数据。可读性舒适,但明显退后。
+- **白镴**(`#999999`):手风琴图标与暗语境里深度弱化的 UI 元素。
+- **浅银**(`#cccccc`):暗语境里的箭头图标与装饰元素。
+- **深石板**(`#363a3f`):暗表面上的边框、开关轨道、强调型围合。
+- **炭灰**(`#333333`):暗色模式开关背景与深次级表面。
 
-### Semantic & Accent
-- **Warning Amber** (`#ab6400`): A warm, deep amber for warning states — deliberately not bright yellow, conveying seriousness.
-- **Destructive Rose** (`#eb8e90`): A soft pink-coral for disabled destructive actions — gentler than typical red, reducing alarm fatigue.
-- **Border Lavender** (`#e0e1e6`): Standard card/container borders — a cool lavender-gray that's visible without being heavy.
-- **Input Border** (`#d9d9e0`): Button and form element borders — slightly warmer/darker than card borders for interactive elements.
-- **Dark Focus Ring** (`#2547d0`): Deep blue for keyboard focus indicators in dark theme contexts.
+### 语义与强调
+- **警告琥珀**(`#ab6400`):暖而深的琥珀,用于警告态——刻意不用亮黄,传达严肃。
+- **危险玫瑰**(`#eb8e90`):柔和的粉珊瑚,用于禁用的破坏性操作——比典型红更温和,减少告警疲劳。
+- **边框薰衣草**(`#e0e1e6`):标准卡片/容器边框——一种冷薰衣草灰,可见又不沉重。
+- **输入边框**(`#d9d9e0`):按钮与表单元素边框——比卡片边框略暖/略深,用于交互元素。
+- **暗聚焦环**(`#2547d0`):深蓝,用于暗色主题语境下的键盘焦点指示。
 
-### Gradient System
-- The design is notably **gradient-free** in the interface layer. Visual richness comes from product screenshots, the React universe illustration, and careful shadow layering rather than color gradients. This absence IS the design decision — gradients would undermine the clinical precision.
+### 渐变系统
+- 这套设计在界面层明显**无渐变**。视觉丰富度来自产品截图、React 宇宙插画与细致的阴影分层,而非色彩渐变。这种缺席本身就是设计决定——渐变会削弱这份冷峻的精确。
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Family
-- **Primary**: `Inter`, with fallbacks: `-apple-system, system-ui`
-- **Monospace**: `JetBrains Mono`, with fallback: `ui-monospace`
-- **System Fallback**: `system-ui, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji`
+### 字族
+- **主字族**:`Inter`,回退:`-apple-system, system-ui`
+- **等宽**:`JetBrains Mono`,回退:`ui-monospace`
+- **系统回退**:`system-ui, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji`
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display / Hero | Inter | 64px (4rem) | 700–900 | 1.10 (tight) | -1.6px to -3px | Maximum impact, extreme tracking |
-| Section Heading | Inter | 48px (3rem) | 600 | 1.10 (tight) | -2px | Feature section anchors |
-| Sub-heading | Inter | 20px (1.25rem) | 600 | 1.20 (tight) | -0.25px | Card titles, feature names |
-| Body Large | Inter | 18px (1.13rem) | 400–500 | 1.40 | normal | Intro paragraphs, section descriptions |
-| Body / Button | Inter | 16px (1rem) | 400–700 | 1.25–1.40 | normal | Standard text, nav links, buttons |
-| Caption / Label | Inter | 14px (0.88rem) | 400–600 | 1.00–1.40 | normal | Descriptions, metadata, badge text |
-| Tag / Small | Inter | 12px (0.75rem) | 500 | 1.00–1.60 | normal | Smallest sans-serif text, badges |
-| Code Body | JetBrains Mono | 16px (1rem) | 400–600 | 1.40 | normal | Inline code, terminal commands |
-| Code Caption | JetBrains Mono | 14px (0.88rem) | 400–600 | 1.40 | normal | Code snippets, technical labels |
-| Code Small | JetBrains Mono | 12px (0.75rem) | 400 | 1.60 | normal | Uppercase tech tags |
+| 显示 / Hero | Inter | 64px (4rem) | 700–900 | 1.10(紧) | -1.6px 至 -3px | 冲击力最大,极端字距 |
+| 区块标题 | Inter | 48px (3rem) | 600 | 1.10(紧) | -2px | Feature 区块锚点 |
+| 子标题 | Inter | 20px (1.25rem) | 600 | 1.20(紧) | -0.25px | 卡片标题、feature 名称 |
+| 大号正文 | Inter | 18px (1.13rem) | 400–500 | 1.40 | normal | 引言段落、区块描述 |
+| 正文 / 按钮 | Inter | 16px (1rem) | 400–700 | 1.25–1.40 | normal | 标准文本、导航链接、按钮 |
+| 说明 / 标签 | Inter | 14px (0.88rem) | 400–600 | 1.00–1.40 | normal | 描述、元数据、徽章文字 |
+| 标签 / 小号 | Inter | 12px (0.75rem) | 500 | 1.00–1.60 | normal | 最小无衬线文本、徽章 |
+| 代码正文 | JetBrains Mono | 16px (1rem) | 400–600 | 1.40 | normal | 行内代码、终端命令 |
+| 代码说明 | JetBrains Mono | 14px (0.88rem) | 400–600 | 1.40 | normal | 代码片段、技术标签 |
+| 代码小号 | JetBrains Mono | 12px (0.75rem) | 400 | 1.60 | normal | 全大写技术标签 |
 
-### Principles
-- **One typeface, full expression**: Inter is the only sans-serif, used from weight 400 (regular) through 900 (black). This gives the design a unified voice while still achieving dramatic contrast between whisper-light body text and thundering display headlines.
-- **Extreme negative tracking at scale**: Headlines at 64px use -1.6px to -3px letter-spacing, creating ultra-dense text blocks that feel like logotypes. This aggressive compression is the signature typographic move.
-- **Weight as hierarchy**: 700–900 for display, 600 for headings, 500 for emphasis, 400 for body. The jumps are decisive — no ambiguous in-between weights.
-- **Consistent 1.40 body line-height**: Nearly all body and UI text shares 1.40 line-height, creating a rhythmic vertical consistency.
+### 原则
+- **一个字族,完整表达**:Inter 是唯一无衬线体,从 400(常规)一路用到 900(黑体)。这给设计统一的嗓音,同时仍在耳语般的正文与雷鸣般的显示标题之间造出戏剧性对比。
+- **大字号下的极端负字距**:64px 标题用 -1.6px 到 -3px 字距,造出超密文本块,像商标字。这种激进压缩是签名的排版动作。
+- **字重即层级**:显示级 700–900,标题 600,强调 500,正文 400。跳档果断——没有含糊的中间字重。
+- **一致的 1.40 正文行高**:几乎所有正文与 UI 文本共用 1.40 行高,造出有节奏的纵向一致。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Primary (White on border)**
-- Background: Pure White (`#ffffff`)
-- Text: Near Black (`#1c2024`)
-- Padding: 0px 12px (compact, content-driven height)
-- Border: thin solid Input Border (`1px solid #d9d9e0`)
-- Radius: subtly rounded (6px)
-- Shadow: subtle combined shadow on hover
-- The understated default — clean, professional, unheroic
+**主按钮(白底描边)**
+- 背景:纯白(`#ffffff`)
+- 文字:近黑(`#1c2024`)
+- padding:0px 12px(紧凑,高度由内容驱动)
+- 边框:细实线输入边框(`1px solid #d9d9e0`)
+- 圆角:微妙圆润(6px)
+- 阴影:hover 时细微的组合阴影
+- 克制的默认态——干净、专业、不张扬
 
-**Primary Pill**
-- Same as Primary but with pill-shaped radius (9999px)
-- Used for hero CTAs and high-emphasis actions
-- The extra roundness signals "start here"
+**主药丸**
+- 与主按钮相同,但圆角为药丸形(9999px)
+- 用于 hero CTA 与高强调操作
+- 额外的圆润度在说"从这里开始"
 
-**Dark Primary**
-- Background: Expo Black (`#000000`)
-- Text: Pure White (`#ffffff`)
-- Pill-shaped (9999px) or generously rounded (32–36px)
-- No border (black IS the border)
-- The maximum-emphasis CTA — reserved for primary conversion actions
+**暗色主按钮**
+- 背景:Expo 黑(`#000000`)
+- 文字:纯白(`#ffffff`)
+- 药丸形(9999px)或慷慨圆润(32–36px)
+- 无边框(黑色本身就是边框)
+- 最高强调的 CTA——只留给主转化操作
 
-### Cards & Containers
-- Background: Pure White (`#ffffff`) — clearly lifted from Cloud Gray page
-- Border: thin solid Border Lavender (`1px solid #e0e1e6`) for standard cards
-- Radius: comfortably rounded (8px) for standard cards; generously rounded (16–24px) for featured containers
-- Shadow Level 1: Whisper (`rgba(0,0,0,0.08) 0px 3px 6px, rgba(0,0,0,0.07) 0px 2px 4px`) — barely perceptible lift
-- Shadow Level 2: Standard (`rgba(0,0,0,0.1) 0px 10px 20px, rgba(0,0,0,0.05) 0px 3px 6px`) — clear floating elevation
-- Hover: likely subtle shadow deepening or background shift
+### 卡片与容器
+- 背景:纯白(`#ffffff`)——从云灰页面明显抬起
+- 边框:标准卡片用细实线边框薰衣草(`1px solid #e0e1e6`)
+- 圆角:标准卡舒适圆润(8px);特色容器慷慨圆润(16–24px)
+- 阴影层级 1:耳语(`rgba(0,0,0,0.08) 0px 3px 6px, rgba(0,0,0,0.07) 0px 2px 4px`)——几乎察觉不到的抬升
+- 阴影层级 2:标准(`rgba(0,0,0,0.1) 0px 10px 20px, rgba(0,0,0,0.05) 0px 3px 6px`)——清晰浮起的海拔
+- Hover:大概是阴影略微加深或背景切换
 
-### Inputs & Forms
-- Background: Pure White (`#ffffff`)
-- Text: Near Black (`#1c2024`)
-- Border: thin solid Input Border (`1px solid #d9d9e0`)
-- Padding: 0px 12px (inline with button sizing)
-- Radius: subtly rounded (6px)
-- Focus: blue ring shadow via CSS custom property
+### 输入与表单
+- 背景:纯白(`#ffffff`)
+- 文字:近黑(`#1c2024`)
+- 边框:细实线输入边框(`1px solid #d9d9e0`)
+- padding:0px 12px(与按钮尺寸对齐)
+- 圆角:微妙圆润(6px)
+- 聚焦:通过 CSS 自定义属性给蓝色环阴影
 
-### Navigation
-- Sticky top nav on transparent/blurred background
-- Logo: Expo wordmark in black
-- Links: Near Black (`#1c2024`) or Slate Gray (`#60646c`) at 14–16px Inter weight 500
-- CTA: Black pill button ("Sign Up") on the right
-- GitHub star badge as social proof
-- Status indicator ("All Systems Operational") with green dot
+### 导航
+- 透明/模糊背景上的吸顶顶栏
+- Logo:黑色 Expo 字标
+- 链接:近黑(`#1c2024`)或石板灰(`#60646c`),14–16px Inter 500 字重
+- CTA:右侧黑色药丸按钮("Sign Up")
+- GitHub 星标徽章作社会证明
+- 状态指示("All Systems Operational")配绿点
 
-### Image Treatment
-- Product screenshots and device mockups are the visual heroes
-- Generously rounded corners (24px) on video and image containers
-- Screenshots shown in realistic device frames
-- Dark UI screenshots provide contrast against the light canvas
-- Full-bleed within rounded containers
+### 图像处理
+- 产品截图与设备模型是视觉主角
+- 视频与图像容器用慷慨圆角(24px)
+- 截图展示在写实设备外框中
+- 暗色 UI 截图在浅画布上形成对比
+- 在圆角容器内全出血
 
-### Distinctive Components
+### 特色组件
 
-**Universe React Logo**
-- Animated/illustrated React logo as the visual centerpiece
-- Connects Expo's identity to the React ecosystem
-- The only illustrative element on an otherwise photographic page
+**宇宙 React Logo**
+- 动画/插画式 React logo 作为视觉中心件
+- 把 Expo 的身份接到 React 生态上
+- 一张以摄影为主的页面上唯一的插画元素
 
-**Device Preview Grid**
-- Multiple device types (phone, tablet, web) shown simultaneously
-- Demonstrates cross-platform capability visually
-- Each device uses realistic device chrome
+**设备预览网格**
+- 多种设备类型(手机、平板、网页)同时展示
+- 以视觉方式演示跨平台能力
+- 每台设备用写实设备外框
 
-**Status Badge**
-- "All Systems Operational" pill in the nav
-- Green dot + text — compact trust signal
-- Pill-shaped (36px radius)
+**状态徽章**
+- 导航里的"All Systems Operational"药丸
+- 绿点 + 文本——紧凑的信任信号
+- 药丸形(36px 圆角)
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 1px, 2px, 4px, 8px, 12px, 16px, 24px, 32px, 40px, 48px, 64px, 80px, 96px, 144px
-- Button padding: 0px 12px (unusually compact — height driven by line-height)
-- Card internal padding: approximately 24–32px
-- Section vertical spacing: enormous (estimated 96–144px between major sections)
-- Component gap: 16–24px between sibling elements
+### 间距系统
+- 基数:8px
+- 档位:1px, 2px, 4px, 8px, 12px, 16px, 24px, 32px, 40px, 48px, 64px, 80px, 96px, 144px
+- 按钮 padding:0px 12px(异常紧凑——高度由行高驱动)
+- 卡片内部 padding:约 24–32px
+- 区块纵向间距:巨大(主区块之间估计 96–144px)
+- 组件间隙:同级元素之间 16–24px
 
-### Grid & Container
-- Max container width: approximately 1200–1400px, centered
-- Hero: centered single-column with massive breathing room
-- Feature sections: alternating layouts (image left/right, full-width showcases)
-- Card grids: 2–3 column for feature highlights
-- Full-width sections with contained inner content
+### 网格与容器
+- 容器最大宽:约 1200–1400px,居中
+- Hero:居中单列,巨大呼吸空间
+- 特色区块:交替布局(图左/图右、全宽展示)
+- 卡片网格:特色亮点用 2–3 列
+- 全宽区块,内部内容收在容器里
 
-### Whitespace Philosophy
-- **Gallery-like pacing**: Each section feels like its own exhibit, surrounded by vast empty space. This creates a premium, unhurried browsing experience.
-- **Breathing room is the design**: The generous whitespace IS the primary design element — it communicates confidence, quality, and that each feature deserves individual attention.
-- **Content islands**: Sections float as isolated "islands" in the white space, connected by scrolling rather than visual continuation.
+### 留白哲学
+- **画廊式节奏**:每个区块都像自己的展品,被广阔空面围住。这造出高级、从容的浏览体验。
+- **呼吸空间就是设计**:慷慨的留白本身就是主设计元素——它传达自信、品质,以及每个特色都值得单独关注。
+- **内容孤岛**:区块像孤立的"岛屿"浮在留白里,靠滚动而非视觉延续连接。
 
-### Border Radius Scale
-- Nearly squared (4px): Small inline elements, tags
-- Subtly rounded (6px): Buttons, form inputs, combo boxes — the functional interactive radius
-- Comfortably rounded (8px): Standard content cards, containers
-- Generously rounded (16px): Feature tabs, content panels
-- Very rounded (24px): Buttons, video/image containers, tabpanels — the signature softness
-- Highly rounded (32–36px): Hero CTAs, status badges, nav buttons
-- Pill-shaped (9999px): Primary action buttons, tags, avatars — maximum friendliness
+### 圆角档位
+- 近方(4px):小行内元素、标签
+- 微妙圆润(6px):按钮、表单输入、组合框——功能性交互圆角
+- 舒适圆润(8px):标准内容卡、容器
+- 慷慨圆润(16px):特色页签、内容面板
+- 很圆(24px):按钮、视频/图像容器、页签面板——签名的柔软度
+- 高度圆润(32–36px):hero CTA、状态徽章、导航按钮
+- 药丸形(9999px):主操作按钮、标签、头像——最大友好度
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层级 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow | Cloud Gray page background, inline text |
-| Surface (Level 1) | White bg, no shadow | Standard white cards on Cloud Gray |
-| Whisper (Level 2) | `rgba(0,0,0,0.08) 0px 3px 6px` + `rgba(0,0,0,0.07) 0px 2px 4px` | Subtle card lift, hover states |
-| Elevated (Level 3) | `rgba(0,0,0,0.1) 0px 10px 20px` + `rgba(0,0,0,0.05) 0px 3px 6px` | Feature showcases, product screenshots |
-| Modal (Level 4) | Dark overlay (`--dialog-overlay-background-color`) + heavy shadow | Dialogs, overlays |
+| 平(层级 0) | 无阴影 | 云灰页面背景、行内文本 |
+| 表面(层级 1) | 白底,无阴影 | 云灰上的标准白卡 |
+| 耳语(层级 2) | `rgba(0,0,0,0.08) 0px 3px 6px` + `rgba(0,0,0,0.07) 0px 2px 4px` | 卡片微抬、hover 态 |
+| 抬高(层级 3) | `rgba(0,0,0,0.1) 0px 10px 20px` + `rgba(0,0,0,0.05) 0px 3px 6px` | 特色展示、产品截图 |
+| 模态(层级 4) | 暗色遮罩(`--dialog-overlay-background-color`)+ 重阴影 | 对话框、覆盖层 |
 
-**Shadow Philosophy**: Expo uses shadows as gentle whispers rather than architectural statements. The primary depth mechanism is **background color contrast** — white cards floating on Cloud Gray — rather than shadow casting. When shadows appear, they're soft, diffused, and directional (downward), creating the feeling of paper hovering millimeters above a desk.
+**阴影哲学**:Expo 用阴影作轻柔耳语,而非建筑式声明。主深度机制是**背景色对比**——白卡浮在云灰上——而不是投影。阴影出现时,柔和、扩散、有方向(向下),造出纸片悬在桌面上方几毫米的感觉。
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use Cloud Gray (`#f0f0f3`) as the page background and Pure White (`#ffffff`) for elevated cards — the two-tone light system is essential
-- Keep display headlines at extreme negative letter-spacing (-1.6px to -3px at 64px) for the signature compressed look
-- Use pill-shaped (9999px) radius for primary CTA buttons — the organic shape is core to the identity
-- Reserve black (`#000000`) for headlines and primary CTAs — it carries maximum authority on the light canvas
-- Use Slate Gray (`#60646c`) for secondary text — it's the precise balance between readable and receded
-- Maintain enormous vertical spacing between sections (96px+) — the gallery pacing defines the premium feel
-- Use product screenshots as the primary visual content — the interface stays monochrome, the products bring color
-- Apply Inter at the full weight range (400–900) — weight contrast IS the hierarchy
+- 用云灰(`#f0f0f3`)作页面背景,纯白(`#ffffff`)作抬升卡片——这套双色浅色系统是必需的
+- 显示级标题保持极端负字距(64px 下 -1.6px 到 -3px),换取签名的压缩外观
+- 主 CTA 按钮用药丸形(9999px)圆角——有机形状是身份核心
+- 把黑(`#000000`)留给标题与主 CTA——它在浅画布上承载最大权威
+- 次级文本用石板灰(`#60646c`)——它是可读与退后之间的精确平衡
+- 区块之间保持巨大纵向间距(96px+)——画廊节奏定义高级感
+- 用产品截图作主要视觉内容——界面保持单色,产品带来颜色
+- 把 Inter 用到全字重区间(400–900)——字重对比就是层级
 
 ### Don't
-- Don't introduce decorative colors into the interface chrome — the monochromatic palette is intentional
-- Don't use sharp corners (border-radius < 6px) on interactive elements — the pill/rounded geometry is the signature
-- Don't reduce section spacing below 64px — the breathing room is the design
-- Don't use heavy drop shadows — depth comes from background contrast and whisper-soft shadows
-- Don't mix in additional typefaces — Inter handles everything from display to caption
-- Don't use letter-spacing wider than -0.25px on body text — extreme tracking is reserved for display only
-- Don't use borders heavier than 2px — containment is subtle, achieved through background color and gentle borders
-- Don't add gradients to the interface — visual richness comes from content, not decoration
-- Don't use saturated colors outside of semantic contexts — the palette is strictly grayscale + functional blue
+- 不把装饰色引入界面 chrome——单色板是刻意的
+- 交互元素不用锐角(圆角 < 6px)——药丸/圆润几何是签名
+- 不把区块间距压到 64px 以下——呼吸空间就是设计
+- 不用厚重投影——深度来自背景对比与耳语般柔和的阴影
+- 不混入其他字族——Inter 从显示级到说明文字全都包了
+- 正文字距不宽于 -0.25px——极端字距只留给显示级
+- 边框不重于 2px——围合是微妙的,靠背景色与轻边框达成
+- 不给界面加渐变——视觉丰富度来自内容,不来自装饰
+- 语义语境之外不用饱和色——色板严格是灰阶 + 功能性蓝
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile | <640px | Single column, hamburger nav, stacked cards, hero text scales to ~36px |
-| Tablet | 640–1024px | 2-column grids, condensed nav, medium hero text |
-| Desktop | >1024px | Full multi-column layout, expanded nav, massive hero (64px) |
+| 移动 | <640px | 单列、汉堡导航、卡片堆叠、hero 文字缩至约 36px |
+| 平板 | 640–1024px | 2 列网格、压缩导航、中等 hero 文字 |
+| 桌面 | >1024px | 完整多列布局、展开导航、巨大 hero(64px) |
 
-*Only one explicit breakpoint detected (640px), suggesting a fluid, container-query or min()/clamp()-based responsive system rather than fixed breakpoint snapping.*
+*仅检测到一个显式断点(640px),说明这是一套流动的、基于容器查询或 min()/clamp() 的响应系统,而非固定断点跳变。*
 
-### Touch Targets
-- Buttons use generous radius (24–36px) creating large, finger-friendly surfaces
-- Navigation links spaced with adequate gap
-- Status badge sized for touch (36px radius)
-- Minimum recommended: 44x44px
+### 触控目标
+- 按钮用慷慨圆角(24–36px),造出大而适合手指的表面
+- 导航链接间距充足
+- 状态徽章按触控尺寸设计(36px 圆角)
+- 建议最小值:44x44px
 
-### Collapsing Strategy
-- **Navigation**: Full horizontal nav with CTA collapses to hamburger on mobile
-- **Feature sections**: Multi-column → stacked single column
-- **Hero text**: 64px → ~36px progressive scaling
-- **Device previews**: Grid → stacked/carousel
-- **Cards**: Side-by-side → vertical stacking
-- **Spacing**: Reduces proportionally but maintains generous rhythm
+### 折叠策略
+- **导航**:完整横向导航带 CTA,移动端折叠为汉堡
+- **特色区块**:多列 → 堆叠单列
+- **Hero 文字**:64px → 约 36px 渐进缩放
+- **设备预览**:网格 → 堆叠/轮播
+- **卡片**:并排 → 纵向堆叠
+- **间距**:等比缩减,但保持慷慨节奏
 
-### Image Behavior
-- Product screenshots scale proportionally
-- Device mockups may simplify or show fewer devices on mobile
-- Rounded corners maintained at all sizes
-- Lazy loading for below-fold content
+### 图像行为
+- 产品截图等比缩放
+- 设备模型在移动端可能简化或减少设备数量
+- 圆角在所有尺寸下保持
+- 首屏以下内容懒加载
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Primary CTA / Headlines: "Expo Black (#000000)"
-- Page Background: "Cloud Gray (#f0f0f3)"
-- Card Surface: "Pure White (#ffffff)"
-- Body Text: "Near Black (#1c2024)"
-- Secondary Text: "Slate Gray (#60646c)"
-- Borders: "Border Lavender (#e0e1e6)"
-- Links: "Link Cobalt (#0d74ce)"
-- Tertiary Text: "Silver (#b0b4ba)"
+### 快速取色参考
+- 主 CTA / 标题:"Expo 黑(#000000)"
+- 页面背景:"云灰(#f0f0f3)"
+- 卡片表面:"纯白(#ffffff)"
+- 正文:"近黑(#1c2024)"
+- 次级文本:"石板灰(#60646c)"
+- 边框:"边框薰衣草(#e0e1e6)"
+- 链接:"链接钴蓝(#0d74ce)"
+- 三级文本:"银(#b0b4ba)"
 
-### Example Component Prompts
-- "Create a hero section on Cloud Gray (#f0f0f3) with a massive headline at 64px Inter weight 700, line-height 1.10, letter-spacing -3px. Text in Expo Black (#000000). Below, add a subtitle in Slate Gray (#60646c) at 18px. Place a black pill-shaped CTA button (9999px radius) beneath."
-- "Design a feature card on Pure White (#ffffff) with a 1px solid Border Lavender (#e0e1e6) border and comfortably rounded corners (8px). Title in Near Black (#1c2024) at 20px Inter weight 600, description in Slate Gray (#60646c) at 16px. Add a whisper shadow (rgba(0,0,0,0.08) 0px 3px 6px)."
-- "Build a navigation bar with Expo logo on the left, text links in Near Black (#1c2024) at 14px Inter weight 500, and a black pill CTA button on the right. Background: transparent with blur backdrop. Bottom border: 1px solid Border Lavender (#e0e1e6)."
-- "Create a code block using JetBrains Mono at 14px on a Pure White surface with Border Lavender border and 8px radius. Code in Near Black, keywords in Link Cobalt (#0d74ce)."
-- "Design a status badge pill (9999px radius) with a green dot and 'All Systems Operational' text in Inter 12px weight 500. Background: Pure White, border: 1px solid Input Border (#d9d9e0)."
+### 组件提示词示例
+- "在云灰(#f0f0f3)上做一段 hero:标题 64px Inter 700 字重,行高 1.10,字距 -3px。文字用 Expo 黑(#000000)。下方加一条副标,石板灰(#60646c),18px。再放一枚黑色药丸 CTA 按钮(9999px 圆角)。"
+- "设计一张 feature 卡:纯白(#ffffff)底,1px solid 边框薰衣草(#e0e1e6)边框,舒适圆润的转角(8px)。标题近黑(#1c2024),20px Inter 600 字重;描述石板灰(#60646c),16px。加一条耳语阴影(rgba(0,0,0,0.08) 0px 3px 6px)。"
+- "做一个导航栏:左侧 Expo logo,文本链接近黑(#1c2024),14px Inter 500 字重,右侧黑色药丸 CTA 按钮。背景:透明加模糊背衬。底边框:1px solid 边框薰衣草(#e0e1e6)。"
+- "做一个代码块:JetBrains Mono 14px,纯白表面,边框薰衣草边框,8px 圆角。代码近黑,关键字链接钴蓝(#0d74ce)。"
+- "设计一枚状态徽章药丸(9999px 圆角),配绿点与'All Systems Operational'文本,Inter 12px 500 字重。背景:纯白,边框:1px solid 输入边框(#d9d9e0)。"
 
-### Iteration Guide
-1. Focus on ONE component at a time
-2. Reference specific color names and hex codes — "use Slate Gray (#60646c)" not "make it gray"
-3. Use radius values deliberately — 6px for buttons, 8px for cards, 24px for images, 9999px for pills
-4. Describe the "feel" alongside measurements — "enormous breathing room with 96px section spacing"
-5. Always specify Inter and the exact weight — weight contrast IS the hierarchy
-6. For shadows, specify "whisper shadow" or "standard elevation" from the elevation table
-7. Keep the interface monochrome — let product content be the color
+### 迭代指南
+1. 一次只盯一个组件
+2. 引用具体色名与 hex 值——说"用石板灰(#60646c)",不说"弄成灰的"
+3. 有意识地使用圆角值——按钮 6px、卡片 8px、图像 24px、药丸 9999px
+4. 描述"感觉"时一并给出测量值——"96px 区块间距,巨大呼吸空间"
+5. 永远指定 Inter 与精确字重——字重对比就是层级
+6. 说阴影时,从海拔表里指定"耳语阴影"或"标准海拔"
+7. 界面保持单色——让产品内容做颜色

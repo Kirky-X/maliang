@@ -1,13 +1,13 @@
-# 候选池索引（Candidates）—— 上游原文快照总目录
+# 候选池索引（Candidates）—— 上游快照中文译本总目录
 
 > **provenance**：原始出处 [样张源](https://样张源) DESIGNS 索引；上游 [/设计样张集](https://github.com//设计样张集)，许可 MIT。站点条目上游路径为 `design-md/<slug>/DESIGN.md`，风格模板条目为 `extra/uiuxskillProMax/generated/<n>-<name>/DESIGN.md`。快照日期 2026-10-31，共 112 条 / 9 组。
-> 每条原文存档为同目录 `<slug>.md`，文件头有完整 provenance 注释（原始出处 / 上游路径 / 许可证 / 分组 / 站点摘要 / 站点色板 / 快照日期）。
+> 每条存档为同目录 `<slug>.md`（上游原文的中文译本，结构与数值逐项对齐原文，专有名词保留英文），文件头有完整 provenance 注释（原始出处 / 上游路径 / 许可证 / 分组 / 站点摘要 / 站点色板 / 快照日期）。
 
 ## 本目录的定位
 
-本目录是**候选池原文快照**，与蒸馏供体层（[../README.md](../README.md)）分工如下：
+本目录是**候选池快照的中文译本**，与蒸馏供体层（[../README.md](../README.md)）分工如下：
 
-- 本目录**只存原文，不背书数值**：上游 DESIGN.md 全文原样存档，未经本仓库 §1 文件契约、§2 九节到值、§3 借鉴纪律检验，也没有 `verified` 人工核验日期；引用其中数值前须自行复核站点现值。
+- 本目录**只存译本，不背书数值**：上游 DESIGN.md 逐段译为中文（代码块、hex、字号字重行高字距、链接与表格结构原样保留），未经本仓库 §1 文件契约、§2 九节到值、§3 借鉴纪律检验，也没有 `verified` 人工核验日期；引用其中数值前须自行复核站点现值。
 - 蒸馏供体层**只收逐家晋升的条目**：把原文蒸馏为 9 节带实测值的结构、过核验时效与查重后，另立 `../<id>.md`，与本快照**并存不互替**（各快照文件头同注）。
 - **晋升三条件**（canonical 见 [../README.md](../README.md) §5）：① 与首批气质轴不重复（暗 / 亮 / 工具 / 内容至少一轴不同）② 9 节能写到具体值 ③ 与既有供体查重；不做"整库平移"，逐家按需收录。
 - 已晋升并存档的：`linear.app` / `raycast` / `stripe` / `vercel` 四条，行内注明对应蒸馏供体。
@@ -57,16 +57,16 @@
 | ---- | ---- | ---------- | ------------------------ | ---- |
 | `cursor` | Cursor | 自制 Gothic 压缩大字负字距，正文衬线带花体替换 | `#26251e` `#f2f1ed` `#e6e5e0` | [cursor.md](cursor.md) |
 | `expo` | Expo | 冷白画廊式留白，严格黑白单色配蓝灰正文 | `#000000` `#1c2024` `#0d74ce` | [expo.md](expo.md) |
-| `linear.app` | Linear | 暗色原生精密工程：近黑画布 + 单色强调 + 签名字重 510。已有蒸馏供体 [../linear.md](../linear.md)，本条为原文快照 | `#f7f8f8` `#ffffff` `#f3f4f5` | [linear.app.md](linear.app.md) |
+| `linear.app` | Linear | 暗色原生精密工程：近黑画布 + 单色强调 + 签名字重 510。已有蒸馏供体 [../linear.md](../linear.md)，本条为快照译本 | `#f7f8f8` `#ffffff` `#f3f4f5` | [linear.app.md](linear.app.md) |
 | `lovable` | Lovable | 暖奶油画布，人文气质展示字配编辑式字距 | `#f7f4ed` `#1c1c1c` `#fcfbf8` | [lovable.md](lovable.md) |
 | `mintlify` | Mintlify | Inter 展示级紧字距，Geist Mono 大写小号当技术标签 | `#0d0d0d` `#ffffff` `#fafafa` | [mintlify.md](mintlify.md) |
 | `posthog` | PostHog | 鼠尾草橄榄绿替代常规蓝调，IBM Plex 700/800 粗标题配 1.5 宽行距 | `#4d4f46` `#23251d` `#f54e00` | [posthog.md](posthog.md) |
-| `raycast` | Raycast | 桌面原生暗色：蓝调近黑 + inset 高光阴影 + 正字距正文。已有蒸馏供体 [../raycast.md](../raycast.md)，本条为原文快照 | `#07080a` `#101111` `#1b1c1e` | [raycast.md](raycast.md) |
+| `raycast` | Raycast | 桌面原生暗色：蓝调近黑 + inset 高光阴影 + 正字距正文。已有蒸馏供体 [../raycast.md](../raycast.md)，本条为快照译本 | `#07080a` `#101111` `#1b1c1e` | [raycast.md](raycast.md) |
 | `resend` | Resend | 纯黑画廊式暗场，衬线主视觉配三字体层级 | `#000000` `#f0f0f0` `#ffffff` | [resend.md](resend.md) |
 | `sentry` | Sentry | 紫黑画布，暖紫谱系深浅分段 | `#1f1633` `#150f23` `#362d59` | [sentry.md](sentry.md) |
 | `supabase` | Supabase | 近黑画布，祖母绿限次点缀作身份标记 | `#3ecf8e` `#00c573` `#0f0f0f` | [supabase.md](supabase.md) |
 | `superhuman` | Superhuman | 深紫渐变 hero，可变字体 460/540 非标字重档 | `#1b1938` `#cbb7fb` `#292827` | [superhuman.md](superhuman.md) |
-| `vercel` | Vercel | 工程静默：纯白画廊 + shadow-as-border + 压缩大字。已有蒸馏供体 [../vercel.md](../vercel.md)，本条为原文快照 | `#171717` `#ffffff` `#fafafa` | [vercel.md](vercel.md) |
+| `vercel` | Vercel | 工程静默：纯白画廊 + shadow-as-border + 压缩大字。已有蒸馏供体 [../vercel.md](../vercel.md)，本条为快照译本 | `#171717` `#ffffff` `#fafafa` | [vercel.md](vercel.md) |
 | `warp` | Warp | 暖土调近黑画布，奶白正文替代纯白 | `#0e0e0d` `#161615` `#faf9f6` | [warp.md](warp.md) |
 | `zapier` | Zapier | 暖奶油画布红棕黑正文，插画驱动 | `#201515` `#fffefb` `#fffdf9` | [zapier.md](zapier.md) |
 
@@ -79,7 +79,7 @@
 | `hashicorp` | HashiCorp | 白暗双模，白色文档区与深灰蓝产品区交替 | `#000000` `#15181e` `#0d0e12` | [hashicorp.md](hashicorp.md) |
 | `mongodb` | MongoDB | 森绿黑画布，荧光绿单点品牌色 | `#001e2b` `#00ed64` `#00684a` | [mongodb.md](mongodb.md) |
 | `sanity` | Sanity | 近黑为默认身份而非暗色模式，极端负字距展示字 | `#f7f7f7` `#ffffff` `#f0f0f0` | [sanity.md](sanity.md) |
-| `stripe` | Stripe | 金融精致：细字重大标题 + 蓝调染色阴影 + 表格数字。已有蒸馏供体 [../stripe.md](../stripe.md)，本条为原文快照 | `#533afd` `#4434d4` `#2e2b8c` | [stripe.md](stripe.md) |
+| `stripe` | Stripe | 金融精致：细字重大标题 + 蓝调染色阴影 + 表格数字。已有蒸馏供体 [../stripe.md](../stripe.md)，本条为快照译本 | `#533afd` `#4434d4` `#2e2b8c` | [stripe.md](stripe.md) |
 
 ## 设计与生产力（design · 10 条）
 

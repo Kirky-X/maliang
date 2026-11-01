@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Organic Biophilic is a UI style reference for general interfaces, focused on Nature, organic shapes, green, sustainable, rounded.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Organic Biophilic 是为通用界面提供的 UI 风格参照,侧重自然、有机形状、绿色、可持续、圆润。
      站点色板: #f5f1e8, #e0d8c8, #5d6b4d, #3e4a32, #8a9a7b, #d4e4c1
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Organic Biophilic
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Organic Biophilic is a UI style reference for general interfaces, combining Nature, organic shapes, green, sustainable, rounded, flowing, wellness, earthy, natural textures. The visual direction is shaped by Rounded corners (16-24px), organic curves (border-radius variations), natural shadows, flowing SVG shapes.
+Organic Biophilic 是为通用界面提供的 UI 风格参照,融合自然、有机形状、绿色、可持续、圆润、流动、健康、土质、自然纹理。视觉方向由圆角(16-24px)、有机曲线(border-radius 变化)、自然阴影、流动 SVG 形状塑造。
 
-Use it for Wellness apps (應用程式), sustainability brands (品牌), eco products (產品), health apps (健康), meditation, organic food brands (品牌). Avoid it for Tech-focused products (產品), gaming (遊戲), industrial, urban brands (品牌).
+用于康养应用、可持续品牌、生态产品、健康应用、冥想、有机食品品牌。避免用于科技导向产品、游戏、工业、城市品牌。
 
-**Key Characteristics:**
-- Primary palette: #228B22 (Forest Green), #8B4513 (Earth Brown), #87CEEB (Sky Blue), #F5F5DC (Beige)
-- Secondary palette: Natural gradients, earth tones, sky blues, organic textures, wood/stone colors
-- Effects: Rounded corners (16-24px), organic curves (border-radius variations), natural shadows, flowing SVG shapes
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Wellness apps (應用程式), sustainability brands (品牌), eco products (產品), health apps (健康), meditation, organic food brands (品牌)
-- Avoid for: Tech-focused products (產品), gaming (遊戲), industrial, urban brands (品牌)
+**关键特征:**
+- 主色板:森林绿 #228B22、土棕 #8B4513、天蓝 #87CEEB、米色 #F5F5DC
+- 次色板:自然渐变、土色、天蓝、有机纹理、木/石色
+- 效果:圆角(16-24px)、有机曲线(border-radius 变化)、自然阴影、流动 SVG 形状
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:康养应用、可持续品牌、生态产品、健康应用、冥想、有机食品品牌
+- 避免用于:科技导向产品、游戏、工业、城市品牌
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, CSS 10/10
-- Era reference: 2020s Sustainable
-- Local preview: [Open HTML preview](../../refstyles/42-organic-biophilic.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、CSS 10/10
+- 年代参照:2020 年代可持续
+- 本地预览:[打开 HTML 预览](../../refstyles/42-organic-biophilic.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

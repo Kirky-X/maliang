@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Memphis Design is a UI style reference for general interfaces, focused on 80s, geometric, playful, postmodern, shapes.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 孟菲斯设计是为通用界面提供的 UI 风格参照,侧重 80 年代、几何、俏皮、后现代、形状。
      站点色板: #fff5e6, #ffe66d, #ff6b6b, #4ecdc4, #a8e6cf, #dda0dd
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Memphis Design
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Memphis Design is a UI style reference for general interfaces, combining 80s, geometric, playful, postmodern, shapes, patterns, squiggles, triangles, neon, abstract, bold. The visual direction is shaped by transform: rotate(), clip-path: polygon(), mix-blend-mode, repeating patterns, bold shapes.
+孟菲斯设计是为通用界面提供的 UI 风格参照,融合 80 年代、几何、俏皮、后现代、形状、图案、波浪线、三角形、霓虹、抽象、粗犷。视觉方向由 transform: rotate()、clip-path: polygon()、mix-blend-mode、重复图案、粗犷形状塑造。
 
-Use it for Creative agencies (創意), music sites (網站), youth brands (品牌), event promotion, artistic portfolios (作品集), entertainment (娛樂). Avoid it for Corporate finance (金融), healthcare (健康), legal, elderly users, conservative brands (品牌).
+用于创意机构、音乐站点、青年品牌、活动推广、艺术作品集、娱乐。避免用于企业金融、医疗健康、法律、年长用户、保守品牌。
 
-**Key Characteristics:**
-- Primary palette: #FF71CE (Hot Pink), #FFCE5C (Yellow), #86CCCA (Teal), #6A7BB4 (Blue Purple)
-- Secondary palette: Complementary geometric colors, pattern fills, contrasting accent shapes
-- Effects: transform: rotate(), clip-path: polygon(), mix-blend-mode, repeating patterns, bold shapes
-- Accessibility: ⚠ Check contrast; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Creative agencies (創意), music sites (網站), youth brands (品牌), event promotion, artistic portfolios (作品集), entertainment (娛樂)
-- Avoid for: Corporate finance (金融), healthcare (健康), legal, elderly users, conservative brands (品牌)
+**关键特征:**
+- 主色板:#FF71CE(亮粉)、#FFCE5C(黄)、#86CCCA(青)、#6A7BB4(蓝紫)
+- 次色板:互补的几何色、图案填充、对比强调形状
+- 效果:transform: rotate()、clip-path: polygon()、mix-blend-mode、重复图案、粗犷形状
+- 无障碍:⚠ 需检查对比;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:创意机构、音乐站点、青年品牌、活动推广、艺术作品集、娱乐
+- 避免用于:企业金融、医疗健康、法律、年长用户、保守品牌
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 9/10, CSS 10/10
-- Era reference: 1980s Postmodern
-- Local preview: [Open HTML preview](../../refstyles/44-memphis-revival.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 9/10、CSS 10/10
+- 年代参照:1980 年代后现代
+- 本地预览:[打开 HTML 预览](../../refstyles/44-memphis-revival.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

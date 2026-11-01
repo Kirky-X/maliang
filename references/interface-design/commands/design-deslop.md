@@ -1,64 +1,64 @@
 ---
 name: interface-design:design-deslop
-description: Strip the signatures that make a UI look AI-generated — flat hierarchy, no focal point, monotone layout, timid palettes, generic tokens, defaulted type, missing states. The design counterpart to a code-deslop pass.
+description: 剥掉那些让 UI 看起来是 AI 生成的签名特征 —— 扁平层级、没有焦点、单调布局、怯弱的色板、通用 token、默认字体、缺失状态。是代码 deslop 流程在设计侧的对应物。
 ---
 
-# Remove design slop
+# 去除设计 slop
 
-Every generated interface carries tells — the specific signatures that make someone glance at it and think *an AI made this*. This pass finds those tells and removes them. Fast, surgical, behavior-preserving. Not a full design review (that's `/interface-design:design-review`, which judges craft against an approval bar and can block). Here you have one job: **make it stop looking generated.**
+每个生成界面都带着 tell —— 那些让人一眼扫过去就想*这是 AI 做的*的具体签名。这一遍找出这些 tell 并去掉它们。快、外科手术式、保持行为不变。不是完整的设计评审(那是 `/interface-design:design-review`,它对着 approval bar 评判 craft 并且可以拦下)。这里你只有一件事:**让它不再看起来像生成的。**
 
-The tell is rarely a single wrong value. It's the *sum* — every number the same size, every card identical, one accent color smeared everywhere, structure built from borders instead of space. Slop is compositional. So you can't catch it by reading CSS line by line; you have to **look at the rendered thing first**, then go fix the lines.
+Tell 很少是单个错的值。它是*总和* —— 每个数字都一样大、每张卡片都一模一样、一个强调色到处涂抹、结构靠边框而不是空间。Slop 是构图性的。所以你没法逐行读 CSS 抓住它;你必须**先看渲染出来的东西**,然后去改那些行。
 
-## How to run it
+## 怎么跑
 
-Two passes, in this order. The first catches the slop that does the most damage and is invisible in a diff. The second catches the concrete line-level tells.
+两遍,按这个顺序。第一遍抓住破坏力最大、在 diff 里又看不见的 slop。第二遍抓住具体的行级 tell。
 
-### Pass 1 — Squint (the rendered output)
+### 第一遍 —— 眯眼(看渲染产出)
 
-Look at the actual UI. If a render tool (`show_widget`/`visualize`) or a screenshot is available, use it. Blur your eyes, or step back. Generated UI fails the squint test in specific ways — this is where the real slop lives, ranked by how much it gives the game away:
+看真实 UI。如果有渲染工具(`show_widget`/`visualize`)或截图,就用。模糊视线,或者退后一步。生成 UI 会以特定方式过不了眯眼测试 —— 真正的 slop 就在这里,按它暴露身份的程度排序:
 
-1. **No focal point.** Nothing leads. Every element competes equally, so the eye has nowhere to land. → Find the one thing the user came for and make it dominate (size, weight, contrast, or isolation); demote the rest.
-2. **Flat hierarchy.** You can't tell primary from secondary from metadata without reading the words — everything is one size, one weight, one color. → Build tiers from weight + a four-step color ramp, not size alone.
-3. **Monotone layout.** Same card size, same gap, same density edge to edge — the unmistakable grid-of-identical-boxes. → Vary density by zone, group by proximity, differentiate cards by their actual content and role.
-4. **Timid color.** A palette spread evenly across five low-commitment tints, or one accent applied to everything until nothing is emphasized. → One intentional accent at ~10%, the rest structural neutrals.
-5. **Borders doing the work of space.** Structure drawn with lines everywhere instead of whitespace and tonal shift. → Replace dividers with spacing and surface steps; keep borders for where separation genuinely needs a line.
+1. **没有焦点。** 没有东西领先。每个元素同等竞争,眼睛无处落脚。→ 找到用户来的那一件事,让它主导(尺寸、字重、对比或孤立);其余降级。
+2. **扁平层级。** 不读字面就分不出主、次与元数据 —— 一切一个字号、一个字重、一个颜色。→ 用字重 + 四步色阶建层级,不要只靠字号。
+3. **单调布局。** 卡片一样大、间距一样、密度从边到边一样 —— 那个一眼就认出的同框网格。→ 按区域变化密度,按邻近性分组,按实际内容与角色区分卡片。
+4. **怯弱的颜色。** 色板均摊在五个低承诺的浅调上,或一个强调色涂到所有东西上直到什么都不突出。→ 一个有意为之的强调色约 10%,其余是结构性中性色。
+5. **边框替空间干活。** 到处用线画结构,而不是留白与色调变化。→ 用间距与表面台阶替代分隔线;边框只留给确实需要一条线的地方。
 
-If the screen survives the squint — one thing leads, tiers are legible, it breathes unevenly, color is restrained — the worst slop is already gone. Then scan.
+如果这一屏过了眯眼 —— 一个东西领先、层级可读、不均匀地呼吸、颜色克制 —— 最糟的 slop 已经走了。然后扫描。
 
-### Pass 2 — Scan (the diff)
+### 第二遍 —— 扫描(看 diff)
 
-Now read what the branch changed and fix the concrete tells. Stay in the diff; these are the line-level signatures, grouped so you can move fast:
+现在读分支改了什么,修掉具体的 tell。待在 diff 里;这些是行级签名,已分组方便你快速推进:
 
-**Tokens & color** — generic names (`--gray-700`, `--surface-2`, inline hex) → semantic names mapped to primitives · competing accents → one · decorative gradients/tints → remove or make them mean status/action · different hues per surface → one hue, shift lightness.
+**Token 与颜色** —— 通用名(`--gray-700`、`--surface-2`、内联 hex)→ 映射到原语的语义名 · 竞争的强调色 → 一个 · 装饰性渐变/色调 → 删掉或让它们表示状态/动作 · 每个表面不同色相 → 一个色相,只改明度。
 
-**Typography** — system/Inter default where a direction exists → the chosen face · size-only hierarchy → add weight + color · slack tracking on large headings → tighten · updating numbers proportional → `tabular-nums`.
+**排版** —— 已有方向却用系统/Inter 默认 → 选定的字族 · 只靠字号的层级 → 加字重 + 颜色 · 大标题字距松 → 收紧 · 会变的数字用比例数字 → `tabular-nums`。
 
-**Surfaces & depth** — harsh 1px solid borders → low-opacity rgba or a shadow · dramatic elevation jumps → a few percent lightness per step · sidebar a different color → same canvas + subtle border · mixed depth strategies → pick one · same radius on nested parent/child → concentric (`outer = inner + padding`).
+**表面与深度** —— 生硬的 1px 实线边框 → 低不透明度 rgba 或阴影 · 夸张的海拔跳变 → 每级几个百分点明度 · 侧栏用另一种颜色 → 同画布 + 微妙边框 · 混用的深度策略 → 选一种 · 父子嵌套同半径 → 同心(`outer = inner + padding`)。
 
-**States & motion** — missing interaction states (hover/focus/active/disabled) → add them, the fastest tell of unfinished UI · `transition: all` → exact properties · `ease-in`/default easing → custom ease-out under 300ms · no press feedback → `scale(0.97)` on `:active` · animation on a keyboard-repeated action → remove · hit areas under 44×44px (40 min) → extend. *(A wholly-absent empty/loading/error state is build work, not a surgical cleanup — note it and leave it to `/interface-design:design-review`.)*
+**状态与动效** —— 缺失的交互状态(悬浮/焦点/按下/禁用)→ 补上,这是未完成 UI 最快的信号 · `transition: all` → 具体属性 · `ease-in`/默认缓动 → 低于 300ms 的自定义 ease-out · 没有按压反馈 → `:active` 上 `scale(0.97)` · 键盘重复触发的动作上有动画 → 去掉 · 热区小于 44×44px(最低 40)→ 扩展。*(完全缺失的空/加载/错误状态是构建工作,不是外科清理 —— 记下来交给 `/interface-design:design-review`。)*
 
-**Spacing & structure** — off-grid values (17px, 23px on a 4/8 base) → snap to grid · unmotivated asymmetric padding → symmetrical · structural hacks (negative margins undoing parent padding, escape-hatch `calc()`, absolute positioning to dodge flow) → the clean layout that doesn't need them.
+**间距与结构** —— 出网格的值(4/8 基准上的 17px、23px)→ 吸附到网格 · 无动机的不对称内边距 → 对称 · 结构性取巧(负 margin 抵消父级内边距、`calc()` 逃生舱、绝对定位绕开布局流)→ 那个不需要它们的干净布局。
 
-**Reinvention — hand-rolled instead of reused** (a high-value tell). A `<div onClick>` acting as a button/link → real `<button>`/`<a>`. A from-scratch dropdown/select/modal/tooltip with no keyboard nav, focus management, or ARIA → a headless accessible primitive (Radix/React Aria/etc.), or the project's existing component. A one-off Tailwind/CSS string duplicating a component the project already ships → use `<Button variant>` / the existing component. The same long className sprayed across many elements → extract a component or variant. Hardcoded literals (`bg-white`, `border-gray-200`, `#fff`) where the system has tokens → semantic tokens (`bg-card`, `border-border`). An inaccessible hand-rolled control is both slop *and* a real bug — flag it even if it looks fine.
+**重复造轮 —— 手搓而非复用**(高价值的 tell)。扮演按钮/链接的 `<div onClick>` → 真正的 `<button>`/`<a>`。从零写的下拉/选择器/模态/提示,没有键盘导航、焦点管理或 ARIA → 无头可访问基础组件(Radix/React Aria 等),或项目已有组件。一次性 Tailwind/CSS 串重复了项目已发布的组件 → 用 `<Button variant>` / 已有组件。同一条长 className 喷在很多元素上 → 抽成组件或变体。系统已有 token 却用硬编码字面值(`bg-white`、`border-gray-200`、`#fff`)→ 语义 token(`bg-card`、`border-border`)。不可访问的手搓控件既是 slop *又*是真 bug —— 即使看起来没问题也要标记。
 
-## What is NOT slop (don't touch it)
+## 什么不是 slop(别碰)
 
-The point is to remove the generic, not to flatten every choice into a default. A cleanup that strips intent is worse than the slop. Leave these alone — and if you're unsure whether something is a tell or a decision, treat it as a decision:
+要点是去掉通用的东西,不是把每个选择都压平成默认值。剥离意图的清理比 slop 更糟。这些留着别动 —— 如果你不确定某个东西是 tell 还是决策,就把它当决策:
 
-- **A bold or unusual choice that's clearly motivated** — a saturated palette, a dramatic type scale, an asymmetric layout. Distinctive is the *goal*; only flag it if it's incoherent with the stated intent, not merely uncommon.
-- **An intentional deviation that has a reason** — a one-off radius, a deliberately heavier border on a focal card, asymmetric padding where content demands it.
-- **Anything outside the diff.** Pre-existing slop in untouched code is out of scope unless the user asks. Stay in the lines that moved.
-- **Anything a linter or formatter owns** — quote style, import order, trailing commas. Not your job here.
-- **Choices the project's `.interface-design/system.md` already ratifies.** If it's in the system, it's a decision, not slop.
+- **明显有动机的大胆或不寻常选择** —— 高饱和色板、夸张字阶、不对称布局。有辨识度是*目标*;只在它与声明意图不连贯时标记,不要仅因为它少见。
+- **有理由的有意偏离** —— 一次性圆角、焦点卡片上刻意加重的边框、内容要求的不对称内边距。
+- **diff 之外的任何东西。** 未触碰代码里的既有 slop 不在范围内,除非用户要求。待在动过的行里。
+- **linter 或格式化工具负责的任何东西** —— 引号风格、import 顺序、尾逗号。这里不是你的活。
+- **项目 `.interface-design/system.md` 已批准的选择。** 如果在系统里,那是决策,不是 slop。
 
-This filter is half the skill. Generated UI looks generated because it defaulted; it does *not* become good by defaulting harder. When in doubt, leave it and note it rather than churn it.
+这个过滤器是半个 skill。生成 UI 看起来像生成的,是因为它默认了;它*不会*因为更用力地默认而变好。拿不准时,留着并记下,而不是折腾它。
 
-## Guardrails
+## 护栏
 
-- Behavior unchanged unless you're fixing a clear visual bug.
-- Minimal, focused edits — this is deslop, not redesign. If a fix turns into a rebuild, that's a `design-review` job; flag it, don't do it here.
-- Match the surrounding code's conventions (Tailwind vs CSS vars, naming). Slop is partly *inconsistency with what's already there* — fix toward the local style, not your own.
+- 行为不变,除非你在修一个明确的视觉 bug。
+- 最小、聚焦的编辑 —— 这是 deslop,不是 redesign。如果一个修法变成重建,那是 `design-review` 的活;标记它,不要在这里做。
+- 遵循周围代码的约定(Tailwind vs CSS 变量、命名)。Slop 有一部分*就是与已有代码不一致* —— 朝本地风格修,不是朝你自己的风格。
 
-## Output
+## 输出
 
-Present changes as a markdown table grouped by category, **Before** and **After** columns, one row per fix, cite file + property when it isn't obvious. Put the compositional fixes (Pass 1) first — they matter most. Omit categories where nothing changed. Close with a 1–2 sentence summary, and if Pass 1 surfaced something too structural to fix surgically, say so and point to `/interface-design:design-review`.
+把改动呈现为按类别分组的 markdown 表,**Before** 与 **After** 两列,每行一个修法,不明显时引用 file + property。把构图性的修法(第一遍)放前面 —— 它们最重要。没变化的类别省略。用 1–2 句总结收尾;如果第一遍发现了太结构性、无法外科修复的东西,说出来并指向 `/interface-design:design-review`。

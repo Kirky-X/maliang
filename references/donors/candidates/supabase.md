@@ -1,260 +1,260 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 开发工具与平台(dev) · 站点摘要: Open-source Firebase alternative. Dark emerald theme, code-first
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 开发工具与平台(dev) · 站点摘要: 开源的 Firebase 替代品。暗色祖母绿主题,代码优先
      站点色板: #3ecf8e, #00c573, #0f0f0f, #171717, #242424, #2e2e2e
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Supabase
+# 设计系统:Supabase
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Supabase's website is a dark-mode-native developer platform that channels the aesthetic of a premium code editor — deep black backgrounds (`#0f0f0f`, `#171717`) with emerald green accents (`#3ecf8e`, `#00c573`) that reference the brand's open-source, PostgreSQL-green identity. The design system feels like it was born in a terminal window and evolved into a sophisticated marketing surface without losing its developer soul.
+Supabase 的网站是一个暗色原生的开发者平台,借的是高端代码编辑器的审美——深黑背景(`#0f0f0f`、`#171717`)配祖母绿强调(`#3ecf8e`、`#00c573`),呼应品牌开源、PostgreSQL 绿的出身。这套设计系统像诞生于一个终端窗口,长成精密的营销界面,却没丢掉开发者灵魂。
 
-The typography is built on "Circular" — a geometric sans-serif with rounded terminals that softens the technical edge. At 72px with a 1.00 line-height, the hero text is compressed to its absolute minimum vertical space, creating dense, impactful statements that waste nothing. The monospace companion (Source Code Pro) appears sparingly for uppercase technical labels with 1.2px letter-spacing, creating the "developer console" markers that connect the marketing site to the product experience.
+排版建在 "Circular" 上——一款端点圆润的几何无衬线,柔化了技术感。72px 配 1.00 行高,hero 文字被压到最小的垂直空间,造出密集、有冲击力的陈述,一点空隙都不浪费。等宽搭档(Source Code Pro)少量出场,用于大写技术标签配 1.2px 字距,造出"开发者控制台"标记,把营销站与产品体验连起来。
 
-What makes Supabase distinctive is its sophisticated HSL-based color token system. Rather than flat hex values, Supabase uses HSL with alpha channels for nearly every color (`--colors-crimson4`, `--colors-purple5`, `--colors-slateA12`), enabling a nuanced layering system where colors interact through transparency. This creates depth through translucency — borders at `rgba(46, 46, 46)`, surfaces at `rgba(41, 41, 41, 0.84)`, and accents at partial opacity all blend with the dark background to create a rich, dimensional palette from minimal color ingredients.
+让 Supabase 与众不同的是它精密的 HSL 色彩 token 系统。几乎每种颜色都不用扁平 hex,而是带 alpha 通道的 HSL(`--colors-crimson4`、`--colors-purple5`、`--colors-slateA12`),让颜色靠透明度互相作用,形成细腻的分层。深度由此来自半透明:边框 `rgba(46, 46, 46)`、表面 `rgba(41, 41, 41, 0.84)`、局部透明的强调色,都与暗背景融合,用极少的色彩原料调出层次丰富的色板。
 
-The green accent (`#3ecf8e`) appears selectively — in the Supabase logo, in link colors (`#00c573`), and in border highlights (`rgba(62, 207, 142, 0.3)`) — always as a signal of "this is Supabase" rather than as a decorative element. Pill-shaped buttons (9999px radius) for primary CTAs contrast with standard 6px radius for secondary elements, creating a clear visual hierarchy of importance.
+绿色强调(`#3ecf8e`)只选择性出现——Supabase 标志、链接色(`#00c573`)、边框高亮(`rgba(62, 207, 142, 0.3)`)——始终作为"这是 Supabase"的信号,不做装饰。主 CTA 用胶囊按钮(9999px 圆角),与次级元素的 6px 标准圆角形成对比,造出清晰的主次视觉层级。
 
-**Key Characteristics:**
-- Dark-mode-native: near-black backgrounds (`#0f0f0f`, `#171717`) — never pure black
-- Emerald green brand accent (`#3ecf8e`, `#00c573`) used sparingly as identity marker
-- Circular font — geometric sans-serif with rounded terminals
-- Source Code Pro for uppercase technical labels (1.2px letter-spacing)
-- HSL-based color token system with alpha channels for translucent layering
-- Pill buttons (9999px) for primary CTAs, 6px radius for secondary
-- Neutral gray scale from `#171717` through `#898989` to `#fafafa`
-- Border system using dark grays (`#2e2e2e`, `#363636`, `#393939`)
-- Minimal shadows — depth through border contrast and transparency
-- Radix color primitives (crimson, purple, violet, indigo, yellow, tomato, orange, slate)
+**关键特征:**
+- 暗色原生:近黑背景(`#0f0f0f`、`#171717`)——从不用纯黑
+- 祖母绿品牌强调(`#3ecf8e`、`#00c573`)少量使用,作身份标记
+- Circular 字体——端点圆润的几何无衬线
+- Source Code Pro 用于大写技术标签(1.2px 字距)
+- 基于 HSL 的色彩 token 系统,带 alpha 通道做半透明分层
+- 主 CTA 用胶囊按钮(9999px),次级用 6px 圆角
+- 中性灰阶从 `#171717` 经 `#898989` 到 `#fafafa`
+- 边框系统用深灰(`#2e2e2e`、`#363636`、`#393939`)
+- 极少阴影——深度来自边框对比与透明度
+- Radix 色彩原语(crimson、purple、violet、indigo、yellow、tomato、orange、slate)
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Brand
-- **Supabase Green** (`#3ecf8e`): Primary brand color, logo, accent borders
-- **Green Link** (`#00c573`): Interactive green for links and actions
-- **Green Border** (`rgba(62, 207, 142, 0.3)`): Subtle green border accent
+### 品牌
+- **Supabase Green**(`#3ecf8e`):主品牌色、标志、强调边框
+- **Green Link**(`#00c573`):链接与操作的可交互绿
+- **Green Border**(`rgba(62, 207, 142, 0.3)`):细微的绿色边框强调
 
-### Neutral Scale (Dark Mode)
-- **Near Black** (`#0f0f0f`): Primary button background, deepest surface
-- **Dark** (`#171717`): Page background, primary canvas
-- **Dark Border** (`#242424`): Horizontal rule, section dividers
-- **Border Dark** (`#2e2e2e`): Card borders, tab borders
-- **Mid Border** (`#363636`): Button borders, dividers
-- **Border Light** (`#393939`): Secondary borders
-- **Charcoal** (`#434343`): Tertiary borders, dark accents
-- **Dark Gray** (`#4d4d4d`): Heavy secondary text
-- **Mid Gray** (`#898989`): Muted text, link color
-- **Light Gray** (`#b4b4b4`): Secondary link text
-- **Near White** (`#efefef`): Light border, subtle surface
-- **Off White** (`#fafafa`): Primary text, button text
+### 中性色阶(暗色模式)
+- **Near Black**(`#0f0f0f`):主按钮背景、最深表面
+- **Dark**(`#171717`):页面背景、主画布
+- **Dark Border**(`#242424`):水平分隔线、区块分割
+- **Border Dark**(`#2e2e2e`):卡片边框、标签页边框
+- **Mid Border**(`#363636`):按钮边框、分隔线
+- **Border Light**(`#393939`):次级边框
+- **Charcoal**(`#434343`):三级边框、暗色强调
+- **Dark Gray**(`#4d4d4d`):厚重的次级文本
+- **Mid Gray**(`#898989`):弱化文本、链接色
+- **Light Gray**(`#b4b4b4`):次级链接文本
+- **Near White**(`#efefef`):浅色边框、细微表面
+- **Off White**(`#fafafa`):主文本、按钮文字
 
-### Radix Color Tokens (HSL-based)
-- **Slate Scale**: `--colors-slate5` through `--colors-slateA12` — neutral progression
-- **Purple**: `--colors-purple4`, `--colors-purple5`, `--colors-purpleA7` — accent spectrum
-- **Violet**: `--colors-violet10` (`hsl(251, 63.2%, 63.2%)`) — vibrant accent
-- **Crimson**: `--colors-crimson4`, `--colors-crimsonA9` — warm accent / alert
-- **Indigo**: `--colors-indigoA2` — subtle blue wash
-- **Yellow**: `--colors-yellowA7` — attention/warning
-- **Tomato**: `--colors-tomatoA4` — error accent
-- **Orange**: `--colors-orange6` — warm accent
+### Radix 色彩 token(基于 HSL)
+- **Slate 色阶**:`--colors-slate5` 至 `--colors-slateA12`——中性递进
+- **Purple**:`--colors-purple4`、`--colors-purple5`、`--colors-purpleA7`——强调谱系
+- **Violet**:`--colors-violet10`(`hsl(251, 63.2%, 63.2%)`)——鲜亮强调
+- **Crimson**:`--colors-crimson4`、`--colors-crimsonA9`——暖调强调 / 告警
+- **Indigo**:`--colors-indigoA2`——细微蓝罩
+- **Yellow**:`--colors-yellowA7`——注意 / 警告
+- **Tomato**:`--colors-tomatoA4`——错误强调
+- **Orange**:`--colors-orange6`——暖调强调
 
-### Surface & Overlay
-- **Glass Dark** (`rgba(41, 41, 41, 0.84)`): Translucent dark overlay
-- **Slate Alpha** (`hsla(210, 87.8%, 16.1%, 0.031)`): Ultra-subtle blue wash
-- **Fixed Scale Alpha** (`hsla(200, 90.3%, 93.4%, 0.109)`): Light frost overlay
+### 表面与叠层
+- **Glass Dark**(`rgba(41, 41, 41, 0.84)`):半透明暗色叠层
+- **Slate Alpha**(`hsla(210, 87.8%, 16.1%, 0.031)`):极细微的蓝罩
+- **Fixed Scale Alpha**(`hsla(200, 90.3%, 93.4%, 0.109)`):浅色霜面叠层
 
-### Shadows
-- Supabase uses **almost no shadows** in its dark theme. Depth is created through border contrast and surface color differences rather than box-shadows. Focus states use `rgba(0, 0, 0, 0.1) 0px 4px 12px` — minimal, functional.
+### 阴影
+- Supabase 的暗色主题**几乎不用阴影**。深度靠边框对比与表面色差造出,而不是 box-shadow。焦点态用 `rgba(0, 0, 0, 0.1) 0px 4px 12px`——极简、功能性。
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Families
-- **Primary**: `Circular`, with fallbacks: `custom-font, Helvetica Neue, Helvetica, Arial`
-- **Monospace**: `Source Code Pro`, with fallbacks: `Office Code Pro, Menlo`
+### 字族
+- **主字族**:`Circular`,回退:`custom-font, Helvetica Neue, Helvetica, Arial`
+- **等宽**:`Source Code Pro`,回退:`Office Code Pro, Menlo`
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Hero | Circular | 72px (4.50rem) | 400 | 1.00 (tight) | normal | Maximum density, zero waste |
-| Section Heading | Circular | 36px (2.25rem) | 400 | 1.25 (tight) | normal | Feature section titles |
-| Card Title | Circular | 24px (1.50rem) | 400 | 1.33 | -0.16px | Slight negative tracking |
-| Sub-heading | Circular | 18px (1.13rem) | 400 | 1.56 | normal | Secondary headings |
-| Body | Circular | 16px (1.00rem) | 400 | 1.50 | normal | Standard body text |
-| Nav Link | Circular | 14px (0.88rem) | 500 | 1.00–1.43 | normal | Navigation items |
-| Button | Circular | 14px (0.88rem) | 500 | 1.14 (tight) | normal | Button labels |
-| Caption | Circular | 14px (0.88rem) | 400–500 | 1.43 | normal | Metadata, tags |
-| Small | Circular | 12px (0.75rem) | 400 | 1.33 | normal | Fine print, footer links |
-| Code Label | Source Code Pro | 12px (0.75rem) | 400 | 1.33 | 1.2px | `text-transform: uppercase` |
+| 显示 / Hero | Circular | 72px (4.50rem) | 400 | 1.00(紧) | normal | 最大密度,零浪费 |
+| 区块标题 | Circular | 36px (2.25rem) | 400 | 1.25(紧) | normal | Feature 区块标题 |
+| 卡片标题 | Circular | 24px (1.50rem) | 400 | 1.33 | -0.16px | 轻微负字距 |
+| 子标题 | Circular | 18px (1.13rem) | 400 | 1.56 | normal | 次级标题 |
+| 正文 | Circular | 16px (1.00rem) | 400 | 1.50 | normal | 标准正文 |
+| 导航链接 | Circular | 14px (0.88rem) | 500 | 1.00–1.43 | normal | 导航项 |
+| 按钮 | Circular | 14px (0.88rem) | 500 | 1.14(紧) | normal | 按钮标签 |
+| 说明 | Circular | 14px (0.88rem) | 400–500 | 1.43 | normal | 元数据、标签 |
+| 小号 | Circular | 12px (0.75rem) | 400 | 1.33 | normal | 小字、页脚链接 |
+| 代码标签 | Source Code Pro | 12px (0.75rem) | 400 | 1.33 | 1.2px | `text-transform: uppercase` |
 
-### Principles
-- **Weight restraint**: Nearly all text uses weight 400 (regular/book). Weight 500 appears only for navigation links and button labels. There is no bold (700) in the detected system — hierarchy is created through size, not weight.
-- **1.00 hero line-height**: The hero text is compressed to absolute zero leading. This is the defining typographic gesture — text that feels like a terminal command: dense, efficient, no wasted vertical space.
-- **Negative tracking on cards**: Card titles use -0.16px letter-spacing, a subtle tightening that differentiates them from body text without being obvious.
-- **Monospace as ritual**: Source Code Pro in uppercase with 1.2px letter-spacing is the "developer console" voice — used sparingly for technical labels that connect to the product experience.
-- **Geometric personality**: Circular's rounded terminals create warmth in what could otherwise be a cold, technical interface. The font is the humanizing element.
+### 原则
+- **字重克制**:几乎所有文本都用 400(常规 / book)。500 只出现在导航链接与按钮标签。检测到的系统里没有粗体(700)——层级靠字号,不靠字重。
+- **1.00 的 hero 行高**:hero 文字被压到零行距。这是定义性的排版动作——文字像终端命令:密集、高效、不浪费垂直空间。
+- **卡片上的负字距**:卡片标题用 -0.16px 字距,这种细微收紧让它与正文区分开,又不显眼。
+- **等宽即仪式**:Source Code Pro 大写配 1.2px 字距,是"开发者控制台"的声音——少量用于连接产品体验的技术标签。
+- **几何个性**:Circular 圆润的端点给本可能冷硬的技术界面添了暖意。这款字体是其中人性化的元素。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Primary Pill (Dark)**
-- Background: `#0f0f0f`
-- Text: `#fafafa`
-- Padding: 8px 32px
-- Radius: 9999px (full pill)
-- Border: `1px solid #fafafa` (white border on dark)
-- Focus shadow: `rgba(0, 0, 0, 0.1) 0px 4px 12px`
-- Use: Primary CTA ("Start your project")
+**主胶囊(暗色)**
+- 背景:`#0f0f0f`
+- 文字:`#fafafa`
+- 内边距:8px 32px
+- 圆角:9999px(全胶囊)
+- 边框:`1px solid #fafafa`(暗底上的白边)
+- 焦点阴影:`rgba(0, 0, 0, 0.1) 0px 4px 12px`
+- 用途:主 CTA("Start your project")
 
-**Secondary Pill (Dark, Muted)**
-- Background: `#0f0f0f`
-- Text: `#fafafa`
-- Padding: 8px 32px
-- Radius: 9999px
-- Border: `1px solid #2e2e2e` (dark border)
-- Opacity: 0.8
-- Use: Secondary CTA alongside primary
+**次级胶囊(暗色、弱化)**
+- 背景:`#0f0f0f`
+- 文字:`#fafafa`
+- 内边距:8px 32px
+- 圆角:9999px
+- 边框:`1px solid #2e2e2e`(暗色边框)
+- 不透明度:0.8
+- 用途:与主 CTA 并列的次级 CTA
 
-**Ghost Button**
-- Background: transparent
-- Text: `#fafafa`
-- Padding: 8px
-- Radius: 6px
-- Border: `1px solid transparent`
-- Use: Tertiary actions, icon buttons
+**幽灵按钮**
+- 背景:透明
+- 文字:`#fafafa`
+- 内边距:8px
+- 圆角:6px
+- 边框:`1px solid transparent`
+- 用途:三级操作、图标按钮
 
-### Cards & Containers
-- Background: dark surfaces (`#171717` or slightly lighter)
-- Border: `1px solid #2e2e2e` or `#363636`
-- Radius: 8px–16px
-- No visible shadows — borders define edges
-- Internal padding: 16px–24px
+### 卡片与容器
+- 背景:暗色表面(`#171717` 或略亮)
+- 边框:`1px solid #2e2e2e` 或 `#363636`
+- 圆角:8px–16px
+- 无可见阴影——边框界定边缘
+- 内边距:16px–24px
 
-### Tabs
-- Border: `1px solid #2e2e2e`
-- Radius: 9999px (pill tabs)
-- Active: green accent or lighter surface
-- Inactive: dark, muted
+### 标签页
+- 边框:`1px solid #2e2e2e`
+- 圆角:9999px(胶囊标签页)
+- 激活:绿色强调或更亮的表面
+- 未激活:暗色、弱化
 
-### Links
-- **Green**: `#00c573` — Supabase-branded links
-- **Primary Light**: `#fafafa` — standard links on dark
-- **Secondary**: `#b4b4b4` — muted links
-- **Muted**: `#898989` — tertiary links, footer
+### 链接
+- **绿色**:`#00c573`——Supabase 品牌链接
+- **主亮色**:`#fafafa`——暗底上的标准链接
+- **次级**:`#b4b4b4`——弱化链接
+- **弱化**:`#898989`——三级链接、页脚
 
-### Navigation
-- Dark background matching page (`#171717`)
-- Supabase logo with green icon
-- Circular 14px weight 500 for nav links
-- Clean horizontal layout with product dropdown
-- Green "Start your project" CTA pill button
-- Sticky header behavior
+### 导航
+- 暗色背景与页面一致(`#171717`)
+- Supabase 标志带绿色图标
+- 导航链接用 Circular 14px 字重 500
+- 干净的横向布局,带产品下拉
+- 绿色"Start your project" CTA 胶囊按钮
+- 吸顶行为
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 1px, 4px, 6px, 8px, 12px, 16px, 20px, 24px, 32px, 40px, 48px, 90px, 96px, 128px
-- Notable large jumps: 48px → 90px → 96px → 128px for major section spacing
+### 间距系统
+- 基数:8px
+- 刻度:1px, 4px, 6px, 8px, 12px, 16px, 20px, 24px, 32px, 40px, 48px, 90px, 96px, 128px
+- 明显的大跳档:48px → 90px → 96px → 128px,用于主要区块间距
 
-### Grid & Container
-- Centered content with generous max-width
-- Full-width dark sections with constrained inner content
-- Feature grids: icon-based grids with consistent card sizes
-- Logo grids for "Trusted by" sections
-- Footer: multi-column on dark background
+### 网格与容器
+- 内容居中,最大宽慷慨
+- 全宽暗色区块,内部内容受限
+- Feature 网格:基于图标的网格,卡片尺寸一致
+- "Trusted by"区块用标志网格
+- 页脚:暗背景上的多列
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile | <600px | Single column, stacked layout |
-| Desktop | >600px | Multi-column grids, expanded layout |
+| 手机 | <600px | 单列、堆叠布局 |
+| 桌面 | >600px | 多列网格、展开布局 |
 
-*Note: Supabase uses a notably minimal breakpoint system — primarily a single 600px breakpoint, suggesting a mobile-first approach with progressive enhancement.*
+*注:Supabase 的断点系统明显极简——基本只有一个 600px 断点,说明它走移动优先、渐进增强的路子。*
 
-### Whitespace Philosophy
-- **Dramatic section spacing**: 90px–128px between major sections creates a cinematic pacing — each section is its own scene in the dark void.
-- **Dense content blocks**: Within sections, spacing is tight (16px–24px), creating concentrated information clusters.
-- **Border-defined space**: Instead of whitespace + shadows for separation, Supabase uses thin borders on dark backgrounds — separation through line, not gap.
+### 留白哲学
+- **戏剧性区块间距**:主要区块之间 90px–128px,造出电影式节奏——每个区块都是暗色虚空里的一幕。
+- **密集内容块**:区块内部间距紧(16px–24px),形成集中的信息簇。
+- **边框界定的空间**:Supabase 不用留白加阴影做分隔,而是在暗背景上画细边框——靠线分隔,不靠空隙。
 
-### Border Radius Scale
-- Standard (6px): Ghost buttons, small elements
-- Comfortable (8px): Cards, containers
-- Medium (11px–12px): Mid-size panels
-- Large (16px): Feature cards, major containers
-- Pill (9999px): Primary buttons, tab indicators
+### 圆角刻度
+- 标准(6px):幽灵按钮、小元素
+- 舒适(8px):卡片、容器
+- 中(11px–12px):中等面板
+- 大(16px):Feature 卡、主要容器
+- 胶囊(9999px):主按钮、标签页指示器
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow, border `#2e2e2e` | Default state, most surfaces |
-| Subtle Border (Level 1) | Border `#363636` or `#393939` | Interactive elements, hover |
-| Focus (Level 2) | `rgba(0, 0, 0, 0.1) 0px 4px 12px` | Focus states only |
-| Green Accent (Level 3) | Border `rgba(62, 207, 142, 0.3)` | Brand-highlighted elements |
+| 平(Level 0) | 无阴影,边框 `#2e2e2e` | 默认态、多数表面 |
+| 细微边框(Level 1) | 边框 `#363636` 或 `#393939` | 交互元素、hover |
+| 焦点(Level 2) | `rgba(0, 0, 0, 0.1) 0px 4px 12px` | 仅焦点态 |
+| 绿色强调(Level 3) | 边框 `rgba(62, 207, 142, 0.3)` | 品牌高亮的元素 |
 
-**Shadow Philosophy**: Supabase deliberately avoids shadows. In a dark-mode-native design, shadows are nearly invisible and serve no purpose. Instead, depth is communicated through a sophisticated border hierarchy — from `#242424` (barely visible) through `#2e2e2e` (standard) to `#393939` (prominent). The green accent border (`rgba(62, 207, 142, 0.3)`) at 30% opacity is the "elevated" state — the brand color itself becomes the depth signal.
+**阴影哲学**:Supabase 刻意回避阴影。在暗色原生的设计里,阴影几乎看不见,也没用。深度改由精密的边框层级传达——从 `#242424`(几乎不可见)经 `#2e2e2e`(标准)到 `#393939`(显著)。30% 不透明度的绿色强调边框(`rgba(62, 207, 142, 0.3)`)就是"抬升"态——品牌色本身成了深度信号。
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use near-black backgrounds (`#0f0f0f`, `#171717`) — depth comes from the gray border hierarchy
-- Apply Supabase green (`#3ecf8e`, `#00c573`) sparingly — it's an identity marker, not a decoration
-- Use Circular at weight 400 for nearly everything — 500 only for buttons and nav
-- Set hero text to 1.00 line-height — the zero-leading is the typographic signature
-- Create depth through border color differences (`#242424` → `#2e2e2e` → `#363636`)
-- Use pill shape (9999px) exclusively for primary CTAs and tabs
-- Employ HSL-based colors with alpha for translucent layering effects
-- Use Source Code Pro uppercase labels for developer-context markers
+- 用近黑背景(`#0f0f0f`、`#171717`)——深度来自灰色边框层级
+- Supabase 绿(`#3ecf8e`、`#00c573`)少量使用——它是身份标记,不是装饰
+- 几乎所有地方用 Circular 字重 400——500 只给按钮与导航
+- hero 文字设 1.00 行高——零行距是排版签名
+- 靠边框色差造深度(`#242424` → `#2e2e2e` → `#363636`)
+- 胶囊形(9999px)只用于主 CTA 与标签页
+- 用带 alpha 的 HSL 色做半透明分层
+- 用 Source Code Pro 大写标签做开发者语境标记
 
 ### Don't
-- Don't add box-shadows — they're invisible on dark backgrounds and break the border-defined depth system
-- Don't use bold (700) text weight — the system uses 400 and 500 only
-- Don't apply green to backgrounds or large surfaces — it's for borders, links, and small accents
-- Don't use warm colors (crimson, orange) as primary design elements — they exist as semantic tokens for states
-- Don't increase hero line-height above 1.00 — the density is intentional
-- Don't use large border radius (16px+) on buttons — pills (9999px) or standard (6px), nothing in between
-- Don't lighten the background above `#171717` for primary surfaces — the darkness is structural
-- Don't forget the translucent borders — `rgba` border colors are the layering mechanism
+- 不加 box-shadow——它在暗背景上看不见,还会破坏边框界定的深度系统
+- 不用粗体(700)——系统只用 400 与 500
+- 不把绿色用在背景或大表面上——它只给边框、链接与小面积强调
+- 不把暖色(crimson、orange)当主设计元素——它们作为状态语义 token 存在
+- 不把 hero 行高抬到 1.00 以上——密度是刻意的
+- 按钮不用大圆角(16px+)——要么胶囊(9999px),要么标准(6px),中间没有
+- 主表面背景不亮过 `#171717`——暗是结构性的
+- 别忘半透明边框——`rgba` 边框色就是分层机制
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile | <600px | Single column, stacked features, condensed nav |
-| Desktop | >600px | Multi-column grids, full nav, expanded sections |
+| 手机 | <600px | 单列、feature 堆叠、导航压缩 |
+| 桌面 | >600px | 多列网格、完整导航、区块展开 |
 
-### Collapsing Strategy
-- Hero: 72px → scales down proportionally
-- Feature grids: multi-column → single column stacked
-- Logo row: horizontal → wrapped grid
-- Navigation: full → hamburger
-- Section spacing: 90–128px → 48–64px
-- Buttons: inline → full-width stacked
+### 折叠策略
+- Hero:72px → 按比例缩小
+- Feature 网格:多列 → 单列堆叠
+- 标志行:横向 → 换行网格
+- 导航:完整 → 汉堡
+- 区块间距:90–128px → 48–64px
+- 按钮:行内 → 全宽堆叠
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Background: `#0f0f0f` (button), `#171717` (page)
-- Text: `#fafafa` (primary), `#b4b4b4` (secondary), `#898989` (muted)
-- Brand green: `#3ecf8e` (brand), `#00c573` (links)
-- Borders: `#242424` (subtle), `#2e2e2e` (standard), `#363636` (prominent)
-- Green border: `rgba(62, 207, 142, 0.3)` (accent)
+### 快速取色参考
+- 背景:`#0f0f0f`(按钮)、`#171717`(页面)
+- 文本:`#fafafa`(主)、`#b4b4b4`(次)、`#898989`(弱化)
+- 品牌绿:`#3ecf8e`(品牌)、`#00c573`(链接)
+- 边框:`#242424`(细微)、`#2e2e2e`(标准)、`#363636`(显著)
+- 绿色边框:`rgba(62, 207, 142, 0.3)`(强调)
 
-### Example Component Prompts
-- "Create a hero section on #171717 background. Headline at 72px Circular weight 400, line-height 1.00, #fafafa text. Sub-text at 16px Circular weight 400, line-height 1.50, #b4b4b4. Pill CTA button (#0f0f0f bg, #fafafa text, 9999px radius, 8px 32px padding, 1px solid #fafafa border)."
-- "Design a feature card: #171717 background, 1px solid #2e2e2e border, 16px radius. Title at 24px Circular weight 400, letter-spacing -0.16px. Body at 14px weight 400, #898989 text."
-- "Build navigation bar: #171717 background. Circular 14px weight 500 for links, #fafafa text. Supabase logo with green icon left-aligned. Green pill CTA 'Start your project' right-aligned."
-- "Create a technical label: Source Code Pro 12px, uppercase, letter-spacing 1.2px, #898989 text."
-- "Design a framework logo grid: 6-column layout on dark, grayscale logos at 60% opacity, 1px solid #2e2e2e border between sections."
+### 组件提示词示例
+- "在 #171717 背景上做一个 hero 区块。标题 72px Circular 字重 400,行高 1.00,#fafafa 文字。副标 16px Circular 字重 400,行高 1.50,#b4b4b4。胶囊 CTA 按钮(#0f0f0f 底,#fafafa 字,9999px 圆角,8px 32px 内边距,1px solid #fafafa 边框)。"
+- "设计一张 feature 卡:#171717 底,1px solid #2e2e2e 边框,16px 圆角。标题 24px Circular 字重 400,字距 -0.16px。正文 14px 字重 400,#898989 文字。"
+- "做一条导航栏:#171717 底。链接用 Circular 14px 字重 500,#fafafa 文字。Supabase 标志带绿色图标,左对齐。绿色胶囊 CTA 'Start your project',右对齐。"
+- "做一个技术标签:Source Code Pro 12px,大写,字距 1.2px,#898989 文字。"
+- "设计一个框架标志网格:暗底 6 列布局,灰度标志 60% 不透明度,区块间用 1px solid #2e2e2e 边框。"
 
-### Iteration Guide
-1. Start with #171717 background — everything is dark-mode-native
-2. Green is the brand identity marker — use it for links, logo, and accent borders only
-3. Depth comes from borders (#242424 → #2e2e2e → #363636), not shadows
-4. Weight 400 is the default for everything — 500 only for interactive elements
-5. Hero line-height of 1.00 is the signature typographic move
-6. Pill (9999px) for primary actions, 6px for secondary, 8-16px for cards
-7. HSL with alpha channels creates the sophisticated translucent layering
+### 迭代指南
+1. 从 #171717 背景开始——一切都是暗色原生
+2. 绿色是品牌身份标记——只用于链接、标志与强调边框
+3. 深度来自边框(#242424 → #2e2e2e → #363636),不靠阴影
+4. 一切默认字重 400——500 只给交互元素
+5. hero 行高 1.00 是签名排版动作
+6. 主操作用胶囊(9999px),次级 6px,卡片 8-16px
+7. 带 alpha 通道的 HSL 造出精密的半透明分层

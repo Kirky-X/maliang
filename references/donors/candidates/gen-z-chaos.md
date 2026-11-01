@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Gen Z Chaos / Maximalism is a UI style reference for general interfaces, focused on Chaos, clutter, stickers, raw, collage.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Gen Z Chaos / Maximalism 是为通用界面提供的 UI 风格参照,侧重混乱、拥挤、贴纸、原生、拼贴。
      站点色板: #ff6b6b, #4ecdc4, #ffe66d, #95e1d3, #1a1a2e, #a388ee
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Gen Z Chaos / Maximalism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Gen Z Chaos / Maximalism is a UI style reference for general interfaces, combining Chaos, clutter, stickers, raw, collage, mixed media, loud, internet culture, ironic. The visual direction is shaped by Marquee scrolls, jitter, sticker layering, GIF overload, random placement, drag-and-drop.
+Gen Z Chaos / Maximalism 是为通用界面提供的 UI 风格参照,融合混乱、拥挤、贴纸、原生、拼贴、混合媒介、喧闹、互联网文化、反讽。视觉方向由跑马灯滚动、抖动、贴纸叠层、GIF 过载、随机排布、拖放塑造。
 
-Use it for Gen Z lifestyle brands (品牌), music artists, creative portfolios (創意), viral marketing (行銷), fashion. Avoid it for Corporate (企業), government, healthcare (健康), banking, serious tools (工具).
+用于 Z 世代生活方式品牌、音乐艺人、创意作品集、病毒式营销、时尚。避免用于企业、政府、医疗健康、银行、严肃工具。
 
-**Key Characteristics:**
-- Primary palette: Clashing Brights: #FF00FF, #00FF00, #FFFF00, #0000FF
-- Secondary palette: Gradients, rainbow, glitch, noise, heavily saturated mix
-- Effects: Marquee scrolls, jitter, sticker layering, GIF overload, random placement, drag-and-drop
-- Accessibility: ❌ Poor; performance: ⚠ Poor (heavy assets); dark mode: ✓ Full.
-- Best for: Gen Z lifestyle brands (品牌), music artists, creative portfolios (創意), viral marketing (行銷), fashion
-- Avoid for: Corporate (企業), government, healthcare (健康), banking, serious tools (工具)
+**关键特征:**
+- 主色板:冲突亮色:#FF00FF、#00FF00、#FFFF00、#0000FF
+- 次色板:渐变、彩虹、故障、噪点、高饱和混色
+- 效果:跑马灯滚动、抖动、贴纸叠层、GIF 过载、随机排布、拖放
+- 无障碍:❌ 差;性能:⚠ 差(资源重);暗色模式:✓ 完整。
+- 最适用于:Z 世代生活方式品牌、音乐艺人、创意作品集、病毒式营销、时尚
+- 避免用于:企业、政府、医疗健康、银行、严肃工具
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: CSS-in-JS 8/10
-- Era reference: 2023+ Internet Core
-- Local preview: [Open HTML preview](../../refstyles/57-gen-z-chaos.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:CSS-in-JS 8/10
+- 年代参照:2023 年起的互联网核心
+- 本地预览:[打开 HTML 预览](../../refstyles/57-gen-z-chaos.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

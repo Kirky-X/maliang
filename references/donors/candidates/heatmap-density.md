@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Heat Map & Heatmap Style is a UI style reference for analytics and BI dashboards, focused on Color-coded grid/matrix, data intensity visualization, geographical heat maps, correlation matrices, cell-based representation.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: 热力图与热图风格是为分析与 BI 仪表板提供的 UI 风格参照,侧重按颜色编码的网格/矩阵、数据强度可视化、地理热力图、相关性矩阵、基于单元格的表达。
      站点色板: #1e293b, #1e3a5f, #0369a1, #0284c7, #38bdf8, #7dd3fc
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Heat Map & Heatmap Style
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Heat Map & Heatmap Style is a UI style reference for analytics and BI dashboards, combining Color-coded grid/matrix, data intensity visualization, geographical heat maps, correlation matrices, cell-based representation, gradient coloring. The visual direction is shaped by Color gradient transitions on data change, cell highlighting on hover, tooltip reveal on click, smooth color animation.
+热力图与热图风格是为分析与 BI 仪表板提供的 UI 风格参照,融合按颜色编码的网格/矩阵、数据强度可视化、地理热力图、相关性矩阵、基于单元格的表达、渐变着色。视觉方向由数据变化时的颜色渐变过渡、hover 态单元格高亮、点击时 tooltip 展开、平滑颜色动画塑造。
 
-Use it for Geographical analysis, performance matrices (效能), correlation analysis, user behavior heatmaps, temperature/intensity data. Avoid it for Linear data representation, categorical comparisons (use bar charts), small datasets.
+用于地理分析、性能矩阵、相关性分析、用户行为热力图、温度/强度数据。避免用于线性数据表达、类别比较(改用柱状图)、小数据集。
 
-**Key Characteristics:**
-- Primary palette: Gradient scale: Cool (blue #0080FF) to hot (red #FF0000), neutral middle (white/yellow)
-- Secondary palette: Support gradients: Light (cool blue) to dark (warm red), divergent for positive/negative data, monochromatic options
-- Effects: Color gradient transitions on data change, cell highlighting on hover, tooltip reveal on click, smooth color animation
-- Accessibility: ⚠ Colorblind considerations; performance: ⚡ Excellent; dark mode: ✓ Full (with adjustments).
-- Best for: Geographical analysis, performance matrices (效能), correlation analysis, user behavior heatmaps, temperature/intensity data
-- Avoid for: Linear data representation, categorical comparisons (use bar charts), small datasets
+**关键特征:**
+- 主色板:渐变刻度——冷(蓝 #0080FF)到热(红 #FF0000),中性中间(白/黄)
+- 次色板:辅助渐变——浅(冷蓝)到深(暖红),正/负数据用发散式,可选单色方案
+- 效果:数据变化时的颜色渐变过渡、hover 态单元格高亮、点击时 tooltip 展开、平滑颜色动画
+- 无障碍:⚠ 需考虑色盲;性能:⚡ 优秀;暗色模式:✓ 完整(需调整)。
+- 最适用于:地理分析、性能矩阵、相关性分析、用户行为热力图、温度/强度数据
+- 避免用于:线性数据表达、类别比较(改用柱状图)、小数据集
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: D3.js 10/10, Recharts 8/10, Chart.js 8/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/29-heatmap-density.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:D3.js 10/10、Recharts 8/10、Chart.js 8/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/29-heatmap-density.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

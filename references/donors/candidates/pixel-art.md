@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Pixel Art is a UI style reference for general interfaces, focused on Retro, 8-bit, 16-bit, gaming, blocky.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Pixel Art 是为通用界面提供的 UI 风格参照,侧重复古、8 位、16 位、游戏、块状。
      站点色板: #0f380f, #9bbc0f, #306230, #8bac0f
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Pixel Art
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Pixel Art is a UI style reference for general interfaces, combining Retro, 8-bit, 16-bit, gaming, blocky, nostalgic, pixelated, arcade. The visual direction is shaped by Frame-by-frame sprite animation, blinking cursor, instant transitions, marquee text.
+Pixel Art 是为通用界面提供的 UI 风格参照,融合复古、8 位、16 位、游戏、块状、怀旧、像素化、街机。视觉方向由逐帧精灵动画、闪烁光标、即时过渡、跑马灯文字塑造。
 
-Use it for Indie games, retro tools (工具), creative portfolios (創意), nostalgia marketing (行銷), Web3/NFT (網頁). Avoid it for Professional corporate (企業), modern SaaS (SaaS), high-res photography sites (網站).
+用于独立游戏、复古工具、创意作品集、怀旧营销、Web3/NFT。避免用于专业企业、现代 SaaS、高清摄影站点。
 
-**Key Characteristics:**
-- Primary palette: Primary colors (NES Palette), brights, limited palette
-- Secondary palette: Black outlines, shading via dithering or block colors
-- Effects: Frame-by-frame sprite animation, blinking cursor, instant transitions, marquee text
-- Accessibility: ✓ Good (if contrast ok); performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Indie games, retro tools (工具), creative portfolios (創意), nostalgia marketing (行銷), Web3/NFT (網頁)
-- Avoid for: Professional corporate (企業), modern SaaS (SaaS), high-res photography sites (網站)
+**关键特征:**
+- 主色板:原色(NES 色板)、亮色、受限色板
+- 次色板:黑色描边、用抖动或块色做明暗
+- 效果:逐帧精灵动画、闪烁光标、即时过渡、跑马灯文字
+- 无障碍:✓ 良好(对比度达标时);性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:独立游戏、复古工具、创意作品集、怀旧营销、Web3/NFT
+- 避免用于:专业企业、现代 SaaS、高清摄影站点
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: CSS (box-shadow) 8/10, Canvas 10/10
-- Era reference: 1980s Arcade
-- Local preview: [Open HTML preview](../../refstyles/52-pixel-art.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:CSS (box-shadow) 8/10、Canvas 10/10
+- 年代参照:1980 年代街机
+- 本地预览:[打开 HTML 预览](../../refstyles/52-pixel-art.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

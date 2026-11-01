@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Storytelling-Driven is a UI style reference for landing pages, focused on Narrative flow, visual story progression, section transitions, consistent character/brand voice, emotional messaging.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: 叙事驱动式设计是为落地页提供的 UI 风格参照,侧重叙事流、视觉故事推进、区块过渡、一致的角色/品牌嗓音、情感化信息。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Storytelling-Driven
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Storytelling-Driven is a UI style reference for landing pages, combining Narrative flow, visual story progression, section transitions, consistent character/brand voice, emotional messaging, journey visualization. The visual direction is shaped by Section-to-section animations, scroll-triggered reveals, character/icon animations, morphing transitions, parallax narrative.
+叙事驱动式设计是为落地页提供的 UI 风格参照,融合叙事流、视觉故事推进、区块过渡、一致的角色/品牌嗓音、情感化信息、旅程可视化。视觉方向由区块间动画、滚动触发揭示、角色/图标动画、形变动画过渡、视差叙事塑造。
 
-Use it for Brand/startup stories, mission-driven products (產品), premium/lifestyle brands (品牌), documentary-style products (產品), educational. Avoid it for Technical/complex products (unless narrative-driven) (產品), traditional enterprise software.
+用于品牌/初创故事、使命驱动型产品、高端/生活方式品牌、纪实风格产品、教育。避免用于技术/复杂产品(除非叙事驱动)、传统企业软件。
 
-**Key Characteristics:**
-- Primary palette: Brand primary, warm/emotional colors, varied accent colors per story section, high visual variety
-- Secondary palette: Story section color coding, emotional state colors (calm, excitement, success), transitional gradients
-- Effects: Section-to-section animations, scroll-triggered reveals, character/icon animations, morphing transitions, parallax narrative
-- Accessibility: ✓ WCAG AA; performance: ⚠ Moderate (animations); dark mode: ✓ Full.
-- Best for: Brand/startup stories, mission-driven products (產品), premium/lifestyle brands (品牌), documentary-style products (產品), educational
-- Avoid for: Technical/complex products (unless narrative-driven) (產品), traditional enterprise software
+**关键特征:**
+- 主色板:品牌主色、温暖/情感色、按故事区块变化的强调色、高视觉多样性
+- 次色板:故事区块色标、情绪状态色(平静、兴奋、成功)、过渡渐变
+- 效果:区块间动画、滚动触发揭示、角色/图标动画、形变动画过渡、视差叙事
+- 无障碍:✓ 达 WCAG AA;性能:⚠ 中等(动画开销);暗色模式:✓ 完整。
+- 最适用于:品牌/初创故事、使命驱动型产品、高端/生活方式品牌、纪实风格产品、教育
+- 避免用于:技术/复杂产品(除非叙事驱动)、传统企业软件
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: GSAP 10/10, Framer Motion 9/10, Tailwind 8/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/27-storytelling.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:GSAP 10/10、Framer Motion 9/10、Tailwind 8/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/27-storytelling.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

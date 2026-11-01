@@ -49,10 +49,10 @@
 6. asymmetric premium marketing flow（非对称高级营销流）
 
 ### 6. Signature Component Set（11 选 4，唯一组合）
-diagonal staggered square masonry ／ 3D cascading card deck ／ hover-accordion slice layout ／ pristine gapless bento grid ／ infinite brand marquee strip ／ turning polaroid arc ／ vertical rhythm lines ／ off-grid editorial layout ／ product UI panel stack ／ split testimonial quote wall ／ layered image crop frames
+diagonal staggered square masonry（对角错落方形砌筑）／ 3D cascading card deck（3D 级联卡牌堆）／ hover-accordion slice layout（悬浮手风琴切片布局）／ pristine gapless bento grid（无缝隙 bento 栅格）／ infinite brand marquee strip（无限品牌跑马灯条）／ turning polaroid arc（旋转拍立得弧列）／ vertical rhythm lines（纵向节奏线）／ off-grid editorial layout（出格编辑式布局）／ product UI panel stack（产品 UI 面板堆叠）／ split testimonial quote wall（分栏证言引语墙）／ layered image crop frames（分层图像裁切框）
 
 ### 7. Motion-Implied Language（6 选 2）
-scrubbing text reveal ／ pinned narrative section ／ staggered float-up ／ parallax image drift ／ smooth accordion expansion ／ cinematic fade-through
+scrubbing text reveal（擦除式文字揭示）／ pinned narrative section（钉定叙事区块）／ staggered float-up（错峰上浮）／ parallax image drift（视差图像漂移）／ smooth accordion expansion（平滑手风琴展开）／ cinematic fade-through（电影式穿透淡入）
 
 ## 强制规则
 

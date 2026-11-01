@@ -1,314 +1,314 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 设计与生产力(design) · 站点摘要: All-in-one workspace. Warm minimalism, serif headings, soft surfaces
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 设计与生产力(design) · 站点摘要: 一体化工作空间。暖调极简、衬线标题、柔和表面
      站点色板: #000000, #ffffff, #f6f5f4, #31302e, #615d59, #a39e98
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Notion
+# 设计系统:Notion
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Notion's website embodies the philosophy of the tool itself: a blank canvas that gets out of your way. The design system is built on warm neutrals rather than cold grays, creating a distinctly approachable minimalism that feels like quality paper rather than sterile glass. The page canvas is pure white (`#ffffff`) but the text isn't pure black -- it's a warm near-black (`rgba(0,0,0,0.95)`) that softens the reading experience imperceptibly. The warm gray scale (`#f6f5f4`, `#31302e`, `#615d59`, `#a39e98`) carries subtle yellow-brown undertones, giving the interface a tactile, almost analog warmth.
+Notion 的网站体现了这个工具自身的哲学:一块给你让路的空白画布。设计系统建在暖中性色而非冷灰上,造出一种明确可亲近的极简主义,读起来像优质纸张,而不是无菌玻璃。页面画布是纯白(`#ffffff`),但文字不是纯黑——而是暖近黑(`rgba(0,0,0,0.95)`),几乎察觉不到地柔化了阅读体验。暖灰阶(`#f6f5f4`、`#31302e`、`#615d59`、`#a39e98`)带细微黄棕底调,给界面一种触感,几乎像模拟时代的暖意。
 
-The custom NotionInter font (a modified Inter) is the backbone of the system. At display sizes (64px), it uses aggressive negative letter-spacing (-2.125px), creating headlines that feel compressed and precise. The weight range is broader than typical systems: 400 for body, 500 for UI elements, 600 for semi-bold labels, and 700 for display headings. OpenType features `"lnum"` (lining numerals) and `"locl"` (localized forms) are enabled on larger text, adding typographic sophistication that rewards close reading.
+自有的 NotionInter 字体(改造过的 Inter)是系统的骨架。显示级字号(64px)下用激进的负字距(-2.125px),造出压缩而精确的标题。字重范围比典型系统更宽:400 给正文、500 给 UI 元素、600 给半粗标签、700 给显示级标题。较大文字上开启 OpenType 特性 `"lnum"`(等高数字)与 `"locl"`(本地化字形),添上值得细读的排版精妙。
 
-What makes Notion's visual language distinctive is its border philosophy. Rather than heavy borders or shadows, Notion uses ultra-thin `1px solid rgba(0,0,0,0.1)` borders -- borders that exist as whispers, barely perceptible division lines that create structure without weight. The shadow system is equally restrained: multi-layer stacks with cumulative opacity never exceeding 0.05, creating depth that's felt rather than seen.
+Notion 视觉语言的定义点是它的边框哲学。不用重边框或阴影,Notion 用极细的 `1px solid rgba(0,0,0,0.1)` 边框——以耳语般的存在,几乎察觉不到的分割线,不靠重量就造出结构。阴影系统同样克制:多层堆叠,累计不透明度从不超过 0.05,造出感受得到、看不见的深度。
 
-**Key Characteristics:**
-- NotionInter (modified Inter) with negative letter-spacing at display sizes (-2.125px at 64px)
-- Warm neutral palette: grays carry yellow-brown undertones (`#f6f5f4` warm white, `#31302e` warm dark)
-- Near-black text via `rgba(0,0,0,0.95)` -- not pure black, creating micro-warmth
-- Ultra-thin borders: `1px solid rgba(0,0,0,0.1)` throughout -- whisper-weight division
-- Multi-layer shadow stacks with sub-0.05 opacity for barely-there depth
-- Notion Blue (`#0075de`) as the singular accent color for CTAs and interactive elements
-- Pill badges (9999px radius) with tinted blue backgrounds for status indicators
-- 8px base spacing unit with an organic, non-rigid scale
+**关键特征:**
+- NotionInter(改造过的 Inter),显示级字号用负字距(64px 下 -2.125px)
+- 暖中性色板:灰都带黄棕底调(`#f6f5f4` 暖白、`#31302e` 暖暗)
+- 近黑文字用 `rgba(0,0,0,0.95)`——不是纯黑,造出微观暖意
+- 极细边框:全站 `1px solid rgba(0,0,0,0.1)`——耳语级重量的分割
+- 多层阴影堆叠,单层不透明度低于 0.05,造出几乎不存在的深度
+- Notion 蓝(`#0075de`)作唯一强调色,用于 CTA 与交互元素
+- 药丸徽章(9999px 圆角),蓝色浅调背景,用于状态指示
+- 8px 基数间距单位,配有机、非刚性的刻度
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Primary
-- **Notion Black** (`rgba(0,0,0,0.95)` / `#000000f2`): Primary text, headings, body copy. The 95% opacity softens pure black without sacrificing readability.
-- **Pure White** (`#ffffff`): Page background, card surfaces, button text on blue.
-- **Notion Blue** (`#0075de`): Primary CTA, link color, interactive accent -- the only saturated color in the core UI chrome.
+### 主色
+- **Notion 黑**(`rgba(0,0,0,0.95)` / `#000000f2`):主文本、标题、正文。95% 不透明度柔化纯黑,又不牺牲可读性。
+- **纯白**(`#ffffff`):页面背景、卡片表面、蓝底按钮文字。
+- **Notion 蓝**(`#0075de`):主 CTA、链接色、交互强调——核心 UI 外壳里唯一的饱和色。
 
-### Brand Secondary
-- **Deep Navy** (`#213183`): Secondary brand color, used sparingly for emphasis and dark feature sections.
-- **Active Blue** (`#005bab`): Button active/pressed state -- darker variant of Notion Blue.
+### 次级品牌
+- **深海军蓝**(`#213183`):次级品牌色,克制用于强调与暗色 feature 区块。
+- **激活蓝**(`#005bab`):按钮激活/按下态——Notion 蓝的更深变体。
 
-### Warm Neutral Scale
-- **Warm White** (`#f6f5f4`): Background surface tint, section alternation, subtle card fill. The yellow undertone is key.
-- **Warm Dark** (`#31302e`): Dark surface background, dark section text. Warmer than standard grays.
-- **Warm Gray 500** (`#615d59`): Secondary text, descriptions, muted labels.
-- **Warm Gray 300** (`#a39e98`): Placeholder text, disabled states, caption text.
+### 暖中性色阶
+- **暖白**(`#f6f5f4`):背景表面浅调、区块交替、细微卡填充。黄底调是关键。
+- **暖暗**(`#31302e`):暗表面背景、暗色区块文字。比标准灰更暖。
+- **暖灰 500**(`#615d59`):次级文本、描述、弱化标签。
+- **暖灰 300**(`#a39e98`):占位文本、禁用态、说明文字。
 
-### Semantic Accent Colors
-- **Teal** (`#2a9d99`): Success states, positive indicators.
-- **Green** (`#1aae39`): Confirmation, completion badges.
-- **Orange** (`#dd5b00`): Warning states, attention indicators.
-- **Pink** (`#ff64c8`): Decorative accent, feature highlights.
-- **Purple** (`#391c57`): Premium features, deep accents.
-- **Brown** (`#523410`): Earthy accent, warm feature sections.
+### 语义强调色
+- **青绿**(`#2a9d99`):成功态、正向指示。
+- **绿**(`#1aae39`):确认、完成徽章。
+- **橙**(`#dd5b00`):警告态、注意力指示。
+- **粉**(`#ff64c8`):装饰性强调、feature 高亮。
+- **紫**(`#391c57`):高级功能、深强调。
+- **棕**(`#523410`):土质强调、暖色 feature 区块。
 
-### Interactive
-- **Link Blue** (`#0075de`): Primary link color with underline-on-hover.
-- **Link Light Blue** (`#62aef0`): Lighter link variant for dark backgrounds.
-- **Focus Blue** (`#097fe8`): Focus ring on interactive elements.
-- **Badge Blue Bg** (`#f2f9ff`): Pill badge background, tinted blue surface.
-- **Badge Blue Text** (`#097fe8`): Pill badge text, darker blue for readability.
+### 交互
+- **链接蓝**(`#0075de`):主链接色,hover 出下划线。
+- **浅链接蓝**(`#62aef0`):暗背景上的较浅链接变体。
+- **焦点蓝**(`#097fe8`):交互元素上的焦点环。
+- **徽章蓝底**(`#f2f9ff`):药丸徽章背景,蓝色浅调表面。
+- **徽章蓝字**(`#097fe8`):药丸徽章文字,更深的蓝保可读。
 
-### Shadows & Depth
-- **Card Shadow** (`rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.84688px, rgba(0,0,0,0.02) 0px 0.8px 2.925px, rgba(0,0,0,0.01) 0px 0.175px 1.04062px`): Multi-layer card elevation.
-- **Deep Shadow** (`rgba(0,0,0,0.01) 0px 1px 3px, rgba(0,0,0,0.02) 0px 3px 7px, rgba(0,0,0,0.02) 0px 7px 15px, rgba(0,0,0,0.04) 0px 14px 28px, rgba(0,0,0,0.05) 0px 23px 52px`): Five-layer deep elevation for modals and featured content.
-- **Whisper Border** (`1px solid rgba(0,0,0,0.1)`): Standard division border -- cards, dividers, sections.
+### 阴影与深度
+- **卡片阴影**(`rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.84688px, rgba(0,0,0,0.02) 0px 0.8px 2.925px, rgba(0,0,0,0.01) 0px 0.175px 1.04062px`):多层卡片海拔。
+- **深阴影**(`rgba(0,0,0,0.01) 0px 1px 3px, rgba(0,0,0,0.02) 0px 3px 7px, rgba(0,0,0,0.02) 0px 7px 15px, rgba(0,0,0,0.04) 0px 14px 28px, rgba(0,0,0,0.05) 0px 23px 52px`):五层深海拔,用于模态与精选内容。
+- **耳语边框**(`1px solid rgba(0,0,0,0.1)`):标准分割边框——卡片、分隔线、区块。
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Family
-- **Primary**: `NotionInter`, with fallbacks: `Inter, -apple-system, system-ui, Segoe UI, Helvetica, Apple Color Emoji, Arial, Segoe UI Emoji, Segoe UI Symbol`
-- **OpenType Features**: `"lnum"` (lining numerals) and `"locl"` (localized forms) enabled on display and heading text.
+### 字族
+- **主**:`NotionInter`,回退:`Inter, -apple-system, system-ui, Segoe UI, Helvetica, Apple Color Emoji, Arial, Segoe UI Emoji, Segoe UI Symbol`
+- **OpenType 特性**:显示级与标题文字开启 `"lnum"`(等高数字)与 `"locl"`(本地化字形)。
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Hero | NotionInter | 64px (4.00rem) | 700 | 1.00 (tight) | -2.125px | Maximum compression, billboard headlines |
-| Display Secondary | NotionInter | 54px (3.38rem) | 700 | 1.04 (tight) | -1.875px | Secondary hero, feature headlines |
-| Section Heading | NotionInter | 48px (3.00rem) | 700 | 1.00 (tight) | -1.5px | Feature section titles, with `"lnum"` |
-| Sub-heading Large | NotionInter | 40px (2.50rem) | 700 | 1.50 | normal | Card headings, feature sub-sections |
-| Sub-heading | NotionInter | 26px (1.63rem) | 700 | 1.23 (tight) | -0.625px | Section sub-titles, content headers |
-| Card Title | NotionInter | 22px (1.38rem) | 700 | 1.27 (tight) | -0.25px | Feature cards, list titles |
-| Body Large | NotionInter | 20px (1.25rem) | 600 | 1.40 | -0.125px | Introductions, feature descriptions |
-| Body | NotionInter | 16px (1.00rem) | 400 | 1.50 | normal | Standard reading text |
-| Body Medium | NotionInter | 16px (1.00rem) | 500 | 1.50 | normal | Navigation, emphasized UI text |
-| Body Semibold | NotionInter | 16px (1.00rem) | 600 | 1.50 | normal | Strong labels, active states |
-| Body Bold | NotionInter | 16px (1.00rem) | 700 | 1.50 | normal | Headlines at body size |
-| Nav / Button | NotionInter | 15px (0.94rem) | 600 | 1.33 | normal | Navigation links, button text |
-| Caption | NotionInter | 14px (0.88rem) | 500 | 1.43 | normal | Metadata, secondary labels |
-| Caption Light | NotionInter | 14px (0.88rem) | 400 | 1.43 | normal | Body captions, descriptions |
-| Badge | NotionInter | 12px (0.75rem) | 600 | 1.33 | 0.125px | Pill badges, tags, status labels |
-| Micro Label | NotionInter | 12px (0.75rem) | 400 | 1.33 | 0.125px | Small metadata, timestamps |
+| 显示 Hero | NotionInter | 64px (4.00rem) | 700 | 1.00(紧) | -2.125px | 最大压缩,广告牌式标题 |
+| 显示次级 | NotionInter | 54px (3.38rem) | 700 | 1.04(紧) | -1.875px | 次级 hero,feature 标题 |
+| 区块标题 | NotionInter | 48px (3.00rem) | 700 | 1.00(紧) | -1.5px | feature 区块标题,带 `"lnum"` |
+| 大号子标题 | NotionInter | 40px (2.50rem) | 700 | 1.50 | normal | 卡片标题、feature 子区块 |
+| 子标题 | NotionInter | 26px (1.63rem) | 700 | 1.23(紧) | -0.625px | 区块副标题、内容页头 |
+| 卡片标题 | NotionInter | 22px (1.38rem) | 700 | 1.27(紧) | -0.25px | feature 卡、列表标题 |
+| 大号正文 | NotionInter | 20px (1.25rem) | 600 | 1.40 | -0.125px | 引言、feature 描述 |
+| 正文 | NotionInter | 16px (1.00rem) | 400 | 1.50 | normal | 标准阅读文本 |
+| 正文中等 | NotionInter | 16px (1.00rem) | 500 | 1.50 | normal | 导航、强调型 UI 文本 |
+| 正文半粗 | NotionInter | 16px (1.00rem) | 600 | 1.50 | normal | 强标签、激活态 |
+| 正文粗体 | NotionInter | 16px (1.00rem) | 700 | 1.50 | normal | 正文尺度上的标题 |
+| 导航 / 按钮 | NotionInter | 15px (0.94rem) | 600 | 1.33 | normal | 导航链接、按钮文字 |
+| 说明 | NotionInter | 14px (0.88rem) | 500 | 1.43 | normal | 元数据、次级标签 |
+| 说明 Light | NotionInter | 14px (0.88rem) | 400 | 1.43 | normal | 正文说明、描述 |
+| 徽章 | NotionInter | 12px (0.75rem) | 600 | 1.33 | 0.125px | 药丸徽章、标签、状态标签 |
+| 微型标签 | NotionInter | 12px (0.75rem) | 400 | 1.33 | 0.125px | 小号元数据、时间戳 |
 
-### Principles
-- **Compression at scale**: NotionInter at display sizes uses -2.125px letter-spacing at 64px, progressively relaxing to -0.625px at 26px and normal at 16px. The compression creates density at headlines while maintaining readability at body sizes.
-- **Four-weight system**: 400 (body/reading), 500 (UI/interactive), 600 (emphasis/navigation), 700 (headings/display). The broader weight range compared to most systems allows nuanced hierarchy.
-- **Warm scaling**: Line height tightens as size increases -- 1.50 at body (16px), 1.23-1.27 at sub-headings, 1.00-1.04 at display. This creates denser, more impactful headlines.
-- **Badge micro-tracking**: The 12px badge text uses positive letter-spacing (0.125px) -- the only positive tracking in the system, creating wider, more legible small text.
+### 原则
+- **大字号压缩**:NotionInter 在显示级 64px 用 -2.125px 字距,到 26px 逐步放松为 -0.625px,16px 回 normal。这种压缩在标题上造密度,在正文尺度上保持可读。
+- **四档字重体系**:400(正文/阅读)、500(UI/交互)、600(强调/导航)、700(标题/显示)。比多数系统更宽的字重范围,支持细粒度层级。
+- **暖调缩放**:行高随字号增大而收紧——正文(16px)1.50,子标题 1.23-1.27,显示级 1.00-1.04。这造出更密、更有冲击力的标题。
+- **徽章微字距**:12px 徽章文字用正字距(0.125px)——系统里唯一的正字距,造出更宽、更易读的小字。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Primary Blue**
-- Background: `#0075de` (Notion Blue)
-- Text: `#ffffff`
-- Padding: 8px 16px
-- Radius: 4px (subtle)
-- Border: `1px solid transparent`
-- Hover: background darkens to `#005bab`
-- Active: scale(0.9) transform
-- Focus: `2px solid` focus outline, `var(--shadow-level-200)` shadow
-- Use: Primary CTA ("Get Notion free", "Try it")
+**主蓝**
+- 背景:`#0075de`(Notion 蓝)
+- 文字:`#ffffff`
+- 内边距:8px 16px
+- 圆角:4px(细微)
+- 边框:`1px solid transparent`
+- hover:背景加深到 `#005bab`
+- 激活:scale(0.9) 变换
+- 焦点:`2px solid` 焦点描边,`var(--shadow-level-200)` 阴影
+- 用途:主 CTA("Get Notion free"、"Try it")
 
-**Secondary / Tertiary**
-- Background: `rgba(0,0,0,0.05)` (translucent warm gray)
-- Text: `#000000` (near-black)
-- Padding: 8px 16px
-- Radius: 4px
-- Hover: text color shifts, scale(1.05)
-- Active: scale(0.9) transform
-- Use: Secondary actions, form submissions
+**次级 / 三级**
+- 背景:`rgba(0,0,0,0.05)`(半透明暖灰)
+- 文字:`#000000`(近黑)
+- 内边距:8px 16px
+- 圆角:4px
+- hover:文字色变化,scale(1.05)
+- 激活:scale(0.9) 变换
+- 用途:次级操作、表单提交
 
-**Ghost / Link Button**
-- Background: transparent
-- Text: `rgba(0,0,0,0.95)`
-- Decoration: underline on hover
-- Use: Tertiary actions, inline links
+**幽灵 / 链接按钮**
+- 背景:透明
+- 文字:`rgba(0,0,0,0.95)`
+- 装饰:hover 出下划线
+- 用途:三级操作、行内链接
 
-**Pill Badge Button**
-- Background: `#f2f9ff` (tinted blue)
-- Text: `#097fe8`
-- Padding: 4px 8px
-- Radius: 9999px (full pill)
-- Font: 12px weight 600
-- Use: Status badges, feature labels, "New" tags
+**药丸徽章按钮**
+- 背景:`#f2f9ff`(蓝色浅调)
+- 文字:`#097fe8`
+- 内边距:4px 8px
+- 圆角:9999px(完整药丸)
+- 字体:12px 字重 600
+- 用途:状态徽章、feature 标签、"New" 标记
 
-### Cards & Containers
-- Background: `#ffffff`
-- Border: `1px solid rgba(0,0,0,0.1)` (whisper border)
-- Radius: 12px (standard cards), 16px (featured/hero cards)
-- Shadow: `rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.84688px, rgba(0,0,0,0.02) 0px 0.8px 2.925px, rgba(0,0,0,0.01) 0px 0.175px 1.04062px`
-- Hover: subtle shadow intensification
-- Image cards: 12px top radius, image fills top half
+### 卡片与容器
+- 背景:`#ffffff`
+- 边框:`1px solid rgba(0,0,0,0.1)`(耳语边框)
+- 圆角:12px(标准卡)、16px(feature/hero 卡)
+- 阴影:`rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.84688px, rgba(0,0,0,0.02) 0px 0.8px 2.925px, rgba(0,0,0,0.01) 0px 0.175px 1.04062px`
+- hover:阴影细微加深
+- 图片卡:顶部 12px 圆角,图片占上半
 
-### Inputs & Forms
-- Background: `#ffffff`
-- Text: `rgba(0,0,0,0.9)`
-- Border: `1px solid #dddddd`
-- Padding: 6px
-- Radius: 4px
-- Focus: blue outline ring
-- Placeholder: warm gray `#a39e98`
+### 输入与表单
+- 背景:`#ffffff`
+- 文字:`rgba(0,0,0,0.9)`
+- 边框:`1px solid #dddddd`
+- 内边距:6px
+- 圆角:4px
+- 焦点:蓝色描边环
+- 占位:暖灰 `#a39e98`
 
-### Navigation
-- Clean horizontal nav on white, not sticky
-- Brand logo left-aligned (33x34px icon + wordmark)
-- Links: NotionInter 15px weight 500-600, near-black text
-- Hover: color shift to `var(--color-link-primary-text-hover)`
-- CTA: blue pill button ("Get Notion free") right-aligned
-- Mobile: hamburger menu collapse
-- Product dropdowns with multi-level categorized menus
+### 导航
+- 白底上干净的横向导航,不吸顶
+- 品牌 logo 左对齐(33x34px 图标 + 字标)
+- 链接:NotionInter 15px 字重 500-600,近黑文字
+- hover:颜色切到 `var(--color-link-primary-text-hover)`
+- CTA:蓝色药丸按钮("Get Notion free")右对齐
+- 移动端:汉堡菜单折叠
+- 产品下拉带多级分类菜单
 
-### Image Treatment
-- Product screenshots with `1px solid rgba(0,0,0,0.1)` border
-- Top-rounded images: `12px 12px 0px 0px` radius
-- Dashboard/workspace preview screenshots dominate feature sections
-- Warm gradient backgrounds behind hero illustrations (decorative character illustrations)
+### 图像处理
+- 产品截图带 `1px solid rgba(0,0,0,0.1)` 边框
+- 顶部圆角图:`12px 12px 0px 0px` 圆角
+- 仪表板/工作空间预览截图占据 feature 区块
+- hero 插画后方的暖色渐变背景(装饰性角色插画)
 
-### Distinctive Components
+### 特色组件
 
-**Feature Cards with Illustrations**
-- Large illustrative headers (The Great Wave, product UI screenshots)
-- 12px radius card with whisper border
-- Title at 22px weight 700, description at 16px weight 400
-- Warm white (`#f6f5f4`) background variant for alternating sections
+**带插画的 Feature 卡**
+- 大幅插画页头(The Great Wave、产品 UI 截图)
+- 12px 圆角卡配耳语边框
+- 标题 22px 字重 700,描述 16px 字重 400
+- 交替区块用暖白(`#f6f5f4`)背景变体
 
-**Trust Bar / Logo Grid**
-- Company logos (trusted teams section) in their brand colors
-- Horizontal scroll or grid layout with team counts
-- Metric display: large number + description pattern
+**信任栏 / Logo 网格**
+- 公司 logo(trusted teams 区块)用各自品牌色
+- 横向滚动或网格布局,带团队数量
+- 指标展示:大数字 + 描述的模式
 
-**Metric Cards**
-- Large number display (e.g., "$4,200 ROI")
-- NotionInter 40px+ weight 700 for the metric
-- Description below in warm gray body text
-- Whisper-bordered card container
+**指标卡**
+- 大数字展示(如 "$4,200 ROI")
+- 指标用 NotionInter 40px+ 字重 700
+- 下方描述用暖灰正文
+- 耳语边框卡容器
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 2px, 3px, 4px, 5px, 6px, 7px, 8px, 11px, 12px, 14px, 16px, 24px, 32px
-- Non-rigid organic scale with fractional values (5.6px, 6.4px) for micro-adjustments
+### 间距系统
+- 基数:8px
+- 刻度:2px, 3px, 4px, 5px, 6px, 7px, 8px, 11px, 12px, 14px, 16px, 24px, 32px
+- 非刚性有机刻度,含小数值(5.6px、6.4px)供微调
 
-### Grid & Container
-- Max content width: approximately 1200px
-- Hero: centered single-column with generous top padding (80-120px)
-- Feature sections: 2-3 column grids for cards
-- Full-width warm white (`#f6f5f4`) section backgrounds for alternation
-- Code/dashboard screenshots as contained with whisper border
+### 网格与容器
+- 内容最大宽:约 1200px
+- Hero:居中单列,顶部内边距慷慨(80-120px)
+- Feature 区块:2-3 列卡片网格
+- 全宽暖白(`#f6f5f4`)区块背景做交替
+- 代码/仪表板截图收在耳语边框里
 
-### Whitespace Philosophy
-- **Generous vertical rhythm**: 64-120px between major sections. Notion lets content breathe with vast vertical padding.
-- **Warm alternation**: White sections alternate with warm white (`#f6f5f4`) sections, creating gentle visual rhythm without harsh color breaks.
-- **Content-first density**: Body text blocks are compact (line-height 1.50) but surrounded by ample margin, creating islands of readable content in a sea of white space.
+### 留白哲学
+- **慷慨的纵向节奏**:主要区块之间 64-120px。Notion 让内容靠大量纵向内边距呼吸。
+- **暖调交替**:白色区块与暖白(`#f6f5f4`)区块交替,造出柔和视觉节奏,不靠生硬的颜色断裂。
+- **内容优先的密度**:正文块紧凑(行高 1.50),但四周留白充足,在白色海洋里造出一座座可读的内容岛。
 
-### Border Radius Scale
-- Micro (4px): Buttons, inputs, functional interactive elements
-- Subtle (5px): Links, list items, menu items
-- Standard (8px): Small cards, containers, inline elements
-- Comfortable (12px): Standard cards, feature containers, image tops
-- Large (16px): Hero cards, featured content, promotional blocks
-- Full Pill (9999px): Badges, pills, status indicators
-- Circle (100%): Tab indicators, avatars
+### 圆角刻度
+- 微(4px):按钮、输入框、功能性交互元素
+- 细微(5px):链接、列表项、菜单项
+- 标准(8px):小卡、容器、行内元素
+- 舒适(12px):标准卡、feature 容器、图片顶部
+- 大(16px):hero 卡、精选内容、推广块
+- 完整药丸(9999px):徽章、药丸、状态指示
+- 正圆(100%):页签指示、头像
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow, no border | Page background, text blocks |
-| Whisper (Level 1) | `1px solid rgba(0,0,0,0.1)` | Standard borders, card outlines, dividers |
-| Soft Card (Level 2) | 4-layer shadow stack (max opacity 0.04) | Content cards, feature blocks |
-| Deep Card (Level 3) | 5-layer shadow stack (max opacity 0.05, 52px blur) | Modals, featured panels, hero elements |
-| Focus (Accessibility) | `2px solid var(--focus-color)` outline | Keyboard focus on all interactive elements |
+| 平(层 0) | 无阴影,无边框 | 页面背景、文本块 |
+| 耳语(层 1) | `1px solid rgba(0,0,0,0.1)` | 标准边框、卡片轮廓、分隔线 |
+| 柔卡(层 2) | 4 层阴影堆叠(最大不透明度 0.04) | 内容卡、feature 块 |
+| 深卡(层 3) | 5 层阴影堆叠(最大不透明度 0.05,52px 模糊) | 模态、精选面板、hero 元素 |
+| 焦点(无障碍) | `2px solid var(--focus-color)` 描边 | 所有交互元素上的键盘焦点 |
 
-**Shadow Philosophy**: Notion's shadow system uses multiple layers with extremely low individual opacity (0.01 to 0.05) that accumulate into soft, natural-looking elevation. The 4-layer card shadow spans from 1.04px to 18px blur, creating a gradient of depth rather than a single hard shadow. The 5-layer deep shadow extends to 52px blur at 0.05 opacity, producing ambient occlusion that feels like natural light rather than computer-generated depth. This layered approach makes elements feel embedded in the page rather than floating above it.
+**阴影哲学**:Notion 的阴影系统用多层,单层不透明度极低(0.01 到 0.05),累加成柔和、自然的海拔。4 层卡片阴影的模糊从 1.04px 到 18px,造出渐变的深度,而不是一条硬阴影。5 层深阴影在 0.05 不透明度下延伸到 52px 模糊,造出的环境遮蔽更像自然光,而不是计算机生成的深度。这种分层做法让元素感觉嵌在页面里,而不是浮在页面上方。
 
-### Decorative Depth
-- Hero section: decorative character illustrations (playful, hand-drawn style)
-- Section alternation: white to warm white (`#f6f5f4`) background shifts
-- No hard section borders -- separation comes from background color changes and spacing
+### 装饰性深度
+- Hero 区块:装饰性角色插画(俏皮、手绘风格)
+- 区块交替:白到暖白(`#f6f5f4`)的背景切换
+- 无硬区块边框——分隔来自背景色变化与间距
 
-## 7. Responsive Behavior
+## 7. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile Small | <400px | Tight single column, minimal padding |
-| Mobile | 400-600px | Standard mobile, stacked layout |
-| Tablet Small | 600-768px | 2-column grids begin |
-| Tablet | 768-1080px | Full card grids, expanded padding |
-| Desktop Small | 1080-1200px | Standard desktop layout |
-| Desktop | 1200-1440px | Full layout, maximum content width |
-| Large Desktop | >1440px | Centered, generous margins |
+| 小屏手机 | <400px | 紧凑单列,最小内边距 |
+| 手机 | 400-600px | 标准移动布局,堆叠 |
+| 小屏平板 | 600-768px | 2 列网格开始 |
+| 平板 | 768-1080px | 完整卡片网格,内边距展开 |
+| 小桌面 | 1080-1200px | 标准桌面布局 |
+| 桌面 | 1200-1440px | 完整布局,最大内容宽 |
+| 大桌面 | >1440px | 居中,慷慨边距 |
 
-### Touch Targets
-- Buttons use comfortable padding (8px-16px vertical)
-- Navigation links at 15px with adequate spacing
-- Pill badges have 8px horizontal padding for tap targets
-- Mobile menu toggle uses standard hamburger button
+### 触控目标
+- 按钮用舒适内边距(纵向 8px-16px)
+- 导航链接 15px,间距充足
+- 药丸徽章横向内边距 8px,便于点按
+- 移动端菜单开关用标准汉堡按钮
 
-### Collapsing Strategy
-- Hero: 64px display -> scales to 40px -> 26px on mobile, maintains proportional letter-spacing
-- Navigation: horizontal links + blue CTA -> hamburger menu
-- Feature cards: 3-column -> 2-column -> single column stacked
-- Product screenshots: maintain aspect ratio with responsive images
-- Trust bar logos: grid -> horizontal scroll on mobile
-- Footer: multi-column -> stacked single column
-- Section spacing: 80px+ -> 48px on mobile
+### 折叠策略
+- Hero:64px 显示 → 缩到 40px → 移动端 26px,字距按比例保持
+- 导航:横向链接 + 蓝色 CTA → 汉堡菜单
+- Feature 卡:3 列 → 2 列 → 单列堆叠
+- 产品截图:保持宽高比,用响应式图片
+- 信任栏 logo:网格 → 移动端横向滚动
+- Footer:多列 → 单列堆叠
+- 区块间距:80px+ → 移动端 48px
 
-### Image Behavior
-- Workspace screenshots maintain whisper border at all sizes
-- Hero illustrations scale proportionally
-- Product screenshots use responsive images with consistent border radius
-- Full-width warm white sections maintain edge-to-edge treatment
+### 图像行为
+- 工作空间截图在各尺寸下保持耳语边框
+- Hero 插画按比例缩放
+- 产品截图用响应式图片,圆角一致
+- 全宽暖白区块保持出血处理
 
-## 8. Accessibility & States
+## 8. 无障碍与状态
 
-### Focus System
-- All interactive elements receive visible focus indicators
-- Focus outline: `2px solid` with focus color + shadow level 200
-- Tab navigation supported throughout all interactive components
-- High contrast text: near-black on white exceeds WCAG AAA (>14:1 ratio)
+### 焦点系统
+- 所有交互元素都有可见焦点指示
+- 焦点描边:`2px solid` 配焦点色 + 阴影层级 200
+- 所有交互组件全程支持 Tab 导航
+- 高对比文字:白底近黑超过 WCAG AAA(>14:1 对比)
 
-### Interactive States
-- **Default**: Standard appearance with whisper borders
-- **Hover**: Color shift on text, scale(1.05) on buttons, underline on links
-- **Active/Pressed**: scale(0.9) transform, darker background variant
-- **Focus**: Blue outline ring with shadow reinforcement
-- **Disabled**: Warm gray (`#a39e98`) text, reduced opacity
+### 交互状态
+- **默认**:标准外观配耳语边框
+- **hover**:文字色变化、按钮 scale(1.05)、链接出下划线
+- **激活/按下**:scale(0.9) 变换、更深背景变体
+- **焦点**:蓝色描边环配阴影加固
+- **禁用**:暖灰(`#a39e98`)文字,降低不透明度
 
-### Color Contrast
-- Primary text (rgba(0,0,0,0.95)) on white: ~18:1 ratio
-- Secondary text (#615d59) on white: ~5.5:1 ratio (WCAG AA)
-- Blue CTA (#0075de) on white: ~4.6:1 ratio (WCAG AA for large text)
-- Badge text (#097fe8) on badge bg (#f2f9ff): ~4.5:1 ratio (WCAG AA for large text)
+### 颜色对比
+- 主文本(rgba(0,0,0,0.95))在白底上:~18:1 对比
+- 次级文本(#615d59)在白底上:~5.5:1 对比(WCAG AA)
+- 蓝色 CTA(#0075de)在白底上:~4.6:1 对比(大字 WCAG AA)
+- 徽章文字(#097fe8)在徽章底(#f2f9ff)上:~4.5:1 对比(大字 WCAG AA)
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Primary CTA: Notion Blue (`#0075de`)
-- Background: Pure White (`#ffffff`)
-- Alt Background: Warm White (`#f6f5f4`)
-- Heading text: Near-Black (`rgba(0,0,0,0.95)`)
-- Body text: Near-Black (`rgba(0,0,0,0.95)`)
-- Secondary text: Warm Gray 500 (`#615d59`)
-- Muted text: Warm Gray 300 (`#a39e98`)
-- Border: `1px solid rgba(0,0,0,0.1)`
-- Link: Notion Blue (`#0075de`)
-- Focus ring: Focus Blue (`#097fe8`)
+### 快速取色参考
+- 主 CTA:Notion 蓝(`#0075de`)
+- 背景:纯白(`#ffffff`)
+- 交替背景:暖白(`#f6f5f4`)
+- 标题文字:近黑(`rgba(0,0,0,0.95)`)
+- 正文文字:近黑(`rgba(0,0,0,0.95)`)
+- 次级文字:暖灰 500(`#615d59`)
+- 弱化文字:暖灰 300(`#a39e98`)
+- 边框:`1px solid rgba(0,0,0,0.1)`
+- 链接:Notion 蓝(`#0075de`)
+- 焦点环:焦点蓝(`#097fe8`)
 
-### Example Component Prompts
-- "Create a hero section on white background. Headline at 64px NotionInter weight 700, line-height 1.00, letter-spacing -2.125px, color rgba(0,0,0,0.95). Subtitle at 20px weight 600, line-height 1.40, color #615d59. Blue CTA button (#0075de, 4px radius, 8px 16px padding, white text) and ghost button (transparent bg, near-black text, underline on hover)."
-- "Design a card: white background, 1px solid rgba(0,0,0,0.1) border, 12px radius. Use shadow stack: rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.85px, rgba(0,0,0,0.02) 0px 0.8px 2.93px, rgba(0,0,0,0.01) 0px 0.175px 1.04px. Title at 22px NotionInter weight 700, letter-spacing -0.25px. Body at 16px weight 400, color #615d59."
-- "Build a pill badge: #f2f9ff background, #097fe8 text, 9999px radius, 4px 8px padding, 12px NotionInter weight 600, letter-spacing 0.125px."
-- "Create navigation: white header. NotionInter 15px weight 600 for links, near-black text. Blue pill CTA 'Get Notion free' right-aligned (#0075de bg, white text, 4px radius)."
-- "Design an alternating section layout: white sections alternate with warm white (#f6f5f4) sections. Each section has 64-80px vertical padding, max-width 1200px centered. Section heading at 48px weight 700, line-height 1.00, letter-spacing -1.5px."
+### 组件提示词示例
+- "在白底上做一段 hero。标题 64px NotionInter 字重 700,行高 1.00,字距 -2.125px,颜色 rgba(0,0,0,0.95)。副标 20px 字重 600,行高 1.40,颜色 #615d59。蓝色 CTA 按钮(#0075de,4px 圆角,8px 16px 内边距,白字)与幽灵按钮(透明底、近黑文字、hover 出下划线)。"
+- "设计一张卡:白色背景,1px solid rgba(0,0,0,0.1) 边框,12px 圆角。用阴影堆叠:rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.85px, rgba(0,0,0,0.02) 0px 0.8px 2.93px, rgba(0,0,0,0.01) 0px 0.175px 1.04px。标题 22px NotionInter 字重 700,字距 -0.25px。正文 16px 字重 400,颜色 #615d59。"
+- "做一个药丸徽章:#f2f9ff 背景,#097fe8 文字,9999px 圆角,4px 8px 内边距,12px NotionInter 字重 600,字距 0.125px。"
+- "做一条导航:白色页头。链接用 NotionInter 15px 字重 600,近黑文字。蓝色药丸 CTA 'Get Notion free' 右对齐(#0075de 底、白字、4px 圆角)。"
+- "设计一个交替区块布局:白色区块与暖白(#f6f5f4)区块交替。每个区块纵向内边距 64-80px,最大宽 1200px 居中。区块标题 48px 字重 700,行高 1.00,字距 -1.5px。"
 
-### Iteration Guide
-1. Always use warm neutrals -- Notion's grays have yellow-brown undertones (#f6f5f4, #31302e, #615d59, #a39e98), never blue-gray
-2. Letter-spacing scales with font size: -2.125px at 64px, -1.875px at 54px, -0.625px at 26px, normal at 16px
-3. Four weights: 400 (read), 500 (interact), 600 (emphasize), 700 (announce)
-4. Borders are whispers: 1px solid rgba(0,0,0,0.1) -- never heavier
-5. Shadows use 4-5 layers with individual opacity never exceeding 0.05
-6. The warm white (#f6f5f4) section background is essential for visual rhythm
-7. Pill badges (9999px) for status/tags, 4px radius for buttons and inputs
-8. Notion Blue (#0075de) is the only saturated color in core UI -- use it sparingly for CTAs and links
+### 迭代指南
+1. 永远用暖中性色——Notion 的灰带黄棕底调(#f6f5f4、#31302e、#615d59、#a39e98),绝不用蓝灰
+2. 字距随字号缩放:64px 下 -2.125px、54px 下 -1.875px、26px 下 -0.625px、16px 回 normal
+3. 四档字重:400(阅读)、500(交互)、600(强调)、700(宣告)
+4. 边框是耳语:1px solid rgba(0,0,0,0.1)——绝不更重
+5. 阴影用 4-5 层,单层不透明度从不超过 0.05
+6. 暖白(#f6f5f4)区块背景是视觉节奏的关键
+7. 状态/标签用药丸(9999px),按钮与输入框用 4px 圆角
+8. Notion 蓝(#0075de)是核心 UI 里唯一饱和色——克制用于 CTA 与链接

@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Data-Dense Dashboard is a UI style reference for analytics and BI dashboards, focused on Multiple charts/widgets, data tables, KPI cards, minimal padding, grid layout.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Data-Dense Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,侧重多图表/组件、数据表格、KPI 卡、最小内边距、网格布局。
      站点色板: #f5f5f5, #333333, #22c55e, #f59e0b, #ef4444
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Data-Dense Dashboard
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Data-Dense Dashboard is a UI style reference for analytics and BI dashboards, combining Multiple charts/widgets, data tables, KPI cards, minimal padding, grid layout, space-efficient, maximum data visibility. The visual direction is shaped by Hover tooltips, chart zoom on click, row highlighting on hover, smooth filter animations, data loading spinners.
+Data-Dense Dashboard 是为分析与 BI 仪表板提供的 UI 风格参照,融合多图表/组件、数据表格、KPI 卡、最小内边距、网格布局、空间高效、数据可见性最大化。视觉方向由悬浮提示、点击缩放图表、悬浮高亮行、平滑筛选动画、数据加载转圈塑造。
 
-Use it for Business intelligence dashboards (儀表板), financial analytics (分析), enterprise reporting, operational dashboards (儀表板), data warehousing. Avoid it for Marketing dashboards (儀表板), consumer-facing analytics (分析), simple reporting.
+用于商业智能仪表板、金融分析、企业报表、运营仪表板、数据仓库。避免用于营销仪表板、面向消费者的分析、简单报表。
 
-**Key Characteristics:**
-- Primary palette: Neutral primary (light grey/white #F5F5F5), data colors (blue/green/red), dark text #333333
-- Secondary palette: Chart colors: success (green #22C55E), warning (amber #F59E0B), alert (red #EF4444), neutral (grey)
-- Effects: Hover tooltips, chart zoom on click, row highlighting on hover, smooth filter animations, data loading spinners
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Business intelligence dashboards (儀表板), financial analytics (分析), enterprise reporting, operational dashboards (儀表板), data warehousing
-- Avoid for: Marketing dashboards (儀表板), consumer-facing analytics (分析), simple reporting
+**关键特征:**
+- 主色板:中性主色(浅灰/白 #F5F5F5)、数据色(蓝/绿/红)、深色文本 #333333
+- 次色板:图表色:成功(绿 #22C55E)、警告(琥珀 #F59E0B)、告警(红 #EF4444)、中性(灰)
+- 效果:悬浮提示、点击缩放图表、悬浮高亮行、平滑筛选动画、数据加载转圈
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:商业智能仪表板、金融分析、企业报表、运营仪表板、数据仓库
+- 避免用于:营销仪表板、面向消费者的分析、简单报表
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Recharts 9/10, Chart.js 9/10, D3.js 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/28-data-dense-dashboard.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Recharts 9/10、Chart.js 9/10、D3.js 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/28-data-dense-dashboard.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

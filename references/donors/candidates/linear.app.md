@@ -1,372 +1,372 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 开发工具与平台(dev) · 站点摘要: Project management for engineers. Ultra-minimal, precise, purple accent
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 开发工具与平台(dev) · 站点摘要: 面向工程师的项目管理。极简、精确、紫色强调
      站点色板: #f7f8f8, #ffffff, #f3f4f5, #1a1a1e, #3c3c43, #62666d
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Linear
+# 设计系统:Linear
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Linear's website is a masterclass in dark-mode-first product design — a near-black canvas (`#08090a`) where content emerges from darkness like starlight. The overall impression is one of extreme precision engineering: every element exists in a carefully calibrated hierarchy of luminance, from barely-visible borders (`rgba(255,255,255,0.05)`) to soft, luminous text (`#f7f8f8`). This is not a dark theme applied to a light design — it is darkness as the native medium, where information density is managed through subtle gradations of white opacity rather than color variation.
+Linear 的网站是暗色优先产品设计的教科书——近黑画布(`#08090a`)上,内容像星光从黑暗里浮现。整体印象是极致的精密工程:每个元素都坐落在仔细校准的亮度层级里,从几乎不可见的边框(`rgba(255,255,255,0.05)`)到柔和发光的文本(`#f7f8f8`)。这不是给亮色设计套的暗色主题——暗色是原生介质,信息密度靠白色透明度的微差管理,而不是靠颜色变化。
 
-The typography system is built entirely on Inter Variable with OpenType features `"cv01"` and `"ss03"` enabled globally, giving the typeface a cleaner, more geometric character. Inter is used at a remarkable range of weights — from 300 (light body) through 510 (medium, Linear's signature weight) to 590 (semibold emphasis). The 510 weight is particularly distinctive: it sits between regular and medium, creating a subtle emphasis that doesn't shout. At display sizes (72px, 64px, 48px), Inter uses aggressive negative letter-spacing (-1.584px to -1.056px), creating compressed, authoritative headlines that feel engineered rather than designed. Berkeley Mono serves as the monospace companion for code and technical labels, with fallbacks to ui-monospace, SF Mono, and Menlo.
+排版系统完全建立在 Inter Variable 之上,全局开启 OpenType 特性 `"cv01"` 与 `"ss03"`,让字形更干净、更几何。Inter 用在极宽的字重区间——从 300(浅正文)经 510(中等,Linear 的签名字重)到 590(半粗强调)。510 字重尤其有辨识度:它介于常规与中等之间,造出不喊叫的微妙强调。显示级尺寸(72px、64px、48px)上,Inter 用激进的负字距(-1.584px 至 -1.056px),造出压缩、有权威感的标题,感觉像被工程化而非被设计过。Berkeley Mono 作为等宽伙伴服务于代码与技术标签,回退 ui-monospace、SF Mono、Menlo。
 
-The color system is almost entirely achromatic — dark backgrounds with white/gray text — punctuated by a single brand accent: Linear's signature indigo-violet (`#5e6ad2` for backgrounds, `#7170ff` for interactive accents). This accent color is used sparingly and intentionally, appearing only on CTAs, active states, and brand elements. The border system uses ultra-thin, semi-transparent white borders (`rgba(255,255,255,0.05)` to `rgba(255,255,255,0.08)`) that create structure without visual noise, like wireframes drawn in moonlight.
+色彩系统几乎全无彩色——暗背景配白/灰文字——只用一个品牌强调色打点:Linear 的签名靛紫(`#5e6ad2` 用于背景,`#7170ff` 用于交互强调)。这个强调色用得克制且有意图,只出现在 CTA、激活态与品牌元素上。边框系统用极细的半透明白边(`rgba(255,255,255,0.05)` 到 `rgba(255,255,255,0.08)`),造出结构却不带视觉噪音,像月光下画的线框。
 
-**Key Characteristics:**
-- Dark-mode-native: `#08090a` marketing background, `#0f1011` panel background, `#191a1b` elevated surfaces
-- Inter Variable with `"cv01", "ss03"` globally — geometric alternates for a cleaner aesthetic
-- Signature weight 510 (between regular and medium) for most UI text
-- Aggressive negative letter-spacing at display sizes (-1.584px at 72px, -1.056px at 48px)
-- Brand indigo-violet: `#5e6ad2` (bg) / `#7170ff` (accent) / `#828fff` (hover) — the only chromatic color in the system
-- Semi-transparent white borders throughout: `rgba(255,255,255,0.05)` to `rgba(255,255,255,0.08)`
-- Button backgrounds at near-zero opacity: `rgba(255,255,255,0.02)` to `rgba(255,255,255,0.05)`
-- Multi-layered shadows with inset variants for depth on dark surfaces
-- Radix UI primitives as the component foundation (6 detected primitives)
-- Success green (`#27a644`, `#10b981`) used only for status indicators
+**关键特征:**
+- 暗色原生:`#08090a` 营销背景、`#0f1011` 面板背景、`#191a1b` 抬升表面
+- Inter Variable 全局开 `"cv01", "ss03"`——几何替代字形带来更干净的气质
+- 签名字重 510(介于常规与中等)承担多数 UI 文本
+- 显示级激进负字距(72px 用 -1.584px,48px 用 -1.056px)
+- 品牌靛紫:`#5e6ad2`(底)/ `#7170ff`(强调)/ `#828fff`(hover)——系统里唯一的彩色
+- 通篇半透明白边:`rgba(255,255,255,0.05)` 到 `rgba(255,255,255,0.08)`
+- 按钮背景近零不透明度:`rgba(255,255,255,0.02)` 到 `rgba(255,255,255,0.05)`
+- 多层阴影,含内凹变体,在暗面上表达深度
+- Radix UI 原语作组件地基(检测到 6 个原语)
+- 成功绿(`#27a644`、`#10b981`)只用于状态指示
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Background Surfaces
-- **Marketing Black** (`#010102` / `#08090a`): The deepest background — the canvas for hero sections and marketing pages. Near-pure black with an imperceptible blue-cool undertone.
-- **Panel Dark** (`#0f1011`): Sidebar and panel backgrounds. One step up from the marketing black.
-- **Level 3 Surface** (`#191a1b`): Elevated surface areas, card backgrounds, dropdowns.
-- **Secondary Surface** (`#28282c`): The lightest dark surface — used for hover states and slightly elevated components.
+### 背景表面
+- **营销黑**(`#010102` / `#08090a`):最深的背景——hero 区与营销页的画布。近纯黑,带不可察觉的蓝冷底调。
+- **面板暗**(`#0f1011`):侧栏与面板背景。比营销黑高一档。
+- **三级表面**(`#191a1b`):抬升表面区、卡片背景、下拉。
+- **次级表面**(`#28282c`):最浅的暗面——用于 hover 态与略微抬升的组件。
 
-### Text & Content
-- **Primary Text** (`#f7f8f8`): Near-white with a barely-warm cast. The default text color — not pure white, preventing eye strain on dark backgrounds.
-- **Secondary Text** (`#d0d6e0`): Cool silver-gray for body text, descriptions, and secondary content.
-- **Tertiary Text** (`#8a8f98`): Muted gray for placeholders, metadata, and de-emphasized content.
-- **Quaternary Text** (`#62666d`): The most subdued text — timestamps, disabled states, subtle labels.
+### 文本与内容
+- **主文本**(`#f7f8f8`):近白,带几乎不可察觉的暖调。默认文本色——不是纯白,避免暗背景上的眼疲劳。
+- **次文本**(`#d0d6e0`):冷银灰,用于正文、描述与次级内容。
+- **三级文本**(`#8a8f98`):弱化灰,用于占位、元数据与降级内容。
+- **四级文本**(`#62666d`):最收敛的文本——时间戳、禁用态、微妙标签。
 
-### Brand & Accent
-- **Brand Indigo** (`#5e6ad2`): Primary brand color — used for CTA button backgrounds, brand marks, and key interactive surfaces.
-- **Accent Violet** (`#7170ff`): Brighter variant for interactive elements — links, active states, selected items.
-- **Accent Hover** (`#828fff`): Lighter, more saturated variant for hover states on accent elements.
-- **Security Lavender** (`#7a7fad`): Muted indigo used specifically for security-related UI elements.
+### 品牌与强调
+- **品牌靛蓝**(`#5e6ad2`):主品牌色——用于 CTA 按钮背景、品牌标记与关键交互表面。
+- **强调紫**(`#7170ff`):更亮的变体,用于交互元素——链接、激活态、选中项。
+- **强调 hover**(`#828fff`):更浅、更饱和的变体,用于强调元素的 hover 态。
+- **安全薰衣草**(`#7a7fad`):弱化靛蓝,专用于安全相关 UI 元素。
 
-### Status Colors
-- **Green** (`#27a644`): Primary success/active status. Used for "in progress" indicators.
-- **Emerald** (`#10b981`): Secondary success — pill badges, completion states.
+### 状态色
+- **绿**(`#27a644`):主成功/活跃状态。用于"进行中"指示。
+- **翡翠**(`#10b981`):次级成功——药丸徽章、完成态。
 
-### Border & Divider
-- **Border Primary** (`#23252a`): Solid dark border for prominent separations.
-- **Border Secondary** (`#34343a`): Slightly lighter solid border.
-- **Border Tertiary** (`#3e3e44`): Lightest solid border variant.
-- **Border Subtle** (`rgba(255,255,255,0.05)`): Ultra-subtle semi-transparent border — the default.
-- **Border Standard** (`rgba(255,255,255,0.08)`): Standard semi-transparent border for cards, inputs, code blocks.
-- **Line Tint** (`#141516`): Nearly invisible line for the subtlest divisions.
-- **Line Tertiary** (`#18191a`): Slightly more visible divider line.
+### 边框与分割
+- **主边框**(`#23252a`):实色暗边,用于强分隔。
+- **次边框**(`#34343a`):略浅的实色边框。
+- **三级边框**(`#3e3e44`):最浅的实色边框变体。
+- **弱边框**(`rgba(255,255,255,0.05)`):极微的半透明边框——默认值。
+- **标准边框**(`rgba(255,255,255,0.08)`):标准半透明边框,用于卡片、输入框、代码块。
+- **线色**(`#141516`):几乎不可见的线,用于最微妙的分割。
+- **三级线色**(`#18191a`):略可见的分割线。
 
-### Light Mode Neutrals (for light theme contexts)
-- **Light Background** (`#f7f8f8`): Page background in light mode.
-- **Light Surface** (`#f3f4f5` / `#f5f6f7`): Subtle surface tinting.
-- **Light Border** (`#d0d6e0`): Visible border in light contexts.
-- **Light Border Alt** (`#e6e6e6`): Alternative lighter border.
-- **Pure White** (`#ffffff`): Card surfaces, highlights.
+### 亮色模式中性色(供亮色主题场景)
+- **亮色背景**(`#f7f8f8`):亮色模式的页面背景。
+- **亮色表面**(`#f3f4f5` / `#f5f6f7`):微妙的表面着色。
+- **亮色边框**(`#d0d6e0`):亮色场景下可见的边框。
+- **亮色备选边框**(`#e6e6e6`):另一条更浅的边框。
+- **纯白**(`#ffffff`):卡片表面、高光。
 
-### Overlay
-- **Overlay Primary** (`rgba(0,0,0,0.85)`): Modal/dialog backdrop — extremely dark for focus isolation.
+### 覆盖层
+- **主覆盖层**(`rgba(0,0,0,0.85)`):模态/对话框背景——极暗,用于聚焦隔离。
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Family
-- **Primary**: `Inter Variable`, with fallbacks: `SF Pro Display, -apple-system, system-ui, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue`
-- **Monospace**: `Berkeley Mono`, with fallbacks: `ui-monospace, SF Mono, Menlo`
-- **OpenType Features**: `"cv01", "ss03"` enabled globally — cv01 provides an alternate lowercase 'a' (single-story), ss03 adjusts specific letterforms for a cleaner geometric appearance.
+### 字族
+- **主字族**:`Inter Variable`,回退:`SF Pro Display, -apple-system, system-ui, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue`
+- **等宽**:`Berkeley Mono`,回退:`ui-monospace, SF Mono, Menlo`
+- **OpenType 特性**:`"cv01", "ss03"` 全局开启——cv01 提供小写 'a' 的替代形(单层),ss03 调整特定字形,让外观更干净、更几何。
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display XL | Inter Variable | 72px (4.50rem) | 510 | 1.00 (tight) | -1.584px | Hero headlines, maximum impact |
-| Display Large | Inter Variable | 64px (4.00rem) | 510 | 1.00 (tight) | -1.408px | Secondary hero text |
-| Display | Inter Variable | 48px (3.00rem) | 510 | 1.00 (tight) | -1.056px | Section headlines |
-| Heading 1 | Inter Variable | 32px (2.00rem) | 400 | 1.13 (tight) | -0.704px | Major section titles |
-| Heading 2 | Inter Variable | 24px (1.50rem) | 400 | 1.33 | -0.288px | Sub-section headings |
-| Heading 3 | Inter Variable | 20px (1.25rem) | 590 | 1.33 | -0.24px | Feature titles, card headers |
-| Body Large | Inter Variable | 18px (1.13rem) | 400 | 1.60 (relaxed) | -0.165px | Introduction text, feature descriptions |
-| Body Emphasis | Inter Variable | 17px (1.06rem) | 590 | 1.60 (relaxed) | normal | Emphasized body, sub-headings in content |
-| Body | Inter Variable | 16px (1.00rem) | 400 | 1.50 | normal | Standard reading text |
-| Body Medium | Inter Variable | 16px (1.00rem) | 510 | 1.50 | normal | Navigation, labels |
-| Body Semibold | Inter Variable | 16px (1.00rem) | 590 | 1.50 | normal | Strong emphasis |
-| Small | Inter Variable | 15px (0.94rem) | 400 | 1.60 (relaxed) | -0.165px | Secondary body text |
-| Small Medium | Inter Variable | 15px (0.94rem) | 510 | 1.60 (relaxed) | -0.165px | Emphasized small text |
-| Small Semibold | Inter Variable | 15px (0.94rem) | 590 | 1.60 (relaxed) | -0.165px | Strong small text |
-| Small Light | Inter Variable | 15px (0.94rem) | 300 | 1.47 | -0.165px | De-emphasized body |
-| Caption Large | Inter Variable | 14px (0.88rem) | 510–590 | 1.50 | -0.182px | Sub-labels, category headers |
-| Caption | Inter Variable | 13px (0.81rem) | 400–510 | 1.50 | -0.13px | Metadata, timestamps |
-| Label | Inter Variable | 12px (0.75rem) | 400–590 | 1.40 | normal | Button text, small labels |
-| Micro | Inter Variable | 11px (0.69rem) | 510 | 1.40 | normal | Tiny labels |
-| Tiny | Inter Variable | 10px (0.63rem) | 400–510 | 1.50 | -0.15px | Overline text, sometimes uppercase |
-| Link Large | Inter Variable | 16px (1.00rem) | 400 | 1.50 | normal | Standard links |
-| Link Medium | Inter Variable | 15px (0.94rem) | 510 | 2.67 | normal | Spaced navigation links |
-| Link Small | Inter Variable | 14px (0.88rem) | 510 | 1.50 | normal | Compact links |
-| Link Caption | Inter Variable | 13px (0.81rem) | 400–510 | 1.50 | -0.13px | Footer, metadata links |
-| Mono Body | Berkeley Mono | 14px (0.88rem) | 400 | 1.50 | normal | Code blocks |
-| Mono Caption | Berkeley Mono | 13px (0.81rem) | 400 | 1.50 | normal | Code labels |
-| Mono Label | Berkeley Mono | 12px (0.75rem) | 400 | 1.40 | normal | Code metadata, sometimes uppercase |
+| 显示 XL | Inter Variable | 72px (4.50rem) | 510 | 1.00(紧) | -1.584px | hero 主标题,冲击力最大 |
+| 显示大 | Inter Variable | 64px (4.00rem) | 510 | 1.00(紧) | -1.408px | 次级 hero 文本 |
+| 显示 | Inter Variable | 48px (3.00rem) | 510 | 1.00(紧) | -1.056px | 区块主标题 |
+| 标题 1 | Inter Variable | 32px (2.00rem) | 400 | 1.13(紧) | -0.704px | 主要区块标题 |
+| 标题 2 | Inter Variable | 24px (1.50rem) | 400 | 1.33 | -0.288px | 子区块标题 |
+| 标题 3 | Inter Variable | 20px (1.25rem) | 590 | 1.33 | -0.24px | 功能标题、卡片标题 |
+| 大号正文 | Inter Variable | 18px (1.13rem) | 400 | 1.60(松) | -0.165px | 引言文本、功能描述 |
+| 正文强调 | Inter Variable | 17px (1.06rem) | 590 | 1.60(松) | normal | 强调正文、内容内子标题 |
+| 正文 | Inter Variable | 16px (1.00rem) | 400 | 1.50 | normal | 标准阅读文本 |
+| 正文中等 | Inter Variable | 16px (1.00rem) | 510 | 1.50 | normal | 导航、标签 |
+| 正文半粗 | Inter Variable | 16px (1.00rem) | 590 | 1.50 | normal | 强强调 |
+| 小号 | Inter Variable | 15px (0.94rem) | 400 | 1.60(松) | -0.165px | 次级正文 |
+| 小号中等 | Inter Variable | 15px (0.94rem) | 510 | 1.60(松) | -0.165px | 强调小字 |
+| 小号半粗 | Inter Variable | 15px (0.94rem) | 590 | 1.60(松) | -0.165px | 强小字 |
+| 小号浅 | Inter Variable | 15px (0.94rem) | 300 | 1.47 | -0.165px | 降级正文 |
+| 说明大 | Inter Variable | 14px (0.88rem) | 510–590 | 1.50 | -0.182px | 子标签、分类表头 |
+| 说明 | Inter Variable | 13px (0.81rem) | 400–510 | 1.50 | -0.13px | 元数据、时间戳 |
+| 标签 | Inter Variable | 12px (0.75rem) | 400–590 | 1.40 | normal | 按钮文字、小标签 |
+| 微字 | Inter Variable | 11px (0.69rem) | 510 | 1.40 | normal | 极小标签 |
+| 极微 | Inter Variable | 10px (0.63rem) | 400–510 | 1.50 | -0.15px | 上标线文本,有时全大写 |
+| 链接大 | Inter Variable | 16px (1.00rem) | 400 | 1.50 | normal | 标准链接 |
+| 链接中 | Inter Variable | 15px (0.94rem) | 510 | 2.67 | normal | 疏排导航链接 |
+| 链接小 | Inter Variable | 14px (0.88rem) | 510 | 1.50 | normal | 紧凑链接 |
+| 链接说明 | Inter Variable | 13px (0.81rem) | 400–510 | 1.50 | -0.13px | footer、元数据链接 |
+| 等宽正文 | Berkeley Mono | 14px (0.88rem) | 400 | 1.50 | normal | 代码块 |
+| 等宽说明 | Berkeley Mono | 13px (0.81rem) | 400 | 1.50 | normal | 代码标签 |
+| 等宽标签 | Berkeley Mono | 12px (0.75rem) | 400 | 1.40 | normal | 代码元数据,有时全大写 |
 
-### Principles
-- **510 is the signature weight**: Linear uses Inter Variable's 510 weight (between regular 400 and medium 500) as its default emphasis weight. This creates a subtly bolded feel without the heaviness of traditional medium or semibold.
-- **Compression at scale**: Display sizes use progressively tighter letter-spacing — -1.584px at 72px, -1.408px at 64px, -1.056px at 48px, -0.704px at 32px. Below 24px, spacing relaxes toward normal.
-- **OpenType as identity**: `"cv01", "ss03"` aren't decorative — they transform Inter into Linear's distinctive typeface, giving it a more geometric, purposeful character.
-- **Three-tier weight system**: 400 (reading), 510 (emphasis/UI), 590 (strong emphasis). The 300 weight appears only in deliberately de-emphasized contexts.
+### 原则
+- **510 是签名字重**:Linear 用 Inter Variable 的 510 字重(介于常规 400 与中等 500)作默认强调字重。这样造出微妙的加粗感,又没有传统中等或半粗的沉重。
+- **大字号压缩**:显示级用逐步收紧的字距——72px 用 -1.584px,64px 用 -1.408px,48px 用 -1.056px,32px 用 -0.704px。24px 以下,字距放松趋近 normal。
+- **OpenType 即身份**:`"cv01", "ss03"` 不是装饰——它们把 Inter 变成 Linear 的独特字体,赋予更几何、更有意图的性格。
+- **三档字重体系**:400(阅读)、510(强调/UI)、590(强强调)。300 字重只出现在刻意降级的场景。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Ghost Button (Default)**
-- Background: `rgba(255,255,255,0.02)`
-- Text: `#e2e4e7` (near-white)
-- Padding: comfortable
-- Radius: 6px
-- Border: `1px solid rgb(36, 40, 44)`
-- Outline: none
-- Focus shadow: `rgba(0,0,0,0.1) 0px 4px 12px`
-- Use: Standard actions, secondary CTAs
+**Ghost 按钮(默认)**
+- 背景:`rgba(255,255,255,0.02)`
+- 文字:`#e2e4e7`(近白)
+- padding:舒适
+- 圆角:6px
+- 边框:`1px solid rgb(36, 40, 44)`
+- outline:none
+- 焦点阴影:`rgba(0,0,0,0.1) 0px 4px 12px`
+- 用途:标准动作、次级 CTA
 
-**Subtle Button**
-- Background: `rgba(255,255,255,0.04)`
-- Text: `#d0d6e0` (silver-gray)
-- Padding: 0px 6px
-- Radius: 6px
-- Use: Toolbar actions, contextual buttons
+**弱化按钮**
+- 背景:`rgba(255,255,255,0.04)`
+- 文字:`#d0d6e0`(银灰)
+- padding:0px 6px
+- 圆角:6px
+- 用途:工具栏动作、上下文按钮
 
-**Primary Brand Button (Inferred)**
-- Background: `#5e6ad2` (brand indigo)
-- Text: `#ffffff`
-- Padding: 8px 16px
-- Radius: 6px
-- Hover: `#828fff` shift
-- Use: Primary CTAs ("Start building", "Sign up")
+**主品牌按钮(推断)**
+- 背景:`#5e6ad2`(品牌靛蓝)
+- 文字:`#ffffff`
+- padding:8px 16px
+- 圆角:6px
+- hover:漂移至 `#828fff`
+- 用途:主 CTA("Start building"、"Sign up")
 
-**Icon Button (Circle)**
-- Background: `rgba(255,255,255,0.03)` or `rgba(255,255,255,0.05)`
-- Text: `#f7f8f8` or `#ffffff`
-- Radius: 50%
-- Border: `1px solid rgba(255,255,255,0.08)`
-- Use: Close, menu toggle, icon-only actions
+**图标按钮(圆形)**
+- 背景:`rgba(255,255,255,0.03)` 或 `rgba(255,255,255,0.05)`
+- 文字:`#f7f8f8` 或 `#ffffff`
+- 圆角:50%
+- 边框:`1px solid rgba(255,255,255,0.08)`
+- 用途:关闭、菜单切换、纯图标动作
 
-**Pill Button**
-- Background: transparent
-- Text: `#d0d6e0`
-- Padding: 0px 10px 0px 5px
-- Radius: 9999px
-- Border: `1px solid rgb(35, 37, 42)`
-- Use: Filter chips, tags, status indicators
+**药丸按钮**
+- 背景:透明
+- 文字:`#d0d6e0`
+- padding:0px 10px 0px 5px
+- 圆角:9999px
+- 边框:`1px solid rgb(35, 37, 42)`
+- 用途:筛选 chip、标签、状态指示
 
-**Small Toolbar Button**
-- Background: `rgba(255,255,255,0.05)`
-- Text: `#62666d` (muted)
-- Radius: 2px
-- Border: `1px solid rgba(255,255,255,0.05)`
-- Shadow: `rgba(0,0,0,0.03) 0px 1.2px 0px 0px`
-- Font: 12px weight 510
-- Use: Toolbar actions, quick-access controls
+**小号工具栏按钮**
+- 背景:`rgba(255,255,255,0.05)`
+- 文字:`#62666d`(弱化)
+- 圆角:2px
+- 边框:`1px solid rgba(255,255,255,0.05)`
+- 阴影:`rgba(0,0,0,0.03) 0px 1.2px 0px 0px`
+- 字体:12px 字重 510
+- 用途:工具栏动作、快捷控件
 
-### Cards & Containers
-- Background: `rgba(255,255,255,0.02)` to `rgba(255,255,255,0.05)` (never solid — always translucent)
-- Border: `1px solid rgba(255,255,255,0.08)` (standard) or `1px solid rgba(255,255,255,0.05)` (subtle)
-- Radius: 8px (standard), 12px (featured), 22px (large panels)
-- Shadow: `rgba(0,0,0,0.2) 0px 0px 0px 1px` or layered multi-shadow stacks
-- Hover: subtle background opacity increase
+### 卡片与容器
+- 背景:`rgba(255,255,255,0.02)` 到 `rgba(255,255,255,0.05)`(永不实色 —— 始终半透明)
+- 边框:`1px solid rgba(255,255,255,0.08)`(标准)或 `1px solid rgba(255,255,255,0.05)`(弱化)
+- 圆角:8px(标准)、12px(特色)、22px(大面板)
+- 阴影:`rgba(0,0,0,0.2) 0px 0px 0px 1px` 或多层阴影堆栈
+- hover:背景不透明度微妙增加
 
-### Inputs & Forms
+### 输入与表单
 
-**Text Area**
-- Background: `rgba(255,255,255,0.02)`
-- Text: `#d0d6e0`
-- Border: `1px solid rgba(255,255,255,0.08)`
-- Padding: 12px 14px
-- Radius: 6px
+**多行文本**
+- 背景:`rgba(255,255,255,0.02)`
+- 文字:`#d0d6e0`
+- 边框:`1px solid rgba(255,255,255,0.08)`
+- padding:12px 14px
+- 圆角:6px
 
-**Search Input**
-- Background: transparent
-- Text: `#f7f8f8`
-- Padding: 1px 32px (icon-aware)
+**搜索输入**
+- 背景:透明
+- 文字:`#f7f8f8`
+- padding:1px 32px(为图标预留)
 
-**Button-style Input**
-- Text: `#8a8f98`
-- Padding: 1px 6px
-- Radius: 5px
-- Focus shadow: multi-layer stack
+**按钮式输入**
+- 文字:`#8a8f98`
+- padding:1px 6px
+- 圆角:5px
+- 焦点阴影:多层堆栈
 
-### Badges & Pills
+### 徽章与药丸
 
-**Success Pill**
-- Background: `#10b981`
-- Text: `#f7f8f8`
-- Radius: 50% (circular)
-- Font: 10px weight 510
-- Use: Status dots, completion indicators
+**成功药丸**
+- 背景:`#10b981`
+- 文字:`#f7f8f8`
+- 圆角:50%(圆形)
+- 字体:10px 字重 510
+- 用途:状态点、完成指示
 
-**Neutral Pill**
-- Background: transparent
-- Text: `#d0d6e0`
-- Padding: 0px 10px 0px 5px
-- Radius: 9999px
-- Border: `1px solid rgb(35, 37, 42)`
-- Font: 12px weight 510
-- Use: Tags, filter chips, category labels
+**中性药丸**
+- 背景:透明
+- 文字:`#d0d6e0`
+- padding:0px 10px 0px 5px
+- 圆角:9999px
+- 边框:`1px solid rgb(35, 37, 42)`
+- 字体:12px 字重 510
+- 用途:标签、筛选 chip、分类标签
 
-**Subtle Badge**
-- Background: `rgba(255,255,255,0.05)`
-- Text: `#f7f8f8`
-- Padding: 0px 8px 0px 2px
-- Radius: 2px
-- Border: `1px solid rgba(255,255,255,0.05)`
-- Font: 10px weight 510
-- Use: Inline labels, version tags
+**弱化徽章**
+- 背景:`rgba(255,255,255,0.05)`
+- 文字:`#f7f8f8`
+- padding:0px 8px 0px 2px
+- 圆角:2px
+- 边框:`1px solid rgba(255,255,255,0.05)`
+- 字体:10px 字重 510
+- 用途:行内标签、版本标签
 
-### Navigation
-- Dark sticky header on near-black background
-- Linear logomark left-aligned (SVG icon)
-- Links: Inter Variable 13–14px weight 510, `#d0d6e0` text
-- Active/hover: text lightens to `#f7f8f8`
-- CTA: Brand indigo button or ghost button
-- Mobile: hamburger collapse
-- Search: command palette trigger (`/` or `Cmd+K`)
+### 导航
+- 近黑背景上的暗色吸顶头
+- Linear logomark 左对齐(SVG 图标)
+- 链接:Inter Variable 13–14px 字重 510,`#d0d6e0` 文字
+- 激活/hover:文字提亮至 `#f7f8f8`
+- CTA:品牌靛蓝按钮或 ghost 按钮
+- 移动端:折叠为汉堡
+- 搜索:命令面板触发器(`/` 或 `Cmd+K`)
 
-### Image Treatment
-- Product screenshots on dark backgrounds with subtle border (`rgba(255,255,255,0.08)`)
-- Top-rounded images: `12px 12px 0px 0px` radius
-- Dashboard/issue previews dominate feature sections
-- Subtle shadow beneath screenshots: `rgba(0,0,0,0.4) 0px 2px 4px`
+### 图片处理
+- 产品截图置于暗背景,配微妙边框(`rgba(255,255,255,0.08)`)
+- 顶部圆角图:`12px 12px 0px 0px` 圆角
+- 仪表板/issue 预览占据功能区块主体
+- 截图下柔和阴影:`rgba(0,0,0,0.4) 0px 2px 4px`
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 1px, 4px, 7px, 8px, 11px, 12px, 16px, 19px, 20px, 22px, 24px, 28px, 32px, 35px
-- The 7px and 11px values suggest micro-adjustments for optical alignment
-- Primary rhythm: 8px, 16px, 24px, 32px (standard 8px grid)
+### 间距系统
+- 基数:8px
+- 刻度:1px, 4px, 7px, 8px, 11px, 12px, 16px, 19px, 20px, 22px, 24px, 28px, 32px, 35px
+- 7px 与 11px 是光学对齐的微调值
+- 主节奏:8px、16px、24px、32px(标准 8px 网格)
 
-### Grid & Container
-- Max content width: approximately 1200px
-- Hero: centered single-column with generous vertical padding
-- Feature sections: 2–3 column grids for feature cards
-- Full-width dark sections with internal max-width constraints
-- Changelog: single-column timeline layout
+### 网格与容器
+- 内容最大宽:约 1200px
+- hero:居中单列 + 慷慨纵向内边距
+- 功能区块:2–3 列网格,承载功能卡
+- 全宽暗色区块,内部设最大宽约束
+- 更新日志:单列时间线布局
 
-### Whitespace Philosophy
-- **Darkness as space**: On Linear's dark canvas, empty space isn't white — it's absence. The near-black background IS the whitespace, and content emerges from it.
-- **Compressed headlines, expanded surroundings**: Display text at 72px with -1.584px tracking is dense and compressed, but sits within vast dark padding. The contrast between typographic density and spatial generosity creates tension.
-- **Section isolation**: Each feature section is separated by generous vertical padding (80px+) with no visible dividers — the dark background provides natural separation.
+### 留白哲学
+- **黑暗即空间**:Linear 的暗画布上,空白不是白色——是缺席。近黑背景本身就是留白,内容从中浮现。
+- **压缩标题、舒展四周**:72px、-1.584px 字距的显示级文本密集而压缩,却坐在大片暗色内边距里。排版密度与空间慷慨之间的对比造出张力。
+- **区块隔离**:每个功能区块由慷慨纵向内边距(80px+)分隔,不用可见分割线——暗背景提供天然分隔。
 
-### Border Radius Scale
-- Micro (2px): Inline badges, toolbar buttons, subtle tags
-- Standard (4px): Small containers, list items
-- Comfortable (6px): Buttons, inputs, functional elements
-- Card (8px): Cards, dropdowns, popovers
-- Panel (12px): Panels, featured cards, section containers
-- Large (22px): Large panel elements
-- Full Pill (9999px): Chips, filter pills, status tags
-- Circle (50%): Icon buttons, avatars, status dots
+### 圆角刻度
+- 微(2px):行内徽章、工具栏按钮、微妙标签
+- 标准(4px):小容器、列表项
+- 舒适(6px):按钮、输入框、功能元素
+- 卡片(8px):卡片、下拉、浮层
+- 面板(12px):面板、特色卡片、区块容器
+- 大(22px):大面板元素
+- 全药丸(9999px):chip、筛选药丸、状态标签
+- 圆形(50%):图标按钮、头像、状态点
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow, `#010102` bg | Page background, deepest canvas |
-| Subtle (Level 1) | `rgba(0,0,0,0.03) 0px 1.2px 0px` | Toolbar buttons, micro-elevation |
-| Surface (Level 2) | `rgba(255,255,255,0.05)` bg + `1px solid rgba(255,255,255,0.08)` border | Cards, input fields, containers |
-| Inset (Level 2b) | `rgba(0,0,0,0.2) 0px 0px 12px 0px inset` | Recessed panels, inner shadows |
-| Ring (Level 3) | `rgba(0,0,0,0.2) 0px 0px 0px 1px` | Border-as-shadow technique |
-| Elevated (Level 4) | `rgba(0,0,0,0.4) 0px 2px 4px` | Floating elements, dropdowns |
-| Dialog (Level 5) | Multi-layer stack: `rgba(0,0,0,0) 0px 8px 2px, rgba(0,0,0,0.01) 0px 5px 2px, rgba(0,0,0,0.04) 0px 3px 2px, rgba(0,0,0,0.07) 0px 1px 1px, rgba(0,0,0,0.08) 0px 0px 1px` | Popovers, command palette, modals |
-| Focus | `rgba(0,0,0,0.1) 0px 4px 12px` + additional layers | Keyboard focus on interactive elements |
+| 平(层 0) | 无阴影,`#010102` 底 | 页面底,最深画布 |
+| 微妙(层 1) | `rgba(0,0,0,0.03) 0px 1.2px 0px` | 工具栏按钮,微抬升 |
+| 表面(层 2) | `rgba(255,255,255,0.05)` 底 + `1px solid rgba(255,255,255,0.08)` 边 | 卡片、输入框、容器 |
+| 内凹(层 2b) | `rgba(0,0,0,0.2) 0px 0px 12px 0px inset` | 内凹面板、内阴影 |
+| 环(层 3) | `rgba(0,0,0,0.2) 0px 0px 0px 1px` | 边作阴影的手法 |
+| 抬高(层 4) | `rgba(0,0,0,0.4) 0px 2px 4px` | 浮动元素、下拉 |
+| 对话框(层 5) | 多层栈:`rgba(0,0,0,0) 0px 8px 2px, rgba(0,0,0,0.01) 0px 5px 2px, rgba(0,0,0,0.04) 0px 3px 2px, rgba(0,0,0,0.07) 0px 1px 1px, rgba(0,0,0,0.08) 0px 0px 1px` | 浮层、命令面板、模态 |
+| 焦点 | `rgba(0,0,0,0.1) 0px 4px 12px` + 附加层 | 交互元素的键盘焦点 |
 
-**Shadow Philosophy**: On dark surfaces, traditional shadows (dark on dark) are nearly invisible. Linear solves this by using semi-transparent white borders as the primary depth indicator. Elevation isn't communicated through shadow darkness but through background luminance steps — each level slightly increases the white opacity of the surface background (`0.02` → `0.04` → `0.05`), creating a subtle stacking effect. The inset shadow technique (`rgba(0,0,0,0.2) 0px 0px 12px 0px inset`) creates a unique "sunken" effect for recessed panels, adding dimensional depth that traditional dark themes lack.
+**阴影哲学**:暗面上,传统阴影(黑对黑)几乎不可见。Linear 的解法是用半透明白边作主要深度信号。海拔不由阴影浓度传达,而由背景亮度阶梯传达——每升一层,表面背景的白色不透明度略微增加(`0.02` → `0.04` → `0.05`),造出微妙的堆叠效果。内凹阴影手法(`rgba(0,0,0,0.2) 0px 0px 12px 0px inset`)给内凹面板造出独特的"下沉"效果,补上传统暗色主题缺少的立体深度。
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use Inter Variable with `"cv01", "ss03"` on ALL text — these features are fundamental to Linear's typeface identity
-- Use weight 510 as your default emphasis weight — it's Linear's signature between-weight
-- Apply aggressive negative letter-spacing at display sizes (-1.584px at 72px, -1.056px at 48px)
-- Build on near-black backgrounds: `#08090a` for marketing, `#0f1011` for panels, `#191a1b` for elevated surfaces
-- Use semi-transparent white borders (`rgba(255,255,255,0.05)` to `rgba(255,255,255,0.08)`) instead of solid dark borders
-- Keep button backgrounds nearly transparent: `rgba(255,255,255,0.02)` to `rgba(255,255,255,0.05)`
-- Reserve brand indigo (`#5e6ad2` / `#7170ff`) for primary CTAs and interactive accents only
-- Use `#f7f8f8` for primary text — not pure `#ffffff`, which would be too harsh
-- Apply the luminance stacking model: deeper = darker bg, elevated = slightly lighter bg
+- 所有文本都用 Inter Variable 配 `"cv01", "ss03"`——这两个特性是 Linear 字形身份的根本
+- 用 510 作默认强调字重——它是 Linear 的签名中间字重
+- 显示级用激进负字距(72px 用 -1.584px,48px 用 -1.056px)
+- 建在近黑背景上:营销用 `#08090a`、面板用 `#0f1011`、抬升表面用 `#191a1b`
+- 用半透明白边(`rgba(255,255,255,0.05)` 到 `rgba(255,255,255,0.08)`)替代实色暗边
+- 按钮背景保持近透明:`rgba(255,255,255,0.02)` 到 `rgba(255,255,255,0.05)`
+- 品牌靛蓝(`#5e6ad2` / `#7170ff`)只留给主 CTA 与交互强调
+- 主文本用 `#f7f8f8`——不用纯 `#ffffff`,那太刺眼
+- 应用亮度堆叠模型:越深底越暗,抬升层底略亮
 
 ### Don't
-- Don't use pure white (`#ffffff`) as primary text — `#f7f8f8` prevents eye strain
-- Don't use solid colored backgrounds for buttons — transparency is the system (rgba white at 0.02–0.05)
-- Don't apply the brand indigo decoratively — it's reserved for interactive/CTA elements only
-- Don't use positive letter-spacing on display text — Inter at large sizes always runs negative
-- Don't use visible/opaque borders on dark backgrounds — borders should be whisper-thin semi-transparent white
-- Don't skip the OpenType features (`"cv01", "ss03"`) — without them, it's generic Inter, not Linear's Inter
-- Don't use weight 700 (bold) — Linear's maximum weight is 590, with 510 as the workhorse
-- Don't introduce warm colors into the UI chrome — the palette is cool gray with blue-violet accent only
-- Don't use drop shadows for elevation on dark surfaces — use background luminance stepping instead
+- 不用纯白(`#ffffff`)作主文本——`#f7f8f8` 防眼疲劳
+- 按钮不用实色背景——透明就是系统(白色 rgba 0.02–0.05)
+- 不把品牌靛蓝做装饰——它只留给交互/CTA 元素
+- 显示级不用正字距——Inter 在大字号永远走负字距
+- 暗背景上不用可见/不透明边框——边框应是耳语级细的半透明白
+- 不跳过 OpenType 特性(`"cv01", "ss03"`)——跳过就是通用 Inter,不是 Linear 的 Inter
+- 不用 700 字重(粗体)——Linear 的字重上限是 590,510 才是主力
+- 不把暖色引入 UI chrome——色板是冷灰配蓝紫强调,仅此而已
+- 暗面上不用投影表达海拔——用背景亮度阶梯
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile Small | <600px | Single column, compact padding |
-| Mobile | 600–640px | Standard mobile layout |
-| Tablet | 640–768px | Two-column grids begin |
-| Desktop Small | 768–1024px | Full card grids, expanded padding |
-| Desktop | 1024–1280px | Standard desktop, full navigation |
-| Large Desktop | >1280px | Full layout, generous margins |
+| 小屏手机 | <600px | 单列,紧凑内边距 |
+| 手机 | 600–640px | 标准移动布局 |
+| 平板 | 640–768px | 开始 2 列网格 |
+| 小屏桌面 | 768–1024px | 完整卡片网格,扩展内边距 |
+| 桌面 | 1024–1280px | 标准桌面,完整导航 |
+| 大屏桌面 | >1280px | 完整布局,慷慨外边距 |
 
-### Touch Targets
-- Buttons use comfortable padding with 6px radius minimum
-- Navigation links at 13–14px with adequate spacing
-- Pill tags have 10px horizontal padding for touch accessibility
-- Icon buttons at 50% radius ensure circular, easy-to-tap targets
-- Search trigger is prominently placed with generous hit area
+### 触控目标
+- 按钮用舒适内边距,圆角最小 6px
+- 导航链接 13–14px,间距充足
+- 药丸标签横向内边距 10px,便于触控
+- 图标按钮 50% 圆角,保证圆形易点目标
+- 搜索触发器位置显眼,点击区域慷慨
 
-### Collapsing Strategy
-- Hero: 72px → 48px → 32px display text, tracking adjusts proportionally
-- Navigation: horizontal links + CTAs → hamburger menu at 768px
-- Feature cards: 3-column → 2-column → single column stacked
-- Product screenshots: maintain aspect ratio, may reduce padding
-- Changelog: timeline maintains single-column through all sizes
-- Footer: multi-column → stacked single column
-- Section spacing: 80px+ → 48px on mobile
+### 折叠策略
+- hero:72px → 48px → 32px 显示级文本,字距按比例收紧
+- 导航:横向链接 + CTA → 768px 折为汉堡菜单
+- 功能卡:3 列 → 2 列 → 单列堆叠
+- 产品截图:保持宽高比,可减少内边距
+- 更新日志:时间线在所有尺寸下保持单列
+- footer:多列 → 堆叠单列
+- 区块间距:80px+ → 移动端 48px
 
-### Image Behavior
-- Dashboard screenshots maintain border treatment at all sizes
-- Hero visuals simplify on mobile (fewer floating UI elements)
-- Product screenshots use responsive sizing with consistent radius
-- Dark background ensures screenshots blend naturally at any viewport
+### 图片行为
+- 仪表板截图在所有尺寸下保持边框处理
+- hero 视觉在移动端简化(更少浮动 UI 元素)
+- 产品截图用响应式尺寸,圆角保持一致
+- 暗背景保证截图在任何视口下自然融合
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Primary CTA: Brand Indigo (`#5e6ad2`)
-- Page Background: Marketing Black (`#08090a`)
-- Panel Background: Panel Dark (`#0f1011`)
-- Surface: Level 3 (`#191a1b`)
-- Heading text: Primary White (`#f7f8f8`)
-- Body text: Silver Gray (`#d0d6e0`)
-- Muted text: Tertiary Gray (`#8a8f98`)
-- Subtle text: Quaternary Gray (`#62666d`)
-- Accent: Violet (`#7170ff`)
-- Accent Hover: Light Violet (`#828fff`)
-- Border (default): `rgba(255,255,255,0.08)`
-- Border (subtle): `rgba(255,255,255,0.05)`
-- Focus ring: Multi-layer shadow stack
+### 快速取色参考
+- 主 CTA:品牌靛蓝(`#5e6ad2`)
+- 页面背景:营销黑(`#08090a`)
+- 面板背景:面板暗(`#0f1011`)
+- 表面:三级(`#191a1b`)
+- 标题文本:主白(`#f7f8f8`)
+- 正文文本:银灰(`#d0d6e0`)
+- 弱化文本:三级灰(`#8a8f98`)
+- 微妙文本:四级灰(`#62666d`)
+- 强调:紫(`#7170ff`)
+- 强调 hover:浅紫(`#828fff`)
+- 边框(默认):`rgba(255,255,255,0.08)`
+- 边框(弱):`rgba(255,255,255,0.05)`
+- 焦点环:多层阴影堆栈
 
-### Example Component Prompts
-- "Create a hero section on `#08090a` background. Headline at 48px Inter Variable weight 510, line-height 1.00, letter-spacing -1.056px, color `#f7f8f8`, font-feature-settings `'cv01', 'ss03'`. Subtitle at 18px weight 400, line-height 1.60, color `#8a8f98`. Brand CTA button (`#5e6ad2`, 6px radius, 8px 16px padding) and ghost button (`rgba(255,255,255,0.02)` bg, `1px solid rgba(255,255,255,0.08)` border, 6px radius)."
-- "Design a card on dark background: `rgba(255,255,255,0.02)` background, `1px solid rgba(255,255,255,0.08)` border, 8px radius. Title at 20px Inter Variable weight 590, letter-spacing -0.24px, color `#f7f8f8`. Body at 15px weight 400, color `#8a8f98`, letter-spacing -0.165px."
-- "Build a pill badge: transparent background, `#d0d6e0` text, 9999px radius, 0px 10px padding, `1px solid #23252a` border, 12px Inter Variable weight 510."
-- "Create navigation: dark sticky header on `#0f1011`. Inter Variable 13px weight 510 for links, `#d0d6e0` text. Brand indigo CTA `#5e6ad2` right-aligned with 6px radius. Bottom border: `1px solid rgba(255,255,255,0.05)`."
-- "Design a command palette: `#191a1b` background, `1px solid rgba(255,255,255,0.08)` border, 12px radius, multi-layer shadow stack. Input at 16px Inter Variable weight 400, `#f7f8f8` text. Results list with 13px weight 510 labels in `#d0d6e0` and 12px metadata in `#62666d`."
+### 组件提示词示例
+- "在 `#08090a` 上做 hero:标题 48px Inter Variable 510,行高 1.00,字距 -1.056px,色 `#f7f8f8`,`font-feature-settings 'cv01', 'ss03'`。副标 18px 400 字重,行高 1.60,色 `#8a8f98`。品牌 CTA 按钮(`#5e6ad2`,6px 圆角,8px 16px padding)与 ghost 按钮(`rgba(255,255,255,0.02)` 底,`1px solid rgba(255,255,255,0.08)` 边,6px 圆角)。"
+- "在暗背景上设计卡片:`rgba(255,255,255,0.02)` 背景,`1px solid rgba(255,255,255,0.08)` 边框,8px 圆角。标题 20px Inter Variable 590,字距 -0.24px,色 `#f7f8f8`。正文 15px 400 字重,色 `#8a8f98`,字距 -0.165px。"
+- "做一个药丸徽章:透明背景,`#d0d6e0` 文字,9999px 圆角,0px 10px padding,`1px solid #23252a` 边框,12px Inter Variable 510。"
+- "做导航:`#0f1011` 上的暗色吸顶头。链接用 Inter Variable 13px 510,`#d0d6e0` 文字。品牌靛蓝 CTA `#5e6ad2` 右对齐,6px 圆角。下边框:`1px solid rgba(255,255,255,0.05)`。"
+- "设计命令面板:`#191a1b` 背景,`1px solid rgba(255,255,255,0.08)` 边框,12px 圆角,多层阴影堆栈。输入框 16px Inter Variable 400,`#f7f8f8` 文字。结果列表:13px 510 标签用 `#d0d6e0`,12px 元数据用 `#62666d`。"
 
-### Iteration Guide
-1. Always set font-feature-settings `"cv01", "ss03"` on all Inter text — this is non-negotiable for Linear's look
-2. Letter-spacing scales with font size: -1.584px at 72px, -1.056px at 48px, -0.704px at 32px, normal below 16px
-3. Three weights: 400 (read), 510 (emphasize/navigate), 590 (announce)
-4. Surface elevation via background opacity: `rgba(255,255,255, 0.02 → 0.04 → 0.05)` — never solid backgrounds on dark
-5. Brand indigo (`#5e6ad2` / `#7170ff`) is the only chromatic color — everything else is grayscale
-6. Borders are always semi-transparent white, never solid dark colors on dark backgrounds
-7. Berkeley Mono for any code or technical content, Inter Variable for everything else
+### 迭代指南
+1. 所有 Inter 文本都设 font-feature-settings `"cv01", "ss03"`——这是 Linear 外观的不可协商项
+2. 字距随字号缩放:72px 用 -1.584px,48px 用 -1.056px,32px 用 -0.704px,16px 以下 normal
+3. 三档字重:400(阅读)、510(强调/导航)、590(宣示)
+4. 表面海拔靠背景不透明度:`rgba(255,255,255, 0.02 → 0.04 → 0.05)`——暗面上永不实色
+5. 品牌靛蓝(`#5e6ad2` / `#7170ff`)是唯一彩色——其余全是灰阶
+6. 边框永远是半透明白,暗背景上永不用实色暗色
+7. 任何代码或技术内容用 Berkeley Mono,其余全用 Inter Variable

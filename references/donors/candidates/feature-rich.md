@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Feature-Rich Showcase is a UI style reference for landing pages, focused on Multiple feature sections, grid layout, benefit cards, visual feature demonstrations, interactive elements.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Feature-Rich Showcase 是为落地页提供的 UI 风格参照,侧重多特色区块、网格布局、卖点卡、可视化功能演示、交互元素。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Feature-Rich Showcase
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Feature-Rich Showcase is a UI style reference for landing pages, combining Multiple feature sections, grid layout, benefit cards, visual feature demonstrations, interactive elements, problem-solution pairs. The visual direction is shaped by Card hover effects (lift/scale), icon animations on scroll, feature toggle animations, smooth section transitions.
+Feature-Rich Showcase 是为落地页提供的 UI 风格参照,融合多特色区块、网格布局、卖点卡、可视化功能演示、交互元素、问题-方案配对。视觉方向由卡片悬浮效果(抬升/缩放)、滚动时图标动画、功能切换动画、平滑区块过渡塑造。
 
-Use it for Enterprise SaaS (SaaS), software tools landing pages (登陸頁面), platform services, complex product explanations, B2B products (產品). Avoid it for Simple product pages, early-stage startups with few features, entertainment landing pages (登陸頁面).
+用于企业 SaaS、软件工具落地页、平台服务、复杂产品说明、B2B 产品。避免用于简单产品页、功能很少的早期创业公司、娱乐落地页。
 
-**Key Characteristics:**
-- Primary palette: Primary brand, bright secondary colors for feature cards, contrasting accent for CTAs
-- Secondary palette: Supporting colors for: benefits (green), problems (red/orange), features (blue/purple), social proof (neutral)
-- Effects: Card hover effects (lift/scale), icon animations on scroll, feature toggle animations, smooth section transitions
-- Accessibility: ✓ WCAG AA; performance: ⚡ Good; dark mode: ✓ Full.
-- Best for: Enterprise SaaS (SaaS), software tools landing pages (登陸頁面), platform services, complex product explanations, B2B products (產品)
-- Avoid for: Simple product pages, early-stage startups with few features, entertainment landing pages (登陸頁面)
+**关键特征:**
+- 主色板:主品牌色、特色卡用的鲜亮次色、CTA 用的对比强调色
+- 次色板:辅助色用于:收益(绿)、问题(红/橙)、功能(蓝/紫)、社会证明(中性)
+- 效果:卡片悬浮效果(抬升/缩放)、滚动时图标动画、功能切换动画、平滑区块过渡
+- 无障碍:✓ WCAG AA;性能:⚡ 良好;暗色模式:✓ 完整。
+- 最适用于:企业 SaaS、软件工具落地页、平台服务、复杂产品说明、B2B 产品
+- 避免用于:简单产品页、功能很少的早期创业公司、娱乐落地页
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/22-feature-rich.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/22-feature-rich.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

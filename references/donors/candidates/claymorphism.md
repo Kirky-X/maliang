@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Claymorphism is a UI style reference for general interfaces, focused on Soft 3D, chunky, playful, toy-like, bubbly.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Claymorphism 是为通用界面提供的 UI 风格参照,侧重软 3D、厚实、俏皮、玩具式、气泡感。
      站点色板: #fef3f2, #f0f9ff, #ffffff, #e6e6e6, #fdbcb4, #f5a69c
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Claymorphism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Claymorphism is a UI style reference for general interfaces, combining Soft 3D, chunky, playful, toy-like, bubbly, thick borders (3-4px), double shadows, rounded (16-24px). The visual direction is shaped by Inner+outer shadows (subtle, no hard lines), soft press (200ms ease-out), fluffy elements, smooth transitions.
+Claymorphism 是为通用界面提供的 UI 风格参照,融合软 3D、厚实、俏皮、玩具式、气泡感、粗边框(3-4px)、双层阴影、圆角(16-24px)。视觉方向由内阴影 + 外阴影(微妙,无硬线)、软按压(200ms ease-out)、蓬松元素、平滑过渡塑造。
 
-Use it for Educational apps (應用程式), children's apps (應用程式), SaaS platforms (SaaS), creative tools (創意), fun-focused, onboarding, casual games. Avoid it for Formal corporate (企業), professional services, data-critical, serious/medical, legal apps (應用程式), finance (金融).
+用于教育应用、儿童应用、SaaS 平台、创意工具、趣味导向、引导流程、休闲游戏。避免用于正式企业、专业服务、数据关键场景、严肃/医疗、法律应用、金融。
 
-**Key Characteristics:**
-- Primary palette: Pastel: Soft Peach #FDBCB4, Baby Blue #ADD8E6, Mint #98FF98, Lilac #E6E6FA, light BG
-- Secondary palette: Soft gradients (pastel-to-pastel), light/dark variations (20-30%), gradient subtle
-- Effects: Inner+outer shadows (subtle, no hard lines), soft press (200ms ease-out), fluffy elements, smooth transitions
-- Accessibility: ⚠ Ensure 4.5:1; performance: ⚡ Good; dark mode: ◐ Partial.
-- Best for: Educational apps (應用程式), children's apps (應用程式), SaaS platforms (SaaS), creative tools (創意), fun-focused, onboarding, casual games
-- Avoid for: Formal corporate (企業), professional services, data-critical, serious/medical, legal apps (應用程式), finance (金融)
+**关键特征:**
+- 主色板:粉彩:浅桃 #FDBCB4、婴儿蓝 #ADD8E6、薄荷绿 #98FF98、淡紫 #E6E6FA、浅底
+- 次色板:柔和渐变(粉彩到粉彩)、明暗变化(20-30%)、渐变微妙
+- 效果:内阴影 + 外阴影(微妙,无硬线)、软按压(200ms ease-out)、蓬松元素、平滑过渡
+- 无障碍:⚠ 确保 4.5:1;性能:⚡ 良好;暗色模式:◐ 部分支持。
+- 最适用于:教育应用、儿童应用、SaaS 平台、创意工具、趣味导向、引导流程、休闲游戏
+- 避免用于:正式企业、专业服务、数据关键场景、严肃/医疗、法律应用、金融
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 9/10, CSS-in-JS 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/09-claymorphism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 9/10、CSS-in-JS 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/09-claymorphism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

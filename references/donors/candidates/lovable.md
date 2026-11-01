@@ -1,303 +1,303 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 开发工具与平台(dev) · 站点摘要: AI full-stack builder. Playful gradients, friendly dev aesthetic
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 开发工具与平台(dev) · 站点摘要: AI 全栈构建器。俏皮的渐变、友好的开发者美学
      站点色板: #f7f4ed, #1c1c1c, #fcfbf8, #eceae4, #5f5f5d, #ef4444
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
-# Design System: Lovable
+# 设计系统:Lovable
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Lovable's website radiates warmth through restraint. The entire page sits on a creamy, parchment-toned background (`#f7f4ed`) that immediately separates it from the cold-white conventions of most developer tool sites. This isn't minimalism for minimalism's sake — it's a deliberate choice to feel approachable, almost analog, like a well-crafted notebook. The near-black text (`#1c1c1c`) against this warm cream creates a contrast ratio that's easy on the eyes while maintaining sharp readability.
+Lovable 的网站用克制散发温暖。整页坐在奶油色、羊皮纸质感的背景(`#f7f4ed`)上,立刻把自己与多数开发者工具站点的冷白惯例分开。这不是为极简而极简——这是一个刻意的选择,为的是显得可接近、几乎像纸品,像一本精心制作的笔记本。近黑文本(`#1c1c1c`)对着这层暖奶油,造出的对比度既不刺眼又保持锐利可读。
 
-The custom Camera Plain Variable typeface is the system's secret weapon. Unlike geometric sans-serifs that signal "tech company," Camera Plain has a humanist warmth — slightly rounded terminals, organic curves, and a comfortable reading rhythm. At display sizes (48px–60px), weight 600 with aggressive negative letter-spacing (-0.9px to -1.5px) compresses headlines into confident, editorial statements. The font uses `ui-sans-serif, system-ui` as fallbacks, acknowledging that the custom typeface carries the brand personality.
+自有字体 Camera Plain Variable 是系统的秘密武器。与那些宣告"科技公司"的几何无衬线体不同,Camera Plain 带人文温度——略微圆润的末端、有机的曲线、舒适的阅读节奏。显示级尺寸(48px–60px)上,600 字重配激进负字距(-0.9px 至 -1.5px)把标题压成自信、编辑式的宣言。该字体用 `ui-sans-serif, system-ui` 作回退,等于承认是自有字体承载了品牌个性。
 
-What makes Lovable's visual system distinctive is its opacity-driven depth model. Rather than using a traditional gray scale, the system modulates `#1c1c1c` at varying opacities (0.03, 0.04, 0.4, 0.82–0.83) to create a unified tonal range. Every shade of gray on the page is technically the same hue — just more or less transparent. This creates a visual coherence that's nearly impossible to achieve with arbitrary hex values. The border system follows suit: `1px solid #eceae4` for light divisions and `1px solid rgba(28, 28, 28, 0.4)` for stronger interactive boundaries.
+Lovable 视觉系统的辨识点在它的不透明度驱动深度模型。系统不用传统灰阶,而是在不同不透明度(0.03、0.04、0.4、0.82–0.83)上调制 `#1c1c1c`,造出统一的色调区间。页面上每一档灰在技术上都是同一个色相——只是透明度不同。这造出的视觉连贯性,用任意 hex 值几乎不可能达成。边框系统照此而行:浅分割用 `1px solid #eceae4`,更强的交互边界用 `1px solid rgba(28, 28, 28, 0.4)`。
 
-**Key Characteristics:**
-- Warm parchment background (`#f7f4ed`) — not white, not beige, a deliberate cream that feels hand-selected
-- Camera Plain Variable typeface with humanist warmth and editorial letter-spacing at display sizes
-- Opacity-driven color system: all grays derived from `#1c1c1c` at varying transparency levels
-- Inset shadow technique on buttons: `rgba(255,255,255,0.2) 0px 0.5px 0px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset`
-- Warm neutral border palette: `#eceae4` for subtle, `rgba(28,28,28,0.4)` for interactive elements
-- Full-pill radius (`9999px`) used extensively for action buttons and icon containers
-- Focus state uses `rgba(0,0,0,0.1) 0px 4px 12px` shadow for soft, warm emphasis
-- shadcn/ui + Radix UI component primitives with Tailwind CSS utility styling
+**关键特征:**
+- 暖羊皮纸背景(`#f7f4ed`)——不是白,不是米,是一种刻意的奶油色,像是手工挑选的
+- Camera Plain Variable 字体,带人文温度与显示级编辑式字距
+- 不透明度驱动的色彩系统:所有灰都从 `#1c1c1c` 派生,只差透明度
+- 按钮上的内嵌阴影手法:`rgba(255,255,255,0.2) 0px 0.5px 0px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset`
+- 暖中性边框色板:弱化用 `#eceae4`,交互元素用 `rgba(28,28,28,0.4)`
+- 全药丸圆角(`9999px`)大量用于动作按钮与图标容器
+- 焦点态用 `rgba(0,0,0,0.1) 0px 4px 12px` 阴影,柔和、温暖地强调
+- shadcn/ui + Radix UI 组件原语,配 Tailwind CSS 工具类样式
 
-## 2. Color Palette & Roles
+## 2. 色板与角色
 
-### Primary
-- **Cream** (`#f7f4ed`): Page background, card surfaces, button surfaces. The foundation — warm, paper-like, human.
-- **Charcoal** (`#1c1c1c`): Primary text, headings, dark button backgrounds. Not pure black — organic warmth.
-- **Off-White** (`#fcfbf8`): Button text on dark backgrounds, subtle highlight. Barely distinguishable from pure white.
+### 主色
+- **奶油**(`#f7f4ed`):页面背景、卡片表面、按钮表面。地基——温暖、纸质、有人味。
+- **炭黑**(`#1c1c1c`):主文本、标题、深色按钮背景。不是纯黑——有机的暖。
+- **米白**(`#fcfbf8`):暗背景上的按钮文字、微妙高光。几乎与纯白分辨不出。
 
-### Neutral Scale (Opacity-Based)
-- **Charcoal 100%** (`#1c1c1c`): Primary text, headings, dark surfaces.
-- **Charcoal 83%** (`rgba(28,28,28,0.83)`): Strong secondary text.
-- **Charcoal 82%** (`rgba(28,28,28,0.82)`): Body copy.
-- **Muted Gray** (`#5f5f5d`): Secondary text, descriptions, captions.
-- **Charcoal 40%** (`rgba(28,28,28,0.4)`): Interactive borders, button outlines.
-- **Charcoal 4%** (`rgba(28,28,28,0.04)`): Subtle hover backgrounds, micro-tints.
-- **Charcoal 3%** (`rgba(28,28,28,0.03)`): Barely-visible overlays, background depth.
+### 中性色阶(基于不透明度)
+- **炭黑 100%**(`#1c1c1c`):主文本、标题、暗面。
+- **炭黑 83%**(`rgba(28,28,28,0.83)`):强次级文本。
+- **炭黑 82%**(`rgba(28,28,28,0.82)`):正文。
+- **弱化灰**(`#5f5f5d`):次级文本、描述、说明文字。
+- **炭黑 40%**(`rgba(28,28,28,0.4)`):交互边框、按钮描边。
+- **炭黑 4%**(`rgba(28,28,28,0.04)`):微妙 hover 背景、微着色。
+- **炭黑 3%**(`rgba(28,28,28,0.03)`):几乎不可见的覆盖层、背景深度。
 
-### Surface & Border
-- **Light Cream** (`#eceae4`): Card borders, dividers, image outlines. The warm divider line.
-- **Cream Surface** (`#f7f4ed`): Card backgrounds, section fills — same as page background for seamless integration.
+### 表面与边框
+- **浅奶油**(`#eceae4`):卡片边框、分割线、图片轮廓。暖调分割线。
+- **奶油表面**(`#f7f4ed`):卡片背景、区块填充——与页面背景同色,无缝融入。
 
-### Interactive
-- **Ring Blue** (`#3b82f6` at 50% opacity): `--tw-ring-color`, Tailwind focus ring.
-- **Focus Shadow** (`rgba(0,0,0,0.1) 0px 4px 12px`): Focus and active state shadow — soft, warm, diffused.
+### 交互
+- **环蓝**(50% 不透明度的 `#3b82f6`):`--tw-ring-color`,Tailwind 聚焦环。
+- **焦点阴影**(`rgba(0,0,0,0.1) 0px 4px 12px`):焦点与激活态阴影——柔和、温暖、弥散。
 
-### Inset Shadows
-- **Button Inset** (`rgba(255,255,255,0.2) 0px 0.5px 0px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset, rgba(0,0,0,0.05) 0px 1px 2px 0px`): The signature multi-layer inset shadow on dark buttons.
+### 内嵌阴影
+- **按钮内嵌**(`rgba(255,255,255,0.2) 0px 0.5px 0px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset, rgba(0,0,0,0.05) 0px 1px 2px 0px`):深色按钮上签名的多层内嵌阴影。
 
-## 3. Typography Rules
+## 3. 排版规则
 
-### Font Family
-- **Primary**: `Camera Plain Variable`, with fallbacks: `ui-sans-serif, system-ui`
-- **Weight range**: 400 (body/reading), 480 (special display), 600 (headings/emphasis)
-- **Feature**: Variable font with continuous weight axis — allows fine-tuned intermediary weights like 480.
+### 字族
+- **主字族**:`Camera Plain Variable`,回退:`ui-sans-serif, system-ui`
+- **字重区间**:400(正文/阅读)、480(特殊显示)、600(标题/强调)
+- **特性**:可变字体,字重轴连续——支持 480 这类细调中间字重。
 
-### Hierarchy
+### 层级
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+| 角色 | 字体 | 字号 | 字重 | 行高 | 字距 | 备注 |
 |------|------|------|--------|-------------|----------------|-------|
-| Display Hero | Camera Plain Variable | 60px (3.75rem) | 600 | 1.00–1.10 (tight) | -1.5px | Maximum impact, editorial |
-| Display Alt | Camera Plain Variable | 60px (3.75rem) | 480 | 1.00 (tight) | normal | Lighter hero variant |
-| Section Heading | Camera Plain Variable | 48px (3.00rem) | 600 | 1.00 (tight) | -1.2px | Feature section titles |
-| Sub-heading | Camera Plain Variable | 36px (2.25rem) | 600 | 1.10 (tight) | -0.9px | Sub-sections |
-| Card Title | Camera Plain Variable | 20px (1.25rem) | 400 | 1.25 (tight) | normal | Card headings |
-| Body Large | Camera Plain Variable | 18px (1.13rem) | 400 | 1.38 | normal | Introductions |
-| Body | Camera Plain Variable | 16px (1.00rem) | 400 | 1.50 | normal | Standard reading text |
-| Button | Camera Plain Variable | 16px (1.00rem) | 400 | 1.50 | normal | Button labels |
-| Button Small | Camera Plain Variable | 14px (0.88rem) | 400 | 1.50 | normal | Compact buttons |
-| Link | Camera Plain Variable | 16px (1.00rem) | 400 | 1.50 | normal | Underline decoration |
-| Link Small | Camera Plain Variable | 14px (0.88rem) | 400 | 1.50 | normal | Footer links |
-| Caption | Camera Plain Variable | 14px (0.88rem) | 400 | 1.50 | normal | Metadata, small text |
+| 显示 Hero | Camera Plain Variable | 60px (3.75rem) | 600 | 1.00–1.10(紧) | -1.5px | 冲击力最大,编辑式 |
+| 显示备选 | Camera Plain Variable | 60px (3.75rem) | 480 | 1.00(紧) | normal | 更轻的 hero 变体 |
+| 区块标题 | Camera Plain Variable | 48px (3.00rem) | 600 | 1.00(紧) | -1.2px | 功能区标题 |
+| 子标题 | Camera Plain Variable | 36px (2.25rem) | 600 | 1.10(紧) | -0.9px | 子区块 |
+| 卡片标题 | Camera Plain Variable | 20px (1.25rem) | 400 | 1.25(紧) | normal | 卡片标题 |
+| 大号正文 | Camera Plain Variable | 18px (1.13rem) | 400 | 1.38 | normal | 引言 |
+| 正文 | Camera Plain Variable | 16px (1.00rem) | 400 | 1.50 | normal | 标准阅读文本 |
+| 按钮 | Camera Plain Variable | 16px (1.00rem) | 400 | 1.50 | normal | 按钮文字 |
+| 小号按钮 | Camera Plain Variable | 14px (0.88rem) | 400 | 1.50 | normal | 紧凑按钮 |
+| 链接 | Camera Plain Variable | 16px (1.00rem) | 400 | 1.50 | normal | 下划线装饰 |
+| 小号链接 | Camera Plain Variable | 14px (0.88rem) | 400 | 1.50 | normal | footer 链接 |
+| 说明文字 | Camera Plain Variable | 14px (0.88rem) | 400 | 1.50 | normal | 元数据、小字 |
 
-### Principles
-- **Warm humanist voice**: Camera Plain Variable gives Lovable its approachable personality. The slightly rounded terminals and organic curves contrast with the sharp geometric sans-serifs used by most developer tools.
-- **Variable weight as design tool**: The font supports continuous weight values (e.g., 480), enabling nuanced hierarchy beyond standard weight stops. Weight 480 at 60px creates a display style that feels lighter than semibold but stronger than regular.
-- **Compression at scale**: Headlines use negative letter-spacing (-0.9px to -1.5px) for editorial impact. Body text stays at normal tracking for comfortable reading.
-- **Two weights, clear roles**: 400 (body/UI/links/buttons) and 600 (headings/emphasis). The narrow weight range creates hierarchy through size and spacing, not weight variation.
+### 原则
+- **暖人文声线**:Camera Plain Variable 给 Lovable 可接近的个性。略微圆润的末端与有机曲线,与多数开发者工具用的锐利几何无衬线体形成对照。
+- **可变字重即设计工具**:该字体支持连续字重值(如 480),能在标准字重档之外造出细腻层级。60px 的 480 字重造出一种显示风格,比半粗轻、比常规重。
+- **大字号压缩**:标题用负字距(-0.9px 至 -1.5px)求编辑式冲击。正文保持 normal 字距,便于舒适阅读。
+- **两档字重、角色清晰**:400(正文/UI/链接/按钮)与 600(标题/强调)。窄字重区间靠尺寸与间距造层级,不靠字重变化。
 
-## 4. Component Stylings
+## 4. 组件样式
 
-### Buttons
+### 按钮
 
-**Primary Dark (Inset Shadow)**
-- Background: `#1c1c1c`
-- Text: `#fcfbf8`
-- Padding: 8px 16px
-- Radius: 6px
-- Shadow: `rgba(0,0,0,0) 0px 0px 0px 0px, rgba(0,0,0,0) 0px 0px 0px 0px, rgba(255,255,255,0.2) 0px 0.5px 0px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset, rgba(0,0,0,0.05) 0px 1px 2px 0px`
-- Active: opacity 0.8
-- Focus: `rgba(0,0,0,0.1) 0px 4px 12px` shadow
-- Use: Primary CTA ("Start Building", "Get Started")
+**主深色(内嵌阴影)**
+- 背景:`#1c1c1c`
+- 文字:`#fcfbf8`
+- padding:8px 16px
+- 圆角:6px
+- 阴影:`rgba(0,0,0,0) 0px 0px 0px 0px, rgba(0,0,0,0) 0px 0px 0px 0px, rgba(255,255,255,0.2) 0px 0.5px 0px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset, rgba(0,0,0,0.05) 0px 1px 2px 0px`
+- 激活:opacity 0.8
+- 焦点:`rgba(0,0,0,0.1) 0px 4px 12px` 阴影
+- 用途:主 CTA("Start Building"、"Get Started")
 
-**Ghost / Outline**
-- Background: transparent
-- Text: `#1c1c1c`
-- Padding: 8px 16px
-- Radius: 6px
-- Border: `1px solid rgba(28,28,28,0.4)`
-- Active: opacity 0.8
-- Focus: `rgba(0,0,0,0.1) 0px 4px 12px` shadow
-- Use: Secondary actions ("Log In", "Documentation")
+**Ghost / 描边**
+- 背景:透明
+- 文字:`#1c1c1c`
+- padding:8px 16px
+- 圆角:6px
+- 边框:`1px solid rgba(28,28,28,0.4)`
+- 激活:opacity 0.8
+- 焦点:`rgba(0,0,0,0.1) 0px 4px 12px` 阴影
+- 用途:次级动作("Log In"、"Documentation")
 
-**Cream Surface**
-- Background: `#f7f4ed`
-- Text: `#1c1c1c`
-- Padding: 8px 16px
-- Radius: 6px
-- No border
-- Active: opacity 0.8
-- Use: Tertiary actions, toolbar buttons
+**奶油表面**
+- 背景:`#f7f4ed`
+- 文字:`#1c1c1c`
+- padding:8px 16px
+- 圆角:6px
+- 无边框
+- 激活:opacity 0.8
+- 用途:三级动作、工具栏按钮
 
-**Pill / Icon Button**
-- Background: `#f7f4ed`
-- Text: `#1c1c1c`
-- Radius: 9999px (full pill)
-- Shadow: same inset pattern as primary dark
-- Opacity: 0.5 (default), 0.8 (active)
-- Use: Additional actions, plan mode toggle, voice recording
+**药丸 / 图标按钮**
+- 背景:`#f7f4ed`
+- 文字:`#1c1c1c`
+- 圆角:9999px(全药丸)
+- 阴影:与主深色相同的内嵌模式
+- 不透明度:0.5(默认)、0.8(激活)
+- 用途:附加动作、计划模式切换、语音录制
 
-### Cards & Containers
-- Background: `#f7f4ed` (matches page)
-- Border: `1px solid #eceae4`
-- Radius: 12px (standard), 16px (featured), 8px (compact)
-- No box-shadow by default — borders define boundaries
-- Image cards: `1px solid #eceae4` with 12px radius
+### 卡片与容器
+- 背景:`#f7f4ed`(与页面一致)
+- 边框:`1px solid #eceae4`
+- 圆角:12px(标准)、16px(特色)、8px(紧凑)
+- 默认无 box-shadow——边框界定边界
+- 图片卡:`1px solid #eceae4` 配 12px 圆角
 
-### Inputs & Forms
-- Background: `#f7f4ed`
-- Text: `#1c1c1c`
-- Border: `1px solid #eceae4`
-- Radius: 6px
-- Focus: ring blue (`rgba(59,130,246,0.5)`) outline
-- Placeholder: `#5f5f5d`
+### 输入与表单
+- 背景:`#f7f4ed`
+- 文字:`#1c1c1c`
+- 边框:`1px solid #eceae4`
+- 圆角:6px
+- 焦点:环蓝(`rgba(59,130,246,0.5)`)描边
+- 占位:`#5f5f5d`
 
-### Navigation
-- Clean horizontal nav on cream background, fixed
-- Logo/wordmark left-aligned (128.75 x 22px)
-- Links: Camera Plain 14–16px weight 400, `#1c1c1c` text
-- CTA: dark button with inset shadow, 6px radius
-- Mobile: hamburger menu with 6px radius button
-- Subtle border or no border on scroll
+### 导航
+- 奶油背景上的干净横向导航,固定
+- Logo/字标左对齐(128.75 x 22px)
+- 链接:Camera Plain 14–16px 字重 400,`#1c1c1c` 文字
+- CTA:带内嵌阴影的深色按钮,6px 圆角
+- 移动端:汉堡菜单,按钮 6px 圆角
+- 滚动时微妙边框或无边框
 
-### Links
-- Color: `#1c1c1c`
-- Decoration: underline (default)
-- Hover: primary accent (via CSS variable `hsl(var(--primary))`)
-- No color change on hover — decoration carries the interactive signal
+### 链接
+- 颜色:`#1c1c1c`
+- 装饰:下划线(默认)
+- hover:主强调(经 CSS 变量 `hsl(var(--primary))`)
+- hover 不变色——由装饰承担交互信号
 
-### Image Treatment
-- Showcase/portfolio images with `1px solid #eceae4` border
-- Consistent 12px border radius on all image containers
-- Soft gradient backgrounds behind hero content (warm multi-color wash)
-- Gallery-style presentation for template/project showcases
+### 图片处理
+- 展示/作品集图片配 `1px solid #eceae4` 边框
+- 所有图片容器统一 12px 圆角
+- hero 内容背后柔和渐变背景(暖调多色晕染)
+- 模板/项目展示用画廊式呈现
 
-### Distinctive Components
+### 特色组件
 
-**AI Chat Input**
-- Large prompt input area with soft borders
-- Suggestion pills with `#eceae4` borders
-- Voice recording / plan mode toggle buttons as pill shapes (9999px)
-- Warm, inviting input area — not clinical
+**AI 对话输入**
+- 大号提示词输入区,配柔和边框
+- 建议药丸,配 `#eceae4` 边框
+- 语音录制 / 计划模式切换按钮做成药丸形(9999px)
+- 温暖、宜人的输入区——不做临床感
 
-**Template Gallery**
-- Card grid showing project templates
-- Each card: image + title, `1px solid #eceae4` border, 12px radius
-- Hover: subtle shadow or border darkening
-- Category labels as text links
+**模板画廊**
+- 展示项目模板的卡片网格
+- 每张卡:图片 + 标题,`1px solid #eceae4` 边框,12px 圆角
+- hover:微妙阴影或边框加深
+- 分类标签做文本链接
 
-**Stats Bar**
-- Large metrics: "0M+" pattern in 48px+ weight 600
-- Descriptive text below in muted gray
-- Horizontal layout with generous spacing
+**数据条**
+- 大号指标:"0M+" 模式用 48px+ 字重 600
+- 下方描述文字用弱化灰
+- 横向布局,间距慷慨
 
-## 5. Layout Principles
+## 5. 布局原则
 
-### Spacing System
-- Base unit: 8px
-- Scale: 8px, 10px, 12px, 16px, 24px, 32px, 40px, 56px, 80px, 96px, 128px, 176px, 192px, 208px
-- The scale expands generously at the top end — sections use 80px–208px vertical spacing for editorial breathing room
+### 间距系统
+- 基数:8px
+- 刻度:8px, 10px, 12px, 16px, 24px, 32px, 40px, 56px, 80px, 96px, 128px, 176px, 192px, 208px
+- 刻度在高端慷慨展开——区块用 80px–208px 纵向间距求编辑式呼吸空间
 
-### Grid & Container
-- Max content width: approximately 1200px (centered)
-- Hero: centered single-column with massive vertical padding (96px+)
-- Feature sections: 2–3 column grids
-- Full-width footer with multi-column link layout
-- Showcase sections with centered card grids
+### 网格与容器
+- 内容最大宽:约 1200px(居中)
+- hero:居中单列 + 巨大纵向内边距(96px+)
+- 功能区块:2–3 列网格
+- 全宽 footer,多列链接布局
+- 展示区块配居中卡片网格
 
-### Whitespace Philosophy
-- **Editorial generosity**: Lovable's spacing is lavish at section boundaries (80px–208px). The warm cream background makes these expanses feel cozy rather than empty.
-- **Content-driven rhythm**: Tight internal spacing within cards (12–24px) contrasts with wide section gaps, creating a reading rhythm that alternates between focused content and visual rest.
-- **Section separation**: Footer uses `1px solid #eceae4` border and 16px radius container. Sections defined by generous spacing rather than border lines.
+### 留白哲学
+- **编辑式慷慨**:Lovable 的间距在区块边界上铺张(80px–208px)。暖奶油背景让这些空旷显得惬意而非空洞。
+- **内容驱动节奏**:卡片内部间距紧(12–24px),与区块间隙宽形成对比,造出在专注内容与视觉休息之间交替的阅读节奏。
+- **区块分隔**:footer 用 `1px solid #eceae4` 边框与 16px 圆角容器。区块靠慷慨间距界定,不靠边框线。
 
-### Border Radius Scale
-- Micro (4px): Small buttons, interactive elements
-- Standard (6px): Buttons, inputs, navigation menu
-- Comfortable (8px): Compact cards, divs
-- Card (12px): Standard cards, image containers, templates
-- Container (16px): Large containers, footer sections
-- Full Pill (9999px): Action pills, icon buttons, toggles
+### 圆角刻度
+- 微(4px):小按钮、交互元素
+- 标准(6px):按钮、输入框、导航菜单
+- 舒适(8px):紧凑卡片、div
+- 卡片(12px):标准卡片、图片容器、模板
+- 容器(16px):大容器、footer 区块
+- 全药丸(9999px):动作药丸、图标按钮、开关
 
-## 6. Depth & Elevation
+## 6. 深度与海拔
 
-| Level | Treatment | Use |
+| 层 | 处理 | 用途 |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow, cream background | Page surface, most content |
-| Bordered (Level 1) | `1px solid #eceae4` | Cards, images, dividers |
-| Inset (Level 2) | `rgba(255,255,255,0.2) 0px 0.5px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset, rgba(0,0,0,0.05) 0px 1px 2px` | Dark buttons, primary actions |
-| Focus (Level 3) | `rgba(0,0,0,0.1) 0px 4px 12px` | Active/focus states |
-| Ring (Accessibility) | `rgba(59,130,246,0.5)` 2px ring | Keyboard focus on inputs |
+| 平(层 0) | 无阴影,奶油背景 | 页面表面、多数内容 |
+| 描边(层 1) | `1px solid #eceae4` | 卡片、图片、分割线 |
+| 内嵌(层 2) | `rgba(255,255,255,0.2) 0px 0.5px 0px inset, rgba(0,0,0,0.2) 0px 0px 0px 0.5px inset, rgba(0,0,0,0.05) 0px 1px 2px` | 深色按钮、主动作 |
+| 焦点(层 3) | `rgba(0,0,0,0.1) 0px 4px 12px` | 激活/焦点态 |
+| 环(无障碍) | `rgba(59,130,246,0.5)` 2px 环 | 输入框的键盘焦点 |
 
-**Shadow Philosophy**: Lovable's depth system is intentionally shallow. Instead of floating cards with dramatic drop-shadows, the system relies on warm borders (`#eceae4`) against the cream surface to create gentle containment. The only notable shadow pattern is the inset shadow on dark buttons — a subtle multi-layer technique where a white highlight line sits at the top edge while a dark ring and soft drop handle the bottom. This creates a tactile, pressed-into-surface feeling rather than a hovering-above-surface feeling. The warm focus shadow (`rgba(0,0,0,0.1) 0px 4px 12px`) is deliberately diffused and large, creating a soft glow rather than a sharp outline.
+**阴影哲学**:Lovable 的深度系统刻意浅。系统不靠浮动卡片配戏剧化投影,而靠奶油表面上的暖边框(`#eceae4`)造出温和的围合。唯一显眼的阴影模式是深色按钮上的内嵌阴影——一种微妙的多层手法:白色高光线坐在顶边,暗环与柔和投影处理底边。这造出被压进表面而非浮在表面之上的触感。暖调焦点阴影(`rgba(0,0,0,0.1) 0px 4px 12px`)刻意弥散且大,造出柔和的光晕而非锐利的描边。
 
-### Decorative Depth
-- Hero: soft, warm multi-color gradient wash (pinks, oranges, blues) behind hero — atmospheric, barely visible
-- Footer: gradient background with warm tones transitioning to the bottom
-- No harsh section dividers — spacing and background warmth handle transitions
+### 装饰性深度
+- hero:背后柔和、暖调的多色渐变晕染(粉、橙、蓝)——氛围性,几乎不可见
+- footer:渐变背景,暖调向下过渡
+- 无生硬的区块分割线——间距与背景暖度承担过渡
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use the warm cream background (`#f7f4ed`) as the page foundation — it's the brand's signature warmth
-- Use Camera Plain Variable at display sizes with negative letter-spacing (-0.9px to -1.5px)
-- Derive all grays from `#1c1c1c` at varying opacity levels for tonal unity
-- Use the inset shadow technique on dark buttons for tactile depth
-- Use `#eceae4` borders instead of shadows for card containment
-- Keep the weight system narrow: 400 for body/UI, 600 for headings
-- Use full-pill radius (9999px) only for action pills and icon buttons
-- Apply opacity 0.8 on active states for responsive tactile feedback
+- 用暖奶油背景(`#f7f4ed`)作页面地基——它是品牌的签名暖度
+- 显示级用 Camera Plain Variable 配负字距(-0.9px 至 -1.5px)
+- 所有灰都从 `#1c1c1c` 按不同不透明度派生,求色调统一
+- 深色按钮用内嵌阴影手法,求触觉深度
+- 卡片围合用 `#eceae4` 边框,不用阴影
+- 字重体系保持窄:正文/UI 用 400,标题用 600
+- 全药丸圆角(9999px)只用于动作药丸与图标按钮
+- 激活态应用 opacity 0.8,给响应式触觉反馈
 
 ### Don't
-- Don't use pure white (`#ffffff`) as a page background — the cream is intentional
-- Don't use heavy box-shadows for cards — borders are the containment mechanism
-- Don't introduce saturated accent colors — the palette is intentionally warm-neutral
-- Don't use weight 700 (bold) — 600 is the maximum weight in the system
-- Don't apply 9999px radius on rectangular buttons — pills are for icon/action toggles
-- Don't use sharp focus outlines — the system uses soft shadow-based focus indicators
-- Don't mix border styles — `#eceae4` for passive, `rgba(28,28,28,0.4)` for interactive
-- Don't increase letter-spacing on headings — Camera Plain is designed to run tight at scale
+- 不用纯白(`#ffffff`)作页面背景——奶油色是刻意的
+- 卡片不用重 box-shadow——边框才是围合手段
+- 不引入饱和强调色——色板刻意保持暖中性
+- 不用 700 字重(粗体)——600 是系统的字重上限
+- 矩形按钮不套 9999px 圆角——药丸留给图标/动作开关
+- 不用锐利焦点描边——系统用柔和的阴影焦点指示
+- 不混用边框风格——被动用 `#eceae4`,交互用 `rgba(28,28,28,0.4)`
+- 标题不加大字距——Camera Plain 的设计就是在大字号下收紧
 
-## 8. Responsive Behavior
+## 8. 响应式
 
-### Breakpoints
-| Name | Width | Key Changes |
+### 断点
+| 名称 | 宽度 | 关键变化 |
 |------|-------|-------------|
-| Mobile Small | <600px | Tight single column, reduced padding |
-| Mobile | 600–640px | Standard mobile layout |
-| Tablet Small | 640–700px | 2-column grids begin |
-| Tablet | 700–768px | Card grids expand |
-| Desktop Small | 768–1024px | Multi-column layouts |
-| Desktop | 1024–1280px | Full feature layout |
-| Large Desktop | 1280–1536px | Maximum content width, generous margins |
+| 小屏手机 | <600px | 紧凑单列,内边距收窄 |
+| 手机 | 600–640px | 标准移动布局 |
+| 小屏平板 | 640–700px | 开始 2 列网格 |
+| 平板 | 700–768px | 卡片网格展开 |
+| 小屏桌面 | 768–1024px | 多列布局 |
+| 桌面 | 1024–1280px | 完整功能布局 |
+| 大屏桌面 | 1280–1536px | 最大内容宽,慷慨外边距 |
 
-### Touch Targets
-- Buttons: 8px 16px padding (comfortable touch)
-- Navigation: adequate spacing between items
-- Pill buttons: 9999px radius creates large tap-friendly targets
-- Menu toggle: 6px radius button with adequate sizing
+### 触控目标
+- 按钮:8px 16px 内边距(舒适触控)
+- 导航:项间距充足
+- 药丸按钮:9999px 圆角造出大而易点的目标
+- 菜单切换:6px 圆角按钮,尺寸充足
 
-### Collapsing Strategy
-- Hero: 60px → 48px → 36px headline scaling with proportional letter-spacing
-- Navigation: horizontal links → hamburger menu at 768px
-- Feature cards: 3-column → 2-column → single column stacked
-- Template gallery: grid → stacked vertical cards
-- Stats bar: horizontal → stacked vertical
-- Footer: multi-column → stacked single column
-- Section spacing: 128px+ → 64px on mobile
+### 折叠策略
+- hero:60px → 48px → 36px 标题缩放,字距按比例调整
+- 导航:横向链接 → 768px 折为汉堡菜单
+- 功能卡:3 列 → 2 列 → 单列堆叠
+- 模板画廊:网格 → 纵向堆叠卡片
+- 数据条:横向 → 纵向堆叠
+- footer:多列 → 堆叠单列
+- 区块间距:128px+ → 移动端 64px
 
-### Image Behavior
-- Template screenshots maintain `1px solid #eceae4` border at all sizes
-- 12px border radius preserved across breakpoints
-- Gallery images responsive with consistent aspect ratios
-- Hero gradient softens/simplifies on mobile
+### 图片行为
+- 模板截图在所有尺寸下保持 `1px solid #eceae4` 边框
+- 12px 圆角跨断点保持
+- 画廊图片响应式,宽高比一致
+- hero 渐变在移动端变柔、简化
 
 ## 9. Agent Prompt Guide
 
-### Quick Color Reference
-- Primary CTA: Charcoal (`#1c1c1c`)
-- Background: Cream (`#f7f4ed`)
-- Heading text: Charcoal (`#1c1c1c`)
-- Body text: Muted Gray (`#5f5f5d`)
-- Border: `#eceae4` (passive), `rgba(28,28,28,0.4)` (interactive)
-- Focus: `rgba(0,0,0,0.1) 0px 4px 12px`
-- Button text on dark: `#fcfbf8`
+### 快速取色参考
+- 主 CTA:炭黑(`#1c1c1c`)
+- 背景:奶油(`#f7f4ed`)
+- 标题文本:炭黑(`#1c1c1c`)
+- 正文文本:弱化灰(`#5f5f5d`)
+- 边框:`#eceae4`(被动)、`rgba(28,28,28,0.4)`(交互)
+- 焦点:`rgba(0,0,0,0.1) 0px 4px 12px`
+- 暗面上的按钮文字:`#fcfbf8`
 
-### Example Component Prompts
-- "Create a hero section on cream background (#f7f4ed). Headline at 60px Camera Plain Variable weight 600, line-height 1.10, letter-spacing -1.5px, color #1c1c1c. Subtitle at 18px weight 400, line-height 1.38, color #5f5f5d. Dark CTA button (#1c1c1c bg, #fcfbf8 text, 6px radius, 8px 16px padding, inset shadow) and ghost button (transparent bg, 1px solid rgba(28,28,28,0.4) border, 6px radius)."
-- "Design a card on cream (#f7f4ed) background. Border: 1px solid #eceae4. Radius 12px. No box-shadow. Title at 20px Camera Plain Variable weight 400, line-height 1.25, color #1c1c1c. Body at 14px weight 400, color #5f5f5d."
-- "Build a template gallery: grid of cards with 12px radius, 1px solid #eceae4 border, cream backgrounds. Each card: image with 12px top radius, title below. Hover: subtle border darkening."
-- "Create navigation: sticky on cream (#f7f4ed). Camera Plain 16px weight 400 for links, #1c1c1c text. Dark CTA button right-aligned with inset shadow. Mobile: hamburger menu with 6px radius."
-- "Design a stats section: large numbers at 48px Camera Plain weight 600, letter-spacing -1.2px, #1c1c1c. Labels below at 16px weight 400, #5f5f5d. Horizontal layout with 32px gap."
+### 组件提示词示例
+- "在奶油背景(#f7f4ed)上做 hero:标题 60px Camera Plain Variable 600 字重,行高 1.10,字距 -1.5px,色 #1c1c1c。副标 18px 400 字重,行高 1.38,色 #5f5f5d。深色 CTA 按钮(#1c1c1c 底,#fcfbf8 文字,6px 圆角,8px 16px padding,内嵌阴影)与 ghost 按钮(透明底,1px solid rgba(28,28,28,0.4) 边,6px 圆角)。"
+- "在奶油(#f7f4ed)背景上设计卡片。边框:1px solid #eceae4。圆角 12px。无 box-shadow。标题 20px Camera Plain Variable 400 字重,行高 1.25,色 #1c1c1c。正文 14px 400 字重,色 #5f5f5d。"
+- "做一个模板画廊:卡片网格,12px 圆角,1px solid #eceae4 边框,奶油背景。每张卡:图片顶部 12px 圆角,标题在下。hover:边框微妙加深。"
+- "做导航:奶油(#f7f4ed)上的吸顶头。链接用 Camera Plain 16px 400 字重,#1c1c1c 文字。深色 CTA 按钮右对齐,带内嵌阴影。移动端:汉堡菜单,6px 圆角。"
+- "设计数据区块:大号数字 48px Camera Plain 600 字重,字距 -1.2px,色 #1c1c1c。下方标签 16px 400 字重,色 #5f5f5d。横向布局,32px 间距。"
 
-### Iteration Guide
-1. Always use cream (`#f7f4ed`) as the base — never pure white
-2. Derive grays from `#1c1c1c` at opacity levels rather than using distinct hex values
-3. Use `#eceae4` borders for containment, not shadows
-4. Letter-spacing scales with size: -1.5px at 60px, -1.2px at 48px, -0.9px at 36px, normal at 16px
-5. Two weights: 400 (everything except headings) and 600 (headings)
-6. The inset shadow on dark buttons is the signature detail — don't skip it
-7. Camera Plain Variable at weight 480 is for special display moments only
+### 迭代指南
+1. 永远用奶油(`#f7f4ed`)作基底——绝不用纯白
+2. 灰从 `#1c1c1c` 按不透明度派生,不用独立 hex 值
+3. 围合用 `#eceae4` 边框,不用阴影
+4. 字距随字号缩放:60px 用 -1.5px,48px 用 -1.2px,36px 用 -0.9px,16px 用 normal
+5. 两档字重:400(除标题外的一切)与 600(标题)
+6. 深色按钮上的内嵌阴影是签名细节——别跳过
+7. Camera Plain Variable 的 480 字重只用于特殊显示时刻

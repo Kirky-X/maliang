@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Flat Design is a UI style reference for general interfaces, focused on 2D, minimalist, bold colors, no shadows, clean lines.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Flat Design 是为通用界面提供的 UI 风格参照,侧重 2D、极简、大胆配色、无阴影、干净线条。
      站点色板: #3498db, #e74c3c, #f39c12, #27ae60, #9b59b6, #f1c40f
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Flat Design
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Flat Design is a UI style reference for general interfaces, combining 2D, minimalist, bold colors, no shadows, clean lines, simple shapes, typography-focused, modern, icon-heavy. The visual direction is shaped by No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons.
+Flat Design 是为通用界面提供的 UI 风格参照,融合 2D、极简、大胆配色、无阴影、干净线条、简单形状、排版优先、现代、图标密集。视觉方向由无渐变/无阴影、简单悬浮态(颜色/透明度偏移)、快速加载、干净过渡(150-200ms ease)、极简图标塑造。
 
-Use it for Web apps (網頁), mobile apps (行動), cross-platform, startup MVPs, user-friendly, SaaS, dashboards (儀表板), corporate (企業). Avoid it for Complex 3D, premium/luxury, artistic portfolios (作品集), immersive experiences, high-detail.
+用于 Web 应用、移动应用、跨平台、初创 MVP、友好易用、SaaS、仪表板、企业。避免用于复杂 3D、高端/奢华、艺术作品集、沉浸式体验、高细节。
 
-**Key Characteristics:**
-- Primary palette: Solid bright: Red, Orange, Blue, Green, limited palette (4-6 max)
-- Secondary palette: Complementary colors, muted secondaries, high saturation, clean accents
-- Effects: No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Web apps (網頁), mobile apps (行動), cross-platform, startup MVPs, user-friendly, SaaS, dashboards (儀表板), corporate (企業)
-- Avoid for: Complex 3D, premium/luxury, artistic portfolios (作品集), immersive experiences, high-detail
+**关键特征:**
+- 主色板:纯色亮色:红、橙、蓝、绿,受限色板(最多 4-6 个)
+- 次色板:互补色、弱化次级色、高饱和度、干净强调
+- 效果:无渐变/无阴影、简单悬浮态(颜色/透明度偏移)、快速加载、干净过渡(150-200ms ease)、极简图标
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:Web 应用、移动应用、跨平台、初创 MVP、友好易用、SaaS、仪表板、企业
+- 避免用于:复杂 3D、高端/奢华、艺术作品集、沉浸式体验、高细节
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 10/10, MUI 9/10
-- Era reference: 2010s Modern
-- Local preview: [Open HTML preview](../../refstyles/12-flat-design.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 10/10、MUI 9/10
+- 年代参照:2010 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/12-flat-design.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

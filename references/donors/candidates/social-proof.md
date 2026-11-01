@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 落地页风格模板(styleLanding) · 站点摘要: Social Proof-Focused is a UI style reference for landing pages, focused on Testimonials prominent, client logos displayed, case studies sections, reviews/ratings, user avatars.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 落地页风格模板(styleLanding) · 站点摘要: 社会认同导向式是为落地页提供的 UI 风格参照,侧重突出的客户证言、客户 logo 展示、案例研究区块、评价/评分、用户头像。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Social Proof-Focused
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Social Proof-Focused is a UI style reference for landing pages, combining Testimonials prominent, client logos displayed, case studies sections, reviews/ratings, user avatars, success metrics, credibility markers. The visual direction is shaped by Testimonial carousel animations, logo grid fade-in, stat counter animations (number count-up), review star ratings.
+社会认同导向式是为落地页提供的 UI 风格参照,融合突出的客户证言、客户 logo 展示、案例研究区块、评价/评分、用户头像、成功指标、可信度标记。视觉方向由证言轮播动画、logo 网格淡入、统计计数器动画(数字递增)、评价星级塑造。
 
-Use it for B2B SaaS (SaaS), professional services, premium products (產品), e-commerce conversion pages (電子商務), established brands (品牌). Avoid it for Startup MVPs, products without users (產品), niche/experimental products (產品).
+用于 B2B SaaS、专业服务、高端产品、电商转化页、成熟品牌。避免用于初创 MVP、还没有用户的产品、小众/实验性产品。
 
-**Key Characteristics:**
-- Primary palette: Primary brand, trust colors (blue), success/growth colors (green), neutral backgrounds
-- Secondary palette: Testimonial highlight colors, logo grid backgrounds (light grey), badge/achievement colors
-- Effects: Testimonial carousel animations, logo grid fade-in, stat counter animations (number count-up), review star ratings
-- Accessibility: ✓ WCAG AA; performance: ⚡ Good; dark mode: ✓ Full.
-- Best for: B2B SaaS (SaaS), professional services, premium products (產品), e-commerce conversion pages (電子商務), established brands (品牌)
-- Avoid for: Startup MVPs, products without users (產品), niche/experimental products (產品)
+**关键特征:**
+- 主色板:品牌主色、信任色(蓝)、成功/增长色(绿)、中性背景
+- 次色板:证言高亮色、logo 网格背景(浅灰)、徽章/成就色
+- 效果:证言轮播动画、logo 网格淡入、统计计数器动画(数字递增)、评价星级
+- 无障碍:✓ 达 WCAG AA;性能:⚡ 良好;暗色模式:✓ 完整。
+- 最适用于:B2B SaaS、专业服务、高端产品、电商转化页、成熟品牌
+- 避免用于:初创 MVP、还没有用户的产品、小众/实验性产品
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/24-social-proof.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/24-social-proof.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

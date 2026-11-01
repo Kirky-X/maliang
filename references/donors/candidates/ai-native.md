@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: AI-Native UI is a UI style reference for general interfaces, focused on Chatbot, conversational, voice, assistant, agentic.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: AI 原生 UI 是为通用界面提供的 UI 风格参照,侧重聊天机器人、对话式、语音、助手、智能体。
      站点色板: #667eea, #764ba2, #6366f1, #10b981, #f5f5f5
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # AI-Native UI
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-AI-Native UI is a UI style reference for general interfaces, combining Chatbot, conversational, voice, assistant, agentic, ambient, minimal chrome, streaming text, AI interactions. The visual direction is shaped by Typing indicators (3-dot pulse), streaming text animations, pulse animations, context cards, smooth reveals.
+AI 原生 UI 是为通用界面提供的 UI 风格参照,融合聊天机器人、对话式、语音、助手、智能体、环境式、极简控件、流式文本、AI 交互。视觉方向由打字指示器(三点脉冲)、流式文本动画、脉冲动画、上下文卡片、平滑显现塑造。
 
-Use it for AI products (產品), chatbots, voice assistants, copilots, AI-powered tools (工具), conversational interfaces. Avoid it for Traditional forms, data-heavy dashboards (儀表板), print-first content.
+用于 AI 产品、聊天机器人、语音助手、copilot、AI 驱动的工具、对话式界面。避免用于传统表单、数据密集的仪表盘、以打印为先的内容。
 
-**Key Characteristics:**
-- Primary palette: Neutral + single accent, #6366F1 (AI Purple), #10B981 (Success), #F5F5F5 (Background)
-- Secondary palette: Status indicators, streaming highlights, context card colors, subtle accent variations
-- Effects: Typing indicators (3-dot pulse), streaming text animations, pulse animations, context cards, smooth reveals
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: AI products (產品), chatbots, voice assistants, copilots, AI-powered tools (工具), conversational interfaces
-- Avoid for: Traditional forms, data-heavy dashboards (儀表板), print-first content
+**关键特征:**
+- 主色板:中性色 + 单一强调色,#6366F1(AI 紫)、#10B981(成功)、#F5F5F5(背景)
+- 次色板:状态指示、流式高亮、上下文卡片色、细微强调变化
+- 效果:打字指示器(三点脉冲)、流式文本动画、脉冲动画、上下文卡片、平滑显现
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:AI 产品、聊天机器人、语音助手、copilot、AI 驱动的工具、对话式界面
+- 避免用于:传统表单、数据密集的仪表盘、以打印为先的内容
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, React 10/10
-- Era reference: 2020s AI-Era
-- Local preview: [Open HTML preview](../../refstyles/43-ai-native.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、React 10/10
+- 年代参照:2020 年代 AI 时代
+- 本地预览:[打开 HTML 预览](../../refstyles/43-ai-native.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Bento Box Grid is a UI style reference for general interfaces, focused on Modular cards, asymmetric grid, varied sizes, Apple-style, dashboard tiles.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 便当盒网格是为通用界面提供的 UI 风格参照,侧重模块化卡片、非对称网格、尺寸变化、Apple 风、仪表盘磁贴。
      站点色板: #ffffff, #f5f5f5
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Bento Box Grid
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Bento Box Grid is a UI style reference for general interfaces, combining Modular cards, asymmetric grid, varied sizes, Apple-style, dashboard tiles, negative space, clean hierarchy, cards. The visual direction is shaped by grid-template with varied spans, rounded-xl (16px), subtle shadows, hover scale (1.02), smooth transitions.
+便当盒网格是为通用界面提供的 UI 风格参照,融合模块化卡片、非对称网格、尺寸变化、Apple 风、仪表盘磁贴、负空间、干净的层级、卡片。视觉方向由跨列跨行的 grid-template、rounded-xl(16px)、细微阴影、hover 缩放(1.02)、平滑过渡塑造。
 
-Use it for Dashboards (儀表板), product pages, portfolios (作品集), Apple-style marketing (行銷), feature showcases, SaaS. Avoid it for Dense data tables, text-heavy content, real-time monitoring (監控).
+用于仪表盘、产品页、作品集、Apple 风营销页、功能展示、SaaS。避免用于密集数据表、文本密集内容、实时监控。
 
-**Key Characteristics:**
-- Primary palette: Neutral base + brand accent, #FFFFFF, #F5F5F5, brand primary
-- Secondary palette: Subtle gradients, shadow variations, accent highlights for interactive cards
-- Effects: grid-template with varied spans, rounded-xl (16px), subtle shadows, hover scale (1.02), smooth transitions
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Dashboards (儀表板), product pages, portfolios (作品集), Apple-style marketing (行銷), feature showcases, SaaS
-- Avoid for: Dense data tables, text-heavy content, real-time monitoring (監控)
+**关键特征:**
+- 主色板:中性底色 + 品牌强调,#FFFFFF、#F5F5F5、品牌主色
+- 次色板:细微渐变、阴影变化、交互卡片的强调高亮
+- 效果:跨列跨行的 grid-template、rounded-xl(16px)、细微阴影、hover 缩放(1.02)、平滑过渡
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:仪表盘、产品页、作品集、Apple 风营销页、功能展示、SaaS
+- 避免用于:密集数据表、文本密集内容、实时监控
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, CSS Grid 10/10
-- Era reference: 2020s Apple
-- Local preview: [Open HTML preview](../../refstyles/39-bento-box.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、CSS Grid 10/10
+- 年代参照:2020 年代 Apple
+- 本地预览:[打开 HTML 预览](../../refstyles/39-bento-box.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

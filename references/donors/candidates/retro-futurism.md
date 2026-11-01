@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Retro-Futurism is a UI style reference for general interfaces, focused on Vintage sci-fi, 80s aesthetic, neon glow, geometric patterns, CRT scanlines.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Retro-Futurism 是为通用界面提供的 UI 风格参照,侧重复古科幻、80 年代审美、霓虹辉光、几何图案、CRT 扫描线。
      站点色板: #1a1a2e, #0080ff, #ff006e, #00ffff, #5d34d0, #c0c0c0
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Retro-Futurism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Retro-Futurism is a UI style reference for general interfaces, combining Vintage sci-fi, 80s aesthetic, neon glow, geometric patterns, CRT scanlines, pixel art, cyberpunk, synthwave. The visual direction is shaped by CRT scanlines (::before overlay), neon glow (text-shadow+box-shadow), glitch effects (skew/offset keyframes).
+Retro-Futurism 是为通用界面提供的 UI 风格参照,融合复古科幻、80 年代审美、霓虹辉光、几何图案、CRT 扫描线、像素艺术、赛博朋克、合成器浪潮。视觉方向由 CRT 扫描线(::before 覆盖层)、霓虹辉光(text-shadow+box-shadow)、故障效果(斜切 / 偏移关键帧)塑造。
 
-Use it for Gaming (遊戲), entertainment (娛樂), music platforms (平台), tech brands (品牌), artistic projects, nostalgic, cyberpunk. Avoid it for Conservative industries, critical accessibility (無障礙性), professional/corporate (企業), elderly, legal/finance (金融).
+用于游戏、娱乐、音乐平台、科技品牌、艺术项目、怀旧主题、赛博朋克。避免用于保守行业、无障碍为硬性要求的场景、专业 / 企业场景、年长用户、法律 / 金融。
 
-**Key Characteristics:**
-- Primary palette: Neon Blue #0080FF, Hot Pink #FF006E, Cyan #00FFFF, Deep Black #1A1A2E, Purple #5D34D0
-- Secondary palette: Metallic Silver #C0C0C0, Gold #FFD700, duotone, 80s Pink #FF10F0, neon accents
-- Effects: CRT scanlines (::before overlay), neon glow (text-shadow+box-shadow), glitch effects (skew/offset keyframes)
-- Accessibility: ⚠ High contrast/strain; performance: ⚠ Moderate; dark mode: ✓ Dark focused.
-- Best for: Gaming (遊戲), entertainment (娛樂), music platforms (平台), tech brands (品牌), artistic projects, nostalgic, cyberpunk
-- Avoid for: Conservative industries, critical accessibility (無障礙性), professional/corporate (企業), elderly, legal/finance (金融)
+**关键特征:**
+- 主色板:霓虹蓝 #0080FF、亮粉 #FF006E、青 #00FFFF、深黑 #1A1A2E、紫 #5D34D0
+- 次色板:金属银 #C0C0C0、金 #FFD700、双色调、80 年代粉 #FF10F0、霓虹强调
+- 效果:CRT 扫描线(::before 覆盖层)、霓虹辉光(text-shadow+box-shadow)、故障效果(斜切 / 偏移关键帧)
+- 无障碍:⚠ 高对比 / 视觉疲劳;性能:⚠ 中等;暗色模式:✓ 以暗色为主。
+- 最适用于:游戏、娱乐、音乐平台、科技品牌、艺术项目、怀旧主题、赛博朋克
+- 避免用于:保守行业、无障碍为硬性要求的场景、专业 / 企业场景、年长用户、法律 / 金融
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 8/10, CSS-in-JS 9/10
-- Era reference: 1980s Retro
-- Local preview: [Open HTML preview](../../refstyles/11-retro-futurism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 8/10、CSS-in-JS 9/10
+- 年代参照:1980 年代复古
+- 本地预览:[打开 HTML 预览](../../refstyles/11-retro-futurism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

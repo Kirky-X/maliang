@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Real-Time Monitoring is a UI style reference for analytics and BI dashboards, focused on Live data updates, status indicators, alert notifications, streaming data visualization, active monitoring.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Real-Time Monitoring 是为分析与 BI 仪表板提供的 UI 风格参照,侧重实时数据更新、状态指示、告警通知、流式数据可视化、主动监控。
      站点色板: #ff0000, #ffa500, #22c55e
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Real-Time Monitoring
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Real-Time Monitoring is a UI style reference for analytics and BI dashboards, combining Live data updates, status indicators, alert notifications, streaming data visualization, active monitoring, streaming charts. The visual direction is shaped by Real-time chart animations, alert pulse/glow, status indicator blink animation, smooth data stream updates, loading effect.
+Real-Time Monitoring 是为分析与 BI 仪表板提供的 UI 风格参照,融合实时数据更新、状态指示、告警通知、流式数据可视化、主动监控、流式图表。视觉方向由实时图表动画、告警脉冲/辉光、状态指示闪烁动画、平滑数据流更新、加载效果塑造。
 
-Use it for System monitoring dashboards (儀表板), DevOps dashboards (儀表板), real-time analytics (分析), stock market dashboards (儀表板), live event tracking. Avoid it for Historical analysis, long-term trend reports, archived data dashboards (儀表板).
+用于系统监控仪表板、DevOps 仪表板、实时分析、股票市场仪表板、实时事件追踪。避免用于历史分析、长期趋势报表、归档数据仪表板。
 
-**Key Characteristics:**
-- Primary palette: Alert colors: critical (red #FF0000), warning (orange #FFA500), normal (green #22C55E), updating (blue animation)
-- Secondary palette: Status indicator colors, chart line colors varying by metric, streaming data highlight colors
-- Effects: Real-time chart animations, alert pulse/glow, status indicator blink animation, smooth data stream updates, loading effect
-- Accessibility: ✓ WCAG AA; performance: ⚡ Good (real-time load); dark mode: ✓ Full.
-- Best for: System monitoring dashboards (儀表板), DevOps dashboards (儀表板), real-time analytics (分析), stock market dashboards (儀表板), live event tracking
-- Avoid for: Historical analysis, long-term trend reports, archived data dashboards (儀表板)
+**关键特征:**
+- 主色板:告警色:严重(红 #FF0000)、警告(橙 #FFA500)、正常(绿 #22C55E)、更新中(蓝色动画)
+- 次色板:状态指示色、按指标变化的图表线色、流式数据高亮色
+- 效果:实时图表动画、告警脉冲/辉光、状态指示闪烁动画、平滑数据流更新、加载效果
+- 无障碍:✓ WCAG AA;性能:⚡ 良好(实时负载);暗色模式:✓ 完整。
+- 最适用于:系统监控仪表板、DevOps 仪表板、实时分析、股票市场仪表板、实时事件追踪
+- 避免用于:历史分析、长期趋势报表、归档数据仪表板
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Recharts 9/10, D3.js 10/10, Socket.io 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/31-real-time-monitoring.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Recharts 9/10、D3.js 10/10、Socket.io 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/31-real-time-monitoring.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

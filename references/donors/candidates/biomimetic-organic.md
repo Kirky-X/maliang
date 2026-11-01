@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Biomimetic / Organic 2.0 is a UI style reference for general interfaces, focused on Nature-inspired, cellular, fluid, breathing, generative.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 仿生 / 有机 2.0 是为通用界面提供的 UI 风格参照,侧重自然启发、细胞式、流动、呼吸感、生成式。
      站点色板: #001e3c, #00ff41, #ff9999, #4d94ff, #ff7f50
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Biomimetic / Organic 2.0
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Biomimetic / Organic 2.0 is a UI style reference for general interfaces, combining Nature-inspired, cellular, fluid, breathing, generative, algorithms, life-like. The visual direction is shaped by Breathing animations, fluid morphing, generative growth, physics-based movement.
+仿生 / 有机 2.0 是为通用界面提供的 UI 风格参照,融合自然启发、细胞式、流动、呼吸感、生成式、算法、富有生命感。视觉方向由呼吸动画、流体变形、生成式生长、基于物理的运动塑造。
 
-Use it for Sustainability tech, biotech, advanced health (健康), meditation, generative art platforms (平台). Avoid it for Standard SaaS (SaaS), data grids, strict corporate (企業), accounting.
+用于可持续科技、生物科技、先进健康、冥想、生成艺术平台。避免用于标准 SaaS、数据网格、严格企业风、会计。
 
-**Key Characteristics:**
-- Primary palette: Cellular Pink #FF9999, Chlorophyll Green #00FF41, Bioluminescent Blue
-- Secondary palette: Deep Ocean #001E3C, Coral #FF7F50, Organic gradients
-- Effects: Breathing animations, fluid morphing, generative growth, physics-based movement
-- Accessibility: ✓ Good; performance: ⚠ Moderate; dark mode: ✓ Full.
-- Best for: Sustainability tech, biotech, advanced health (健康), meditation, generative art platforms (平台)
-- Avoid for: Standard SaaS (SaaS), data grids, strict corporate (企業), accounting
+**关键特征:**
+- 主色板:细胞粉 #FF9999、叶绿素绿 #00FF41、生物荧光蓝
+- 次色板:深海 #001E3C、珊瑚 #FF7F50、有机渐变
+- 效果:呼吸动画、流体变形、生成式生长、基于物理的运动
+- 无障碍:✓ 良好;性能:⚠ 中等;暗色模式:✓ 完整。
+- 最适用于:可持续科技、生物科技、先进健康、冥想、生成艺术平台
+- 避免用于:标准 SaaS、数据网格、严格企业风、会计
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Canvas 10/10, WebGL 10/10
-- Era reference: 2024+ Generative
-- Local preview: [Open HTML preview](../../refstyles/58-biomimetic-organic.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Canvas 10/10、WebGL 10/10
+- 年代参照:2024+ 生成式
+- 本地预览:[打开 HTML 预览](../../refstyles/58-biomimetic-organic.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

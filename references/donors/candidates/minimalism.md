@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Minimalism & Swiss Style is a UI style reference for general interfaces, focused on Clean, simple, spacious, functional, white space.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Minimalism & Swiss Style 是为通用界面提供的 UI 风格参照,侧重干净、简单、宽敞、功能化、留白。
      站点色板: #000000, #ffffff, #808080, #f5f1e8, #b38b6d
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Minimalism & Swiss Style
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Minimalism & Swiss Style is a UI style reference for general interfaces, combining Clean, simple, spacious, functional, white space, high contrast, geometric, sans-serif, grid-based, essential. The visual direction is shaped by Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type hierarchy, fast loading.
+Minimalism & Swiss Style 是为通用界面提供的 UI 风格参照,融合干净、简单、宽敞、功能化、留白、高对比、几何、无衬线、网格化、只留必要。视觉方向由微弱 hover(200-250ms)、平滑过渡、若有阴影则锐利、清晰字阶、加载快塑造。
 
-Use it for Enterprise apps (企業應用), dashboards (儀表板), documentation sites (網站), SaaS platforms (SaaS), professional tools (工具). Avoid it for Creative portfolios (創意), entertainment (娛樂), playful brands (品牌), artistic experiments.
+用于企业应用、仪表板、文档站、SaaS 平台、专业工具。避免用于创意作品集、娱乐、玩趣品牌、艺术实验。
 
-**Key Characteristics:**
-- Primary palette: Monochromatic, Black #000000, White #FFFFFF
-- Secondary palette: Neutral (Beige #F5F1E8, Grey #808080, Taupe #B38B6D), Primary accent
-- Effects: Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type hierarchy, fast loading
-- Accessibility: ✓ WCAG AAA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Enterprise apps (企業應用), dashboards (儀表板), documentation sites (網站), SaaS platforms (SaaS), professional tools (工具)
-- Avoid for: Creative portfolios (創意), entertainment (娛樂), playful brands (品牌), artistic experiments
+**关键特征:**
+- 主色板:单色、黑 #000000、白 #FFFFFF
+- 次色板:中性(米色 #F5F1E8、灰 #808080、灰褐 #B38B6D)、主强调色
+- 效果:微弱 hover(200-250ms)、平滑过渡、若有阴影则锐利、清晰字阶、加载快
+- 无障碍:✓ WCAG AAA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:企业应用、仪表板、文档站、SaaS 平台、专业工具
+- 避免用于:创意作品集、娱乐、玩趣品牌、艺术实验
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Bootstrap 9/10, MUI 9/10
-- Era reference: 1950s Swiss
-- Local preview: [Open HTML preview](../../refstyles/01-minimalism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Bootstrap 9/10、MUI 9/10
+- 年代参照:1950 年代瑞士
+- 本地预览:[打开 HTML 预览](../../refstyles/01-minimalism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

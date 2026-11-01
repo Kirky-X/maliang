@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: User Behavior Analytics is a UI style reference for analytics and BI dashboards, focused on Funnel visualization, user flow diagrams, conversion tracking, engagement metrics, user journey mapping.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: 用户行为分析是为分析与 BI 仪表板提供的 UI 风格参照,侧重漏斗可视化、用户流程图、转化追踪、参与度指标、用户旅程映射。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # User Behavior Analytics
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-User Behavior Analytics is a UI style reference for analytics and BI dashboards, combining Funnel visualization, user flow diagrams, conversion tracking, engagement metrics, user journey mapping, cohort analysis. The visual direction is shaped by Funnel animation (fill-down), flow diagram animations (connection draw), conversion pulse, engagement bar fill.
+用户行为分析是为分析与 BI 仪表板提供的 UI 风格参照,融合漏斗可视化、用户流程图、转化追踪、参与度指标、用户旅程映射、同期群分析。视觉方向由漏斗动画(向下填充)、流程图动画(连线绘制)、转化脉冲、参与度条形填充塑造。
 
-Use it for Conversion funnel analysis, user journey tracking, engagement analytics (分析), cohort analysis, retention tracking. Avoid it for Real-time operational metrics, technical system monitoring (監控), financial transactions.
+用于转化漏斗分析、用户旅程追踪、参与度分析、同期群分析、留存追踪。避免用于实时运营指标、技术系统监控、金融交易。
 
-**Key Characteristics:**
-- Primary palette: Funnel stage colors: high engagement (green), drop-off (red), conversion (blue), user flow arrows (grey)
-- Secondary palette: Stage completion colors (success), abandonment colors (warning), engagement levels (gradient), cohort colors
-- Effects: Funnel animation (fill-down), flow diagram animations (connection draw), conversion pulse, engagement bar fill
-- Accessibility: ✓ WCAG AA; performance: ⚡ Good; dark mode: ✓ Full.
-- Best for: Conversion funnel analysis, user journey tracking, engagement analytics (分析), cohort analysis, retention tracking
-- Avoid for: Real-time operational metrics, technical system monitoring (監控), financial transactions
+**关键特征:**
+- 主色板:漏斗阶段色:高参与(绿)、流失(红)、转化(蓝)、用户流箭头(灰)
+- 次色板:阶段完成色(成功)、放弃色(警示)、参与度级别(渐变)、同期群色
+- 效果:漏斗动画(向下填充)、流程图动画(连线绘制)、转化脉冲、参与度条形填充
+- 无障碍:✓ WCAG AA;性能:⚡ 良好;暗色模式:✓ 完整。
+- 最适用于:转化漏斗分析、用户旅程追踪、参与度分析、同期群分析、留存追踪
+- 避免用于:实时运营指标、技术系统监控、金融交易
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Recharts 9/10, Chart.js 9/10, D3.js 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/35-user-behavior-analytics.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Recharts 9/10、Chart.js 9/10、D3.js 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/35-user-behavior-analytics.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

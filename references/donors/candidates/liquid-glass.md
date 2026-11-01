@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Liquid Glass is a UI style reference for general interfaces, focused on Flowing glass, morphing, smooth transitions, fluid effects, translucent.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 液态玻璃是为通用界面提供的 UI 风格参照,侧重流动玻璃、形变、平滑过渡、流体效果、半透明。
      站点色板: #667eea, #764ba2, #f093fb
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Liquid Glass
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Liquid Glass is a UI style reference for general interfaces, combining Flowing glass, morphing, smooth transitions, fluid effects, translucent, animated blur, iridescent, chromatic aberration. The visual direction is shaped by Morphing elements (SVG/CSS), fluid animations (400-600ms curves), dynamic blur (backdrop-filter), color transitions.
+液态玻璃是为通用界面提供的 UI 风格参照,融合流动玻璃、形变、平滑过渡、流体效果、半透明、动态模糊、虹彩、色差。视觉方向由形变元素(SVG/CSS)、流体动画(400-600ms 曲线)、动态模糊(backdrop-filter)、颜色过渡塑造。
 
-Use it for Premium SaaS (SaaS), high-end e-commerce (電子商務), creative platforms (創意), branding experiences, luxury portfolios (作品集). Avoid it for Performance-limited (效能), critical accessibility (無障礙性), complex data, budget projects.
+用于高端 SaaS、高端电商、创意平台、品牌体验、奢华作品集。避免用于性能受限场景、无障碍为硬性要求的场景、复杂数据、预算有限的项目。
 
-**Key Characteristics:**
-- Primary palette: Vibrant iridescent (rainbow spectrum), translucent base with opacity shifts, gradient fluidity
-- Secondary palette: Chromatic aberration (Red-Cyan), iridescent oil-spill, fluid gradient blends, holographic effects
-- Effects: Morphing elements (SVG/CSS), fluid animations (400-600ms curves), dynamic blur (backdrop-filter), color transitions
-- Accessibility: ⚠ Text contrast; performance: ⚠ Moderate-Poor; dark mode: ✓ Full.
-- Best for: Premium SaaS (SaaS), high-end e-commerce (電子商務), creative platforms (創意), branding experiences, luxury portfolios (作品集)
-- Avoid for: Performance-limited (效能), critical accessibility (無障礙性), complex data, budget projects
+**关键特征:**
+- 主色板:鲜明虹彩(彩虹光谱)、半透明基底配不透明度变化、渐变流动性
+- 次色板:色差(红-青)、虹彩油膜、流体渐变混合、全息效果
+- 效果:形变元素(SVG/CSS)、流体动画(400-600ms 曲线)、动态模糊(backdrop-filter)、颜色过渡
+- 无障碍:⚠ 文字对比;性能:⚠ 中等偏差;暗色模式:✓ 完整。
+- 最适用于:高端 SaaS、高端电商、创意平台、品牌体验、奢华作品集
+- 避免用于:性能受限场景、无障碍为硬性要求的场景、复杂数据、预算有限的项目
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Framer Motion 10/10, GSAP 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/14-liquid-glass.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Framer Motion 10/10、GSAP 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/14-liquid-glass.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

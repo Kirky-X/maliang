@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Predictive Analytics is a UI style reference for analytics and BI dashboards, focused on Forecast lines, confidence intervals, trend projections, scenario modeling, AI-driven insights.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Predictive Analytics 是为分析与 BI 仪表板提供的 UI 风格参照,侧重预测线、置信区间、趋势预测、情景建模、AI 驱动的洞察。
      站点色板: #3b82f6, #a855f7
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Predictive Analytics
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Predictive Analytics is a UI style reference for analytics and BI dashboards, combining Forecast lines, confidence intervals, trend projections, scenario modeling, AI-driven insights, anomaly detection visualization. The visual direction is shaped by Forecast line animation on draw, confidence band fade-in, anomaly pulse alert, smoothing function animations.
+Predictive Analytics 是为分析与 BI 仪表板提供的 UI 风格参照,融合预测线、置信区间、趋势预测、情景建模、AI 驱动的洞察、异常检测可视化。视觉方向由绘制时的预测线动画、置信带淡入、异常脉冲告警、平滑函数动画塑造。
 
-Use it for Forecasting dashboards (儀表板), anomaly detection systems, trend prediction dashboards (儀表板), AI-powered analytics (分析), budget planning. Avoid it for Historical-only dashboards (儀表板), simple reporting, real-time operational dashboards (儀表板).
+用于预测仪表板、异常检测系统、趋势预测仪表板、AI 驱动的分析、预算规划。避免用于仅历史的仪表板、简单报表、实时运营仪表板。
 
-**Key Characteristics:**
-- Primary palette: Forecast line color (distinct from actual), confidence interval shading, anomaly highlight (red alert), trend colors
-- Secondary palette: High confidence (dark color), low confidence (light color), anomaly colors (red/orange), normal trend (green/blue)
-- Effects: Forecast line animation on draw, confidence band fade-in, anomaly pulse alert, smoothing function animations
-- Accessibility: ✓ WCAG AA; performance: ⚠ Good (computation); dark mode: ✓ Full.
-- Best for: Forecasting dashboards (儀表板), anomaly detection systems, trend prediction dashboards (儀表板), AI-powered analytics (分析), budget planning
-- Avoid for: Historical-only dashboards (儀表板), simple reporting, real-time operational dashboards (儀表板)
+**关键特征:**
+- 主色板:预测线颜色(区别于实际值)、置信区间阴影、异常高亮(红色告警)、趋势色
+- 次色板:高置信(深色)、低置信(浅色)、异常色(红/橙)、正常趋势(绿/蓝)
+- 效果:绘制时的预测线动画、置信带淡入、异常脉冲告警、平滑函数动画
+- 无障碍:✓ WCAG AA;性能:⚠ 良好(计算);暗色模式:✓ 完整。
+- 最适用于:预测仪表板、异常检测系统、趋势预测仪表板、AI 驱动的分析、预算规划
+- 避免用于:仅历史的仪表板、简单报表、实时运营仪表板
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: D3.js 10/10, Recharts 8/10, TensorFlow.js 8/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/34-predictive-analytics.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:D3.js 10/10、Recharts 8/10、TensorFlow.js 8/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/34-predictive-analytics.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

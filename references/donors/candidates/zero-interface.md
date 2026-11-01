@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Zero Interface is a UI style reference for general interfaces, focused on Minimal visible UI, voice-first, gesture-based, AI-driven, invisible controls.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: 零界面是为通用界面提供的 UI 风格参照,侧重极少的可见 UI、语音优先、基于手势、AI 驱动、不可见控件。
      站点色板: #fafafa, #e5e5e5, #f5f1e8, #f0f0f0
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Zero Interface
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Zero Interface is a UI style reference for general interfaces, combining Minimal visible UI, voice-first, gesture-based, AI-driven, invisible controls, predictive, context-aware, ambient. The visual direction is shaped by Voice recognition UI, gesture detection, AI predictions (smooth reveal), progressive disclosure, smart suggestions.
+零界面是为通用界面提供的 UI 风格参照,融合极少的可见 UI、语音优先、基于手势、AI 驱动、不可见控件、预测式、情境感知、环境式。视觉方向由语音识别 UI、手势检测、AI 预测(平滑显现)、渐进披露、智能建议塑造。
 
-Use it for Voice assistants, AI platforms (平台), future-forward UX, smart home, contextual computing, ambient experiences. Avoid it for Complex workflows, data-entry heavy, traditional systems, legacy support, explicit control.
+用于语音助手、AI 平台、前向 UX、智能家居、情境计算、环境式体验。避免用于复杂工作流、重数据录入、传统系统、遗留支持、显式控制。
 
-**Key Characteristics:**
-- Primary palette: Neutral backgrounds: Soft white #FAFAFA, light grey #F0F0F0, warm off-white #F5F1E8
-- Secondary palette: Subtle feedback: light green, light red, minimal UI elements, soft accents
-- Effects: Voice recognition UI, gesture detection, AI predictions (smooth reveal), progressive disclosure, smart suggestions
-- Accessibility: ✓ Excellent; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Voice assistants, AI platforms (平台), future-forward UX, smart home, contextual computing, ambient experiences
-- Avoid for: Complex workflows, data-entry heavy, traditional systems, legacy support, explicit control
+**关键特征:**
+- 主色板:中性背景:柔白 #FAFAFA、浅灰 #F0F0F0、暖近白 #F5F1E8
+- 次色板:细微反馈:浅绿、浅红、极简 UI 元素、柔强调
+- 效果:语音识别 UI、手势检测、AI 预测(平滑显现)、渐进披露、智能建议
+- 无障碍:✓ 优秀;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:语音助手、AI 平台、前向 UX、智能家居、情境计算、环境式体验
+- 避免用于:复杂工作流、重数据录入、传统系统、遗留支持、显式控制
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Tailwind 10/10, Custom 10/10
-- Era reference: 2020s AI-Era
-- Local preview: [Open HTML preview](../../refstyles/18-zero-interface.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Tailwind 10/10、Custom 10/10
+- 年代参照:2020 年代 AI 时代
+- 本地预览:[打开 HTML 预览](../../refstyles/18-zero-interface.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

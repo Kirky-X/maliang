@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: Comparative Analysis Dashboard is a UI style reference for analytics and BI dashboards, focused on Side-by-side comparisons, period-over-period metrics, A/B test results, regional comparisons, performance benchmarks.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 分析仪表板模板(styleAnalytics) · 站点摘要: 对比分析仪表板是为分析与 BI 仪表板提供的 UI 风格参照,侧重并排对比、同期指标、A/B 测试结果、区域对比、性能基准。
      站点色板: —
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Comparative Analysis Dashboard
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Comparative Analysis Dashboard is a UI style reference for analytics and BI dashboards, combining Side-by-side comparisons, period-over-period metrics, A/B test results, regional comparisons, performance benchmarks. The visual direction is shaped by Comparison bar animations (grow to value), delta indicator animations (direction arrows), highlight on compare.
+对比分析仪表板是为分析与 BI 仪表板提供的 UI 风格参照,融合并排对比、同期指标、A/B 测试结果、区域对比、性能基准。视觉方向由对比条动画(增长到目标值)、差值指示动画(方向箭头)、对比时高亮塑造。
 
-Use it for Period-over-period reporting, A/B test dashboards (儀表板), market comparison, competitive analysis, regional performance (效能). Avoid it for Single metric dashboards (儀表板), future projections (use forecasting), real-time only (no historical).
+用于同期对比报表、A/B 测试仪表板、市场对比、竞品分析、区域性能。避免用于单指标仪表板、未来预测(改用 forecasting)、仅实时场景(无历史数据)。
 
-**Key Characteristics:**
-- Primary palette: Comparison colors: primary (blue), comparison (orange/purple), delta indicator (green/red)
-- Secondary palette: Winning metric color (green), losing metric color (red), neutral comparison (grey), benchmark colors
-- Effects: Comparison bar animations (grow to value), delta indicator animations (direction arrows), highlight on compare
-- Accessibility: ✓ WCAG AA; performance: ⚡ Excellent; dark mode: ✓ Full.
-- Best for: Period-over-period reporting, A/B test dashboards (儀表板), market comparison, competitive analysis, regional performance (效能)
-- Avoid for: Single metric dashboards (儀表板), future projections (use forecasting), real-time only (no historical)
+**关键特征:**
+- 主色板:对比色:主色(蓝)、对比色(橙 / 紫)、差值指示(绿 / 红)
+- 次色板:胜出指标色(绿)、落后指标色(红)、中性对比(灰)、基准色
+- 效果:对比条动画(增长到目标值)、差值指示动画(方向箭头)、对比时高亮
+- 无障碍:✓ WCAG AA;性能:⚡ 优秀;暗色模式:✓ 完整。
+- 最适用于:同期对比报表、A/B 测试仪表板、市场对比、竞品分析、区域性能
+- 避免用于:单指标仪表板、未来预测(改用 forecasting)、仅实时场景(无历史数据)
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: Recharts 9/10, Chart.js 9/10, D3.js 9/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/33-comparative-analytics.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:Recharts 9/10、Chart.js 9/10、D3.js 9/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/33-comparative-analytics.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

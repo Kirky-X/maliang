@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Skeuomorphism is a UI style reference for general interfaces, focused on Realistic, texture, depth, 3D appearance, real-world metaphors.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Skeuomorphism 是为通用界面提供的 UI 风格参照,侧重写实、材质、深度、3D 外观、现实世界隐喻。
      站点色板: #c8c8c8, #a0a0a0, #f5f5f5, #d8d8d8, #b8b8b8, #e8e8e8
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Skeuomorphism
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Skeuomorphism is a UI style reference for general interfaces, combining Realistic, texture, depth, 3D appearance, real-world metaphors, shadows, gradients, tactile, detailed, material. The visual direction is shaped by Realistic shadows (layers), depth (perspective), texture details (noise, grain), realistic animations (300-500ms).
+Skeuomorphism 是为通用界面提供的 UI 风格参照,融合写实、材质、深度、3D 外观、现实世界隐喻、阴影、渐变、触感、细节、材料。视觉方向由写实阴影(分层)、深度(透视)、材质细节(噪点、颗粒)、写实动画(300-500ms)塑造。
 
-Use it for Legacy apps (應用程式), gaming (遊戲), immersive storytelling, premium products (產品), luxury, realistic simulations, education. Avoid it for Modern enterprise, critical accessibility (無障礙性), low-performance (效能), web (use Flat/Modern) (網頁).
+用于遗留应用、游戏、沉浸式叙事、高端产品、奢侈品、写实模拟、教育。避免用于现代企业、无障碍为硬性要求的场景、性能受限场景、网页(改用 Flat/Modern)。
 
-**Key Characteristics:**
-- Primary palette: Rich realistic: wood, leather, metal colors, detailed gradients (8-12 stops), metallic effects
-- Secondary palette: Realistic lighting gradients, shadow variations (30-50% darker), texture overlays, material colors
-- Effects: Realistic shadows (layers), depth (perspective), texture details (noise, grain), realistic animations (300-500ms)
-- Accessibility: ⚠ Textures reduce readability; performance: ❌ Poor; dark mode: ◐ Partial.
-- Best for: Legacy apps (應用程式), gaming (遊戲), immersive storytelling, premium products (產品), luxury, realistic simulations, education
-- Avoid for: Modern enterprise, critical accessibility (無障礙性), low-performance (效能), web (use Flat/Modern) (網頁)
+**关键特征:**
+- 主色板:丰富的写实材质:木、皮革、金属色,复杂渐变(8-12 个色标),金属效果
+- 次色板:写实光照渐变、阴影变化(暗 30-50%)、材质叠加、材料色
+- 效果:写实阴影(分层)、深度(透视)、材质细节(噪点、颗粒)、写实动画(300-500ms)
+- 无障碍:⚠ 材质降低可读性;性能:❌ 差;暗色模式:◐ 部分支持。
+- 最适用于:遗留应用、游戏、沉浸式叙事、高端产品、奢侈品、写实模拟、教育
+- 避免用于:现代企业、无障碍为硬性要求的场景、性能受限场景、网页(改用 Flat/Modern)
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: CSS-in-JS 7/10, Custom 8/10
-- Era reference: 2007-2012 iOS
-- Local preview: [Open HTML preview](../../refstyles/13-skeuomorphism.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:CSS-in-JS 7/10、Custom 8/10
+- 年代参照:2007-2012 iOS
+- 本地预览:[打开 HTML 预览](../../refstyles/13-skeuomorphism.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)

@@ -1,27 +1,27 @@
-<!-- 供体候选池快照(原文存档,非蒸馏供体)。
-     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Motion-Driven is a UI style reference for general interfaces, focused on Animation-heavy, microinteractions, smooth transitions, scroll effects, parallax.
+<!-- 供体候选池快照(中文译本,非蒸馏供体;原文见「原始出处」)。
+     站点分组: 通用风格模板(styleGeneral) · 站点摘要: Motion-Driven 是为通用界面提供的 UI 风格参照,侧重动效密集、微交互、平滑过渡、滚动效果、视差。
      站点色板: #22c55e, #ef4444
      晋升正式供体须满足 ../README.md §5 三条件;蒸馏稿另立 ../<id>.md,与本快照并存。 -->
 
 # Motion-Driven
 
-## 1. Visual Theme & Atmosphere
+## 1. 视觉主题与氛围
 
-Motion-Driven is a UI style reference for general interfaces, combining Animation-heavy, microinteractions, smooth transitions, scroll effects, parallax, entrance anim, page transitions. The visual direction is shaped by Scroll anim (Intersection Observer), hover (300-400ms), entrance, parallax (3-5 layers), page transitions.
+Motion-Driven 是为通用界面提供的 UI 风格参照,融合动效密集、微交互、平滑过渡、滚动效果、视差、入场动效、页面过渡。视觉方向由滚动动效(Intersection Observer)、hover(300-400ms)、入场、视差(3-5 层)、页面过渡塑造。
 
-Use it for Portfolio sites (網站), storytelling platforms (平台), interactive experiences, entertainment apps (娛樂), creative (創意), SaaS. Avoid it for Data dashboards (儀表板), critical accessibility (無障礙性), low-power devices, content-heavy, motion-sensitive.
+用于作品集站、叙事平台、交互体验、娱乐应用、创意、SaaS。避免用于数据仪表板、无障碍为硬性要求的场景、低功耗设备、内容密集场景、对动效敏感的用户。
 
-**Key Characteristics:**
-- Primary palette: Bold colors emphasize movement, high contrast animated, dynamic gradients, accent action colors
-- Secondary palette: Transitional states, success (Green #22C55E), error (Red #EF4444), neutral feedback
-- Effects: Scroll anim (Intersection Observer), hover (300-400ms), entrance, parallax (3-5 layers), page transitions
-- Accessibility: ⚠ Prefers-reduced-motion; performance: ⚠ Good; dark mode: ✓ Full.
-- Best for: Portfolio sites (網站), storytelling platforms (平台), interactive experiences, entertainment apps (娛樂), creative (創意), SaaS
-- Avoid for: Data dashboards (儀表板), critical accessibility (無障礙性), low-power devices, content-heavy, motion-sensitive
+**关键特征:**
+- 主色板:大胆色强调运动、高对比动效、动态渐变、动作强调色
+- 次色板:过渡态、成功(绿 #22C55E)、错误(红 #EF4444)、中性反馈
+- 效果:滚动动效(Intersection Observer)、hover(300-400ms)、入场、视差(3-5 层)、页面过渡
+- 无障碍:⚠ 需尊重 prefers-reduced-motion;性能:⚠ 良好;暗色模式:✓ 完整支持。
+- 最适用于:作品集站、叙事平台、交互体验、娱乐应用、创意、SaaS
+- 避免用于:数据仪表板、无障碍为硬性要求的场景、低功耗设备、内容密集场景、对动效敏感的用户
 
-## 2. Implementation Notes
+## 2. 实现要点
 
-- Framework fit: GSAP 10/10, Framer Motion 10/10
-- Era reference: 2020s Modern
-- Local preview: [Open HTML preview](../../refstyles/15-motion-driven.html)
-- Library index: [Open UI/UX Pro Max home](../../index.html)
+- 框架适配:GSAP 10/10、Framer Motion 10/10
+- 年代参照:2020 年代现代
+- 本地预览:[打开 HTML 预览](../../refstyles/15-motion-driven.html)
+- 库索引:[打开 UI/UX Pro Max 首页](../../index.html)
