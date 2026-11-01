@@ -34,6 +34,9 @@
 - `preview-longpress-peek` 长按 400ms 触发;三路手势:松手落回 / 拖到操作项执行 / 拖出范围取消
 - 所有 sheet 关闭必须响应系统返回键/Esc,且与下拉关闭走同一动画(见 [`accessibility.md`](../meta/accessibility.md) 焦点管理)
 - 入退场时长 ≤ 400ms(浮层档,见 [`micro-interactions.md`](micro-interactions.md) 分层口径);`prefers-reduced-motion` 降级为淡入淡出
+- **Sheet 按钮位**:完成类 sheet 的 Done 必配 Cancel(或 Back),三钮不同现;单视图 sheet Cancel 居左上、Done 居右上
+- **先关再开**:关 A sheet 开 B sheet 前先关 A——关闭应回到父视图而非另一张 sheet(与 popups.md 模态纪律"同一时间至多一个模态"同源)
+- **非模态 sheet**:影响父视图的补充操作(格式刷、取色器)用非模态 sheet 呈现,不锁父视图,用户可边调整边看效果;与 `popup-nested` 的堆叠语义分界:嵌套是模态栈,非模态 sheet 是工具面板
 
 ## 在 draw-md 中的写法
 

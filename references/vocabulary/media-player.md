@@ -1,0 +1,31 @@
+# 媒体播放器模式命名词汇
+
+> 术语库。视频/音频播放器的状态与适配模式命名。与页面加载(states.md)、滚动行为(scroll.md)互补:那里管页面级加载与滚动,这里管播放语境专属的加载时机、续播与画面适配。
+
+## 命名表
+
+| 模式名 | 构成要素(形态/阈值) | 适用场景 |
+| --- | --- | --- |
+| `player-loading-screen` | 纯黑底 + 居中 spinner,无周边内容 | 视频加载超过 2 秒才显示;够播即起播,剩余缓冲后台续载——2 秒内不出加载屏,防闪变 |
+| `player-autoresume` | 自动从上次退出时间点续播,不弹"是否继续"询问 | 回访续看;能续播就静默续,退出播放落在内容详情页并留续播入口 |
+| `player-aspect-fill` | 裁切充满容器 | 宽幅视频(2:1 至 2.40:1)的默认适配 |
+| `player-aspect-fit` | 完整适配 + 黑边 | 标准比例(4:3、16:9)的默认适配;宽高比决定默认模式,用户可手动切换 |
+| `player-overlay-delay` | 交互浮层(答题/打卡)出现时延迟 ≥0.5s 才暂停媒体,并给明确的"关闭浮层继续播放"出口 | 教育视频中途测验、打卡类浮层;浮层关闭立即续播 |
+
+## 使用规则
+
+- **2 秒阈值**:加载屏是"慢"的信号,不是默认开场;网络快的首帧直出
+- **续播免确认**:自动续播 + 时间点精确到上次退出位置;询问式续播("从 12:34 继续吗?")只用于源质量变化等真有歧义的场景
+- **宽高比决定默认**:fill 与 fit 是适配策略不是用户偏好;默认由内容比例定,切换入口常驻
+- **浮层不抢画面**:一切中途浮层必须可一键关闭并自动续播;浮层出现到暂停的 ≥0.5s 延迟让用户看清是画面在让位
+- **与 states.md 分工**:播放器内的加载走 `player-loading-screen`;页面级加载状态仍走 states.md
+
+## 在 draw-md 中的写法
+
+```markdown
+## MediaPlayer (video-detail)
+- loading: { pattern: player-loading-screen, threshold: 2s }
+- resume: player-autoresume
+- fit: { default: player-aspect-fit, wide: player-aspect-fill, switchable: true }
+- overlays: { pause-delay: 0.5s, dismiss-resumes: true }
+```

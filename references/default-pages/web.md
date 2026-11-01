@@ -76,7 +76,7 @@ Web 站点首页,承载品牌传达、核心功能入口与转化引导。
 
 ## settings
 
-集中管理账户与系统偏好,支持分组表单与统一保存。
+集中管理账户与系统偏好,支持分组表单与统一保存。分流与默认值纪律(什么该进设置)见 [`../vocabulary/settings.md`](../vocabulary/settings.md)。
 
 ## profile
 

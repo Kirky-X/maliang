@@ -74,7 +74,7 @@ App 启动后的主入口页,聚合核心功能入口与内容流,承担分发�
 
 ## settings
 
-集中管理应用偏好(通知、主题、缓存等)与账户操作(含退出登录)。
+集中管理应用偏好(通知、主题、缓存等)与账户操作(含退出登录)。分流与默认值纪律(什么该进设置)见 [`../vocabulary/settings.md`](../vocabulary/settings.md);通知偏好分级见 [`../vocabulary/notifications.md`](../vocabulary/notifications.md)。
 
 ## about
 

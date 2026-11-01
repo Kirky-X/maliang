@@ -25,6 +25,7 @@
 - 触发 [`ai-tells.md`](../meta/ai-tells.md) Unsplash random 占位时,改固定 ID
 - `gallery-lightbox` 必须有键盘 ESC 关闭 + 左右键切换
 - 单页画廊模式 1 种(避免混乱)
+- 分页圆点只表扁平有序页(不表层级);≤10 个,再多难以一瞥计数(改网格/缩略图索引);自定义指示图 ≤2 种
 
 ## 在 draw-md 中的写法
 

@@ -33,6 +33,8 @@
 - `scroll-infinite` 必须有 loading skeleton 与"已加载全部"终止态
 - `scroll-virtualized` 用于列表 > 100 项,见 [`performance.md`](../meta/performance.md) DOM Cost
 - 单页滚动模式 ≤ 2 种组合(如 `scroll-reveal` + `scroll-progress`)
+- 内容可滚要可见暗示:视图边缘露出一截下一屏内容,表示"还有更多";截断得刚刚好的视口让人以为已经到底
+- 同轴滚动容器禁嵌套(滚动区套滚动区抢滚轮);异轴(纵向页面 × 横向表格)可以
 
 ## 在 draw-md 中的写法
 

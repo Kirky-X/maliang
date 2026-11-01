@@ -94,6 +94,7 @@ function currentIndex() { return Math.round(-gsap.getProperty(pager, 'x') / page
 - 轴向锁定阈值 8-12px;锁定前的微小位移在松手时必须完全归零(未锁轴动作"不算数",参考按钮滑出取消语义)
 - 锁定竖轴时立刻把控制权交还页面滚动(`touch-action: pan-y` 配合),禁止再拦截
 - 点按(总位移 < 6px)不计为滑动手势,正常派发 click
+- 手势不可用必须显式说明原因:对象被锁定/权限不足/场景禁用拖拽时,给可见的锁定态或禁用提示——不说明原因的无效手势会被当成应用卡死
 - 页面级转场动画时长 ≤ 400ms(见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 分层口径)
 - 回弹 / 落定用 JS 弹簧驱动;本骨架的手势段禁用 CSS transition 驱动(CSS 过渡无法中途抓取反转,见 [`INDEX.md`](INDEX.md) R1 死法栏)
 

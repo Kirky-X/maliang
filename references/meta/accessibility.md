@@ -44,6 +44,7 @@
 
 - 所有装饰性动画(入场、视差、stagger)在 reduced-motion 下退化为瞬时显示
 - 功能性动画(loading 进度、状态切换反馈)允许保留,但 duration ≤ 150ms
+- **功能性动画的替代手法**:位移过渡(x/y/z)改淡入淡出;禁用模糊进出(blur in/out)动画;禁用 z 轴深度动画;弹簧动画收紧幅度——保留的 ≤150ms 反馈用这些手法实现,不是简单截断原动画
 - MOTION_INTENSITY(见 [`dials.md`](./dials.md))在 reduced-motion 下强制 ≤ 3
 - 视差滚动 / pin sticky / 横向平移必须**完全禁用**(非降级,是关闭)
 - preview 阶段必须双跑:默认 + reduced-motion,对比截图无信息丢失
@@ -106,6 +107,10 @@
 | 移动端热区          | 原生移动端(iOS/Android/鸿蒙)触摸目标 ≥ 44pt/48dp/44vp(平台规范);Web 最低 24×24 CSS px、推荐 44px(Touch CRITICAL,见 [`rules-priority.md`](./rules-priority.md);分层 slug 见 [`ux-rules.md`](./ux-rules.md) 第 5 节) |
 | 焦点顺序            | DOM 顺序 = 视觉顺序,不靠 `tabindex` 正整数手动调                       |
 | 动态内容            | `aria-live="polite"`(通知)/ `aria-live="assertive"`(错误)            |
+| 焦点归还            | 无用户操作不得移动焦点;唯一例外:焦点元素消失且用户正以方向键等离散输入导航时,把焦点移至相邻剩余项——焦点环必须始终落在用户能找到的位置 |
+| 焦点组导航          | 复合组件(工具栏/网格/列表)用 roving tabindex:Tab 进出组件组,方向键在组内移动;组获得焦点时自动落到组内主项 |
+| 多媒体可达          | 预录视频配 captions(同步字幕);翻译用 subtitles;视觉信息口述用 audio description;完整文本版用 transcript——按内容形态选择,直播至少保 captions |
+| 触控间距            | 带边框控件周围留 ≈12px 间距、无边框控件可见边缘周围留 ≈24px 间距,防误触(目标尺寸口径见上"移动端热区"行) |
 
 ## 6. Preview 阶段无障碍检查
 

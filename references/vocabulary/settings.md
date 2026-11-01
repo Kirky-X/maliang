@@ -1,0 +1,31 @@
+# 设置设计模式命名词汇
+
+> 术语库。设置是"把改动频率低、影响面宽的偏好集中存放"的一组模式,本表标准化其分流决策与默认值纪律。页面骨架(分组列表/保存动作)见 [`../default-pages/app.md`](../default-pages/app.md) 与 [`../default-pages/web.md`](../default-pages/web.md) 的 settings 条目,本篇管"什么该进设置、什么不该"。
+
+## 命名表
+
+| 模式名 | 构成要素(位置/形态) | 适用场景 |
+| --- | --- | --- |
+| `settings-inline` | 就地控件:任务所在屏幕上直接可改(开关/滑杆/分段) | 任务特定选项——当前场景可发现、改动即时见效;不必进设置区 |
+| `settings-page` | 设置区分组页:语义分组 + 行内控件 + 改动即存 | 一般性低频偏好(主题、通知分级、语言);分组标题名词,组内 ≤7 行 |
+| `settings-delegate` | 委托系统/账号层:只留入口跳转,不自建副本 | 系统级全局设置(深浅色、系统字体缩放、系统语言)——尊重系统设置,避免重复定制版 |
+
+## 使用规则
+
+- **三级分流判据 = 改动频率 × 影响范围**:任务内高频改动 → `settings-inline`;跨任务低频偏好 → `settings-page`;与系统/账号一致的 → `settings-delegate`
+- **默认值哲学**:默认值给最多数人最佳体验——理想状态是用户零调整即达最佳;每个默认值都要能回答"为什么是它"
+- **最小化设置数量**:设置越多,目标越难找、产品亲和力越低;每加一条设置先问"能不能自动检测/能不能给更聪明的默认"
+- **不放可自动检测的信息**:已连接的外设、当前深浅色模式、屏幕尺寸等能自动获得的,禁止做成设置项
+- **不复制系统设置**:系统已有全局开关的(勿扰、深色模式),应用内最多放"前往系统设置"的入口,不做平行副本
+- **改动即存**:设置页内一般不需要"保存"按钮,改动即时生效;有明确提交语义的例外(表单式配置)才配保存动作
+- **与 notifications.md 互链**:通知偏好(分级/节奏/退订)是 `settings-page` 的必设入口
+
+## 在 draw-md 中的写法
+
+```markdown
+## Settings
+- inline: [editor-autosave, table-density]        # 任务就地
+- page: { groups: [appearance, notifications, language] }   # settings-page
+- delegate: { theme: system, font-scale: system }  # settings-delegate
+- defaults: documented-per-item
+```

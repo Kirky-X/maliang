@@ -26,6 +26,20 @@
 - `type-kinetic` 仅 MOTION_INTENSITY ≥ 8 使用(见 [`dials.md`](../meta/dials.md))
 - 中文行高 ≥ 1.6,英文 ≥ 1.4
 
+## 文字层级色
+
+> 文字颜色按视觉重要度分层,直接映射 DESIGN.md 的 text token 层级;层级差靠色阶+字重联合表达(与 principles 第 15 定律 weight beats size 同源)。
+
+| 层级 | 角色 | 适用场景 |
+| --- | --- | --- |
+| `text-primary` | 主文字色,最高对比 | 标题、正文主句、关键数值 |
+| `text-secondary` | 补充说明色 | 副标题、说明文字、表单帮助文本 |
+| `text-tertiary` | 弱化色 | 占位符、禁用项、时间戳/元信息 |
+| `text-quaternary` | 极弱色 | 水印字、装饰性页脚、背景标签 |
+
+- 每级与背景的实际对比仍须过 WCAG(口径见 [`../dimensions/color.md`](../dimensions/color.md));tertiary/quaternary 只承载可弃信息,禁放必读内容
+- 层级数固定 4 级封顶——再多一档,相邻档差异就小到读不出层级
+
 ## 在 draw-md 中的写法
 
 ```markdown

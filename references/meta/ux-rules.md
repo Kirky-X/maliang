@@ -1,6 +1,6 @@
 # UX 规则库 —— 规则 ID + Do/Don't 可核对条目
 
-> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,全库共 54 条。
+> 规范层。本文是"规则 ID + Do/Don't"的**可核对条目库**:每条规则有稳定 slug、一句话规则、Do/Don't、适用端与严重级,供设计/实现/验证三阶段按 slug 引用与核对。出处：UX 规则库(`ux-guidelines.csv` 119 条 + `quick-reference.md` 稳定 ID)精选 40 条;精选日期 2026-09-07。§11 浏览器原生面主题化 5 条§12 国际化与方向 1 条为 2026-09 整合审查增补(W2-05 harden 可正则子集配套登记,中文自研),§6 增补 fixed-width-text 1 条(同批)与 cancellable-state-transitions 1 条(2026-10 自 accessibility §8 收敛),§13 层级与动作 5 条,§14 包容性 5 条、§15 键盘与指针 7 条、§5 触控目标增补 3 条为 2026-11 增补(中文自研),全库共 68 条。
 > 与脚本的关系:`scripts/validate.py draw-md` 现有 23 项检查中 4 项回链本表 slug(aria-label → aria-labels;touch-target → touch-target-44 / web-target-size-24;fixed-width-text → fixed-width-text;physical-property → physical-property,回链见脚本 R_* 常量行内注释),其余 19 项为结构/token 契约项、无本表对应;演进目标:ERROR 级规则逐步机械化进脚本,新检查注释须回链 slug。脚本通过 ≠ 规则全对,脚本未覆盖的部分以本文 Do/Don't 为准。
 
 ## 严重级定义
@@ -55,6 +55,9 @@
 | touch-target-44    | 原生移动端(iOS/Android/鸿蒙)触控目标 ≥ 44pt/48dp/44vp(平台规范);Web 口径见 web-target-size-24 | 视觉不足时扩展热区至达标       | 热区跟重视觉尺寸一起缩水      | iOS/Android/鸿蒙 | ERROR    |
 | web-target-size-24 | Web 指针目标 ≥ 24×24 CSS px(WCAG 2.2 2.5.8 AA),推荐 44px;原生分层口径见 touch-target-44 | 不足时间距等效豁免并记录原因   | 拿原生 44pt/48dp 混充 Web 达标 | Web            | ERROR    |
 | touch-spacing      | 相邻触控目标间距 ≥ 8px                 | 密集列表加间隔或收拢行动       | 可点击元素紧贴排列            | 全端           | WARN     |
+| hit-area-padding   | 热区内边距:带边框控件 ≈12px、无边框控件 ≈24px | 视觉尺寸外的透明热区扩边,防误触;过小显得必须精准瞄准,过大指针难移出 | 相邻热区留缝(条栏按钮热区不连续,高亮会在缝隙闪烁) | 全端           | ADVISORY |
+| touch-press-visible | 触摸按压反馈必须可见                  | 反馈效果(辉光/提亮)避开指腹遮挡区或足够大,透过手指也能看到 | 反馈只在指腹正下方 1:1 区域(被手指盖住看不见) | iOS/Android/鸿蒙 | WARN     |
+| target-scale-not-control | 放大热区而非控件本身            | 小/密集控件提供触摸时临时放大的可操作变体,抬指后保留片刻再收起 | 为达标把控件视觉尺寸放大,破坏布局密度 | 全端           | WARN     |
 
 ## 6. 文本韧性
 
@@ -132,6 +135,28 @@
 | weight-contrast-balance| 重量与对比互偿:加重量修低对比,降对比修超重 | 实心图标压过旁边文字 → 降图标对比(更柔的色);1px 边框柔色太隐、加深又太凶 → 保柔色加粗到 2px | 用同一种预算硬扛(只加深 / 只加粗)把另一维推过头 | 全端 | ADVISORY |
 | baseline-align-mixed   | 一行混排字号对齐用 baseline             | 一行内大小字号混排用 `align-items: baseline`(Web)/ `CrossAxisAlignment.baseline`(Flutter),大数字与单位/标签底对齐 | 垂直居中对齐混排行,字面看起来各飘各的      | 全端 | ADVISORY |
 | layout-explains        | 删掉不必要的次要标签与描述,让布局本身传达(Avoid unnecessary secondary labels and descriptions — let the layout do the explaining) | 层级靠尺度差/重量差/留白差/分组表达,先试「不加任何说明能不能不言自明」;说明文字只在删掉后会误读或误操作时保留(单位/法律/风险类);同组卡片用版式差异区分身份,说明只留一份且放在唯一需要处 | 每个标题上挂一行全大写小标签(eyebrow)充当层级;卡片下配「这是 XX 卡片」式自我描述行;标签与描述双份说同一件事;用说明行补版式没做出来的分组 | 全端 | WARN     |
+
+## 14. 包容性
+
+| slug                   | 一句话规则                                        | Do(怎么做)                                                                 | Don't(别怎么做)                          | 端   | Severity |
+| ---------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- | ---- | -------- |
+| inclusive-language     | 文案避开俚语/习语/有压迫渊源的短语                 | 用直白中性表达("遗留" 而非带歧视渊源的旧词);幽默谨慎,翻译后语义会漂移        | 未定义术语、圈内黑话、依赖文化语境的比喻     | 全端 | WARN     |
+| gender-neutral         | 文案与人形图形性别中性;表单性别项给自填出口         | 表单需性别时给 nonbinary / self-identify / 不愿透露选项;人形图标用无性别人形 | 默认二元性别单选;人形图标暗示性别角色       | 全端 | WARN     |
+| stereotype-check       | 以普遍人类经历替代特定文化/能力经历                 | 安全问题用"你最喜欢的活动"这类普适项,而非依赖车/房/教育经历的项;插图场景覆盖多元人群 | 场景/角色固化刻板印象(性别/种族/年龄/能力)  | 全端 | ADVISORY |
+| people-first-disability | 残障表述用"人"优先语言,残障是光谱                 | "视障用户";交互设计考虑永久/临时/情境性残障(单手抱娃=情境性)                 | 把用户按能力二分("健全/残障");用缺陷定义人  | 全端 | ADVISORY |
+| cultural-color-semantic | 色彩语义随目标 locale 校验                         | 面向新市场时核对颜色的文化含义(红在部分文化表喜庆非危险)                      | 假设语义色(红=危险/绿=成功)全球通用         | 全端 | ADVISORY |
+
+## 15. 键盘与指针
+
+| slug                   | 一句话规则                                        | Do(怎么做)                                                                 | Don't(别怎么做)                          | 端   | Severity |
+| ---------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- | ---- | -------- |
+| keyboard-standard-shortcuts | 尊重标准快捷键语义,Esc=取消当前操作       | 仅为高频专属命令新增快捷键;Ctrl/Cmd+Z 撤销、Ctrl/Cmd+F 查找等标准语义不挪用 | 给标准快捷键重绑异义;堆砌快捷键降低可学性   | Web/桌面 | WARN     |
+| keyboard-modifier-roles | 修饰键分层:Ctl/Cmd 主命令、Shift 补充/反向、Alt 低频 | Shift-Tab 反向移动、Shift+Cmd+Z 重做;多修饰键按 Control→Alt→Shift→Command 顺序书写 | 给双字符键的上位字符再加 Shift;Alt 承载高频命令 | Web/桌面 | ADVISORY |
+| input-compose-stability | 组合输入(IME/手写/语音)期间文本字段保持静止       | 候选窗/转写进行中不移动字段、不缩放、不自动滚动已转写文本                    | 输入中途重排布局或滚走落笔位置              | 全端 | WARN     |
+| cursor-semantics       | cursor 跟随内容语义映射                           | 文本 I-beam、链接 pointer、拖拽 grab/grabbing、禁用 not-allowed、缩放 zoom-in/out、方向调整 resize-* | 全站默认 cursor 或漏设可点元素的 pointer    | Web  | ADVISORY |
+| hover-delay-tiered     | hover 反馈延迟按用途分三档                        | 细微/邀请型即时显示;快速交互型(面板展开)短延迟;附加信息型(tooltip)更长延迟 | 所有 hover 一刀切零延迟(误扫即触发)或统一长延迟 | Web  | ADVISORY |
+| hover-style-by-element | hover 效果按元素类型三选一                        | 组内控件=高亮;独立控件=lift(缩放+投影+高光,阴影不脱离缩放);大元素=自定义;表格行不用缩放 | 对所有元素套同一种 lift;只用阴影不缩放      | Web  | ADVISORY |
+| no-gesture-hijack      | 不劫持浏览器原生手势                              | 双指滚动/捏合缩放/历史导航滑动保持系统行为;自定义手势只加在非冲突区          | preventDefault 掉捏合缩放或右键菜单且无替代  | Web  | WARN     |
 
 ## 与其他文档的关系
 
