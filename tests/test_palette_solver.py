@@ -81,5 +81,50 @@ class TestCli(unittest.TestCase):
         self.assertEqual(code, 2)
 
 
+class TestHarmony(unittest.TestCase):
+    """色轮调和方案:偏移查找表 + 跨色相求解(确定性几何,不交给模型)。"""
+
+    def test_offset_table(self):
+        self.assertEqual(ps.HARMONY_SCHEMES["complementary"], (180.0,))
+        self.assertEqual(ps.HARMONY_SCHEMES["split-complementary"], (150.0, 210.0))
+        self.assertEqual(ps.HARMONY_SCHEMES["triadic"], (120.0, 240.0))
+        self.assertEqual(ps.HARMONY_SCHEMES["tetradic"], (60.0, 180.0, 240.0))
+        self.assertEqual(ps.HARMONY_SCHEMES["analogous"], (330.0, 30.0))
+
+    def test_offset_hues_mod_360(self):
+        self.assertEqual(ps.harmony_offset_hues(220.0, "complementary"), [40.0])
+        # 30 + 330 = 360 → 取模为 0
+        self.assertEqual(ps.harmony_offset_hues(30.0, "analogous"), [0.0, 60.0])
+
+    def test_solve_harmony_entries_meet_floors(self):
+        entries = ps.solve_harmony("0b0d12", 150.0, 0.12, "triadic")
+        self.assertEqual(len(entries), 2)
+        for e in entries:
+            self.assertEqual(e["missing"], [])
+            self.assertGreaterEqual(
+                ps.contrast_ratio_hex_pair(e["roles"]["text"], "0b0d12"), 4.5)
+            self.assertGreaterEqual(
+                ps.contrast_ratio_hex_pair(e["roles"]["ui"], "0b0d12"), 3.0)
+
+    def test_cli_rejects_unknown_scheme(self):
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            code = ps._main_palette_solver(
+                ["--bg", "0b0d12", "--hue", "150", "--harmony", "bogus"])
+        self.assertEqual(code, 2)
+
+    def test_cli_json_smoke(self):
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            code = ps._main_palette_solver(
+                ["--bg", "0b0d12", "--hue", "150", "--harmony", "triadic", "--json"])
+        self.assertEqual(code, 0)
+        data = json.loads(buf.getvalue())
+        self.assertEqual(data["scheme"], "triadic")
+        self.assertEqual(data["base_hue"], 150.0)
+        self.assertEqual(len(data["entries"]), 2)
+        self.assertIn("text", data["entries"][0]["roles"])
+
+
 if __name__ == "__main__":
-    unittest._main_palette_solver()
+    unittest.main()

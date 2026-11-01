@@ -2,7 +2,7 @@
 """maliang 脚本共享层(validate-draw-md / ui-graph / check-claims / 各验证脚本共用)。
 
 职责面:①frontmatter 解析(含一层嵌套);②markdown 表格解析;③WCAG 对比度数学
-(全库唯一实现);④lint-checks.json 规则引擎(check-claims canonical;skill_lint 为
+(全库唯一实现)与 APCA-W3 感知对比(参考值);④lint-checks.json 规则引擎(check-claims canonical;skill_lint 为
 vendored 自包含孪生副本,parity 测试守护);⑤「PyYAML 优先+降级」骨架。
 依赖: Python 3 标准库(无第三方依赖)。
 """
@@ -285,6 +285,69 @@ def contrast_ratio_hex(hex1, hex2):
     l1 = relative_luminance(tuple(v / 255.0 for v in hex_to_rgb255(hex1)))
     l2 = relative_luminance(tuple(v / 255.0 for v in hex_to_rgb255(hex2)))
     return contrast_ratio(l1, l2)
+
+
+# ---------------------------------------------------------------------------
+# APCA-W3 0.1.9 感知对比(WCAG 之外的参考值;非门禁,见 color.md 第 11 节)
+# ---------------------------------------------------------------------------
+
+# SA98G 常量(官方 apca-w3.js 0.1.9 逐项对齐)
+APCA_MAIN_TRC = 2.4
+APCA_S_RCO = 0.2126729
+APCA_S_GCO = 0.7151522
+APCA_S_BCO = 0.0721750
+APCA_NORM_BG = 0.56
+APCA_NORM_TXT = 0.57
+APCA_REV_TXT = 0.62
+APCA_REV_BG = 0.65
+APCA_BLK_THRS = 0.022
+APCA_BLK_CLMP = 1.414
+APCA_SCALE_BOW = 1.14
+APCA_SCALE_WOB = 1.14
+APCA_LO_BOW_OFFSET = 0.027
+APCA_LO_WOB_OFFSET = 0.027
+APCA_DELTA_Y_MIN = 0.0005
+APCA_LO_CLIP = 0.1
+
+
+def apca_luminance(rgb01):
+    """APCA 感知亮度 Y:通道 0-1 浮点直接 ^2.4(非 WCAG 的分段线性)。"""
+    y = 0.0
+    for coef, c in ((APCA_S_RCO, rgb01[0]), (APCA_S_GCO, rgb01[1]), (APCA_S_BCO, rgb01[2])):
+        y += coef * c ** APCA_MAIN_TRC
+    return y
+
+
+def _apca_soft_clamp(y):
+    """近黑软钳:Y ≤ 0.022 时按 (blkThrs − Y)^1.414 回升,避免纯黑塌陷。"""
+    return y if y > APCA_BLK_THRS else y + (APCA_BLK_THRS - y) ** APCA_BLK_CLMP
+
+
+def apca_Lc(txt_y, bg_y):
+    """APCA Lc:深字浅底(BoW)返回正值,浅字深底(WoB)返回负值;量程约 ±108。
+
+    极性不可交换——官方语义。参数为两个 APCA 感知亮度(0-1 浮点),
+    txtY/bgY 顺序与官方 APCAcontrast(txtY, bgY) 一致。
+    """
+    for y in (txt_y, bg_y):
+        if y < 0.0 or y > 1.1:
+            return 0.0
+    txt_y = _apca_soft_clamp(txt_y)
+    bg_y = _apca_soft_clamp(bg_y)
+    if abs(bg_y - txt_y) < APCA_DELTA_Y_MIN:
+        return 0.0
+    if bg_y > txt_y:
+        sapc = (bg_y ** APCA_NORM_BG - txt_y ** APCA_NORM_TXT) * APCA_SCALE_BOW
+        return 0.0 if sapc < APCA_LO_CLIP else (sapc - APCA_LO_BOW_OFFSET) * 100.0
+    sapc = (bg_y ** APCA_REV_BG - txt_y ** APCA_REV_TXT) * APCA_SCALE_WOB
+    return 0.0 if sapc > -APCA_LO_CLIP else (sapc + APCA_LO_WOB_OFFSET) * 100.0
+
+
+def apca_Lc_hex(txt_hex, bg_hex):
+    """六位 hex 颜色对的 APCA Lc 便捷入口(顺序:文字色在前,背景色在后)。"""
+    txt_y = apca_luminance(tuple(v / 255.0 for v in hex_to_rgb255(txt_hex)))
+    bg_y = apca_luminance(tuple(v / 255.0 for v in hex_to_rgb255(bg_hex)))
+    return apca_Lc(txt_y, bg_y)
 
 
 # ---------------------------------------------------------------------------

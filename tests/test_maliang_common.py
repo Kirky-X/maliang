@@ -86,6 +86,34 @@ class TestWcagMath(unittest.TestCase):
         self.assertAlmostEqual(mc.contrast_ratio_hex("#9CA3AF", "#F7F8FA"), 2.39, places=2)
 
 
+class TestApcaContrast(unittest.TestCase):
+    """APCA-W3 0.1.9 Lc(SA98G 常量;锚点对照官方 apca-w3.js 验算)。"""
+
+    def test_black_on_white_anchor(self):
+        # 官方实现纯黑字/纯白底 Lc ≈ 106.05(BoW 为正)
+        self.assertAlmostEqual(mc.apca_Lc_hex("#000000", "#ffffff"), 106.05, delta=0.5)
+
+    def test_white_on_black_anchor(self):
+        # 纯白字/纯黑底 Lc ≈ -107.89(WoB 恒为负)
+        self.assertAlmostEqual(mc.apca_Lc_hex("#ffffff", "#000000"), -107.89, delta=0.5)
+
+    def test_same_color_is_zero(self):
+        self.assertEqual(mc.apca_Lc_hex("#2a3441", "#2a3441"), 0.0)
+
+    def test_polarity_sign(self):
+        self.assertGreater(mc.apca_Lc_hex("#111111", "#eeeeee"), 0.0)
+        self.assertLess(mc.apca_Lc_hex("#eeeeee", "#111111"), 0.0)
+
+    def test_monotonic_with_lightness_gap(self):
+        lo = abs(mc.apca_Lc_hex("#888888", "#ffffff"))
+        hi = abs(mc.apca_Lc_hex("#222222", "#ffffff"))
+        self.assertGreater(hi, lo)
+
+    def test_low_delta_soft_clamps_to_zero(self):
+        # 近黑两灰经软钳后 ∆Y < deltaYmin → 0(低对比平滑回卷)
+        self.assertEqual(mc.apca_Lc_hex("#000000", "#010101"), 0.0)
+
+
 class TestEngineParityWithSkillLint(unittest.TestCase):
     """skill_lint(可 vendored 自包含副本)与 maliang_common 共享引擎的孪生一致性:
     同一 fixture 上两套实现必须同判,防止双副本语义漂移(F20)。"""

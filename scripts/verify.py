@@ -8,6 +8,7 @@
     python3 scripts/verify.py assets <preview.html> [options]            # 资产位在场验证(G40)
     python3 scripts/verify.py measure-colors <图片> [options]            # 图片确定性测色
     python3 scripts/verify.py palette-solver <参数>                      # OKLCH 亮度求解 + 配对矩阵
+                                                                        #   --harmony <方案>:跨色相调和(complementary/split-complementary/analogous/triadic/tetradic)
 
 退出码: 各子命令沿用原脚本三态语义,canonical 见 scripts/EXIT-CODES.md。
 各节实现为原独立脚本全文并入;interactive 节原经 importlib 动态加载
@@ -2359,6 +2360,55 @@ def format_report(roles, pairs, missing, hue, chroma):
     return "\n".join(lines)
 
 
+# ---------- 跨色相调和(色轮几何;确定性查找表) ----------
+
+# 标准色轮偏移(度)。基色相 + 偏移 → 调制到 [0,360);analogous 用 330 表示 −30。
+HARMONY_SCHEMES = {
+    "complementary": (180.0,),
+    "split-complementary": (150.0, 210.0),
+    "analogous": (330.0, 30.0),
+    "triadic": (120.0, 240.0),
+    "tetradic": (60.0, 180.0, 240.0),
+}
+
+
+def harmony_offset_hues(base_hue, scheme):
+    """基色相加方案偏移,返回调制到 [0,360) 的色相列表(保序)。"""
+    return [(base_hue + off) % 360.0 for off in HARMONY_SCHEMES[scheme]]
+
+
+def solve_harmony(bg_hex, base_hue, chroma, scheme):
+    """对方案内每个偏移色相跑三档求解,返回 [{"hue", "offset", "roles", "missing"}]。"""
+    entries = []
+    for off, hue in zip(HARMONY_SCHEMES[scheme], harmony_offset_hues(base_hue, scheme)):
+        roles, missing = solve_palette(bg_hex, hue, chroma)
+        entries.append({"hue": hue, "offset": off, "roles": roles, "missing": missing})
+    return entries
+
+
+def _report_harmony(bg, base_hue, chroma, scheme, as_json):
+    """调和模式报告:逐偏移色相列出三档色与缺档(缺档显性化)。"""
+    entries = solve_harmony(bg, base_hue, chroma, scheme)
+    if as_json:
+        print(json.dumps({
+            "scheme": scheme, "base_hue": base_hue, "chroma": chroma, "bg": bg,
+            "entries": [{"hue": e["hue"], "offset": e["offset"],
+                         "roles": {k: v for k, v in e["roles"].items() if v},
+                         "missing_roles": e["missing"]} for e in entries],
+        }, ensure_ascii=False, indent=2))
+    else:
+        lines = ["# 调和配色 — scheme=%s bg=%s base_hue=%.1f chroma=%.3f"
+                 % (scheme, bg, base_hue, chroma)]
+        for e in entries:
+            note = "" if not e["missing"] else "  !! 无解档位: %s" % ", ".join(e["missing"])
+            lines.append("  offset %++.0f° hue=%5.1f  text=#%s ui=#%s decorative=#%s%s"
+                         % (e["offset"] if e["offset"] < 180 else e["offset"] - 360,
+                            e["hue"], e["roles"].get("text", "?"), e["roles"].get("ui", "?"),
+                            e["roles"].get("decorative", "?"), note))
+        print("\n".join(lines))
+    return 1 if any(e["missing"] for e in entries) else 0
+
+
 def _main_palette_solver(argv=None):
     parser = argparse.ArgumentParser(
         description="OKLCH 亮度域配色求解 + 全配对矩阵(text≥4.5/UI≥3.0/decorative<3.0;无 MOODS)"
@@ -2366,6 +2416,9 @@ def _main_palette_solver(argv=None):
     parser.add_argument("--bg", required=True, help="背景色 6 位 hex,如 0b0d12")
     parser.add_argument("--hue", type=float, required=True, help="前景色相(度,0-360)")
     parser.add_argument("--chroma", type=float, default=0.12, help="起始彩度(默认 0.12;无解时自动 0.85 降档)")
+    parser.add_argument("--harmony", default=None,
+                        help="跨色相调和方案(%s;色相为基色相,逐偏移色相求解)"
+                             % "/".join(sorted(HARMONY_SCHEMES)))
     parser.add_argument("--json", action="store_true", help="输出机器可读 JSON(默认人类可读报告)")
     args = parser.parse_args(argv)
 
@@ -2376,6 +2429,13 @@ def _main_palette_solver(argv=None):
     if not (0.0 <= args.hue <= 360.0) or not (0.0 <= args.chroma <= 0.4):
         print("palette-solver: --hue 须在 [0,360]、--chroma 须在 [0,0.4]", file=sys.stderr)
         return 2
+    if args.harmony is not None and args.harmony not in HARMONY_SCHEMES:
+        print("palette-solver: --harmony 须为 %s 之一,得到 %r"
+              % ("/".join(sorted(HARMONY_SCHEMES)), args.harmony), file=sys.stderr)
+        return 2
+
+    if args.harmony is not None:
+        return _report_harmony(bg, args.hue, args.chroma, args.harmony, args.json)
 
     roles, missing = solve_palette(bg, args.hue, args.chroma)
     pairs = pairing_matrix(roles)
