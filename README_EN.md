@@ -49,7 +49,7 @@ First-run requirements: Python 3.8+ only (scripts use the standard library exclu
 
 ## 🚀 Quick Start
 
-Prerequisite: the skill is deployed to an agent skills directory; `{SKILL_DIR}` is the install directory and `--target` points at the user's project (never analyze the skill's own `examples/`).
+Prerequisite: the skill is deployed to an agent skills directory; `{SKILL_DIR}` is the install directory and `--target` points at the user's product directory (canonical `.maliang/ui-markdown/`, layout contract in `references/meta/workspace-layout.md`; never analyze the skill's own `examples/`).
 
 ```text
 Create a DESIGN.md for this project          # → design-md
@@ -61,9 +61,9 @@ Convert this page to HarmonyOS code          # → draw-harmony
 The script layer runs standalone too:
 
 ```bash
-python3 {SKILL_DIR}/scripts/ui-graph.py generate --target ui-markdown/      # build the UI relationship graph
-python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target ui-markdown/     # navigation dead-link check
-python3 {SKILL_DIR}/scripts/validate.py draw-md ui-markdown/ --format text  # 15 compliance checks
+python3 {SKILL_DIR}/scripts/ui-graph.py generate --target .maliang/ui-markdown/      # build the UI relationship graph
+python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target .maliang/ui-markdown/     # navigation dead-link check
+python3 {SKILL_DIR}/scripts/validate.py draw-md .maliang/ui-markdown/ --format text  # 23 compliance checks
 bash {SKILL_DIR}/scripts/ci-gate.sh                                          # CI gate (tests + 3 validators)
 ```
 
@@ -80,11 +80,11 @@ flowchart LR
 
 ## ✅ Tests & Verification
 
-Measured pytest run (2026-10-20, Python 3.12):
+Measured pytest run (2026-11-03, Python 3.12):
 
 ```text
 $ python3 -m pytest tests -q
-445 passed, 1 skipped in 13.13s
+629 passed, 17 skipped in 11.44s
 ```
 
 Test files: see [`tests/`](tests) (single source; counts guarded by `test_doc_consistency`).
@@ -110,8 +110,9 @@ maliang/
 │   ├── vocabulary/          # 30 component-naming vocabulary docs (incl. pro-motion, chat)
 │   └── default-pages/       # default page lists (15 app + 15 web pages, P0–P2)
 ├── scripts/                 # verification layer: preview-check / preview-lint.js / verify-states / verify-interactive / design-md (merged entry) / validate-generated / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate (exit-code canonical: scripts/EXIT-CODES.md); second batch: verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy; base layer: ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / device_models / maliang_common / devices/
-├── examples/                # 12 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue)
-└── tests/                   # pytest suite (445 cases, 31 files)
+├── examples/                # 12 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue, first-generation layout)
+#   In user projects all runtime artifacts land in <project-root>/.maliang/ (DESIGN.md + ui-markdown/ + preview/ + critique/ + ip/ + ip-handbook/)
+└── tests/                   # pytest suite (646 cases, 39 files)
 ```
 
 ## 🔮 Boundaries

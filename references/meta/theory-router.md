@@ -12,7 +12,7 @@
 
 ## 1. 阶段自动识别(判阶表)
 
-判阶是**确定性决策表**(规则7:不交给模型猜)。输入三类信号:**产物**(工作区文件存在性:DESIGN.md / ui-markdown\*.md / preview 产物 / 评分快照 / 框架代码;规范路径见 [workspace-layout.md](workspace-layout.md)——页面规格/预览/快照统一在 `design/` 下,存量项目旧路径 `examples/ui-markdown/` 兼容识别)、**意图**(用户措辞,对齐 SKILL.md 子命令路由)、**当前位置**(本会话已进入的子命令)。已进入子命令时直接按 lifecycle「覆盖对照」映射段,不再判;未进入时自上而下首条命中即判:
+判阶是**确定性决策表**(规则7:不交给模型猜)。输入三类信号:**产物**(工作区文件存在性:DESIGN.md / ui-markdown\*.md / preview 产物 / 评分快照 / 框架代码;规范路径见 [workspace-layout.md](workspace-layout.md)——页面规格/预览/快照统一在 `.maliang/` 下,存量项目旧路径 `design/` 与 `examples/ui-markdown/` 兼容识别)、**意图**(用户措辞,对齐 SKILL.md 子命令路由)、**当前位置**(本会话已进入的子命令)。已进入子命令时直接按 lifecycle「覆盖对照」映射段,不再判;未进入时自上而下首条命中即判:
 
 | # | 条件(全部成立) | 判为 | 理论包 |
 | --- | --- | --- | --- |

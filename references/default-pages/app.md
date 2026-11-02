@@ -10,7 +10,7 @@
 
 | 列名 | 含义 |
 | ---- | ---- |
-| 页面 slug | kebab-case 页面标识,与 `examples/ui-markdown/ui/<slug>.md` 产物文件名对齐(如 `home` → `ui/home.md`,`forgot-password` → `ui/forgot-password.md`) |
+| 页面 slug | kebab-case 页面标识,与 `.maliang/ui-markdown/ui/<slug>.md` 产物文件名对齐(如 `home` → `ui/home.md`,`forgot-password` → `ui/forgot-password.md`) |
 | 描述 | 一句话页面用途(≤20 字) |
 | 必备元素 | 该页 MUST 含的核心区块/组件,用 `/` 分隔 |
 | 优先级 | P0(必备)/ P1(按业务选)/ P2(可选) |

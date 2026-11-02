@@ -1,7 +1,7 @@
 # preview 子命令 —— 使用 Element Plus 实时预览验证
 
 > 本文件是 `preview` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 输入 = `draw-md` 产出的页面级 UI markdown(`design/ui-markdown/` 下),输出 = 自包含 HTML 预览文件。
+> 输入 = `draw-md` 产出的页面级 UI markdown(`.maliang/ui-markdown/` 下),输出 = 自包含 HTML 预览文件。
 > 预览使用 Element Plus 框架(CDN 引入),支持设备外壳展示(从 `scripts/device_models.py` 读取尺寸)。
 
 ---
@@ -32,7 +32,7 @@ flowchart LR
 读取 `draw-md` 产出的页面 markdown:
 
 1. **解析 frontmatter** — 提取 `name`、`description`、`background`、`updated`、`version`
-2. **解析 token.md** — 读取 `design/ui-markdown/token.md`,建立 token 名→硬值映射表
+2. **解析 token.md** — 读取 `.maliang/ui-markdown/token.md`,建立 token 名→硬值映射表
 3. **解析布局章节** — 按"顶部导航 → 主体区块 → 底部 dock"顺序,逐章提取组件类型与参数表
 4. **解析 organisms** — 若页面引用了 `organisms/` 下的组件,读取对应 markdown
 
@@ -430,7 +430,7 @@ preview 产出的 HTML 必须通过 `validate.py draw-md` 全部 23 项检查(�
 ## 产出物
 - 一个页面 → 一个 HTML 预览文件
 - 文件命名:`preview_<page-name>_<device>.html`(如 `preview_home_iphone15.html`)
-- 产出位置:用户指定目录(默认 `design/preview/`)
+- 产出位置:用户指定目录(默认 `.maliang/preview/`)
 
 ---
 

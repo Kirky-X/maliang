@@ -179,7 +179,7 @@ def write_conflict_report(root: str, candidate: dict, conflicts: list[dict]) -> 
 def cmd_init(root: str) -> int:
     ensure_store(root)
     print(f"已初始化账本：{ledger_dir(root)}")
-    print("提示：把 .maliang/ 加进项目 .gitignore（与 variation-engine build-log 同域同待遇）。")
+    print("提示：把 .maliang/feedback/ 加进项目 .gitignore（与 variation-engine build-log 同域同待遇；.maliang/ 下交付产物默认入仓，禁整目录 ignore，清单见 references/meta/workspace-layout.md）。")
     return 0
 
 

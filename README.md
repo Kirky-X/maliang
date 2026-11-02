@@ -49,7 +49,7 @@ npx skills add Kirky-X/maliang --agent claude-code -y
 
 ## 🚀 快速开始
 
-前置：skill 已部署到 agent 技能目录；`{SKILL_DIR}` 指安装目录，`--target` 指向用户项目路径（禁止拿 skill 自带 `examples/` 当分析目标）。
+前置：skill 已部署到 agent 技能目录；`{SKILL_DIR}` 指安装目录，`--target` 指向用户项目产物目录（canonical 为 `.maliang/ui-markdown/`，布局契约见 `references/meta/workspace-layout.md`；禁止拿 skill 自带 `examples/` 当分析目标）。
 
 ```text
 为这个项目创建 DESIGN.md               # → design-md
@@ -61,9 +61,9 @@ npx skills add Kirky-X/maliang --agent claude-code -y
 脚本层可直接独立运行：
 
 ```bash
-python3 {SKILL_DIR}/scripts/ui-graph.py generate --target ui-markdown/      # 生成 UI 关系图
-python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target ui-markdown/     # 导航死链检查
-python3 {SKILL_DIR}/scripts/validate.py draw-md ui-markdown/ --format text  # 23 项规范性检查
+python3 {SKILL_DIR}/scripts/ui-graph.py generate --target .maliang/ui-markdown/      # 生成 UI 关系图
+python3 {SKILL_DIR}/scripts/ui-graph.py check-nav --target .maliang/ui-markdown/     # 导航死链检查
+python3 {SKILL_DIR}/scripts/validate.py draw-md .maliang/ui-markdown/ --format text  # 23 项规范性检查
 bash {SKILL_DIR}/scripts/ci-gate.sh                                          # CI 验证门（单测 + 三验证器）
 ```
 
@@ -80,11 +80,11 @@ flowchart LR
 
 ## ✅ 测试与验证
 
-pytest 实测（2026-10-20，Python 3.12）：
+pytest 实测（2026-11-03，Python 3.12）：
 
 ```text
 $ python3 -m pytest tests -q
-446 passed, 1 skipped in 13.13s
+629 passed, 17 skipped in 11.44s
 ```
 
 测试文件清单以 [`tests/`](tests) 单一来源为准（计数一致性由 `test_doc_consistency` 断言守护）；本批新增验证层脚本各有对应测试与 fixtures。
@@ -110,8 +110,9 @@ maliang/
 │   ├── vocabulary/          # 30 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息）
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
 ├── scripts/                 # 验证层：preview-check / preview-lint.js / verify-states / verify-interactive / design-md(合并入口) / validate-generated / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate（退出码 canonical 见 scripts/EXIT-CODES.md）；第二批：verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy；基础层：ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / device_models / maliang_common / devices/
-├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue）
-└── tests/                   # pytest 套件（445 用例，31 文件）
+├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue，第一代布局历史实例）
+#   用户项目运行时产物统一落 <项目根>/.maliang/（DESIGN.md + ui-markdown/ + preview/ + critique/ + ip/ + ip-handbook/）
+└── tests/                   # pytest 套件（646 用例，39 文件）
 ```
 
 ## 🧭 维护归属

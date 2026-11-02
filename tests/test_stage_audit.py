@@ -72,6 +72,14 @@ class TestStage1(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertTrue(any("用户三产出缺失" in m for m in res["missing"]))
 
+    def test_pass_with_maliang_layout(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        _write(os.path.join(tmp.name, ".maliang", "DESIGN.md"), DESIGN_WITH_USERS)
+        code, res = sa.audit_stage(1, tmp.name, run_gates=False)
+        self.assertEqual(code, 0)
+        self.assertEqual(res["missing"], [])
+
 
 class TestArtifacts(unittest.TestCase):
     def _root(self):
@@ -84,12 +92,19 @@ class TestArtifacts(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertTrue(res["missing"])
 
-    def test_stage3_canonical_path(self):
+    def test_stage3_maliang_canonical_path(self):
+        root = self._root()
+        _write(os.path.join(root, ".maliang", "ui-markdown", "token.md"), "token")
+        code, res = sa.audit_stage(3, root, run_gates=False)
+        self.assertEqual(code, 0)
+        self.assertTrue(any("canonical" in n for n in res["notes"]))
+
+    def test_stage3_legacy_design_fallback(self):
         root = self._root()
         _write(os.path.join(root, "design", "ui-markdown", "token.md"), "token")
         code, res = sa.audit_stage(3, root, run_gates=False)
         self.assertEqual(code, 0)
-        self.assertTrue(any("canonical" in n for n in res["notes"]))
+        self.assertTrue(any("存量旧路径" in n for n in res["notes"]))
 
     def test_stage3_legacy_examples_fallback(self):
         root = self._root()
@@ -100,12 +115,19 @@ class TestArtifacts(unittest.TestCase):
 
     def test_stage5_needs_preview_html(self):
         root = self._root()
-        _write(os.path.join(root, "design", "preview", "keep.txt"), "x")
+        _write(os.path.join(root, ".maliang", "preview", "keep.txt"), "x")
         code, _ = sa.audit_stage(5, root, run_gates=False)
         self.assertEqual(code, 1)
-        _write(os.path.join(root, "design", "preview", "preview_home_iphone15.html"), "<html></html>")
+        _write(os.path.join(root, ".maliang", "preview", "preview_home_iphone15.html"), "<html></html>")
         code, _ = sa.audit_stage(5, root, run_gates=False)
         self.assertEqual(code, 0)
+
+    def test_stage5_legacy_preview_fallback(self):
+        root = self._root()
+        _write(os.path.join(root, "design", "preview", "preview_home_iphone15.html"), "<html></html>")
+        code, res = sa.audit_stage(5, root, run_gates=False)
+        self.assertEqual(code, 0)
+        self.assertTrue(any("存量旧路径" in n for n in res["notes"]))
 
     def test_stage4_implementation_map(self):
         root = self._root()

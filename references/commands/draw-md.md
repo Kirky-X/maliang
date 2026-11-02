@@ -1,7 +1,7 @@
 # draw-md 子命令 —— 产出页面级硬 token UI markdown
 
 > 本文件是 `draw-md` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 产出物 = **页面级 UI markdown**,落在 `design/ui-markdown/` 下:每页一份 markdown,用 YAML frontmatter + 表格描述布局与组件参数,**颜色/字体/间距等全部引用硬 token**(RGBA + HEX 双格式)。
+> 产出物 = **页面级 UI markdown**,落在 `.maliang/ui-markdown/` 下:每页一份 markdown,用 YAML frontmatter + 表格描述布局与组件参数,**颜色/字体/间距等全部引用硬 token**(RGBA + HEX 双格式)。
 > 这是 [`design-md`](./design-md.md) 的**下游**:design-md 产出 prose-first 的 DESIGN.md(规范理由),draw-md 产出硬值 token + 页面规格(可实现)。
 > draw-md 产出的逻辑 UI markdown 是下游 `draw-harmony` / `draw-flutter` / `draw-element` 三个框架适配子命令的输入。
 
@@ -16,18 +16,18 @@
 | 文件                                | 层级   | 职责                                                                                  | 是否含色值 |
 | ----------------------------------- | ------ | ------------------------------------------------------------------------------------- | ---------- |
 | [`token.md`](../meta/token.md)(本目录)    | 规范层 | token **命名规则**(kebab-case、层级、语义),受 [`philosophy.md`](../meta/philosophy.md) 约束 | **否**     |
-| `design/ui-markdown/token.md`(产物层) | 产物层 | token **硬值**(RGBA + HEX)                                                            | **是**     |
+| `.maliang/ui-markdown/token.md`(产物层) | 产物层 | token **硬值**(RGBA + HEX)                                                            | **是**     |
 
-**draw-md 产出物的 frontmatter 与参数表 MUST 引用产物层 `design/ui-markdown/token.md`,禁止引用规范层 `../meta/token.md`**(后者不含色值,引用它会导致下游无法解析)。规范层 token.md 仅在"如何命名一个新 token"时参考。
+**draw-md 产出物的 frontmatter 与参数表 MUST 引用产物层 `.maliang/ui-markdown/token.md`,禁止引用规范层 `../meta/token.md`**(后者不含色值,引用它会导致下游无法解析)。规范层 token.md 仅在"如何命名一个新 token"时参考。
 
 ---
 
 ## 产物层目录结构
 
-所有 draw-md 产出落在 `design/ui-markdown/`:
+所有 draw-md 产出落在 `.maliang/ui-markdown/`:
 
 ```
-design/ui-markdown/
+.maliang/ui-markdown/
 ├── token.md          # 全局硬 token 表(颜色/字体/图标/间距/圆角/分割线,RGBA+HEX)
 ├── organisms/        # 跨页面复用组件(导航栏、dock 栏……)
 │   └── *.md
@@ -194,21 +194,21 @@ pattern: [chart-line, table-sortable]
 
 ## 流程
 
-0. **读取 DESIGN.md 提取 token** —— 读取项目根目录的 DESIGN.md,提取 YAML frontmatter 中的所有 token(colors/typography/spacing/radius 等),写入 `design/ui-markdown/token.md` 作为本子命令的 token 锚点。这是从 [`design-md`](./design-md.md) 衔接进入 draw-md 的状态过渡步骤:DESIGN.md 是 design-md 的产出物,draw-md 必须基于它产出硬值 token,不可凭空生成。
+0. **读取 DESIGN.md 提取 token** —— 读取 .maliang/DESIGN.md(存量旧布局无此文件时读取项目根 `DESIGN.md`,并在交付说明提示一次迁移),提取 YAML frontmatter 中的所有 token(colors/typography/spacing/radius 等),写入 `.maliang/ui-markdown/token.md` 作为本子命令的 token 锚点。这是从 [`design-md`](./design-md.md) 衔接进入 draw-md 的状态过渡步骤:DESIGN.md 是 design-md 的产出物,draw-md 必须基于它产出硬值 token,不可凭空生成。
 
    **🔴 CHECKPOINT · token 提取**:确认 token.md 已生成且包含 DESIGN.md 中的全部 token,再进入下一步。若 DESIGN.md 缺失关键 token,走「失败模式与 fallback」表中的对应策略。
 
-1. **先定 token.md** —— 若 `design/ui-markdown/token.md` 不存在或需补充,先产出/更新它(6 章节:颜色/字体/图标/间距/圆角/分割线,RGBA + HEX 双格式)。token 命名遵循规范层 [`token.md`](../meta/token.md) 的规则。
+1. **先定 token.md** —— 若 `.maliang/ui-markdown/token.md` 不存在或需补充,先产出/更新它(6 章节:颜色/字体/图标/间距/圆角/分割线,RGBA + HEX 双格式)。token 命名遵循规范层 [`token.md`](../meta/token.md) 的规则。
 2. **抽取 organisms** —— 识别跨页面复用组件(导航栏、dock 栏),写入 `organisms/`,每份含 frontmatter + 参数表。
 
    **🔴 CHECKPOINT · 逐页产出前**:确认 token.md + organisms 已定义,展示待产出页面清单供用户确认,再进入逐页产出。
 
 ### 步骤 2.5(可选):页面清单确认
 
-> **仅新项目触发**。存量项目(`design/ui-markdown/ui/` 已有页面)跳过此步骤,直接进入步骤 3。
+> **仅新项目触发**。存量项目(`.maliang/ui-markdown/ui/` 已有页面)跳过此步骤,直接进入步骤 3。
 
 **触发条件**(二选一即触发):
-1. `design/ui-markdown/ui/` 目录为空或不存在(判定为新项目首次产出)。
+1. `.maliang/ui-markdown/ui/` 目录为空或不存在(判定为新项目首次产出)。
 2. 用户明确要求"全量产出"/"补齐默认页面"。
 
 **步骤行为**:
@@ -247,7 +247,7 @@ pattern: [chart-line, table-sortable]
 
 **② 布局构思**:页面布局未定时,先并排画 2-3 个**结构不同**的 ASCII 线框对比(区块顺序 / 分栏方式 / 首屏构图各自不同),每框附一句话理由,对比定稿后再写布局章节;布局已定的页面跳过本步。
 
-> 🔴 **线框边界**:线框是**内部思考工具,不进交付文档**——`design/ui-markdown/` 产物只含 frontmatter + 布局章节 + 参数表,禁止出现 ASCII 图;定稿即弃,定稿理由落进方向契约块的 `first-viewport`。需要把多套方向渲染成真预览对比时,升级走 [`explore`](./explore.md) 子命令,不走线框。
+> 🔴 **线框边界**:线框是**内部思考工具,不进交付文档**——`.maliang/ui-markdown/` 产物只含 frontmatter + 布局章节 + 参数表,禁止出现 ASCII 图;定稿即弃,定稿理由落进方向契约块的 `first-viewport`。需要把多套方向渲染成真预览对比时,升级走 [`explore`](./explore.md) 子命令,不走线框。
 
 ### 步骤 2.7(数据型产品):结构判定 + 数据底座
 
@@ -275,7 +275,7 @@ pattern: [chart-line, table-sortable]
 - [ ] 每个组件参数表首行声明"组件类型"字段,引用 framework/INDEX.md 的 56 类组件 slug,组合组件用 ` + ` 连接
 - [ ] 每个组件参数表 MUST 含 action 字段,格式 `event=behavior; ...`(五元组 tap/state/db/api/long-press;输入类可扩展 submit/focus/blur/input;容器可全为"无")
 - [ ] 每页 ≤ 3 个核心组件(hero/主操作/关键转化点)参数表 SHOULD 含 intent 字段(一句话决定理由;非硬性,_validator_ 不检查)
-- [ ] 所有颜色值引用产物层 `design/ui-markdown/token.md`,**无硬编码色值字面量**
+- [ ] 所有颜色值引用产物层 `.maliang/ui-markdown/token.md`,**无硬编码色值字面量**
 - [ ] 二级页面用子目录嵌套(如 `setting/about.md`)
 - [ ] 一个界面 = 一份页面文件:禁止按页长把同一界面的列表/区块截断拆到第二份文件(对应检查:页面数应等于界面数,而非 ceil(内容长度/页长))
 - [ ] 跨页面复用组件放 `organisms/`,页面引用而非重复定义
@@ -314,8 +314,8 @@ pattern: [chart-line, table-sortable]
 
 ## 禁止事项(反例)
 
-- **禁止在组件参数表写裸色值**(如 `#FFFFFF`、`rgba(0,0,0,0.8)`):色值脱离 token 体系会导致多端不一致与主题切换失效。MUST 引用 `design/ui-markdown/token.md` 的 token(如 `{surface-card}`)。
-- **禁止引用规范层 `../meta/token.md`**:它只定义命名规则、不含色值,引用它会让下游 draw-* 无法解析出具体值。MUST 引用产物层 `design/ui-markdown/token.md`(RGBA + HEX 硬值)。
+- **禁止在组件参数表写裸色值**(如 `#FFFFFF`、`rgba(0,0,0,0.8)`):色值脱离 token 体系会导致多端不一致与主题切换失效。MUST 引用 `.maliang/ui-markdown/token.md` 的 token(如 `{surface-card}`)。
+- **禁止引用规范层 `../meta/token.md`**:它只定义命名规则、不含色值,引用它会让下游 draw-* 无法解析出具体值。MUST 引用产物层 `.maliang/ui-markdown/token.md`(RGBA + HEX 硬值)。
 - **禁止组件类型字段自创 slug**(如 `search-bar`、`tab-item`):脱离 framework 索引会导致下游 draw-* 映射失败。MUST 引用 [`framework/INDEX.md`](../framework/INDEX.md) 的 56 类组件 slug,组合组件用 ` + ` 连接(如 `input + icon`)。
 - **禁止跨页面复用组件在多页重复定义**:重复定义会造成维护漂移与 token 不一致。MUST 放入 `organisms/` 单独成文,各页面通过名称引用。
 - **禁止二级页面文件直接放 `ui/` 根目录**(如 `ui/about.md`):扁平放置会让页面层级丢失、无法表达导航嵌套。MUST 用子目录(如 `ui/setting/about.md`)。

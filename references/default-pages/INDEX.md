@@ -88,7 +88,7 @@ P0 不得删减,用户裁剪仅限 P1/P2。
 ## 与 draw-md 关联说明
 
 - `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用本索引(触发条件与步骤行为见 [draw-md.md](../commands/draw-md.md))。
-- `draw-md` 产出的页面文件名(`examples/ui-markdown/ui/<slug>.md`)SHALL 与本清单 slug 对齐(如 `home.md`、`forgot-password.md`)。
+- `draw-md` 产出的页面文件名(`.maliang/ui-markdown/ui/<slug>.md`)SHALL 与本清单 slug 对齐(如 `home.md`、`forgot-password.md`)。
 - 用户可裁剪 P1/P2 但不得删减 P0。
 
 ---

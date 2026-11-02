@@ -21,7 +21,7 @@
                        任一页失同步退 1,基线缺失退 2(先建基线)
 
 哈希范围(--kind,compute-hash / diff-hash 共用):
-    draw-md(默认)  构建产物的 .md 页面(examples/ui-markdown/,排除 token.md),
+    draw-md(默认)  构建产物的 .md 页面(.maliang/ui-markdown/,排除 token.md),
                     基线文件 ui-hash-state.json —— 供 critique backlog 指纹判定
                     (critique.md「指纹失效判定」,只管 draw-md 产物)使用;
     preview        预览产品物 + 取证清单(**.html + 截图 png/jpg/jpeg/webp/svg
@@ -30,7 +30,7 @@
                     (receipts.py)记录「被实测的预览状态」;与 draw-md 指纹分开,
                     两者不得混用同一基线文件。
 
-默认 --target = examples/ui-markdown/。
+默认 --target = .maliang/ui-markdown/。
 所有 JSON 产出的相对路径均以 target_dir 为根目录。
 依赖: Python 3 标准库(无第三方依赖)。
 """
@@ -83,7 +83,7 @@ PREVIEW_SUFFIXES = (".html", ".htm", ".png", ".jpg", ".jpeg", ".webp", ".svg", "
 PREVIEW_EXCLUDE_FILES = {"selection.json"}
 
 # 默认 target 目录(相对脚本调用的工作目录)
-DEFAULT_TARGET = "examples/ui-markdown"
+DEFAULT_TARGET = ".maliang/ui-markdown"
 
 
 # ---------------------------------------------------------------------------

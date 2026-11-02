@@ -171,7 +171,7 @@ design-md / draw-md / preview 拆分,每个子命令产出聚焦单一职责,降
 
 长流程(design-md → draw-md 多页产出 → preview → draw-*)开工时即落进度清单,每完成一页更新:
 
-- **进度文件**:`.maliang/progress.md`(运行时状态,gitignore,同 workspace-layout 的 `.maliang/` 约定)——逐页记 `页面路径 | 状态(todo/drawn/previewed/implemented) | 完成时间`;
+- **进度文件**:`.maliang/progress.md`(运行时状态,gitignore,按 workspace-layout 的运行态逐条 ignore 约定)——逐页记 `页面路径 | 状态(todo/drawn/previewed/implemented) | 完成时间`;
 - **恢复动作**:新会话接手时先读进度文件,再与产物层交叉核对,不信任单一出处：
   1. `ui-graph.py generate` + `list-missing` → 哪些跳转目标还没产出;
   2. `ui-graph.py list-unimplemented` → 哪些页还没有 preview/代码;

@@ -272,14 +272,14 @@ Method: dual-agent (A: <agent-id> · B: <agent-id>)
 
 ## 产物
 
-1. **评分快照**:`design/critique/<date>_<page>.md`(如 `2026-09-07_home.md`),含完整报告 + 分母 + n/a 清单 + P0/P1 计数;
+1. **评分快照**:`.maliang/critique/<date>_<page>.md`(如 `2026-09-07_home.md`),含完整报告 + 分母 + n/a 清单 + P0/P1 计数;
 2. **趋势**:追加进快照后读该页面近 5 次总分,在报告尾输出一行 `近 5 次:24 → 28 → 32 → 29 → 32(/40)`;首次评审写"首次评审,暂无趋势"。**输出趋势结论(改善 / 退步 / 趋势向好)前先核对条件指纹**——两轮评估的评估页集与分母、设备与视口、字号与内容、模式逐字段一致才可比;不一致**拒绝比较并重建基线**,并在报告注明原因(G34;口径见 [`preview.md`](./preview.md)「取证契约」跨轮比较条件指纹);
 3. **Backlog 闭环**:P0-P2 发现形成 backlog,移交 [`redesign.md`](./redesign.md)(Refresh / Refresh·Deslop)与 [`draw-md.md`](./draw-md.md) 修补;每条注明对应命令与具体位置,不要求用户复制粘贴。
 
-   **指纹失效判定**:评审时先跑 `python3 {SKILL_DIR}/scripts/ui-graph.py compute-hash --target <产物目录>` 建哈希基线,每条 backlog 条目记录目标产物文件当时的 sha256。下次评审同一页面前先跑 `diff-hash`:凡 modified 列表命中的页面,其旧 backlog 条目**整体失效**——指纹是逐字节比对,产物任何改动即失效;须重新走查确认哪些问题仍在,禁止直接沿用旧 backlog,确认后重新 `compute-hash` 建新基线。指纹只对准 draw-md 产物 md(`design/ui-markdown/`);预览 HTML / 截图类产物不在基线内,以重新走查为准。
+   **指纹失效判定**:评审时先跑 `python3 {SKILL_DIR}/scripts/ui-graph.py compute-hash --target <产物目录>` 建哈希基线,每条 backlog 条目记录目标产物文件当时的 sha256。下次评审同一页面前先跑 `diff-hash`:凡 modified 列表命中的页面,其旧 backlog 条目**整体失效**——指纹是逐字节比对,产物任何改动即失效;须重新走查确认哪些问题仍在,禁止直接沿用旧 backlog,确认后重新 `compute-hash` 建新基线。指纹只对准 draw-md 产物 md(`.maliang/ui-markdown/`);预览 HTML / 截图类产物不在基线内,以重新走查为准。
 
    **显式关闭语义**:backlog 条目只有在本轮评审中**实测确认已修复或不再成立**才标记关闭;"页面改过了"不等于"问题修掉了"——失效 ≠ 关闭;未处理条目重新验证后带新指纹顺延,禁止批量关闭、禁止静默丢弃。
-4. **A11y 实测记录**:`design/critique/a11y-walkthrough.md`(每页面一份,复测追加)。**真机读屏实测超出 skill 边界——此模板供人工实测记录**,skill 只做键盘推演与要点声明,不伪造"已实测"结论。模板:
+4. **A11y 实测记录**:`.maliang/critique/a11y-walkthrough.md`(每页面一份,复测追加)。**真机读屏实测超出 skill 边界——此模板供人工实测记录**,skill 只做键盘推演与要点声明,不伪造"已实测"结论。模板:
 
    ```markdown
    # A11y 实测记录 · <page> · <date>
@@ -308,7 +308,7 @@ Method: dual-agent (A: <agent-id> · B: <agent-id>)
 - [ ] Nielsen 打分 MUST 先判 surface 模式,n/a 项写理由并重归一化分母,禁止全 3 分凑数
 - [ ] persona 走查 MUST 按模式选 2-3 个、按任务脚本执行并落走查记录表,报具体红旗(点名元素与步骤),禁止泛泛而谈
 - [ ] 每条发现 MUST 有 P0-P3 定级(摇摆时用"找客服"判据)与具体修法
-- [ ] 报告 MUST 落快照到 `design/critique/` 并输出近 5 次趋势;backlog MUST 注明去向(redesign / draw-md)
+- [ ] 报告 MUST 落快照到 `.maliang/critique/` 并输出近 5 次趋势;backlog MUST 注明去向(redesign / draw-md)
 - [ ] 优先问题 MUST 按 结构→视觉系统→交互动效→polish 依赖序分组;报告 MUST 含「被否决候选」2-5 条(确无则写"无"+检查范围)
 - [ ] 修复建议 MUST 零上下文自包含:现状 verbatim + `file:line`、值精确、给范例、漂移即 STOP
 - [ ] backlog MUST 带内容指纹基线(compute-hash/diff-hash);失效条目禁止沿用,关闭 MUST 逐条实测确认

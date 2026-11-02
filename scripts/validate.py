@@ -47,7 +47,7 @@ def main(argv=None):
 用法:
     python3 scripts/validate.py draw-md [target_dir] [--token-file PATH] [--framework-file PATH] [--format {text,json}]
 
-默认 target_dir = examples/ui-markdown/。
+默认 target_dir = .maliang/ui-markdown/(存量项目旧路径由调用方显式传参)。
 默认 token-file  = {target_dir}/token.md
 默认 framework-file = references/framework/INDEX.md
 默认 format      = text
@@ -1405,8 +1405,8 @@ def _main_draw_md(argv):
     parser.add_argument(
         "target_dir",
         nargs="?",
-        default="examples/ui-markdown",
-        help="目标目录(默认 examples/ui-markdown)",
+        default=".maliang/ui-markdown",
+        help="目标目录(默认 .maliang/ui-markdown,存量项目旧路径自动兼容见 stage-audit)",
     )
     parser.add_argument(
         "--token-file", default=None, help="token.md 路径(默认 {target_dir}/token.md)"
@@ -1923,7 +1923,7 @@ def _main_framework(argv):
                                           [--format {text,json}]
 
 默认 target_dir = examples/element-plus/(draw-element 的产出目录)。
-默认 token-file = examples/ui-markdown/token.md
+默认 token-file = .maliang/ui-markdown/token.md(缺失回退 examples/ui-markdown/token.md)
 默认 framework-index = references/framework/INDEX.md(组件白名单从同目录
 framework/element/ 的文档里抽取 el-* 标签与 El* 服务名)。
 
@@ -2236,7 +2236,7 @@ def _main_generated(argv=None):
     parser.add_argument("target_dir", nargs="?", default="examples/element-plus",
                         help="生成码目录(默认 examples/element-plus)")
     parser.add_argument("--token-file", default=None,
-                        help="token.md 路径(默认 examples/ui-markdown/token.md)")
+                        help="token.md 路径(默认 .maliang/ui-markdown/token.md,缺失回退 examples/)")
     parser.add_argument("--framework-index", default=None,
                         help="framework/INDEX.md 路径(默认 references/framework/INDEX.md)")
     parser.add_argument("--format", choices=["text", "json"], default="text",
@@ -2244,8 +2244,15 @@ def _main_generated(argv=None):
     args = parser.parse_args(argv)
 
     target_dir = os.path.abspath(args.target_dir)
-    token_file = os.path.abspath(args.token_file or os.path.join(
-        os.getcwd(), "examples", "ui-markdown", "token.md"))
+    if args.token_file:
+        token_file = os.path.abspath(args.token_file)
+    else:
+        token_candidates = [
+            os.path.join(os.getcwd(), ".maliang", "ui-markdown", "token.md"),
+            os.path.join(os.getcwd(), "examples", "ui-markdown", "token.md"),
+        ]
+        token_file = os.path.abspath(next(
+            (c for c in token_candidates if os.path.isfile(c)), token_candidates[0]))
     framework_index = os.path.abspath(args.framework_index or os.path.join(
         os.getcwd(), "references", "framework", "INDEX.md"))
     framework_dir = os.path.join(os.path.dirname(framework_index), "element")

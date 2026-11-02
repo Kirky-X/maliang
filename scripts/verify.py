@@ -1629,7 +1629,7 @@ def _main_assets(argv=None):
     )
     parser.add_argument("html", help="产物 HTML 文件")
     parser.add_argument("--manifest", default=None,
-                        help="资产声明 JSON 数组(默认:<html 同目录>/.maliang/assets.json 或 assets.json)")
+                        help="资产声明 JSON 数组(默认:<html 同目录>/assets.json,旧布局回退 <html 同目录>/.maliang/assets.json)")
     args = parser.parse_args(argv)
 
     if not os.path.isfile(args.html):
@@ -1637,8 +1637,8 @@ def _main_assets(argv=None):
         return 2
     manifest_path = args.manifest
     if manifest_path is None:
-        for cand in (os.path.join(os.path.dirname(args.html), ".maliang", "assets.json"),
-                     os.path.join(os.path.dirname(args.html), "assets.json")):
+        for cand in (os.path.join(os.path.dirname(args.html), "assets.json"),
+                     os.path.join(os.path.dirname(args.html), ".maliang", "assets.json")):
             if os.path.isfile(cand):
                 manifest_path = cand
                 break

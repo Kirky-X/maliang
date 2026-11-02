@@ -1,8 +1,8 @@
 # ip 子命令 —— 从 DESIGN.md 调性生成 IP 形象
 
 > 本文件是 `ip` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 输入 = 项目根目录的 [`DESIGN.md`](./design-md.md) 产出物(YAML frontmatter 含 colors/typography/keywords + 正文风格描述)。
-> 输出 = **IP 形象 PNG 图片** 或 **结构化 prompt 文档(API 不可用时 fallback)**,落在 `design/ip/` 下。
+> 输入 = `.maliang/` 下的 [`DESIGN.md`](./design-md.md) 产出物(YAML frontmatter 含 colors/typography/keywords + 正文风格描述)。
+> 输出 = **IP 形象 PNG 图片** 或 **结构化 prompt 文档(API 不可用时 fallback)**,落在 `.maliang/ip/` 下。
 > 这是 [`design-md`](./design-md.md) 的**下游**:design-md 产出 DESIGN.md 定义品牌调性,ip 基于调性生成与品牌一致的 IP 形象,不修改 DESIGN.md。
 > 调用通道 = `text_to_image` API,agent 运行时通过 WebFetch / run_mcp 工具发起 HTTP 请求。
 
@@ -12,10 +12,10 @@
 
 ## 产物层目录结构
 
-所有 ip 产出落在 `design/ip/`:
+所有 ip 产出落在 `.maliang/ip/`:
 
 ```
-design/ip/
+.maliang/ip/
 ├── <project-name>-ip.png                    # IP 形象图片(API 可用,3:4 比例)
 ├── <project-name>-ip-<YYYYMMDD-HHMMSS>.png  # 重画/多轮产出:新路径,不覆盖上一版
 └── <project-name>-ip-prompt.md              # 结构化 prompt 文档(API 不可用 fallback)
@@ -65,7 +65,7 @@ design/ip/
 
 ## 流程
 
-0. **读取 DESIGN.md 提取调性** —— 读取项目根目录的 `DESIGN.md`,解析 YAML frontmatter,提取以下字段:
+0. **读取 DESIGN.md 提取调性** —— 读取 `.maliang/DESIGN.md`,解析 YAML frontmatter,提取以下字段:
    - `colors`:主色(primary)、辅助色(secondary)的 HEX 值
    - `typography`:字体族(font-family,如 HarmonyOS Sans / Inter / Roboto)
    - `keywords` / `description`:情感基调关键词(如"专业/温暖/科技感/可信赖")
@@ -97,7 +97,7 @@ design/ip/
    https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=<url-encoded>&image_size=portrait_4_3
    ```
    - agent 运行时通过 `WebFetch` / `run_mcp` 工具发起 HTTP GET。
-   - 返回的图片二进制落地为 `design/ip/<project-name>-ip.png`。**落盘与自检三条**:
+   - 返回的图片二进制落地为 `.maliang/ip/<project-name>-ip.png`。**落盘与自检三条**:
      - **新路径不覆盖**:目标路径已存在时改用带时间戳/序号的新路径(`<project-name>-ip-<YYYYMMDD-HHMMSS>.png`),不静默覆盖旧产物
      - **实际打开图片核对**:生成后打开图片检查主体 / 风格 / 配色与 DESIGN.md 调性一致,记录待修正项——只验"文件存在且非空"不算自检
      - **记录生成档案**:模型 / 提示词 / 真实尺寸 / 待修正项写进产物说明或 prompt 文档;对结果不满意的重画算**新的生成**,不伪装成网络重试
@@ -105,7 +105,7 @@ design/ip/
 
    **🔴 CHECKPOINT · 图片落地**:确认 PNG 已写入**新路径**、已实际打开核对、生成档案已记录,再交付。若 API 返回错误或超时,走步骤 4 fallback。
 
-4. **Fallback 结构化 prompt 文档**(API 不可用时) —— 当步骤 3 API 调用失败(网络错误 / 鉴权失败 / 超时 / 返回非图片),产出 markdown 文档 `design/ip/<project-name>-ip-prompt.md`,内容含:
+4. **Fallback 结构化 prompt 文档**(API 不可用时) —— 当步骤 3 API 调用失败(网络错误 / 鉴权失败 / 超时 / 返回非图片),产出 markdown 文档 `.maliang/ip/<project-name>-ip-prompt.md`,内容含:
    - **正向提示词**(8 维度完整拼接,中英双语)+ **散文版**(同一内容一段话,gpt-image / DALL-E 类模型更吃散文),hex 一个不漏
    - **负向提示词**
    - **逐模型适配注记**:gpt-image / DALL-E 用散文版原样;Midjourney 压缩为逗号短语 + `--ar 3:4`(`--style raw`),**无真 alpha**,透明底走纯色 chroma + 后期抠图;SD / Flux 按结构化字段转逗号标签,AVOID 块移入 negative prompt 字段
@@ -129,7 +129,7 @@ design/ip/
 - [ ] 调性(色彩/字体/情感)MUST 来自 DESIGN.md,禁止凭空生成
 - [ ] 缺失字段使用默认值时 MUST 在 prompt 文档中标注 "(default)"
 - [ ] API 可用路径产出 PNG,API 不可用路径产出 prompt markdown,二选一
-- [ ] 产出物落在 `design/ip/` 目录;重画/多轮产出 MUST 落新路径(时间戳/序号),不覆盖旧产物
+- [ ] 产出物落在 `.maliang/ip/` 目录;重画/多轮产出 MUST 落新路径(时间戳/序号),不覆盖旧产物
 - [ ] 生成后 MUST 实际打开图片核对并记录生成档案(模型/提示词/真实尺寸/待修正项),只验"文件非空"不算自检
 - [ ] cutout 用途(贴纸/叠加/网站素材)MUST 走 `isolated` 形态;提示词写「透明」不构成证明,须程序校验真 alpha,失败按 chroma-key 兜底并如实标注
 
@@ -139,7 +139,7 @@ design/ip/
 
 | 触发条件                                   | 一线修复                                              | 仍失败兜底                                                |
 | ------------------------------------------ | ----------------------------------------------------- | --------------------------------------------------------- |
-| DESIGN.md 缺失(项目根目录无该文件)        | 提示用户先执行 [`design-md`](./design-md.md) 生成     | 用全默认调性(主色 #007DFF / 辅助 #FFAA00 / 情感"专业可信赖"),并在产出物顶部明确标注"调性出处：default,非 DESIGN.md" |
+| DESIGN.md 缺失(`.maliang/` 无该文件)        | 提示用户先执行 [`design-md`](./design-md.md) 生成     | 用全默认调性(主色 #007DFF / 辅助 #FFAA00 / 情感"专业可信赖"),并在产出物顶部明确标注"调性出处：default,非 DESIGN.md" |
 | DESIGN.md frontmatter 缺失 colors 字段     | 列出缺失字段,询问用户补全 DESIGN.md                  | 用默认主色 #007DFF + 辅助 #FFAA00,在 prompt 文档标注 "(default)" |
 | DESIGN.md frontmatter 缺失 typography      | 同上                                                  | 用默认字体 HarmonyOS Sans,标注 "(default)"                |
 | text_to_image API 返回错误(4xx/5xx)        | 重试 1 次,确认 URL 编码正确                           | 走步骤 4 fallback 产出 prompt markdown                    |

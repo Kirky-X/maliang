@@ -149,7 +149,7 @@ fi
 
 # 4. 导航冒烟(ui-graph 缺目标为 1;三态下按 strict 处理)
 gate "ui-graph check-nav(导航关系冒烟)" \
-  python3 scripts/ui-graph.py check-nav
+  python3 scripts/ui-graph.py check-nav --target examples/ui-markdown
 
 # 5. preview Pre-Flight(目录存在时;已迁移三态:2=无目标 → 拦截)
 if [ -d examples/preview ]; then
@@ -185,7 +185,7 @@ fi
 gate_if_script scripts/validate-design-md.py "validate-design-md(DESIGN.md 溯源交叉检查)" \
   python3 scripts/design-md.py validate examples/design-system/DESIGN.md
 gate_if_script scripts/validate-generated.py "validate-generated(生成码机械校验)" \
-  python3 scripts/validate.py generated examples/element-plus/
+  python3 scripts/validate.py generated examples/element-plus/ --token-file examples/ui-markdown/token.md
 
 # 9. 项目反馈账本(存在才校验;账本是项目级 .maliang/feedback/ 状态,不存在即未启用)
 if [ -f .maliang/feedback/decisions.jsonl ]; then

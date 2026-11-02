@@ -140,7 +140,7 @@ dials:
 
 ### 项目已有 DESIGN.md —— 合并 vs 覆写
 
-用户请求生成新的 DESIGN.md 时,若项目根目录已有旧版本:
+用户请求生成新的 DESIGN.md 时,若 `.maliang/DESIGN.md` 已有旧版本:
 
 1. 先展示旧版 token 摘要(name、颜色、字体系列)
 2. 明确询问:**"是覆盖旧版本 / 合并新旧 token / 另存为新文件?"**

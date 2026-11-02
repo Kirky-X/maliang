@@ -411,7 +411,7 @@ def main(argv: list[str] | None = None) -> int:
             record = init_run(root, session, args.run, args.artifact, args.script, args.note)
             print(f"已记录收据 init run={args.run}（产物 {len(record['artifacts'])} / 脚本 {len(record['scripts'])}）")
             print(f"  收据文件: {receipts_file(root, session)}")
-            print("  提示：把 .maliang/ 加进项目 .gitignore（会话收据是本地状态，不入仓）。")
+            print("  提示：把 .maliang/receipts/ 加进项目 .gitignore（.maliang/ 下交付产物默认入仓，禁整目录 ignore，完整清单见 references/meta/workspace-layout.md）。")
             return 0
         if args.command == "attach":
             if not args.report:

@@ -1,8 +1,8 @@
 # ip-handbook 子命令 —— IP 视觉手册全模块产出
 
 > 本文件是 `ip-handbook` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 输入 = 项目根目录的 [`DESIGN.md`](./design-md.md) + [`ip`](./ip.md) 子命令产出的 IP 形象 PNG。
-> 输出 = **IP 视觉手册**(8 个模块:三视图/动作延展/表情包/字体/色彩/版式/周边/通用要求),落在 `design/ip-handbook/<project-name>/` 下。
+> 输入 = `.maliang/` 下的 [`DESIGN.md`](./design-md.md) + [`ip`](./ip.md) 子命令产出的 IP 形象 PNG。
+> 输出 = **IP 视觉手册**(8 个模块:三视图/动作延展/表情包/字体/色彩/版式/周边/通用要求),落在 `.maliang/ip-handbook/<project-name>/` 下。
 > 这是 [`ip`](./ip.md) 的**下游**:ip 产出单一 IP 形象,ip-handbook 在其上延展为完整视觉手册,确保全模块视觉风格一致。
 > 调性必须继承 DESIGN.md,色彩必须来自同一调色板。
 
@@ -12,10 +12,10 @@
 
 ## 产物层目录结构
 
-所有 ip-handbook 产出落在 `design/ip-handbook/<project-name>/`:
+所有 ip-handbook 产出落在 `.maliang/ip-handbook/<project-name>/`:
 
 ```
-design/ip-handbook/<project-name>/
+.maliang/ip-handbook/<project-name>/
 ├── README.md                       # 手册总览(8 模块索引 + 调色板声明 + 模块 0 基串引用)
 ├── 00-style-base.md                # 模块 0:共享美术基串(所有资产 prompt 的公共前缀)
 ├── 01-views/                       # 模块 1:三视图
@@ -173,7 +173,7 @@ AVOID:    负向清单(无文字 / 无水印 / 无调色板外色 / 无写实照
 
 ## 流程
 
-0. **读取 DESIGN.md + ip 产出物** —— 读取项目根目录 `DESIGN.md`(调色板 + 字体)与 `design/ip/<project-name>-ip.png`(IP 形象参考);随后按上文「模块 0」节抽出**共享美术基串**(STYLE/LIGHTING/PALETTE/MOOD/AVOID)写入 `00-style-base.md`,作为本手册全部资产 prompt 的公共前缀。
+0. **读取 DESIGN.md + ip 产出物** —— 读取 `.maliang/DESIGN.md`(调色板 + 字体)与 `.maliang/ip/<project-name>-ip.png`(IP 形象参考);随后按上文「模块 0」节抽出**共享美术基串**(STYLE/LIGHTING/PALETTE/MOOD/AVOID)写入 `00-style-base.md`,作为本手册全部资产 prompt 的公共前缀。
 
    **🔴 CHECKPOINT · 输入齐全与基串定稿**:确认 DESIGN.md 与 IP PNG 都存在、基串五段已定稿(调色板逐 hex + 用色分配);后续每个资产 prompt 复用同一份基串,禁止逐模块即兴改风格词。若 IP PNG 缺失,先执行 [`ip`](./ip.md) 子命令。
 
@@ -208,7 +208,7 @@ AVOID:    负向清单(无文字 / 无水印 / 无调色板外色 / 无写实照
 - [ ] 模块 5 色彩应用比例 MUST 60/30/10(主/辅/中性)
 - [ ] 模块 7 周边物料 MUST 4 种(帆布袋/贴纸包/限定盲盒/海报),每种含样机效果描述 + 尺寸 + 材质
 - [ ] 自检 MUST 含"实际打开图片核对模块间一致性"一步(只验文件存在与 grep 色值不算)
-- [ ] 产出物落在 `design/ip-handbook/<project-name>/` 目录,按 8 模块编号子目录
+- [ ] 产出物落在 `.maliang/ip-handbook/<project-name>/` 目录,按 8 模块编号子目录
 - [ ] `README.md` MUST 含 8 模块索引 + 调色板声明 + 一致性声明 + 模块 0 基串引用
 
 ---
@@ -218,7 +218,7 @@ AVOID:    负向清单(无文字 / 无水印 / 无调色板外色 / 无写实照
 | 触发条件                                       | 一线修复                                                  | 仍失败兜底                                                |
 | ---------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- |
 | DESIGN.md 缺失                                 | 提示用户先执行 [`design-md`](./design-md.md)              | 拒绝执行,缺 DESIGN.md 无法保证调色板一致                  |
-| IP PNG 缺失(`design/ip/` 无产出)            | 提示用户先执行 [`ip`](./ip.md) 子命令                     | 基于 DESIGN.md 调性临时构造 IP 描述,标注"无 IP PNG 参考"  |
+| IP PNG 缺失(`.maliang/ip/` 无产出)            | 提示用户先执行 [`ip`](./ip.md) 子命令                     | 基于 DESIGN.md 调性临时构造 IP 描述,标注"无 IP PNG 参考"  |
 | 三视图 IP 特征不一致(五官/服装差异)          | 重新生成,以正面图为基准对齐侧面/背面                      | 仅产出正面图,标注"侧面/背面待补"                          |
 | 模块间色彩偏离 DESIGN.md 调色板                | 列出偏离色值,替换为调色板内最近色                          | 删除偏离模块,重新生成                                     |
 | 表情包数量不足 8 个                            | 补足至 8 个(从选配表情补充)                              | 仅产出已有表情,标注"待补足至 8 个"                        |

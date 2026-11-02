@@ -4,7 +4,7 @@ description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定�
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
   author: "Kirky-X"
   repo: "https://github.com/Kirky-X/maliang"
   tags: "design-system, design-token, ui-markdown, DESIGN.md, w3c-dtcg, harmonyos, flutter, element-plus, preview, device-models, ui-graph, ip-character, ip-handbook, accessibility, dark-mode"
@@ -132,18 +132,18 @@ metadata:
 ## 通用
 
 - **不确定用哪个?** 先 `design-md`。没有 DESIGN.md 就无法产出可靠的 `draw-md` 硬 token,更无法进行框架适配。
-- **完整流程链路**(每步产出 = 下步输入): `design-md`(→DESIGN.md) → `draw-md`(→design/ui-markdown/*.md) → `preview`(→preview_*.html) → [`critique`](references/commands/critique.md)(→评分快照) → `draw-harmony`/`draw-flutter`/`draw-element`(→框架代码);迭代经 `redesign`/`ui-graph` 回流 decisions 账本。
+- **完整流程链路**(每步产出 = 下步输入): `design-md`(→.maliang/DESIGN.md) → `draw-md`(→.maliang/ui-markdown/*.md) → `preview`(→.maliang/preview/preview_*.html) → [`critique`](references/commands/critique.md)(→评分快照) → `draw-harmony`/`draw-flutter`/`draw-element`(→框架代码);迭代经 `redesign`/`ui-graph` 回流 decisions 账本。
 - 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局 / 对齐 / 海拔)在 [`references/dimensions/`](references/dimensions/) 下(含 color-palettes 调色板库、design-systems 参考设计系统、glass-effect/glass-advanced 液态玻璃配方、texture 纹理预算(一页一纹理族/透明度 token 化)、elevation 表面海拔、alignment 对齐轴/同排等高/凸起关系、h5-frame H5 手机专属页容器契约);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),十三个子命令共享参考,不在本路由器重复。桌面页到手机上的六条机械故障见 [`references/meta/mobile-floor.md`](references/meta/mobile-floor.md)。
 - **模板墙**在 [`references/templates/`](references/templates/INDEX.md):14 种设计语言(液态玻璃/M3 Expressive/Fluent 2/Bento/瑞士编辑/OLED 暗色/数据仪表盘等) + 整页模式(编辑分栏/纵深长廊/Dashboard 风格集/移动端五式/滚动图带/AI 工作台) + 落地页编排 + 性格方向卡;选型走 README 四步路由 + [variation-engine](references/templates/variation-engine.md) 七轴组合 + [跨次构建记忆](references/templates/variation-engine.md)(build-log + CSS 盖章,≥5 轴相同即重选)。
 - **术语库**在 [`references/vocabulary/`](references/vocabulary/INDEX.md):30 篇模式命名词汇,draw-md 组件命名对齐——篇目/来源/核验日期的唯一清单见 [vocabulary/INDEX.md](references/vocabulary/INDEX.md),条目明细在各篇「命名表」。动效骨架([`references/motion-skeletons/`](references/motion-skeletons/))共 11 篇。**动效选型先读 [`motion-skeletons/INDEX.md`](references/motion-skeletons/INDEX.md)**:效果×路线双轴、GATE 四查、六路线成本表、十一族效果目录(含各族 slop form 反模式,含 3.11 页面级滚动叙事场景)、四拍节奏表。
 - **结构化 UX 规则**在 [`references/meta/ux-rules.md`](references/meta/ux-rules.md)(slug + Do/Don't + 严重级,脚本检查是它的机械化子集);页面模式判定见 [`surface-modes.md`](references/meta/surface-modes.md),图片策略见 [`visual-assets.md`](references/meta/visual-assets.md)。
 - **理论模型路由**在 [`references/meta/theory-router.md`](references/meta/theory-router.md):判阶表(产物证据>意图措辞,8 条规则)自动识别所处段,每段给出理论模型包(模型×判断什么×触发条件),复合规则(诊断链/决策链/降载链/转化链/旅程链/伦理闸,单次 ≤3 模型);定律机制以 [`ux-laws.md`](references/meta/ux-laws.md) 为 canonical,全量 174 模型明细在 [`design-theory-models.md`](references/meta/design-theory-models.md)。理论是推理/归因/说服层,不能抵扣 ux-rules 与编号门禁。
-- **工作区布局**以 [`references/meta/workspace-layout.md`](references/meta/workspace-layout.md) 为 canonical:用户项目交付物统一落 `design/`(ui-markdown / preview / critique / ip),DESIGN.md 留根,运行时状态落 `.maliang/`(项目 gitignore);本仓范例树 `examples/` 为同构历史实例,指向本仓范例的链接不变。存量项目旧路径(examples/ui-markdown)识别兼容、提示迁移不强制。
+- **工作区布局**以 [`references/meta/workspace-layout.md`](references/meta/workspace-layout.md) 为 canonical:用户项目全部产物统一落 `.maliang/`(DESIGN.md 与 ui-markdown / preview / critique / ip / ip-handbook),仅运行态文件逐条 gitignore;本仓范例树 `examples/` 为历史实例,指向本仓范例的链接不变。存量项目旧路径(design/、examples/ui-markdown)识别兼容、提示迁移不强制。
 - 数据埋点规范(事件命名 / 漏斗三件套 / 改版基线比对)见 [`references/meta/analytics-events.md`](references/meta/analytics-events.md);用户研究三产出(persona / journey / JTBD)见 design-md Phase 0a([`references/commands/design-md.md`](references/commands/design-md.md))。
 - 默认页面清单(App 15 页 + Web 15 页,含 P0/P1/P2 选用规则)在 [`references/default-pages/INDEX.md`](references/default-pages/INDEX.md) 下,供 `draw-md` 子命令在新项目触发"页面清单确认"步骤时引用。
 - 框架组件文档(按钮/文本/列表 × 三框架)在 [`references/framework/`](references/framework/INDEX.md) 下,三个 draw-* 子命令共享。
 - UI 关系管理工具 [`scripts/ui-graph.py`](scripts/ui-graph.py) 提供 9 个子命令(generate/list-missing/check-nav/compute-hash/diff-hash/build-impl-map/list-unimplemented/token-usage/check-sync),纯 Python 标准库实现,产出 ui-relationships.json(层级 + 跳转)、ui-hash-state.json(哈希基线)、ui-implementation-map.json(逻辑 UI ↔ 实现映射)、code-hash-state.json(实现指纹)、token-usage.json(token→页面反向索引 + 孤儿 token),供 `ui-graph` 子命令调用——check-sync 判「规格改了代码没跟 / 代码手改了规格没动」,token-usage 供 DESIGN.md token 变更波及分析;配套 [`scripts/validate.py`](scripts/validate.py) 的 `draw-md` 子命令 含 23 项检查(aria/touch-target/dark-mode/motion/radius/z-index/方向契约块/organisms 引用/数值合理性等),供 `preview` 子命令校验。
-- **验证层脚本**(纯 Python 标准库):由 [`scripts/ci-gate.sh`](scripts/ci-gate.sh) 统一编排,逐脚本职责见 README「功能特性」与各脚本自身 docstring;退出码三态语义唯一 canonical 见 [`scripts/EXIT-CODES.md`](scripts/EXIT-CODES.md)——0 看了没问题 / 1 看了有问题 / 2 没能检查,未测量不得记为通过。**段级审计** [`scripts/stage-audit.py`](scripts/stage-audit.py) `--stage N`(1-7)/`--all` 把「产物存在性 + 段门禁 + 测量收据(init→attach→verify)」串成一跑,三态退出;产物路径按 [workspace-layout.md](references/meta/workspace-layout.md)(design/ canonical,examples/ 存量兼容),进段 N+1 前该段审计须为 0(--skip-gates 的 0 仅覆盖产物面,不算过;段6 无机械审计面,判定在 preview-checklist + 编号门禁)。
+- **验证层脚本**(纯 Python 标准库):由 [`scripts/ci-gate.sh`](scripts/ci-gate.sh) 统一编排,逐脚本职责见 README「功能特性」与各脚本自身 docstring;退出码三态语义唯一 canonical 见 [`scripts/EXIT-CODES.md`](scripts/EXIT-CODES.md)——0 看了没问题 / 1 看了有问题 / 2 没能检查,未测量不得记为通过。**段级审计** [`scripts/stage-audit.py`](scripts/stage-audit.py) `--stage N`(1-7)/`--all` 把「产物存在性 + 段门禁 + 测量收据(init→attach→verify)」串成一跑,三态退出;产物路径按 [workspace-layout.md](references/meta/workspace-layout.md)(.maliang/ canonical,design/ 与 examples/ 存量兼容),进段 N+1 前该段审计须为 0(--skip-gates 的 0 仅覆盖产物面,不算过;段6 无机械审计面,判定在 preview-checklist + 编号门禁)。
 - **新增参考层**：首屏舞台构成 [`references/dimensions/hero-stage.md`](references/dimensions/hero-stage.md);品牌供体值库 [`references/donors/`](references/donors/README.md)(借鉴纪律见 interface-design/craft-discipline.md 的「借鉴数值,不借鉴外观」);用户反馈账本 [`references/meta/feedback-ledger.md`](references/meta/feedback-ledger.md)(与 decisions 账本的分工见其 §1;含 pending-review 与跨项目 profile 层)。第二批新增:区段原型库 [`references/components/`](references/components/INDEX.md)(51 个区段原型,「从索引挑名、只加载选中的那几个」);来源卫生 [`references/meta/source-hygiene.md`](references/meta/source-hygiene.md)(拒载名单/私网拒绝/junk 信号/Provenance);感知症状诊断 [`references/meta/visual-symptoms.md`](references/meta/visual-symptoms.md)。
 - **token 溯源**在 [`references/meta/token-provenance.md`](references/meta/token-provenance.md):DESIGN.md 每个 token 顶层键行尾注释指回产生它的决策 id(`primary: "#212121" # D-P1-1`),无本地依据的写 `# no-decision: <来源>`;`## Overview` 的 2–3 条原则须各落到至少一个 token 上,否则是装饰不是立场。`design-md` Phase 0d 先写决策表再填模板,违规三类(悬空溯源 / 孤儿 token / 空原则)在 `preview` 交付时被门禁 G01–G03 拦。
 - **跨项目外观账本** [`scripts/style-ledger.py`](scripts/style-ledger.py):`add --project <名> <DESIGN.md>` 把每次交付的外观指纹(底色/主色/字族)记进 `~/.maliang/style-ledger.jsonl`,`check` 在 explore/draw-md 开工前列出最近 8 个交付反复出现的底色与字族供主动避开(报告不阻塞,与 profile.json 偏好先验、`.maliang/feedback/` 协作规则、build-log 构图轮换四账分工互不写入);`list` 全量回看。机制详述见脚本 docstring。
@@ -158,8 +158,8 @@ metadata:
 | DESIGN.md 缺失关键 token(如无 color.text) | 在子命令流程内列出缺失 token 清单,询问用户补全 | 用 `{color-text-primary}` 等标准命名占位,标注"假设值,需 DESIGN.md 确认" |
 | draw-* 找不到组件文档(framework/ 无对应类型) | 在 index.md 索引表查最接近的组件类型 | 用基础组件(button/text/list/layout)组合实现,标注"无原生对应,本方案为组合" |
 | 用户提供的 UI markdown 不符合 draw-md 规格(见禁止事项 #3) | 提示具体偏差(缺 token / 缺布局章节) | 引导用户重跑 draw-md,不要硬解析不规范输入;preview 设备尺寸不在 scripts/ 时用最接近尺寸替代 |
-| ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 design/ip/(首次回填时创建该目录) |
-| ui-graph 找不到 ui-relationships.json(未 generate) | 提示先跑 `python3 scripts/ui-graph.py generate --target design/ui-markdown/` | 若 ui-markdown/ 为空,引导回退到 draw-md 先产出页面 markdown |
+| ip 子命令 text_to_image API 不可用(网络/限流/未配置) | 输出结构化 prompt 文档(正向/负向提示词 + CFG/步数/种子参数建议 + 比例 3:4),标注"待 API 可用后调用" | 引导用户用外部工具(Stable Diffusion/MJ)按 prompt 生成,产物回填到 .maliang/ip/(首次回填时创建该目录) |
+| ui-graph 找不到 ui-relationships.json(未 generate) | 提示先跑 `python3 scripts/ui-graph.py generate --target .maliang/ui-markdown/` | 若 ui-markdown/ 为空,引导回退到 draw-md 先产出页面 markdown |
 | explore 方向未定时无 DESIGN.md | 引导先走 design-md Phase 0a 领域探索 | 用户坚持探索时,用克制默认外观 + 临时 token 占位,显式标注「待 DESIGN.md 建立后回填」,方向清单未经确认不进入实体化 |
 
 ## 禁止事项(反例黑名单)

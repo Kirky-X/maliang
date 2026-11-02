@@ -199,7 +199,7 @@
 - 成本列诚实填写,不许全写「无」;不预设偏好,表里不暗夹推荐。
 - 用户问「你选哪个」:基于产品人格与使用频率回答,不只答好看。
 - 用户选定 → **keep 晋级**;用户要再来一轮 → **riff**(见下节)。
-- **选择物化**：keep 落定后把选择写成机读 gate 文件 `design/ui-markdown/.maliang/direction-approved.md`(方向名/时间/轮次/选择证据)——文件不在 = 确认环节没做,draw-md 起点校验之;不设「已有 design context」豁免通道(外部该通道因滥用被废止,引以为鉴);「用户说继续」授权进入下一步,不跳过本步内部 gate。
+- **选择物化**：keep 落定后把选择写成机读 gate 文件 `.maliang/direction-approved.md`(方向名/时间/轮次/选择证据)——文件不在 = 确认环节没做,draw-md 起点校验之;不设「已有 design context」豁免通道(外部该通道因滥用被废止,引以为鉴);「用户说继续」授权进入下一步,不跳过本步内部 gate。
 
 **落选方向三件事(选定的同时落,不是事后补)**:每个落选方向记录三条——**它在测什么**(与其他方向差异的那根轴)、**输在哪条判据**(差异检验哪一条 / tradeoff 表哪一列)、**什么条件下复活**(brief 变化到什么形态它重新成立)。三条写进设计说明,并按 design-md 决策账本五字段格式回流 DESIGN.md `decisions:` 表(决策例:「拒绝方向 X:测交互单元批量维 / 输在块面复查 / 复活条件:对象量 > 200 且逐件比较成为主任务」)——账本是既有机制,这三条是它此前缺失的字段。落选方向是产出的一半:没有这三条,六个月后同一条路会被重新走一遍再输一次。
 
@@ -223,7 +223,7 @@
 
 **认可选择的三选一证据**(进入下游 / 认定「用户已选」前必须有其一):① 用户在对话中粘贴或直接说出选择(格式见「选择回传」);② 用户在设计说明 / 备注中明确回复;③ 用户明确授权「你定 / 按推荐继续」。三条都不满足时停在比较器——**推荐态不是选择**,超时不自动推进、不倒计时。
 
-**探索期间不运行 ui-graph**——`ui-graph generate` 默认递归扫描整个 `design/ui-markdown/`,会把探索面卷进关系图;keep 晋级后再按常规对生产面跑 generate / diff-hash。
+**探索期间不运行 ui-graph**——`ui-graph generate` 默认递归扫描整个 `.maliang/ui-markdown/`,会把探索面卷进关系图;keep 晋级后再按常规对生产面跑 generate / diff-hash。
 
 ---
 
@@ -245,8 +245,8 @@
 
 | 面 | 位置 | 规则 |
 | --- | --- | --- |
-| 探索面 | `design/ui-markdown/prototypes/<slug>/`(规格 + 原型 organisms + 各方向预览 HTML + 比较器页,比较器命名 `preview_explore_<slug>.html`) | 只服务本次比较;可引用产物层 `token.md` |
-| 生产面 | `design/ui-markdown/ui/` + `design/ui-markdown/organisms/` | 正式产物,唯一被下游 draw-* 与 ui-graph 消费的面 |
+| 探索面 | `.maliang/ui-markdown/prototypes/<slug>/`(规格 + 原型 organisms + 各方向预览 HTML + 比较器页,比较器命名 `preview_explore_<slug>.html`) | 只服务本次比较;可引用产物层 `token.md` |
+| 生产面 | `.maliang/ui-markdown/ui/` + `.maliang/ui-markdown/organisms/` | 正式产物,唯一被下游 draw-* 与 ui-graph 消费的面 |
 
 - **单向依赖**:探索面可引用生产面 token,生产面**禁止**引用探索面任何文件(不反向 import)——探索面组件未晋级前对下游不存在。
 - **晋级即清理**:keep 后探索面默认删除;保留必须来自用户显式要求,且在 decisions 账本记录。

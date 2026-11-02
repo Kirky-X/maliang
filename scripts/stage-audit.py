@@ -9,8 +9,8 @@
     python3 scripts/stage-audit.py --stage 1 --skip-gates     # 只查产物面,不跑门禁
 
 每段审计两步:
-    1. **产物存在性**——该段必备结果(路径按 workspace-layout.md canonical:design/ 下;
-       存量项目旧路径 examples/ 兼容识别)。缺任一必备产物 = 该段没有结果,不得进下一段。
+    1. **产物存在性**——该段必备结果(路径按 workspace-layout.md canonical:.maliang/ 下;
+       存量项目旧路径 design/ 与 examples/ 兼容识别)。缺任一必备产物 = 该段没有结果,不得进下一段。
     2. **段门禁**——该段可无头运行的确定性脚本;跑前 receipts init 绑定产物+脚本哈希,
        跑后 attach 登记报告与退出码,末尾 verify 三态(收据编排,对齐 receipts 机制)。
 
@@ -65,8 +65,8 @@ def _symlink_guard(*paths):
 # ---------------------------------------------------------------------------
 
 def _spec_dir(root):
-    """页面规格目录:canonical design/ui-markdown,存量项目旧路径 examples/ui-markdown。"""
-    for rel in ("design/ui-markdown", "examples/ui-markdown"):
+    """页面规格目录:canonical .maliang/ui-markdown,存量项目旧路径 design/ 与 examples/。"""
+    for rel in (".maliang/ui-markdown", "design/ui-markdown", "examples/ui-markdown"):
         p = os.path.join(root, rel)
         if os.path.isdir(p):
             return p, rel
@@ -74,11 +74,25 @@ def _spec_dir(root):
 
 
 def _preview_dir(root):
-    for rel in ("design/preview", "examples/preview"):
+    for rel in (".maliang/preview", "design/preview", "examples/preview"):
         p = os.path.join(root, rel)
         if os.path.isdir(p):
             return p, rel
     return None, None
+
+
+def _design_md(root):
+    """DESIGN.md 路径:canonical .maliang/DESIGN.md,存量项目旧位置为项目根。"""
+    for rel in (".maliang/DESIGN.md", "DESIGN.md"):
+        p = os.path.join(root, rel)
+        if os.path.isfile(p):
+            return p, rel
+    return os.path.join(root, ".maliang", "DESIGN.md"), ".maliang/DESIGN.md"
+
+
+def _spec_file_exists(root, name):
+    spec, _ = _spec_dir(root)
+    return os.path.isfile(os.path.join(spec, name)) if spec else False
 
 
 def _file_exists(path):
@@ -93,7 +107,7 @@ def _dir_has_preview(root):
 
 
 def _gate_validate_design_md(root):
-    design = os.path.join(root, "DESIGN.md")
+    design, _ = _design_md(root)
     return [sys.executable, os.path.join(SCRIPT_DIR, "design-md.py"), "validate", design]
 
 
@@ -121,26 +135,24 @@ STAGES = {
     2: {
         "name": "定义",
         "target": "DESIGN.md(决策账本/token 溯源)",
-        "artifacts": [("DESIGN.md", lambda root: _file_exists(os.path.join(root, "DESIGN.md")))],
+        "artifacts": [("DESIGN.md", lambda root: _file_exists(_design_md(root)[0]))],
         "gates": [("validate-design-md", _gate_validate_design_md)],
     },
     3: {
         "name": "设计",
-        "target": "design/ui-markdown/ 页面规格(token.md 必备)",
-        "artifacts": [("token.md(页面规格层)", lambda root: _file_exists(
-            os.path.join(_spec_dir(root)[0] or root, "token.md")) if _spec_dir(root)[0] else False)],
+        "target": ".maliang/ui-markdown/ 页面规格(token.md 必备)",
+        "artifacts": [("token.md(页面规格层)", lambda root: _spec_file_exists(root, "token.md"))],
         "gates": [("validate-draw-md", _gate_validate_draw_md)],
     },
     4: {
         "name": "实现",
         "target": "ui-implementation-map.json(实现映射);完整性判定走 ui-graph list-unimplemented",
-        "artifacts": [("ui-implementation-map.json", lambda root: _file_exists(
-            os.path.join(_spec_dir(root)[0] or root, "ui-implementation-map.json")) if _spec_dir(root)[0] else False)],
+        "artifacts": [("ui-implementation-map.json", lambda root: _spec_file_exists(root, "ui-implementation-map.json"))],
         "gates": [],
     },
     5: {
         "name": "验证",
-        "target": "design/preview/ 下 preview_*.html",
+        "target": ".maliang/preview/ 下 preview_*.html",
         "artifacts": [("preview_*.html(预览产物)", _dir_has_preview)],
         "gates": [("preview-check", _gate_preview_check)],
     },
@@ -154,8 +166,7 @@ STAGES = {
     7: {
         "name": "迭代",
         "target": "ui-hash-state.json(哈希基线,decisions 回写属 DESIGN.md 人工层)",
-        "artifacts": [("ui-hash-state.json(哈希基线)", lambda root: _file_exists(
-            os.path.join(_spec_dir(root)[0] or root, "ui-hash-state.json")) if _spec_dir(root)[0] else False)],
+        "artifacts": [("ui-hash-state.json(哈希基线)", lambda root: _spec_file_exists(root, "ui-hash-state.json"))],
         "gates": [],
     },
 }
@@ -171,7 +182,7 @@ _FM_OPEN_RE = re.compile(r"^---\s*$")
 def check_stage1(root):
     """段1(研究)产物检查,返回缺失/问题清单(空 = 过)。"""
     problems = []
-    path = os.path.join(root, "DESIGN.md")
+    path, _ = _design_md(root)
     if not os.path.isfile(path):
         return ["DESIGN.md 不存在(段1·2 无结果,全链路 CHECKPOINT 禁止跳段)"]
     try:
@@ -265,7 +276,7 @@ def audit_stage(stage_no, root, run_gates=True, gates_override=None):
     artifact_paths = []
     if stage_no == 1:
         result["missing"].extend(check_stage1(root))
-        artifact_paths = [os.path.join(root, "DESIGN.md")]
+        artifact_paths = [_design_md(root)[0]]
     else:
         for label, predicate in stage["artifacts"]:
             if not predicate(root):
@@ -273,7 +284,7 @@ def audit_stage(stage_no, root, run_gates=True, gates_override=None):
         spec, rel = _spec_dir(root)
         if spec:
             result["notes"].append("规格目录:%s(%s)" % (
-                rel, "canonical" if rel.startswith("design/") else "存量旧路径,建议迁移见 workspace-layout.md"))
+                rel, "canonical" if rel.startswith(".maliang/") else "存量旧路径,建议迁移见 workspace-layout.md"))
             binding = {3: "token.md", 4: "ui-implementation-map.json",
                        7: "ui-hash-state.json"}.get(stage_no)
             if binding:
@@ -282,10 +293,10 @@ def audit_stage(stage_no, root, run_gates=True, gates_override=None):
             d, rel = _preview_dir(root)
             if d:
                 result["notes"].append("预览目录:%s(%s)" % (
-                    rel, "canonical" if rel.startswith("design/") else "存量旧路径,建议迁移见 workspace-layout.md"))
+                    rel, "canonical" if rel.startswith(".maliang/") else "存量旧路径,建议迁移见 workspace-layout.md"))
                 artifact_paths.extend(_glob.glob(os.path.join(d, "preview_*.html")))
         if stage_no == 2:
-            artifact_paths = [os.path.join(root, "DESIGN.md")]
+            artifact_paths = [_design_md(root)[0]]
 
     if result["missing"]:
         return 1, result

@@ -1,8 +1,8 @@
 # ui-graph 子命令 —— UI 关系管理与变更追踪
 
 > 本文件是 `ui-graph` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
-> 输入 = [`draw-md`](./draw-md.md) 产出的 `design/ui-markdown/` 目录(token.md + organisms/ + ui/*.md)。
-> 输出 = 六个 JSON 文件,落在 `design/ui-markdown/` 下:
+> 输入 = [`draw-md`](./draw-md.md) 产出的 `.maliang/ui-markdown/` 目录(token.md + organisms/ + ui/*.md)。
+> 输出 = 六个 JSON 文件,落在 `.maliang/ui-markdown/` 下:
 >   - `ui-relationships.json` — 页面层级 + 跳转关系图
 >   - `ui-hash-state.json` — 每个 markdown 文件的 sha256 哈希快照（draw-md 指纹）
 >   - `preview-hash-state.json` — 预览 HTML/截图清单的 sha256 快照（`--kind preview`,落在预览目录）
@@ -18,10 +18,10 @@
 
 ## 产物层目录结构
 
-所有 ui-graph 产出落在 `design/ui-markdown/`(与 draw-md 产物同目录):
+所有 ui-graph 产出落在 `.maliang/ui-markdown/`(与 draw-md 产物同目录):
 
 ```
-design/ui-markdown/
+.maliang/ui-markdown/
 ├── token.md                    # draw-md 产物(本子命令只读,不修改)
 ├── organisms/                  # draw-md 产物(只读)
 ├── ui/                         # draw-md 产物(只读)
@@ -47,7 +47,7 @@ design/ui-markdown/
 ```json
 {
   "generated_at": "2026-07-05T10:00:00+08:00",
-  "target_dir": "design/ui-markdown",
+  "target_dir": ".maliang/ui-markdown",
   "pages": [
     {
       "path": "ui/home.md",
@@ -75,11 +75,11 @@ design/ui-markdown/
 }
 ```
 
-- `pages[].path` — 相对 `design/ui-markdown/` 的路径(如 `ui/setting/about.md`)。
+- `pages[].path` — 相对 `.maliang/ui-markdown/` 的路径(如 `ui/setting/about.md`)。
 - `pages[].parent` — 父级目录名(`ui/` 直接子文件为 null;`ui/setting/about.md` 为 `"setting"`)。
 - `pages[].depth` — 层级深度(`ui/home.md` = 1;`ui/setting/about.md` = 2)。
 - `pages[].components` — 从 frontmatter `components` 字段解析的组件 slug 列表。
-- `navigations[].from` / `to` — 均为相对 `design/ui-markdown/` 的路径。
+- `navigations[].from` / `to` — 均为相对 `.maliang/ui-markdown/` 的路径。
 - `navigations[].event` — 触发事件(当前仅 `tap`;`submit`/`focus` 等不产生跳转,不在此列)。
 - `navigations[].source_component` — 触发跳转的组件类型(v1 暂为 null,后续可增强为参数表的"组件类型"字段值)。
 
@@ -88,7 +88,7 @@ design/ui-markdown/
 ```json
 {
   "computed_at": "2026-07-05T10:00:00+08:00",
-  "target_dir": "design/ui-markdown",
+  "target_dir": ".maliang/ui-markdown",
   "files": [
     { "path": "ui/home.md", "sha256": "abc123...", "size": 2048 },
     { "path": "organisms/nav-bar.md", "sha256": "def456...", "size": 1024 }
@@ -128,11 +128,11 @@ design/ui-markdown/
 
 ### 1. generate — 生成 ui-relationships.json
 
-解析 `design/ui-markdown/` 目录,聚合页面层级与跳转关系。
+解析 `.maliang/ui-markdown/` 目录,聚合页面层级与跳转关系。
 
 ```bash
 python3 scripts/ui-graph.py generate [--target PATH]
-# 默认 --target design/ui-markdown/
+# 默认 --target .maliang/ui-markdown/
 # 产出 {target}/ui-relationships.json
 ```
 
@@ -178,7 +178,7 @@ python3 scripts/ui-graph.py check-nav [--target PATH]
 python3 scripts/ui-graph.py compute-hash [--target PATH] [--kind draw-md|preview|code]
 # 产出 {target}/ui-hash-state.json（draw-md）、preview-hash-state.json（preview）或 code-hash-state.json（code）
 # preview 示例（目标为预览产物目录）:
-python3 scripts/ui-graph.py compute-hash --target design/preview --kind preview
+python3 scripts/ui-graph.py compute-hash --target .maliang/preview --kind preview
 ```
 
 ### 5. diff-hash — 对比哈希快照
@@ -199,7 +199,7 @@ python3 scripts/ui-graph.py diff-hash [--target PATH] [--kind draw-md|preview|co
 
 ```bash
 python3 scripts/ui-graph.py build-impl-map [--target PATH] [--preview-root PATH] [--code-root PATH]
-# 默认 --preview-root = {target}/../preview  (即 design/preview/)
+# 默认 --preview-root = {target}/../preview  (即 .maliang/preview/)
 # 默认 --code-root = 当前工作目录
 # 产出 {target}/ui-implementation-map.json
 ```
@@ -248,9 +248,9 @@ python3 scripts/ui-graph.py check-sync [--target PATH]
 
 ## 流程
 
-0. **前置检查** —— 确认 `design/ui-markdown/` 存在且含 `ui/` 子目录;若不存在,提示用户先跑 [`draw-md`](./draw-md.md) 产出页面 markdown。
+0. **前置检查** —— 确认 `.maliang/ui-markdown/` 存在且含 `ui/` 子目录;若不存在,提示用户先跑 [`draw-md`](./draw-md.md) 产出页面 markdown。
 
-   **🔴 CHECKPOINT · 输入就绪**:确认 `design/ui-markdown/ui/` 至少有 1 个 .md 文件,再进入下一步。
+   **🔴 CHECKPOINT · 输入就绪**:确认 `.maliang/ui-markdown/ui/` 至少有 1 个 .md 文件,再进入下一步。
 
 1. **生成关系图** —— 运行 `generate` 产出 `ui-relationships.json`。
 
@@ -292,7 +292,7 @@ python3 scripts/ui-graph.py check-sync [--target PATH]
 
 | 触发条件 | 一线修复 | 仍失败兜底 |
 | -------- | -------- | ---------- |
-| `design/ui-markdown/` 不存在 | 提示用户先跑 draw-md 产出页面 markdown | 退出码 1,不产出空 JSON |
+| `.maliang/ui-markdown/` 不存在 | 提示用户先跑 draw-md 产出页面 markdown | 退出码 1,不产出空 JSON |
 | 页面 markdown 缺 frontmatter | `parse_frontmatter` 返回空 dict,`name` 用文件名(去 .md)兜底 | 在 `pages[]` 标注 `name=null`,继续处理其他页面 |
 | frontmatter `components` 字段格式异常(非 `[a,b,c]`) | 当作字符串处理,split(',') 兜底 | 设为空 list,不阻塞 generate |
 | action 字段含 `tap=→` 但目标为中文/含空格(如 `tap=→对应目标页`) | 正则 `[a-z][a-z0-9/-]*` 不匹配,自动跳过 | 记入 `navigations[]` 的 `to=null`(可选增强) |
