@@ -101,7 +101,7 @@ Commands:
       显示目标项目中已安装的 skill
   generate-commands <skill-name> [--target <dir>] [--agent <type>|--all-agents] [--commands <cmd1,cmd2,...>]
       为 skill 的每个子命令生成 agent commands 文件（<target>/<folder>/commands/<skill>-<sub>.md）
-      子命令出处：--commands 显式指定 > SKILL.md argument-hint > SKILL.md 路由表扫描
+      子命令解析顺序：--commands 显式指定 > SKILL.md argument-hint > SKILL.md 路由表扫描
 
 Options:
   --target <dir>   目标项目目录（默认当前目录 .）

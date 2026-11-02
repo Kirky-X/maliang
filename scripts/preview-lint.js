@@ -29,7 +29,7 @@
  *     不记为问题;滚动叙事只是提示,不是 hard fail。
  *
  * (默认做法提示 lintPage 与动效四相位探针
- * MOTION_PROBE),2026-10 扩充(#2/#4)。
+ * MOTION_PROBE)(#2/#4)。
  */
 
 (function () {
