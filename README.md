@@ -143,8 +143,10 @@ MIT License（© 2026 Kirky-X）。
 
 **致谢**（第三方内容与规则的取材对象，仅此处在案）：
 
-- [interface-design](https://github.com//interface-design)（，MIT）——`references/interface-design/` 的 craft 纪律与评审流程并入自该项目
-- [设计样张集](https://github.com//设计样张集)（，MIT）——`references/donors/candidates/` 快照集的上游
-- [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines)（MIT）——`references/meta/web-interface-guidelines.md` 的本地快照底本
-- [设计方法库](https://github.com//设计方法库)、[动效方法库](https://github.com/动效方法库)、[去 AI 味方法库](https://github.com//去 AI 味方法库)（Damir Sokolovsky，CC BY 4.0）、[设计基准库](https://github.com//设计基准库)、[UX 规则库](https://github.com//UX 规则库)——动效与设计规则经蒸馏改写融入本仓
-- [UX 定律集](https://UX 定律集)（）、[平台人机界面指南](https://developer.apple.com/design/human-interface-guidelines)、[HarmonyOS 应用设计](https://developer.huawei.com/consumer/cn/doc/doccenter-ux-design)、政府数字服务规范 Design System、尼尔森诺曼集团、Carbon 设计体系、Atlassian、Material Design——规则与定律的参考文献
+- interface-design —— `references/interface-design/` 的 craft 纪律与严格评审流程
+- awesome-design-md —— `references/donors/candidates/` 快照集的上游
+- Vercel Web Interface Guidelines —— `references/meta/web-interface-guidelines.md` 的本地快照底本
+- taste-skill、emilkowalski/skills、unslop、hallmark、ui-ux-pro-max-skill —— 动效与设计规则经蒸馏改写融入本仓
+- Laws of UX、Apple Human Interface Guidelines、HarmonyOS 应用设计、GOV.UK Design System、Nielsen Norman Group、IBM Carbon、Atlassian、Material Design —— 规则与定律的参考文献
+
+上述第三方内容均依其原有许可条款使用，署名与许可条款见各来源项目。

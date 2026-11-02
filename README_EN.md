@@ -127,8 +127,10 @@ MIT License (© 2026 Kirky-X).
 
 **Acknowledgements** (third-party content and rules, recorded here only):
 
-- [interface-design](https://github.com//interface-design) (, MIT) — craft discipline and review flows in `references/interface-design/` merged from that project
-- [设计样张集](https://github.com//设计样张集) (, MIT) — upstream of the `references/donors/candidates/` snapshots
-- [Vercel Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) (MIT) — base of the local snapshot in `references/meta/web-interface-guidelines.md`
-- [设计方法库](https://github.com//设计方法库), [动效方法库](https://github.com/动效方法库), [去 AI 味方法库](https://github.com//去 AI 味方法库) (Damir Sokolovsky, CC BY 4.0), [设计基准库](https://github.com//设计基准库), [UX 规则库](https://github.com//UX 规则库) — motion and design rules distilled into this repo
-- [UX 定律集](https://UX 定律集) (), [平台人机界面指南](https://developer.apple.com/design/human-interface-guidelines), [HarmonyOS app design](https://developer.huawei.com/consumer/cn/doc/doccenter-ux-design), 政府数字服务规范 Design System, 尼尔森诺曼集团, Carbon 设计体系, Atlassian, Material Design — reference literature for rules and laws
+- interface-design — craft discipline and strict review flows in `references/interface-design/`
+- awesome-design-md — upstream of the `references/donors/candidates/` snapshots
+- Vercel Web Interface Guidelines — base of the local snapshot in `references/meta/web-interface-guidelines.md`
+- taste-skill, emilkowalski/skills, unslop, hallmark, ui-ux-pro-max-skill — motion and design rules distilled into this repo
+- Laws of UX, Apple Human Interface Guidelines, HarmonyOS app design, GOV.UK Design System, Nielsen Norman Group, IBM Carbon, Atlassian, Material Design — reference literature for rules and laws
+
+Third-party content is used under its original licence terms; attribution and licence text live with each source project.
