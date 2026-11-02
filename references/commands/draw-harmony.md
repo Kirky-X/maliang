@@ -148,6 +148,7 @@ flowchart LR
 - [ ] 组件映射 MUST 查 `framework/harmony/` 文档,MUST NOT 凭记忆杜撰 ArkTS API
 - [ ] Token 引用 MUST 解析为具体值(资源引用或硬值),MUST NOT 在产出代码中残留 `{token-name}` 占位符
 - [ ] 产出代码 MUST 可在 DevEco Studio 中编译(语法正确、import 完整)
+- [ ] 一个界面 = 一个 @Entry 页面:禁止按页长把同一界面的列表/区块截断拆到第二个 @Entry struct(界面边界来自 UI markdown 的页面文件,不得自创 `xxx_2.ets` 之类的续页)
 
 ---
 
@@ -169,3 +170,4 @@ flowchart LR
 - **禁止用 `Flex` 容器代替 `Row` / `Column`**:`Flex` 性能差且语义弱(需计算弹性权重),线性布局不应使用。MUST 用 `Row` / `Column` 表达横向/纵向线性布局。
 - **禁止列表用 `ForEach` 不加 `key`**:缺 key 会导致 diff 全量比对、重渲染抖动与状态错位。MUST 为 `ForEach` 提供稳定 `keyGenerator`。
 - **禁止导航用 `router.pushUrl` 不处理回调失败**:跳转失败(页面不存在/栈溢出)会被静默吞掉,用户无反馈。MUST 处理 `err` 回调并提示用户。
+- **禁止按页长拆分同一界面**(如 `orders.ets` 列表画一半,余下拆成 `orders_2.ets`):@Entry 页面对应 UI markdown 的页面文件,「页」是界面单位不是长度单位;拆页会多出一个无意义的路由入口。MUST 在单页面内画全整个界面(长列表用 `ForEach` 渲染真实数据项,配合 `List` 懒加载),页面高度随内容增长。

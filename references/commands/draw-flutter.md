@@ -149,6 +149,7 @@ flowchart LR
 - [ ] 组件映射 MUST 查 `framework/flutter/` 文档,MUST NOT 凭记忆杜撰 Flutter Widget API
 - [ ] Token 引用 MUST 解析为具体值(`Color()` 或 `ThemeData`),MUST NOT 在产出代码中残留 `{token-name}` 占位符
 - [ ] 产出代码 MUST 可通过 `dart analyze`(语法正确、import 完整、类型安全)
+- [ ] 一个界面 = 一个页面文件:禁止按页长把同一界面的列表/区块截断拆到第二个 page 文件(界面边界来自 UI markdown 的页面文件,不得自创 `xxx_page_2.dart` 之类的续页)
 
 ---
 
@@ -170,3 +171,4 @@ flowchart LR
 - **禁止列表用 `Column` + 多个子 widget**:`Column` 一次性构建全部子 widget,无懒加载,长列表会卡顿/OOM。MUST 用 `ListView.builder` 按需构建。
 - **禁止状态管理在 Widget 内用 `setState` 处理跨页面状态**:`setState` 作用域仅当前 Widget,跨页面状态会失同步、难以测试。MUST 用 Provider / Riverpod / Bloc 集中管理。
 - **禁止文本不用 `Text` widget 的 `style` 引用 `ThemeData.textTheme`**:硬编码字号/字重会脱离主题层级,响应式与一致性失效。MUST 经 `style: Theme.of(context).textTheme.xxx` 引用。
+- **禁止按页长拆分同一界面**(如 `orders_page.dart` 列表画一半,余下拆成 `orders_page_2.dart`):page 文件对应 UI markdown 的页面文件,「页」是界面单位不是长度单位;拆页破坏路由表与 Widget 复用关系。MUST 在单文件内画全整个界面(长列表用 `ListView.builder` 渲染真实数据项),页面滚动高度随内容增长。

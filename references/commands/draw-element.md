@@ -150,6 +150,7 @@ flowchart LR
 - [ ] 组件映射 MUST 查 `framework/element/` 文档,MUST NOT 凭记忆杜撰 Element Plus 组件 API
 - [ ] Token 引用 MUST 解析为具体值(CSS 变量,或可回溯 token.md 的字面值),MUST NOT 在产出代码中残留 `{token-name}` 占位符
 - [ ] 产出代码 MUST 为合法 Vue 3 SFC(语法正确、标签闭合、script setup 有效)
+- [ ] 一个界面 = 一个 SFC:禁止按页长把同一界面的列表/区块截断拆到第二个 SFC(界面边界来自 UI markdown 的页面文件,不得自创 `Xxx-2.vue` 之类的续页)
 
 ---
 
@@ -171,3 +172,4 @@ flowchart LR
 - **禁止直接操作 DOM**(如 `document.querySelector`):绕过 Vue 响应式系统会导致状态与视图脱节、难以维护。MUST 用 Vue 的 `ref` 和 `reactive` 访问元素与状态。
 - **禁止表单不用 `el-form` + `rules` 校验、自己写校验逻辑**:自写校验重复造轮子、缺统一错误提示与异步校验。MUST 用 `<el-form :rules>` + `<el-form-item prop>` 声明式校验。
 - **禁止用 `scoped CSS` 写颜色硬值**:scoped 中硬编码颜色无法被主题变量覆盖,暗色模式失效。MUST 用 CSS 变量(`var(--xxx)`),scoped 仅用于作用域隔离。
+- **禁止按页长拆分同一界面**(如 `Home.vue` 列表画一半,余下拆成 `Home-2.vue`):SFC 对应 UI markdown 的页面文件,「页」是界面单位不是长度单位;拆页破坏路由映射与组件复用关系。MUST 在单 SFC 内画全整个界面(长列表用 `v-for` 渲染真实数据项),组件高度随内容增长。
