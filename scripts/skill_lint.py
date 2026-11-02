@@ -241,7 +241,7 @@ def check_orphans(repo: Path) -> list[str]:
                     tokens.add("/".join(segs[i:]))
     orphans = []
     for p in refs:
-        if p.name == "index.md":
+        if p.name.lower() == "index.md":
             continue
         stem_rel = str(p.relative_to(repo / "references"))
         if p.stem in tokens or stem_rel in tokens or p.name in tokens:

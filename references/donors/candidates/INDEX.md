@@ -49,6 +49,7 @@
 | `replicate` | Replicate | 橙红洋红爆炸渐变 hero，128px 特重展示字 | `#202020` `#ea2804` `#dd4425` | [replicate.md](replicate.md) |
 | `runwayml` | RunwayML | 全幅影像当界面，单一字体走到底，纯黑画布 | `#000000` `#030303` `#1a1a1a` | [runwayml.md](runwayml.md) |
 | `together.ai` | Together AI | 白底配粉蓝薰衣草柔和渐变，深午夜蓝承载研究暗区 | `#ef2cc1` `#fc4c02` `#010120` | [together.ai.md](together.ai.md) |
+| `voltagent` | VoltAgent | 碳黑画布暖灰描边，祖母绿单色能量源 | `#050507` `#101010` `#00d992` | [voltagent.md](voltagent.md) |
 | `x.ai` | xAI | 深灰蓝与纯白二值对比无中间灰，GeistMono 320px 细字重当展示字 | `#f8f8f8` `#ffffff` `#1f2228` | [x.ai.md](x.ai.md) |
 
 ## 开发工具与平台（dev · 14 条）

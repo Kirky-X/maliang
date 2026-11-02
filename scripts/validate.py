@@ -1438,7 +1438,7 @@ def _main_draw_md(argv):
     )
     framework_file = os.path.abspath(
         args.framework_file
-        or os.path.join(os.getcwd(), "references", "framework", "index.md")
+        or os.path.join(os.getcwd(), "references", "framework", "INDEX.md")
     )
     vocabulary_dir = os.path.abspath(
         args.vocabulary_dir
@@ -2247,7 +2247,7 @@ def _main_generated(argv=None):
     token_file = os.path.abspath(args.token_file or os.path.join(
         os.getcwd(), "examples", "ui-markdown", "token.md"))
     framework_index = os.path.abspath(args.framework_index or os.path.join(
-        os.getcwd(), "references", "framework", "index.md"))
+        os.getcwd(), "references", "framework", "INDEX.md"))
     framework_dir = os.path.join(os.path.dirname(framework_index), "element")
 
     def _cannot_check(message):

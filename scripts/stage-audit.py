@@ -101,7 +101,7 @@ def _gate_validate_draw_md(root):
     spec, _ = _spec_dir(root)
     return [
         sys.executable, os.path.join(SCRIPT_DIR, "validate.py"), "draw-md", spec,
-        "--framework-file", os.path.join(SKILL_DIR, "references", "framework", "index.md"),
+        "--framework-file", os.path.join(SKILL_DIR, "references", "framework", "INDEX.md"),
         "--vocabulary-dir", os.path.join(SKILL_DIR, "references", "vocabulary"),
     ]
 
