@@ -42,6 +42,7 @@ design/ui-markdown/
 - `token.md` — 单一硬值来源,所有页面引用它。
 - `organisms/` — **重复性/跨页面**组件(出现在多页的导航栏、dock 栏等),单独成文,页面通过名称引用,不重复定义。
 - `ui/` — **页面** markdown,一页一文件;二级页面用子目录表达嵌套(如 `setting/about.md`)。
+- **一界面一文件**:「一页一文件」的「页」指**用户可感知的一个完整界面**(screen),不是输出长度单位。同一界面的内容——哪怕含长列表、多区块——MUST 完整画在同一份文件里;**禁止按固定页长把界面截断拆成第二份文件**(如列表画一半、余下项拆到 `xxx-2.md`)。页面高度由真实内容决定,不取"要求的页面长度";长列表按数据底座给出真实项数(或合理满项态)在单文件内画全。
 
 ---
 
@@ -276,6 +277,7 @@ pattern: [chart-line, table-sortable]
 - [ ] 每页 ≤ 3 个核心组件(hero/主操作/关键转化点)参数表 SHOULD 含 intent 字段(一句话决定理由;非硬性,_validator_ 不检查)
 - [ ] 所有颜色值引用产物层 `design/ui-markdown/token.md`,**无硬编码色值字面量**
 - [ ] 二级页面用子目录嵌套(如 `setting/about.md`)
+- [ ] 一个界面 = 一份页面文件:禁止按页长把同一界面的列表/区块截断拆到第二份文件(对应检查:页面数应等于界面数,而非 ceil(内容长度/页长))
 - [ ] 跨页面复用组件放 `organisms/`,页面引用而非重复定义
 - [ ] 每个页面 MUST 引用至少 1 个 dark token 或含"## 暗色模式"章节(对应检查 8, AUDIT G01)
 - [ ] 交互组件(组件类型含 button/icon/input/link)参数表 MUST 含 aria-label 字段(对应检查 9, AUDIT G02)
@@ -317,3 +319,4 @@ pattern: [chart-line, table-sortable]
 - **禁止组件类型字段自创 slug**(如 `search-bar`、`tab-item`):脱离 framework 索引会导致下游 draw-* 映射失败。MUST 引用 [`framework/INDEX.md`](../framework/INDEX.md) 的 56 类组件 slug,组合组件用 ` + ` 连接(如 `input + icon`)。
 - **禁止跨页面复用组件在多页重复定义**:重复定义会造成维护漂移与 token 不一致。MUST 放入 `organisms/` 单独成文,各页面通过名称引用。
 - **禁止二级页面文件直接放 `ui/` 根目录**(如 `ui/about.md`):扁平放置会让页面层级丢失、无法表达导航嵌套。MUST 用子目录(如 `ui/setting/about.md`)。
+- **禁止按页长拆分同一界面**(如 `orders.md` 的列表画到第 10 项截断,余下项拆成 `orders-2.md` 或"接下页"):「页」是界面单位不是长度单位,截断拆页会让导航图、diff-hash 与实现映射把一个界面算成两个,且第二份丢失界面上下文。MUST 在单文件内画全整个界面,页面高度随真实内容增长;单次输出确实写不完时走 [`../meta/llm-behavior.md`](../meta/llm-behavior.md) §4.3 PAUSED 续传协议,在文件边界续传,而非伪造界面边界。
