@@ -225,7 +225,7 @@ function onMenu() {
   min-height: 100vh;
   background: var(--color-surface-base);
   color: var(--color-text-primary);
-  font-family: "PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF Pro Text", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
   position: relative;
 }
 

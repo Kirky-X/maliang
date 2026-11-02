@@ -89,6 +89,8 @@ critical 与 major 进「硬命中」通道 → 退出码 1;minor 与 warn 进�
   reflex-font [warn]        display 首位字族命中 ai-tells §11 反射字体清单。命中不自动
                             违规(仍走 §0 豁免总则),故进告警档而非硬失败通道;命中后
                             要么换字族,要么写出「没有其他字体能满足」的理由并标豁免。
+  cjk-font-chain [minor]    中文字体在链首且后随西文字族(font-family 逐字符匹配,
+                            西文字体永远轮不到出场),见 dimensions/font.md CJK 排印补丁
 
 豁免:复用 ai-tells.md 第 0 节机制——三豁免(DESIGN.md 批准 / 世界类型自洽 /
 内容真有动机)的语义判断由人完成,脚本只认**显式记录**的 tell-exempt 标注:
@@ -152,6 +154,7 @@ RULE_LIBRARY_PRIMARY = "library-primary"
 RULE_UNIFORM_SHADOW = "uniform-shadow"
 RULE_GLASS_BACKDROP = "glass-backdrop-blur"
 RULE_UNDECLARED_FONT = "undeclared-font"
+RULE_CJK_FONT_CHAIN = "cjk-font-chain"
 
 # 阈值(确定性口径,写死不猜)
 GLOW_BOX_BLUR_MIN = 16      # box-shadow / drop-shadow 0 偏移模糊 ≥16px 判辉光
@@ -888,6 +891,16 @@ _LINE_RULES = (
     (RULE_GLASS_BACKDROP, SEV_MINOR,
      re.compile(r"\bbackdrop-blur\b|backdrop-filter\s*:\s*[^;}\n]*blur", re.IGNORECASE),
      "玻璃拟态默认(backdrop-blur;命中不自动违规),见 ai-tells.md §1;液态玻璃走模板墙选型并标 tell-exempt"),
+    (RULE_CJK_FONT_CHAIN, SEV_MINOR,
+     re.compile(
+         r"font-family\s*:\s*[\"']?(?:pingfang sc|microsoft yahei|hiragino sans(?: gb)?|"
+         r"hiragino kaku gothic pron|hiragino mincho pron|source han sans|source han serif|"
+         r"noto sans sc|noto serif sc|noto sans cjk sc|songti sc|simhei|simsun|stheitisc|"
+         r"stkaitisc|stsongsc)\b[^;}\n]*,\s*[\"']?(?:sf pro|inter|roboto|helvetica|arial|"
+         r"segoe|georgia|times|verdana|tahoma|open sans|lato|montserrat|source sans|"
+         r"work sans|manrope|karla|public sans|general sans|switzer|schibsted)", re.IGNORECASE),
+     "中文字体在链首且后随西文字族——font-family 逐字符匹配,西文字体永远轮不到出场"
+     "(反模式),见 dimensions/font.md CJK 排印补丁;改西文在前、中文在后"),
 )
 
 

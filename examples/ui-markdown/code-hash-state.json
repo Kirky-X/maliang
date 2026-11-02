@@ -1,18 +1,18 @@
 {
-  "computed_at": "2026-10-27T08:39:13+08:00",
+  "computed_at": "2026-11-02T17:20:26+08:00",
   "target_dir": "D:\\projects\\maliang\\examples\\ui-markdown",
   "kind": "code",
   "scope_note": "指纹范围: impl-map 映射的实现文件(preview HTML + 三框架代码,code-hash-state.json;check-sync 的实现侧基线)",
   "files": [
     {
       "path": "preview_home_iphone15.html",
-      "sha256": "7f8e694e37e20e51b33eb49a0d01a52652c7b97291f35d2e525b44e8b5f35287",
-      "size": 19273
+      "sha256": "d7bd005ce0c3d4239dd44a7f2be6caddc60ac797087deb9a4524e5575c321a6a",
+      "size": 19308
     },
     {
       "path": "views/Home.vue",
-      "sha256": "1a528f434b92cc3c4c477f89b0e1fcb6e23e06452cb4a8660fd368472c7b4a48",
-      "size": 13976
+      "sha256": "759195eb221f7b7d819415c1c23db6481e907185b1bb13c9639f8c8a99efe7ff",
+      "size": 14011
     }
   ]
 }

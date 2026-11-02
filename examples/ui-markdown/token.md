@@ -69,8 +69,8 @@ version: 1.3.0
 
 ## 2. 字体(typography)
 
-字族:UI 字体:`"PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif`(中英文统一)。
-Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景,与 UI 字体形成对比,对齐 ai-tells.md §2 “Inter 单字族禁令”)。
+字族:UI 字体:`"SF Pro Text", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif`(西文在前、中文在后,同 font.md 链序)。
+Display 字体:`"Fraunces", Georgia, "Noto Serif SC", "Songti SC", serif`(标题/品牌场景,与 UI 字体形成对比,对齐 ai-tells.md §2 “Inter 单字族禁令”)。
 
 | token                | 值   | 用途              |
 | -------------------- | ---- | ----------------- |
@@ -84,8 +84,8 @@ Display 字体:`"Fraunces", "Noto Serif SC", Georgia, serif`(标题/品牌场景
 | font-weight-medium   | 500  | 小标题 / 强调正文 |
 | font-weight-semibold | 600  | 卡片标题 / 按钮   |
 | font-weight-bold     | 700  | 页面主标题        |
-| font-family-display  | "Fraunces", "Noto Serif SC", Georgia, serif | Display 场景(标题/品牌) |
-| font-family-ui       | "PingFang SC", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif | UI 场景(正文/标签) |
+| font-family-display  | "Fraunces", Georgia, "Noto Serif SC", "Songti SC", serif | Display 场景(标题/品牌) |
+| font-family-ui       | "SF Pro Text", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif | UI 场景(正文/标签) |
 | line-height-tight    | 1.2  | 标题              |
 | line-height-base     | 1.5  | 正文              |
 | line-height-relaxed  | 1.6  | 长文本阅读        |

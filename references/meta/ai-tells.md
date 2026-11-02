@@ -115,6 +115,12 @@
 - **为什么是 Tell**:写了字体名单但没人负责加载,渲染结果与设计意图脱节;确定性签名,脚本可查
 - **替代**:声明与加载配套(本地子集/字体链接),或如实用系统栈;preview 自包含 HTML 内必须自带加载。
 
+### Tell · 中文字体放 fallback 链首
+
+- **症状**:`font-family: "PingFang SC", "SF Pro Text", …`——中文字体在链首,后面还排了西文字族
+- **为什么是 Tell**:font-family 逐字符匹配,中文字体自带的西文字形普遍难看,拉丁字母和数字全被它吃掉,精心选的西文字体永远轮不到出场;确定性签名,脚本可查
+- **替代**:西文在前、中文在后、系统中文兜底、泛型收尾(`"Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif`),见 [`../dimensions/font.md`](../dimensions/font.md) CJK 排印补丁;机械扫描走 `audit.py tells` 告警档 `cjk-font-chain`
+
 ## 3. Layout & Spacing(布局与间距)
 
 ### Tell · 三列等高卡片网格
