@@ -17,7 +17,7 @@ App/Web 各 15 页的页面 slug、描述、优先级与示例链接**以平台�
 
 ## 页面 × 支撑资产映射(30 页)
 
-> 每个页面类型的三层落点:首选 [vocabulary](../vocabulary/) 模式 → [模板墙](../templates/INDEX.md) 条目 → [framework](../framework/INDEX.md) 组件类(该列均为 framework 索引表中的组件类型 slug)。标注"缺口"的是暂无现成支撑、建议后续补充的资产。
+> 每个页面类型的三层落点:首选 [vocabulary](../vocabulary/) 模式 → [模板墙](../templates/INDEX.md) 条目 → [framework](../framework/INDEX.md) 组件类(该列均为 framework 索引表中的组件类型 slug)。标注"缺口"的是暂无现成支撑、建议后续补充的资产。本表只覆盖 30 个默认页;非默认页面按区块逐个选型,判据见 [framework/component-routing.md](../framework/component-routing.md)。
 
 ### App 端(15 页)
 

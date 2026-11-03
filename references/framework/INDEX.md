@@ -2,6 +2,7 @@
 
 > 本文件是 `references/framework/` 分层框架文档数据库的入口,为 `draw-harmony` / `draw-flutter` / `draw-element` 三个子命令提供组件映射参考。
 > 每个框架下按组件类型组织(共 56 类,3 现有 + 53 新增),每类组件含两份文档(文件名遵循各框架生态术语惯例)。
+> **选型判据层**:[`component-routing.md`](./component-routing.md) 按「区块要做什么」给推荐组件组合 + 反模式,draw-md 步骤 2.6 逐区块过表——本文件管「组件类有哪些文档」,选哪个组合先看路由表。
 > 部分组件在某框架无原生对应时,以 N/A 占位文件说明缺失原因与替代方案,保持目录结构对称。
 > **API 基线**:HarmonyOS NEXT 6.0.0(API 20) / Flutter 3.47.5(stable) / Element Plus 2.14.6;超基线 API 标 `⚠`,分 `safe to plan around` / `unsafe to write today` 两级并附降级写法,详见下文「API 基线」节。
 > **Element Plus 组件事实双源协调(2026-10)**:若运行环境已安装 element-dev skill,其 qdrant 知识库为 EP 组件 API **查询**场景的优先事实源(时效更新);本仓 `framework/element/` 快照仅服务 draw-element 的**生成**映射。快照刷新触发条件:EP 基线版本变更时同步重建两源(以本节基线为准)。
@@ -214,8 +215,9 @@
 1. 在 `references/framework/<framework>/` 下新建组件目录(kebab-case 命名,跨框架统一 slug)
 2. 按该框架的文件名惯例创建两份文档
 3. 更新本文件的组件类型索引表,新增一行(按 P0/P1/P2 优先级归类),并填写描述列(≤15 字中文短语,格式'是什么 + 用途')
-4. 在对应框架的 `draw-<framework>.md` 子命令流程文档中补充组件映射条目
-5. 在主文档末尾添加 `## 参考链接` 章节,引用官方文档 URL
+4. 同步 [`component-routing.md`](./component-routing.md) 路由表:新类若命中某个区块功能行,更新该行推荐组合;无命中不改动
+5. 在对应框架的 `draw-<framework>.md` 子命令流程文档中补充组件映射条目
+6. 在主文档末尾添加 `## 参考链接` 章节,引用官方文档 URL
 
 ### 文档内容要求
 

@@ -112,7 +112,7 @@ breakpoints: [375, 768, 1024] # 可选:响应式断点(升序整数,≥2 项;dra
 
 > 布局类型选用与嵌套规则见 [`layout.md`](../dimensions/layout.md)。
 >
-> **区段形态选型(每个章节挑一个原型)**:先从 [`../components/INDEX.md`](../components/INDEX.md)(51 个区段原型)挑名——**从索引挑名、只加载选中的那几个**,典型一次构建 5-7 个文件(1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航),**不整库加载**;选中的原型按它自己的「变体旋钮」行逐旋钮取值,取值写进 build-log。**分工**:区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)与模式级命名词汇(含 nav-* 导航、layout-* 布局等结构条目)都在 [`../vocabulary/`](../vocabulary/),组件类型 slug 仍在 [`../framework/INDEX.md`](../framework/INDEX.md) 的 56 类里;同一原型第二次出现必须换至少一个旋钮(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
+> **区段形态选型(每个章节挑一个原型)**:先从 [`../components/INDEX.md`](../components/INDEX.md)(51 个区段原型)挑名——**从索引挑名、只加载选中的那几个**,典型一次构建 5-7 个文件(1 个 hero + 1 个区段头 + 1-2 个主体区段 + 1 个 CTA + 1 个页脚 + 1 个导航),**不整库加载**;选中的原型按它自己的「变体旋钮」行逐旋钮取值,取值写进 build-log。**分工**:区段原型管「这段长成什么」,元素级外观(按钮/卡片/表单)与模式级命名词汇(含 nav-* 导航、layout-* 布局等结构条目)都在 [`../vocabulary/`](../vocabulary/),组件类型 slug 仍在 [`../framework/INDEX.md`](../framework/INDEX.md) 的 56 类里——**每个区块的 slug 组合按 [`../framework/component-routing.md`](../framework/component-routing.md) 路由表选,不凭感觉挑**;同一原型第二次出现必须换至少一个旋钮(盖章与旋钮口径见 [`../templates/variation-engine.md`](../templates/variation-engine.md))。
 
 ### 组件意图头(新增组件的参数表节前 MUST 附)
 
@@ -249,6 +249,8 @@ pattern: [chart-line, table-sortable]
 
 > 🔴 **线框边界**:线框是**内部思考工具,不进交付文档**——`.maliang/ui-markdown/` 产物只含 frontmatter + 布局章节 + 参数表,禁止出现 ASCII 图;定稿即弃,定稿理由落进方向契约块的 `first-viewport`。需要把多套方向渲染成真预览对比时,升级走 [`explore`](./explore.md) 子命令,不走线框。
 
+**③ 组件路由**:布局章节定稿后、写参数表前,**逐区块**过 [`../framework/component-routing.md`](../framework/component-routing.md) 路由表(6 功能域:数据展示/列表与集合/表单录入/操作与反馈/导航与结构/状态与空态),按「判据 → 推荐组合」取组件类 slug 组合;命中「不推荐」列的组合时 MUST 在组件意图头或 `intent` 字段写明理由;组合 >3 类先拆章。本步产出的是每区块的组件类决定,直接供下方「组件参数表」的组件类型字段引用。
+
 ### 步骤 2.7(数据型产品):结构判定 + 数据底座
 
 > 首屏含数值 / 进度 / 榜单 / 结论条 / 指标卡(判型见 [`../meta/data-floor.md`](../meta/data-floor.md) §0)的数据型产品,**逐页产出前必过本步**;纯内容站跳过。
@@ -260,7 +262,7 @@ pattern: [chart-line, table-sortable]
 3. **逐页产出** —— 每个页面一份 markdown:frontmatter(背景引用 token)+ 顶部导航章 → 主体章 → 底部 dock 章,每组件一张参数表(值引用 token)。
 4. **自检** —— grep 确认所有颜色字段是 token 引用而非字面量(对应验证点 5.2)。
 
-   **🔴 CHECKPOINT · 自检通过**:自检全部通过后,产出物方可交付给下游(preview / draw-harmony / draw-flutter / draw-element)使用。
+   **🔴 CHECKPOINT · 自检通过**:自检全部通过后,产出物方可交付给下游(preview / draw-harmony / draw-flutter / draw-element)使用。用户已显式声明跳过 preview 时,validate 检查照跑,交付说明首行挂 `⚠️ DEGRADED: preview-skipped（用户显式 opt-out,未经预览验证）`横幅并列明跳过未验项(触发语与边界见 [`preview.md`](./preview.md)「跳过条件(显式 opt-out)」节)。
 
 ---
 
@@ -275,6 +277,7 @@ pattern: [chart-line, table-sortable]
 - [ ] 每个组件参数表首行声明"组件类型"字段,引用 framework/INDEX.md 的 56 类组件 slug,组合组件用 ` + ` 连接
 - [ ] 每个组件参数表 MUST 含 action 字段,格式 `event=behavior; ...`(五元组 tap/state/db/api/long-press;输入类可扩展 submit/focus/blur/input;容器可全为"无")
 - [ ] 每页 ≤ 3 个核心组件(hero/主操作/关键转化点)参数表 SHOULD 含 intent 字段(一句话决定理由;非硬性,_validator_ 不检查)
+- [ ] 每个区块的组件类组合 SHOULD 过 [`../framework/component-routing.md`](../framework/component-routing.md) 路由表;偏离「不推荐」列 MUST 在组件意图头/intent 写明理由(非硬性,_validator_ 不检查)
 - [ ] 所有颜色值引用产物层 `.maliang/ui-markdown/token.md`,**无硬编码色值字面量**
 - [ ] 二级页面用子目录嵌套(如 `setting/about.md`)
 - [ ] 一个界面 = 一份页面文件:禁止按页长把同一界面的列表/区块截断拆到第二份文件(对应检查:页面数应等于界面数,而非 ceil(内容长度/页长))

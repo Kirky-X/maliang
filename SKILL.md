@@ -1,10 +1,10 @@
 ---
 name: maliang
-description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版（不沉淀 token）用本 skill 的 redesign 命令；代码质量/架构审查用 diting；安全扫描用 tiangang；框架运行时开发、编译报错、测试→hap-dev/flutter-dev/element-dev；组件文档查询→element-dev；通用文生图→wudaozi（本 skill 的 ip 仅限项目 IP 形象场景）；纯文本去 AI 味→cangjie"
+description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/组件路由/组件选型/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版（不沉淀 token）用本 skill 的 redesign 命令；代码质量/架构审查用 diting；安全扫描用 tiangang；框架运行时开发、编译报错、测试→hap-dev/flutter-dev/element-dev；组件文档查询→element-dev；通用文生图→wudaozi（本 skill 的 ip 仅限项目 IP 形象场景）；纯文本去 AI 味→cangjie"
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
   author: "Kirky-X"
   repo: "https://github.com/Kirky-X/maliang"
   tags: "design-system, design-token, ui-markdown, DESIGN.md, w3c-dtcg, harmonyos, flutter, element-plus, preview, device-models, ui-graph, ip-character, ip-handbook, accessibility, dark-mode"
@@ -69,7 +69,7 @@ metadata:
 **轻档不是门禁豁免**。以下**不可裁剪项**任何档位完整执行:
 
 1. **a11y 检查** — aria-label、触控目标 ≥44px、对比度、`prefers-*` 偏好(CRITICAL 类,见 [`references/meta/rules-priority.md`](references/meta/rules-priority.md) 冲突裁决规则 4,不可妥协);
-2. **preview 硬门禁** — validate-draw-md 检查与 preview 评审 disposition 照常;轻档的「抽查」指只跑改动页,不是跳过或降阈值;
+2. **preview 硬门禁** — validate-draw-md 检查与 preview 评审 disposition 照常;轻档的「抽查」指只跑改动页,不是跳过或降阈值。**唯一例外**:用户明说不需要预览时按 [`preview.md`](references/commands/preview.md)「跳过条件(显式 opt-out)」跳过渲染与评审,validate 检查照跑,交付说明挂 DEGRADED 横幅;
 3. draw-md 硬约束(token 引用 / 暗色引用 / 动效 ≤400ms)随改动页逐条过(见 [`references/commands/draw-md.md`](references/commands/draw-md.md) 约束汇总)。
 
 无 DESIGN.md 时的轻档请求按「失败模式与 fallback」第一行处理:引导先走 design-md,分档不提供例外。
@@ -83,7 +83,7 @@ metadata:
 | --- | --- |
 | 方向 / 提案确认(design-md 0b/0c、explore 方向清单) | 按证据与推荐直接推进;explore 仍实体化 3 个方向、三张首屏缩到 480px 并排自选并写明理由;任务明确只要一个方向时不问也不做对比页 |
 | 提取 / 盘点确认(token 提取、页面清单) | 按现场证据取值并标置信(✅/⚠️/❓,写法见 design-md「提取路径置信标记」);清单按默认规则生成 |
-| 交付前确认(preview / critique 行动确认) | 按门禁与证据结果推进,交付说明首行挂降级横幅 |
+| 交付前确认(preview / critique 行动确认) | 按门禁与证据结果推进,交付说明首行挂降级横幅;preview 跳过**不属于**自选动作——仅用户明说时按 [`preview.md`](references/commands/preview.md)「跳过条件(显式 opt-out)」允许,无人值守一律照跑 |
 | 素材 / API 类确认(ip 等) | API 不可用走既有 fallback;产物按新路径落盘不覆盖 |
 
 **呈现纪律**:交付说明首行挂 `⚠️ DEGRADED: unattended（<原因>）`(沿用 critique/preview 既有 DEGRADED 形状,不引入第二模式);自选决定与理由逐条写入设计说明;看不了图时写明「未验证实际视觉」、不给视觉打分;没有可运行环境时不说交互已通过。用户回归后按其意见修订,修订走决策回写。
