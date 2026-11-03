@@ -158,6 +158,7 @@
 
 | 场景 | 推荐框架 | 理由 |
 | ---- | -------- | ---- |
+| 项目已有前端代码库 / 团队技术栈 | 跟随现有栈 | draw-md 产物端无关,共享同一份 DESIGN.md token;迁移成本高于一切场景收益 |
 | HarmonyOS 原生应用 | HarmonyOS(ArkTS) | 华为生态原生支持,ArkTS 声明式 UI 性能最优 |
 | 跨平台移动应用(iOS/Android) | Flutter | 单代码库跨平台,Skia 渲染性能接近原生 |
 | Web 后台管理系统 | Element Plus | Vue 3 生态成熟,组件丰富,中文文档完善 |

@@ -84,3 +84,4 @@
 - **组合连接符**:组件类之间用 ` + ` 连接(如 `input + icon`),与 draw-md「组件类型标注规范」一致;frontmatter `components` 数组按页面出现顺序去重登记。
 - **图表特殊路径**:图表不是组件类,一律经 frontmatter `pattern: chart-*` 声明(见 draw-md「模式引用(`pattern:` 字段)」),`table`/`statistic` 等只做数值承载。
 - **vocabulary 词汇不进 slug 列**:区块级模式(如 `search-bar`、`table-sortable`)走 `pattern:` 字段,本表推荐列只收组件类。
+- **icon 资产选型不在本表**:组件类 `icon` 只声明「有图标位」;用哪个图标库、哪个具体图标资产,按 [`../dimensions/icon.md`](../dimensions/icon.md) 走 xizhi skill 路由,本表不复述其 API(防双处维护)。

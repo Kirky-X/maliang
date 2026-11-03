@@ -4,7 +4,7 @@ description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定�
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
 metadata:
-  version: "0.6.0"
+  version: "0.7.0"
   author: "Kirky-X"
   repo: "https://github.com/Kirky-X/maliang"
   tags: "design-system, design-token, ui-markdown, DESIGN.md, w3c-dtcg, harmonyos, flutter, element-plus, preview, device-models, ui-graph, ip-character, ip-handbook, accessibility, dark-mode"
@@ -54,7 +54,7 @@ metadata:
 | 🔷 基于 DESIGN.md 生成 IP 形象(API 优先,fallback prompt) | ip | [`references/commands/ip.md`](references/commands/ip.md) |
 | 🔷 生成 IP 视觉手册(三视图/动作/表情/字体/色彩/版式/周边) | ip-handbook | [`references/commands/ip-handbook.md`](references/commands/ip-handbook.md) |
 
-> 🔴 标记的行需先确认 draw-md 产出存在;preview/draw-* 无 UI markdown 输入时应在子命令流程内 fallback 引导用户回退到 draw-md。🔷 标记的行属新增能力,critique 需先有 preview 产出或可访问页面,ui-graph 需先有 draw-md 产出,ip/ip-handbook 需先有 DESIGN.md。
+> 🔴 标记的行需先确认 draw-md 产出存在;preview/draw-* 无 UI markdown 输入时应在子命令流程内 fallback 引导用户回退到 draw-md。用户未指定目标框架时,draw-* 先查用户项目已有前端栈(有 → 跟随该栈并说明假设;无 → 按 [`framework/INDEX.md`](references/framework/INDEX.md)「框架选型指南」按场景推荐,经用户确认后再进)。🔷 标记的行属新增能力,critique 需先有 preview 产出或可访问页面,ui-graph 需先有 draw-md 产出,ip/ip-handbook 需先有 DESIGN.md。
 
 进入子命令后,按其流程文档执行。检查点、边界情形、交付核对清单均在各子命令文档内 —— **本路由器不含流程主体**。
 

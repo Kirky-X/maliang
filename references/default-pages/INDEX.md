@@ -72,12 +72,19 @@ P0 不得删减,用户裁剪仅限 P1/P2。
 
 ### P1 按业务选
 
-根据产品形态选配,常见组合:
+按产品形态查下表选配(页面 slug 花名册以 [app.md](./app.md) / [web.md](./web.md) 为唯一源,本表只做「形态 → 选配」判据):
 
-- 电商/内容类 App:discover / messages
-- 社区/工具类 App:feedback / about
-- SaaS Web 后台:verify-email / profile
-- 官网型 Web:about / contact
+| 产品形态 | App P1 选配 | Web P1 选配 |
+| -------- | ----------- | ----------- |
+| 电商 / 交易 | discover, messages | contact, verify-email |
+| 内容 / 社区 | discover, about | about, contact |
+| 效率工具 | feedback, about | profile, contact |
+| SaaS / 后台 | feedback | profile, verify-email |
+| 社交 / 通讯 | messages, feedback | profile, verify-email |
+| 通用底座(任何形态必配) | signup, forgot-password | signup, forgot-password |
+
+- **未列形态**:按「用户产生内容的页面优先于管理功能页面」就近判,选择写入页面产出清单并注明假设。
+- P1 全不适用时可仅出通用底座行,不凑满;P1 全部可裁,裁剪不影响 P0 义务。
 
 ### P2 可选
 

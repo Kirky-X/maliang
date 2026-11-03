@@ -199,7 +199,13 @@ pattern: [chart-line, table-sortable]
    **🔴 CHECKPOINT · token 提取**:确认 token.md 已生成且包含 DESIGN.md 中的全部 token,再进入下一步。若 DESIGN.md 缺失关键 token,走「失败模式与 fallback」表中的对应策略。
 
 1. **先定 token.md** —— 若 `.maliang/ui-markdown/token.md` 不存在或需补充,先产出/更新它(6 章节:颜色/字体/图标/间距/圆角/分割线,RGBA + HEX 双格式)。token 命名遵循规范层 [`token.md`](../meta/token.md) 的规则。
-2. **抽取 organisms** —— 识别跨页面复用组件(导航栏、dock 栏),写入 `organisms/`,每份含 frontmatter + 参数表。
+2. **抽取 organisms** —— 按三条判据识别跨页面复用组件,写入 `organisms/`,每份含 frontmatter + 参数表:
+
+   - **预判型**(逐页产出前):页面产出清单中 **≥2 页**都会出现的**导航栏、dock 栏、页面头、搜索框、筛选栏** 5 类 → 直接成 organism。这 5 类是高频复用形态,且导航/dock 本就是每页首末章的布局硬约束——等第二次真实出现再抽必然多页重复定义,故豁免「第二次复用」门槛;
+   - **观察回补**(逐页产出中):预判清单之外的组件出现**第 2 次真实复用** → 当场抽为 organism,已产出页改为名称引用(回补引用,不重写定义);
+   - **单页专用不进**:只服务单页的组件,即使形态与上述 5 类相似也不进 `organisms/`。
+
+   分工:[`../framework/INDEX.md`](../framework/INDEX.md)「样式四级阶梯」管组件/样式提取的通用纪律(第二次真实复用才提取);本步管 organisms 的预判清单与回补通道——口径统一为「预判 5 类豁免第二次门槛,其余一律按阶梯」。
 
    **🔴 CHECKPOINT · 逐页产出前**:确认 token.md + organisms 已定义,展示待产出页面清单供用户确认,再进入逐页产出。
 
@@ -218,7 +224,7 @@ pattern: [chart-line, table-sortable]
    - 跨端项目 → 两端清单各自适用,共享 design token 保证视觉一致
 2. 标注优先级:
    - **P0(必备,不可删)**:App 4 页(home/mine/login/settings);Web 4 页(home/login/dashboard/settings)
-   - **P1(按业务选)**:根据产品形态选配(如电商 App 选 discover/messages;SaaS Web 选 verify-email/profile)
+   - **P1(按业务选)**:按产品形态查 [`../default-pages/INDEX.md`](../default-pages/INDEX.md)「选用规则 · P1 按业务选」判据表选配;表未列形态按就近判规则处理并在清单注明假设
    - **P2(可选)**:错误页/协议页等,按合规与容错需求选配,建议至少保留 not-found
 3. 询问用户:确认 P0 全部产出 + 从 P1/P2 勾选所需页面,或自定义增补。
 4. 用户确认后形成本项目的"页面产出清单",作为步骤 3 逐页产出的输入。
