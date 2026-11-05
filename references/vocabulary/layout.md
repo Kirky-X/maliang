@@ -9,7 +9,7 @@
 | `layout-single-column`| 单列居中,最大宽度限制                            | 文章 / 博客 / 长文案                  |
 | `layout-two-column`   | 主内容 + 侧边栏(左或右)                         | 文档站、博客详情、Wiki                |
 | `layout-three-column` | 三列(导航 + 内容 + 辅助)                       | IDE、邮件客户端、Slack 类             |
-| `layout-bento-grid`   | 不对称网格(1 大 + 多中小)                       | SaaS Dashboard、产品功能展示          |
+| `layout-bento-grid`   | 不对称网格(1 大 + 多中小);深色多彩变体:近黑底+多彩卡片,主网格比 1.42:1、圆角 26、标题字重 800 | SaaS Dashboard、产品功能展示          |
 | `layout-masonry`      | 瀑布流(列高不齐)                                | 图片社区、Pinterest 类                |
 | `layout-grid-uniform` | 等大网格(N × M)                                 | 商品列表、卡片墙                      |
 | `layout-full-bleed`   | 全出血(无外边距)                                | Hero、媒体、视频背景                  |
@@ -84,7 +84,7 @@
 
 - 同一布局模式连续重复 ≤ 2 次(如 `layout-bento-grid` → `layout-bento-grid` → `layout-bento-grid` = 违规)
 - 第 3 个 section 必须切换布局(如改为 `layout-single-column` / `layout-split-screen` / `layout-full-bleed`)
-- 布局家族多样性下限:8 节及以上的页面,使用的布局家族 ≥ 4 种(家族 = 本文档三张命名表共 22 个模式,各计 1 族);`layout-single-column` / `layout-stacked` 基础流式不计入种类统计,防止用正文流凑数
+- 布局家族多样性下限:8 节及以上的页面,使用的布局家族 ≥ 4 种(家族 = 本文档三张命名表共 31 个模式,各计 1 族;「页内模块展开交互」3 式是页内动效,不计入);`layout-single-column` / `layout-stacked` 基础流式不计入种类统计,防止用正文流凑数
 - 同一布局家族整页至多出现 1 次("精选案例"区不得长得像"我们做什么"区);本条**废止**上述"非连续复用合规"口径——bento → single → bento 现在违规,同一家族第 2 次出现必须换家族
 
 ### L5 · Marquee 单页 ≤ 1
@@ -107,7 +107,7 @@
 
 ## 仪表盘页面布局
 
-> 整页级仪表盘布局:同一句描述词换一种排法的 6 种解法,每条附痛点锚点(什么症状用什么布局)。主表 10 模式作页内区块组合;本节 6 模式作整页主布局,单页选 1 种。
+> 整页级仪表盘布局:同一句描述词换一种排法的解法库,每条附痛点锚点(什么症状用什么布局)。主表 10 模式作页内区块组合;本节模式作整页主布局,单页选 1 种。
 
 ### 命名表
 
@@ -119,6 +119,15 @@
 | `layout-floating-panels` | 画布铺满加浮动面板(Full-bleed Canvas):全幅画布作底,指标与列表成浮动面板贴四角叠上层,边距 16px | 视觉主导仪表盘;解「图和数字各占一半」 |
 | `layout-kanban-columns` | 看板分列(Kanban Columns):按状态等宽列(基准 216px),列头名称 + 计数,列内纵向堆叠,整体横向滚动 | 任务 / 项目追踪;解「不知道进行到哪一步」 |
 | `layout-timeline-swimlanes` | 时间轴泳道(Timeline Swimlanes):顶部时间刻度,每行一条泳道,事项按起止时间绘横条,竖向参考线标当前时刻 | 排期 / 资源 / 会程;解「看不出谁和谁撞了」 |
+| `layout-goal-anchor` | 目标锚点(Goal Anchor):左侧大标题+进度条突出今日目标,快捷操作紧随其下,右侧助手栏,统计收底部;日/周切换全页同步 | 目标/习惯/打卡型首页 |
+| `layout-trend-central` | 趋势居中(Trend Central):趋势图居中主位,关键指标叠印图前,右侧明细稳定;切换指标数字与曲线同步 | 监控/分析页(趋势即主角) |
+| `layout-info-three-column` | 信息三列(Info Three-Column):同类信息纵向三列分区,少量强调色只标状态与差值 | 状态总览/环境监测页 |
+| `layout-central-axis` | 中央轴观测(Central Axis):中央主视图+双侧信息栏+底部时间轴,衬线大编号配等宽读数 | 观测/监测台 |
+| `layout-industrial-fixed-action` | 工业固定操作区(Industrial Fixed Action):右侧固定操作区贯穿到底,左列筛选+玻璃质感表格,选中态联动(数值待核) | 工业操作台/密集操作后台 |
+| `layout-glass-dot-matrix` | 毛玻璃点阵(Glass Dot Matrix):浅灰毛玻璃点阵读数,月份带串起整页,月份指标共享状态 | 月报/数据集览页 |
+| `layout-console-three-pane` | 三栏控制台(Three-Pane Console):深浅分区三栏;点模式项房名/照片/温度联动一起换 | 智能家居/设备控制台(与 `layout-info-three-column` 互见:彼条静态信息分区,本条模式联动切换) |
+| `layout-number-anchor` | 数字锚点(Number Anchor):超大数字作视觉锚点+2×2 紧凑网格+右侧独立纵向面板,层级靠比例/字号/留白 | 单指标强调页 |
+| `layout-magazine-editorial` | 杂志编辑式(Magazine Editorial):顶部文字大图分栏+三列图片网格,细线分格克制留白,非卡片化 | 内容/编辑式仪表盘 |
 
 ### AI 描述词对照
 
@@ -135,13 +144,25 @@
 
 ### 使用规则
 
-- 6 模式为整页级主布局,单页选 1 种;页内区块再用主表 10 模式组合;L4 家族统计两表都计入(各计 1 族)
+- 本节模式为整页级主布局,单页选 1 种;页内区块再用主表 10 模式组合;L4 家族统计两表都计入(各计 1 族)
 - `layout-hero-module`:主模块唯一,次模块面积禁超过主模块;8/4 列为桌面基准,窄断点降级单列堆叠
 - `layout-stacked-bands`:带数 ≤ 4;层间 48px 写成 spacing token;带与带禁频繁换底色(重色只给一处,见 [`../templates/page/dashboard-styles.md`](../templates/page/dashboard-styles.md) 配色占比公式);带内内容选型:概览 → [number-motion.md](number-motion.md)、趋势 → [charts.md](charts.md)、明细 → [tables.md](tables.md)
 - `layout-main-aside`:aside 恒 320px + `top: 0`;主区独立滚动时锁 body 滚动防双滚动条;移动端 aside 降级底部 section 或 sheet(挂 [sheet-drawer.md](sheet-drawer.md))
 - `layout-floating-panels`:画布底即 `layout-full-bleed`,本模式在其上加面板层;面板 ≤ 4 贴四角,统一 16px 边距;媒体之上的面板必须实底或加 scrim,保文字对比度(见 [accessibility.md](../meta/accessibility.md));画布素材走 [visual-assets.md](../meta/visual-assets.md)
 - `layout-kanban-columns`:列等宽(基准 216px)禁自适应挤压;列头计数与列内卡片数一致;横向滚动配 scroll-snap,禁劫持竖向页面滚动;列内拖拽排序走 [spring-reorder](../motion-skeletons/spring-reorder.md) 骨架
 - `layout-timeline-swimlanes`:泳道 ≤ 6;时间刻度行 sticky;NOW 竖线随当前时刻刷新;横条起止吸附刻度(整点 / 半点)
+- `layout-goal-anchor`:今日目标是全页唯一主视觉,进度条选型走 [charts.md](charts.md);日/周切换数字与列表同步全换
+- `layout-trend-central`:叠印指标 ≤ 3,压图须保对比(见 [accessibility.md](../meta/accessibility.md));切指标数字与曲线同帧过渡
+- `layout-info-three-column`:强调色只标状态与差值,禁做装饰;三列列宽一致,列内同类信息
+- `layout-central-axis`:双侧信息栏对称等宽,底部时间轴 sticky;衬线大编号只做标识不做正文
+- `layout-industrial-fixed-action`:右侧操作区固定宽贯穿到底;玻璃表格配方见 [`../dimensions/glass-effect.md`](../dimensions/glass-effect.md)(行内数值待核)
+- `layout-glass-dot-matrix`:点阵读数是装饰性呈现,关键数值须有明文备份;月份带共享选中状态,切月全页联动
+- `layout-console-three-pane`:点模式项三栏联动同换(房名/照片/温度),禁只换一栏;联动切换选本条,静态分区选 `layout-info-three-column`
+- `layout-number-anchor`:层级靠比例/字号/留白表达,禁加框强调;2×2 网格与右侧面板不抢数字焦点
+- `layout-magazine-editorial`:细线分格代替卡片阴影,禁卡片化;图片网格 3 列为基准
+- `layout-main-aside` 日历联动变体:右栏日历点选日期,下方切当日安排,分栏独立滚动但选择联动
+- `layout-floating-panels` 地图变体:画布为地图,指标/筛选/记录面板环绕;空间信息归地图,趋势图表归侧板,分工不重复
+- **内容形态决定组件形态**:照片管氛围、封面管内容、图表管数据——不同模块用不同视觉形态,统一间距/圆角/字阶收拢,禁全卡片化
 - 移动端 6 模式全部降级纵向单列流;横向滚动只允许出现在 kanban 列区与泳道区内部
 
 ### 在 draw-md 中的写法
@@ -157,6 +178,16 @@
 - columns: 5 × 216px, header: name+count, scroll: horizontal-snap
 - drag: spring-reorder
 ```
+
+## 页内模块展开交互
+
+> 页内模块的就地展开与让位(页内动效,不计入 L4 整页家族统计):展开只动受影响的格子/行,其余连续让位,禁整块重绘跳变;`prefers-reduced-motion` 直达终态。
+
+| 模式名 | 视觉特征 | 适用场景 |
+| --- | --- | --- |
+| `grid-cell-expand-fullrow` | 宫格撑行:两列宫格点击一格横向撑成整行、高度增加,其余格子依次重排让位,不跳页 | 功能宫格就地看详情 |
+| `schedule-track-expand` | 日程原位展开:点日程项原位展开详情,其余项连续让位,左侧光点同步标记当前项 | 日程/时间轴列表 |
+| `accordion-exclusive-expand` | 互斥手风琴:高度逐帧撑开,箭头旋转变身,旧项收起新项展开同步进行,页面不猛跳 | FAQ、设置组、表单分段(与 [cards.md](cards.md) `card-collapsible` 互见:彼条单卡折叠容器,本条多段互斥;长文展开见 [typography.md](typography.md) `type-expand-fulltext`) |
 
 ## 移动端页面布局
 

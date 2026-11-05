@@ -8,13 +8,13 @@
 | [buttons](buttons.md) | 按钮与卡片动效反馈命名，[micro-interactions](micro-interactions.md) 的参数级补充 |
 | [cards](cards.md) | 卡片容器变体命名 |
 | [charts](charts.md) | 图表选型（按数据要回答的问题先选型） |
-| [chat](chat.md) | 对话与消息组件命名（气泡生命周期/流式输出/语音输入/滚动锚点/引用角标 8 组） |
+| [chat](chat.md) | 对话与消息组件命名（气泡生命周期/流式输出/语音输入/滚动锚点/引用角标/消息动作与输入区 14 组） |
 | [commerce](commerce.md) | 定价转化模式命名（价格卡/计费切换/对比矩阵/紧迫感/结账信任；文末订单与订阅诚信节） |
 | [drag-drop](drag-drop.md) | 拖放模式命名（触发阈值/move-copy 语义/接受性反馈/成败反馈） |
 | [forms](forms.md) | 表单模式命名（结构 + 校验时机 + 反馈位置） |
 | [galleries](galleries.md) | 图片/媒体集合展示模式 |
 | [hero](hero.md) | Hero 区域标准化命名（含首屏骨架表） |
-| [layout](layout.md) | 页面整体布局命名（文末含仪表盘/移动端整页布局两节） |
+| [layout](layout.md) | 页面整体布局命名（文末含仪表盘/页内模块展开交互/移动端整页布局三节） |
 | [media-player](media-player.md) | 媒体播放器模式命名（加载阈值/续播/宽高比适配/浮层暂停） |
 | [menus](menus.md) | 菜单形态与条目纪律命名（下拉/右键/编辑菜单/子菜单/开关项） |
 | [micro-interactions](micro-interactions.md) | 元素级微交互模式（动效时长预算的 canonical） |
@@ -24,7 +24,7 @@
 | [onboarding](onboarding.md) | 新手引导模式命名（与 states 互补） |
 | [pickers](pickers.md) | 选择器交互命名（圆周手势/速度物理/径向菜单） |
 | [popups](popups.md) | 弹窗浮层链路命名（进来/停留/退场/成功） |
-| [pro-motion](pro-motion.md) | 专业交互组件四节 49 组（移动动效 24 / 桌面 Web 10 / 形变 10 / 质感 5） |
+| [pro-motion](pro-motion.md) | 专业交互组件四节 50 组（移动动效 24 / 桌面 Web 11 / 形变 10 / 质感 5） |
 | [progress-confirm](progress-confirm.md) | 进度与确认模式（过程感替代二次确认弹窗） |
 | [scroll](scroll.md) | 滚动行为与动效命名 |
 | [search](search.md) | 搜索与筛选模式命名（少打字、快收敛、可撤销） |

@@ -89,6 +89,7 @@
 - `drop-target-attract`:靠近判据 = 拖拽元素与目标边缘距离 ≤ 24px;目标张开 ≤ 1.1 倍;松手元素缩小吸入(0.9→0 淡出)目标计数 +1 后回弹落定;目标禁用态不响应张开(误触保护)
 - `progress-segmented`:收编行——口径全挂 [progress-confirm.md](progress-confirm.md);本行补:按住暂停即停帧(进度冻结不回退),松手续走;点击左右半区按进度方向就近切换
 - `gallery-cover-flow`:侧卡 ±46° 侧立,当前项居中放大 ≤ 1.15 倍;背景从当前图取主色 blur 铺底(混合 37%),切换时背景与标题同帧过渡;同屏卡数 ≤ 7(3D 层数上限)
+- **提示词句式两步法**:动效提示词把触发条件与响应对象写进同一句(「当用户松手超过阈值时,卡片弹回原位」),禁只写「加个动效」;先布局后动效两步走——布局句先落版式与内容,动效句再按 [micro-interactions.md](micro-interactions.md) 的「触发 + 顺序 + 数值 + 缓动」四段公式挂参数
 
 ## 在 draw-md 中的写法
 
@@ -144,6 +145,7 @@
 | `picker-snap-level` | 分档拖动条 Snapping Level Slider | 圆角轨道 + 圆形拖柄;拖动时数字按离散档位滚动切换,已经过轨道填充主色;松手弹簧吸附最近档位 | 档位 / 力度 / 强度调节(slider-liquid 的离散档变体) |
 | `chart-scrub-readout` | 跟手读数柱状图 Scrubbing Bar Chart | 细竖柱密集排列;横向移动时竖向指示线与圆形读数标签跟手,指示线左侧柱体主色、右侧压暗,顶部数值平滑滚动 | 桌面端时序数据扫读(chart-magnet-cursor 的桌面 hover 变体) |
 | `list-hover-preview` | 悬停跟随预览图 Hover Image Reveal | 文字列表每行绑定一图;悬停时图片 0.8 缩放淡入并带惯性跟随光标,切换行时新图 0.9 缩放弹入覆盖,移出列表缩小淡出 | 列表行 → 图片的桌面预览(移动端对应 sheet-drawer.md `preview-longpress-peek`) |
+| `slice-stagger-reveal` | 切片错落揭幕 Slice Stagger Reveal | 画面切 5 条竖切片错落排列,悬停回正对齐;切换时新画面在切片里依次揭开(错峰单档 ≤ 80ms),揭开未完即可交互,用户不必等全部结束 | 图片 / 场景切换的叙事位(reduced-motion 直接切换) |
 | `theme-circular-reveal` | 圆形扩散换肤 Circular Theme Reveal | 以主题按钮为圆心 View Transitions + clip-path circle 扩散换肤,太阳图标同步变月亮,再次点击反向收回 | 主题切换(已有实现:[circular-reveal.md](../motion-skeletons/circular-reveal.md) 骨架;日月 morph 见 [`../dimensions/icon.md`](../dimensions/icon.md)) |
 
 ### AI 描述词对照
@@ -178,6 +180,7 @@
 - `chart-scrub-readout`:左侧主色 / 右侧压暗表达「当前 / 非当前」;读数标签跟手,数值滚动属反馈档 ≤ 400ms;数据点 > 500 先降采样(沿用 `chart-magnet-cursor` 口径);移动端换用 `chart-magnet-cursor` 触摸版
 - 反馈档时长 ≤ 400ms 硬门同样适用本节(跟随 / 展开 / 填充均为状态反馈,见 [micro-interactions.md](micro-interactions.md) 分层口径)
 - `list-hover-preview`:预览图 fixed 容器 rAF lerp 跟随光标(惯性系数 0.1-0.2),只动 transform;切行换图交叉淡入 + 0.9→1 弹入(一次性过渡),列表行本身禁动;预览图预载相邻行,防切换闪空;降级为行内静态缩略图
+- `slice-stagger-reveal`:切片数 ≤ 5(3D 层上限口径同 `gallery-cover-flow`);切片只动 transform(位移 / 旋转),图片 object-fit 裁切不挤压;悬停回正与揭开共用同一条回弹曲线(本节回弹同频纪律);`prefers-reduced-motion` 直接切换不揭幕
 - `theme-circular-reveal`:实现全挂 [circular-reveal.md](../motion-skeletons/circular-reveal.md)(View Transitions 首选、降级双层 DOM、裁切不缩放、reduced-motion 直接切换);日月图标 morph 与扩散同帧启动;再次点击沿相反方向收回(收场复现入场轨迹,链路铁律);换肤只换 token 值不改 token 结构,深浅两套现成可用
 
 ### 在 draw-md 中的写法

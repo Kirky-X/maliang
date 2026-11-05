@@ -25,7 +25,16 @@
 | `swipe-row-delete`    | 行级左滑删除:行跟手左移露出删除钮,松手按阈值分流——过线(80px)吸附停在露钮位、不足弹回、过半宽直接删除(该行滑出淡出+高度收 0+下行平滑补位,约 300ms ease-out);删除有去向,禁止整块瞬间消失 | 消息/条目列表行 |
 | `card-disintegrate`   | 碎沙消散删除:确认删除后元素按像素拆成小粒子(约 1500 粒,各保留原位置颜色),从一侧依次散开似风扫过(约 0.8s,装饰类长动效须可跳过/reduced-motion 直达删除终态) | 聊天气泡、内容销毁(与 `swipe-row-delete` 互见:彼条滑出+补位"有去向",本条原地消散强情绪,仅低频高情绪场景) |
 | `card-fan-stack-swipe` | 扇形叠滑动切换:一组照片按序展开成扇形,左右滑动换组时整组用弹簧重新摆位,标题同步替换,分页指示点当前项拉长 | 相册分组浏览(与 [buttons.md](buttons.md) `card-stack-pull` 互见:彼条单张纵向抽卡,本条整组扇形横向换组) |
-| `swipe-triage` | 滑动分拣:相似项排成一叠,当前张跟手平移,超阈值沿手势方向飞出对应一种处置(左丢右留);下一张从缩小压暗状态弹簧放大接替 | 照片整理/邮件/待办批量分流(与 `swipe-row-delete` 互见:彼条删单行,本条连叠分拣双处置) |
+| `swipe-triage` | 滑动分拣:相似项排成一叠,当前张跟手平移,超阈值沿手势方向飞出对应一种处置(左丢右留);下一张从缩小压暗状态弹簧放大浮上瞬时接替 | 照片整理/邮件/待办批量分流(与 `swipe-row-delete` 互见:彼条删单行,本条连叠分拣双处置) |
+| `card-press-tilt-follow` | 按压跟手倾斜:按压点在哪侧卡片向哪侧下沉倾斜,按住平移跟手,松手弹回 | 大图卡/可视化卡按压反馈(与 `card-tilt-depth` 互见:彼条 hover 视差层深,本条按压跟手倾斜) |
+| `card-flip-3d` | 3D 翻面:绕竖轴带透视翻面,backface 隐藏背面镜像,翻到一半微微抬起落下带回弹,柔和高光随指针变化;变体:绕横轴垂直翻(与 [`buttons.md`](buttons.md) `card-flip-3d` 互见:彼条为该模式的 CSS 配方行,本条为交互定义) | 卡片正反面(摘要/详情)、集换卡(与 `card-tilt-depth` 互见:彼条倾斜不换面,本条翻面换内容面) |
+| `card-longpress-lift-menu` | 长按浮起:长按把卡片"拿起来"(抬起放大),整页虚化,弹出菜单滑动选择 | 移动端卡片快捷操作(长按浮起家族 canonical;桌面端改 hover/右键菜单) |
+| `card-expand-fullpage` | 整卡铺满:点击放大圆角贴合屏幕,封面延续为详情头图,新增内容错层入场,关闭复原 | 列表卡→详情(与 `shared-element-card-transition` 互见:彼条共享元素映射对应位,本条整卡放大铺满) |
+| `stacked-cards-peel` | 纵深逐层展开:纵深堆叠卡片按不同位移逐层下移展开,收起带弹性叠回 | 堆叠内容就地展开(与 `card-fan-stack-swipe` 互见:彼条扇形叠滑动换组,本条纵深逐层展开;与 [buttons.md](buttons.md) `card-stack-pull` 互见:彼条纵向抽卡) |
+| `staged-card-swap-arc` | 圆弧卡组换卡三阶段:选中卡转到中央,换卡分转侧→换内容→转回正面三步走 | 人物/物品弧形选择卡组 |
+| `card-peel-curl` | 卷纸揭面:按角卷纸揭背面,弯曲阴影跟手同步,松手回弹 | 贺卡/票据/翻页隐喻(与 `card-flip-3d` 互见:彼条刚体绕轴翻面,本条柔性卷曲) |
+| `glass-weather-card` | 玻璃数据卡:玻璃卡上温度/文字/趋势曲线/背景色随数据连续变化,玻璃透出后方柔色而前景信息清晰 | 天气/环境监测卡(质感配方见 [`glass-effect.md`](../dimensions/glass-effect.md);与 `card-glass` 互见:彼条静态质感,本条数据连续过渡) |
+| `shared-element-card-transition` | 共享元素转场(container transform):卡片与详情间连续过渡位置/尺寸/圆角,核心信息移到详情对应位,禁整体缩放文字 | 列表卡→详情无缝转场(与 `card-expand-fullpage` 互见:彼条整卡铺满;图片原位放大家族见 [galleries.md](galleries.md) `gallery-shared-element-expand`) |
 
 ## 使用规则
 

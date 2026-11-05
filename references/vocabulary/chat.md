@@ -8,12 +8,17 @@
 | --- | --- | --- |
 | `chat-bubble-lifecycle` | 气泡生命周期:消息从输入框位置飞入列表位,长按弹操作排(复制 / 引用 / 撤回);发送失败原地标红可点击重发 | 所有对话界面的消息进出 |
 | `chat-stream-typewriter` | 流式输出:逐 chunk 追加 + 块光标,可跳过直达终稿;AI 自报身份与能力边界 | AI 助手回复(流式口径与 [ai-console.md](../templates/page/ai-console.md) 一致) |
-| `chat-typing-indicator` | 输入中指示:对方气泡位三点呼吸;超 10s 未出内容降级为「仍在输入」文案 | 双人 IM、客服会话 |
+| `chat-typing-indicator` | 输入中指示:对方气泡位三点呼吸;超 10s 未出内容降级为「仍在输入」文案;顶栏变体:提示胶囊自标题栏右缘滑入挤走标题,三点轮流跳动 | 双人 IM、客服会话 |
 | `chat-stop-regenerate` | 停止与重生成:生成中主钮变「停止」,完成后唤起「重新生成」;重生成保留旧答案可对比 | AI 对话的连续生成控制 |
 | `chat-swipe-reply` | 滑动引用回复:气泡水平滑出引用轨,松手进输入框带引用头 | IM 消息回复(桌面为右键等价) |
+| `chat-thread-cascade-grow` | 楼中楼回复:子回复沿左侧竖线依次垂下展开(瀑布式逐条,错峰单档 ≤ 80ms),竖线随展开同步生长;下方已有评论平滑让位,不被顶开跳动 | 评论区嵌套回复展开(引用回复入口见 `chat-swipe-reply`) |
+| `chat-reaction-longpress-fly` | 长按表情回应:气泡轻轻浮起、周围变暗,表情沿弧依次展开,手指划过哪个哪个放大(跟手放大挂 [pickers.md](pickers.md) `picker-magnify-strip`);松手表情沿弧线飞下贴合气泡、计数 +1,移出面板即取消——「抬起→展开→归位」是同一段连续动作,禁拆成三个独立动画 | 消息 / 评论的表情回应(无选择的轻量点赞见 `chat-heart-fly-avatar`) |
+| `chat-heart-fly-avatar` | 双击点赞:多颗爱心自触点散开,拐弯飞向对方头像渐隐,头像被撞一缩一放(受击回弹);反馈档 ≤ 400ms | 直播 / 社聊的双击点赞 |
 | `chat-voice-input` | 按住说话:按住出实时波形,上滑进取消区,松手发送;转写中显示占位骨架 | 语音消息、语音输入 |
 | `chat-scroll-anchor` | 新消息锚点:贴底时自动跟随新消息;上滚后钉住 + 「回到底部」徽标(带未读数) | 所有滚动对话流 |
 | `chat-citation-chip` | 引用角标:AI 回答尾部来源 chip(N 条),点击展开来源卡可跳转 | AI 回答的可信度与溯源 |
+| `chat-bubble-autogrow` | 输入气泡贴合内容生长:逐字变宽、换行瞬间变高并轻微回弹,宽度由内容撑开非固定框 | 聊天输入区 / 草稿气泡(发送衔接 `chat-optimistic-send`) |
+| `chat-input-pill-morph` | 键盘收起时输入框随之下移并同步收圆成胶囊,内部按钮同帧重排;键盘弹起反向展开 | 移动端聊天输入区(键盘联动纪律见使用规则) |
 | `chat-optimistic-send` | 乐观发送:气泡立刻上屏(自输入框位置滑上+回弹,约 250ms),不等服务器;输入框即清空可续打;气泡旁时钟图标→成功换双对勾;失败变浅红+"点击重试"小红圈,不弹窗 | 即时通讯发送(states.md 乐观更新原则的模式化:失败必须可对账回滚) |
 
 ## 使用规则
@@ -24,7 +29,7 @@
 - `chat-stop-regenerate`:停止后已生成部分保留,禁整段丢弃;重生成时旧答案折叠可展开对比
 - `chat-voice-input`:按住 < 400ms 视为误触回落(挂 [buttons.md](buttons.md) `press-peek` 长按判定);上滑超阈值进取消区松手不发送;波形只动 transform
 - `chat-scroll-anchor`:用户上滚超过 1 屏才钉住;「回到底部」徽标带未读数(`num-badge` 语义,挂 [number-motion.md](number-motion.md));点击回底后恢复自动跟随
-- 键盘弹起:列表锚定到当前气泡,输入框随键盘上移不遮内容;系统返回键 / Esc 收键盘
+- 键盘弹起:列表锚定到当前气泡,输入框随键盘上移不遮内容;系统返回键 / Esc 收键盘;收起时输入框同步下移收圆成胶囊(`chat-input-pill-morph`),禁键盘先走、输入框后跳两段式
 - 无障碍:消息列表 `aria-live="polite"` 播报新消息(见 [`accessibility.md`](../meta/accessibility.md));流式可跳过即等价 reduced-motion 降级
 
 ### AI 生成内容交互

@@ -24,6 +24,9 @@
 | `scroll-center-focus`   | 中心聚焦放大:靠近屏幕中心的内容放大,离开缩小,建立视觉焦点 | 轮播、卡片流(配合 `scroll-snap`)      |
 | `scroll-depth-layers`   | 景深分层滚动:三层内容不同滚动速度/模糊半径/亮度,全由滚动进度驱动 | 品牌叙事首屏(MOTION ≥ 7)             |
 | `scroll-overscroll-damp` | 边缘阻尼:列表到顶继续拉越拉越沉拉不穿,松手弹回;顶图随下拉放大 | 移动 App 原生质感(下拉刷新前传)      |
+| `scroll-dual-column-parallax` | 双列异速视差:左右两列同向上滚但速度不同成视差,到底两列对齐收尾 | 图文对照、编辑式长文(与 `scroll-parallax` 互见:彼条同区块多层景深,本条双列异速) |
+| `scroll-sticky-date-rail` | 日期轨吸附:左窄栏大号日期滚动吸附顶部,被下一天日期从下方推上替换 | 时间线/日志/日程流(与 `scroll-pinned` 互见:彼条静态钉住,本条钉住+推上替换) |
+| `scroll-new-content-pill` | 新内容胶囊:新动态从顶部滑下小胶囊提示不打断,点击回顶后新内容逐条插入 | 社交 Feed、协作动态(与 `scroll-infinite` 互见:彼条底部追加,本条顶部插入) |
 
 > `scroll-overscroll-damp` 顶图拉伸变体:图片按下拉距离放大(scale ≤ 1.15)+文字淡出+松手阻尼回弹。
 

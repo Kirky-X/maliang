@@ -8,7 +8,7 @@
 | --------------------- | ------------------------------------------------- | ------------------------------------- |
 | `hero-centered`       | 居中文案 + CTA,无图或背景图淡出                  | 营销首页、SaaS 主页、产品发布         |
 | `hero-split`          | 左文案 + 右视觉(图 / 视频 / 产品截图)          | 产品页、功能介绍、电商首页            |
-| `hero-fullscreen`     | 全屏图 / 视频 + 浮层文字                          | 品牌站、作品集、影视媒体              |
+| `hero-fullscreen`     | 全屏图 / 视频 + 浮层文字;摄影变体:超大标题居左下安全区,导航极简 | 品牌站、作品集、影视媒体              |
 | `hero-kenburns`       | 全屏图 + Ken Burns 缓慢缩放                       | 品牌、影视、摄影集                    |
 | `hero-parallax`       | 多层视差,滚动时背景 / 中景 / 前景速率不同        | 品牌叙事、产品发布                    |
 | `hero-canvas`         | WebGL / Canvas 动态背景(粒子 / 流体)            | 科技品牌、3D 交互、创意工具           |
@@ -16,7 +16,8 @@
 | `hero-card-stack`     | 卡片堆叠 + 滚动揭示(配合 sticky-stack 骨架)     | 产品功能介绍、案例展示                |
 | `hero-video-loop`     | 短视频循环 + 文字浮层                             | 消费品、产品演示、IP 落地页           |
 | `hero-text-only`      | 纯文字 + 排版,无图                               | 设计师作品集、极简品牌、文档站        |
-| `hero-inline-image-type` | 巨型标题词间嵌入小尺寸语境照片(行高对齐、圆角、作视觉标点) | VARIANCE ≥ 7 的品牌 / 作品集站;移动端退化为标题下方堆叠(依赖 [`visual-assets.md`](../meta/visual-assets.md) 图片策略) |
+| `hero-inline-image-type` | 巨型标题词间嵌入小尺寸语境照片(行高对齐、圆角、作视觉标点) | VARIANCE ≥ 7 的品牌 / 作品集站;移动端退化为标题下方堆叠(依赖 [`visual-assets.md`](../meta/visual-assets.md) 图片策略);正文标题嵌图可展开变体见 [typography.md](typography.md) `type-inline-image-expand` |
+| `hero-media-cover`   | 大封面为视觉中心:标题+播放键叠印封面,点播后播放器从底部展开接管 | 影视/播客/课程等内容首页              |
 
 ## 首屏骨架表(8 种,先于文案)
 

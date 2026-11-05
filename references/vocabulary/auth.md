@@ -10,8 +10,9 @@
 | `auth-social`           | 第三方登录按钮组:2-3 个主供应商,遵守各家品牌规范,配"或"分隔线与隐私 microcopy     | C 端注册登录 |
 | `auth-combined-entry`   | 合并入口:输入邮箱一次,系统自动判定登录或注册                                      | 首页登录注册一体 |
 | `auth-toggle-mode`      | 登录/注册分页时,底部固定切换文案,如"新用户?创建账号"                             | 分离式双页                      |
+| `auth-mode-switch-stretch` | 验证码/密码登录同页切换:表单平滑伸长或缩短(OTP 分格组展开、密码框收起),按钮跟随落位;已填手机号保留不清空 | 多方式登录同页切换(方式降级选型见 `auth-mfa`) |
 | `auth-magic-link`       | 输邮箱 → 发登录链接 →"查收邮件"确认态(重发/换邮箱);过期链接一键重发且预填邮箱     | 低摩擦登录                      |
-| `auth-otp`              | 手机号/邮箱收验证码登录:自动填充 + 满位自动提交,失败给重发倒计时                   | 移动优先产品             |
+| `auth-otp`              | 手机号/邮箱收验证码登录:自动填充 + 满位自动提交,失败给重发倒计时;重发按钮按压缩一下,秒数逐格滚动递减,归零轻弹恢复可点                   | 移动优先产品             |
 | `auth-mfa`              | 二步验证:密码后独立 MFA 屏,说明为何需要;主方法默认选中 +"尝试其他方式"切换        | 已开启二步验证的账号              |
 | `auth-passkey`          | passkey 登录:用户名框 `autocomplete="webauthn"` 自动填充优先,配专用按钮与降级路径  | 现代账号体系(Microsoft Learn:autofill 成功率最高) |
 | `auth-sso`              | 企业 IdP 单点登录入口(SAML/OIDC),常以"使用 XX 继续"按钮呈现                        | B2B/企业产品                               |
@@ -23,7 +24,7 @@
 
 - 分工同 [forms.md](forms.md):[`ux-rules.md`](../meta/ux-rules.md) 管 Do/Don't 可核对规则,本表只管**模式命名与选型**;表单字段级模式复用 forms.md
 - 登录/注册按钮与社交按钮命名见 [buttons.md](buttons.md);错误与二次确认浮层见 [popups.md](popups.md);左品牌右表单的分栏结构见 [layout.md](layout.md);提交等待态见 [states.md](states.md)
-- 登录失败不得暴露"用户名或密码哪个错",并清空密码框;密码框复用 forms.md 的 `input-password-reveal`,不加二次确认框
+- 登录失败不得暴露"用户名或密码哪个错",并清空密码框;密码框复用 forms.md 的 `input-password-reveal`(点眼睛图标先眨一下确认,密码圆点再从左到右逐个翻成明文,级联错峰单档 ≤ 80ms),不加二次确认框
 - 每种认证模式必须自带降级路径(passkey→密码、OTP→换方法、magic link→重发),不许死胡同
 - 凭据输入框务必设 `autocomplete="username"/"current-password"/"new-password"`,且允许粘贴
 - 验证码屏用 forms.md 的 `input-otp` 分格模式;MFA 招募给多方法选择,QR 码外必须给文本密钥

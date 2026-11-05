@@ -21,6 +21,11 @@
 | `micro-loading-bar`   | 顶部进度条                                        | 长时加载 / 页面切换                   |
 | `micro-icon-morph`    | 图标在两个命名状态间形变(菜单↔关闭、播放↔暂停)   | 图标级状态切换(见 [`icon.md`](../dimensions/icon.md) 动效图标节) |
 | `micro-hold-confirm`  | hold-to-confirm:长按 2s 环形填充,松手 200ms 回弹 | 破坏性操作防误触(删除/清空/支付)      |
+| `micro-hover-yield`   | 悬停卡浮起,相邻卡同时外移让位(空间让出来,不是只抬一张);只过渡 transform 与 opacity,浮起幅度同 `micro-hover-lift` 2-4px | 卡片网格、图标阵列 |
+| `micro-magnet-hover`  | 磁吸跟随:按钮随指针与自身中心的距离轻微偏移靠近,离开交互区弹性复位 | 主 CTA、桌面端重点按钮(与 `micro-hover-lift` 分界:彼条原位上浮,本条跟指针平移) |
+| `micro-send-paper-plane` | 发送语义插画:纸飞机飞出→发送中→已分享三态在同一插画上衔接;语义动画替代干 spinner,三态同位置衔接不断片,反馈档 ≤ 400ms | 发送/分享按钮(社交、表单提交) |
+| `micro-reward-arc-fly` | 奖励胶囊先弹出停顿一拍,再沿弧线飞向计数器,计数器数字弹一下加一;弧线只动 transform,数字加一弹跳与到达到帧同步(同帧性);计数见 [`number-motion.md`](number-motion.md) `num-badge-flip` | 签到/任务奖励入账、加购反馈 |
+| `micro-streak-badge-pop` | 连续天数徽卡先弹起再变色,同排的奖励图标与进度条随之联动;弹起+变色序贯两拍,同排联动同频启动,禁只动徽卡 | 连续签到/成就行、奖励条 |
 
 ## 频率法则:该不该动
 
@@ -78,6 +83,7 @@
 - 入场**禁止** `ease-in` 类加速曲线(首帧可见延迟,像卡顿);入场一律用 ease-out `cubic-bezier(0.23, 1, 0.32, 1)`
 - **禁止**元素从 `scale(0)` 出现(突变突兀);从 `scale(0.95) + opacity: 0` 起步,popover / dropdown 从触发器原点缩放
 - 退场必须比入场**更快更轻**(时长约为入场的 60-80%,幅度更小)
+- **动效只动 `transform` 与 `opacity`**:全属性过渡(width/height/top/left/margin/box-shadow/filter)逐帧触发 layout/paint 必掉帧;尺寸位置变化用 transform 承载,阴影用预渲染层淡入替代 box-shadow 过渡
 - **动效降级三档**:
   - **`user`(默认档)**——小幅沟通性微转场(第 1 层 <300ms 元素级反馈、icon morph):跟随系统 `prefers-reduced-motion` 设置,开启时直达**静止终态**即可,静止终态必须完整传达状态;无需专门设计降级编排;
   - **`always`(强制降级档)**——功能性与大幅动效(第 2 层浮层转场、入场编排,第 3 层滚动揭示 / skeleton):**必须**自带降级形态(位移改淡入、编排改瞬时切换、循环改静止),不做降级视为未完成;

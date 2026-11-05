@@ -10,12 +10,16 @@
 | `type-editorial`      | 衬线 body + 无衬线 UI,杂志感                     | 长文 / 博客 / 出版物                  |
 | `type-technical`      | Mono + Sans 分工,工程感                          | DevTool、文档、代码                   |
 | `type-numeric-display`| 数字特殊字体(tabular-nums)                      | 价格、金融数据、统计                  |
-| `type-kinetic`        | 文字切割 / 重组 / 滚动驱动变形                    | 品牌叙事、IP 落地页                   |
+| `type-kinetic`        | 文字切割 / 重组 / 滚动驱动变形;变体:编辑式超大标题+不对称网格下逐字母响应鼠标 | 品牌叙事、IP 落地页、互动作品集                   |
 | `type-mask-reveal`    | 文字遮罩揭示动画                                  | Hero 标题入场                          |
 | `type-marquee`        | 滚动文字带                                        | 公告、新闻 ticker、品牌 slogan        |
 | `type-quote`          | 大引号 + 引文 + 署名                              | 评价、推荐语、媒体引用                |
 | `type-sticky`         | 标题 sticky,正文滚动                             | 长文 / 章节导航                       |
 | `type-drop-cap`       | 首字母下沉                                        | 杂志风长文、editorial                 |
+| `type-knockout-photo` | 镂空透图:照片从大标题字形镂空处透出,上滑文字放大至照片铺满全屏,回滑收回(滚动 scrub) | 品牌叙事、专题首屏(配合 [scroll.md](scroll.md) `scroll-scrub-bind`) |
+| `type-inline-image-expand` | 标题嵌图展开:标题行内嵌等高圆角小图,点击原地展开成整宽大图,上下文字两侧让位,再点缩回 | 图文标题、编辑式列表(与 [hero.md](hero.md) `hero-inline-image-type` 互见:彼条 hero 静态嵌图,本条正文嵌图可展开) |
+| `type-line-stagger-swap` | 逐行换题:旧标题逐行错开下沉退场,新标题逐行升起进场,关联插画弹性回位 | 首页标题轮换、主题切换 |
+| `type-expand-fulltext` | 展开全文:长文"展开全文"平滑顶开铺展,再点平滑收回,页面不猛跳 | 摘要长文、评论折叠(与 [cards.md](cards.md) `card-collapsible` 互见:彼条卡片折叠容器,本条纯文本流) |
 
 ## 使用规则
 
@@ -25,6 +29,7 @@
 - `type-marquee` 必须实现 `prefers-reduced-motion` 降级(静态显示完整文字)
 - `type-marquee` 跑马灯细节:渐隐区域从文本消失处起向前扩展约 16px(透明度渐变),只计文本区域不含容器 padding;限制滚动次数(如每次激活只滚一遍)控功耗与骚扰感
 - `type-kinetic` 仅 MOTION_INTENSITY ≥ 8 使用(见 [`dials.md`](../meta/dials.md))
+- 文字展开/换字动效(`type-expand-fulltext` / `type-line-stagger-swap`)必须逐帧过渡高度,禁整块闪换致页面跳动
 - 中文行高 ≥ 1.6,英文 ≥ 1.4
 
 ## 文字层级色

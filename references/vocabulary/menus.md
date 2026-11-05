@@ -27,6 +27,7 @@
 - **图标全有或全无**:一组菜单项要么全配图标,要么全不配;找不到准确达意的图标就不放
 - **与 forms.md 分界**:菜单承载命令与选项切换;字段取值(表单内选一个值)走 forms.md 的 select 连续谱
 - **与 popups.md 分界**:menu 是用户主动展开;动作引发的选择分支用 action sheet(见 popups.md 浮层选型)
+- **展开动效**:菜单从触发按钮那一角撑起(锚点生长,机制见 [`sheet-drawer.md`](sheet-drawer.md) `popup-anchor-grow`),选项错峰蹦出(stagger 单档 ≤ 80ms),禁整块从屏幕中心淡入
 
 ## 在 draw-md 中的写法
 
