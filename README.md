@@ -23,7 +23,7 @@
 | `ui-graph` | 交付 | UI 关系图（层级 + 跳转 + 哈希基线 + 实现映射），变更追踪与实现缺口查询 |
 | `ip` / `ip-handbook` | 交付 | IP 形象生成（API 优先，fallback prompt）/ IP 视觉手册（8 模块，2K 3:4） |
 
-- **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 30 篇组件命名词汇 + 九维规范（色/字/图/距/角/线/布局/对齐/海拔）
+- **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 30 篇组件命名词汇（含 131 项中英术语对照：词典 80 项 + 词典外 51 项，中文说法→英文术语→库内模式路由）+ 九维规范（色/字/图/距/角/线/布局/对齐/海拔）
 - **区段原型库**：[`references/components/`](references/components/INDEX.md)（51 个区段原型 + 索引——**从索引挑名、只加载选中的那几个**，典型一次构建 5-7 个文件：1 hero + 1 区段头 + 1-2 主体区段 + 1 CTA + 1 页脚 + 1 导航；区段原型管「这段长成什么」，元素级外观仍在 `references/vocabulary/`）
 - **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **craft 纪律与评审**：[`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Web 界面规则快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)，critique 的 UI 合规/a11y 清单读取该快照
@@ -80,7 +80,7 @@ flowchart LR
 
 ## ✅ 测试与验证
 
-pytest 实测（2026-11-03，Python 3.12）：
+pytest 实测（2026-11-07，Python 3.12）：
 
 ```text
 $ python3 -m pytest tests -q
@@ -107,7 +107,7 @@ maliang/
 │   ├── framework/           # 56 类组件 × 三框架文档（harmony / flutter / element）
 │   ├── components/          # 区段原型库：51 个原型 + INDEX.md（从索引挑名、只加载选中的那几个）
 │   ├── templates/           # 模板墙：14 种设计语言 + 整页模式 + 落地页编排
-│   ├── vocabulary/          # 30 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息）
+│   ├── vocabulary/          # 30 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息、131 项中英术语对照）
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
 ├── scripts/                 # 验证层：preview-check / preview-lint.js / verify-states / verify-interactive / design-md(合并入口) / validate-generated / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate（退出码 canonical 见 scripts/EXIT-CODES.md）；第二批：verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy；基础层：ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / device_models / maliang_common / devices/
 ├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue，第一代布局历史实例）

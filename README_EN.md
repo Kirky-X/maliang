@@ -23,7 +23,7 @@ English | [中文](README.md)
 | `ui-graph` | Deliver | UI relationship graph (hierarchy + navigation + hash baseline + implementation map), change tracking and implementation-gap queries |
 | `ip` / `ip-handbook` | Deliver | IP character generation (API first, prompt fallback) / IP visual handbook (8 modules, 2K 3:4) |
 
-- **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 30 component-naming vocabulary docs + nine dimension specs (color / type / icon / spacing / radius / border / layout / alignment / elevation)
+- **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 30 component-naming vocabulary docs (incl. a 131-entry Chinese–English term glossary — 80 dictionary + 51 supplemental — routing Chinese phrasing → English term → library pattern) + nine dimension specs (color / type / icon / spacing / radius / border / layout / alignment / elevation)
 - **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (51 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
 - **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Craft discipline & review**: [`references/interface-design/`](references/interface-design/) (product UI craft discipline, strict review, de-slop flow); Web interface rules snapshot in [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md), read by critique UI/a11y checklists
@@ -80,7 +80,7 @@ flowchart LR
 
 ## ✅ Tests & Verification
 
-Measured pytest run (2026-11-03, Python 3.12):
+Measured pytest run (2026-11-07, Python 3.12):
 
 ```text
 $ python3 -m pytest tests -q
@@ -107,7 +107,7 @@ maliang/
 │   ├── framework/           # 56 component classes × three frameworks (harmony / flutter / element)
 │   ├── components/          # section-archetype library: 51 prototypes + INDEX.md (pick from the index, load only what you pick)
 │   ├── templates/           # template wall: 14 design languages + full-page patterns + landing-page orchestration
-│   ├── vocabulary/          # 30 component-naming vocabulary docs (incl. pro-motion, chat)
+│   ├── vocabulary/          # 30 component-naming vocabulary docs (incl. pro-motion, chat, 131-entry Chinese–English term glossary)
 │   └── default-pages/       # default page lists (15 app + 15 web pages, P0–P2)
 ├── scripts/                 # verification layer: preview-check / preview-lint.js / verify-states / verify-interactive / design-md (merged entry) / validate-generated / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate (exit-code canonical: scripts/EXIT-CODES.md); second batch: verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy; base layer: ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / device_models / maliang_common / devices/
 ├── examples/                # 12 design-system examples + end-to-end artifacts (ui-markdown → preview → Vue, first-generation layout)
