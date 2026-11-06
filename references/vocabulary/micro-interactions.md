@@ -26,6 +26,7 @@
 | `micro-send-paper-plane` | 发送语义插画:纸飞机飞出→发送中→已分享三态在同一插画上衔接;语义动画替代干 spinner,三态同位置衔接不断片,反馈档 ≤ 400ms | 发送/分享按钮(社交、表单提交) |
 | `micro-reward-arc-fly` | 奖励胶囊先弹出停顿一拍,再沿弧线飞向计数器,计数器数字弹一下加一;弧线只动 transform,数字加一弹跳与到达到帧同步(同帧性);计数见 [`number-motion.md`](number-motion.md) `num-badge-flip` | 签到/任务奖励入账、加购反馈 |
 | `micro-streak-badge-pop` | 连续天数徽卡先弹起再变色,同排的奖励图标与进度条随之联动;弹起+变色序贯两拍,同排联动同频启动,禁只动徽卡 | 连续签到/成就行、奖励条 |
+| `micro-gooey-metaball` | 黏液融合 Gooey:相邻元素靠近时表面像液滴一样粘连、拉开时拉丝回弹(SVG gooey filter:模糊+alpha 阈值);filter 静态写死只动元素 transform(逐帧重绘 filter 必掉帧),降级直达分离态 | 加载点融合、拖拽黏连、图标形变(材质手感类,慎用档) |
 
 ## 频率法则:该不该动
 

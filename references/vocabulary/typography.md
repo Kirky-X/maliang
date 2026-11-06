@@ -20,6 +20,8 @@
 | `type-inline-image-expand` | 标题嵌图展开:标题行内嵌等高圆角小图,点击原地展开成整宽大图,上下文字两侧让位,再点缩回 | 图文标题、编辑式列表(与 [hero.md](hero.md) `hero-inline-image-type` 互见:彼条 hero 静态嵌图,本条正文嵌图可展开) |
 | `type-line-stagger-swap` | 逐行换题:旧标题逐行错开下沉退场,新标题逐行升起进场,关联插画弹性回位 | 首页标题轮换、主题切换 |
 | `type-expand-fulltext` | 展开全文:长文"展开全文"平滑顶开铺展,再点平滑收回,页面不猛跳 | 摘要长文、评论折叠(与 [cards.md](cards.md) `card-collapsible` 互见:彼条卡片折叠容器,本条纯文本流) |
+| `type-typewriter-loop` | 打字机循环:文案逐字打出+块光标闪烁,打完停一拍→删除倒放→换下一句循环;等宽字重排版防宽度抖动,逐字间隔 40-70ms(与 [chat.md](chat.md) `chat-stream-typewriter` 互见:彼条 AI 回复一次性流式,本条营销位循环轮播) | hero 副标题轮播、终端风营销站 |
+| `type-text-scramble` | 乱码解码:目标文字先以随机字符扰动,再从左到右逐位锁定为真实字符(每字符独立定时器,总时长随文本长度收敛在 0.6-1s);用等宽数字/字体防锁定时抖动;装饰档可跳过,reduced-motion 直出终稿 | 数据解密氛围、terminal 风、数字大盘标题 |
 
 ## 使用规则
 

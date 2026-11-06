@@ -138,6 +138,8 @@
 | --- | --- | --- | --- |
 | `scroll-sticky-story` | 滚动钉住主图 Sticky Scroll Story | 主图 position: sticky 钉在视口,右侧文字分段滚动;主图缩放与位移随段落进度连续过渡,推近对应部位并亮起主色标记圈 | 产品细节叙事页(scroll-pinned + scroll-scrub-bind 的组合) |
 | `cursor-contextual-morph` | 情境光标 Contextual Cursor | 隐藏系统光标,小圆点缓动跟随;悬停图片放大到 88px 填充主色,淡入文字标签,离开平滑缩回 | 图墙 / 作品集的「查看」入口(micro-cursor-custom 的语义化变体) |
+| `cursor-spotlight-reveal` | 聚光灯跟随 Spotlight | 暗页上以光标为圆心的径向渐变遮罩揭示内容(亮圈约 240-320px,边缘 2-3 档透明度过渡);移动端/触屏禁用(无 hover),reduced-motion 全显不遮 | 暗色作品集、游戏风的探索式首屏(与 `cursor-contextual-morph` 互见:彼条光标变形承载语义,本条遮罩揭示内容) |
+| `motion-trail-echo` | 运动拖尾 Motion Trail | 元素/光标运动时残影拖尾:记录最近 6-10 帧历史位置,按序缩小降透明度重绘,头实体尾渐隐;canvas 承载只动 transform,装饰档须可跳过 | 创意站光标轨迹、体感图表回放(与 `cursor-contextual-morph` 互见:彼条单光标本体,本条历史残影) |
 | `btn-magnetic-follow` | 磁吸按钮 Magnetic Button | 鼠标进入按钮周围 60px 按偏移倍率跟随,内部图标再叠一层倍率(双层层深);离开弹性回原位 | Hero CTA、圆形图标按钮(micro-interactions Magnetic Button 的参数化命名) |
 | `btn-icon-expand` | 图标展开标签 Expanding Icon Button | 圆形图标按钮悬停宽度 48px→自适应文字宽,保持全圆角;标签延迟 80ms 淡入,相邻按钮同步让位 | 工具排、标注工具条 |
 | `nav-hover-pill` | 导航悬停指示块 Sliding Nav Highlight | 绝对定位圆角底块悬停追随目标项的位置与宽度;移出导航回到当前页项 | 顶部导航(micro-hover 态;选中态见 navigation.md `nav-tab-liquid`) |
