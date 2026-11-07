@@ -504,6 +504,20 @@ npx @google/design.md@0.4.0 spec --rules-only --format json
 - 两屏走 draw-md → preview 链路渲染(或等价可运行预览);用真实 token 与真实密度数据,不用装饰性假数据
 - 环境不可渲染时(无浏览器 / 无宿主),在交付说明显式标注「自证视图未渲染,系统级验证未完成」——未测量不得记为通过;不得用营销页视角的审美结论替代本视图
 
+### 契约理解力测试(交付前,语义级验收)
+
+> lint / 溯源门禁 / 自证视图全过 ≠ 契约可读——机械面查「格式对不对」,查不出「读了理解错」。DESIGN.md 是下游 agent(draw-md / draw-*)的唯一上下文来源,必须有一道「全新读者只读契约能否复述对」的语义门。
+
+**做法**(零上下文评审,形态吸收自 EGM Comprehension Test):
+
+1. **派生隔离读者**:通过 Task/subagent 工具派生一个**未接触本项目**的评审代理,只给两样输入——DESIGN.md 路径(+ 可选:一张 ui-markdown 目标页)与一句任务;不携带本会话任何背景与自我评估。无 subagent 工具时报告首行挂 `⚠️ DEGRADED: single-context (<原因>)`,降级为主代理按同清单自检(自查天然偏松,发现按从严口径收)。
+2. **读者只读不写**(禁改任何文件),产出三件:
+   - **复述两段**:「这份设计系统主张什么(Overview 原则 → token 落点)」+「下游如何消费它(draw-md / draw-* 拿它怎么用)」,各 2-5 句,用自己的话;
+   - **未定义术语清单**:项目专有概念(方向词 / 结构词 / 自造组件名)未在文内定义或未链接的——通用工程与设计术语不计;
+   - **先决知识缺口**:未声明的依赖步骤(「先跑 X 再跑 Y」没写)、含糊表述(「自动处理」「保持一致」不给出判定方式)。
+3. **对照设计意图**:主代理拿复述与设计意图比对——复述错了 = **Blocker**(改 DESIGN.md,不改复述者:复述错永远先怀疑文档);关键约束(某 token 族 / 某条原则)在复述中消失 = Major;两份清单逐条按 P0-P3 定级。
+4. **收据落盘**:`.maliang/critique/comprehension_<date>.md`(复述原文 + findings + 定级),交付说明给路径;Blocker 未清不得宣告验证完成。
+
 ### 决策回写(交付末尾固定动作)
 
 每次 design-md 交付的末尾,固定附一格"决策账本",汇总本轮新出现的设计决定(为什么选这个方向 / 为什么拒绝某个默认 / 为什么定这个值):
@@ -566,12 +580,13 @@ Confidence map(YYYY-MM-DD):
 - [ ] URL / 截图输入 MUST 先过 [`../meta/source-hygiene.md`](../meta/source-hygiene.md) 来源准入;junk 五信号任一命中 MUST 按固定话术请用户贴截图,禁止静默降级;URL 来源写入 DESIGN.md 前 MUST 过 Provenance 三选 attestation
 - [ ] 特效段(effects)为可选:静帧提不出的动效标 ❓ 或按 canonical 弃权短语收尾,禁止编造
 - [ ] 交付前 MUST 出自证视图两屏(token 全量展板 + 高密度产品屏,每个 token 至少出现一次);不可渲染时 MUST 显式声明「未渲染/未验证」,不得记为通过
+- [ ] 交付前 MUST 跑契约理解力测试(零上下文 subagent 只读 DESIGN.md 复述;复述错 = Blocker,先改文档不改复述者;收据落 `.maliang/critique/comprehension_<date>.md`);降级单上下文 MUST 挂 `⚠️ DEGRADED` 横幅
 
 ---
 
 ## 输出质量清单
 
-交付前核对:YAML 无语法错误 · colors 均以 `"#"` 开头加引号(引号是溯源注释生效的前提) · 每个 token 顶层键带溯源 id 或 `no-decision` · 每个 id 在 `decisions` 中查得到 · `## Overview` 的每条原则至少被一个 token 引用 · 溯源核对三行已留痕 · typography 至少含 fontFamily/fontSize/fontWeight/lineHeight · spacing 遵循统一 base scale · components 用 `{path.to.token}` 引用而非重复字面值 · prose 解释"为什么"而非只列数值 · Do's and Don'ts ≥4条且具体可执行(提取型输入可写 canonical 弃权短语替代凑数) · 提取型交付的每层带 ✅/⚠️/❓ 标记且交付末含 Confidence map · 参考图色彩经 verify.py measure-colors 实测或已声明不可测原因 · URL 来源已过来源准入与 Provenance attestation · effects 段无证据时已弃权而非编造 · 自证视图两屏已产出、每个 token 至少出现一次(不可渲染时已显式声明未验证) · 章节顺序为 Overview→Colors→Typography→Layout→Elevation→Shapes→Components→Do's and Don'ts · CLI 可用时跑一遍 lint 修完所有 error · 过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) A 组门禁
+交付前核对:YAML 无语法错误 · colors 均以 `"#"` 开头加引号(引号是溯源注释生效的前提) · 每个 token 顶层键带溯源 id 或 `no-decision` · 每个 id 在 `decisions` 中查得到 · `## Overview` 的每条原则至少被一个 token 引用 · 溯源核对三行已留痕 · typography 至少含 fontFamily/fontSize/fontWeight/lineHeight · spacing 遵循统一 base scale · components 用 `{path.to.token}` 引用而非重复字面值 · prose 解释"为什么"而非只列数值 · Do's and Don'ts ≥4条且具体可执行(提取型输入可写 canonical 弃权短语替代凑数) · 提取型交付的每层带 ✅/⚠️/❓ 标记且交付末含 Confidence map · 参考图色彩经 verify.py measure-colors 实测或已声明不可测原因 · URL 来源已过来源准入与 Provenance attestation · effects 段无证据时已弃权而非编造 · 自证视图两屏已产出、每个 token 至少出现一次(不可渲染时已显式声明未验证) · 契约理解力测试已跑、复述收据已落盘且 Blocker 清零(降级时已挂 DEGRADED 横幅) · 章节顺序为 Overview→Colors→Typography→Layout→Elevation→Shapes→Components→Do's and Don'ts · CLI 可用时跑一遍 lint 修完所有 error · 过 [`../meta/numbered-gates.md`](../meta/numbered-gates.md) A 组门禁
 
 ---
 
