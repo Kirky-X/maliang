@@ -191,6 +191,6 @@ build 阶段(draw-md / draw-*)出现 DESIGN.md 里没有的视觉值时,**不许
 | ------------------ | ------------------------------------------------- | --------------------------------- |
 | 决策字段 / 账本结构 | [`spec-schema.md`](spec-schema.md) `decisions` 块 | 只管 id 编号与 token 反向引用     |
 | token 命名与层级   | [`token.md`](token.md)                            | 只管溯源标记,不碰命名             |
-| DESIGN.md 模板     | [`../commands/design-md.md`](../commands/design-md.md) | 只管模板里溯源注释落在哪      |
+| DESIGN.md 模板     | [`../../template/DESIGN.md`](../../template/DESIGN.md) | 只管模板里溯源注释落在哪      |
 | 交付门禁           | [`numbered-gates.md`](numbered-gates.md) A 组      | 提供判据,门禁在那边执行          |
 | 跨会话决策记忆     | `decisions` 账本(迭代段回写)                      | 账本记「为什么是这样」,溯源记「谁指的路」 |

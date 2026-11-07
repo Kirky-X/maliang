@@ -48,23 +48,11 @@
 
 ## 页面 markdown 契约
 
+> 本节管字段判据与校验;**可复制的整页骨架字面形态(frontmatter + 方向契约块 + 意图头 + 参数表)唯一 canonical 在 [`template/ui-page.md`](../../template/ui-page.md)**——复制为 `.maliang/ui-markdown/ui/<page>.md` 后填充。
+
 ### YAML frontmatter(每页 MUST 含)
 
-```yaml
----
-name: home # 页面名称(kebab-case 或简明英文/中文)
-description: 首页 — 商品瀑布流 + 金刚区入口 # 一句话页面用途
-background: "{surface-base}" # 页面背景,MUST 引用 token.md 的 token(非硬编码色值)
-updated: 2026-06-30 # 更新时间(ISO 日期)
-version: 1.0.0 # 页面版本号
-mode: persuade # 可选:页面模式(persuade|operate|read|experience),判法见 meta/surface-modes.md
-pattern: [table-sortable, form-wizard] # 可选:vocabulary 模式 slug 列表(命名对齐 references/vocabulary/ 18 篇;框架代码由 draw-* 阶段映射)
-platform: mobile # 可选:端型(mobile|web|ios|android|harmony|flutter)——触控阈值分端判定的依据,移动端产物 SHOULD 声明
-dir: ltr # 可选:书写方向(ltr|rtl)——声明 rtl 即承担逻辑属性硬门(检查 15 升 ERROR)
-spec_version: 1 # 可选:契约版本(当前 1;非 1 时校验器按 v1 规则检查并 WARN 提示可能漏检)
-breakpoints: [375, 768, 1024] # 可选:响应式断点(升序整数,≥2 项;draw-* 映射为框架响应式机制,检查 22 校验)
----
-```
+**字面形态(全部字段 + 注释)见 [`template/ui-page.md`](../../template/ui-page.md) frontmatter 块**。必填字段:name / description / background / updated / version;其余为可选,逐字段判据:
 
 - `background` 等任何颜色字段 **MUST 是 token 引用**(如 `{surface-base}`),**禁止硬编码字面量**(如 `#FFFFFF` / `rgba(0,0,0,0.8)`)。这是 draw-md 的硬约束(见验证点 5.2)。
 - `updated` 用 ISO 日期(`YYYY-MM-DD`)。
@@ -89,14 +77,7 @@ breakpoints: [375, 768, 1024] # 可选:响应式断点(升序整数,≥2 项;dra
 
 > **检查点:读起来像情绪 = 方向还没定**。"温暖而有质感"是情绪,不是方向;四个字段都落到具体决定(哪个组件 / 哪种材质 / 哪个动作),契约才算成立。契约兑现核对与 preview 现有能力对齐:signature-interaction 由 preview 既有 Swap / Signature 自检覆盖,thesis / first-viewport 归入 Brand Fit 人工复核(见 [`preview.md`](./preview.md) 决定性自检与 Brand Fit 维度)。
 
-**字面形态(机器可查,检查 20)**:四字段以**加粗字段名行**书写,置于 frontmatter 之后、首个 `##` 章节之前(organisms 是组件文档非页面,不要求):
-
-```markdown
-**thesis**: <一句话>
-**own-world**: <一句话>
-**first-viewport**: <一句话>
-**signature-interaction**: <一句话>
-```
+**字面形态(机器可查,检查 20)**:四字段以**加粗字段名行**书写,置于 frontmatter 之后、首个 `##` 章节之前(organisms 是组件文档非页面,不要求);四行字面形态见 [`template/ui-page.md`](../../template/ui-page.md) 方向契约块。
 
 `validate.py draw-md` 检查 20 按**字段在场**判定(四字段缺失即 error,写在首个 `##` 之后不算);字段内容的兑现度仍由 preview 的 Brand Fit 人工复核——机器管在场,人管成立。
 
@@ -116,33 +97,13 @@ breakpoints: [375, 768, 1024] # 可选:响应式断点(升序整数,≥2 项;dra
 
 ### 组件意图头(新增组件的参数表节前 MUST 附)
 
-每个**新增**组件的参数表之前,先附 4 行意图头,回答"为什么是这些值";**复用既有组件**(organisms / 前页已定义)可引用 DESIGN.md 或已有定义代替,不必重写:
-
-```
-意图:[这个组件为谁做什么,该什么感觉]
-焦点:[本屏焦点是否在此;若不是,它如何刻意降级]
-深度策略:[borders-only / subtle-shadows / layered / tint-shift 四选一,见 dimensions/elevation.md]
-密度:[与页面 VISUAL_DENSITY 档位的关系;密集区如何控制]
-```
+每个**新增**组件的参数表之前,先附 4 行意图头,回答"为什么是这些值";**复用既有组件**(organisms / 前页已定义)可引用 DESIGN.md 或已有定义代替,不必重写。四行字面形态(意图 / 焦点 / 深度策略 / 密度)见 [`template/ui-page.md`](../../template/ui-page.md) 意图头块。
 
 说不出意图头的 WHY,说明该组件还在默认值里,停下想清楚再写参数表。
 
 ### 组件参数表(每个组件 MUST 含)
 
-每个组件用一张表描述可实现参数:
-
-| 参数        | 值                          | 说明       |
-| ----------- | --------------------------- | ---------- |
-| 组件类型    | `button` + `icon`(组合)     | 引用 [framework/INDEX.md](../framework/INDEX.md) 的 56 类组件 slug,组合用 ` + ` 连接 |
-| 宽度 width  | 375px(或 `match-parent`)    | 组件宽度   |
-| 高度 height | 64px                        | 组件高度   |
-| 字体大小    | `{font-size-md}`            | 引用 token |
-| 圆角 radius | `{radius-subtle}`           | 引用 token |
-| 背景颜色    | `{surface-card}`            | 引用 token |
-| 字体颜色    | `{text-primary}`            | 引用 token |
-| padding     | `{spacing-md} {spacing-lg}` | 引用 token |
-| action      | `tap=→目标页; state=按下高亮; db=无; api=无; long-press=无` | 交互行为五元组,见下 |
-| intent      | 让"提交"在首屏无需滚动可达,故固定 44px 高 + primary 底 | 决定理由(核心组件 SHOULD,见下) |
+每个组件用一张表描述可实现参数;**全字段表头与逐行示例的唯一 canonical 见 [`template/ui-page.md`](../../template/ui-page.md) 参数表块**——必含行:组件类型 / 宽高 / 字号 / 圆角 / 背景色 / 字色 / padding / action(+intent SHOULD),逐行判据:
 
 - 颜色、字号、间距、圆角 **MUST 引用 `token.md` 的 token**,不在表里写裸值。
 - 尺寸(宽高)可写具体像素(实现层需要)。

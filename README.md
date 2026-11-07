@@ -109,6 +109,7 @@ maliang/
 │   ├── templates/           # 模板墙：14 种设计语言 + 整页模式 + 落地页编排
 │   ├── vocabulary/          # 30 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息、131 项中英术语对照）
 │   └── default-pages/       # 默认页面清单（App/Web 各 15 页，P0–P2）
+├── template/                # 交付物骨架模板（DESIGN.md / ui-page / ip-prompt / a11y-walkthrough，复制填充；填法与校验规则见各命令文档）
 ├── scripts/                 # 验证层：preview-check / preview-lint.js / verify-states / verify-interactive / design-md(合并入口) / validate-generated / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate（退出码 canonical 见 scripts/EXIT-CODES.md）；第二批：verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy；基础层：ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / device_models / maliang_common / devices/
 ├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue，第一代布局历史实例）
 #   用户项目运行时产物统一落 <项目根>/.maliang/（DESIGN.md + ui-markdown/ + preview/ + critique/ + ip/ + ip-handbook/）

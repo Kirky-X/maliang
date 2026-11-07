@@ -300,21 +300,8 @@ Method: dual-agent (A: <agent-id> · B: <agent-id>)
    **指纹失效判定**:评审时先跑 `python3 {SKILL_DIR}/scripts/ui-graph.py compute-hash --target <产物目录>` 建哈希基线,每条 backlog 条目记录目标产物文件当时的 sha256。下次评审同一页面前先跑 `diff-hash`:凡 modified 列表命中的页面,其旧 backlog 条目**整体失效**——指纹是逐字节比对,产物任何改动即失效;须重新走查确认哪些问题仍在,禁止直接沿用旧 backlog,确认后重新 `compute-hash` 建新基线。指纹只对准 draw-md 产物 md(`.maliang/ui-markdown/`);预览 HTML / 截图类产物不在基线内,以重新走查为准。
 
    **显式关闭语义**:backlog 条目只有在本轮评审中**实测确认已修复或不再成立**才标记关闭;"页面改过了"不等于"问题修掉了"——失效 ≠ 关闭;未处理条目重新验证后带新指纹顺延,禁止批量关闭、禁止静默丢弃。
-4. **A11y 实测记录**:`.maliang/critique/a11y-walkthrough.md`(每页面一份,复测追加)。**真机读屏实测超出 skill 边界——此模板供人工实测记录**,skill 只做键盘推演与要点声明,不伪造"已实测"结论。模板:
+4. **A11y 实测记录**:`.maliang/critique/a11y-walkthrough.md`(每页面一份,复测追加)。**真机读屏实测超出 skill 边界——此模板供人工实测记录**,skill 只做键盘推演与要点声明,不伪造"已实测"结论。模板唯一 canonical 在 [`template/a11y-walkthrough.md`](../../template/a11y-walkthrough.md),复制后逐页复测追加。
 
-   ```markdown
-   # A11y 实测记录 · <page> · <date>
-   环境:<浏览器 / 系统 / 读屏器与版本,人工填写>
-
-   | 项目                                                      | 判定        | 证据             |
-   | --------------------------------------------------------- | ----------- | ---------------- |
-   | 键盘-only 完成主任务(skill 推演)                        | PASS / FAIL | <按键序列>     |
-   | 焦点可见(每个交互控件有焦点环)                         | PASS / FAIL | <截图 / 选择器> |
-   | 读屏要点声明(地标 / 标题结构 / 图标可访问名)           | 声明        | <要点清单>     |
-   | 读屏真机走查(NVDA / VoiceOver / TalkBack)               | 人工填写    | <留空待实测>   |
-   | 对比度实测值(正文 / 次要文字 / 占位文字)               | PASS / FAIL | <实测比值>     |
-   | reduced-motion 实测(动效确有降级)                       | PASS / FAIL | <实录描述>     |
-   ```
 
    FAIL 项按 P0-P3 定级并入 backlog;豁免项写明理由与复验到期日。
 5. **未测量清单**(交付段必做,):本次会话改过、且**没有活收据**的可渲染产物,在报告/收尾回复逐项列出未测量项与原因,不得以「已通过」措辞收尾;无浏览器时写明 **UNMEASURED**(不是通过)。口径与 hooks 可选增强说明见 [`preview.md`](./preview.md)「收尾前未测量清单」。
