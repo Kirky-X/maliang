@@ -244,6 +244,36 @@ python3 scripts/ui-graph.py check-sync [--target PATH]
 
 **基线节奏**(基线语义 = 「上次全部对齐时的快照」):每次全量产出/重生成后,`build-impl-map` → `compute-hash` → `compute-hash --kind code` 连跑建双基线;此后任何时点 `check-sync` 都能机械判定漂移方向。路径锚定:impl-map 记录 `anchors.preview_root` / `anchors.code_root`(以及 legacy 的 `base_dir`),实现路径相对各自锚根解析——**任何 cwd 运行 check-sync 均可**;impl-map 出现绝对路径或 `..` 穿越路径时拒绝消费(退出码 2,防越界读取)。增量重生成纪律见 [`llm-behavior.md`](../meta/llm-behavior.md) §6.2。
 
+> **哈希盲区**:check-sync 判「变没变」,判不出「没变但错」——功能缺失 / 写死值 / 架构偏离等语义层漂移走下方「[语义漂移审计](#语义漂移审计语义层agent-执行形态吸收自-egm-drift-report)」。
+
+---
+
+## 语义漂移审计(语义层,agent 执行;形态吸收自 EGM Drift Report)
+
+> check-sync 是逐字节哈希对照:只判「文件变没变」,判不出「文件没变但实现错了」。本节是它的**语义层**,由 agent 读码对照——纯脚本做不了,也不做成 `ui-graph.py` 子命令(避免伪机械检查;脚本子命令仍是 9 个)。
+
+**时机**:交付前对 P0 页例行抽审;check-sync 判 `in-sync` 但抽查怀疑「对不上」时对目标页加审。全量逐页读码成本高,默认只审 P0 页 + check-sync 的 `code-drifted` / `diverged` 页;全量仅在用户显式要求时跑。
+
+**流程**:
+
+1. **取审计范围**:`ui-implementation-map.json` 的 mappings 按默认范围过滤;impl-map 缺失先跑 `build-impl-map`;
+2. **逐页对照** `ui/<page>.md` 与映射到的实现文件(preview HTML / 三框架代码),只查四类漂移:
+
+   | 类 | 判据 | 例 |
+   | --- | --- | --- |
+   | 功能缺失 | 规格写了、代码没有 | 参数表里的禁用态 / 空态未实现 |
+   | 结构缺字段 | 数据结构比规格少字段 | 列表项规格 5 字段,代码只渲染 3 个 |
+   | 写死替代动态 | 规格要求动态逻辑,代码写死 | token 引用被换字面量 / 条件分支写死 |
+   | 架构偏离 | 实现用了规格外的模式/库 | 规格说复用 organisms/dock,代码自造一份 |
+
+3. **只报差异**:有漂移的页逐条列;全匹配的页一行「无漂移」,禁止复述一致项(防报告膨胀);
+4. **定级与去向**:每条漂移按 P0-P3 定级 + 给修法(注明走 redesign / draw-md / draw-* 哪条路),报告落 `.maliang/critique/drift_<date>.md`——**禁止落 `ui-markdown/`**(根级 .md 会被 `compute-hash --kind draw-md` 当页面计入基线,污染指纹);
+5. **链接回填提示**:某条规格在代码里找不到对应物、且 impl-map 未记录该实现路径时,提示用户把实现路径补进对应页锚点——链接齐了,下次 `build-impl-map` 与本审计都更便宜。
+
+**边界**:本审计只读不改——发现漂移一律移交对应子命令处置,禁止顺手改码;修复后按「基线节奏」重建基线再复审,复评同样适用 [`critique.md`](./critique.md) 的「重审上限」语义。
+
+---
+
 ---
 
 ## 流程
@@ -264,7 +294,7 @@ python3 scripts/ui-graph.py check-sync [--target PATH]
 
 4. **变更检测(按需)** —— 当 draw-md 产出更新后,运行 `compute-hash` 刷新快照,再运行 `diff-hash` 输出变更页面清单,供前端/预览更新决策。
 
-5. **同步判定(按需)** —— 重生成/手改后运行 `check-sync` 判定规格与实现的漂移方向;基线缺失时先按「基线节奏」补建。token 变更后运行 `token-usage --token <name>` 列波及页面。
+5. **同步判定(按需)** —— 重生成/手改后运行 `check-sync` 判定规格与实现的漂移方向;基线缺失时先按「基线节奏」补建。token 变更后运行 `token-usage --token <name>` 列波及页面。P0 页交付前按需加跑一轮「语义漂移审计」(语义层,哈希照不到「没变但错」)。
 
 ---
 
@@ -281,6 +311,7 @@ python3 scripts/ui-graph.py check-sync [--target PATH]
 - [ ] `compute-hash` MUST 计算每个 .md 文件(含 organisms/,排除 token.md 与本子命令产出的 .json)
 - [ ] `--kind code` MUST 依赖 ui-implementation-map.json(缺失时显性失败,提示先跑 build-impl-map);哈希目标为 impl-map 映射到的实现文件
 - [ ] `check-sync` 的状态 MUST 四值枚举:`in-sync` / `spec-ahead` / `code-drifted` / `diverged`;基线缺失 MUST 退出码 2(没能检查),不得按 in-sync 处理
+- [ ] 语义漂移审计(agent 执行)MUST 只报差异(全匹配页一行「无漂移」);报告落 `.maliang/critique/drift_<date>.md`,禁止落 `ui-markdown/`(根级 .md 会污染 compute-hash 基线)
 - [ ] `token-usage` MUST 排除 action 行的 `{xxx}`(URL/JS 模板参数,非 token 引用,与 validate-draw-md 检查 1 同规则)
 - [ ] `build-impl-map` 的 status MUST 三值枚举:`implemented` / `partial` / `missing`
 - [ ] 所有 JSON 产出 MUST 含 ISO8601 时间戳字段(`generated_at` / `computed_at` / `built_at`)
