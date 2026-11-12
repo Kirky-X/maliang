@@ -109,7 +109,7 @@ flowchart LR
 
 目标组件源为 React 生态(registry-json / docs-site 型,组件源 profile 见 [`../framework/adapter-contract.md`](../framework/adapter-contract.md))时,预览模板换用 React 骨架。要点:
 
-- **CDN 四件套**:React UMD + ReactDOM UMD + `@babel/standalone`(JSX 浏览器内编译,无构建链)+ Tailwind Play CDN。组件源码经查询通道([`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」)从官方 registry JSON 取回后**内联**为组件定义(复制粘贴型本就以源码分发);
+- **CDN 四件套**:React UMD + ReactDOM UMD + `@babel/standalone`(**MUST 锁 7.x 版本**,如 `@7.26.4`——不锁版本会拉到 Babel 8 beta,其 react preset 默认 automatic runtime,编译产物带 `import … from "react/jsx-runtime"`,在经典 inline script 里语法错误导致整页白屏;2026-11-13 鹈鹕骑车预览实测)+ Tailwind Play CDN。组件源码经查询通道([`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」)从官方 registry JSON 取回后**内联**为组件定义(复制粘贴型本就以源码分发);
 - **token 注入**:DESIGN.md token 以 CSS 变量注入 `:root`——shadcn/Motif 用 `--background` / `--primary` 等语义变量名;组件源码中的 Tailwind 工具类由 Play CDN 运行时生成;
 - **设备外壳复用**:同一 `.device-shell` / `.device-screen` 结构(框架无关),外壳 CSS 见下节;
 - **校验降级(显式)**:Tailwind Play CDN 运行时生成工具类 → §5.6 静态孤儿类检查由 `scripts/preview.py` 检测 CDN 标记后**显式跳过并报 WARN**(不算通过也不算失败,列入收尾前未测量清单);其余 143 项检查照跑;
@@ -126,7 +126,7 @@ flowchart LR
   <title>预览 - <页面名称></title>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { /* 语义变量注入(从 token.md 解析) */
