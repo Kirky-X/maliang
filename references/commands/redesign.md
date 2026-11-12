@@ -401,6 +401,16 @@ findings 按**两段拆分**,不混写:
 - Restructure 模式:可选 3-4 个,允许高风险杠杆(Layout Refactor)
 - 改动后的视觉变化必须可量化(如"对比度 3.2:1 → 4.7:1","间距 13px → 8px 网格")
 
+### 平台旧模式扫描与清零(Modernise 前置诊断)
+
+> 确定性旧模式扫描 + 判据复检 + 复扫清零闭环(机制吸收自 MWG legacy-scan)。与第 2 节 10 维审计分工:审计管品味层,本节管「JS 手写实现平台已有原生能力」的可机械判定层。
+
+- **扫什么**(旧模式特征面,Refresh / Restructure 模式逐项过):手写 tooltip / 浮层定位(→ anchor positioning)· 条件渲染直切闪现(→ `@starting-style` / transition)· JS 滚动监听驱动进度与视差(→ scroll-driven animations)· 手写轮播吸附与滑动逻辑(→ scroll snap)· JS 模拟校验态时机(→ `:user-valid` / `:user-invalid`)· 浮层手写轻关闭(→ popover / light dismiss)——原语落点查 [`../vocabulary/INDEX.md`](../vocabulary/INDEX.md) 术语对照
+- **判据复检剔误报**:每条命中先过两判——keepWhen(仍需支持旧环境的降级实现 = 保留,不动)/ dropWhen(第三方库内代码 / 跨文件复用的辅助函数 / 形似实非的写法 = 剔);不硬凑零,剔除的误报显性列出
+- **修复路由**:替换为平台原语,保留原实现作 fallback;替换动作过第 5 节决策树,风险进改动清单
+- **复扫清零**:改完对改动文件复扫一遍,清零才交付;清不了的条目(浏览器矩阵不允许)显性登记进改动清单风险列,禁静默遗留
+- **范围诚实**:确定性判据只覆盖旧模式的一个子集,复扫零命中 ≠ 没有旧模式——品味层与架构层旧式仍走第 2 节审计,不因本节免审
+
 ---
 
 ## 5. Decision Tree(决策树)
@@ -490,6 +500,7 @@ redesign 子命令产出:
 - [ ] 四模式(Rebuild 除外)MUST 在第 2 节审计前完成 Pre-Flight 扫描:六信号源按序、findings 带 `file:line`、preserve / introduce 拆分;项目信号冲突 MUST 显性化请裁决,不擅自选边
 - [ ] preflight.json 与源码指纹缓存 MUST 按不可信数据对待,信任边界四条缺一不可(仅 repo 内路径 / 拒密钥文件 / 键集精确相等 / 临时文件 + rename 原子写)
 - [ ] 重跑场景 MUST 走指纹路由;git diff MUST 引号限定路径逐文件取;MUST NOT 以变更行数或整文件哈希推断重要性;delta 不可得 MUST 明说,指纹不匹配单独 MUST NOT 强制冷路由
+- [ ] Refresh / Restructure 模式 MUST 跑平台旧模式扫描(§4),命中项先过 keepWhen / dropWhen 判据复检再动手,改后复扫清零;清不了的显性登记进改动清单风险列
 
 ---
 

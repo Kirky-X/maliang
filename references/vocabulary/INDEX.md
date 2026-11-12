@@ -39,7 +39,7 @@
 
 ## 中英术语对照（前端效果词典 80 项）
 
-> 中文说法 → 英文术语 → 库内落点。写提示词时先用对名称（"说不出名称 = 落入默认审美"）；库内已有模式的用模式名，无模式行的词直接作提示词术语使用（标 † 为 CSS/SVG 原语词，不入命名表）。
+> 中文说法 → 英文术语 → 库内落点。写提示词时先用对名称（"说不出名称 = 落入默认审美"）；库内已有模式的用模式名，无模式行的词直接作提示词术语使用（标 † 为 CSS/SVG 原语词，不入命名表）。**查库先译意图**：用户以意图措辞描述效果（「点一下先确认」「别一次全蹦出来」）时，先译成 UI 原语名词（→确认模态、→交错入场）再进索引；复合诉求拆成单条逐个查，不整句硬匹配。
 
 - **布局与页面结构**：网格布局=Grid Layout（[layout](layout.md) 网格系）· 弹性布局=Flexbox † · 便当盒布局=Bento Grid（`layout-bento-grid`）· 瀑布流=Masonry Layout（[cards](cards.md)/[galleries](galleries.md) 瀑布流系）· 分屏布局=Split-screen Layout（[layout](layout.md) 分栏）· 卡片式布局=Card Layout（[cards](cards.md)）· 首屏主视觉=Hero Section（[hero](hero.md)）· 侧边栏=Sidebar（[navigation](navigation.md) nav-rail 系）· 粘性定位=Sticky（[scroll](scroll.md) `scroll-pinned`）· 固定定位=Fixed † · 响应式布局=Responsive Layout（framework 断点系）· 留白=Whitespace（dimensions spacing）
 - **组件与信息呈现**：导航栏=Navigation Bar（[navigation](navigation.md)）· 下拉菜单=Dropdown Menu（[menus](menus.md)）· 大型下拉菜单=Mega Menu（[menus](menus.md)）· 标签页=Tabs（[navigation](navigation.md) `nav-tab-liquid`）· 手风琴=Accordion（[layout](layout.md) `accordion-exclusive-expand`）· 模态弹窗=Modal Dialog（[popups](popups.md)）· 抽屉面板=Drawer（[sheet-drawer](sheet-drawer.md)）· 悬浮提示=Tooltip（[micro-interactions](micro-interactions.md) `micro-tooltip`）· 弹出浮层=Popover（[popups](popups.md)）· 轻提示=Toast（[micro-interactions](micro-interactions.md) `micro-toast`）· 轮播=Carousel（[galleries](galleries.md) 轮播族）· 图片灯箱=Lightbox（`gallery-lightbox`）
@@ -51,7 +51,7 @@
 
 ### 词典外补充（80 词未覆盖的常用术语）
 
-> 同一对照口径,收录词典 80 项之外的常用说法;锚点均经 grep 核实,真空词标 † 作纯提示词术语。
+> 同一对照口径,收录词典 80 项之外的常用说法;锚点均经 grep 核实,真空词标 † 作纯提示词术语。**条目准入按已知度修剪**(机制吸收自 MWG eval-pruning):模型默认就稳定产出的通用写法不入库;条目价值在非显然约束(参数值/阈值/兼容坑/降级路径),新收条目必须带上这些约束——只收名词不带约束 = 不收。
 
 - **交互与手势**：下拉刷新=Pull to Refresh（`scroll-pull-refresh`）· 边缘阻尼/橡皮筋=Overscroll Rubber-band（`scroll-overscroll-damp`）· 惯性滚动=Momentum Scrolling（`picker-wheel-decay` 速度衰减）· 触觉反馈=Haptics（`micro-haptic`）· 长按=Long-press（`press-peek` / `micro-hold-confirm`）· 双击=Double-tap（`chat-heart-fly-avatar`）· 摇一摇=Shake Gesture † · 拖拽排序=Drag-to-reorder（[drag-drop](drag-drop.md)）· 左滑删除=Swipe-to-delete（`swipe-row-delete`）· 压感=Force Touch † · 手势密码=Pattern Lock † · 生物识别=Biometric（Face ID/指纹）†
 - **组件**：涟漪/水波纹=Ripple（`micro-ripple`）· 步进器=Stepper（`picker-stepper-roll`）· 评分=Rating（[forms](forms.md) 评分条）· 面包屑=Breadcrumb（[navigation](navigation.md)）· 树形视图=Tree View（`nav-menu-submenu-inline`）· 虚拟列表=Virtualized List（`scroll-virtualized`）· 时间轴=Timeline（`progress-timeline-card`）· 画中画=Picture-in-Picture（[pro-motion](pro-motion.md) 滚动变小窗）· 扫码=QR Scan（[auth](auth.md)）· 弹幕=Danmaku †
