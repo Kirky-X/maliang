@@ -115,7 +115,7 @@ card.addEventListener('pointerup', () => {
 | --- | --- | --- |
 | Flutter | `SpringDescription.withDampingRatio(mass, stiffness, ratio)` + `SpringSimulation`(physics 库,api.flutter.dev) | `ratio` 即 damping ratio(1.0 临界);**response 无直接参数**,按标准二阶系统换算 `stiffness = (2π/response)² × mass`(换算式为通用弹簧物理,非 Flutter 官方 API,落地时实测验算) |
 | HarmonyOS | `curves.springMotion(response, dampingFraction)`(ArkUI 官方指南:时长由参数、属性变化与初速度自动计算,指定的 duration 不生效);跟手+离手场景用 `curves.responsiveSpringMotion`(自动继承跟手段速度) | 直接两参数,最贴近本模型。注意:`curves.springCurve(velocity, mass, stiffness, damping)` 是另一个 4 参数物理 API,官方注明「时长映射破坏物理规律,不建议使用」,勿混用 |
-| Web | 预烘焙:CSS `linear()` 弹簧曲线(Chrome 113+ / Firefox 112+ / Safari 17.2+),bounce+duration 近似 damping+response——**固定时长、不能中途改目标**,只适合无交互转场;可中断场景:JS rAF 逐帧积分,或选支持 velocity 重定向的弹簧库(如 Motion 的 `type: 'spring', bounce, duration`) | 可中断性需求(核心原则法则④)排除一切预烘焙曲线 |
+| Web | 预烘焙:CSS `linear()` 弹簧曲线(Chrome 113+ / Firefox 112+ / Safari 17.2+),bounce+duration 近似 damping+response——**固定时长、不能中途改目标**,只适合无交互转场;增量坑:bounce 曲线禁用于 opacity(过冲 <0/>1 闪烁)、必须显式 duration(linear() 不派生时长)、fallback 双声明序——先写 cubic-bezier 回退行再写 `transition-timing-function: linear(...)` 覆盖行(非法值被忽略即保住前一行);可中断场景:JS rAF 逐帧积分,或选支持 velocity 重定向的弹簧库(如 Motion 的 `type: 'spring', bounce, duration`) | 可中断性需求(核心原则法则④)排除一切预烘焙曲线 |
 
 ## 手势物理三公式
 

@@ -100,6 +100,7 @@ function commitOrder() { /* 按 order 持久化排序;DOM 归零 translate */ }
 - 让位统一用 `ease-spring`(过冲 ≤ 1.2,见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) 缓动库),`overwrite: 'auto'` 防止叠加。**近似边界**:`cubic-bezier(0.34, 1.56, 0.64, 1)` 是预烘焙近似弹簧,仅适用于让位项——目标是槽位、一次性过渡、用户不会再抓住它;若列表项可被中途再拖起(可中断场景),CSS 过渡无法抓取反转,该项落定改走 [`interruptible-motion.md`](interruptible-motion.md) 的 JS 弹簧两参数模型(damping + response)
 - 行高一致用 `index * H` 计算;变高列表改为逐项实测 rect
 - 松手落定后必须 `commitOrder` 归零 translate 并同步 DOM 顺序,二次拖拽前状态必须干净
+- 重排/换父的 DOM 搬运用 `parent.moveBefore(node, ref)` 原子移动(Chrome 133+/Edge 133+/Firefox 144+,Safari 不支持):iframe 不重载、CSS 动画不重启、输入焦点不丢——append/insertBefore 实为拆除+插入,三者全丢;Web Components 走 `connectedMoveCallback`;探测 `'moveBefore' in Element.prototype` 回退传统移动并接受状态重置(行为侧「节点复用禁销毁重建」与 [pro-motion.md](../vocabulary/pro-motion.md) `card-layout-morph` / `list-vt-reflow` 同源)
 - 触觉反馈:进入新槽位时 vibration ≤ 10ms(见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) `micro-haptic`)
 
 ## 失败模式

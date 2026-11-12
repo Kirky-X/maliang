@@ -16,12 +16,13 @@
 | `filter-drawer`            | 筛选项收进抽屉,呼出按钮带已选计数                | 移动端筛选项多(≥3 组)                  | 抽屉容器与手势遵循 popups.md;桌面端少用              |
 | `filter-sidebar`           | 左侧栏分面常驻可见,改选即时生效                  | 桌面端大结果集(商品/文档库)            | 筛选维度 ≤2 时工具栏足够                             |
 | `search-command`           | 快捷键唤起命令面板,搜动作/页面/对象三合一        | 后台工具、开发者向产品                    | 消费者内容站慎用;必须有可发现入口;与 [`navigation.md`](navigation.md) `nav-command-palette`(同模式,交互侧重)互为对照 |
-| `search-results-highlight` | 结果与建议中加粗/缩进区分用户已输入片段          | 全部搜索结果与建议列表   | 补全式高亮补全段,包含式高亮用户输入,勿混用          |
+| `search-results-highlight` | 结果与建议中加粗/缩进区分用户已输入片段;页内全文命中(不动 DOM)用 CSS Custom Highlight API(TreeWalker→Range→CSS.highlights→`::highlight()`,仅 color/background 等 7 组文字属性;纯视觉不进 a11y 树,语义场景用 `<mark>`,禁只靠颜色;fallback 检测 `CSS.highlights` 无则 `<mark>` 包装) | 全部搜索结果与建议列表;全文检索命中、协作光标、拼错标记   | 补全式高亮补全段,包含式高亮用户输入,勿混用          |
 | `search-empty-query`       | 聚焦未输入时给快捷入口(最近/热门/历史)          | 首页搜索、高频复访场景                    | 无历史数据只给热门,勿留空面板                        |
 | `search-no-result`         | 无结果页:说明原因 + 建议改词/清除筛选出口        | 所有搜索必须覆盖的终态                    | 纯"无结果"空屏禁用;筛选叠加时优先给"清除筛选"      |
 | `filter-range-slider`      | 单/双滑块区间筛选:价格、日期等连续区间,拖动实时联动结果计数 | 价格带、时间范围等数值区间收敛          | 离散少档位改 chip/复选;双滑块须键盘可微调,读数不被拇指遮挡 |
 | `search-debounce-stream` | 停顿触发流式结果:打字停顿(防抖)才查询,结果逐条流出,命中词高亮(规则见 `search-results-highlight`),空结果给推荐词 | 慢源/昂贵查询、大结果集 | 快源直接 `search-instant`(防抖徒增延迟);流式结果须可被新输入打断覆盖 |
 | `filter-sequential-reveal` | 筛选依次换入:筛选标签选中底色滑到新项,旧结果淡出、新结果依次换入 | 卡片/图片网格按类筛选 | 连点须可打断并合并到最终筛选;筛选片持久化见 `filter-chip` |
+| `search-until-found` | 隐藏内容可检索:`hidden="until-found"` 视觉隐藏仍可页内搜索 / URL 文本片段(`#:~:text=`)命中并自动展开,`beforematch` 事件同步 aria-expanded / 互斥面板;`details name=` 原生互斥手风琴 | 折叠 FAQ、手风琴、"阅读更多"折叠段 | 禁对其覆写 `display:none`(永久不可检);不藏敏感信息;Safari 不支持 → 降级直接全部展开 |
 
 ## 使用规则
 

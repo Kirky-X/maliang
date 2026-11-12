@@ -18,7 +18,7 @@
 | `gallery-split`       | 主图 + 列表(可切换)                             | 商品详情、相册管理                    |
 | `gallery-coverflow` | 封面流:居中卡正视,两侧按离心距离后仰变暗,切换整排转动 | 专辑/媒体封面选择 |
 | `gallery-css3d-film-ring` | 零依赖 CSS 3D 胶片环:环形排布可拖转,点选单格抬起 | 品牌展示、怀旧媒体墙(与 `gallery-filmstrip` 互见:彼条平面横向胶片条,本条 3D 环) |
-| `gallery-carousel-magnet` | 轮播磁吸:停正中吸附,中央放大、两侧缩小变暗 | 商品/内容轮播(与 [scroll.md](scroll.md) `scroll-center-focus` 互见:彼条通用中心聚焦原理,本条轮播磁吸落位) |
+| `gallery-carousel-magnet` | 轮播磁吸:停正中吸附,中央放大、两侧缩小变暗;吸附态高亮升级纯 CSS:`container-type: scroll-state` + `@container scroll-state(snapped: x)` 判当前吸附卡,免 IO/scroll 监听(降级 IO rootMargin "0px -49%" 取中央 2% 切片);连续 scrub 变体:`animation-timeline: view(inline)` 进出视口进度驱动 scale(峰 1、端 0.5),@supports 须同时测 `(animation-timeline: view())` 与 `(animation-range: entry)`;吸附高亮 ≠ 选中/焦点,须与焦点环区分、非当前项禁灰化到不可读 | 商品/内容轮播(与 [scroll.md](scroll.md) `scroll-center-focus` 互见:彼条通用中心聚焦原理,本条轮播磁吸落位) |
 | `gallery-carousel-peek-snap` | 露角吸附轮播:横滑露邻卡一角提示可滑,松手自动对齐完整卡片(吸附+统一间距) | 移动端卡片轮播(吸附机制见 [scroll.md](scroll.md) `scroll-snap`) |
 | `gallery-intro-drop-fan` | 开场三段:照片逐张落下堆叠→数张收拢成扇形→标题面板升起 | 相册/摄影集开场 |
 | `gallery-shared-element-expand` | 原位放大共享元素:缩略图/列表图从原位同比放大成详情,文字随后进入,返回收回原位,焦点不跳;撕口票根是变体细节 | 图库/商品图→详情(与 [cards.md](cards.md) `shared-element-card-transition` 互见:彼条卡片容器转场机制,本条图片原位放大家族;与 `gallery-lightbox` 互见:彼条全屏跳切,本条连续过渡) |

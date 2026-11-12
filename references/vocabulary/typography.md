@@ -22,6 +22,7 @@
 | `type-expand-fulltext` | 展开全文:长文"展开全文"平滑顶开铺展,再点平滑收回,页面不猛跳 | 摘要长文、评论折叠(与 [cards.md](cards.md) `card-collapsible` 互见:彼条卡片折叠容器,本条纯文本流) |
 | `type-typewriter-loop` | 打字机循环:文案逐字打出+块光标闪烁,打完停一拍→删除倒放→换下一句循环;等宽字重排版防宽度抖动,逐字间隔 40-70ms(与 [chat.md](chat.md) `chat-stream-typewriter` 互见:彼条 AI 回复一次性流式,本条营销位循环轮播) | hero 副标题轮播、终端风营销站 |
 | `type-text-scramble` | 乱码解码:目标文字先以随机字符扰动,再从左到右逐位锁定为真实字符(每字符独立定时器,总时长随文本长度收敛在 0.6-1s);用等宽数字/字体防锁定时抖动;装饰档可跳过,reduced-motion 直出终稿 | 数据解密氛围、terminal 风、数字大盘标题 |
+| `type-overflow-reveal` | 单行溢出揭示:截断三式(尾部省略号/末端渐隐/容器查询短版切换),全文留 DOM 禁脚本截字;hover+focus-visible 原地滚出全文(持续型不计 ≤400ms,同 `type-marquee` 口径;reduced-motion 留省略号);chip 展开用 `interpolate-size: allow-keywords`;截断检测用自身 scroll timeline 打 `--truncated` 旗标(禁 scroll-state 判 overflow:hidden);flex 需 min-inline-size:0;Safari 无滚动驱动动画 → ResizeObserver 比对 scrollWidth 打 class | tab/chip 标签、表格单元、文件名、媒体标题(数字列中置省略号已在 [tables.md](tables.md)) |
 
 ## 使用规则
 

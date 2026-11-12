@@ -232,3 +232,4 @@ JSON 标准,用于 Figma / Style Dictionary / Token Studio 等 token pipeline �
 - 命名转换**必须**保持语义一致(不因格式改语义,只改命名风格)
 - 复合对象(typography)**必须**在所有格式中可还原(fontFamily + size + weight + lineHeight 不可丢)
 - 暗色模式 token **必须**在 CSS / Tailwind v4 中通过 `@media` 覆盖,不可在 DTCG JSON 中重复定义
+- **组件级 color-scheme(吸收自 MWG component-specific-light-dark-theme)**:复杂表面(代码块/播放器/地图/嵌入)在暗页上整块反转,元素级 `color-scheme: only dark`(only 强制覆盖浏览器自适应),浅容器禁用;**light-dark() 计算值陷阱**:token 禁注册为 `<color>`(表达式被快照,子树不随 color-scheme 重解析),覆盖元素须重声明继承色属性;iframe Safari 不随宿主 scheme(显式传参)

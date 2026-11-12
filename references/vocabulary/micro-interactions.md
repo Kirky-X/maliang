@@ -10,7 +10,7 @@
 | `micro-press-scale`   | 按下时 scale 0.97 + 短促过渡                     | 按钮、可点击卡片                      |
 | `micro-focus-ring`    | 键盘聚焦时显示 ring(outline 替代)               | 所有交互元素(强制)                  |
 | `micro-ripple`        | 点击位置涟漪扩散                                  | Material 风、移动按钮                 |
-| `micro-tooltip`       | hover 延迟 500ms 显示 tooltip;**相邻 tooltip 已打开时跳过延迟与动画**(`transition-duration: 0ms` 直出)——整条工具栏因此显得快 | 图标按钮、密度高的工具栏              |
+| `micro-tooltip`       | hover 延迟 500ms 显示 tooltip;**相邻 tooltip 已打开时跳过延迟与动画**(`transition-duration: 0ms` 直出)——整条工具栏因此显得快;Web 渐进增强 `popover="hint"` + `interestfor` 触发(hover/focus/长按,隐式锚点免 anchor-name;只互斥关其他 hint,不关 auto/manual 菜单;Safari 无 hint 回退 manual 关不掉,须 beforetoggle 换 auto) | 图标按钮、密度高的工具栏              |
 | `micro-skeleton`      | Loading 时显示骨架占位                            | 数据加载、列表、详情                  |
 | `micro-shimmer`       | 骨架上的微光扫过                                  | 骨架占位的进阶版                      |
 | `micro-toast`         | 操作反馈 toast(成功 / 失败)                     | 表单提交、删除、加入购物车            |
@@ -27,6 +27,9 @@
 | `micro-reward-arc-fly` | 奖励胶囊先弹出停顿一拍,再沿弧线飞向计数器,计数器数字弹一下加一;弧线只动 transform,数字加一弹跳与到达到帧同步(同帧性);计数见 [`number-motion.md`](number-motion.md) `num-badge-flip` | 签到/任务奖励入账、加购反馈 |
 | `micro-streak-badge-pop` | 连续天数徽卡先弹起再变色,同排的奖励图标与进度条随之联动;弹起+变色序贯两拍,同排联动同频启动,禁只动徽卡 | 连续签到/成就行、奖励条 |
 | `micro-gooey-metaball` | 黏液融合 Gooey:相邻元素靠近时表面像液滴一样粘连、拉开时拉丝回弹(SVG gooey filter:模糊+alpha 阈值);filter 静态写死只动元素 transform(逐帧重绘 filter 必掉帧),降级直达分离态 | 加载点融合、拖拽黏连、图标形变(材质手感类,慎用档) |
+| `micro-action-preview` | 悬停/聚焦动作按钮即时预演该动作效果,移开即还原(原语 `interestfor`,interest-delay-start 0.2s / end 0.1s,`:interest-source`/`:interest-target` 选态);预览即暗示,禁 live region 播报(扫过即触发,播报成噪声);fallback:检测 `interestForElement`,无则退 JS hover | 格式/滤镜/主题按钮的效果预演、悬停看提交后果(与 [`pro-motion.md`](pro-motion.md) 悬停跟随预览图、[buttons.md](buttons.md) `press-peek` 三分) |
+| `micro-toggletip` | i/? 信息钮显式揭示:双触发(`interestfor` 悬停 + `popovertargetaction="show"` 点击,禁 toggle——点击会把悬停已开的关掉);WCAG 1.4.13 三条:Esc 可关 / 可悬停读取 / 持续显示 | 多数人不需要但值得主动查的信息(运费规则 / 字段为何必填;与 `micro-tooltip` 分界:彼条可错过,本条主动查) |
+| `micro-discrete-toggle` | display:none↔可见的过渡式显隐:入场起点写 `@starting-style`,退场靠 `transition-behavior: allow-discrete` 把 display 纳入 transition(单独声明,并进 shorthand 会被不支持浏览器整条丢弃);top-layer 元素(dialog/popover)过渡列表须加 `overlay` | popover/卡片/列表项声明式入退场(坑与降级见下方 @starting-style 注记) |
 
 ## 频率法则:该不该动
 
@@ -37,6 +40,7 @@
 | 每天 100+ 次的操作(快捷键、命令面板等)     | 禁止动画,延迟即成本         |
 | 每天几十次的操作(hover 状态、列表导航、频繁 toggle) | 否决,或仅近乎无感的反馈(快而轻) |
 | 偶发表面(modal / drawer / toast / popover) | 标准入场 / 退场动画          |
+| 首次运行(onboarding / 空状态)              | 才可加惊喜动效               |
 
 **默认态即可见**:内容在无 JS/失败态下不得藏在动画初始态里(`opacity: 0` 等待入场)——截图管线会判"元素缺失"引发错误返工;入场动画从可见态过渡,不用初始态藏内容(与 motion-INDEX §1.1 删动画残留同源)。
 
@@ -50,7 +54,6 @@
 4. 终检:**邻品无法原样复用此时刻**——能被任何产品原样搬走的 delight 是模板件
 
 **反向检查(防死页)**:频率法则全是上限口径;MOTION_INTENSITY ≥ 6 的页面还要查下限——可视可动元素 < 8 个时检查页面是否"死页"(静态稿直出),< 16 个为警告;下限不过就补反馈与过渡,不是补装饰动画。
-| 首次运行(onboarding / 空状态)              | 才可加惊喜动效               |
 
 **键盘一票否决**:键盘发起的操作(命令面板、快捷键、焦点跳转)是一票否决项,不是判断题——这类操作每天重复上百次,动画让它们显得慢、迟滞、与手脱节。参照 Raycast:无任何开合动画,就是最优体验。
 
@@ -94,6 +97,8 @@
 - **动效描述句式**:向 AI 或 draw-md 描述动效时,禁止笼统的「加点高级动效」;必须写成「触发 + 顺序 + 数值 + 缓动」四段——触发(什么元素+在什么情况下)、顺序(先…再…最后…)、数值(缩放倍数/位移 px/时长 ms,如 0.8→1.2 倍、600ms)、缓动(带回弹弹簧曲线/ease-out/ease-in-out)。手势类必写三要素:阻尼(跟手减速比,如下拉 2:1 越拉越沉)、阈值(吸附/触发的距离线,松手按阈值分流)、回弹(弹簧曲线)——"硬邦邦"手感即三者缺失。示例数值按本表口径收敛(错峰单档 ≤ 80ms、时长按层级预算)
 
 > **@starting-style 注记(仅 Web)**:兼容性 Chrome 117+ / Edge 117+ / Safari 17.5+ / Firefox 129+(2024 Baseline Newly Available,来源 caniuse/MDN);且 `@supports at-rule (@starting-style)` 特性检测尚不可用(CSSWG #10648)。**不可作唯一入场路径**——不支持浏览器中元素会直接以终态出现,这本身可接受;但若初态依赖它隐藏元素(如从 `opacity:0` 过渡),必须保证无支持时不残缺:默认态写终态,起点只放进 `@starting-style` 块;JS fallback 为元素插入后强制 reflow 再移除初始 class,或直接接受无动画直显。HarmonyOS / Flutter 无对应概念,n/a。
+>
+> **退场补强(top-layer 显隐,吸收自 MWG animate-to-from-top-layer)**:退场须 transition-property 带 `display` + `overlay`,`transition-behavior: allow-discrete` 单独声明(并进 shorthand 会被不支持浏览器整条丢弃);`::backdrop` 独立过渡;**Firefox 129+ 假支持**——能解析 allow-discrete 但 display 过渡不生效(bug 1882408),须 DOM 探针实测;不支持时 `data-closing` 分离视觉退场态、JS 删除前 `getAnimations()` 等完 + 2s failsafe;`overlay` 仅 Chromium。
 
 ## 声音反馈
 

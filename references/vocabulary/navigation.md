@@ -19,9 +19,9 @@
 | `nav-stepper`         | 步进式导航(1/2/3)                                | 流程页(结账、注册、向导)            |
 | `nav-floating-island` | 浮岛导航:悬浮胶囊 + 汉堡→X 形变 + 蒙版错峰揭示   | 品牌 / 创意站;移动端降级为全宽 dock |
 | `nav-fab`             | 悬浮操作按钮:右下角单 FAB(一屏仅一个主操作),滚动下滑出现 / 上滑收起联动,避开底部导航安全区 | 移动 App 新建/发布/写等一级操作入口                |
-| `nav-tab-spring-underline` | 顶部标签页跟手下划线:下划线随拖动半路跟手,松手落定,选中标签自动滚动居中 | 顶部多 tab(资讯、订单分类)                     |
+| `nav-tab-spring-underline` | 顶部标签页跟手下划线:下划线随拖动半路跟手,松手落定,选中标签自动滚动居中;Web 原生路线:指示条挂容器 ::before,active 项 `anchor-name`+`position-anchor` 绑定,`transition: inset .2s`(须包 prefers-reduced-motion);fallback `@supports not (position-anchor: auto)` 退静态 border-bottom;**坑:forced-colors 模式剥掉 background/box-shadow,指示条必须用 border 画**;必须配 aria-current/aria-selected,不许纯视觉 | 顶部多 tab(资讯、订单分类;跨页跳转不适用)                     |
 | `nav-tab-liquid`      | 液态 tab 指示器:选中背景移动中先拉长再收缩最后回弹,像液体流过去;简版=胶囊底平滑滑到选中项(低 MOTION 或底栏用,底栏右侧独立快捷按钮见 `nav-quick-actions`) | 分段切换、底部标签栏(MOTION ≥ 7 用液态)                          |
-| `nav-large-title-collapse` | 大标题折叠:缩放/横移/上移/底色全挂同一个滚动进度,大标题随滚动收进导航栏 | iOS 式列表页、个人主页                       |
+| `nav-large-title-collapse` | 大标题折叠:缩放/横移/上移/底色全挂同一个滚动进度,大标题随滚动收进导航栏;折叠行程=首尾高度差(如 200→50px 即 range 0-150px);`scroll-padding-top` 挂同一条 scroll 时间线随 header 高同步动(WCAG 2.4.11 焦点不遮);body 预留 padding-top=初始高;被折叠元素禁 static/relative(在流内会改总滚动距离) | iOS 式列表页、个人主页(单值驱动原理同 `nav-collapsing-search`)                       |
 | `nav-bottom-action-bar` | 吸底操作栏:关键信息+主按钮常驻底部,避开手势安全区(environ safe-area);区段原型对照 [C4](../components/c4-sticky-bottom-bar.md) | 详情页购买栏、多选操作栏                      |
 | `nav-tabbar-auto-hide` | 底栏滚动方向感知显隐:下滚收起(内容全宽沉浸),上滚即唤出 | 信息流 / 浏览型页(流程 / 详情页禁用,操作导航须常驻) |
 | `nav-predictive-back` | 预测性返回:返回手势中预览目标页,松手确认跳转,中途松开回弹取消 | Android / 鸿蒙系统级返回转场 |

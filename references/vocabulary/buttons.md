@@ -50,6 +50,7 @@
 - **自定义按钮必须有按压态**:没有 press state 的按钮看起来像失灵;按压反馈分量口径见使用规则
 - **需要补输入的动作加省略号**:标题尾加"…"表示还有后续输入(Export… / 导出…);与菜单省略号规则同源([`menus.md`](menus.md))
 - **钮内异步反馈**:非即时完成的动作在按钮内转圈并切换文案(Checkout → Checking out…),完成后原地变成功态(与 `btn-commit-morph` 同构);触发后禁用按钮防重复提交
+- **声明式动作分发(吸收自 MWG custom-button-actions)**:多按钮控制同一目标(开关/排序/工具栏动作)用 button `commandfor` + `command` 声明式接线(自定义命令必须 `--` 前缀);command 事件不冒泡(监听直挂目标或 capture);自定义命令无内建语义,须手动同步 aria-pressed/aria-expanded;Baseline 2025-12(Chrome 135/Firefox 144/Safari 26.2),按 `'commandForElement' in HTMLButtonElement.prototype` 条件加载 invokers-polyfill
 - **热区下限**:按钮触控热区 ≥44×44(Web ≥24px 口径见 [`../meta/ux-rules.md`](../meta/ux-rules.md) touch-target 条目);视觉可小于热区,热区不可小于阈值
 - **等待态按钮替代加载弹框的两场景**:①动作极快、弹框会闪现;②多步连续跳转、层层弹加载框——此时在按钮内转圈更稳;真正的长任务仍用进度/弹框(见 [`progress-confirm.md`](progress-confirm.md))
 

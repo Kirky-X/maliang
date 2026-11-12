@@ -12,7 +12,7 @@
 | `chart-magnet-cursor` | 磁吸游标与滚动码表 Snap Odometer | 折线图横滑自动吸附最近数据点,顶部数值滚动计数器实时平滑联动 | 移动端时序图浏览(已有实现:[charts.md](charts.md) `chart-magnet-cursor` + [number-motion.md](number-motion.md) `num-ticker-partial`) |
 | `sheet-velocity-anchor` | 阻尼弹性抽屉 Bottom Sheet | 底部抽屉橡皮筋跟手,松手按滑动速度投射目标档位吸附,非只取最近静态档 | 多档位底部抽屉(组合语义:[sheet-drawer.md](sheet-drawer.md) `sheet-velocity-dismiss` + `sheet-notch-snap`,速度投射见 [gesture-arbitration.md](../motion-skeletons/gesture-arbitration.md)) |
 | `border-conic-glow` | 动态弥散光晕边框 Conic Glow | conic 渐变描边绕卡片旋转,底部一层呼吸弥散背光同步晕染 | 强调卡、AI 生成内容卡、状态高亮卡 |
-| `stagger-spring-cascade` | 物理弹簧交错流 Stagger Cascade | 列表项按固定间隔依次入场,每项带微弱弹性过冲向上滑入 | 列表/图墙首屏入场(spring 变体;ease-out 基准版见 [scroll-reveal-stagger.md](../motion-skeletons/scroll-reveal-stagger.md)) |
+| `stagger-spring-cascade` | 物理弹簧交错流 Stagger Cascade | 列表项按固定间隔依次入场,每项带微弱弹性过冲向上滑入;纯 CSS 原语 `sibling-index()`:animation-delay: calc(sibling-index() × 单项间隔) 免逐项手写延迟,不支持时 JS 注入 `--sibling-index` 自定义属性双声明降级(降级声明在前);间隔沿用单档 ≤80ms | 列表/图墙首屏入场(spring 变体;ease-out 基准版见 [scroll-reveal-stagger.md](../motion-skeletons/scroll-reveal-stagger.md)) |
 | `press-scale-overshoot` | 弹性微缩触觉反馈 Press Scale | 按压弹性压缩 + 深度内阴影,释放轻微超调回弹 | 主操作按钮、卡片按压(增强档;强制基线见 [micro-interactions.md](micro-interactions.md) `micro-press-scale`) |
 | `panel-explode-layers` | 面板分层爆炸视图 Layered Exploded Panel | 长按面板 3D 侧立(X 52° / Z -28°),四层沿 Z 轴等差推出(0/70/140/210),每层错 6 帧;松手弹簧合拢 | 长按检视堆叠详情(长按判定见 [buttons.md](buttons.md) `press-peek`) |
 | `card-swipe-deck` | 堆叠滑动切换 Swipe Card Stack | 顶层跟手,旋转 = 横向位移 × 0.06°/px;超宽 35% 松手沿手势甩出,下层 +12px 上移从 0.94 放大到 1 补位,被甩张回底层排队 | 卡组循环切换(挂 [buttons.md](buttons.md) `card-stack-pull` + `card-fling`) |
@@ -138,7 +138,7 @@
 | --- | --- | --- | --- |
 | `scroll-sticky-story` | 滚动钉住主图 Sticky Scroll Story | 主图 position: sticky 钉在视口,右侧文字分段滚动;主图缩放与位移随段落进度连续过渡,推近对应部位并亮起主色标记圈 | 产品细节叙事页(scroll-pinned + scroll-scrub-bind 的组合) |
 | `cursor-contextual-morph` | 情境光标 Contextual Cursor | 隐藏系统光标,小圆点缓动跟随;悬停图片放大到 88px 填充主色,淡入文字标签,离开平滑缩回 | 图墙 / 作品集的「查看」入口(micro-cursor-custom 的语义化变体) |
-| `cursor-spotlight-reveal` | 聚光灯跟随 Spotlight | 暗页上以光标为圆心的径向渐变遮罩揭示内容(亮圈约 240-320px,边缘 2-3 档透明度过渡);移动端/触屏禁用(无 hover),reduced-motion 全显不遮 | 暗色作品集、游戏风的探索式首屏(与 `cursor-contextual-morph` 互见:彼条光标变形承载语义,本条遮罩揭示内容) |
+| `cursor-spotlight-reveal` | 聚光灯跟随 Spotlight | 暗页上以光标为圆心的径向渐变遮罩揭示内容(亮圈约 240-320px,边缘 2-3 档透明度过渡);遮罩 stop 尺寸变量须 `@property` 注册(`<length-percentage>`)才可 transition(0.2s ease-in-out 内外圈展开),指针位置变量不注册不过渡(直跟不拖影);mask 层 `pointer-events: none`;底层内容必须键盘可达,遮罩只是增强禁挡正文;移动端/触屏禁用(无 hover),reduced-motion 全显不遮 | 暗色作品集、游戏风的探索式首屏(与 `cursor-contextual-morph` 互见:彼条光标变形承载语义,本条遮罩揭示内容) |
 | `motion-trail-echo` | 运动拖尾 Motion Trail | 元素/光标运动时残影拖尾:记录最近 6-10 帧历史位置,按序缩小降透明度重绘,头实体尾渐隐;canvas 承载只动 transform,装饰档须可跳过 | 创意站光标轨迹、体感图表回放(与 `cursor-contextual-morph` 互见:彼条单光标本体,本条历史残影) |
 | `btn-magnetic-follow` | 磁吸按钮 Magnetic Button | 鼠标进入按钮周围 60px 按偏移倍率跟随,内部图标再叠一层倍率(双层层深);离开弹性回原位 | Hero CTA、圆形图标按钮(micro-interactions Magnetic Button 的参数化命名) |
 | `btn-icon-expand` | 图标展开标签 Expanding Icon Button | 圆形图标按钮悬停宽度 48px→自适应文字宽,保持全圆角;标签延迟 80ms 淡入,相邻按钮同步让位 | 工具排、标注工具条 |
@@ -216,7 +216,8 @@
 | `nav-tab-liquid` | 标签指示条 Elastic Tab Indicator | 切换时前沿先走奔向目标,后沿延后 6 帧追赶,宽度中途拉到 2 倍以上再收回,末端带一次轻微超调 | 分段 / tab 切换(已有实现:[navigation.md](navigation.md) `nav-tab-liquid`) |
 | `btn-stepper-morph` | 按钮变步进器 Add to Stepper | 加入按钮宽 44 弹到 156(弹簧曲线),左侧浮出减号、中间竖向位移滚动数字、右侧保留加号;数量归零反向收回成圆钮,减号与数值透明度跟宽度走 | 数量选择:购物 / 打包清单 |
 | `list-inline-expand` | 列表展开详情 Inline Expand | 选中项高度 88→268 连续过渡,后项跟着位移同距离;详情图 / 文字 / 标签按高度进度分三层依次淡入;展开收起同一条曲线,不跳页不用弹层 | 列表内详情:订单 / 房型 / 邮件 |
-| `card-layout-morph` | 列表切换网格 FLIP Layout Morph | 先记每项切换前后矩形,位移缩放反向补偿,沿带弧度路径缓动到新格位,相邻项错 3 帧;图片比例裁切不挤压,不销毁重建节点 | 列表 ↔ 网格换版式(已有实现:[buttons.md](buttons.md) `card-layout-morph`) |
+| `card-layout-morph` | 列表切换网格 FLIP Layout Morph | 先记每项切换前后矩形,位移缩放反向补偿,沿带弧度路径缓动到新格位,相邻项错 3 帧;图片比例裁切不挤压,不销毁重建节点 | 列表 ↔ 网格换版式(已有实现:[buttons.md](buttons.md) `card-layout-morph`;VT 原生重排见 `list-vt-reflow`) |
+| `list-vt-reflow` | 列表重排转场 View Transition Reflow | 排序/筛选/增删重排:现有节点原子搬运禁重建(`moveBefore` 保焦点/媒体/动画态;Safari 不支持降级 before() 并回焦重捕获),View Transitions 位移动画 `view-transition-name: match-element` 免逐项命名 + `view-transition-class` 组样式一次定义,作用域级 startViewTransition 页面其余可交互、root 组禁用防全页快照;增删以 `:only-child` 判向(新增 ease-out 入/删除 ease-in 出),组动画 ≤400ms;`::view-transition` 设 pointer-events: none 保未转场元素可交互 | 列表/卡片网格/表格排序切换与增删重排(几百项以上或虚拟化列表跳过动画——逐项快照贵;快速连点跳过在飞动画只留终态;播报单条 role="status" 命结果如「按价格升序 24 项」,禁 aria-live 挂列表;与 `card-layout-morph` 互见:彼条 FLIP 换版式,本条 VT 重排) |
 | `nav-collapsing-search` | 顶栏随滚动收起 Collapsing Bar | 滚动进度归一化 0→1 单值驱动:搜索框宽 / 高 / 圆角 / 位置 / 标题字号全是该值的函数,滚到底收成右上角 44 圆形图标;反向连续还原,松手不另起动动画,列表不参与形变 | 长列表页顶栏(同原理兄弟:[navigation.md](navigation.md) `nav-large-title-collapse`) |
 | `menu-circular-reveal` | 菜单铺满全屏 Circular Reveal | 以菜单按钮中心为圆心,clip-path 半径 0 扩到对角线铺满整屏;菜单项等覆盖率过 85% 后每项 4 帧交错进入,关闭半径沿原路收回,底层页面不动不缩放 | 全屏菜单 / 抽屉替代(机制同 [circular-reveal.md](../motion-skeletons/circular-reveal.md) 骨架) |
 

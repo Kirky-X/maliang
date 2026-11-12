@@ -79,6 +79,18 @@ document.getElementById('detail').addEventListener('close', () => {
 - 返回导航(系统返回键/浏览器后退)必须同样走反向 FLIP,禁止只绑关闭按钮
 - 过渡期间屏蔽对详情背景的点击(防中途误触)
 
+## VT 原生路线(View Transitions,吸收自 MWG 转场族)
+
+> 与上方 FLIP 路线并存:有 View Transitions 支持时优先 VT(浏览器代管快照与插值),不支持时降级 FLIP 或直接切换。motion-INDEX §5 已点名 VT 为原生方案,本节补机制细节。
+
+**SPA 同文档转场**:`document.startViewTransition(update)` 包裹 DOM 更新;`view-transition-name` 必须全局唯一——重名 = 整个转场静默跳过直切;列表→详情两法:详情页动态赋名 / 列表项 `.selected` 赋名,`finished` 后清名防后续转场报错;文字元素两端 `width: fit-content` 防快照拉伸,变比例元素 `::view-transition-old/new` 设 `height: 100%`;不支持浏览器直接 updateDOM 并把焦点路由到新视图 heading(`tabindex="-1"`)。
+
+**元素级局部转场**:`element.startViewTransition()` 把转场限定在组件子树——::view-transition 叠层落在组件上,页面其余部分保持可交互,fixed 头/popover 不被遮挡,多组件可并发;子项用 `view-transition-name: match-element` 按 DOM 节点身份自动命名(必须移动节点,禁 innerHTML 重建);`view-transition-scope: all` 防内名外泄;Chrome 147+/Edge 147+ 独占,探测 `'startViewTransition' in Element.prototype`,降级 = 直接更新不动画,**禁降级到 document 级**(会遮 popover/断并发)。
+
+**方向感页面转场**:`startViewTransition({update, types: ['forward'|'backward']})` + `html:active-view-transition-type(forward)` 分支给 old/new(root) 挂不同 slide keyframes(前进出左入右、后退镜像);`::view-transition-group(root)` 统一 400ms 非线性缓动,禁 linear(机械感);reduced-motion `animation: none !important`。
+
+**MPA 跨页转场(吸收自 MWG cross-document-transitions 两篇,稳定性与动画互补合一)**:同源 MPA 导航转场,`@view-transition { navigation: auto }` 双页开启,reduced-motion 时 `navigation: none`;快照稳定性:`blocking="render"`(主题脚本)+ `<link rel="expect" href="#hero" blocking="render">` 阻塞到首屏元素解析,图片另配 preload + 显式尺寸防空快照;组合阻塞超约 4s 浏览器跳过转场(ready reject InvalidStateError);动画:`::view-transition-old/new(root)` 挂 ≤400ms slide keyframes(旧页退 ease-in 出左、新页入 ease-out 进右,「入场禁 ease-in」口径不变);方向类型:静态 `types:` 或 pagereveal 按 `navigation.activation` 动态 `viewTransition.types.add()`,CSS 用 `:active-view-transition-type(next/previous)` 分支,探测 `'onpagereveal' in window`,Navigation API 缺失时回退固定类型;`finished` 后必须清动态命名,否则挡 bfcache;无支持浏览器自然降级普通导航。
+
 ## 失败模式
 
 | 触发条件 | 处理 |

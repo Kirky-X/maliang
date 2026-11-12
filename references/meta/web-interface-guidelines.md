@@ -105,7 +105,7 @@ argument-hint: <file-or-pattern>
 
 - `touch-action: manipulation`(消除双击缩放的延迟)
 - `-webkit-tap-highlight-color` 要刻意设置 —— 关掉它就等于强制每个交互元素都要有显式 `:active` 按压反馈(见下文「手势手感」),否则触控将失去全部反馈
-- `overscroll-behavior` 分两层:根滚动容器只在类 app 外壳里设 `none`,以杀掉下拉刷新劫持(内容页/文档页保持默认);内部滚动容器设 `contain` —— 模态/抽屉/底部面板也算
+- `overscroll-behavior` 分两层:根滚动容器只在类 app 外壳里设 `none`,以杀掉下拉刷新劫持(内容页/文档页保持默认);内部滚动容器设 `contain` —— 模态/抽屉/底部面板也算;模态走 `dialog:modal { overscroll-behavior: contain }` 时 `::backdrop` 默认不是滚动容器,须先 `overflow: hidden`(禁 clip),且禁锁 html/body(见 [`vocabulary/popups.md`](../vocabulary/popups.md) 模态纪律)
 - 绝不用 `touchmove` + `preventDefault` 假造:它挡住原生滚动、强制非被动监听、卡帧
 - 拖拽期间:禁用文本选择,被拖元素加 `inert`
 - `user-select: none` 只用于控件外壳(按钮、标签页、滑块)并配 `-webkit-touch-callout: none`;内容文本(段落、代码、说明)必须保持可选;绝不加在 `body` 上

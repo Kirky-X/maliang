@@ -23,6 +23,7 @@
 | `banner-task-track`       | 常驻任务跟踪条:上传/导出/配送/直播比分等长任务的一瞥式进度条 | 有明确起止;只显示一瞥必需信息;任务即时结束并给完成摘要,驻留一段后自动消失;内容真变化才更新;敏感信息不外显(旁人可见场景) | 进行中任务的持久可视化;通知分级与投放纪律见 [notifications.md](notifications.md) |
 | `popup-toast`             | 即时反馈:纯告知小条,不承载任何交互元素(禁放按钮/链接) | 单次显示 ≤3s;禁止连续弹新 toast 覆盖旧 toast;不遮盖弹出框内容 | 操作结果的轻量告知;需要撤销/重试等动作时升级为 `popup-snackbar` |
 | `popup-snackbar`          | 即时操作:反馈 + 一个轻操作(撤销/重试/查看) | 定时模式 5~10s 自动消失,滑动屏幕即关;常驻模式(登录/权限等重要提示)必须提供关闭按钮 | 反馈之外还要给出口的场景;与 `popup-toast` 的分界=是否带操作 |
+| `popup-anchor-flip` | 浮层钉在触发器旁,出屏自动换边:锚点定位 `position-area` 3×3 逻辑格落位 + `position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline`(逻辑关键词自带 RTL) | `inset: auto` 必须放 @supports 门控内(裸写会把不支持浏览器的 popover 从居中拽到 (0,0));polyfill 不支持隐式锚点与 position-area+fallbacks 组合,须 `anchor()` 写 inset | 下拉/动作面板/富浮层的原生锚定定位(替代 Popper.js 接线;与 [`sheet-drawer.md`](sheet-drawer.md) `popup-anchor-grow` 分界:彼条入场动画,本条定位韧性) |
 
 > 注:`popup-spring-in` 的"翘起 0.24s + 落位 0.66s"为**序列两段值**(合计 0.9s),非单段 transition;单段 transition >400ms 会触发 `validate.py draw-md` 硬门(ERROR,见 [`micro-interactions.md`](micro-interactions.md) 时长预算表注),实现时拆 keyframes 分段或压缩至 400ms 内。
 
@@ -43,8 +44,8 @@
 - **破坏性样式只用于"非本意的破坏"**:清空回收站是用户本意,不用危险色;alert 含破坏项时必配 Cancel 出口
 - **alert 标题**:写清发生了什么/何时/为何,禁"Error 329347";正文只在增值时才写
 - **action sheet 纪律**:禁滚动(按钮多到要滚=设计错误);Cancel 固定底部;破坏性项置顶加危险色;选项务必一屏看全,除 Cancel 外 ≤3 项
-- **popover 纪律**:同时只开一个,禁级联(新 popover 先关旧的);popover 上不得再叠浮层(alert 除外);尺寸只够装内容,箭头指向触发源;非模态 popover 因点外自动关闭前必须保存工作,只有显式 Cancel 才丢弃
-- **模态纪律**:同一时间至多一个模态——先关闭再开新模态(alert 例外可压一切,但也至多一个);模态内保持单一通路,避免"应用中再有应用";必须含子层级时只给一条返回路径,且不放易误认成关闭按钮的控件
+- **popover 纪律**:同时只开一个,禁级联(新 popover 先关旧的);popover 上不得再叠浮层(alert 除外);尺寸只够装内容,箭头指向触发源;非模态 popover 因点外自动关闭前必须保存工作,只有显式 Cancel 才丢弃;箭头随翻转换向——浮层出屏翻转时用 `container-type: anchored` + `@container anchored(fallback: flip-block)` 查询当前落位换向(@supports 门控,不支持直接藏箭头;@container 只及后代,箭头走伪元素/内包裹);声明式接线走 button `commandfor` + `command`(show-popover / hide-popover / toggle-popover,Baseline 2025-12),禁与 popovertarget 同钮混用(双触发),commandForElement 不代管 ARIA 须手动同步 aria-expanded
+- **模态纪律**:同一时间至多一个模态——先关闭再开新模态(alert 例外可压一切,但也至多一个);模态内保持单一通路,避免"应用中再有应用";必须含子层级时只给一条返回路径,且不放易误认成关闭按钮的控件;点遮罩可关走 dialog `closedby="any"` 声明(替代手写 click-outside,Chrome 134+/Firefox 141+,Safari 未支持→click target===dialog + 内容盒坐标判定兜底),必留可见关闭钮;Esc 与平台关闭控件(移动端返回手势/AT dismiss)由 showModal() 内建响应,永远给平台原生关闭路;背景滚动锁死用 `dialog:modal { overscroll-behavior: contain }` 纯 CSS——`::backdrop` 默认不是滚动容器,须先 `overflow: hidden`(禁 clip);**禁锁 html/body**(滚动条消失致横向位移/sticky 破坏/滚动位置跳);Safari 对非溢出容器的 contain 未支持,按渐进增强,不可 @supports 特检(语法恒真)
 - **反馈强度总纲**:传达方式的重要度匹配信息的重要度——状态就近被动展示,只有警告才允许打断;成功确认只留给足够重要的任务(常规成功不打扰);只对"非预期且不可逆"的数据丢失警告,预期内的删除不警告
 - **命令无法执行时**:显式说明原因并给出路,禁止无声置灰了事(文案口径见 [`../meta/content-guide.md`](../meta/content-guide.md))
 - **弹窗按钮 ≥3 个改上下布局**:顺序由左至右改为从下至上(主操作沉底);弹窗宽度可随窗口弹性伸缩,设最大宽度封顶
