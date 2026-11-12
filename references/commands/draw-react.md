@@ -130,11 +130,53 @@ React 运行时挂三个组件源(shadcn/ui · Motif · Astryx,见 [`adapter-con
 - 用户改过组件源码时,以项目内源码为准(契约已知限制承接);
 - Motif 部件混入 shadcn 项目时,导入路径按 registry 安装落点,标注混合来源。
 
+最小示例(视觉值一律语义变量/类,零裸 px/hex;props 以查询结果与项目内源码为准):
+
+```tsx
+// Home.tsx —— 由 draw-react 从 home.md 生成;sources: shadcn
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export function Home() {
+  return (
+    <div className="flex h-full flex-col" style={{ background: "var(--background)" }}>
+      {/* 顶部导航:容器角色交框架原语,视觉走 token */}
+      <header className="flex items-center gap-4 border-b p-4" style={{ borderColor: "var(--border)" }}>
+        <Input placeholder="搜索" className="flex-1" aria-label="搜索" />
+        <Button size="icon" aria-label="搜索"><Search /></Button>
+      </header>
+      {/* 主体区块 */}
+      <main className="flex-1 p-4 text-base" style={{ color: "var(--foreground)" }}>
+        {/* 页面组件经词典与查询映射 */}
+      </main>
+    </div>
+  );
+}
+```
+
 **Astryx(npm 型)**:
 
 - `import { Button } from "@astryxdesign/core"` + 主题包 provider 包裹;
 - token 经 StyleX 变量/主题包映射,不经 Tailwind(混用禁令:不与 Tailwind 系同页);
 - **禁止 swizzle/eject 组件源码到用户项目**(属用户决策,skill 不主动建议)。
+
+最小骨架(组件 props 以实时查询 astryx.atmeta.com 与 `@astryxdesign/cli component --list` 结果为准,此处仅示意导入与 provider 形态):
+
+```tsx
+// Setting.tsx —— 由 draw-react 从 setting.md 生成;sources: astryx
+import { AstryxProvider, Button } from "@astryxdesign/core";
+
+export function Setting() {
+  return (
+    <AstryxProvider theme="neutral">
+      {/* 页面组件:props 经 docs-site 实时查询确认后填充,视觉走主题包 token */}
+      <Button variant="primary">保存</Button>
+    </AstryxProvider>
+  );
+}
+```
 
 ---
 
