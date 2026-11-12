@@ -2,7 +2,7 @@
 
 > 本文件是 `draw-element` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
 > 输入 = `draw-md` 产出的页面级 UI markdown(`.maliang/ui-markdown/` 下),输出 = Element Plus + Vue 3 SFC 实现代码。
-> 组件映射参考 [`framework/element/`](../framework/element/) 下的组件文档。
+> 组件文档查询按 [`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」执行:**官网实时抓取为事实源**;[`framework/element/`](../framework/element/) 快照仅作断网回退源,不建持久缓存。
 > **API 基线**:Element Plus 2.14.6;超基线 API 标 `⚠`,分 `safe to plan around`(可规划,实现附降级写法) / `unsafe to write today`(禁止直写)两级,完整约定见 [`framework/INDEX.md`](../framework/INDEX.md)「API 基线」节。
 
 ---
@@ -33,7 +33,13 @@ flowchart LR
 
 ## 2. 组件映射
 
-逐组件查 [`framework/element/`](../framework/element/) 文档,将逻辑组件映射为 Element Plus 组件:
+逐组件将逻辑组件映射为 Element Plus 组件。组件文档获取按 [`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」走**三级通道**:
+
+1. **官网实时抓取**(事实源)— 按组件源 profile 的 ingest 通道(`docs-site`)抓 Element Plus 官方文档站对应组件页,取用法 + Props/Events/Methods/Slots 表;
+2. **bundled 快照回退** — 实时抓取失败(断网/反爬/页面结构变更)时读 [`framework/element/`](../framework/element/) 快照,并显式报告「本次使用快照,版本以快照基线为准」;
+3. **显式报错 + 组合兜底** — 两级都失败:显式报错(不静默),改用基础组件(button/text/list/layout)组合实现,标注「无原生对应,本方案为组合」。
+
+会话内查询去重:同一任务内以「运行时 × 组件源 × 组件」为键内存去重,任务结束即弃,不落盘、不建持久缓存。
 
 ### 组件映射表
 
@@ -107,10 +113,18 @@ flowchart LR
 
 > 优先使用 CSS 变量(便于主题切换),通过 `<style>` 块的 `:root` 或组件 scoped 样式注入。
 
+### 项目版本探测(必做,先于映射)
+
+读用户项目 `package.json` 中 `element-plus` 的已装版本号,与官网文档对应版本比对:
+
+- 官网文档内容对应版本 ≤ 项目已装版本 → 正常映射;
+- 官网文档内容依赖**高于已装版本**的 API → 按 [`framework/INDEX.md`](../framework/INDEX.md)「超基线 API 两级语义」处理:`⚠ safe to plan around` 附版本/特性检测与降级写法,`⚠ unsafe to write today` 禁止写入产出代码;
+- 项目未装 element-plus(依赖缺失)→ 显式提示用户先安装,不猜测版本继续。
+
 ### 映射步骤
 
 1. 识别组件类型 — 从参数表的组件名推断(如"按钮"→`<el-button>`)
-2. 查框架文档 — 读 `framework/element/<component>/component.md` 获取用法,读 `api.md` 获取属性/事件/方法表
+2. 查组件文档 — 按上方三级通道获取用法与 Props/Events/Methods/Slots 表(先官网实时抓取,失败回退快照并显式报告)
 3. 填充属性 — 将 draw-md 参数表的值(token 引用)映射为 Element Plus 组件 props 与 CSS 变量
 4. 生成代码 — 产出 Vue 3 SFC(`<template>` + `<script setup>` + `<style scoped>`)
 
@@ -160,7 +174,7 @@ flowchart LR
 | -------- | -------- | ---------- |
 | DESIGN.md 缺失关键 token(如无 color.text) | 列出缺失 token 清单,询问用户补全 | 用 `{color-text-primary}` 等标准命名占位,标注"假设值,需 DESIGN.md 确认" |
 | UI markdown 出现裸值(如 `#FF0000` / `14px`) | 提示用户回退 draw-md 重新产出 | 拒绝硬编码,显式标注"需回 draw-md 修复" |
-| `framework/element/` 无对应组件类型 | 在 index.md 索引表查最接近类型 | 用基础组件(button/text/list/layout)组合实现,标注"无原生对应,本方案为组合" |
+| 组件文档三级通道全部失败(官网抓取失败且快照缺失,或无对应组件类型) | 官网实时抓取失败先回退快照并显式报告;快照也没有时在 index.md 索引表查最接近类型 | 显式报错后用基础组件(button/text/list/layout)组合实现,标注"无原生对应,本方案为组合" |
 | Vue 3 SFC 编译报错(如 token 占位符未替换) | 检查 `{token-name}` 是否全部解析 | 标注未解析 token 清单,引导用户回 design-md 确认 |
 
 ---

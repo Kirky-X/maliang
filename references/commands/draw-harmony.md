@@ -2,7 +2,7 @@
 
 > 本文件是 `draw-harmony` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
 > 输入 = `draw-md` 产出的页面级 UI markdown(`.maliang/ui-markdown/` 下),输出 = HarmonyOS ArkTS 框架实现代码。
-> 组件映射参考 [`framework/harmony/`](../framework/harmony/) 下的组件文档。
+> 组件文档按 [`adapter-contract.md`](../framework/adapter-contract.md) 登记:ArkUI 为 **bundled-snapshot 型源**(官网版本页 JS 渲染,程序化抓取已证失败,见 [`INDEX.md`](../framework/INDEX.md)「API 基线」)——**快照为主源,官网仅人工复核通道**;不建持久缓存。
 > **API 基线**:HarmonyOS NEXT 6.0.0(API 20) Release;超基线 API 标 `⚠`,分 `safe to plan around`(可规划,实现附降级写法) / `unsafe to write today`(禁止直写)两级,完整约定见 [`framework/INDEX.md`](../framework/INDEX.md)「API 基线」节。
 
 ---
@@ -33,7 +33,13 @@ flowchart LR
 
 ## 2. 组件映射
 
-逐组件查 [`framework/harmony/`](../framework/harmony/) 文档,将逻辑组件映射为 HarmonyOS ArkTS 组件:
+逐组件将逻辑组件映射为 HarmonyOS ArkTS 组件。ArkUI 按 [`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」走**快照型源通道**:
+
+1. **bundled 快照读取**(主源)— 读 [`framework/harmony/`](../framework/harmony/) 快照取组件用法与 API;
+2. **官网人工复核** — 快照滞后或存疑时,由用户人工访问官方文档复核(**官网版本页 JS 渲染,程序化抓取已证失败,不做自动抓取尝试**,见 [`INDEX.md`](../framework/INDEX.md)「API 基线」节记录);
+3. **显式报错 + 组合兜底** — 快照也无对应类型:显式报错(不静默),改用基础组件(Button/Text/List)组合实现,标注「组合方案」。
+
+快照刷新触发条件:HarmonyOS 基线版本变更时同步重建(见 [`INDEX.md`](../framework/INDEX.md)「API 基线」节)。会话内查询去重:同一任务内以「运行时 × 组件源 × 组件」为键内存去重,任务结束即弃,不落盘、不建持久缓存。
 
 ### 组件映射表
 
@@ -107,10 +113,18 @@ flowchart LR
 
 > 优先使用资源引用(`$r()`),若无资源系统则降级为硬值(从 token.md 解析)。
 
+### 项目版本探测(必做,先于映射)
+
+读用户项目 `oh-package.json5` 与工程 `build-profile.json5`(compatibleSdkVersion)确认目标 API 版本,与快照基线比对:
+
+- 快照基线覆盖目标版本 → 正常映射;
+- 目标 API **高于快照基线** → 按 [`framework/INDEX.md`](../framework/INDEX.md)「超基线 API 两级语义」处理:`⚠ safe to plan around` 附 `canIUse()` 能力检测与降级写法,`⚠ unsafe to write today` 禁止直写;
+- 快照基线滞后于官方已发布基线 → 按 [`INDEX.md`](../framework/INDEX.md)「API 基线」节「HarmonyOS 待人工复核」流程人工复核后上调,不做程序化抓取。
+
 ### 映射步骤
 
 1. 识别组件类型 — 从参数表的组件名推断(如"按钮"→Button)
-2. 查框架文档 — 读 `framework/harmony/<component>/component.md` 获取 API,读 `usage.md` 获取用法示例
+2. 查组件文档 — 按上方快照型源通道读取用法与 API(快照为主源,官网仅人工复核)
 3. 填充属性 — 将 draw-md 参数表的值(token 引用)映射为 ArkTS 属性调用
 4. 生成代码 — 产出 `@Component` struct,含 `build()` 方法
 
@@ -158,7 +172,7 @@ flowchart LR
 | -------- | -------- | ---------- |
 | DESIGN.md 缺失关键 token(如无 color.text) | 列出缺失 token 清单,询问用户补全 | 用 `{color-text-primary}` 等标准命名占位,标注"假设值,需 DESIGN.md 确认" |
 | UI markdown 缺少 token 引用(裸值) | 提示具体偏差(哪些值未引用 token) | 用 DESIGN.md 中的 token 替换裸值,标注"自动补全,需确认" |
-| 组件无对应 ArkTS 组件文档(framework/harmony/ 无对应类型) | 在 index.md 索引表查最接近类型 | 用基础组件(Button/Text/List)组合实现,标注"组合方案" |
+| 快照无对应 ArkTS 组件类型(官网程序化抓取不适用) | 在 index.md 索引表查最接近类型;快照滞后走官网人工复核 | 显式报错后用基础组件(Button/Text/List)组合实现,标注"组合方案" |
 | ArkTS 代码编译报错(@Component 装饰器/状态管理错误) | 提示具体编译错误及修复方向 | 引导用户简化 UI markdown(移除复杂组件)后重试 |
 
 ---

@@ -17,15 +17,15 @@
 | `component` | 设计 | 单个组件 brief（做个按钮 / 单个输入框 / toast 等单元素，8 状态硬门），走组件流程替代 draw-md 页面机制 |
 | `explore` | 定义 | 方向未定时多方案发散-比较-收敛：实体化 3–5 个真不同方案 → preview 渲染比较 → 选定胜者（见 [explore.md](references/commands/explore.md)） |
 | `draw-md` | 设计 | 从 DESIGN.md 产出页面级硬 token UI markdown（颜色/字体/间距全引用 token） |
-| `preview` | 验证 | Element Plus + iOS/Android 设备外壳实时预览 |
+| `preview` | 验证 | Element Plus / React（shadcn·Motif·Astryx）+ iOS/Android 设备外壳实时预览 |
 | `critique` | 验证 | Nielsen 10 启发式 0–4 评分 + persona 走查 + 认知负荷清单，产出评分快照/趋势/backlog |
-| `draw-harmony` / `draw-flutter` / `draw-element` | 实现 | 转换为 HarmonyOS(ArkTS) / Flutter(Dart) / Element Plus(Vue 3) 框架代码 |
+| `draw-harmony` / `draw-flutter` / `draw-element` | 实现 | 转换为 HarmonyOS(ArkTS) / Flutter(Dart) / Element Plus(Vue 3) 框架代码；组件文档按适配器契约实时抓官网（快照仅回退） |
 | `ui-graph` | 交付 | UI 关系图（层级 + 跳转 + 哈希基线 + 实现映射），变更追踪与实现缺口查询 |
 | `ip` / `ip-handbook` | 交付 | IP 形象生成（API 优先，fallback prompt）/ IP 视觉手册（8 模块，2K 3:4） |
 
 - **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 30 篇组件命名词汇（含 149 项中英术语对照：词典 80 项 + 词典外 69 项，中文说法→英文术语→库内模式路由）+ 九维规范（色/字/图/距/角/线/布局/对齐/海拔）
 - **区段原型库**：[`references/components/`](references/components/INDEX.md)（51 个区段原型 + 索引——**从索引挑名、只加载选中的那几个**，典型一次构建 5-7 个文件：1 hero + 1 区段头 + 1-2 主体区段 + 1 CTA + 1 页脚 + 1 导航；区段原型管「这段长成什么」，元素级外观仍在 `references/vocabulary/`）
-- **三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
+- **框架适配器契约**：[`references/framework/adapter-contract.md`](references/framework/adapter-contract.md)——运行时 × 组件源两层结构（React 生态 shadcn/ui · Motif · Astryx 已登记）+ 组件文档官网实时抓取为事实源（不建持久缓存，快照仅回退，ArkUI 为快照型主源）+ 组件源由用户强制指定；**三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **craft 纪律与评审**：[`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Web 界面规则快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)，critique 的 UI 合规/a11y 清单读取该快照
 - **脚本验证层**：`validate.py draw-md`（23 项检查）、`preview.py check`（51/143 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（9 子命令，含 check-sync 规格↔实现同步判定与 token-usage 波及分析）、`validate.py generated`（生成码校验 + G46 注入面扫描）、`ci-gate.sh` 统一入口——纯 Python 标准库
 - **第二批验证脚本**（同标准库）：`verify.py color-fidelity`（重建 vs 参考图 ΔE 保真门）、`verify.py measure-colors`（图片确定性测色）、`verify.py palette-solver`（OKLCH 亮度求解 + 配对矩阵）、`verify.py assets`（资产位在场验证）、`audit.py fingerprint`（重审计源码指纹）、`audit.py structure-history`（轮换重复 / 热轴 / 盖章真伪）、`audit.py copy`（句型级反模板）
@@ -104,7 +104,7 @@ maliang/
 │   │                        #   + source-hygiene.md（来源卫生）/ visual-symptoms.md（症状诊断）
 │   ├── interface-design/    # 原 craft 方法集 并入（craft 纪律 / 严格评审）
 │   ├── dimensions/          # 九维规范 + 调色板库 + 液态玻璃配方
-│   ├── framework/           # 56 类组件 × 三框架文档（harmony / flutter / element）
+│   ├── framework/           # 适配器契约 adapter-contract.md + 两级选型表 + 56 类组件 × 三框架文档（harmony / flutter / element）
 │   ├── components/          # 区段原型库：51 个原型 + INDEX.md（从索引挑名、只加载选中的那几个）
 │   ├── templates/           # 模板墙：14 种设计语言 + 整页模式 + 落地页编排
 │   ├── vocabulary/          # 30 篇组件命名词汇（含 pro-motion 专业交互、chat 对话消息、149 项中英术语对照）

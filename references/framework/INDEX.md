@@ -1,11 +1,11 @@
 # 框架资源总览
 
-> 本文件是 `references/framework/` 分层框架文档数据库的入口,为 `draw-harmony` / `draw-flutter` / `draw-element` 三个子命令提供组件映射参考。
+> 本文件是 `references/framework/` 分层框架文档数据库的入口,为 `draw-harmony` / `draw-flutter` / `draw-element` 三个子命令提供组件映射参考;接入契约与实时查询语义见 [adapter-contract.md](./adapter-contract.md)。
 > 每个框架下按组件类型组织(共 56 类,3 现有 + 53 新增),每类组件含两份文档(文件名遵循各框架生态术语惯例)。
 > **选型判据层**:[`component-routing.md`](./component-routing.md) 按「区块要做什么」给推荐组件组合 + 反模式,draw-md 步骤 2.6 逐区块过表——本文件管「组件类有哪些文档」,选哪个组合先看路由表。
 > 部分组件在某框架无原生对应时,以 N/A 占位文件说明缺失原因与替代方案,保持目录结构对称。
 > **API 基线**:HarmonyOS NEXT 6.0.0(API 20) / Flutter 3.47.5(stable) / Element Plus 2.14.6;超基线 API 标 `⚠`,分 `safe to plan around` / `unsafe to write today` 两级并附降级写法,详见下文「API 基线」节。
-> **Element Plus 组件事实双源协调(2026-10)**:若运行环境已安装 element-dev skill,其 qdrant 知识库为 EP 组件 API **查询**场景的优先事实源(时效更新);本仓 `framework/element/` 快照仅服务 draw-element 的**生成**映射。快照刷新触发条件:EP 基线版本变更时同步重建两源(以本节基线为准)。
+> **事实源与回退(2026-11,取代 2026-10 EP 双源协调注记)**:组件文档以**官网实时抓取**为事实源(按 [adapter-contract.md](./adapter-contract.md) 各组件源 ingest 通道);本仓 `framework/` 快照降级为**回退源**——仅官网程序化抓取失败的框架(当前 ArkUI,见「API 基线」节)以快照为主源,其余框架仅断网兜底,快照缺失则跳过本级并显式报告。element-dev 边界不变:运行时报错与 API 深查询走 element-dev,maliang 只做生成期映射查询。不建持久缓存:查询结果仅会话内按查询键内存去重(契约见 [adapter-contract.md](./adapter-contract.md)「查询契约」)。快照刷新触发条件保持:各框架基线版本变更时同步重建(以本节基线为准)。
 
 ---
 
@@ -154,15 +154,61 @@
 
 ---
 
-## 框架选型指南
+## 运行时 × 组件源两级选型表
 
-| 场景 | 推荐框架 | 理由 |
-| ---- | -------- | ---- |
-| 项目已有前端代码库 / 团队技术栈 | 跟随现有栈 | draw-md 产物端无关,共享同一份 DESIGN.md token;迁移成本高于一切场景收益 |
-| HarmonyOS 原生应用 | HarmonyOS(ArkTS) | 华为生态原生支持,ArkTS 声明式 UI 性能最优 |
-| 跨平台移动应用(iOS/Android) | Flutter | 单代码库跨平台,Skia 渲染性能接近原生 |
-| Web 后台管理系统 | Element Plus | Vue 3 生态成熟,组件丰富,中文文档完善 |
-| 需要同时支持移动+Web | Flutter(移动)+ Element Plus(Web) | 分端实现,共享 design token 保证视觉一致 |
+> **选型权在用户**:下表只呈现候选与适用场景,skill 只提醒"哪个更优",不锁定(契约见 [adapter-contract.md](./adapter-contract.md)「用户强制指定门」)。draw-* 遇未指定组件源时:探测项目栈 → 按本表呈现候选(已装排前) → 用户指定 → 回写 DESIGN.md 决策账本。
+
+### 第一级·运行时
+
+| 运行时 | 判据(用户项目信号) |
+| ------ | ------------------ |
+| react | package.json 含 react(或 Next.js/Remix/Astro/Vite 等框架壳) |
+| vue | package.json 含 vue |
+| arkts | ArkTS 工程结构(oh-package.json5 / module.json5) |
+| flutter | pubspec.yaml 存在 |
+
+### 第二级·组件源
+
+React 生态三源详表:
+
+| | shadcn/ui | Motif | Astryx |
+| ---- | --------- | ----- | ------ |
+| 形态 | 复制粘贴组件集(源码进项目) | shadcn 第三方 registry,专项部件集 | npm 设计系统(React 19 + StyleX) |
+| ingest 通道 | registry-json(官方 registry JSON) | registry-json(llms.txt + 任意 URL 加 .md) | docs-site(astryx.atmeta.com + Storybook) |
+| 最适合 | 需要自定义设计的简洁 Web 应用 / 后台管理页;要持有并修改组件源码 | Agent/AI 产品界面:对话流、agent 运行块、生成式媒体控件;给已有 shadcn 项目补件 | 要完整设计系统(foundations + components + patterns + 7 主题包)与 npm 正式依赖的 React 新项目 |
+| 慎用 | 密集企业级复杂组件(高级表格/树表需另配 TanStack 等) | 当通用后台全量库用(它是专项集,不是全量库) | Beta 成熟度;StyleX 生态小、第三方插件少 |
+| 风险标记 | 源码自持,升级靠手动 diff | 无版本锚点,内容会漂移 | Beta |
+| token 契合度 | 高(CSS 变量 + Tailwind) | 高(官方明说沿用 shadcn 主题 token) | 中(StyleX 变量 + 主题包) |
+
+六源全景速查:
+
+| 组件源 | 运行时 | ingest 通道 | 一句话适用 |
+| ------ | ------ | ----------- | ---------- |
+| ArkUI/ArkTS | arkts | bundled-snapshot(官网 JS 渲染抓取已证失败,见「API 基线」) | 鸿蒙原生应用,唯一源 |
+| Flutter(Material/Cupertino) | flutter | docs-site | 跨平台移动,自绘引擎视觉一致性最高 |
+| Element Plus | vue | docs-site(bundled 快照回退) | Web 后台管理,企业密集组件最全,中文文档完善 |
+| shadcn/ui | react | registry-json | 需要自定义设计的简洁 Web 应用 / 管理页 |
+| Motif | react | registry-json | Agent/AI 产品界面专项部件 |
+| Astryx | react | docs-site | 要完整设计系统 + npm 依赖的 React 新项目(Beta) |
+
+混用规则:
+
+| 组合 | 结论 |
+| ---- | ---- |
+| shadcn/ui + Motif | 可混(同一 token 体系;registry 依赖自动带入)。主源缺件经用户确认后补齐,产出标注混合来源 |
+| Astryx + Tailwind 系(shadcn/Motif) | 不可混(StyleX 与 Tailwind 两套样式引擎,同页冲突) |
+
+## 新增框架接入流程
+
+新运行时或新组件源一律**实时查询、不预写快照**——接入 = 登记一份组件源 profile,禁止为新框架手写全套组件文档。快照仅为官网程序化抓取失败的框架保留(当前 ArkUI)。
+
+1. 按 [adapter-contract.md](./adapter-contract.md) 契约 8 字段新建组件源 profile(在 adapter-contract.md「两层结构」实例表登记,8 字段落全);
+2. 更新本文件「运行时 × 组件源两级选型表」(速查表加一行;React 系新源另补详表列);
+3. 登记「组件词典」:统一 slug ↔ 框架原生名(原生名不一致类先按「命名 slug 统一约定」登记 slug);
+4. 确认 preview 通道:react 系源 → `react` 模板;全新运行时需先扩 `scripts/preview.py` 模板注册表;
+5. **不建**组件类型索引表列——组件清单以 profile 组件词典 + 官方组件列表实时抓取为准;
+6. 核对对应 draw-* 命令文档失败模式表的三级回退适用性(官网实时抓 → 快照回退 → 组合兜底);
+7. 「文档维护规范」的「新增组件流程」仅适用于 bundled-snapshot 型源;实时型源新增组件类 = 更新 profile 组件词典。
 
 ---
 

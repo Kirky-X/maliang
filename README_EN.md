@@ -17,15 +17,15 @@ English | [中文](README.md)
 | `component` | Design | Single-component brief (a button / a single input / toast and the like, 8-state hard gate), component flow instead of draw-md's page machinery |
 | `explore` | Define | When direction is undecided: diverge 3–5 genuinely different options → compare via preview renders → commit to the winner (see [explore.md](references/commands/explore.md)) |
 | `draw-md` | Design | Produce page-level hard-token UI markdown from DESIGN.md (colors/fonts/spacing all token-referenced) |
-| `preview` | Verify | Live preview with Element Plus inside iOS/Android device shells |
+| `preview` | Verify | Live preview with Element Plus / React (shadcn·Motif·Astryx) inside iOS/Android device shells |
 | `critique` | Verify | Nielsen 10 heuristics scored 0–4 + persona walkthrough + cognitive-load checklist; emits score snapshots/trends/backlog |
-| `draw-harmony` / `draw-flutter` / `draw-element` | Implement | Convert to HarmonyOS(ArkTS) / Flutter(Dart) / Element Plus(Vue 3) framework code |
+| `draw-harmony` / `draw-flutter` / `draw-element` | Implement | Convert to HarmonyOS(ArkTS) / Flutter(Dart) / Element Plus(Vue 3) framework code; component docs fetched live from official sites per the adapter contract (snapshots are fallback only) |
 | `ui-graph` | Deliver | UI relationship graph (hierarchy + navigation + hash baseline + implementation map), change tracking and implementation-gap queries |
 | `ip` / `ip-handbook` | Deliver | IP character generation (API first, prompt fallback) / IP visual handbook (8 modules, 2K 3:4) |
 
 - **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 30 component-naming vocabulary docs (incl. a 149-entry Chinese–English term glossary — 80 dictionary + 69 supplemental — routing Chinese phrasing → English term → library pattern) + nine dimension specs (color / type / icon / spacing / radius / border / layout / alignment / elevation)
 - **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (51 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
-- **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
+- **Framework adapter contract**: [`references/framework/adapter-contract.md`](references/framework/adapter-contract.md) — two-layer runtime × component-source structure (React ecosystem shadcn/ui · Motif · Astryx registered) + component docs fetched live from official sites as source of truth (no persistent cache; snapshots are fallback only, ArkUI is snapshot-primary) + component source mandated by the user; **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Craft discipline & review**: [`references/interface-design/`](references/interface-design/) (product UI craft discipline, strict review, de-slop flow); Web interface rules snapshot in [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md), read by critique UI/a11y checklists
 - **Script verification layer**: `validate.py draw-md` (23 checks), `preview.py check` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (9 subcommands, incl. check-sync spec↔implementation sync and token-usage impact analysis), `validate.py generated` (generated-code checks + G46 injection-surface scan), `ci-gate.sh` unified entry — pure Python standard library
 - **Second-batch verification scripts** (same standard library): `verify.py color-fidelity` (rebuild-vs-reference ΔE fidelity gate), `verify.py measure-colors` (deterministic image color measurement), `verify.py palette-solver` (OKLCH brightness solver + pairing matrix), `verify.py assets` (asset-slot presence check), `audit.py fingerprint` (source fingerprint for re-audits), `audit.py structure-history` (rotation repeats / hot axis / stamp truth), `audit.py copy` (template-phrase scanner)
@@ -104,7 +104,7 @@ maliang/
 │   │                        #   + source-hygiene.md (source hygiene) / visual-symptoms.md (symptom diagnosis)
 │   ├── interface-design/    # merged from the former craft 方法集 (craft discipline / strict review)
 │   ├── dimensions/          # nine dimension specs + palette library + liquid-glass recipes
-│   ├── framework/           # 56 component classes × three frameworks (harmony / flutter / element)
+│   ├── framework/           # adapter contract adapter-contract.md + two-level selection table + 56 component classes × three frameworks (harmony / flutter / element)
 │   ├── components/          # section-archetype library: 51 prototypes + INDEX.md (pick from the index, load only what you pick)
 │   ├── templates/           # template wall: 14 design languages + full-page patterns + landing-page orchestration
 │   ├── vocabulary/          # 30 component-naming vocabulary docs (incl. pro-motion, chat, 149-entry Chinese–English term glossary)

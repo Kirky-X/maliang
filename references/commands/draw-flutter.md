@@ -2,7 +2,7 @@
 
 > 本文件是 `draw-flutter` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
 > 输入 = `draw-md` 产出的页面级 UI markdown(`.maliang/ui-markdown/` 下),输出 = Flutter Dart 框架实现代码。
-> 组件映射参考 [`framework/flutter/`](../framework/flutter/) 下的组件文档。
+> 组件文档查询按 [`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」执行:**官网实时抓取为事实源**(api.flutter.dev 对应 widget 页 + releases JSON 基线);[`framework/flutter/`](../framework/flutter/) 快照仅作断网回退源,不建持久缓存。
 > **API 基线**:Flutter 3.47.5(stable 通道);超基线 API 标 `⚠`,分 `safe to plan around`(可规划,实现附降级写法) / `unsafe to write today`(禁止直写)两级,完整约定见 [`framework/INDEX.md`](../framework/INDEX.md)「API 基线」节。
 
 ---
@@ -33,7 +33,13 @@ flowchart LR
 
 ## 2. 组件映射
 
-逐组件查 [`framework/flutter/`](../framework/flutter/) 文档,将逻辑组件映射为 Flutter Widget:
+逐组件将逻辑组件映射为 Flutter Widget。组件文档获取按 [`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」走**三级通道**:
+
+1. **官网实时抓取**(事实源)— 按组件源 profile 的 ingest 通道(`docs-site`)抓 api.flutter.dev 对应 widget 页与 Flutter 官方 releases JSON,取用法与属性表;
+2. **bundled 快照回退** — 实时抓取失败(断网/反爬/页面结构变更)时读 [`framework/flutter/`](../framework/flutter/) 快照,并显式报告「本次使用快照,版本以快照基线为准」;
+3. **显式报错 + 组合兜底** — 两级都失败:显式报错(不静默),改用基础 Widget(Text/ElevatedButton/ListView)组合实现,标注「组合方案」。
+
+会话内查询去重:同一任务内以「运行时 × 组件源 × 组件」为键内存去重,任务结束即弃,不落盘、不建持久缓存。
 
 ### 组件映射表
 
@@ -107,10 +113,18 @@ flowchart LR
 
 > 优先使用 `ThemeData` 集中管理 token,若无主题系统则降级为硬值(从 token.md 解析)。
 
+### 项目版本探测(必做,先于映射)
+
+读用户项目 `pubspec.yaml`(`environment: sdk` 约束)与已装 Flutter SDK 版本(`flutter --version`),与官网文档对应版本比对:
+
+- 官网文档内容对应版本 ≤ 已装 SDK 版本 → 正常映射;
+- 官网文档内容依赖**高于已装 SDK** 的 API → 按 [`framework/INDEX.md`](../framework/INDEX.md)「超基线 API 两级语义」处理:`⚠ safe to plan around` 附平台/版本分支与降级写法,`⚠ unsafe to write today` 禁止写入产出代码(含禁止 pin 未稳定 channel);
+- Flutter SDK 未安装或 pubspec 约束与已装 SDK 冲突 → 显式提示用户,不猜测版本继续。
+
 ### 映射步骤
 
 1. 识别组件类型 — 从参数表的组件名推断(如"按钮"→ElevatedButton/TextButton)
-2. 查框架文档 — 读 `framework/flutter/<component>/widget.md` 获取 Widget 定义,读 `properties.md` 获取属性表
+2. 查组件文档 — 按上方三级通道获取用法与属性表(先官网实时抓取,失败回退快照并显式报告)
 3. 填充属性 — 将 draw-md 参数表的值(token 引用)映射为 Flutter Widget 属性
 4. 生成代码 — 产出 `StatelessWidget` 或 `StatefulWidget`,含 `build()` 方法
 
@@ -159,7 +173,7 @@ flowchart LR
 | -------- | -------- | ---------- |
 | DESIGN.md 缺失关键 token(如无 color.text) | 列出缺失 token 清单,询问用户补全 | 用 `{color-text-primary}` 等标准命名占位,标注"假设值,需 DESIGN.md 确认" |
 | UI markdown 缺少 token 引用(裸值) | 提示具体偏差(哪些值未引用 token) | 用 DESIGN.md 中的 token 替换裸值,标注"自动补全,需确认" |
-| 组件无对应 Flutter Widget 文档(framework/flutter/ 无对应类型) | 在 index.md 索引表查最接近类型 | 用基础 Widget(Text/ElevatedButton/ListView)组合实现,标注"组合方案" |
+| 组件文档三级通道全部失败(官网抓取失败且快照缺失,或无对应 Widget 类型) | 官网实时抓取失败先回退快照并显式报告;快照也没有时在 index.md 索引表查最接近类型 | 显式报错后用基础 Widget(Text/ElevatedButton/ListView)组合实现,标注"组合方案" |
 | Flutter 代码编译报错(Widget 嵌套/类型错误) | 提示具体编译错误及修复方向 | 引导用户简化 UI markdown(移除复杂组件)后重试 |
 
 ---

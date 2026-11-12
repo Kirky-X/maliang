@@ -237,6 +237,17 @@ FRAMEWORK_PREFIXES = (
     ("n-", ("naive-ui", "naiveui")),
 )
 
+# React 通道(Tailwind Play CDN)标记:工具类由运行时生成,静态孤儿类比对不适用。
+# shadcn/Motif 主题变量(--background 等)在模板 :root 显式定义,非 CDN 运行时产物,
+# 正常参与 5.6 比对,不在此豁免。
+TAILWIND_CDN_MARKERS = ("cdn.tailwindcss.com", "tailwindcss.com")
+
+
+def _has_tailwind_cdn(text):
+    """检测 React 通道模板是否加载 Tailwind Play CDN。"""
+    lower = text.lower()
+    return any(marker in lower for marker in TAILWIND_CDN_MARKERS)
+
 
 def _detected_framework_prefixes(text):
     """返回当前文件加载的框架 CDN 对应的类/变量前缀集合。"""
@@ -883,6 +894,15 @@ def check_5_6_css_orphans(text, fname):
     used = collect_used_classes(text)
     framework_prefixes = _detected_framework_prefixes(text)
     reported = set()
+
+    if _has_tailwind_cdn(text):
+        # React 通道:Tailwind Play CDN 运行时生成工具类,静态比对必然全量误报。
+        # 显式跳过并报 WARN(不算通过也不算失败),由会话纪律的未测量清单承接。
+        return [_r(
+            "WARN", 1, "css.orphan-class",
+            "检测到 Tailwind Play CDN:工具类由运行时生成,静态孤儿类比对不适用,"
+            "本项检查已显式跳过(checklist §5.6,列入未测量清单)",
+        )]
 
     for raw_block in STYLE_BLOCK_RE.findall(text):
         block_start = text.find(raw_block)

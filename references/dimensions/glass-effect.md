@@ -178,6 +178,25 @@
 
 降级:`@supports not (backdrop-filter: blur(20px)) { .glass { background: rgba(255,255,255,0.9); } }`。
 
+## 10. 效果 → 组件参数退化(接入框架组件时)
+
+> 液态玻璃作为设计效果落入**框架组件**时,按 [`../framework/adapter-contract.md`](../framework/adapter-contract.md)「token 注入点」字段退化为该框架的组件参数描述。上方 §1-§5 的 Web 配方仅在自绘 HTML/容器层使用。退化顺序:优先框架原生参数 → 主题/样式注入点 → 参数描述;禁止为玻璃感手搓原语组件(复用阶梯级 3 是最后手段,见 [`../framework/INDEX.md`](../framework/INDEX.md))。
+
+### 三要素 × 三框架参数对应
+
+| 玻璃要素 | Element Plus(Vue 3) | Flutter | ArkUI |
+| -------- | ------------------- | ------- | ----- |
+| blur(背景模糊) | 组件无原生 blur prop → 经 CSS 变量注入容器层(`backdrop-filter` 半透明变量) | `BackdropFilter` + `ImageFilter.blur(sigma)` 包裹组件 | `.backgroundBlurStyle(BlurStyle)` 组件属性 |
+| opacity(半透明底) | 组件背景色 CSS 变量(`--el-bg-color-*` / `--el-fill-color-*`)取半透明 token 值 | `colorScheme.surface` + alpha(`withOpacity`) | `.backgroundColor(半透明资源色)` |
+| background(材质底色) | CSS 变量覆盖组件背景 | `ThemeData.colorScheme.surface` + `surfaceTintColor` | 材质背景属性(`foregroundMaterialStyle` 等) |
+
+### 退化规则(按序执行)
+
+1. 组件有**原生**玻璃/模糊参数(如 ArkUI `backgroundBlurStyle`)→ 直接参数化,值用 `{token-name}` 引用;
+2. 组件无原生参数但有**主题/样式注入点**(如 EP CSS 变量、Flutter `ThemeData`)→ 经注入点表达,不 inline 覆盖组件内部结构;
+3. 两者皆无 → 退化为**参数描述**写入 draw-md 组件参数表(blur 半径 token、透明度 token、背景色 token 三条),由实现层按 §1 配方在容器层实现;
+4. 任何退化路径都遵守 §8 性能预算与 §7 禁止场景;参数值一律 `{token-name}` 引用(命名按 [`token.md`](../meta/token.md)),禁止裸 px/hex。
+
 ## 与其他文档的关系
 
 - **真实折射/物理参数模型**见 [`glass-advanced.md`](./glass-advanced.md)(SVG + WebGL 双引擎,本文件为基础配方的进阶升级路径)
@@ -185,3 +204,4 @@
 - 无障碍降级见 [`accessibility.md`](../meta/accessibility.md) 第 4 节 prefers-reduced-transparency
 - 暗色模式规则见 [`color.md`](./color.md) 第 5 节
 - z-index 取值见 [`token.md`](../meta/token.md) z-index category
+- **效果 → 组件参数退化**(接入框架组件时)见本文件 §10 与 [`../framework/adapter-contract.md`](../framework/adapter-contract.md)「token 注入点」

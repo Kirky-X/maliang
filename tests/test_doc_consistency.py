@@ -13,6 +13,10 @@ BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 CHECKLIST = os.path.join(BASE, "references", "commands", "preview-checklist.md")
 PREVIEW_MD = os.path.join(BASE, "references", "commands", "preview.md")
 PC_SCRIPT = os.path.join(BASE, "scripts", "preview.py")  # check 节(原 preview-check.py)
+ADAPTER_CONTRACT = os.path.join(BASE, "references", "framework", "adapter-contract.md")
+FRAMEWORK_INDEX = os.path.join(BASE, "references", "framework", "INDEX.md")
+COMPONENT_ROUTING = os.path.join(BASE, "references", "framework", "component-routing.md")
+GLASS_EFFECT = os.path.join(BASE, "references", "dimensions", "glass-effect.md")
 
 SCRIPTED = 51
 
@@ -57,6 +61,41 @@ class TestCoverageCounts(unittest.TestCase):
         checklist = _read(CHECKLIST)
         self.assertNotIn("duration ≤ 600ms", checklist,
                          "入场时长口径须与脚本 400ms 硬门一致(分层长动效见 micro-interactions)")
+
+
+class TestFrameworkAdapterDocs(unittest.TestCase):
+    """framework-adapter-live-query 变更产物在场守护:删除文档或关键节即失败。"""
+
+    def test_adapter_contract_exists_with_key_enums(self):
+        text = _read(ADAPTER_CONTRACT)
+        for token in ("registry-json", "docs-site", "bundled-snapshot",
+                      "npm-package", "copy-paste", "用户强制指定门",
+                      "查询契约", "不建持久缓存"):
+            self.assertIn(token, text, "adapter-contract.md 缺少关键字段: %s" % token)
+
+    def test_framework_index_has_two_level_selection_and_onboarding(self):
+        text = _read(FRAMEWORK_INDEX)
+        for token in ("运行时 × 组件源两级选型表", "新增框架接入流程",
+                      "shadcn/ui", "Motif", "Astryx", "混用规则",
+                      "adapter-contract.md"):
+            self.assertIn(token, text, "framework/INDEX.md 缺少新选型层: %s" % token)
+        self.assertNotIn("## 框架选型指南", text,
+                         "旧单级「框架选型指南」节应已被两级选型表取代")
+
+    def test_routing_has_recipe_section(self):
+        text = _read(COMPONENT_ROUTING)
+        for token in ("复合组件配方", "search-box", "配方 schema"):
+            self.assertIn(token, text, "component-routing.md 缺少配方层: %s" % token)
+
+    def test_glass_effect_has_degradation_section(self):
+        text = _read(GLASS_EFFECT)
+        self.assertIn("效果 → 组件参数退化", text, "glass-effect.md 缺少退化节")
+        self.assertIn("adapter-contract.md", text, "退化节未链接适配器契约")
+
+    def test_preview_md_documents_react_channel(self):
+        text = _read(PREVIEW_MD)
+        self.assertIn("React 通道", text, "preview.md 缺少 React 通道说明")
+        self.assertIn("cdn.tailwindcss.com", text, "preview.md React 骨架缺 Tailwind CDN")
 
 
 if __name__ == "__main__":

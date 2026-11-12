@@ -85,3 +85,42 @@
 - **图表特殊路径**:图表不是组件类,一律经 frontmatter `pattern: chart-*` 声明(见 draw-md「模式引用(`pattern:` 字段)」),`table`/`statistic` 等只做数值承载。
 - **vocabulary 词汇不进 slug 列**:区块级模式(如 `search-bar`、`table-sortable`)走 `pattern:` 字段,本表推荐列只收组件类。
 - **icon 资产选型不在本表**:组件类 `icon` 只声明「有图标位」;用哪个图标库、哪个具体图标资产,按 [`../dimensions/icon.md`](../dimensions/icon.md) 走 xizhi skill 路由,本表不复述其 API(防双处维护)。
+
+---
+
+## 复合组件配方
+
+> **分工**:vocabulary 的 `pattern: search-bar` 等 `pattern:` 字段管**命名**(区块叫什么);本节管**零件**(该区块由哪些组件类/原语拼成、逐框架映射到什么组件)。复合组件配方指**有原生组件可用**的组合;「框架无原生对应」的组合方案在 [INDEX.md](./INDEX.md)「N/A 占位说明」体系内,两者不混。
+> 组件源 profile 与查询契约见 [adapter-contract.md](./adapter-contract.md);实时型源的逐框架映射以查询结果为准,本表只登记组件类角色与已知落点。
+
+### 配方 schema
+
+| 要素 | 说明 |
+| ---- | ---- |
+| 名称 | 配方 slug(kebab-case,与 vocabulary 命名对齐) |
+| 角色分解 | 组成零件清单:每个角色 = 一个组件类(取自 [INDEX.md](./INDEX.md) 56 类)或框架原语 |
+| 逐框架组件映射 | 每个运行时/组件源下,各角色落到的具体组件(bundled 源指向 framework/ 对应文档;实时型源指向组件源 profile 词典,以查询结果为准) |
+| token 锚点 | 视觉值(尺寸/间距/圆角/颜色)一律 `{token-name}` 引用,命名按 [`../meta/token.md`](../meta/token.md),以项目 DESIGN.md 为准;禁止裸值 |
+| 反模式 | 已知的错误拼法及原因 |
+
+角色可被单组件吸收(如框架 input 组件自带容器与图标槽);吸收时该角色不单独落组件,映射表标注「吸收」。新增配方 = 本节追加一条(schema 五要素齐全),不另建文件。
+
+### 首例:`search-box`(搜索框)
+
+需求形态:矩形容器 + 单行输入 + 前置搜索图标,可带清除与提交动作。
+
+| 角色 | 组件类 | react(shadcn 通道) | vue(Element Plus) | flutter | arkts |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 容器 | `layout` | 带定位的容器(div/Card,承载 icon 绝对定位) | 吸收(el-input 内建容器) | 吸收(TextField 自带容器) | 吸收(Row + TextInput 容器) |
+| 输入框 | `input` | Input | el-input | TextField | TextInput |
+| 图标 | `icon` | lucide Search 图标(资产路由走 xizhi) | el-icon(prefix 槽) | prefixIcon | SymbolGlyph/内置搜索图标 |
+
+token 锚点:容器内边距、图标尺寸、边框与圆角、占位文案色一律 `{token-name}` 引用(具体语义 token 名以项目 DESIGN.md 为准,不在本表固化,防双处维护)。
+
+反模式:
+
+| 禁止 | 原因 | 正确做法 |
+| ---- | ---- | -------- |
+| 用 `button` 冒充整条搜索框 | 丢输入语义,无法聚焦/受控 | 容器 + input + icon 组合 |
+| 图标裸 SVG 内联、绕开 `icon` 组件类 | 绕过 xizhi 资产路由与图标语义 | `icon` 角色落组件类,资产走 xizhi |
+| 在 input 上手搓边框阴影再造容器 | 越权到样式四级阶梯(见 [INDEX.md](./INDEX.md)「复用阶梯」) | 容器角色交给框架组件或语义 token |

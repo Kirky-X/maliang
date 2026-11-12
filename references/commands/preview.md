@@ -1,4 +1,4 @@
-# preview 子命令 —— 使用 Element Plus 实时预览验证
+# preview 子命令 —— 实时预览验证(Element Plus / React 双通道)
 
 > 本文件是 `preview` 子命令的完整流程,由顶层 [`SKILL.md`](../../SKILL.md) 路由进入。
 > 输入 = `draw-md` 产出的页面级 UI markdown(`.maliang/ui-markdown/` 下),输出 = 自包含 HTML 预览文件。
@@ -104,6 +104,64 @@ flowchart LR
 </body>
 </html>
 ```
+
+### React 通道(shadcn/ui / Motif / Astryx)
+
+目标组件源为 React 生态(registry-json / docs-site 型,组件源 profile 见 [`../framework/adapter-contract.md`](../framework/adapter-contract.md))时,预览模板换用 React 骨架。要点:
+
+- **CDN 四件套**:React UMD + ReactDOM UMD + `@babel/standalone`(JSX 浏览器内编译,无构建链)+ Tailwind Play CDN。组件源码经查询通道([`adapter-contract.md`](../framework/adapter-contract.md)「查询契约」)从官方 registry JSON 取回后**内联**为组件定义(复制粘贴型本就以源码分发);
+- **token 注入**:DESIGN.md token 以 CSS 变量注入 `:root`——shadcn/Motif 用 `--background` / `--primary` 等语义变量名;组件源码中的 Tailwind 工具类由 Play CDN 运行时生成;
+- **设备外壳复用**:同一 `.device-shell` / `.device-screen` 结构(框架无关),外壳 CSS 见下节;
+- **校验降级(显式)**:Tailwind Play CDN 运行时生成工具类 → §5.6 静态孤儿类检查由 `scripts/preview.py` 检测 CDN 标记后**显式跳过并报 WARN**(不算通过也不算失败,列入收尾前未测量清单);其余 143 项检查照跑;
+- **CDN 不可达**:按本文件 §0 显式 opt-out / DEGRADED 横幅惯例处理,不静默;
+- **SRI**:React/ReactDOM/Babel 锁版本时按 EP 模板同法生成 integrity 哈希;Tailwind Play CDN 不支持 SRI 锁版(其脚本地址动态编译),锁定需求出现时改走预编译 CSS 并按 DEGRADED 惯例声明。
+
+骨架(与 EP 模板同构,差异仅在 head 资源与挂载脚本):
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>预览 - <页面名称></title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { /* 语义变量注入(从 token.md 解析) */
+      --background: #...;  --foreground: #...;  --primary: #...;
+      --radius: 8px;
+    }
+    .device-shell { width: <设备宽度>px; height: <设备高度>px; /* 设备外壳样式 */ }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="device-shell">
+      <div class="device-screen">
+        <!-- 页面组件(经查询通道内联的源码 + JSX 挂载) -->
+      </div>
+    </div>
+  </div>
+  <script type="text/babel" data-presets="react">
+    const { useState } = React;
+    function Page() { /* 内联组件 + 页面结构 */ }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Page />);
+  </script>
+</body>
+</html>
+```
+
+React 通道组件映射:
+
+| draw-md 逻辑组件 | React 通道预览组件(经查询通道内联) |
+| ------------------- | --------------------- |
+| button | `<Button>`(registry 源码) |
+| text | `<p>` / `<h1>`~`<h6>` |
+| list | `.map()` 渲染 + 列表/卡片组件 |
+| navigation bar | flex header(内联组件) |
+| dock | footer + `<Button>` 组 |
 
 ### 设备外壳 CSS
 
