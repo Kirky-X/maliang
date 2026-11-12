@@ -115,6 +115,8 @@
 | 输入框 | `input` | Input | el-input | TextField | TextInput |
 | 图标 | `icon` | lucide Search 图标(资产路由走 xizhi) | el-icon(prefix 槽) | prefixIcon | SymbolGlyph/内置搜索图标 |
 
+组件类文档入口:各角色组件类(input / icon / layout)的逐框架文档见 [INDEX.md](./INDEX.md)「组件类型索引表」对应行;实时型源(组件源 profile 词典)以查询结果为准。
+
 token 锚点:容器内边距、图标尺寸、边框与圆角、占位文案色一律 `{token-name}` 引用(具体语义 token 名以项目 DESIGN.md 为准,不在本表固化,防双处维护)。
 
 反模式:

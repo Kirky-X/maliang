@@ -80,11 +80,11 @@ flowchart LR
 
 ## ✅ 测试与验证
 
-pytest 实测（2026-11-07，Python 3.12）：
+pytest 实测（2026-11-13，Python 3.12）：
 
 ```text
 $ python3 -m pytest tests -q
-629 passed, 17 skipped in 11.44s
+634 passed, 17 skipped in 7.91s
 ```
 
 测试文件清单以 [`tests/`](tests) 单一来源为准（计数一致性由 `test_doc_consistency` 断言守护）；本批新增验证层脚本各有对应测试与 fixtures。
@@ -113,7 +113,7 @@ maliang/
 ├── scripts/                 # 验证层：preview-check / preview-lint.js / verify-states / verify-interactive / design-md(合并入口) / validate-generated / evidence-check / receipts / check-claims / ledger / build-explorer / preview-server / detect-tells / ci-gate（退出码 canonical 见 scripts/EXIT-CODES.md）；第二批：verify-color-fidelity / measure-colors / palette-solver / verify-assets / source-fingerprint / check-structure-history / check-copy；基础层：ui-graph / validate-draw-md / validate-framework / install-skill / skill_lint / device_models / maliang_common / devices/
 ├── examples/                # 12 种设计系统示例 + 端到端链路产物（ui-markdown → preview → Vue，第一代布局历史实例）
 #   用户项目运行时产物统一落 <项目根>/.maliang/（DESIGN.md + ui-markdown/ + preview/ + critique/ + ip/ + ip-handbook/）
-└── tests/                   # pytest 套件（646 用例，39 文件）
+└── tests/                   # pytest 套件（651 用例，39 文件）
 ```
 
 ## 🧭 维护归属

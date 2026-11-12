@@ -182,14 +182,14 @@ React 生态三源详表:
 
 六源全景速查:
 
-| 组件源 | 运行时 | ingest 通道 | 一句话适用 |
-| ------ | ------ | ----------- | ---------- |
-| ArkUI/ArkTS | arkts | bundled-snapshot(官网 JS 渲染抓取已证失败,见「API 基线」) | 鸿蒙原生应用,唯一源 |
-| Flutter(Material/Cupertino) | flutter | docs-site | 跨平台移动,自绘引擎视觉一致性最高 |
-| Element Plus | vue | docs-site(bundled 快照回退) | Web 后台管理,企业密集组件最全,中文文档完善 |
-| shadcn/ui | react | registry-json | 需要自定义设计的简洁 Web 应用 / 管理页 |
-| Motif | react | registry-json | Agent/AI 产品界面专项部件 |
-| Astryx | react | docs-site | 要完整设计系统 + npm 依赖的 React 新项目(Beta) |
+| 组件源 | 运行时 | ingest 通道 | 一句话适用 | 风险标记 |
+| ------ | ------ | ----------- | ---------- | -------- |
+| ArkUI/ArkTS | arkts | bundled-snapshot(官网 JS 渲染抓取已证失败,见「API 基线」) | 鸿蒙原生应用,唯一源 | 快照滞后需人工复核基线 |
+| Flutter(Material/Cupertino) | flutter | docs-site | 跨平台移动,自绘引擎视觉一致性最高 | GitHub Releases 已停更,版本以 releases JSON 为准 |
+| Element Plus | vue | docs-site(bundled 快照回退) | Web 后台管理,企业密集组件最全,中文文档完善 | 快照基线滞后时以实时抓取为准 |
+| shadcn/ui | react | registry-json | 需要自定义设计的简洁 Web 应用 / 管理页 | 源码自持,升级靠手动 diff |
+| Motif | react | registry-json | Agent/AI 产品界面专项部件 | 无版本锚点,内容会漂移 |
+| Astryx | react | docs-site | 要完整设计系统 + npm 依赖的 React 新项目 | Beta 成熟度 |
 
 混用规则:
 
