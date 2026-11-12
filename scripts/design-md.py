@@ -461,9 +461,13 @@ def render_token_md(data, input_path):
 
 
 def _main_token_md(argv):
-    if len(argv) != 2:
-        die("用法: python3 scripts/design-md.py token-md <input.md> <output.md>")
-    input_path, output_path = argv[0], argv[1]
+    parser = argparse.ArgumentParser(
+        prog="python3 scripts/design-md.py token-md",
+        description="DESIGN.md → 产物层 token.md(派生产物层硬 token 表)")
+    parser.add_argument("input", help="DESIGN.md 路径")
+    parser.add_argument("output", help="token.md 输出路径")
+    args = parser.parse_args(argv)
+    input_path, output_path = args.input, args.output
     try:
         with open(input_path, "r", encoding="utf-8") as f:
             text = f.read()
@@ -1056,13 +1060,21 @@ def _parse_args(argv):
     return row
 
 
+
 def _main_derive_dark(argv):
+    parser = argparse.ArgumentParser(
+        prog="python3 scripts/design-md.py derive-dark",
+        description="从一套调色板行派生暗色模式行(输出 JSON,含 _mode_derivation)")
+    parser.add_argument(
+        "pairs", nargs="+",
+        help="调色板列名=hex 对(10 列齐全,如 Primary=#1A1C1E Background=#FAF4E8 …)")
+    args = parser.parse_args(argv)
     try:
-        row = _parse_args(argv)
-        print(json.dumps(derive_dark_palette(row), ensure_ascii=False, indent=2))
+        row = _parse_args(args.pairs)
     except ValueError as exc:
-        print(f"错误: {exc}", file=sys.stderr)
-        return 1
+        parser.error(str(exc))  # argparse 标准错误通道,exit 2
+    print(json.dumps(derive_dark_palette(row), ensure_ascii=False, indent=2))
+    return 0
     return 0
 
 
@@ -1517,7 +1529,7 @@ def analyze(design_path, token_path=None, token_explicit=False):
                 return findings, warnings, "token 文件不存在: " + token_path
             warnings.append({
                 "line": 0, "rule": "design-md.token-missing",
-                "message": "同目录未找到 token.md,跳过派生一致性核对(--token-file 可显式指定)",
+                "message": "未找到 token.md(ui-markdown/ 与 DESIGN.md 同目录均无),跳过派生一致性核对(--token-file 可显式指定)",
             })
         else:
             with open(token_path, "r", encoding="utf-8") as fh:
@@ -1544,15 +1556,20 @@ def _main_validate(argv=None):
     )
     parser.add_argument("design_md", help="DESIGN.md 路径")
     parser.add_argument("--token-file", default=None,
-                        help="产物层 token.md 路径(默认取 DESIGN.md 同目录的 token.md)")
+                        help="产物层 token.md 路径(默认先找 DESIGN.md 同目录的 ui-markdown/token.md,再回退同目录)")
     parser.add_argument("--format", choices=["text", "json"], default="text",
                         help="输出格式: text(人类可读,默认) / json")
     args = parser.parse_args(argv)
 
     design_path = os.path.abspath(args.design_md)
     token_explicit = args.token_file is not None
+    design_dir = os.path.dirname(design_path)
+    canonical = os.path.join(design_dir, "ui-markdown", "token.md")
+    legacy = os.path.join(design_dir, "token.md")
+    # 默认查找顺序:workspace-layout canonical(ui-markdown/)优先,同目录回退(存量兼容)
+    # ——来源:p2-deferred-batch(E2E 冒烟 friction ⑧)
     token_path = os.path.abspath(
-        args.token_file or os.path.join(os.path.dirname(design_path), "token.md"))
+        args.token_file or (canonical if os.path.isfile(canonical) else legacy))
 
     def _cannot_check(message):
         if args.format == "json":

@@ -329,6 +329,8 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 
 > **leaf 键 = 最终 token 名,各组前缀归属**(来源:e2e-friction-fixes):**colors 组 leaf 键直接写最终 token 名**(`color-primary` 等,派生器按 leaf 键原名输出);**spacing / rounded / typography 组 leaf 键用语义名**(`xs`/`md`/`headline-lg` 等,派生器自动加 `spacing-`/`radius-`/`font-size-`/`font-family-` 等前缀)。所有 token 名须符合 [`../meta/token.md`](../meta/token.md) 命名规范。
 
+> **typography 组最小档位**(来源:p2-deferred-batch):最小 token 集也要含 **body 档 + ≥1 个大字号档**(≥24px 常规,或 ≥18.66px 粗体——大文本 AA 3:1 阈值的合规空间,阈值见 [`../meta/accessibility.md`](../meta/accessibility.md))。强调色底文字对比度 <4.5:1 时,MUST 改用大字号档或调整色对,并把档位差异写进 token——**禁止为凑对比度在产出里加临场裸字号**。
+
 ---
 
 ## Phase 2:应用 DESIGN.md

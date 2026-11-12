@@ -128,6 +128,17 @@ class TestE2eFrictionFixes(unittest.TestCase):
             self.assertIn("D-P<原则序号>-<决策序号>", text, "{} 缺 token-provenance 制式引用".format(path))
 
 
+class TestP2DeferredBatch(unittest.TestCase):
+    """p2-deferred-batch 变更守护:design-md.md 字号档指引在场。"""
+
+    def test_design_md_has_minimal_font_ladder_guidance(self):
+        text = _read(os.path.join(BASE, "references", "commands", "design-md.md"))
+        self.assertIn(
+            "≥18.66px", text,
+            "design-md.md 缺 typography 最小档位指引(大文本 AA 3:1 合规空间)",
+        )
+
+
 class TestReactGenerationEntry(unittest.TestCase):
     """react-generation-entry 变更产物在场守护:删除 draw-react.md 或关键节即失败。"""
 

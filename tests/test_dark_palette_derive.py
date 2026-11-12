@@ -125,7 +125,15 @@ class TestCli(unittest.TestCase):
         self.assertEqual(row["Background"], "#F8FAFC")
 
     def test_main_rejects_bad_arg_format(self):
-        self.assertEqual(dpd._main_derive_dark(["not-a-kv"]), 1)
+        # p2-deferred-batch:argparse 化后错误走标准通道(SystemExit 2 + stderr 文案)
+        import contextlib
+        import io
+        err = io.StringIO()
+        with self.assertRaises(SystemExit) as cm:
+            with contextlib.redirect_stderr(err):
+                dpd._main_derive_dark(["not-a-kv"])
+        self.assertEqual(cm.exception.code, 2)
+        self.assertIn("列名=hex", err.getvalue())
 
     def test_main_emits_json_with_trail(self):
         import contextlib

@@ -287,5 +287,45 @@ colors:
                             for w in data["warnings"]))
 
 
+class TestDefaultTokenPath(unittest.TestCase):
+    """validate token.md 默认查找顺序:e2e-friction P2①——canonical(ui-markdown/)
+    优先、同目录回退;canonical 命中时派生一致性不静默跳过。Red→Green:T001 先失败,T002 转绿。
+    """
+
+    def _layout(self, td, with_ui_md_token, with_same_dir_token):
+        maliang = os.path.join(td, ".maliang")
+        os.makedirs(maliang, exist_ok=True)
+        design = os.path.join(maliang, "DESIGN.md")
+        with open(design, "w", encoding="utf-8") as fh:
+            fh.write(GOOD_DESIGN)
+        if with_ui_md_token:
+            os.makedirs(os.path.join(maliang, "ui-markdown"), exist_ok=True)
+            with open(os.path.join(maliang, "ui-markdown", "token.md"), "w", encoding="utf-8") as fh:
+                fh.write(GOOD_TOKEN)
+        if with_same_dir_token:
+            with open(os.path.join(maliang, "token.md"), "w", encoding="utf-8") as fh:
+                fh.write(GOOD_TOKEN)
+        return design
+
+    def test_canonical_token_md_used_without_flag(self):
+        # 不应报: canonical(ui-markdown/) 的 token.md 在无 --token-file 时被采用
+        with tempfile.TemporaryDirectory() as td:
+            design = self._layout(td, True, False)
+            code, out = run_main([design, "--format", "text"])
+            self.assertEqual(code, 0, out)
+            self.assertNotIn(
+                "跳过派生一致性核对", out,
+                "canonical token.md 命中时派生一致性不应静默跳过",
+            )
+
+    def test_missing_everywhere_keeps_skip_with_new_copy(self):
+        # 应报(降级 WARN): 两处皆无 token.md;文案写明两处查找口径
+        with tempfile.TemporaryDirectory() as td:
+            design = self._layout(td, False, False)
+            code, out = run_main([design, "--format", "text"])
+            self.assertIn("跳过派生一致性核对", out)
+            self.assertIn("ui-markdown", out, "跳过文案应写明两处查找口径")
+
+
 if __name__ == "__main__":
     unittest.main()
