@@ -101,6 +101,33 @@ class TestFrameworkAdapterDocs(unittest.TestCase):
         self.assertIn("cdn.tailwindcss.com", text, "preview.md React 骨架缺 Tailwind CDN")
 
 
+class TestE2eFrictionFixes(unittest.TestCase):
+    """e2e-friction-fixes 变更守护:模板 colors 键前缀 + 账本 id 制式统一。"""
+
+    TEMPLATE = os.path.join(BASE, "template", "DESIGN.md")
+    ADAPTER = os.path.join(BASE, "references", "framework", "adapter-contract.md")
+    DRAW_REACT = os.path.join(BASE, "references", "commands", "draw-react.md")
+
+    def test_template_colors_leaf_keys_carry_category_prefix(self):
+        text = _read(self.TEMPLATE)
+        colors_block = text.split("colors:", 1)[1].split("typography:", 1)[0]
+        for line in colors_block.splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or ":" not in stripped:
+                continue
+            key = stripped.split(":", 1)[0].strip()
+            self.assertTrue(
+                key.startswith("color-"),
+                "template colors 组 leaf 键应带 color- 前缀(token 名直出): {}".format(key),
+            )
+
+    def test_ledger_id_scheme_unified_to_provenance(self):
+        for path in (self.ADAPTER, self.DRAW_REACT):
+            text = _read(path)
+            self.assertNotIn("D-<阶段>", text, "{} 残留自创账本 id 制式".format(path))
+            self.assertIn("D-P<原则序号>-<决策序号>", text, "{} 缺 token-provenance 制式引用".format(path))
+
+
 class TestReactGenerationEntry(unittest.TestCase):
     """react-generation-entry 变更产物在场守护:删除 draw-react.md 或关键节即失败。"""
 

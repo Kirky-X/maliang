@@ -453,5 +453,49 @@ class TestEndToEnd(unittest.TestCase):
         self.assertIn("state.focus-ring-removed", found)
 
 
+class TestReactChannelExemptions(unittest.TestCase):
+    """React 通道(script/babel 内 JSX 表达式)与内联 SVG 的块级豁免。
+
+    来源:e2e-friction-fixes(friction ②③)——token.residue 误杀 {children}、
+    ai-tells.integer-number 误杀 path 坐标。Red→Green:T005 先失败,T006 转绿。
+    """
+
+    BABEL_HTML = """<!DOCTYPE html>
+<html><head><script type="text/babel" data-presets="react">
+const { useState } = React;
+function Field({ children, label }) { return <label>{label}{children}</label>; }
+const limit = 100;
+</script></head>
+<body><main id="main"><p>今日成交 2,847 单</p></main></body></html>
+"""
+
+    SVG_HTML = """<!DOCTYPE html>
+<html><head><style>:root { --x: #101010; }</style></head>
+<body><main id="main">
+<svg viewBox="0 0 480 200" aria-hidden="true"><path d="M0 0 Q 246 100 480 0" fill="none"/></svg>
+</main></body></html>
+"""
+
+    PROSE_INT_HTML = """<!DOCTYPE html>
+<html><body><main id="main"><p>超过 100 个网点</p></main></body></html>
+"""
+
+    def test_babel_script_jsx_not_token_residue(self):
+        found = _rules(_run(self.BABEL_HTML))
+        self.assertNotIn("token.residue", found, "script 块内 JSX 表达式不是 token 残留")
+
+    def test_babel_script_integer_not_flagged(self):
+        found = _rules(_run(self.BABEL_HTML))
+        self.assertNotIn("ai-tells.integer-number", found, "script 块内数值不是凑数 tell")
+
+    def test_svg_path_geometry_not_integer_flagged(self):
+        found = _rules(_run(self.SVG_HTML))
+        self.assertNotIn("ai-tells.integer-number", found, "SVG path 坐标不是凑数 tell")
+
+    def test_prose_integer_still_flagged(self):
+        found = _rules(_run(self.PROSE_INT_HTML))
+        self.assertIn("ai-tells.integer-number", found, "正文裸整数凑数仍应报")
+
+
 if __name__ == "__main__":
     unittest._main_check()

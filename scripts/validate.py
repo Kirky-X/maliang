@@ -619,7 +619,10 @@ def check_section_order(rel_path, lines):
     last_title = h2[-1][1]
     if not ("导航" in first_title or "nav-bar" in first_title or "nav" in first_title):
         results.append(("WARN", rel_path, h2[0][0], "章节顺序: 第一章非导航"))
-    if not ("dock" in last_title or "底部" in last_title):
+    # Web 落地页以页脚收尾(components/INDEX.md Ft1-Ft8 为 canonical),"页脚/footer"
+    # 与 dock/底部 同列放行——来源:e2e-friction-fixes(E2E 冒烟 friction ⑥)
+    if not ("dock" in last_title or "底部" in last_title
+            or "页脚" in last_title or "footer" in last_title):
         results.append(("WARN", rel_path, h2[-1][0], "章节顺序: 最后一章非 dock"))
     return results
 

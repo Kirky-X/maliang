@@ -62,7 +62,7 @@ draw-* 遇「目标组件源未指定」时执行：
 
 组件源选择是设计决策，回写规则与 [token-provenance.md](../meta/token-provenance.md) 决策 id 体系一致：
 
-- 回写条目 = `决策 id + D-<阶段>-<序号>` 形态记入 DESIGN.md decisions 账本，内容含：选定运行时、选定组件源、选择理由、探测到的已装依赖证据；
+- 回写条目按 [`../meta/token-provenance.md`](../meta/token-provenance.md) 决策 id 制式（`D-P<原则序号>-<决策序号>`）记入 DESIGN.md decisions 账本，内容含：选定运行时、选定组件源、选择理由、探测到的已装依赖证据；
 - 后续 draw-* / redesign 读取账本即得组件源，不再重复执行「用户强制指定门」；
 - 用户中途换源 = 新决策条目，旧条目保留不覆盖（账本 append-only）。
 

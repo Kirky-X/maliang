@@ -354,8 +354,7 @@ def render_typography(data):
             if ff and ff not in families:
                 families.append(ff)
     if families:
-        fam_str = ", ".join('"{}"'.format(f) for f in families)
-        lines.append('字族:{}。'.format(fam_str))
+        lines.append("字族:{}。".format(", ".join(families)))
     else:
         lines.append("字族:未指定。")
     lines.append("")
@@ -363,6 +362,12 @@ def render_typography(data):
     for name, spec in typography.items():
         if not isinstance(spec, dict):
             continue
+        if "fontFamily" in spec:
+            val = str(spec["fontFamily"]).strip()
+            if len(val) >= 2 and val[0] == '"' and val[-1] == '"' and '"' in val[1:-1]:
+                # YAML 外层引号包裹整段字族串时剥一层;族内引号按 CSS 惯例保留
+                val = val[1:-1]
+            rows.append(("font-family-{}".format(name), val, name))
         if "fontSize" in spec:
             rows.append(("font-size-{}".format(name), str(spec["fontSize"]), name))
         if "fontWeight" in spec:
@@ -456,9 +461,9 @@ def render_token_md(data, input_path):
 
 
 def _main_token_md(argv):
-    if len(argv) != 3:
-        die("用法: python3 scripts/design_md_to_token_md.py <input.md> <output.md>")
-    input_path, output_path = argv[1], argv[2]
+    if len(argv) != 2:
+        die("用法: python3 scripts/design-md.py token-md <input.md> <output.md>")
+    input_path, output_path = argv[0], argv[1]
     try:
         with open(input_path, "r", encoding="utf-8") as f:
             text = f.read()

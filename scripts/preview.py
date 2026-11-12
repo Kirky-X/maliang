@@ -259,6 +259,27 @@ def _detected_framework_prefixes(text):
     }
 
 
+NON_PROSE_BLOCK_RE = re.compile(
+    r"<script\b[^>]*>[\s\S]*?</script>|<svg\b[^>]*>[\s\S]*?</svg>",
+    re.IGNORECASE,
+)
+
+
+def _non_prose_line_mask(text):
+    """返回 <script>/<svg> 块覆盖的 1-based 行号集合。
+
+    JSX 表达式({children} 等)不是 token 残留的语义对象;SVG path 坐标不是
+    "整数凑数"文案 tell 的语义对象——两处检查按块级豁免(来源:e2e-friction-fixes,
+    E2E 冒烟 friction ②③)。
+    """
+    mask = set()
+    for m in NON_PROSE_BLOCK_RE.finditer(text):
+        start_line = text.count("\n", 0, m.start()) + 1
+        end_line = text.count("\n", 0, m.end()) + 1
+        mask.update(range(start_line, end_line + 1))
+    return mask
+
+
 # --- HTML 解析辅助 ---
 ALT_ATTR_RE = re.compile(r"""<img\b[^>]*\balt\s*=\s*["']""", re.IGNORECASE)
 ARIA_LABEL_RE = re.compile(r"""aria-label\s*=\s*["']""", re.IGNORECASE)
@@ -349,7 +370,10 @@ def check_5_1_ai_tells(text, fname):
                               "lorem ipsum 残留: " + fname))
 
     # 5.1.11: 整数凑数(100/1k/10k 等)
+    non_prose = _non_prose_line_mask(text)
     for i, line in enumerate(lines, 1):
+        if i in non_prose:
+            continue
         for m in INTEGER_NUMBER_RE.finditer(line):
             # 排除 CSS 属性值、HTML 数值属性与自定义属性(如 --motion-duration-instant: 100ms)
             ctx = line[max(0, m.start() - 30):m.end() + 30]
@@ -751,8 +775,11 @@ def check_5_6_tokens(text, fname):
     lines = text.splitlines()
 
     # 5.6.1: {token-name} 占位符残留
+    non_prose = _non_prose_line_mask(text)
     for i, line in enumerate(lines, 1):
-        # 跳过 <script> 和注释
+        # 跳过 <script> 块(JSX 表达式非残留)与注释
+        if i in non_prose:
+            continue
         stripped = line.strip()
         if stripped.startswith("//") or stripped.startswith("/*") or stripped.startswith("*"):
             continue

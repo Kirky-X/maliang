@@ -11,10 +11,10 @@ decisions:                          # 0d 决策表;id 供 token 行尾溯源,字
   # 原则 P1/P2/P3 对应 ## Overview 里的 2-3 条立场
   # 溯源注释规则(# D-P<n>-<m> / # no-decision: <来源>)唯一 canonical 见 references/meta/token-provenance.md
 colors:
-  primary: "#..." # D-P1-1
-  secondary: "#..." # D-P1-2
-  tertiary: "#..." # D-P1-1        # 强调色 / CTA
-  neutral: "#..." # D-P1-2         # 背景、表面
+  color-primary: "#..." # D-P1-1
+  color-secondary: "#..." # D-P1-2
+  color-tertiary: "#..." # D-P1-1        # 强调色 / CTA
+  color-neutral: "#..." # D-P1-2         # 背景、表面
 typography:
   headline-lg: # D-P2-1
     fontFamily: ...
@@ -41,8 +41,8 @@ spacing:
   xl: 64px # D-P3-1
 components:
   button-primary: # D-P1-3
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.neutral}"
+    backgroundColor: "{colors.color-primary}"
+    textColor: "{colors.color-neutral}"
     typography: "{typography.label-sm}"
     rounded: "{rounded.md}"
     padding: 12px 24px

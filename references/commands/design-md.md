@@ -327,6 +327,8 @@ Design Read(一行检查点 + Visual Thesis / Content Plan / Interaction Thesis 
 
 **骨架唯一 canonical 在 [`template/DESIGN.md`](../../template/DESIGN.md)**(复制为 `.maliang/DESIGN.md` 后填充):YAML frontmatter(decisions 决策表 + colors / typography / rounded / spacing / components / effects 七块,每块顶层键带溯源注释)+ prose 章节(Overview→Colors→Typography→Layout→Elevation→Shapes→Components→Do's and Don'ts→Provenance)。本节不复述骨架字面形态;各章节内容怎么写见上文 Phase 2,溯源怎么判见 [`../meta/token-provenance.md`](../meta/token-provenance.md)。
 
+> **leaf 键 = 最终 token 名,各组前缀归属**(来源:e2e-friction-fixes):**colors 组 leaf 键直接写最终 token 名**(`color-primary` 等,派生器按 leaf 键原名输出);**spacing / rounded / typography 组 leaf 键用语义名**(`xs`/`md`/`headline-lg` 等,派生器自动加 `spacing-`/`radius-`/`font-size-`/`font-family-` 等前缀)。所有 token 名须符合 [`../meta/token.md`](../meta/token.md) 命名规范。
+
 ---
 
 ## Phase 2:应用 DESIGN.md

@@ -822,5 +822,33 @@ class TestBreakpointsAndActionTargets(unittest.TestCase):
                 [], value)
 
 
+class TestSectionOrderWebFooter(unittest.TestCase):
+    """末章检查 Web 形态放行:e2e-friction-fixes(friction ⑥)——
+    Web 落地页以页脚收尾(components/INDEX.md Ft1-Ft8 为 canonical),
+    "页脚/footer"末章不应报「最后一章非 dock」。Red→Green:T007 先失败,T008 转绿。
+    """
+
+    def test_web_footer_last_chapter_not_warned(self):
+        # 不应报: Web 落地页页脚收尾
+        lines = ["## 顶部导航", "## hero 主视觉", "## 页脚"]
+        results = vdm.check_section_order("ui/home.md", lines)
+        self.assertFalse(
+            any("最后一章非 dock" in r[3] for r in results),
+            "页脚末章(Web 形态)不应报 dock WARN",
+        )
+
+    def test_footer_english_last_chapter_not_warned(self):
+        # 不应报: 英文 footer 末章
+        lines = ["## navigation", "## hero", "## footer"]
+        results = vdm.check_section_order("ui/home.md", lines)
+        self.assertFalse(any("最后一章非 dock" in r[3] for r in results))
+
+    def test_non_closing_last_chapter_still_warned(self):
+        # 应报: 末章为普通内容章(放行不扩大)
+        lines = ["## 顶部导航", "## hero 主视觉", "## 设置"]
+        results = vdm.check_section_order("ui/home.md", lines)
+        self.assertTrue(any("最后一章非 dock" in r[3] for r in results))
+
+
 if __name__ == "__main__":
     unittest._main_draw_md()

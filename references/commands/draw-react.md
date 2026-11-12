@@ -40,7 +40,7 @@ React 运行时挂三个组件源(shadcn/ui · Motif · Astryx,见 [`adapter-con
 1. 探测用户项目:npm 型读 `package.json` 依赖(`@astryxdesign/core` 等);复制粘贴型读 `components.json` 存在性或 `components/ui/` 目录(shadcn/Motif);
 2. 按 [`framework/INDEX.md`](../framework/INDEX.md)「运行时 × 组件源两级选型表」呈现候选——已装的排前,每项附适用场景与风险标记;
 3. **由用户指定最终组件源**——skill 只提醒"哪个更优",不得自动锁定;
-4. 指定结果回写 DESIGN.md 决策账本(`D-<阶段>-<序号>` 形态,含选定源与探测证据);账本已有选择时直接复用,不再重问;
+4. 指定结果回写 DESIGN.md 决策账本(按 [`../meta/token-provenance.md`](../meta/token-provenance.md) 决策 id 制式 `D-P<原则序号>-<决策序号>`,含选定源与探测证据);账本已有选择时直接复用,不再重问;
 5. 主源缺某类组件(如 shadcn 缺 agent 对话部件)→ 提示补充源候选(→Motif),经用户确认后混用并标注混合来源;混用边界遵守选型表「混用规则」(Astryx 不与 Tailwind 系混)。
 
 ### 组件映射(三级查询通道)
