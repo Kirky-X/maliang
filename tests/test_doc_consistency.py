@@ -17,6 +17,9 @@ ADAPTER_CONTRACT = os.path.join(BASE, "references", "framework", "adapter-contra
 FRAMEWORK_INDEX = os.path.join(BASE, "references", "framework", "INDEX.md")
 COMPONENT_ROUTING = os.path.join(BASE, "references", "framework", "component-routing.md")
 GLASS_EFFECT = os.path.join(BASE, "references", "dimensions", "glass-effect.md")
+DRAW_REACT = os.path.join(BASE, "references", "commands", "draw-react.md")
+SKILL_MD = os.path.join(BASE, "SKILL.md")
+README_MD = os.path.join(BASE, "README.md")
 
 SCRIPTED = 51
 
@@ -96,6 +99,28 @@ class TestFrameworkAdapterDocs(unittest.TestCase):
         text = _read(PREVIEW_MD)
         self.assertIn("React 通道", text, "preview.md 缺少 React 通道说明")
         self.assertIn("cdn.tailwindcss.com", text, "preview.md React 骨架缺 Tailwind CDN")
+
+
+class TestReactGenerationEntry(unittest.TestCase):
+    """react-generation-entry 变更产物在场守护:删除 draw-react.md 或关键节即失败。"""
+
+    def test_draw_react_exists_with_key_sections(self):
+        text = _read(DRAW_REACT)
+        for token in ("组件词典", "用户强制指定", "三级查询通道", "UNMEASURED",
+                      "禁止事项", "复制粘贴型", "Astryx", "决策账本"):
+            self.assertIn(token, text, "draw-react.md 缺少关键节: %s" % token)
+
+    def test_skill_md_routes_draw_react_and_counts_14(self):
+        text = _read(SKILL_MD)
+        self.assertIn("draw-react.md", text, "SKILL.md 路由表缺 draw-react 行")
+        self.assertNotIn("十三个子命令", text, "SKILL.md 仍有旧计数「十三个子命令」")
+        self.assertIn("十四个子命令", text, "SKILL.md 缺「十四个子命令」计数")
+
+    def test_readme_counts_14_subcommands(self):
+        text = _read(README_MD)
+        self.assertIn("14 个子命令", text, "README.md 缺「14 个子命令」计数")
+        self.assertNotIn("13 个子命令", text, "README.md 仍有旧计数「13 个子命令」")
+        self.assertIn("draw-react", text, "README.md 缺 draw-react 功能行")
 
 
 if __name__ == "__main__":

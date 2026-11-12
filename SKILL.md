@@ -1,13 +1,13 @@
 ---
 name: maliang
-description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/组件路由/组件选型/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版（不沉淀 token）用本 skill 的 redesign 命令；代码质量/架构审查用 diting；安全扫描用 tiangang；框架运行时开发、编译报错、测试→hap-dev/flutter-dev/element-dev；生成期组件映射查询→maliang 按适配器契约实时抓官网；运行时报错/API 深查询→element-dev；通用文生图→wudaozi（本 skill 的 ip 仅限项目 IP 形象场景）；纯文本去 AI 味→cangjie"
+description: "前端设计生成 skill,覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代)。触发：DESIGN.md/design token/CSS 提取/页面 UI markdown/组件规格/组件路由/组件选型/导出 Tailwind·CSS·DTCG·lint/转 HarmonyOS·Flutter·Element Plus·React(shadcn/Motif/Astryx)/redesign/重设计/refresh/restructure/rebuild/去 AI 味/deslop/可用性评审/critique/用户旅程/persona/可用性测试/五秒测试/埋点/设计语言模板/液态玻璃/模板墙。不适用：无 UI 的后端/脚本/数据任务、纯文案写作、非视觉类代码生成。触发（含并入口）：产品 UI 设计/界面 craft/dashboard 界面/设置页设计/interface-design、UI 合规审查/a11y 审查/check accessibility/审查我的 UI（critique 读 web-interface-guidelines 快照）、方向未定/多方案/先看几版/比较几版（explore 读 DESIGN.md 后多方案渲染对比）。边界：一次性改版（不沉淀 token）用本 skill 的 redesign 命令；代码质量/架构审查用 diting；安全扫描用 tiangang；框架运行时开发、编译报错、测试→hap-dev/flutter-dev/element-dev；生成期组件映射查询→maliang 按适配器契约实时抓官网；运行时报错/API 深查询→element-dev；通用文生图→wudaozi（本 skill 的 ip 仅限项目 IP 形象场景）；纯文本去 AI 味→cangjie"
 allowed-tools: "Bash(python3 scripts/*)"
 license: MIT
 metadata:
   version: "0.4.3"
   author: "Kirky-X"
   repo: "https://github.com/Kirky-X/maliang"
-  tags: "design-system, design-token, ui-markdown, DESIGN.md, w3c-dtcg, harmonyos, flutter, element-plus, preview, device-models, ui-graph, ip-character, ip-handbook, accessibility, dark-mode"
+  tags: "design-system, design-token, ui-markdown, DESIGN.md, w3c-dtcg, harmonyos, flutter, element-plus, react, preview, device-models, ui-graph, ip-character, ip-handbook, accessibility, dark-mode"
 ---
 
 # maliang (马良) —— 设计系统技能
@@ -15,7 +15,7 @@ metadata:
 > **脚本调用约定**：`python3 scripts/…` 中的相对路径以**本 skill 的安装目录**为基准（CWD 假设）。
 > 在用户项目中执行时，一律以 `{SKILL_DIR}` 绝对路径调用，如 `python3 {SKILL_DIR}/scripts/ui-graph.py …`；`--target`/`--framework-file` 等输入参数显式指向用户项目路径，禁止把 skill 自带的 `examples/` 当作分析目标。
 
-十三个子命令覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代,总图见 [`references/meta/lifecycle.md`](references/meta/lifecycle.md)):design-md(创建 DESIGN.md,含领域探索与决策账本)→ redesign(改版现有 UI)→ explore(方向未定时多方案发散-比较-收敛)→ draw-md(页面级 UI markdown)· component(单组件 brief)→ preview(预览验证)→ critique(可用性评审)→ draw-harmony/draw-flutter/draw-element(框架代码)→ ui-graph(UI 关系管理)· ip(IP 形象)/ip-handbook(IP 视觉手册)。
+十四个子命令覆盖 UIUX 全生命周期(研究→定义→设计→实现→验证→交付→迭代,总图见 [`references/meta/lifecycle.md`](references/meta/lifecycle.md)):design-md(创建 DESIGN.md,含领域探索与决策账本)→ redesign(改版现有 UI)→ explore(方向未定时多方案发散-比较-收敛)→ draw-md(页面级 UI markdown)· component(单组件 brief)→ preview(预览验证)→ critique(可用性评审)→ draw-harmony/draw-flutter/draw-element/draw-react(框架代码)→ ui-graph(UI 关系管理)· ip(IP 形象)/ip-handbook(IP 视觉手册)。
 
 - **design-md**(上游)— 产出 prose-first 的 **DESIGN.md**(YAML token + Markdown 设计理由,Google Labs agent-first 格式)。支持"创建、应用、验证、导出"四个动作。解决"设计系统**是什么、为什么**"。
 - **redesign**(上游旁路)— 改版现有 UI,10 维审计(含 SEO 与追踪、产物一致性) + 保留规则。支持 Refresh / Restructure / Rebuild / Deslop 四模式。解决"**现有设计如何变好**"。
@@ -25,6 +25,7 @@ metadata:
 - **draw-harmony**(下游)— 将 draw-md 逻辑 UI 转换为 HarmonyOS(ArkTS)框架实现。解决"HarmonyOS **代码怎么写**"。
 - **draw-flutter**(下游)— 将 draw-md 逻辑 UI 转换为 Flutter 框架实现。解决"Flutter **代码怎么写**"。
 - **draw-element**(下游)— 将 draw-md 逻辑 UI 转换为 Element Plus 框架实现。解决"Element Plus **代码怎么写**"。
+- **draw-react**(下游)— 将 draw-md 逻辑 UI 转换为 React 生态(shadcn/ui · Motif · Astryx)TSX 实现,组件文档按适配器契约实时抓取(组件词典起步表 + 用户强制指定门 + 决策账本复用)。解决"React 生态 **代码怎么写**"。
 - **ui-graph**(关系管理)— 从 ui-markdown/ 产出 ui-relationships.json(层级 + 跳转) + ui-hash-state.json(哈希基线) + ui-implementation-map.json(逻辑 UI ↔ 实现映射)。解决"页面关系怎么管、变更怎么追、实现缺口在哪"。
 - **ip**(IP 形象)— 基于 DESIGN.md 调性构造 prompt,优先调用 text_to_image API 生成图片,fallback 输出结构化 prompt 文档。解决"项目 IP **形象怎么生**"。
 - **ip-handbook**(IP 视觉手册)— 8 模块产出规格(三视图/动作延展/表情包/字体/色彩/版式/周边物料/通用要求),2K 高清 3:4。解决"IP 视觉系统**怎么落地**"。
@@ -49,12 +50,13 @@ metadata:
 | 🔴 将 UI markdown 转换为 HarmonyOS(ArkTS)代码  | draw-harmony  | [`references/commands/draw-harmony.md`](references/commands/draw-harmony.md) |
 | 🔴 将 UI markdown 转换为 Flutter(Dart)代码    | draw-flutter  | [`references/commands/draw-flutter.md`](references/commands/draw-flutter.md) |
 | 🔴 将 UI markdown 转换为 Element Plus(Vue 3)代码 | draw-element | [`references/commands/draw-element.md`](references/commands/draw-element.md) |
+| 🔴 将 UI markdown 转换为 React 生态(shadcn/Motif/Astryx)TSX 代码 | draw-react | [`references/commands/draw-react.md`](references/commands/draw-react.md) |
 | 🔷 生成 / 查询 UI 关系图(层级 + 跳转 + 哈希 + 实现映射) | ui-graph | [`references/commands/ui-graph.md`](references/commands/ui-graph.md) |
 | 🔷 查询跳转目标未生成 / 异常跳转 / 未实现页面 / 规格↔代码语义漂移(功能缺失/写死值/架构偏离) | ui-graph | [`references/commands/ui-graph.md`](references/commands/ui-graph.md) |
 | 🔷 基于 DESIGN.md 生成 IP 形象(API 优先,fallback prompt) | ip | [`references/commands/ip.md`](references/commands/ip.md) |
 | 🔷 生成 IP 视觉手册(三视图/动作/表情/字体/色彩/版式/周边) | ip-handbook | [`references/commands/ip-handbook.md`](references/commands/ip-handbook.md) |
 
-> 🔴 标记的行需先确认 draw-md 产出存在;preview/draw-* 无 UI markdown 输入时应在子命令流程内 fallback 引导用户回退到 draw-md。用户未指定目标框架时,draw-* 先查用户项目已有前端栈(有 → 跟随该栈并说明假设;无 → 按 [`framework/INDEX.md`](references/framework/INDEX.md)「运行时 × 组件源两级选型表」呈现候选——已装的排前,附适用场景与风险标记,**组件源由用户强制指定,skill 只提醒不得自动锁定**,指定结果回写 DESIGN.md 决策账本后进入;查询语义见 [`framework/adapter-contract.md`](references/framework/adapter-contract.md))。🔷 标记的行属新增能力,critique 需先有 preview 产出或可访问页面,ui-graph 需先有 draw-md 产出,ip/ip-handbook 需先有 DESIGN.md。
+> 🔴 标记的行需先确认 draw-md 产出存在;preview/draw-* 无 UI markdown 输入时应在子命令流程内 fallback 引导用户回退到 draw-md。用户未指定目标框架时,draw-*(含 draw-react) 先查用户项目已有前端栈(有 → 跟随该栈并说明假设;无 → 按 [`framework/INDEX.md`](references/framework/INDEX.md)「运行时 × 组件源两级选型表」呈现候选——已装的排前,附适用场景与风险标记,**组件源由用户强制指定,skill 只提醒不得自动锁定**,指定结果回写 DESIGN.md 决策账本后进入;查询语义见 [`framework/adapter-contract.md`](references/framework/adapter-contract.md))。🔷 标记的行属新增能力,critique 需先有 preview 产出或可访问页面,ui-graph 需先有 draw-md 产出,ip/ip-handbook 需先有 DESIGN.md。
 
 进入子命令后,按其流程文档执行。检查点、边界情形、交付核对清单均在各子命令文档内 —— **本路由器不含流程主体**。
 
@@ -133,7 +135,7 @@ metadata:
 
 - **不确定用哪个?** 先 `design-md`。没有 DESIGN.md 就无法产出可靠的 `draw-md` 硬 token,更无法进行框架适配。
 - **完整流程链路**(每步产出 = 下步输入): `design-md`(→.maliang/DESIGN.md) → `draw-md`(→.maliang/ui-markdown/*.md) → `preview`(→.maliang/preview/preview_*.html) → [`critique`](references/commands/critique.md)(→评分快照) → `draw-harmony`/`draw-flutter`/`draw-element`(→框架代码);迭代经 `redesign`/`ui-graph` 回流 decisions 账本。
-- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局 / 对齐 / 海拔)在 [`references/dimensions/`](references/dimensions/) 下(含 color-palettes 调色板库、design-systems 参考设计系统、glass-effect/glass-advanced 液态玻璃配方、texture 纹理预算(一页一纹理族/透明度 token 化)、elevation 表面海拔、alignment 对齐轴/同排等高/凸起关系、h5-frame H5 手机专属页容器契约);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),十三个子命令共享参考,不在本路由器重复。桌面页到手机上的六条机械故障见 [`references/meta/mobile-floor.md`](references/meta/mobile-floor.md)。
+- 维度规范(色 / 字 / 图 / 距 / 角 / 线 / 布局 / 对齐 / 海拔)在 [`references/dimensions/`](references/dimensions/) 下(含 color-palettes 调色板库、design-systems 参考设计系统、glass-effect/glass-advanced 液态玻璃配方、texture 纹理预算(一页一纹理族/透明度 token 化)、elevation 表面海拔、alignment 对齐轴/同排等高/凸起关系、h5-frame H5 手机专属页容器契约);设计原则在 [`references/meta/principles.md`](references/meta/principles.md),十四个子命令共享参考,不在本路由器重复。桌面页到手机上的六条机械故障见 [`references/meta/mobile-floor.md`](references/meta/mobile-floor.md)。
 - **模板墙**在 [`references/templates/`](references/templates/INDEX.md):14 种设计语言(液态玻璃/M3 Expressive/Fluent 2/Bento/瑞士编辑/OLED 暗色/数据仪表盘等) + 整页模式(编辑分栏/纵深长廊/Dashboard 风格集/移动端五式/滚动图带/AI 工作台) + 落地页编排 + 性格方向卡;选型走 README 四步路由 + [variation-engine](references/templates/variation-engine.md) 七轴组合 + [跨次构建记忆](references/templates/variation-engine.md)(build-log + CSS 盖章,≥5 轴相同即重选)。
 - **交付物骨架模板**在 [`template/`](template/README.md):DESIGN.md 骨架 / ui-markdown 页面骨架 / IP prompt 契约 / A11y 实测记录,复制填充用——骨架字面形态的唯一 canonical 在各文件,填法与校验规则在对应子命令文档;与模板墙分工(选型参考 vs 落盘起点)见 [`template/README.md`](template/README.md)。
 - **术语库**在 [`references/vocabulary/`](references/vocabulary/INDEX.md):30 篇模式命名词汇,draw-md 组件命名对齐——篇目/来源/核验日期的唯一清单见 [vocabulary/INDEX.md](references/vocabulary/INDEX.md),条目明细在各篇「命名表」。**查库先译意图**:用户大白话描述效果时先译成 UI 原语名词再进索引(译法纪律见 [vocabulary/INDEX.md](references/vocabulary/INDEX.md) 头注),复合诉求拆单条逐个查。动效骨架([`references/motion-skeletons/`](references/motion-skeletons/))共 11 篇。**动效选型先读 [`motion-skeletons/INDEX.md`](references/motion-skeletons/INDEX.md)**:效果×路线双轴、GATE 四查、六路线成本表、十一族效果目录(含各族 slop form 反模式,含 3.11 页面级滚动叙事场景)、四拍节奏表。

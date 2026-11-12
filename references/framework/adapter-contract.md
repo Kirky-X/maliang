@@ -13,6 +13,7 @@
 | --- | --- | --- |
 | 运行时适配器 | 语言与渲染范式层：决定代码形态、主题机制、preview 模板 | `react` / `vue` / `arkts` / `flutter` |
 | 组件源 profile | 挂在一个运行时之下、提供组件的具体来源 | react：shadcn/ui（registry-json）、Motif（registry-json）、Astryx（docs-site）；vue：Element Plus（docs-site，bundled 快照回退）；arkts：ArkUI（bundled-snapshot）；flutter：Material/Cupertino（docs-site） |
+| 生成入口 | 每个运行时的页面代码生成命令 | react → [draw-react.md](../commands/draw-react.md)；vue → draw-element；arkts → draw-harmony；flutter → draw-flutter |
 
 同一运行时可挂多个组件源。Motif 是 `react` 运行时上 shadcn 通道的第二个 registry 源，不是独立运行时适配器。新运行时/新组件源一律按「新增框架接入流程」（[INDEX.md](./INDEX.md)）登记 profile 后方可进入 draw-* 查询。
 
@@ -71,4 +72,4 @@ draw-* 遇「目标组件源未指定」时执行：
 - [component-routing.md](./component-routing.md)：区块功能 → 组件类路由、复合组件配方
 - [glass-effect.md](../dimensions/glass-effect.md)：效果 → 组件参数退化
 - [token.md](../meta/token.md)：token 命名（查询返回值纪律的上位规范）
-- 各框架命令文档:[draw-element.md](../commands/draw-element.md) / [draw-harmony.md](../commands/draw-harmony.md) / [draw-flutter.md](../commands/draw-flutter.md)(查询通道步骤与版本探测)
+- 各框架命令文档:[draw-element.md](../commands/draw-element.md) / [draw-harmony.md](../commands/draw-harmony.md) / [draw-flutter.md](../commands/draw-flutter.md) / [draw-react.md](../commands/draw-react.md)(查询通道步骤与版本探测)

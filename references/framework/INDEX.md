@@ -76,6 +76,8 @@
 
 ## 组件类型索引表
 
+> **适用范围**:本表服务 bundled 三框架快照映射;React 源(shadcn/Motif/Astryx)不读本表映射——走 [`draw-react.md`](../commands/draw-react.md) 组件词典 + 实时查询。
+
 ### 现有组件(3 类)
 
 | 组件类型 | 描述 | HarmonyOS(ArkTS) | Flutter(Dart) | Element Plus(Vue 3) |
@@ -180,6 +182,8 @@ React 生态三源详表:
 | 风险标记 | 源码自持,升级靠手动 diff | 无版本锚点,内容会漂移 | Beta |
 | token 契合度 | 高(CSS 变量 + Tailwind) | 高(官方明说沿用 shadcn 主题 token) | 中(StyleX 变量 + 主题包) |
 
+生成入口:三源均走 [`draw-react.md`](../commands/draw-react.md)(契约驱动实时查询,组件词典起步表见该文件)。
+
 六源全景速查:
 
 | 组件源 | 运行时 | ingest 通道 | 一句话适用 | 风险标记 |
@@ -207,7 +211,7 @@ React 生态三源详表:
 3. 登记「组件词典」:统一 slug ↔ 框架原生名(原生名不一致类先按「命名 slug 统一约定」登记 slug);
 4. 确认 preview 通道:react 系源 → `react` 模板;全新运行时需先扩 `scripts/preview.py` 模板注册表;
 5. **不建**组件类型索引表列——组件清单以 profile 组件词典 + 官方组件列表实时抓取为准;
-6. 核对对应 draw-* 命令文档失败模式表的三级回退适用性(官网实时抓 → 快照回退 → 组合兜底);
+6. 核对生成入口与失败模式表的三级回退适用性:react 系源 → [draw-react.md](../commands/draw-react.md);其他运行时按 [adapter-contract.md](./adapter-contract.md)「两层结构」生成入口列对应命令文档(官网实时抓 → 快照回退 → 组合兜底);
 7. 「文档维护规范」的「新增组件流程」仅适用于 bundled-snapshot 型源;实时型源新增组件类 = 更新 profile 组件词典。
 
 ---

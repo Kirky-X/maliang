@@ -8,7 +8,7 @@ English | [中文](README.md)
 
 ## ✨ Features
 
-**13 subcommands** covering the full lifecycle (full routing table in [SKILL.md](SKILL.md)):
+**14 subcommands** covering the full lifecycle (full routing table in [SKILL.md](SKILL.md)):
 
 | Subcommand | Stage | Function |
 | ---------- | ----- | -------- |
@@ -20,12 +20,13 @@ English | [中文](README.md)
 | `preview` | Verify | Live preview with Element Plus / React (shadcn·Motif·Astryx) inside iOS/Android device shells |
 | `critique` | Verify | Nielsen 10 heuristics scored 0–4 + persona walkthrough + cognitive-load checklist; emits score snapshots/trends/backlog |
 | `draw-harmony` / `draw-flutter` / `draw-element` | Implement | Convert to HarmonyOS(ArkTS) / Flutter(Dart) / Element Plus(Vue 3) framework code; component docs fetched live from official sites per the adapter contract (snapshots are fallback only) |
+| `draw-react` | Implement | Convert to React ecosystem (shadcn/ui · Motif · Astryx) TSX: contract-driven live query + starter component dictionary + user-mandated source selection |
 | `ui-graph` | Deliver | UI relationship graph (hierarchy + navigation + hash baseline + implementation map), change tracking and implementation-gap queries |
 | `ip` / `ip-handbook` | Deliver | IP character generation (API first, prompt fallback) / IP visual handbook (8 modules, 2K 3:4) |
 
 - **Design asset library**: template wall with 14 design languages (liquid glass / M3 Expressive / Fluent 2 / Bento / Swiss editorial / OLED dark, etc.) + 30 component-naming vocabulary docs (incl. a 149-entry Chinese–English term glossary — 80 dictionary + 69 supplemental — routing Chinese phrasing → English term → library pattern) + nine dimension specs (color / type / icon / spacing / radius / border / layout / alignment / elevation)
 - **Section-archetype library**: [`references/components/`](references/components/INDEX.md) (51 section prototypes + index — **pick names from the index, load only the ones you picked**; a typical build touches 5-7 files: 1 hero + 1 section header + 1-2 body sections + 1 CTA + 1 footer + 1 nav; archetypes decide how a section looks, element-level styling stays in `references/vocabulary/`)
-- **Framework adapter contract**: [`references/framework/adapter-contract.md`](references/framework/adapter-contract.md) — two-layer runtime × component-source structure (React ecosystem shadcn/ui · Motif · Astryx registered) + component docs fetched live from official sites as source of truth (no persistent cache; snapshots are fallback only, ArkUI is snapshot-primary) + component source mandated by the user; **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
+- **Framework adapter contract**: [`references/framework/adapter-contract.md`](references/framework/adapter-contract.md) — two-layer runtime × component-source structure (React ecosystem shadcn/ui · Motif · Astryx registered; generation entry draw-react) + component docs fetched live from official sites as source of truth (no persistent cache; snapshots are fallback only, ArkUI is snapshot-primary) + component source mandated by the user; **Three-framework component docs**: 56 component classes × HarmonyOS/Flutter/Element Plus (`references/framework/`)
 - **Craft discipline & review**: [`references/interface-design/`](references/interface-design/) (product UI craft discipline, strict review, de-slop flow); Web interface rules snapshot in [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md), read by critique UI/a11y checklists
 - **Script verification layer**: `validate.py draw-md` (23 checks), `preview.py check` (51/143 items scriptable, incl. WCAG contrast), `ui-graph.py` (9 subcommands, incl. check-sync spec↔implementation sync and token-usage impact analysis), `validate.py generated` (generated-code checks + G46 injection-surface scan), `ci-gate.sh` unified entry — pure Python standard library
 - **Second-batch verification scripts** (same standard library): `verify.py color-fidelity` (rebuild-vs-reference ΔE fidelity gate), `verify.py measure-colors` (deterministic image color measurement), `verify.py palette-solver` (OKLCH brightness solver + pairing matrix), `verify.py assets` (asset-slot presence check), `audit.py fingerprint` (source fingerprint for re-audits), `audit.py structure-history` (rotation repeats / hot axis / stamp truth), `audit.py copy` (template-phrase scanner)
@@ -98,7 +99,7 @@ maliang/
 ├── SKILL.md                 # Entry: 13-subcommand router + meta load order + failure modes + prohibitions
 ├── skill.json               # Metadata (MIT)
 ├── references/
-│   ├── commands/            # 13 subcommand workflow docs + 2 auxiliary docs (design-md-advanced / preview-checklist)
+│   ├── commands/            # 14 subcommand workflow docs + 2 auxiliary docs (design-md-advanced / preview-checklist)
 │   ├── meta/                # Spec layer: token / principles / ux-rules / lifecycle / accessibility …
 │   │                        #   incl. web-interface-guidelines.md snapshot (pin info in the file header)
 │   │                        #   + source-hygiene.md (source hygiene) / visual-symptoms.md (symptom diagnosis)

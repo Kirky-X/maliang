@@ -8,7 +8,7 @@
 
 ## ✨ 功能特性
 
-**13 个子命令**覆盖全生命周期（完整路由表见 [SKILL.md](SKILL.md)）：
+**14 个子命令**覆盖全生命周期（完整路由表见 [SKILL.md](SKILL.md)）：
 
 | 子命令 | 阶段 | 功能 |
 | ------ | ---- | ---- |
@@ -20,12 +20,13 @@
 | `preview` | 验证 | Element Plus / React（shadcn·Motif·Astryx）+ iOS/Android 设备外壳实时预览 |
 | `critique` | 验证 | Nielsen 10 启发式 0–4 评分 + persona 走查 + 认知负荷清单，产出评分快照/趋势/backlog |
 | `draw-harmony` / `draw-flutter` / `draw-element` | 实现 | 转换为 HarmonyOS(ArkTS) / Flutter(Dart) / Element Plus(Vue 3) 框架代码；组件文档按适配器契约实时抓官网（快照仅回退） |
+| `draw-react` | 实现 | 转换为 React 生态（shadcn/ui · Motif · Astryx）TSX 代码：契约驱动实时查询 + 组件词典起步表 + 用户强制指定门 |
 | `ui-graph` | 交付 | UI 关系图（层级 + 跳转 + 哈希基线 + 实现映射），变更追踪与实现缺口查询 |
 | `ip` / `ip-handbook` | 交付 | IP 形象生成（API 优先，fallback prompt）/ IP 视觉手册（8 模块，2K 3:4） |
 
 - **设计资产库**：14 种设计语言模板墙（液态玻璃 / M3 Expressive / Fluent 2 / Bento / 瑞士编辑 / OLED 暗色等）+ 30 篇组件命名词汇（含 149 项中英术语对照：词典 80 项 + 词典外 69 项，中文说法→英文术语→库内模式路由）+ 九维规范（色/字/图/距/角/线/布局/对齐/海拔）
 - **区段原型库**：[`references/components/`](references/components/INDEX.md)（51 个区段原型 + 索引——**从索引挑名、只加载选中的那几个**，典型一次构建 5-7 个文件：1 hero + 1 区段头 + 1-2 主体区段 + 1 CTA + 1 页脚 + 1 导航；区段原型管「这段长成什么」，元素级外观仍在 `references/vocabulary/`）
-- **框架适配器契约**：[`references/framework/adapter-contract.md`](references/framework/adapter-contract.md)——运行时 × 组件源两层结构（React 生态 shadcn/ui · Motif · Astryx 已登记）+ 组件文档官网实时抓取为事实源（不建持久缓存，快照仅回退，ArkUI 为快照型主源）+ 组件源由用户强制指定；**三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
+- **框架适配器契约**：[`references/framework/adapter-contract.md`](references/framework/adapter-contract.md)——运行时 × 组件源两层结构（React 生态 shadcn/ui · Motif · Astryx 已登记，生成入口 draw-react）+ 组件文档官网实时抓取为事实源（不建持久缓存，快照仅回退，ArkUI 为快照型主源）+ 组件源由用户强制指定；**三框架组件文档**：56 类组件 × HarmonyOS/Flutter/Element Plus（`references/framework/`）
 - **craft 纪律与评审**：[`references/interface-design/`](references/interface-design/)（产品 UI craft 纪律与严格评审/去 slop 深流程）；Web 界面规则快照在 [`references/meta/web-interface-guidelines.md`](references/meta/web-interface-guidelines.md)，critique 的 UI 合规/a11y 清单读取该快照
 - **脚本验证层**：`validate.py draw-md`（23 项检查）、`preview.py check`（51/143 项可脚本化，含 WCAG 对比度）、`ui-graph.py`（9 子命令，含 check-sync 规格↔实现同步判定与 token-usage 波及分析）、`validate.py generated`（生成码校验 + G46 注入面扫描）、`ci-gate.sh` 统一入口——纯 Python 标准库
 - **第二批验证脚本**（同标准库）：`verify.py color-fidelity`（重建 vs 参考图 ΔE 保真门）、`verify.py measure-colors`（图片确定性测色）、`verify.py palette-solver`（OKLCH 亮度求解 + 配对矩阵）、`verify.py assets`（资产位在场验证）、`audit.py fingerprint`（重审计源码指纹）、`audit.py structure-history`（轮换重复 / 热轴 / 盖章真伪）、`audit.py copy`（句型级反模板）
@@ -98,7 +99,7 @@ maliang/
 ├── SKILL.md                 # 入口：13 子命令路由 + meta 加载时序 + 失败模式 + 禁止事项
 ├── skill.json               # 元数据（MIT）
 ├── references/
-│   ├── commands/            # 13 份子命令流程文档 + 2 份附属文档（design-md-advanced / preview-checklist）
+│   ├── commands/            # 14 份子命令流程文档 + 2 份附属文档（design-md-advanced / preview-checklist）
 │   ├── meta/                # 规范层：token / principles / ux-rules / lifecycle / accessibility …
 │   │                        #   含 web-interface-guidelines.md 快照（钉定信息见文件头部）
 │   │                        #   + source-hygiene.md（来源卫生）/ visual-symptoms.md（症状诊断）
