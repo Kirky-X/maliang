@@ -53,6 +53,7 @@
 - **声明式动作分发(吸收自 MWG custom-button-actions)**:多按钮控制同一目标(开关/排序/工具栏动作)用 button `commandfor` + `command` 声明式接线(自定义命令必须 `--` 前缀);command 事件不冒泡(监听直挂目标或 capture);自定义命令无内建语义,须手动同步 aria-pressed/aria-expanded;Baseline 2025-12(Chrome 135/Firefox 144/Safari 26.2),按 `'commandForElement' in HTMLButtonElement.prototype` 条件加载 invokers-polyfill
 - **热区下限**:按钮触控热区 ≥44×44(Web ≥24px 口径见 [`../meta/ux-rules.md`](../meta/ux-rules.md) touch-target 条目);视觉可小于热区,热区不可小于阈值
 - **等待态按钮替代加载弹框的两场景**:①动作极快、弹框会闪现;②多步连续跳转、层层弹加载框——此时在按钮内转圈更稳;真正的长任务仍用进度/弹框(见 [`progress-confirm.md`](progress-confirm.md))
+- **按钮形态选型(形状是角色,不是风格)**:圆角半径与按钮高度之比定形态——0 为直角、约 1/4 为圆角、1/2 为胶囊;三个问题定角色:①页内唯一最想被点的主动作用胶囊(轮廓最集中,一眼锁定);②密集网格里彼此紧贴的选项用直角(边对边严丝合缝);③其余普通按钮用圆角,且与旁边输入框取同一档(档位见 [`../dimensions/radius.md`](../dimensions/radius.md));同一角色整页只用一种形状,禁同角色混两种形态
 
 ## 在 draw-md 中的写法
 
