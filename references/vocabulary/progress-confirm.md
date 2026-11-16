@@ -23,6 +23,9 @@
 | `habit-week-ring-checkin` | 七日沿圆周排布的打卡环:当日节点打卡时变色并扩散一圈光圈,中心连续天数同步滚动,圆周路径逐日连续绘制,满周显对勾;打卡反馈属庆祝档可跳过;天数滚动见 [`number-motion.md`](number-motion.md) `num-ticker-partial`;与 `checkin-hold-burst` 互见:彼条单次打卡收束,本条整周推进 | 习惯打卡、连续签到、周目标 |
 | `confirm-copy-tick` | 复制成功翻转:复制图标原地翻成对勾,上方冒出「已复制」小提示,约 1s 后一起复原 | 复制链接/代码/口令按钮 |
 | `scrubber-waveform` | 波形进度条:整段内容压成一排竖条波形,已过部分高亮;按住拖动实时更新进度,松手从该位置继续播放 | 音频/视频/语音消息的进度控制(波形只动 transform) |
+| `progress-phase-copy` | 阶段报幕:十几秒以上的任务按阶段换文案(「正在读取文件」→「正在生成报告」),隔一会儿喊一声,人就不慌;禁一句「加载中」挂到底 | AI 生成/导入导出/安装等分阶段长任务(与 `state-progress-bar` 组合;状态族见 [`states.md`](states.md)) |
+| `progress-live-pill` | 计时胶囊顶条:离开计时页后顶部小条向两侧撑开露出剩余时间,点按长成带暂停/计数的完整计时卡,数秒无操作自动缩回 | 计时/专注/配送等跨页驻留任务(iOS Live Activity 同族;与 `undo-toast-countdown` 分界:彼条 toast 内嵌倒计时,本条跨页驻留) |
+| `progress-object-metaphor` | 进度物化:进度映射到载体本身——书口已读部分变深、书签夹在当前页、水杯水位上涨,不另立独立进度条 | 内容消费类(读书/课程/听书;数值联动走 [`number-motion.md`](number-motion.md)) |
 
 > 环形进度与「约 1s 后复原」为进度/驻留语义,非转场时长,draw-md 勿写 `duration: 1000ms` 类字面量(防检查 11 误报,先例同 [`micro-interactions.md`](micro-interactions.md) `micro-hold-confirm`)。
 

@@ -25,6 +25,7 @@
 | `gallery-reflow-filter` | 图片主角网格留白:点分类平滑退出自动重排,关闭详情归原位 | 摄影/作品集分类浏览 |
 | `gallery-whitespace-showcase` | 大留白横向摄影:切作品主图说明同步过渡,滑杆实时调明暗 | 摄影作品展示页 |
 | `gallery-fan-stair-scroll` | 扇形转台阶:彩色扇形卡片抓视线,滚动后变台阶式排列,按钮驱动依次换位 | 营销/活动页(与 [cards.md](cards.md) `card-fan-stack-swipe` 互见:彼条滑动换组,本条滚动/按钮改排列) |
+| `gallery-infinite-loop` | 无限画廊:固定图集循环排列,往哪拖都有图,两端无缝看不到头 | 摄影作品墙、品牌氛围页(与 `scroll-infinite` 分界:彼条 Feed 无限追加,本条固定集合循环) |
 
 ## 使用规则
 

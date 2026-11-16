@@ -33,6 +33,7 @@
 | `input-inline-mention`     | 正文联想浮层:输入时在光标旁弹出联想列表,实时筛选,选中以彩色胶囊嵌入正文,退格整块删除胶囊不逐字符,浮层收起 | 富文本 @提及/引用                               |
 | `validate-error-shake`     | 错误水平轻晃:校验失败该输入框水平轻晃(3 下幅度递减约 10→6→3px,共约 400ms,手机配轻震)+边框变红,提示文字从下方滑入;摇完自动选中内容便于重输,重新输入红色淡出恢复 | 移动端行内错误反馈(与 `validate-inline` 组合,口径见 [`ux-rules.md`](../meta/ux-rules.md) inline-validation) |
 | `toggle-press-slide-rebound` | 拟态开关三段编排:按下整个开关先下沉,滑块移到另一侧,松手回弹落定 | 拟态(neumorphism)开关、物理感拨杆(滑钮形变口径见 [`buttons.md`](buttons.md) `btn-squash`;三段序贯不重叠) |
+| `input-tag-chip` | 标签输入:输入词回车即成 chip 逐个排列,点叉删除,支持一次粘贴多值自动拆分;替代在单框里手打逗号还得猜中英文逗号 | 兴趣/技能/关键词/收件人等多值输入(chip 元素两型规范见同篇操作块) |
 
 ## 使用规则
 

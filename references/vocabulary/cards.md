@@ -35,6 +35,8 @@
 | `card-peel-curl` | 卷纸揭面:按角卷纸揭背面,弯曲阴影跟手同步,松手回弹 | 贺卡/票据/翻页隐喻(与 `card-flip-3d` 互见:彼条刚体绕轴翻面,本条柔性卷曲) |
 | `glass-weather-card` | 玻璃数据卡:玻璃卡上温度/文字/趋势曲线/背景色随数据连续变化,玻璃透出后方柔色而前景信息清晰 | 天气/环境监测卡(质感配方见 [`glass-effect.md`](../dimensions/glass-effect.md);与 `card-glass` 互见:彼条静态质感,本条数据连续过渡) |
 | `shared-element-card-transition` | 共享元素转场(container transform):卡片与详情间连续过渡位置/尺寸/圆角,核心信息移到详情对应位,禁整体缩放文字 | 列表卡→详情无缝转场(与 `card-expand-fullpage` 互见:彼条整卡铺满;图片原位放大家族见 [galleries.md](galleries.md) `gallery-shared-element-expand`) |
+| `card-avatar-stack` | 头像叠放组:成员头像依次叠压约三分之一,末位一颗「+N」圆;点按整组依次散开露出姓名,再点原序收回(散开按序错峰,不一次性全摊) | 团队/参与者/协作人展示(静态计数口径见 [`notifications.md`](notifications.md) 角标族) |
+| `card-hover-spotlight` | 聚光跟随:鼠标移到哪张卡,哪张亮起柔光斑且边框同步微亮,光斑随指针连续移动;一排卡只亮一张,张张发光等于没有重点 | 定价/功能/作品卡排(桌面 hover;光效克制见 [`../meta/ai-tells.md`](../meta/ai-tells.md) 光斑/发光族口径) |
 
 ## 使用规则
 
@@ -43,6 +45,7 @@
 - 卡片圆角按 [`radius.md`](../dimensions/radius.md) 分档,容器 > 控件
 - 触发 [`ai-tells.md`](../meta/ai-tells.md) "全场 rounded-2xl" 时,差异化圆角
 - 等高三列卡片网格禁用(见 [`ai-tells.md`](../meta/ai-tells.md) 第 9 节),改 bento 或非对称
+- 同排确需等高时的执行细节:说明文案最多两行截断省略,主按钮贴底对齐成一条线(等高三列作为默认布局的禁令不变,见上行)
 - 信息密度平衡:太疏的卡显得多余,太密失去一瞥价值——一瞥给要点,细看有增量;卡片尺寸升级=信息层级加深,禁止把小卡内容原样拉伸填大卡
 - 卡片描述动词开头("查看当前用量…"),禁"本卡片展示…"式自我介绍
 - **刷新动效按变化幅度选型**:微元素(按钮/图标)直接变化;数字翻转/滚动(见 number-motion);整卡大面积内容换版用渐隐渐现;周期轮换用带方向的推移补位——变化多小配多小的动效,禁小变化配大动作

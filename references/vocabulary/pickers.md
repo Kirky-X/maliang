@@ -36,6 +36,7 @@
 - 选择器键盘可达性:`picker-searchable-dropdown` 必须支持 ↑↓ 移动 + Enter 确认 + Esc 关闭(见 [`accessibility.md`](../meta/accessibility.md))
 - `input-auto-format` 只做展示层分隔,提交值保持纯数据;禁止格式化吞掉用户正在编辑的光标位置
 - 选项 ≤ 5 用 `picker-single-collapse` 或分段控件,> 15 必须可搜索;两档之间用 `picker-group-sticky`
+- **select 与 dropdown 辨析**:`select` 是填表——选完值回填输入框等待提交;`dropdown` 是命令集合——点击即执行动作或跳转,不回填。筛选框用带框 select,操作列「更多」用纯文字/图标触发的 dropdown,两者禁用同一外观(后台表格翻车重灾区)。两条补充铁律:两个选项用单选框/开关;用户倒背如流的值(出生年份)直接输入。移动端选项多改底部整块面板(半屏口径见 [`popups.md`](popups.md) `popup-half-snap`),出屏换边见 `popup-anchor-flip`
 
 ## 在 draw-md 中的写法
 

@@ -18,7 +18,7 @@
 | `nav-floating-pill`   | 浮动药丸式导航,滚动时显隐;区段原型对照 [N5](../components/n5-floating-pill.md) | 长滚动页(单页营销 / 品牌站)         |
 | `nav-stepper`         | 步进式导航(1/2/3)                                | 流程页(结账、注册、向导)            |
 | `nav-floating-island` | 浮岛导航:悬浮胶囊 + 汉堡→X 形变 + 蒙版错峰揭示   | 品牌 / 创意站;移动端降级为全宽 dock |
-| `nav-fab`             | 悬浮操作按钮:右下角单 FAB(一屏仅一个主操作),滚动下滑出现 / 上滑收起联动,避开底部导航安全区 | 移动 App 新建/发布/写等一级操作入口                |
+| `nav-fab`             | 悬浮操作按钮:右下角单 FAB(一屏仅一个主操作),滚动下滑出现 / 上滑收起联动,避开底部导航安全区;带字变体:标签随滚动方向伸缩——下滚收成圆形加号、上滚伸出文字(与整钮显隐两个维度,可独立配置)| 移动 App 新建/发布/写等一级操作入口                |
 | `nav-tab-spring-underline` | 顶部标签页跟手下划线:下划线随拖动半路跟手,松手落定,选中标签自动滚动居中;Web 原生路线:指示条挂容器 ::before,active 项 `anchor-name`+`position-anchor` 绑定,`transition: inset .2s`(须包 prefers-reduced-motion);fallback `@supports not (position-anchor: auto)` 退静态 border-bottom;**坑:forced-colors 模式剥掉 background/box-shadow,指示条必须用 border 画**;必须配 aria-current/aria-selected,不许纯视觉 | 顶部多 tab(资讯、订单分类;跨页跳转不适用)                     |
 | `nav-tab-liquid`      | 液态 tab 指示器:选中背景移动中先拉长再收缩最后回弹,像液体流过去;简版=胶囊底平滑滑到选中项(低 MOTION 或底栏用,底栏右侧独立快捷按钮见 `nav-quick-actions`) | 分段切换、底部标签栏(MOTION ≥ 7 用液态)                          |
 | `nav-large-title-collapse` | 大标题折叠:缩放/横移/上移/底色全挂同一个滚动进度,大标题随滚动收进导航栏;折叠行程=首尾高度差(如 200→50px 即 range 0-150px);`scroll-padding-top` 挂同一条 scroll 时间线随 header 高同步动(WCAG 2.4.11 焦点不遮);body 预留 padding-top=初始高;被折叠元素禁 static/relative(在流内会改总滚动距离) | iOS 式列表页、个人主页(单值驱动原理同 `nav-collapsing-search`)                       |
@@ -27,6 +27,7 @@
 | `nav-predictive-back` | 预测性返回:返回手势中预览目标页,松手确认跳转,中途松开回弹取消 | Android / 鸿蒙系统级返回转场 |
 | `nav-folder-tab-stack` | 档案夹层叠:多页如档案夹层叠仅露顶部标签,点标签对应页抽到最前,其余依次后退 | 多文档/多工作区并行切换 |
 | `nav-top-capsule` | 顶部胶囊导航:导航收进顶栏圆角胶囊容器或分组标签排,替代侧栏 | 页面数不多的工具后台(与 `nav-top-transparent` 互见:彼条去容器透明落底,本条胶囊容器/分组标签承载;层级深回侧栏骨架六式) |
+| `nav-deep-link-landing` | 深度链接直达:通知/分享/外链点入直接落到目标内容页并补全返回栈,返回即回上一级;禁把人扔回首页自己翻 | 推送落地、分享回流、外链接入(深层级配面包屑,返回手势接住退路) |
 
 ## 侧边栏骨架六式(后台/桌面端)
 

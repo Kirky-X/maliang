@@ -7,7 +7,7 @@
 | 模式名 | 视觉特征 | 适用场景 |
 | --- | --- | --- |
 | `chat-bubble-lifecycle` | 气泡生命周期:消息从输入框位置飞入列表位,长按弹操作排(复制 / 引用 / 撤回);发送失败原地标红可点击重发 | 所有对话界面的消息进出 |
-| `chat-stream-typewriter` | 流式输出:逐 chunk 追加 + 块光标,可跳过直达终稿;AI 自报身份与能力边界 | AI 助手回复(流式口径与 [ai-console.md](../templates/page/ai-console.md) 一致) |
+| `chat-stream-typewriter` | 流式输出:逐 chunk 追加 + 块光标,可跳过直达终稿;AI 自报身份与能力边界;模糊对焦变体:每字出现带极短模糊随即对焦,相邻字错开几十毫秒呈波浪推进,不逐字闪烁 | AI 助手回复(流式口径与 [ai-console.md](../templates/page/ai-console.md) 一致) |
 | `chat-typing-indicator` | 输入中指示:对方气泡位三点呼吸;超 10s 未出内容降级为「仍在输入」文案;顶栏变体:提示胶囊自标题栏右缘滑入挤走标题,三点轮流跳动 | 双人 IM、客服会话 |
 | `chat-stop-regenerate` | 停止与重生成:生成中主钮变「停止」,完成后唤起「重新生成」;重生成保留旧答案可对比 | AI 对话的连续生成控制 |
 | `chat-swipe-reply` | 滑动引用回复:气泡水平滑出引用轨,松手进输入框带引用头 | IM 消息回复(桌面为右键等价) |
