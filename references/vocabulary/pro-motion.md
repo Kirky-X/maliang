@@ -287,6 +287,7 @@
 | `scroll-depth-layers` | 景深分层滚动 Depth Scroll | 内容分三层,按层级给不同滚动速度、模糊半径和亮度,全部由滚动进度驱动 | 品牌叙事首屏(已有实现:[scroll.md](scroll.md) `scroll-depth-layers`) |
 | `list-cylinder-scroll` | 圆柱卷收列表 Cylinder Scroll | 列表项按距视区中心距离插值旋转角度、缩放和亮度,边缘项渐隐 | 长列表的 3D 卷收浏览(ROUTING R6 零依赖 CSS 3D) |
 | `metaball-tether` | 液滴粘连拖拽 Metaball Drag | 拖动元素与原位之间生成液态连接,按距离收缩颈部,超阈值断开并让两端回弹成圆 | 元素拖出 / 归组(已有实现:[metaball-tether.md](../motion-skeletons/metaball-tether.md) 骨架) |
+| `card-exit-four` | 元素离场四式 Exit Styles | Burn 从点击点白热线扩散后碳化;Plume 一束软火苗从底边升起托卡带走;Blocks 受击碎成方块翻滚弹跳;Peel 从一角撕下缩向对边;均为装饰档,须可跳过/reduced-motion 直达移除 | 卡片删除/完成移除的表达性离场(常规收起/合批见 [`notifications.md`](notifications.md) `notif-deck-fan`/`notif-digest`) |
 
 ### AI 描述词对照
 

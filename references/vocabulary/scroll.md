@@ -36,6 +36,7 @@
 | `scroll-edge-hint`      | 边缘可滚暗示:端部渐变阴影(sticky 伪元素 0.75rem 阴影,opacity .2s)或内容渐隐(mask,`@property` 注册 3rem 防跳变),由 scroll-state(scrollable) 显隐、到端自消;横滑用渐隐、竖滚用阴影;RTL 翻转;scroll-padding ≥ fade 宽防吸附落渐隐内 | 横滑 tabs/chips/轮播、弹窗内滚动区、固定头尾表格(与「露下一屏一角」规则互补) |
 | `scroll-stuck-style`    | 吸顶变样式:`@container scroll-state(stuck: top)` 纯 CSS 判吸顶瞬间换底色/阴影/压缩(容器必须命名防嵌套碰撞,样式只作用于子代);吸顶改盒模型须 sticky 直接父级 `overflow-anchor: none` 防抖振;scroll-padding-top ≥ header 高;降级 IO rootMargin -1px | 长列表分组标题吸顶、TOC 吸顶、表头吸顶变实底(与 [tables.md](tables.md) `table-sticky-header` 互见) |
 | `scroll-pull-reveal`    | 下拉露控件:搜索栏/筛选藏首屏上方,`scroll-initial-target: nearest` 定主内容于首位 + `scroll-snap-type: y mandatory` 保证全显/全隐不悬停半途;必须配 ≥24×24 等效按钮(WCAG 2.5.1 路径手势);降级 scrollIntoView instant block:start | 移动 Feed 顶部藏搜索栏/筛选(与 `scroll-pull-refresh` 分界:彼条触发刷新,本条露出控件) |
+| `scroll-card-stacking` | 滚动驱动卡片堆叠两变体:**层叠粘滞**(每张卡 sticky 粘点略低于前一张,滚到底新卡盖上来,旧卡留在身后层叠可见);**滚动发牌**(顶卡随滚动飞出一侧并旋转,下卡升起补位,滚回去反向收回);钉住横移画廊为第三变体(区段 pin 住,竖滚驱动横排位移) | 作品集/相册/叙事页(手势甩出切换走 [`pro-motion.md`](pro-motion.md) `card-swipe-deck`;滚动钉住基础见 [`../motion-skeletons/sticky-stack.md`](../motion-skeletons/sticky-stack.md)) |
 
 > `scroll-overscroll-damp` 顶图拉伸变体:图片按下拉距离放大(scale ≤ 1.15)+文字淡出+松手阻尼回弹。
 

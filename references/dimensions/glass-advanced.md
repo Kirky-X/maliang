@@ -210,6 +210,21 @@ Vue 版基于 React 版改编,额外提供 **effect 枚举**(shader 模式下的
 
 **映射到 shader effect**:`clear` ≈ `transparentIce`、`regular` ≈ `liquidGlass`、`prominent` ≈ `flowingLiquid`、`dark` = `liquidGlass` + `glass-tint-color: #000` + `glass-tint-opacity: 0.3`。
 
+## 六层解剖与四声明组件化
+
+任一组件玻璃化 = 四声明换 token(background/backdrop-filter/box-shadow/color 四行各接玻璃变量,示例命名 `--glass-tint` / `--glass-blur`+`--glass-lens` / `--glass-edge` / `--glass-ink`;正式 token 名以第 5 节表为准,落地时映射),配方由六层叠出(任意壁纸、明暗通用):
+
+| 层 | 作用 | 关键参数 |
+| --- | --- | --- |
+| 1 Shadow | 把卡从壁纸抬起 | `0 0 .3px rgba(0 0 0/.35), 0 0 2px rgba(0 0 0/.35)` |
+| 2 Blur & light | 软化背景同时保鲜艳 | `backdrop-filter: blur(6px) saturate(1.5)` |
+| 3 Rim lens | 边缘透镜向内弯、中线放大 | 内 4px 带 `backdrop-filter: blur(4px)`,offset 1.1px |
+| 4 Tint | 杂壁纸上的薄白 wash 保文字 | `rgba(205 235 255/.6)` 到 `.25` 渐变 |
+| 5 Rim light | 光击中处内亮线+内 glow | `inset 1.5px 1px 1px rgba(255 255 255/.35)`,外圈 `0 0 2px rgba(255 205 235/.35)` |
+| 6 Ink | 两档墨色 multiply 进玻璃 | `rgba(0 8 17/.5)` 与 `/.9`,`mix-blend-mode: multiply` |
+
+容器 `border-radius: 44px` 一档;六层顺序不可换(Shadow 抬起、Blur 软化、Rim lens 折射、Tint 保读、Rim light 打光、Ink 定墨),漏层最常见是漏 Tint(杂壁纸文字不可读)与漏 Ink(对比度漂移)。
+
 ---
 
 ## 7. 浏览器支持矩阵

@@ -37,6 +37,7 @@
 | `shared-element-card-transition` | 共享元素转场(container transform):卡片与详情间连续过渡位置/尺寸/圆角,核心信息移到详情对应位,禁整体缩放文字 | 列表卡→详情无缝转场(与 `card-expand-fullpage` 互见:彼条整卡铺满;图片原位放大家族见 [galleries.md](galleries.md) `gallery-shared-element-expand`) |
 | `card-avatar-stack` | 头像叠放组:成员头像依次叠压约三分之一,末位一颗「+N」圆;点按整组依次散开露出姓名,再点原序收回(散开按序错峰,不一次性全摊) | 团队/参与者/协作人展示(静态计数口径见 [`notifications.md`](notifications.md) 角标族) |
 | `card-hover-spotlight` | 聚光跟随:鼠标移到哪张卡,哪张亮起柔光斑且边框同步微亮,光斑随指针连续移动;一排卡只亮一张,张张发光等于没有重点 | 定价/功能/作品卡排(桌面 hover;光效克制见 [`../meta/ai-tells.md`](../meta/ai-tells.md) 光斑/发光族口径) |
+| `card-stack-fan-hover` | 层叠卡 hover 扇形翻起:一摞压叠的卡,hover 时底下各张按指数衰减角度逐张翻起(angle(n)=42°x0.7^n),delay(n)=28ms x n 错峰;三档风格 Default 白卡/Skeuomorphic 拟物书页/Minimal 极简,同参数只换皮 | 精选集/作品摞/扑克牌式卡组(桌面 hover;手势甩出切换见 [`pro-motion.md`](pro-motion.md) `card-swipe-deck`) |
 
 ## 使用规则
 

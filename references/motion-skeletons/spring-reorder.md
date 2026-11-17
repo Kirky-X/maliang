@@ -102,6 +102,7 @@ function commitOrder() { /* 按 order 持久化排序;DOM 归零 translate */ }
 - 松手落定后必须 `commitOrder` 归零 translate 并同步 DOM 顺序,二次拖拽前状态必须干净
 - 重排/换父的 DOM 搬运用 `parent.moveBefore(node, ref)` 原子移动(Chrome 133+/Edge 133+/Firefox 144+,Safari 不支持):iframe 不重载、CSS 动画不重启、输入焦点不丢——append/insertBefore 实为拆除+插入,三者全丢;Web Components 走 `connectedMoveCallback`;探测 `'moveBefore' in Element.prototype` 回退传统移动并接受状态重置(行为侧「节点复用禁销毁重建」与 [pro-motion.md](../vocabulary/pro-motion.md) `card-layout-morph` / `list-vt-reflow` 同源)
 - 触觉反馈:进入新槽位时 vibration ≤ 10ms(见 [`micro-interactions.md`](../vocabulary/micro-interactions.md) `micro-haptic`)
+- 邻居让位传播(吸收自交互演示批):被拖项插入点附近的邻居按指数衰减位移依次让位,nudge(n) = 10px x 0.7^n(网格 8px),delay(n) = 24ms x n 错峰;松手弹簧回位与重排一次完成;错峰在单档 80ms 口径内(24ms 起步累加,封顶 5 层)
 
 ## 失败模式
 
