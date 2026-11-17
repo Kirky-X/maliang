@@ -17,18 +17,18 @@
 
 | 风格 | 视觉特征 | 代表套件(获取走 xizhi 路由) | 适用/注意 |
 | --- | --- | --- | --- |
-| 线性 Outlined/Stroke | 1.5~2px 均匀描边,无填充,端点圆角统一 | lucide / feather / tabler / radix | 默认首选;工具型/后台;小于 16px 易发虚,改用填充 |
-| 填充 Filled/Solid | 整体色块填充,无描边 | material-symbols(filled) / antd / bootstrap | 选中态/主功能强调;小尺寸下比线性清晰 |
-| 双色 Duotone | 主形实色+辅形半透明,两档色阶 | phosphor(duotone) / antd(two-tone) | 信息面板分层;两色须同源单主色派生 |
-| 半填充 Semi-filled | 局部填充局部描边(圆内实、外圈线) | material-symbols 圆角填充变体 | 播放/录制等状态钮 |
-| 系统字形 Glyph/Symbol | 符号字体,字重轴可变,随系统主题 | SF Symbols(代码 API) / sys.symbol / material-symbols(variable) | 原生平台默认;零下载自动跟随主题 |
-| 扁平多彩 Flat Multicolor | 多色平涂,无渐变无光影 | iconify color 族(含 fluent-emoji) | 消费级/生活方式 App;企业后台慎用易闹 |
-| 彩色拟物 Color-Skeuomorphic | 渐变+高光+投影的厚度感 | iconify 兜底彩色拟物族 | 营销页/空状态;正文功能图标密度大时禁 |
-| 玻璃拟态 Glass | 半透明+背景模糊+高光边 | 平台图标层(如 iOS 液态玻璃层) | 必须垫彩色底,否则与白纸无异(见 [`glass-effect.md`](glass-effect.md)) |
-| 等距 Isometric | 等距视角+三面光影 | iconify isometric 族 | 架构图/主题站;交互功能图标禁用 |
-| 手绘 Doodle | 不均匀线条,涂鸦感 | iconify doodle 族 | 儿童/轻品牌;企业产品禁用 |
-| 像素 Pixel | 像素网格硬边 | iconify pixelart 族 | 复古/游戏主题 |
-| 动效 Animated | Lottie/变形动画 | lordicon / morphicons | loading/成功/空状态;一处一动效+reduced-motion 降级(见下节) |
+| 线性 Outlined/Stroke | 一根等粗细的线条勾出整个轮廓,内部留空只见骨架;线宽全程均匀无粗细变化,转角与端点是统一的小圆弧;整体轻盈克制,像用同一支细钢笔一次画完,靠减法表达含义 | lucide / feather / tabler / radix | 默认首选;工具型/后台;小于 16px 易发虚,改用填充 |
+| 填充 Filled/Solid | 整块实色剪影,轮廓即形状,内部没有线条;细节全靠负空间(镂空)承担,观感稳重敦实、视觉重量大;远看是一组边界清晰的色块影子 | material-symbols(filled) / antd / bootstrap | 选中态/主功能强调;小尺寸下比线性清晰 |
+| 双色 Duotone | 两档颜色分主次:主体实色,次级形状半透明的同色系,形成「实体+影子」的层次;比填充多一层深度,比多彩克制;观感像主体打光后投在同色背景上的双层影像 | phosphor(duotone) / antd(two-tone) | 信息面板分层;两色须同源单主色派生 |
+| 半填充 Semi-filled | 同一个图形里一半是描边线、一半是实面色,交界处留一道均匀细缝;实与虚的对比集中在单个图标内部,观感「半开着」,像一扇门开了一半 | material-symbols 圆角填充变体 | 播放/录制等状态钮 |
+| 系统字形 Glyph/Symbol | 图标本质是「字」:由符号字体渲染,笔画粗细像字重一样连续可调;与正文文字排在同一基线与粗细体系里,观感与字体浑然一体,不像贴上去的图片 | SF Symbols(代码 API) / sys.symbol / material-symbols(variable) | 原生平台默认;零下载自动跟随主题 |
+| 扁平多彩 Flat Multicolor | 三四种平涂色块拼出形体,色块之间无渐变、无阴影、无描边,像剪纸拼贴;颜色明快、边界干脆,靠色相区分部位而不是靠光影塑造体积 | iconify color 族(含 fluent-emoji) | 消费级/生活方式 App;企业后台慎用易闹 |
+| 彩色拟物 Color-Skeuomorphic | 单色相的三阶明暗叠出圆润体积,顶部一粒高光、底部一片柔影,像一块被灯光打亮的软糖;十二档里唯一有明确光源方向的,观感有「想捏一下」的材质诱惑力 | iconify 兜底彩色拟物族 | 营销页/空状态;正文功能图标密度大时禁 |
+| 玻璃拟态 Glass | 半透明磨砂面板浮在彩色背景上,底下的内容透过它变得模糊柔和,边缘一圈亮边勾出玻璃厚度;观感像一块真的厚玻璃压在界面上 | 平台图标层(如 iOS 液态玻璃层) | 必须垫彩色底,否则与白纸无异(见 [`glass-effect.md`](glass-effect.md)) |
+| 等距 Isometric | 把正面视角斜切 30°,顶面/侧面/暗面用同色相三阶明暗铺开,方块有了「盒子感」;观感像积木或纸模,有空间纵深但仍是平面绘制 | iconify isometric 族 | 架构图/主题站;交互功能图标禁用 |
+| 手绘 Doodle | 线条粗细不匀、端点不闭合、圆是歪的,故意保留人手抖动的痕迹;观感像马克笔或蜡笔随手涂的小画,亲切随性、带体温 | iconify doodle 族 | 儿童/轻品牌;企业产品禁用 |
+| 像素 Pixel | 每个色点都咬在像素网格上,边缘是台阶状硬边,禁一切柔化与抗锯齿;观感像红白机时代的点阵图,颗粒感本身就是风格 | iconify pixelart 族 | 复古/游戏主题 |
+| 动效 Animated | 静止时是一张完整图标,触发或循环时播放一段小动画(旋转/弹跳/部件变形);观感是「会回应你」的图标,常驻动效限 loading/成功/空状态三处 | lordicon / morphicons | loading/成功/空状态;一处一动效+reduced-motion 降级(见下节) |
 
 风格选择锚定产品气质与平台:后台/工具型默认线性,品牌消费端可上双色/扁平多彩;彩色拟物/等距/像素属表达性主题档,正文功能图标禁用。App 图标(应用 logo/商店图)是品牌资产,走品牌设计流程,不在本表——本表只管界面内功能图标。
 
