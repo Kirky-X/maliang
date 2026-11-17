@@ -13,15 +13,26 @@
 
 基础栅格 24×24,图标按 24 网格设计,缩放到其他尺寸(20/16/32)时保持视觉重量一致。
 
-## 描边 vs 填充
+## 图标风格选型
 
-| 风格         | 用途               |
-| ------------ | ------------------ |
-| 线性(stroke) | 次功能/导航/默认态 |
-| 填充(filled) | 选中态/主功能/强调 |
+| 风格 | 视觉特征 | 代表套件(获取走 xizhi 路由) | 适用/注意 |
+| --- | --- | --- | --- |
+| 线性 Outlined/Stroke | 1.5~2px 均匀描边,无填充,端点圆角统一 | lucide / feather / tabler / radix | 默认首选;工具型/后台;小于 16px 易发虚,改用填充 |
+| 填充 Filled/Solid | 整体色块填充,无描边 | material-symbols(filled) / antd / bootstrap | 选中态/主功能强调;小尺寸下比线性清晰 |
+| 双色 Duotone | 主形实色+辅形半透明,两档色阶 | phosphor(duotone) / antd(two-tone) | 信息面板分层;两色须同源单主色派生 |
+| 半填充 Semi-filled | 局部填充局部描边(圆内实、外圈线) | material-symbols 圆角填充变体 | 播放/录制等状态钮 |
+| 系统字形 Glyph/Symbol | 符号字体,字重轴可变,随系统主题 | SF Symbols(代码 API) / sys.symbol / material-symbols(variable) | 原生平台默认;零下载自动跟随主题 |
+| 扁平多彩 Flat Multicolor | 多色平涂,无渐变无光影 | iconify color 族(含 fluent-emoji) | 消费级/生活方式 App;企业后台慎用易闹 |
+| 彩色拟物 Color-Skeuomorphic | 渐变+高光+投影的厚度感 | iconify 兜底彩色拟物族 | 营销页/空状态;正文功能图标密度大时禁 |
+| 玻璃拟态 Glass | 半透明+背景模糊+高光边 | 平台图标层(如 iOS 液态玻璃层) | 必须垫彩色底,否则与白纸无异(见 [`glass-effect.md`](glass-effect.md)) |
+| 等距 Isometric | 等距视角+三面光影 | iconify isometric 族 | 架构图/主题站;交互功能图标禁用 |
+| 手绘 Doodle | 不均匀线条,涂鸦感 | iconify doodle 族 | 儿童/轻品牌;企业产品禁用 |
+| 像素 Pixel | 像素网格硬边 | iconify pixelart 族 | 复古/游戏主题 |
+| 动效 Animated | Lottie/变形动画 | lordicon / morphicons | loading/成功/空状态;一处一动效+reduced-motion 降级(见下节) |
+
+风格选择锚定产品气质与平台:后台/工具型默认线性,品牌消费端可上双色/扁平多彩;彩色拟物/等距/像素属表达性主题档,正文功能图标禁用。App 图标(应用 logo/商店图)是品牌资产,走品牌设计流程,不在本表——本表只管界面内功能图标。
 
 同一图标集 MUST 风格统一:描边粗细一致(推荐 1.5~2px stroke)、圆角一致、端点一致。**禁止混搭**(同一集里有的线性有的填充)。选中/未选中通过**同图标的线性↔填充切换**表达,不换图。
-
 同一容器/同一列表/同一行内的同类图标 MUST 用同一尺寸档(同一 `{icon-size-*}` token);同排图标尺寸混用是对齐轴断裂的常见根因(判据见 [alignment.md](./alignment.md) 同排等高与行槽)。
 
 ## 命名
